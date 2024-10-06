@@ -9,6 +9,7 @@
   - Pedro M. Baeza
   - Alexandre Díaz
   - César A. Sánchez
+  - Carlos López
 - [Onestein](https://www.onestein.nl):
   - Dennis Sluijk \<<d.sluijk@onestein.nl>\>
   - Anjeel Haria

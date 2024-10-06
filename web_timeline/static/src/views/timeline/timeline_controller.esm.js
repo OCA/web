@@ -1,106 +1,78 @@
 /** @odoo-module alias=web_timeline.TimelineController **/
-/* Copyright 2023 Onestein - Anjeel Haria
- * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
-import AbstractController from "web.AbstractController";
+/**
+ * Copyright 2023 Onestein - Anjeel Haria
+ * Copyright 2024 Tecnativa - Carlos López
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+ */
+import {Component, useRef} from "@odoo/owl";
+import {ConfirmationDialog} from "@web/core/confirmation_dialog/confirmation_dialog";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
-import time from "web.time";
-import core from "web.core";
-import Dialog from "web.Dialog";
-var _t = core._t;
-import {Component} from "@odoo/owl";
+import {Layout} from "@web/search/layout";
+import {SearchBar} from "@web/search/search_bar/search_bar";
+import {_t} from "@web/core/l10n/translation";
+import {makeContext} from "@web/core/context";
+import {standardViewProps} from "@web/views/standard_view_props";
+import {useDebounced} from "@web/core/utils/timing";
+import {useModel} from "@web/model/model";
+import {useSearchBarToggler} from "@web/search/search_bar/search_bar_toggler";
+import {useService} from "@web/core/utils/hooks";
+import {useSetupView} from "@web/views/view_hook";
 
-export default AbstractController.extend({
-    custom_events: _.extend({}, AbstractController.prototype.custom_events, {
-        onGroupClick: "_onGroupClick",
-        onItemDoubleClick: "_onItemDoubleClick",
-        onUpdate: "_onUpdate",
-        onRemove: "_onRemove",
-        onMove: "_onMove",
-        onAdd: "_onAdd",
-    }),
+const {DateTime} = luxon;
 
+// Import time from "web.time";
+
+export class TimelineController extends Component {
     /**
      * @override
      */
-    init: function (parent, model, renderer, params) {
-        this._super.apply(this, arguments);
-        this.open_popup_action = params.open_popup_action;
-        this.date_start = params.date_start;
-        this.date_stop = params.date_stop;
-        this.date_delay = params.date_delay;
-        this.context = params.actionContext;
+    setup() {
+        this.rootRef = useRef("root");
+        this.model = useModel(this.props.Model, this.props.modelParams);
+        useSetupView({rootRef: useRef("root")});
+        this.searchBarToggler = useSearchBarToggler();
+        this.date_start = this.props.modelParams.date_start;
+        this.date_stop = this.props.modelParams.date_stop;
+        this.date_delay = this.props.modelParams.date_delay;
+        this.open_popup_action = this.props.modelParams.open_popup_action;
         this.moveQueue = [];
-        this.debouncedInternalMove = _.debounce(this.internalMove, 0);
-    },
-    on_detach_callback() {
-        if (this.Dialog) {
-            this.Dialog();
-            this.Dialog = undefined;
-        }
-        return this._super.apply(this, arguments);
-    },
-    /**
-     * @override
-     */
-    update: function (params, options) {
-        const res = this._super.apply(this, arguments);
-        if (_.isEmpty(params)) {
-            return res;
-        }
-        const defaults = _.defaults({}, options, {
-            adjust_window: true,
-        });
-        const domains = params.domain || this.renderer.last_domains || [];
-        const contexts = params.context || [];
-        const group_bys = params.groupBy || this.renderer.last_group_bys || [];
-        this.last_domains = domains;
-        this.last_contexts = contexts;
-        // Select the group by
-        let n_group_bys = group_bys;
-        if (!n_group_bys.length && this.renderer.arch.attrs.default_group_by) {
-            n_group_bys = this.renderer.arch.attrs.default_group_by.split(",");
-        }
-        this.renderer.last_group_bys = n_group_bys;
-        this.renderer.last_domains = domains;
-
-        let fields = this.renderer.fieldNames;
-        fields = _.uniq(fields.concat(n_group_bys));
-        $.when(
-            res,
-            this._rpc({
-                model: this.model.modelName,
-                method: "search_read",
-                kwargs: {
-                    fields: fields,
-                    domain: domains,
-                    order: [{name: this.renderer.arch.attrs.default_group_by}],
-                },
-                context: this.getSession().user_context,
-            }).then((data) =>
-                this.renderer.on_data_loaded(data, n_group_bys, defaults.adjust_window)
-            )
-        );
-        return res;
-    },
-
+        this.debouncedInternalMove = useDebounced(this.internalMove, 0);
+        this.dialogService = useService("dialog");
+        this.actionService = useService("action");
+    }
+    get rendererProps() {
+        return {
+            model: this.model,
+            onAdd: this._onAdd.bind(this),
+            onGroupClick: this._onGroupClick.bind(this),
+            onItemDoubleClick: this._onItemDoubleClick.bind(this),
+            onMove: this._onMove.bind(this),
+            onRemove: this._onRemove.bind(this),
+            onUpdate: this._onUpdate.bind(this),
+        };
+    }
+    getSearchProps() {
+        const {comparision, context, domain, groupBy, orderBy} = this.env.searchModel;
+        return {comparision, context, domain, groupBy, orderBy};
+    }
     /**
      * Gets triggered when a group in the timeline is
      * clicked (by the TimelineRenderer).
      *
      * @private
-     * @param {EventObject} event
-     * @returns {jQuery.Deferred}
+     * @param {EventObject} item
      */
-    _onGroupClick: function (event) {
-        const groupField = this.renderer.last_group_bys[0];
-        return this.do_action({
+    _onGroupClick(item) {
+        const groupField = this.model.last_group_bys[0];
+        this.actionService.doAction({
             type: "ir.actions.act_window",
-            res_model: this.renderer.fields[groupField].relation,
-            res_id: event.data.item.group,
-            target: "new",
+            res_model: this.model.fields[groupField].relation,
+            res_id: item.group,
             views: [[false, "form"]],
+            view_mode: "form",
+            target: "new",
         });
-    },
+    }
 
     /**
      * Triggered on double-click on an item in read-only mode (otherwise, we use _onUpdate).
@@ -109,63 +81,61 @@ export default AbstractController.extend({
      * @param {EventObject} event
      * @returns {jQuery.Deferred}
      */
-    _onItemDoubleClick: function (event) {
-        return this.openItem(event.data.item, false);
-    },
+    _onItemDoubleClick(event) {
+        return this.openItem(event.item, false);
+    }
 
     /**
      * Opens a form view of a clicked timeline
      * item (triggered by the TimelineRenderer).
      *
      * @private
-     * @param {EventObject} event
+     * @param {Object} item
+     * @returns {Object}
      */
-    _onUpdate: function (event) {
-        const item = event.data.item;
+    _onUpdate(item) {
         const item_id = Number(item.evt.id) || item.evt.id;
         return this.openItem(item_id, true);
-    },
+    }
 
-    /** Open specified item, either through modal, or by navigating to form view. */
-    openItem: function (item_id, is_editable) {
+    /** Open specified item, either through modal, or by navigating to form view.
+     * @param {Integer} item_id
+     * @param {Boolean} is_editable
+     */
+    openItem(item_id, is_editable) {
         if (this.open_popup_action) {
             const options = {
-                resModel: this.model.modelName,
+                resModel: this.model.model_name,
                 resId: item_id,
-                context: this.getSession().user_context,
             };
             if (is_editable) {
-                options.onRecordSaved = () => this.write_completed();
+                options.onRecordSaved = async () => {
+                    await this.model.load(this.getSearchProps());
+                    this.render();
+                };
             } else {
                 options.preventEdit = true;
             }
-            this.Dialog = Component.env.services.dialog.add(
-                FormViewDialog,
-                options,
-                {}
-            );
+            this.Dialog = this.dialogService.add(FormViewDialog, options, {});
         } else {
-            this.trigger_up("switch_view", {
-                view_type: "form",
-                model: this.model.modelName,
-                res_id: item_id,
+            this.env.services.action.switchView("form", {
+                resId: item_id,
                 mode: is_editable ? "edit" : "readonly",
             });
         }
-    },
+    }
 
     /**
      * Gets triggered when a timeline item is
      * moved (triggered by the TimelineRenderer).
      *
      * @private
-     * @param {EventObject} event
+     * @param {Object} item
+     * @param {Function} callback
      */
-    _onMove: function (event) {
-        const item = event.data.item;
-        const fields = this.renderer.fields;
-        const event_start = item.start;
-        const event_end = item.end;
+    _onMove(item, callback) {
+        const event_start = DateTime.fromJSDate(item.start);
+        const event_end = item.end ? DateTime.fromJSDate(item.end) : false;
         let group = false;
         if (item.group !== -1) {
             group = item.group;
@@ -173,52 +143,34 @@ export default AbstractController.extend({
         const data = {};
         // In case of a move event, the date_delay stay the same,
         // only date_start and stop must be updated
-        data[this.date_start] = time.auto_date_to_str(
-            event_start,
-            fields[this.date_start].type
-        );
+        data[this.date_start] = this.model.serializeDate(this.date_start, event_start);
         if (this.date_stop) {
             // In case of instantaneous event, item.end is not defined
             if (event_end) {
-                data[this.date_stop] = time.auto_date_to_str(
-                    event_end,
-                    fields[this.date_stop].type
+                data[this.date_stop] = this.model.serializeDate(
+                    this.date_stop,
+                    event_end
                 );
             } else {
                 data[this.date_stop] = data[this.date_start];
             }
         }
         if (this.date_delay && event_end) {
-            const diff_seconds = Math.round(
-                (event_end.getTime() - event_start.getTime()) / 1000
-            );
-            data[this.date_delay] = diff_seconds / 3600;
+            const diff = event_end.diff(event_start, "hours");
+            data[this.date_delay] = diff.hours;
         }
-        const grouped_field = this.renderer.last_group_bys[0];
-        this._rpc({
-            model: this.modelName,
-            method: "fields_get",
-            args: [grouped_field],
-            context: this.getSession().user_context,
-        }).then(async (fields_processed) => {
-            if (
-                this.renderer.last_group_bys &&
-                this.renderer.last_group_bys instanceof Array &&
-                fields_processed[grouped_field].type !== "many2many"
-            ) {
-                data[this.renderer.last_group_bys[0]] = group;
-            }
-
-            this.moveQueue.push({
-                id: event.data.item.id,
-                data: data,
-                event: event,
-            });
-
-            this.debouncedInternalMove();
+        const grouped_field = this.model.last_group_bys[0];
+        if (this.model.fields[grouped_field].type !== "many2many") {
+            data[grouped_field] = group;
+        }
+        this.moveQueue.push({
+            id: item.id,
+            data,
+            item,
+            callback,
         });
-    },
-
+        this.debouncedInternalMove();
+    }
     /**
      * Write enqueued moves to Odoo. After all writes are finished it updates
      * the view once (prevents flickering of the view when multiple timeline items
@@ -226,153 +178,96 @@ export default AbstractController.extend({
      *
      * @returns {jQuery.Deferred}
      */
-    internalMove: function () {
+    async internalMove() {
         const queues = this.moveQueue.slice();
         this.moveQueue = [];
-        const defers = [];
         for (const item of queues) {
-            defers.push(
-                this._rpc({
-                    model: this.model.modelName,
-                    method: "write",
-                    args: [[item.event.data.item.id], item.data],
-                    context: this.getSession().user_context,
-                }).then(() => {
-                    item.event.data.callback(item.event.data.item);
-                })
-            );
+            await this.model.write_completed(item.id, item.data);
+            item.callback(item.item);
         }
-        return $.when.apply($, defers).done(() => {
-            this.write_completed({
-                adjust_window: false,
-            });
-        });
-    },
+        await this.model.load(this.getSearchProps());
+        this.render();
+    }
 
     /**
      * Triggered when a timeline item gets removed from the view.
      * Requires user confirmation before it gets actually deleted.
      *
      * @private
-     * @param {EventObject} event
-     * @returns {jQuery.Deferred}
+     * @param {Object} item
+     * @param {Function} callback
      */
-    _onRemove: function (event) {
-        var def = $.Deferred();
-
-        Dialog.confirm(this, _t("Are you sure you want to delete this record?"), {
+    _onRemove(item, callback) {
+        this.dialogService.add(ConfirmationDialog, {
             title: _t("Warning"),
-            confirm_callback: () => {
-                this.remove_completed(event).then(def.resolve.bind(def));
+            body: _t("Are you sure you want to delete this record?"),
+            confirmLabel: _t("Confirm"),
+            cancelLabel: _t("Discard"),
+            confirm: async () => {
+                await this.model.remove_completed(item);
+                callback(item);
             },
-            cancel_callback: def.resolve.bind(def),
+            cancel: () => {
+                return;
+            },
         });
-
-        return def;
-    },
+    }
 
     /**
      * Triggered when a timeline item gets added and opens a form view.
      *
      * @private
-     * @param {EventObject} event
-     * @returns {dialogs.FormViewDialog}
+     * @param {Object} item
+     * @param {Function} callback
      */
-    _onAdd: function (event) {
-        const item = event.data.item;
+    _onAdd(item, callback) {
         // Initialize default values for creation
-        const default_context = {};
-        default_context["default_".concat(this.date_start)] = item.start;
+        const context = {};
+        let item_start = false,
+            item_end = false;
+        item_start = DateTime.fromJSDate(item.start);
+        context[`default_${this.date_start}`] = this.model.serializeDate(
+            this.date_start,
+            item_start
+        );
         if (this.date_delay) {
-            default_context["default_".concat(this.date_delay)] = 1;
-        }
-        if (this.date_start) {
-            default_context["default_".concat(this.date_start)] = moment(item.start)
-                .utc()
-                .format("YYYY-MM-DD HH:mm:ss");
+            context[`default_${this.date_delay}`] = 1;
         }
         if (this.date_stop && item.end) {
-            default_context["default_".concat(this.date_stop)] = moment(item.end)
-                .utc()
-                .format("YYYY-MM-DD HH:mm:ss");
+            item_end = DateTime.fromJSDate(item.end);
+            context[`default_${this.date_stop}`] = this.model.serializeDate(
+                this.date_stop,
+                item_end
+            );
         }
-        if (this.date_delay && this.date_start && this.date_stop && item.end) {
-            default_context["default_".concat(this.date_delay)] =
-                (moment(item.end) - moment(item.start)) / 3600000;
+        if (this.date_delay && this.date_stop && item_end) {
+            const diff = item_end.diff(item_start, "hours");
+            context[`default_${this.date_delay}`] = diff.hours;
         }
         if (item.group > 0) {
-            default_context["default_".concat(this.renderer.last_group_bys[0])] =
-                item.group;
+            context[`default_${this.model.last_group_bys[0]}`] = item.group;
         }
         // Show popup
-        this.Dialog = Component.env.services.dialog.add(
+        this.dialogService.add(
             FormViewDialog,
             {
                 resId: false,
-                context: _.extend(default_context, this.context),
-                onRecordSaved: (record) => this.create_completed([record.res_id]),
-                resModel: this.model.modelName,
+                context: makeContext([context], this.env.searchModel.context),
+                onRecordSaved: async (record) => {
+                    const new_record = await this.model.create_completed(record.resId);
+                    callback(new_record);
+                },
+                resModel: this.model.model_name,
             },
-            {onClose: () => event.data.callback()}
+            {onClose: () => callback()}
         );
-        return false;
-    },
-
-    /**
-     * Triggered upon completion of a new record.
-     * Updates the timeline view with the new record.
-     *
-     * @param {RecordId} id
-     * @returns {jQuery.Deferred}
-     */
-    create_completed: function (id) {
-        return this._rpc({
-            model: this.model.modelName,
-            method: "read",
-            args: [id, this.model.fieldNames],
-            context: this.context,
-        }).then((records) => {
-            var new_event = this.renderer.event_data_transform(records[0]);
-            var items = this.renderer.timeline.itemsData;
-            items.add(new_event);
-        });
-    },
-
-    /**
-     * Triggered upon completion of writing a record.
-     * @param {ControllerOptions} options
-     */
-    write_completed: function (options) {
-        const params = {
-            domain: this.renderer.last_domains,
-            context: this.context,
-            groupBy: this.renderer.last_group_bys,
-        };
-        this.update(params, options);
-    },
-
-    /**
-     * Triggered upon confirm of removing a record.
-     * @param {EventObject} event
-     * @returns {jQuery.Deferred}
-     */
-    remove_completed: function (event) {
-        return this._rpc({
-            model: this.modelName,
-            method: "unlink",
-            args: [[event.data.item.id]],
-            context: this.getSession().user_context,
-        }).then(() => {
-            let unlink_index = false;
-            for (var i = 0; i < this.model.data.data.length; i++) {
-                if (this.model.data.data[i].id === event.data.item.id) {
-                    unlink_index = i;
-                }
-            }
-            if (!isNaN(unlink_index)) {
-                this.model.data.data.splice(unlink_index, 1);
-            }
-            event.data.callback(event.data.item);
-        });
-    },
-});
+    }
+}
+TimelineController.template = "web_timeline.TimelineView";
+TimelineController.components = {Layout, SearchBar};
+TimelineController.props = {
+    ...standardViewProps,
+    Model: Function,
+    modelParams: Object,
+    Renderer: Function,
+};

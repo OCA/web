@@ -135,8 +135,10 @@ rendering:
 
 -  ``record``: to access the fields values selected in the timeline
    definition.
--  ``field_utils``: used to format and parse values (see available
-   functions in ``web.field_utils``).
+-  ``formatters``: used to format values (see available functions in
+   ``@web/views/fields/formatters``).
+-  ``parsers``: used to parse values (see available functions in
+   ``@web/views/fields/parsers``).
 
 You also need to declare the view in an action window of the involved
 model.
@@ -159,15 +161,15 @@ More evolved example, from ``project_timeline``:
                          string="Tasks"
                          default_group_by="project_id"
                          event_open_popup="true"
-                         colors="white: user_ids == []; #2ecb71: kanban_state == 'done'; #ec7063: kanban_state == 'blocked'"
+                         colors="white: user_ids == []; #2ecb71: state == '1_done'; #ec7063: state == '1_canceled'"
                          dependency_arrow="depend_on_ids"
                >
                    <field name="user_ids" />
-                   <field name="planned_hours" />
+                   <field name="allocated_hours" />
                    <templates>
                        <t t-name="timeline-item">
                            <div class="o_project_timeline_item">
-                               <t t-foreach="record.user_ids" t-as="user">
+                               <t t-foreach="record.user_ids" t-as="user" t-key="user.id">
                                    <img
                                        t-if="record.user_ids"
                                        t-attf-src="/web/image/res.users/#{user}/image_128/16x16"
@@ -182,12 +184,12 @@ More evolved example, from ``project_timeline``:
                                    <t t-esc="record.display_name" />
                                </span>
                                <small
-                                   name="planned_hours"
+                                   name="allocated_hours"
                                    class="text-info ml4"
-                                   t-if="record.planned_hours"
+                                   t-if="record.allocated_hours"
                                >
                                    <t
-                                       t-esc="field_utils.format.float_time(record.planned_hours)"
+                                       t-out="formatters.get('float_time')(record.allocated_hours)"
                                    />
                                </small>
                            </div>
@@ -293,6 +295,7 @@ Contributors
    -  Pedro M. Baeza
    -  Alexandre Díaz
    -  César A. Sánchez
+   -  Carlos López
 
 -  `Onestein <https://www.onestein.nl>`__:
 
