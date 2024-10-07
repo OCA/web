@@ -33,4 +33,15 @@ sup.field-tooltip {
     .popover-content {
         background-color: white;
     }
+
+    &.popup-dark-mode {
+        .popover-title {
+            font-weight: bold;
+            background-color: #242733;
+        }
+
+        .popover-content {
+            background-color: unset;
+        }
+    }
 }

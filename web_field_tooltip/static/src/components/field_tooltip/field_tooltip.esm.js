@@ -19,7 +19,8 @@ export class FieldTooltip extends Component {
         this.showAddHelper =
             session.can_manage_tooltips && session.tooltip_show_add_helper;
         this.fieldTooltip = this.props.field.field_tooltip;
-
+        this.colorMode =
+            this.env.services.cookie.current.color_scheme === "dark" ? "dark" : "light";
         if (session.can_manage_tooltips) {
             this.dialogService = useService("dialog");
         }
@@ -30,6 +31,7 @@ export class FieldTooltip extends Component {
         return {
             title: props.field.string,
             help: markup(this.tooltipText),
+            colorMode: this.colorMode,
         };
     }
 
