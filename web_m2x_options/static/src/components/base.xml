@@ -7,7 +7,6 @@
         t-name="web_m2x_options.AutoComplete"
         t-inherit="web.AutoComplete"
         t-inherit-mode="extension"
-        owl="1"
     >
         <xpath expr="//t[@t-foreach='source.options']/li/a" position="attributes">
             <attribute name="t-attf-style">{{ option.style }}</attribute>
@@ -18,7 +17,6 @@
         t-name="web_m2x_options.Many2ManyTagsField"
         t-inherit="web.Many2ManyTagsField"
         t-inherit-mode="extension"
-        owl="1"
     >
         <xpath expr="//Many2XAutocomplete" position="attributes">
             <attribute name="searchLimit">props.searchLimit</attribute>

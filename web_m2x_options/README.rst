@@ -199,6 +199,7 @@ Contributors
 -  `Trobz <https://trobz.com>`__:
 
    -  Hoang Diep <hoang@trobz.com>
+   -  Chau Le <chaulb@trobz.com>
 
 -  `Sygel <https://sygel.es>`__:
 
@@ -209,7 +210,7 @@ Contributors
 Other credits
 -------------
 
-The migration of this module from 15.0 to 16.0 was financially supported
+The migration of this module from 17.0 to 18.0 was financially supported
 by Camptocamp
 
 Maintainers
