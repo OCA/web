@@ -154,6 +154,12 @@ Contributors
 -  Nikul Chaudhary <nchaudhary@opensourceintegrators.com>
 -  Tris Doan <tridm@trobz.com>
 
+Other credits
+-------------
+
+The migration of this module from 17.0 to 18.0 was financially supported
+by Camptocamp.
+
 Maintainers
 -----------
 

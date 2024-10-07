@@ -130,6 +130,8 @@ class ResUsers(models.Model):
             "action": action,
             "params": dict(params or []),
         }
-
-        notifications = [[partner, "web.notify", [bus_message]] for partner in target]
-        self.env["bus.bus"]._sendmany(notifications)
+        for partner in target:
+            partner._bus_send(
+                "web_notify",
+                bus_message,
+            )
