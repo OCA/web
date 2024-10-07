@@ -26,7 +26,7 @@ class TestResUsers(common.TransactionCase):
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
         test_msg.update({"type": SUCCESS})
-        payload = json.loads(news.message)["payload"][0]
+        payload = json.loads(news.message)["payload"]
         self.assertDictEqual(test_msg, payload)
 
     def test_notify_danger(self):
@@ -45,7 +45,7 @@ class TestResUsers(common.TransactionCase):
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
         test_msg.update({"type": DANGER})
-        payload = json.loads(news.message)["payload"][0]
+        payload = json.loads(news.message)["payload"]
         self.assertDictEqual(test_msg, payload)
 
     def test_notify_warning(self):
@@ -64,7 +64,7 @@ class TestResUsers(common.TransactionCase):
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
         test_msg.update({"type": WARNING})
-        payload = json.loads(news.message)["payload"][0]
+        payload = json.loads(news.message)["payload"]
         self.assertDictEqual(test_msg, payload)
 
     def test_notify_info(self):
@@ -83,7 +83,7 @@ class TestResUsers(common.TransactionCase):
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
         test_msg.update({"type": INFO})
-        payload = json.loads(news.message)["payload"][0]
+        payload = json.loads(news.message)["payload"]
         self.assertDictEqual(test_msg, payload)
 
     def test_notify_default(self):
@@ -102,7 +102,7 @@ class TestResUsers(common.TransactionCase):
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
         test_msg.update({"type": DEFAULT})
-        payload = json.loads(news.message)["payload"][0]
+        payload = json.loads(news.message)["payload"]
         self.assertDictEqual(test_msg, payload)
 
     def test_notify_many(self):
