@@ -17,27 +17,28 @@ Web Notify
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/16.0/web_notify
+    :target: https://github.com/OCA/web/tree/17.0/web_notify
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_notify
+    :target: https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_notify
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 Send instant notification messages to the user in live.
 
-This technical module allows you to send instant notification messages from the server to the user in live.
-Two kinds of notification are supported.
+This technical module allows you to send instant notification messages
+from the server to the user in live. Two kinds of notification are
+supported.
 
-* Success: Displayed in a `success` theme color flying popup div
-* Danger: Displayed in a `danger` theme color flying popup div
-* Warning: Displayed in a `warning` theme color flying popup div
-* Information: Displayed in a `info` theme color flying popup div
-* Default: Displayed in a `default` theme color flying popup div
+-  Success: Displayed in a success theme color flying popup div
+-  Danger: Displayed in a danger theme color flying popup div
+-  Warning: Displayed in a warning theme color flying popup div
+-  Information: Displayed in a info theme color flying popup div
+-  Default: Displayed in a default theme color flying popup div
 
 **Table of contents**
 
@@ -47,74 +48,77 @@ Two kinds of notification are supported.
 Installation
 ============
 
-This module is based on the Instant Messaging Bus. To work properly, the server must be launched in gevent mode.
+This module is based on the Instant Messaging Bus. To work properly, the
+server must be launched in gevent mode.
 
 Usage
 =====
 
+To send a notification to the user you just need to call one of the new
+methods defined on res.users:
 
-To send a notification to the user you just need to call one of the new methods defined on res.users:
-
-.. code-block:: python
+.. code:: python
 
    self.env.user.notify_success(message='My success message')
 
 or
 
-.. code-block:: python
+.. code:: python
 
    self.env.user.notify_danger(message='My danger message')
 
 or
 
-.. code-block:: python
+.. code:: python
 
    self.env.user.notify_warning(message='My warning message')
 
 or
 
-.. code-block:: python
+.. code:: python
 
    self.env.user.notify_info(message='My information message')
 
 or
 
-.. code-block:: python
+.. code:: python
 
    self.env.user.notify_default(message='My default message')
 
-
 The notifications can bring interactivity with some buttons.
 
-* One allowing to refresh the active view
-* Another allowing to send a window / client action
+-  One allowing to refresh the active view
+-  Another allowing to send a window / client action
 
 The reload button is activated when sending the notification with:
 
-The action can be used using the ``action`` keyword and we can choose which name to
-give to our button with the ``button_name`` key in the action context `params` key:
+The action can be used using the ``action`` keyword and we can choose
+which name to give to our button with the ``button_name`` key in the
+action context params key:
 
-.. code-block:: python
+.. code:: python
 
-    action = self.env["ir.actions.act_window"]._for_xml_id('sale.action_orders')
-    action.update({
-       'res_id': self.id,
-       'views': [(False, 'form')],
-    })
-    action["context"].setdefault("params", {})
-    action["context"]["params"]["button_name"] = "Sales"
-    action["context"]["params"]["button_icon"] = "fa-eye"
-    self.env.user.notify_info('My information message', action=action)
+   action = self.env["ir.actions.act_window"]._for_xml_id('sale.action_orders')
+   action.update({
+      'res_id': self.id,
+      'views': [(False, 'form')],
+   })
+   action["context"].setdefault("params", {})
+   action["context"]["params"]["button_name"] = "Sales"
+   action["context"]["params"]["button_icon"] = "fa-eye"
+   self.env.user.notify_info('My information message', action=action)
 
+|image1|
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/16.0/web_notify/static/img/notifications_screenshot.gif
-   :alt: Sample notifications
+You can test the behaviour of the notifications by installing this
+module in a demo database. Access the users form through Settings ->
+Users & Companies. You'll see a tab called "Test web notify", here
+you'll find two buttons that'll allow you test the module.
 
-You can test the behaviour of the notifications by installing this module in a demo database.
-Access the users form through Settings -> Users & Companies. You'll see a tab called "Test web notify", here you'll find two buttons that'll allow you test the module.
+|image2|
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/16.0/web_notify/static/img/test_notifications_demo.png
-   :alt: Sample notifications
+.. |image1| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_notify/static/img/notifications_screenshot.gif
+.. |image2| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_notify/static/img/test_notifications_demo.png
 
 Bug Tracker
 ===========
@@ -122,7 +126,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_notify%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_notify%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -130,25 +134,25 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ACSONE SA/NV
 * AdaptiveCity
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Laurent Mignon <laurent.mignon@acsone.eu>
-* Serpent Consulting Services Pvt. Ltd.<jay.vora@serpentcs.com>
-* Aitor Bouzas <aitor.bouzas@adaptivecity.com>
-* Shepilov Vladislav <shepilov.v@protonmail.com>
-* Kevin Khao <kevin.khao@akretion.com>
-* `Tecnativa <https://www.tecnativa.com>`_:
+-  Laurent Mignon <laurent.mignon@acsone.eu>
+-  Serpent Consulting Services Pvt. Ltd.<jay.vora@serpentcs.com>
+-  Aitor Bouzas <aitor.bouzas@adaptivecity.com>
+-  Shepilov Vladislav <shepilov.v@protonmail.com>
+-  Kevin Khao <kevin.khao@akretion.com>
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  * David Vidal
+   -  David Vidal
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -160,6 +164,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/16.0/web_notify>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/17.0/web_notify>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

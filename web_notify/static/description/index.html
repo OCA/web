@@ -369,16 +369,17 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:4869ee3b6cdd657030585657c2ede8fd85f2c6cf12fcbedfc662b7d35e3f9c5a
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Production/Stable" src="https://img.shields.io/badge/maturity-Production%2FStable-green.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/16.0/web_notify"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_notify"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Production/Stable" src="https://img.shields.io/badge/maturity-Production%2FStable-green.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/17.0/web_notify"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_notify"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>Send instant notification messages to the user in live.</p>
-<p>This technical module allows you to send instant notification messages from the server to the user in live.
-Two kinds of notification are supported.</p>
+<p>This technical module allows you to send instant notification messages
+from the server to the user in live. Two kinds of notification are
+supported.</p>
 <ul class="simple">
-<li>Success: Displayed in a <cite>success</cite> theme color flying popup div</li>
-<li>Danger: Displayed in a <cite>danger</cite> theme color flying popup div</li>
-<li>Warning: Displayed in a <cite>warning</cite> theme color flying popup div</li>
-<li>Information: Displayed in a <cite>info</cite> theme color flying popup div</li>
-<li>Default: Displayed in a <cite>default</cite> theme color flying popup div</li>
+<li>Success: Displayed in a success theme color flying popup div</li>
+<li>Danger: Displayed in a danger theme color flying popup div</li>
+<li>Warning: Displayed in a warning theme color flying popup div</li>
+<li>Information: Displayed in a info theme color flying popup div</li>
+<li>Default: Displayed in a default theme color flying popup div</li>
 </ul>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
@@ -396,11 +397,13 @@ Two kinds of notification are supported.</p>
 </div>
 <div class="section" id="installation">
 <h1><a class="toc-backref" href="#toc-entry-1">Installation</a></h1>
-<p>This module is based on the Instant Messaging Bus. To work properly, the server must be launched in gevent mode.</p>
+<p>This module is based on the Instant Messaging Bus. To work properly, the
+server must be launched in gevent mode.</p>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
-<p>To send a notification to the user you just need to call one of the new methods defined on res.users:</p>
+<p>To send a notification to the user you just need to call one of the new
+methods defined on res.users:</p>
 <pre class="code python literal-block">
 <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">notify_success</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s1">'My success message'</span><span class="p">)</span>
 </pre>
@@ -426,8 +429,9 @@ Two kinds of notification are supported.</p>
 <li>Another allowing to send a window / client action</li>
 </ul>
 <p>The reload button is activated when sending the notification with:</p>
-<p>The action can be used using the <tt class="docutils literal">action</tt> keyword and we can choose which name to
-give to our button with the <tt class="docutils literal">button_name</tt> key in the action context <cite>params</cite> key:</p>
+<p>The action can be used using the <tt class="docutils literal">action</tt> keyword and we can choose
+which name to give to our button with the <tt class="docutils literal">button_name</tt> key in the
+action context params key:</p>
 <pre class="code python literal-block">
 <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">&quot;ir.actions.act_window&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">_for_xml_id</span><span class="p">(</span><span class="s1">'sale.action_orders'</span><span class="p">)</span><span class="w">
 </span><span class="n">action</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="w">
@@ -439,21 +443,19 @@ give to our button with the <tt class="docutils literal">button_name</tt> key in
 </span><span class="n">action</span><span class="p">[</span><span class="s2">&quot;context&quot;</span><span class="p">][</span><span class="s2">&quot;params&quot;</span><span class="p">][</span><span class="s2">&quot;button_icon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;fa-eye&quot;</span><span class="w">
 </span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">notify_info</span><span class="p">(</span><span class="s1">'My information message'</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">)</span>
 </pre>
-<div class="figure">
-<img alt="Sample notifications" src="https://raw.githubusercontent.com/OCA/web/16.0/web_notify/static/img/notifications_screenshot.gif" />
-</div>
-<p>You can test the behaviour of the notifications by installing this module in a demo database.
-Access the users form through Settings -&gt; Users &amp; Companies. You’ll see a tab called “Test web notify”, here you’ll find two buttons that’ll allow you test the module.</p>
-<div class="figure">
-<img alt="Sample notifications" src="https://raw.githubusercontent.com/OCA/web/16.0/web_notify/static/img/test_notifications_demo.png" />
-</div>
+<p><img alt="image1" src="https://raw.githubusercontent.com/OCA/web/17.0/web_notify/static/img/notifications_screenshot.gif" /></p>
+<p>You can test the behaviour of the notifications by installing this
+module in a demo database. Access the users form through Settings -&gt;
+Users &amp; Companies. You’ll see a tab called “Test web notify”, here
+you’ll find two buttons that’ll allow you test the module.</p>
+<p><img alt="image2" src="https://raw.githubusercontent.com/OCA/web/17.0/web_notify/static/img/test_notifications_demo.png" /></p>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_notify%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_notify%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -488,7 +490,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/16.0/web_notify">OCA/web</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/17.0/web_notify">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
