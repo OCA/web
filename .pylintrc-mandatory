@@ -1,0 +1,98 @@
+
+[MASTER]
+load-plugins=pylint_odoo
+score=n
+
+[ODOOLINT]
+readme-template-url="https://github.com/OCA/maintainer-tools/blob/master/template/module/README.rst"
+manifest-required-authors=Odoo Community Association (OCA)
+manifest-required-keys=license
+manifest-deprecated-keys=description,active
+license-allowed=AGPL-3,GPL-2,GPL-2 or any later version,GPL-3,GPL-3 or any later version,LGPL-3
+valid-odoo-versions=18.0
+
+[MESSAGES CONTROL]
+disable=all
+
+enable=anomalous-backslash-in-string,
+    api-one-deprecated,
+    api-one-multi-together,
+    assignment-from-none,
+    attribute-deprecated,
+    class-camelcase,
+    dangerous-default-value,
+    dangerous-view-replace-wo-priority,
+    development-status-allowed,
+    duplicate-id-csv,
+    duplicate-key,
+    duplicate-xml-fields,
+    duplicate-xml-record-id,
+    eval-referenced,
+    eval-used,
+    incoherent-interpreter-exec-perm,
+    license-allowed,
+    manifest-author-string,
+    manifest-deprecated-key,
+    manifest-required-author,
+    manifest-required-key,
+    manifest-version-format,
+    method-compute,
+    method-inverse,
+    method-required-super,
+    method-search,
+    openerp-exception-warning,
+    pointless-statement,
+    pointless-string-statement,
+    print-used,
+    redundant-keyword-arg,
+    redundant-modulename-xml,
+    reimported,
+    relative-import,
+    return-in-init,
+    rst-syntax-error,
+    sql-injection,
+    too-few-format-args,
+    translation-field,
+    translation-required,
+    unreachable,
+    use-vim-comment,
+    wrong-tabs-instead-of-spaces,
+    xml-syntax-error,
+    attribute-string-redundant,
+    character-not-valid-in-resource-link,
+    consider-merging-classes-inherited,
+    context-overridden,
+    create-user-wo-reset-password,
+    dangerous-filter-wo-user,
+    dangerous-qweb-replace-wo-priority,
+    deprecated-data-xml-node,
+    deprecated-openerp-xml-node,
+    duplicate-po-message-definition,
+    except-pass,
+    file-not-used,
+    invalid-commit,
+    manifest-maintainers-list,
+    missing-newline-extrafiles,
+    missing-readme,
+    missing-return,
+    odoo-addons-relative-import,
+    old-api7-method-defined,
+    po-msgstr-variables,
+    po-syntax-error,
+    renamed-field-parameter,
+    resource-not-exist,
+    str-format-used,
+    test-folder-imported,
+    translation-contains-variable,
+    translation-positional-used,
+    unnecessary-utf8-coding-comment,
+    website-manifest-key-not-valid-uri,
+    xml-attribute-translatable,
+    xml-deprecated-qweb-directive,
+    xml-deprecated-tree-attribute,
+    external-request-timeout
+
+[REPORTS]
+msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}
+output-format=colorized
+reports=no
