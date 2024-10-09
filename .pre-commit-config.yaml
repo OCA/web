@@ -14,6 +14,10 @@ exclude: |
   ^docs/_templates/.*\.html$|
   # Don't bother non-technical authors with formatting issues in docs
   readme/.*\.(rst|md)$|
+  # Ignore build and dist directories in addons
+  /build/|/dist/|
+  # Ignore test files in addons
+  /tests/samples/.*|
   # You don't usually want a bot to modify your legal texts
   (LICENSE.*|COPYING.*)
 default_language_version:
@@ -35,7 +39,7 @@ repos:
         language: fail
         files: '[a-zA-Z0-9_]*/i18n/en\.po$'
   - repo: https://github.com/oca/maintainer-tools
-    rev: 969238e47c07d0c40573acff81d170f63245d738
+    rev: d5fab7ee87fceee858a3d01048c78a548974d935
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
@@ -48,11 +52,14 @@ repos:
           - --org-name=OCA
           - --repo-name=web
           - --if-source-changed
+          - --keep-source-digest
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
     rev: v0.0.25
     hooks:
       - id: oca-checks-odoo-module
       - id: oca-checks-po
+        args:
+          - --disable=po-pretty-format
   - repo: https://github.com/myint/autoflake
     rev: v1.4
     hooks:
