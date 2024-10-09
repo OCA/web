@@ -1,8 +1,8 @@
 /** @odoo-module **/
 
-import {patch} from "@web/core/utils/patch";
 import {ListRenderer} from "@web/views/list/list_renderer";
 import {evaluateBooleanExpr} from "@web/core/py_js/py";
+import {patch} from "@web/core/utils/patch";
 
 patch(ListRenderer.prototype, {
     /**
@@ -30,9 +30,9 @@ patch(ListRenderer.prototype, {
     /**
      * Return the `color` that has truthfull expresssion
      *
-     * @param column {Object} represents field
-     * @param record {Record}
-     * @param color_target {String} 'bg_color' or 'fg_color'
+     * @param {Object} column represents field
+     * @param {Record} record
+     * @param {String} color_target 'bg_color' or 'fg_color'
      * @returns {String | undefined} color
      */
     getDynamicColor(column, record, color_target) {
