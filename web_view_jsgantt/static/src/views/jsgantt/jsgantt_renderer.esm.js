@@ -1,7 +1,8 @@
 /** @odoo-module **/
-/* global JSGantt */
 
 import {Component, onMounted, onWillRender, useRef} from "@odoo/owl";
+
+const JSGantt = window.JSGantt;
 
 const DEFAULT_TIME_FORMAT = "day";
 
