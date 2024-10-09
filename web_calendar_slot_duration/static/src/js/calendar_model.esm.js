@@ -17,7 +17,14 @@ patch(CalendarModel.prototype, "WebCalendarSlotDurationCalendarModel", {
             const [hours, minutes, seconds] = slot_duration
                 .match(/(\d+):(\d+):(\d+)/)
                 .slice(1, 4);
-            const durationFloat = hours + minutes / 60 + seconds / 3600;
+            // Convert all to float
+            // if we use a context like {'calendar_slot_duration': '01:30:00'}
+            // we will have on the backend a duration of 10 hour and 30 minutes
+            // instead of 1 hour and 30 minutes
+            const durationFloat =
+                parseFloat(hours) +
+                parseFloat(minutes) / 60 +
+                parseFloat(seconds) / 3600;
             partialRecord.end = partialRecord.start.plus({hours: durationFloat});
         }
         return this._super(partialRecord, options);
