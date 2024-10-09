@@ -1,0 +1,11 @@
+[project]
+name = "odoo-addons-oca-web"
+version = "18.0.20241009.0"
+dependencies = [
+    "odoo-addon-web_environment_ribbon==18.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 18.0",
+]
