@@ -34,5 +34,5 @@ class Base(models.AbstractModel):
                 tree.insert(name_field[0].getparent().index(name_field[0]) + 1, id_elem)
             else:
                 tree.insert(0, id_elem)
-        res["arch"] = etree.tostring(arch)
+        res["arch"] = etree.tostring(arch, encoding="utf-8")
         return res
