@@ -6,7 +6,7 @@
     "name": "Web Notify",
     "summary": """
         Send notification messages to user""",
-    "version": "15.0.2.1.0",
+    "version": "15.0.2.1.1",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV," "AdaptiveCity," "Odoo Community Association (OCA)",
     "development_status": "Production/Stable",
