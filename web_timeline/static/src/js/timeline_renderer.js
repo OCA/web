@@ -227,6 +227,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                 this.qweb.add_template(tmpl);
             }
 
+            this.blockUI();
             this.timeline = new vis.Timeline(
                 this.$timeline.get(0),
                 {},
@@ -247,6 +248,59 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
             this.timeline.on("changed", () => {
                 this.draw_canvas();
             });
+        },
+
+        /**
+         * Block the interface by displaying a progress bar.
+         *
+         * @private
+         */
+        blockUI: function () {
+            this.loadStartTime = Date.now();
+            $.blockUI({
+                message: core.qweb.render("TimelineView.loadProgressDialog", {}),
+            });
+            $(document.body).removeClass("o_ui_blocked");
+        },
+
+        /**
+         * Updates the information displayed in the interface block,
+         * incrementing the progress bar with the records loaded.
+         *
+         * @param {Number} index Total records uploaded
+         * @param {Number} totalEvents Total number of records to be uploaded
+         * @private
+         */
+        update_pct_blockedUI: function (index, totalEvents) {
+            const percentage = parseInt((index / totalEvents) * 100, 10);
+            $(".o_load_progress_dialog_index").text(index);
+            $(".o_load_progress_dialog")
+                .find(".progress-bar")
+                .text(percentage + "%")
+                .attr("aria-valuenow", percentage)
+                .css("width", percentage + "%");
+            if (percentage > 0) {
+                var estimatedTimeLeftMinutes =
+                    ((Date.now() - this.loadStartTime) *
+                        ((100 - percentage) / percentage)) /
+                    60000;
+                $(".o_load_progress_dialog_time_left").removeClass("d-none");
+                $(".o_load_progress_dialog_time_left_text").text(
+                    field_utils.format.float_time(estimatedTimeLeftMinutes)
+                );
+            } else {
+                $(".o_load_progress_dialog_total_events").text(totalEvents);
+            }
+        },
+
+        /**
+         * Unlocks the interface once all records have been loaded.
+         *
+         * @private
+         */
+        unblockUI: function () {
+            $(document.body).removeClass("o_ui_blocked");
+            $.unblockUI();
         },
 
         /**
@@ -323,6 +377,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
          * @returns {jQuery.Deferred}
          */
         on_data_loaded: function (events, group_bys, adjust_window) {
+            this.update_pct_blockedUI(0, events.length);
             const ids = _.pluck(events, "id");
             return this._rpc({
                 model: this.modelName,
@@ -366,6 +421,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                 if (mode && adjust) {
                     this.timeline.fit();
                 }
+                this.unblockUI();
             });
         },
 
@@ -382,9 +438,10 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                 return events;
             }
             const groups = [];
+            const totalEvents = events.length;
             groups.push({id: -1, content: _t("<b>UNASSIGNED</b>"), order: -1});
             var seq = 1;
-            for (const evt of events) {
+            for (const [index, evt] of events.entries()) {
                 const grouped_field = _.first(group_bys);
                 const group_name = evt[grouped_field];
                 if (group_name) {
@@ -434,6 +491,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                         }
                     }
                 }
+                this.update_pct_blockedUI(index, totalEvents);
             }
             return groups;
         },
