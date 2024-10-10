@@ -1,6 +1,7 @@
 /* Copyright 2015 Holger Brunn <hbrunn@therp.nl>
  * Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
  * Copyright 2018 Simone Orsi <simone.orsi@camptocamp.com>
+ * Copyright 2019 Vincent Hatakeyama <vincent.hatakeyama@xcg-consulting.fr>
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
@@ -67,6 +68,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
                 node.show_column_totals ||
                     this.is_aggregatable(field_defs[this.field_value])
             );
+            this.row_totals_location = node.row_totals_location || "last";
         },
 
         /**
@@ -129,6 +131,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
                 rows: this.rows,
                 show_row_totals: this.show_row_totals,
                 show_column_totals: this.show_column_totals,
+                row_totals_location: this.row_totals_location,
             };
         },
 
