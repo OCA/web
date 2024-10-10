@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ir_model_access_ir_ui_view_merge_notebook_tab_reader,Merge Notebook Tab Settings Reader,model_ir_ui_view_merge_notebook_tab,base.group_user,1,0,0,0
+ir_model_access_ir_ui_view_merge_notebook_tab_manager,Merge Notebook Tab Settings Manager,model_ir_ui_view_merge_notebook_tab,base.group_erp_manager,1,1,1,1
