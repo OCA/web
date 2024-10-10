@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="map_field.MapField">
+        <div class="o_map_location_wrapper">
+            <div class="o_map_info">
+                <div>
+                    <label for="o_map_longitude"><strong>Longitude:</strong></label>
+                    <span id="o_map_longitude" class="o_map_data">
+                        <t t-esc="state.location.lng" />
+                    </span>
+                </div>
+                <div>
+                    <label for="o_map_latitude"><strong>Latitude:</strong></label>
+                    <span id="o_map_latitude" class="o_map_data">
+                        <t t-esc="state.location.lat" />
+                    </span>
+                </div>
+            </div>
+            <div
+                class="o_map_field"
+                style="height: 400px; width: 100%; margin-top: 15px;"
+            >
+                <div t-att-ref="map" style="height: 100%;" />
+            </div>
+        </div>
+    </t>
+</templates>
