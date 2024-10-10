@@ -1,0 +1,1 @@
+This module adds a button to open a dashboard's action in the usual view, thus enabling filtering and any other actions you can apply on the resulting records. Basically, this is the inverse to `Add to dashboard`.
