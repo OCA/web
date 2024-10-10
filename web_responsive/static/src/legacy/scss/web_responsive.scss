@@ -432,14 +432,14 @@ html .o_web_client .o_action_manager .o_action {
 
         .custom-control-label {
             &::after {
-                width: 24px;
-                height: 24px;
+                width: 12px;
+                height: 12px;
             }
             &::before {
                 outline: none !important;
                 border: 1px solid #4c4c4c;
-                width: 24px;
-                height: 24px;
+                width: 12px;
+                height: 12px;
             }
         }
     }
