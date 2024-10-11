@@ -8,8 +8,7 @@
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
-            "map_field/static/src/components/**/*",
-            "map_field/static/src/css/map.scss",
+            "map_field/static/src/components/*",
         ],
     },
     "license": "AGPL-3",
