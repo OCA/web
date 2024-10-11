@@ -1,0 +1,12 @@
+// set all the colors but the "no-color" one
+@for $size from 2 through length($o-colors) {
+    .o_many2one_colored_item_color_#{$size - 1},
+    .o_field_widget input.o_many2one_colored_item_color_#{$size - 1} {
+        color: nth($o-colors, $size);
+    }
+}
+
+// this is the default style when no color is set. defining this is not
+// needed, but it could be confusing otherwise.
+.o_many2one_colored_item_color_0 {
+}

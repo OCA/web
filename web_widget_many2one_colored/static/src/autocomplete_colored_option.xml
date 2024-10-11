@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_widget_many2one_colored.AutoCompleteColoredOption" owl="1">
+        <span t-attf-class="o_many2one_colored_item_color_{{ option.color }}">
+            <t t-esc="option.label" />
+        </span>
+    </t>
+
+</templates>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_widget_many2one_colored.Many2XAutocompleteColored"
+        t-inherit="web.Many2XAutocomplete"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+        <xpath expr="//input[@t-if='env.isSmall']" position="attributes">
+            <attribute
+                name="t-attf-class"
+            >o_input o_many2one_colored_item_color_{{ props.color }}</attribute>
+        </xpath>
+
+        <xpath expr="//AutoComplete" position="replace">
+            <AutoCompleteColored
+                t-else=""
+                value="props.value"
+                color="props.color"
+                id="props.id"
+                placeholder="props.placeholder"
+                sources="sources"
+                autoSelect="props.autoSelect"
+                onSelect.bind="onSelect"
+                onInput.bind="onInput"
+                onChange.bind="onChange"
+                onCancel.bind="onCancel"
+            />
+        </xpath>
+    </t>
+
+</templates>

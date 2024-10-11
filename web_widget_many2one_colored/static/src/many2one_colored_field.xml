@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_widget_many2one_colored.Many2OneColoredField"
+        t-inherit="web.Many2OneField"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+        <xpath
+            expr="t[@t-if='props.readonly']/t[@t-if='!props.canOpen']/span"
+            position="attributes"
+        >
+            <attribute
+                name="t-attf-class"
+            >o_many2one_colored_item_color_{{ color }}</attribute>
+        </xpath>
+
+        <xpath expr="//Many2XAutocomplete" position="replace">
+            <Many2XAutocompleteColored t-props="Many2XAutocompleteProps" />
+        </xpath>
+    </t>
+
+</templates>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_widget_many2one_colored.AutoCompleteColored"
+        t-inherit="web.AutoComplete"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+        <xpath expr="//input" position="attributes">
+            <attribute
+                name="t-attf-class"
+            >o-autocomplete--input o_input o_many2one_colored_item_color_{{ props.color }}</attribute>
+        </xpath>
+    </t>
+
+</templates>
