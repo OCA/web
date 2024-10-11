@@ -1,8 +1,6 @@
 /** @odoo-module */
 
 import {loadCSS, loadJS} from "@web/core/assets";
-import {registry} from "@web/core/registry";
-import {useService} from "@web/core/utils/hooks";
 import {
     Component,
     onMounted,
@@ -13,8 +11,10 @@ import {
     useRef,
     useState,
 } from "@odoo/owl";
+import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {useInputField} from "@web/views/fields/input_field_hook";
+import {useService} from "@web/core/utils/hooks";
 
 export class MapField extends Component {
     static template = "map_field.MapField";
