@@ -151,5 +151,5 @@ class Test(TransactionCase):
         )
         partner = self.env["res.partner"].create({"name": "Test"})
         partner.location = "12.34,56.78"
-        value = field.get_location("location", "res.partner", partner.id)
+        value = field.get_location("x_location", "res.partner", partner.id)
         self.assertEqual(value, "12.34,56.78")

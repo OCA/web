@@ -11,7 +11,7 @@ class MapField(fields.Field):
     type = "char"
     column_type = ("varchar", "varchar")
 
-    def c(self, value, record, validate=True):
+    def convert_to_record(self, value, record, validate=True):
         """
         Converts the value to a valid value for the record.
         If is not valid, returns "0.0,0.0".
