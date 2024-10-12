@@ -7,31 +7,31 @@
     Part of the code comes from web_responsive module. (same repository)
 */
 
-odoo.define('web_responsive_company', function (require) {
-    'use strict';
+odoo.define("web_responsive_company", function (require) {
+    "use strict";
 
     var SwitchCompanyMenu = require("web.SwitchCompanyMenu");
-    var session = require('web.session');
+    var session = require("web.session");
     var config = require("web.config");
     var core = require("web.core");
 
-
-    function findNames (memo, company) {
+    function findNames(memo, company) {
         memo[company.complete_name] = company;
         return memo;
     }
 
-
     SwitchCompanyMenu.include({
-        events: _.extend({
-            "keydown .search-input input": "_searchResultsNavigate",
-            "input .search-input input": "_searchCompaniesSchedule",
-            "click .o-menu-search-result": "_searchResultChosen",
-            "shown.bs.dropdown": "_searchFocus",
-            "hidden.bs.dropdown": "_searchReset",
-            "hide.bs.dropdown": "_hideCompaniesMenu",
-        }, SwitchCompanyMenu.prototype.events),
-
+        events: _.extend(
+            {
+                "keydown .search-input input": "_searchResultsNavigate",
+                "input .search-input input": "_searchCompaniesSchedule",
+                "click .o-menu-search-result": "_searchResultChosen",
+                "shown.bs.dropdown": "_searchFocus",
+                "hidden.bs.dropdown": "_searchReset",
+                "hide.bs.dropdown": "_hideCompaniesMenu",
+            },
+            SwitchCompanyMenu.prototype.events
+        ),
 
         /**
          * Load complete companies.
@@ -41,11 +41,7 @@ odoo.define('web_responsive_company', function (require) {
         init: function () {
             this._super.apply(this, arguments);
             this._companies = session.complete_companies;
-            this._searchableCompanies = _.reduce(
-                this._companies,
-                findNames,
-                {}
-            );
+            this._searchableCompanies = _.reduce(this._companies, findNames, {});
             this._search_def = $.Deferred();
         },
 
@@ -54,11 +50,13 @@ odoo.define('web_responsive_company', function (require) {
          */
         start: function () {
             this._super.apply(this, arguments);
-            // rerender element to remove html that is hard inserted in the odoo Core function
+            // Rerender element to remove html that is hard inserted in the odoo Core function
             // and so read the name of the company
             this.renderElement();
             if (!this.isMobile) {
-                this.$('.oe_topbar_name').text(session.user_companies.current_company[1]);
+                this.$(".oe_topbar_name").text(
+                    session.user_companies.current_company[1]
+                );
             }
             this.$search_container = this.$(".search-container");
             this.$search_input = this.$(".search-input input");
@@ -104,20 +102,20 @@ odoo.define('web_responsive_company', function (require) {
                 key = event.shiftKey ? "ArrowUp" : "ArrowDown";
             }
             switch (key) {
-            // Pressing enter is the same as clicking on the active element
-            case "Enter":
-                pre_focused.click();
-                break;
-            // Navigate up or down
-            case "ArrowUp":
-                offset--;
-                break;
-            case "ArrowDown":
-                offset++;
-                break;
-            default:
-                // Other keys are useless in this event
-                return;
+                // Pressing enter is the same as clicking on the active element
+                case "Enter":
+                    pre_focused.click();
+                    break;
+                // Navigate up or down
+                case "ArrowUp":
+                    offset--;
+                    break;
+                case "ArrowDown":
+                    offset++;
+                    break;
+                default:
+                    // Other keys are useless in this event
+                    return;
             }
             // Allow looping on results
             if (offset < 0) {
@@ -137,10 +135,10 @@ odoo.define('web_responsive_company', function (require) {
         },
 
         /*
-        * Control if AppDrawer can be closed
-        */
+         * Control if AppDrawer can be closed
+         */
         _hideCompaniesMenu: function () {
-            return !this.$('input').is(':focus');
+            return !this.$("input").is(":focus");
         },
 
         _companyInfo: function (key) {
@@ -168,26 +166,16 @@ odoo.define('web_responsive_company', function (require) {
                 this.$search_results.empty();
                 return;
             }
-            var results = fuzzy.filter(
-                query,
-                _.keys(this._searchableCompanies),
-                {
-                    pre: "<b>",
-                    post: "</b>",
-                }
-            );
-            this.$search_container.toggleClass(
-                "has-results",
-                Boolean(results.length)
-            );
+            var results = fuzzy.filter(query, _.keys(this._searchableCompanies), {
+                pre: "<b>",
+                post: "</b>",
+            });
+            this.$search_container.toggleClass("has-results", Boolean(results.length));
             this.$search_results.html(
-                core.qweb.render(
-                    "web_responsive_company.CompanySearchResults",
-                    {
-                        results: results,
-                        widget: this,
-                    }
-                )
+                core.qweb.render("web_responsive_company.CompanySearchResults", {
+                    results: results,
+                    widget: this,
+                })
             );
         },
 
@@ -204,10 +192,8 @@ odoo.define('web_responsive_company', function (require) {
             return this._companies;
         },
 
-        isCurrentCompany: function(company) {
+        isCurrentCompany: function (company) {
             return session.company_id === company.id;
         },
-
     });
-
 });

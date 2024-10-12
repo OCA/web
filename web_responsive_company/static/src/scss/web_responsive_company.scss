@@ -8,7 +8,6 @@
 */
 
 .o_switch_company_menu {
-
     .dropdown-menu.show {
         @include full-screen-dropdown();
 
@@ -48,15 +47,14 @@
                 height: 100px;
                 width: 100px;
                 text-align: center;
-                line-height:100px;
-                background-color:white;
+                line-height: 100px;
+                background-color: white;
                 border-radius: 3px;
             }
 
             .o-company-logo-img {
                 max-width: 95px;
             }
-
         }
 
         // Hide companies icons when searching
@@ -65,17 +63,15 @@
         }
 
         .o-company-selected-yes {
-            background-color:#DDD;
+            background-color: #ddd;
         }
 
         .o-company-selected-no {
             cursor: pointer;
 
             &:hover {
-                background-color:#EEE;
+                background-color: #eee;
             }
         }
-
     }
-
 }
