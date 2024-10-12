@@ -1,6 +1,10 @@
 /** @odoo-module */
 
 import {loadCSS, loadJS} from "@web/core/assets";
+import {registry} from "@web/core/registry";
+import {useService} from "@web/core/utils/hooks";
+import {standardFieldProps} from "@web/views/fields/standard_field_props";
+import {useInputField} from "@web/views/fields/input_field_hook";
 import {
     Component,
     onMounted,
@@ -11,10 +15,6 @@ import {
     useRef,
     useState,
 } from "@odoo/owl";
-import {registry} from "@web/core/registry";
-import {standardFieldProps} from "@web/views/fields/standard_field_props";
-import {useInputField} from "@web/views/fields/input_field_hook";
-import {useService} from "@web/core/utils/hooks";
 
 export class MapField extends Component {
     static template = "map_field.MapField";
@@ -62,7 +62,9 @@ export class MapField extends Component {
 
         onWillUpdateProps(() => {
             this.placeMarker(this.parseLatLng(this.props.record.data[this.props.name]));
-            this.state.location = this.parseLatLng(this.props.record.data[this.props.name]);
+            this.state.location = this.parseLatLng(
+                this.props.record.data[this.props.name]
+            );
         });
 
         onPatched(() => {

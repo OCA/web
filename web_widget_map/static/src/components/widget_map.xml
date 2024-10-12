@@ -2,7 +2,10 @@
 <templates>
     <t t-name="map_field.MapField">
         <div class="o_map_location_wrapper">
-            <div class="o_map_field" style="height: 400px; width: 100%; margin-top: 15px;">
+            <div
+                class="o_map_field"
+                style="height: 400px; width: 100%; margin-top: 15px;"
+            >
                 <div t-att-ref="map" style="height: 100%;" />
             </div>
         </div>
