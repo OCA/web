@@ -5,7 +5,7 @@
     "website": "https://github.com/OCA/web",
     "category": "Customizations",
     "version": "17.0.1.0.0",
-    "depends": ["web"],
+    "depends": ["web", "web_view_leaflet_map"],
     "assets": {
         "web.assets_backend": [
             "web_widget_map/static/src/components/*",
