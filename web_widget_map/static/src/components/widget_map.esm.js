@@ -31,10 +31,10 @@ export class MapField extends Component {
             location: {
                 lat: this.props.record.data[this.props.name]
                     ? parseFloat(this.props.record.data[this.props.name].split(",")[0])
-                    : 0,
+                    : 0.0,
                 lng: this.props.record.data[this.props.name]
                     ? parseFloat(this.props.record.data[this.props.name].split(",")[1])
-                    : 0,
+                    : 0.0,
             },
             fields: this.props.field_list
                 ? JSON.parse(this.props.field_list.split(","))
@@ -51,8 +51,8 @@ export class MapField extends Component {
 
         onWillStart(() =>
             Promise.all([
-                loadJS("/map_field/static/lib/leaflet/leaflet.js"),
-                loadCSS("/map_field/static/lib/leaflet/leaflet.css"),
+                loadJS("/web_widget_map/static/lib/leaflet/leaflet.js"),
+                loadCSS("/web_widget_map/static/lib/leaflet/leaflet.css"),
             ])
         );
 
@@ -62,10 +62,12 @@ export class MapField extends Component {
 
         onWillUpdateProps(() => {
             this.placeMarker(this.parseLatLng(this.props.record.data[this.props.name]));
+            this.state.location = this.parseLatLng(this.props.record.data[this.props.name]);
         });
 
         onPatched(() => {
             this.placeMarker(this.parseLatLng(this.props.record.data[this.props.name]));
+            this.resetZoom(this.parseLatLng(this.props.record.data[this.props.name]));
         });
 
         onWillPatch(() => {
