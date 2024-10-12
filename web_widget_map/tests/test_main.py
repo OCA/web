@@ -1,5 +1,3 @@
-from lxml import etree
-
 from odoo.tests.common import TransactionCase
 
 
@@ -71,12 +69,9 @@ class Test(TransactionCase):
         field = self.env["ir.model.fields"].create(
             {
                 "model_id": self.env.ref("base.model_res_partner").id,
-                "name": "location",
+                "name": "x_location",
                 "field_description": "Location",
                 "ttype": "char",
-                "state": "manual",
-                "model": "res.partner",
-                "required": False,
             }
         )
         value = field.convert_to_record("12.34,56.78", self.env["res.partner"])
@@ -89,12 +84,9 @@ class Test(TransactionCase):
         field = self.env["ir.model.fields"].create(
             {
                 "model_id": self.env.ref("base.model_res_partner").id,
-                "name": "location",
+                "name": "x_location",
                 "field_description": "Location",
                 "ttype": "char",
-                "state": "manual",
-                "model": "res.partner",
-                "required": False,
             }
         )
         value = field.convert_to_record("12.34,56.78,90.12", self.env["res.partner"])
@@ -107,12 +99,9 @@ class Test(TransactionCase):
         field = self.env["ir.model.fields"].create(
             {
                 "model_id": self.env.ref("base.model_res_partner").id,
-                "name": "location",
+                "name": "x_location",
                 "field_description": "Location",
                 "ttype": "char",
-                "state": "manual",
-                "model": "res.partner",
-                "required": False,
             }
         )
         value = field.convert_to_export("12.34,56.78", self.env["res.partner"])
@@ -125,12 +114,9 @@ class Test(TransactionCase):
         field = self.env["ir.model.fields"].create(
             {
                 "model_id": self.env.ref("base.model_res_partner").id,
-                "name": "location",
+                "name": "x_location",
                 "field_description": "Location",
                 "ttype": "char",
-                "state": "manual",
-                "model": "res.partner",
-                "required": False,
             }
         )
         value = field.convert_to_cache("12.34,56.78", self.env["res.partner"])
@@ -143,12 +129,9 @@ class Test(TransactionCase):
         field = self.env["ir.model.fields"].create(
             {
                 "model_id": self.env.ref("base.model_res_partner").id,
-                "name": "location",
+                "name": "x_location",
                 "field_description": "Location",
                 "ttype": "char",
-                "state": "manual",
-                "model": "res.partner",
-                "required": False,
             }
         )
         value = field.convert_to_column("12.34,56.78", self.env["res.partner"])
@@ -161,12 +144,9 @@ class Test(TransactionCase):
         field = self.env["ir.model.fields"].create(
             {
                 "model_id": self.env.ref("base.model_res_partner").id,
-                "name": "location",
+                "name": "x_location",
                 "field_description": "Location",
                 "ttype": "char",
-                "state": "manual",
-                "model": "res.partner",
-                "required": False,
             }
         )
         partner = self.env["res.partner"].create({"name": "Test"})
