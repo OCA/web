@@ -63,3 +63,113 @@ class Test(TransactionCase):
         partner = self.env["res.partner"].create({"name": "test partner"})
         html = view._render_template(view.id, {"record": partner})
         self.assertIsInstance(html, str)
+
+    def test_convert_to_record(self):
+        """
+        Test the convert_to_record method.
+        """
+        field = self.env["ir.model.fields"].create(
+            {
+                "model_id": self.env.ref("base.model_res_partner").id,
+                "name": "location",
+                "field_description": "Location",
+                "ttype": "char",
+                "state": "manual",
+                "model": "res.partner",
+                "required": False,
+            }
+        )
+        value = field.convert_to_record("12.34,56.78", self.env["res.partner"])
+        self.assertEqual(value, "12.34,56.78")
+
+    def test_convert_to_record_invalid(self):
+        """
+        Test the convert_to_record method with an invalid value.
+        """
+        field = self.env["ir.model.fields"].create(
+            {
+                "model_id": self.env.ref("base.model_res_partner").id,
+                "name": "location",
+                "field_description": "Location",
+                "ttype": "char",
+                "state": "manual",
+                "model": "res.partner",
+                "required": False,
+            }
+        )
+        value = field.convert_to_record("12.34,56.78,90.12", self.env["res.partner"])
+        self.assertEqual(value, "0.0,0.0")
+
+    def test_convert_to_export(self):
+        """
+        Test the convert_to_export method.
+        """
+        field = self.env["ir.model.fields"].create(
+            {
+                "model_id": self.env.ref("base.model_res_partner").id,
+                "name": "location",
+                "field_description": "Location",
+                "ttype": "char",
+                "state": "manual",
+                "model": "res.partner",
+                "required": False,
+            }
+        )
+        value = field.convert_to_export("12.34,56.78", self.env["res.partner"])
+        self.assertEqual(value, "12.34,56.78")
+
+    def test_convert_to_cache(self):
+        """
+        Test the convert_to_cache method.
+        """
+        field = self.env["ir.model.fields"].create(
+            {
+                "model_id": self.env.ref("base.model_res_partner").id,
+                "name": "location",
+                "field_description": "Location",
+                "ttype": "char",
+                "state": "manual",
+                "model": "res.partner",
+                "required": False,
+            }
+        )
+        value = field.convert_to_cache("12.34,56.78", self.env["res.partner"])
+        self.assertEqual(value, "12.34,56.78")
+
+    def test_convert_to_column(self):
+        """
+        Test the convert_to_column method.
+        """
+        field = self.env["ir.model.fields"].create(
+            {
+                "model_id": self.env.ref("base.model_res_partner").id,
+                "name": "location",
+                "field_description": "Location",
+                "ttype": "char",
+                "state": "manual",
+                "model": "res.partner",
+                "required": False,
+            }
+        )
+        value = field.convert_to_column("12.34,56.78", self.env["res.partner"])
+        self.assertEqual(value, "12.34,56.78")
+
+    def test_get_location(self):
+        """
+        Test the get_location method.
+        """
+        field = self.env["ir.model.fields"].create(
+            {
+                "model_id": self.env.ref("base.model_res_partner").id,
+                "name": "location",
+                "field_description": "Location",
+                "ttype": "char",
+                "state": "manual",
+                "model": "res.partner",
+                "required": False,
+            }
+        )
+        partner = self.env["res.partner"].create({"name": "Test"})
+        partner.location = "12.34,56.78"
+        value = field.get_location("location", "res.partner", partner.id)
+        self.assertEqual(value, "12.34,56.78")

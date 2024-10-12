@@ -1,5 +1,4 @@
-from odoo import _, fields
-from odoo.exceptions import ValidationError
+from odoo import fields
 
 
 class MapField(fields.Field):
@@ -12,15 +11,16 @@ class MapField(fields.Field):
     type = "char"
     column_type = ("varchar", "varchar")
 
-    def convert_to_record(self, value, record, validate=True):
+    def c(self, value, record, validate=True):
         """
         Converts the value to a valid value for the record.
+        If is not valid, returns "0.0,0.0".
         """
         try:
             float(value.split(",")[0])
             float(value.split(",")[1])
-        except ValueError as e:
-            raise ValidationError(_("Coords must be numbers.")) from e
+        except ValueError:
+            value = "0.0,0.0"
         return value
 
     def convert_to_export(self, value, record):
