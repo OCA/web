@@ -5,7 +5,7 @@
 {
     "name": "Web Responsive - Company Menu",
     "summary": "Improve the diplay of the list of the companies",
-    "version": "12.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Web",
     "website": "https://github.com/OCA/web",
     "author": "GRAP,Odoo Community Association (OCA)",
