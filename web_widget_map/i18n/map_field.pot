@@ -14,24 +14,3 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: map_field
-#. odoo-javascript
-#: code:addons/map_field/static/src/components/location_map.xml:0
-#, python-format
-msgid "Get Location"
-msgstr ""
-
-#. module: map_field
-#. odoo-javascript
-#: code:addons/map_field/static/src/components/location_map.xml:0
-#, python-format
-msgid "Latitude:"
-msgstr ""
-
-#. module: map_field
-#. odoo-javascript
-#: code:addons/map_field/static/src/components/location_map.xml:0
-#, python-format
-msgid "Longitude:"
-msgstr ""
