@@ -131,7 +131,19 @@ export class JSGanttRenderer extends Component {
                 this.setFieldVisible(mappingField, false);
             }
         }
-        this.chart.setCustomLang(langTerms);
+        if (this.chart.vLang === "en") {
+            // This is a workaround to allow to modify the english language
+            // terms. Just calling setCustomLang() does not work because it
+            // would start by deleting the current terms before iterating on
+            // them.
+            this.chart.vLang = "en_";
+            this.chart.setCustomLang(langTerms);
+            this.chart.vLangs.en = this.chart.vLangs.en_;
+            delete this.chart.vLangs.en_;
+            this.chart.vLang = "en";
+        } else {
+            this.chart.setCustomLang(langTerms);
+        }
         this.fieldsMapping = fieldsMapping;
     }
 
