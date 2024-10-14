@@ -51,8 +51,8 @@ export class MapField extends Component {
 
         onWillStart(() =>
             Promise.all([
-                loadJS("/web_view_leaflet_map/static/lib/leaflet/leaflet.js"),
-                loadCSS("web_view_leaflet_map/static/lib/leaflet/leaflet.css"),
+                loadJS("/web_leaflet_lib/static/lib/leaflet/leaflet.js"),
+                loadCSS("/web_leaflet_lib/static/lib/leaflet/leaflet.css"),
             ])
         );
 
