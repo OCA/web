@@ -310,7 +310,7 @@ export default AbstractController.extend({
             {
                 resId: false,
                 context: _.extend(default_context, this.context),
-                onRecordSaved: (record) => this.create_completed([record.res_id]),
+                onRecordSaved: (record) => this.create_completed([record.resId]),
                 resModel: this.model.modelName,
             },
             {onClose: () => event.data.callback()}
