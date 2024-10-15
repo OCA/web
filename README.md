@@ -27,7 +27,7 @@ addon | version | maintainers | summary
 [web_favicon](web_favicon/) | 17.0.1.0.2 |  | Allows to set a custom shortcut icon (aka favicon)
 [web_field_tooltip](web_field_tooltip/) | 17.0.1.0.0 |  | Displays customizable tooltips for fields
 [web_group_expand](web_group_expand/) | 17.0.1.0.0 |  | Group Expand Buttons
-[web_m2x_options](web_m2x_options/) | 17.0.1.0.2 |  | web_m2x_options
+[web_m2x_options](web_m2x_options/) | 17.0.1.0.3 |  | web_m2x_options
 [web_no_bubble](web_no_bubble/) | 17.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 17.0.1.0.0 |  | Send notification messages to user
 [web_refresher](web_refresher/) | 17.0.1.1.2 |  | Web Refresher
