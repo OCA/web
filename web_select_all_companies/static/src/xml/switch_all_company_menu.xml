@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.SwitchCompanyMenu" t-inherit-mode="extension">
+        <xpath expr="//t[@t-key='company.id']" position="before">
+            <DropdownItem
+                class="'p-0'"
+                parentClosingMode="!isCompanyAllowed ? 'none' : 'all'"
+            >
+                <div class="d-flex">
+                    <div
+                        role="menuitemcheckbox"
+                        t-att-aria-checked="isAllCompaniesSelected ? 'true' : 'false'"
+                        aria-label="Select All Companies"
+                        t-att-title="(isAllCompaniesSelected ? 'Unselect ' : 'Select ') + 'All Companies'"
+                        tabindex="0"
+                        class="border-end toggle_company"
+                        t-on-click.stop="() => this.toggleSelectAllCompanies()"
+                    >
+                            <span class="btn border-0 p-2">
+                                <i
+                                class="fa fa-fw py-2"
+                                t-att-class="isAllCompaniesSelected ? 'fa-check-square text-primary' : 'fa-square-o'"
+                            />
+                            </span>
+                    </div>
+                    <div
+                        t-att-aria-pressed="isAllCompaniesSelected ? 'true' : 'false'"
+                        aria-label="Select All Companies"
+                        class="d-flex flex-grow-1 align-items-center py-0 log_into ps-2"
+                        title="Select All Companies"
+                        name="select_all_companies"
+                        t-on-click="() => this.toggleSelectAllCompanies()"
+                    >
+                            <span>All Companies</span>
+                    </div>
+                </div>
+            </DropdownItem>
+        </xpath>
+    </t>
+
+</templates>
