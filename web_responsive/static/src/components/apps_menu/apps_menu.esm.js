@@ -24,6 +24,14 @@ patch(WebClient.prototype, "web_responsive.DefaultAppsMenu", {
             document.body.classList.toggle("o_apps_menu_opened", state);
         });
     },
+    _loadDefaultApp() {
+        var menu_apps_dropdown = document.querySelector(
+            ".o_navbar_apps_menu .dropdown-toggle"
+        );
+        menu_apps_dropdown.click();
+        document.body.classList.toggle("o_apps_menu_opened", true);
+        return true;
+    },
 });
 
 /**
