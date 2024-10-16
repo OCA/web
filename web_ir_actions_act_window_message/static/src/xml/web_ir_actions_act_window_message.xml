@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="web_ir_actions_act_window_message.ActWindowMessageDialog">
+        <Dialog size="props.size" title="props.title">
+            <div t-att-style="!props.is_html_message ? 'white-space: pre-line' : ''">
+                <t t-esc="props.body" />
+            </div>
+            <t t-set-slot="footer">
+                <t t-foreach="state.buttons" t-as="button" t-key="button.name">
+                    <button
+                        t-att-class="button.classes"
+                        t-out="button.name"
+                        t-on-click="button.click"
+                    />
+                </t>
+            </t>
+        </Dialog>
+    </t>
+</templates>
