@@ -10,7 +10,10 @@ import {
     KanbanMany2OneAvatarField,
     Many2OneAvatarField,
 } from "@web/views/fields/many2one_avatar/many2one_avatar_field";
-import {Many2ManyTagsAvatarField} from "@web/views/fields/many2many_tags_avatar/many2many_tags_avatar_field";
+import {
+    KanbanMany2ManyTagsAvatarField,
+    Many2ManyTagsAvatarField,
+} from "@web/views/fields/many2many_tags_avatar/many2many_tags_avatar_field";
 
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {evaluateBooleanExpr} from "@web/core/py_js/py";
@@ -18,49 +21,52 @@ import {isX2Many} from "@web/views/utils";
 import {patch} from "@web/core/utils/patch";
 import {session} from "@web/session";
 
-Many2OneField.props = {
-    ...Many2OneField.props,
-    noSearchMore: {type: Boolean, optional: true},
-    fieldColor: {type: String, optional: true},
-    fieldColorOptions: {type: Object, optional: true},
-};
-Many2XAutocomplete.props = {
-    ...Many2XAutocomplete.props,
+const fieldColorProps = {
     fieldColor: {type: String, optional: true},
     fieldColorOptions: {type: Object, optional: true},
 };
 
+Many2OneField.props = {
+    ...Many2OneField.props,
+    noSearchMore: {type: Boolean, optional: true},
+    ...fieldColorProps,
+};
+Many2XAutocomplete.props = {
+    ...Many2XAutocomplete.props,
+    ...fieldColorProps,
+};
+
 KanbanMany2OneAvatarField.props = {
     ...KanbanMany2OneAvatarField.props,
-    fieldColor: {type: String, optional: true},
-    fieldColorOptions: {type: Object, optional: true},
+    ...fieldColorProps,
 };
 
 Many2OneAvatarField.props = {
     ...Many2OneAvatarField.props,
     noSearchMore: {type: Boolean, optional: true},
-    fieldColor: {type: String, optional: true},
-    fieldColorOptions: {type: Object, optional: true},
+    ...fieldColorProps,
 };
 
 Many2ManyTagsField.props = {
     ...Many2ManyTagsField.props,
     searchLimit: {type: Number, optional: true},
-    fieldColor: {type: String, optional: true},
-    fieldColorOptions: {type: Object, optional: true},
+    ...fieldColorProps,
 };
 
 Many2ManyTagsFieldColorEditable.props = {
     ...Many2ManyTagsFieldColorEditable.props,
     searchLimit: {type: Number, optional: true},
-    fieldColor: {type: String, optional: true},
-    fieldColorOptions: {type: Object, optional: true},
+    ...fieldColorProps,
 };
 
 Many2ManyTagsAvatarField.props = {
     ...Many2ManyTagsAvatarField.props,
-    fieldColor: {type: String, optional: true},
-    fieldColorOptions: {type: Object, optional: true},
+    ...fieldColorProps,
+};
+
+KanbanMany2ManyTagsAvatarField.props = {
+    ...KanbanMany2ManyTagsAvatarField.props,
+    ...fieldColorProps,
 };
 
 patch(many2OneField, {
