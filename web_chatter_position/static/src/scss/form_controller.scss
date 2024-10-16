@@ -1,0 +1,17 @@
+/*
+    Copyright 2024 Alitec Pte Ltd (https://www.alitec.sg).
+    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+*/
+
+.o_form_view {
+    .o_form_sheet_bg {
+        max-width: none;
+    }
+    .o_form_sheet {
+        max-width: $o-form-view-sheet-max-width;
+        width: 100%;
+        @include media-breakpoint-up(md) {
+            margin: $o-sheet-vpadding * 0.2 auto;
+        }
+    }
+}
