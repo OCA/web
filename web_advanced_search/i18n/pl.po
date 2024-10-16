@@ -44,3 +44,17 @@ msgstr " lub "
 #, python-format
 msgid "Add Advanced Filter"
 msgstr "Dodaj Filtr Zaawansowany"
+
+#. module: web_advanced_search
+#. odoo-javascript
+#: code:addons/web_advanced_search/static/src/js/DomainSelector.esm.js:0
+#, python-format
+msgid "Domain not properly formed"
+msgstr ""
+
+#. module: web_advanced_search
+#. odoo-javascript
+#: code:addons/web_advanced_search/static/src/js/DomainSelector.esm.js:0
+#, python-format
+msgid "Syntax error"
+msgstr ""
