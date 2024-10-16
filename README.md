@@ -22,7 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [web_action_conditionable](web_action_conditionable/) | 16.0.1.0.0 |  | web_action_conditionable
-[web_advanced_search](web_advanced_search/) | 16.0.1.0.4 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easier and more powerful searching tools
+[web_advanced_search](web_advanced_search/) | 16.0.1.0.5 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easier and more powerful searching tools
 [web_apply_field_style](web_apply_field_style/) | 16.0.1.0.1 |  | Apply css class style to fields from a dict parameters
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 16.0.1.0.1 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) | Customizable calendar slot durations
 [web_chatter_position](web_chatter_position/) | 16.0.1.0.2 |  | Add an option to change the chatter position
