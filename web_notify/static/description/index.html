@@ -420,6 +420,16 @@ Two kinds of notification are supported.</p>
 <pre class="code python literal-block">
 <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">notify_default</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s1">'My default message'</span><span class="p">)</span>
 </pre>
+<p>You can also add sound to your notifications by using the sound parameter. The sound parameter expects a string containing the URL path to the audio file that should be played when the notification is displayed.</p>
+<p>Example:</p>
+<pre class="code python literal-block">
+<span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">notify_success</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s1">'My success message'</span><span class="p">,</span> <span class="n">sound</span><span class="o">=</span><span class="s1">'/&lt;YOUR_MODULE&gt;/static/audio/success.mp3'</span> <span class="p">)</span>
+</pre>
+<p>or</p>
+<pre class="code python literal-block">
+<span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">notify_info</span><span class="p">(</span> <span class="n">message</span><span class="o">=</span><span class="s1">'My information message'</span><span class="p">,</span> <span class="n">sound</span><span class="o">=</span><span class="s1">'/&lt;YOUR_MODULE&gt;/static/audio/info.mp3'</span> <span class="p">)</span>
+</pre>
+<p>The sound parameter can be used with any notification type (success, danger, warning, info, or default). If the sound parameter is not provided, the notification will be displayed without any sound.</p>
 <p>The notifications can bring interactivity with some buttons.</p>
 <ul class="simple">
 <li>One allowing to refresh the active view</li>
@@ -477,6 +487,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>David Vidal</li>
 </ul>
 </li>
+<li>Cetmix OÜ &lt;<a class="reference external" href="https://cetmix.com/">https://cetmix.com/</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
