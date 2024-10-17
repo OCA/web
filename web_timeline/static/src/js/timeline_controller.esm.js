@@ -93,15 +93,19 @@ export default AbstractController.extend({
      */
     _onGroupClick: function (event) {
         const groupField = this.renderer.last_group_bys[0];
-        return this.do_action({
-            type: "ir.actions.act_window",
-            res_model: this.renderer.fields[groupField].relation,
-            res_id: event.data.item.group,
-            target: "new",
-            views: [[false, "form"]],
-        });
+        const field = this.renderer.fields[groupField];
+        if (field.relation) {
+            return this.do_action({
+                type: "ir.actions.act_window",
+                res_model: field.relation,
+                res_id: event.data.item.group,
+                target: "new",
+                views: [[false, "form"]],
+            });
+        }
+        console.warn(`Field ${groupField} is not a relational field.`);
+        return $.Deferred().resolve();
     },
-
     /**
      * Triggered on double-click on an item in read-only mode (otherwise, we use _onUpdate).
      *
