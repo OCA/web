@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-27 11:33+0000\n"
+"PO-Revision-Date: 2024-10-17 15:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: web_advanced_search
 #. odoo-javascript
@@ -49,11 +49,11 @@ msgstr "Aggiungi Filtro Avanzato"
 #: code:addons/web_advanced_search/static/src/js/DomainSelector.esm.js:0
 #, python-format
 msgid "Domain not properly formed"
-msgstr ""
+msgstr "Dominio formattato non correttamente"
 
 #. module: web_advanced_search
 #. odoo-javascript
 #: code:addons/web_advanced_search/static/src/js/DomainSelector.esm.js:0
 #, python-format
 msgid "Syntax error"
-msgstr ""
+msgstr "Errore di sintassi"
