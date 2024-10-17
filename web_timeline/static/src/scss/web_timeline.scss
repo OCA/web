@@ -1,0 +1,36 @@
+$vis-hover-background-color: linen;
+$vis-weekend-background-color: #dcdcdc;
+$vis-item-content-padding: 0 3px !important;
+
+.oe_timeline_view .vis-timeline {
+    .vis-grid {
+        &.vis-saturday,
+        &.vis-sunday {
+            background: $vis-weekend-background-color;
+        }
+    }
+
+    .vis-item {
+        &:hover {
+            background-color: $vis-hover-background-color !important;
+            cursor: pointer !important;
+        }
+        .vis-item-overflow {
+            overflow: visible;
+        }
+        .vis-item-content {
+            padding: $vis-item-content-padding;
+            &:hover {
+                background-color: $vis-hover-background-color !important;
+            }
+        }
+    }
+}
+.oe_timeline_view_canvas {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
