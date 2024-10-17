@@ -1,0 +1,210 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_m2x_options_manager
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_m2x_options_manager
+#: code:addons/web_m2x_options_manager/models/m2x_create_edit_option.py:0
+#, python-format
+msgid "'%s' is not a valid field for model '%s'!"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create__set_true
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create_edit__set_true
+msgid "Add"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit
+msgid "Create & Edit Option"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit_wizard
+msgid "Create & Edit Wizard"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create
+msgid "Create Option"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
+msgid "Create/Edit Options"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,help:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit_wizard
+msgid ""
+"Defines behaviour for 'Create & Edit' Wizard\n"
+"Set to False to prevent 'Create & Edit' Wizard to pop up"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,help:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit
+msgid ""
+"Defines behaviour for 'Create & Edit' option:\n"
+"* Do nothing: nothing is done\n"
+"* Add/Remove: option 'Create & Edit' is set to True/False only if not already present in view definition\n"
+"* Force Add/Remove: option 'Create & Edit' is always set to True/False, overriding any pre-existing option"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,help:web_m2x_options_manager.field_m2x_create_edit_option__option_create
+msgid ""
+"Defines behaviour for 'Create' option:\n"
+"* Do nothing: nothing is done\n"
+"* Add/Remove: option 'Create' is set to True/False only if not already present in view definition\n"
+"* Force Add/Remove: option 'Create' is always set to True/False, overriding any pre-existing option"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__display_name
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model_fields__display_name
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_ui_view__display_name
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create__none
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create_edit__none
+msgid "Do nothing"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
+msgid "Empty"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__field_id
+msgid "Field"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__field_name
+msgid "Field Name"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model,name:web_m2x_options_manager.model_ir_model_fields
+msgid "Fields"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
+msgid "Fields Description"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
+msgid "Fill"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create__force_true
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create_edit__force_true
+msgid "Force Add"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create__force_false
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create_edit__force_false
+msgid "Force Remove"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__id
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model_fields__id
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_ui_view__id
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__id
+msgid "ID"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model____last_update
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model_fields____last_update
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_ui_view____last_update
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__m2x_create_edit_option_ids
+msgid "M2X Create Edit Option"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model,name:web_m2x_options_manager.model_m2x_create_edit_option
+msgid "Manage Options 'Create/Edit' For Fields"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__model_id
+msgid "Model"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__model_name
+msgid "Model Name"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model,name:web_m2x_options_manager.model_ir_model
+msgid "Models"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: code:addons/web_m2x_options_manager/models/m2x_create_edit_option.py:0
+#, python-format
+msgid "Only Many2many and Many2one fields can be chosen!"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.constraint,message:web_m2x_options_manager.constraint_m2x_create_edit_option_model_field_uniqueness
+msgid "Options must be unique for each model/field couple!"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create__set_false
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create_edit__set_false
+msgid "Remove"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model,name:web_m2x_options_manager.model_ir_ui_view
+msgid "View"
+msgstr ""
