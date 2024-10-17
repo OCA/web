@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_view_jsgantt.JSGanttView" owl="1">
+        <div t-att-class="props.className">
+            <Layout display="props.display">
+                <t
+                    t-component="props.Renderer"
+                    list="model.root"
+                    archInfo="props.archInfo"
+                    openRecord.bind="openRecord"
+                />
+            </Layout>
+        </div>
+    </t>
+
+</templates>
