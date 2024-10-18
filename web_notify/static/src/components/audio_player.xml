@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2024 Cetmix OÜ
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+
+    <t t-name="web_notify.AudioPlayer" owl="1">
+        <!-- No visual elements needed, audio is controlled programmatically -->
+    </t>
+
+</templates>
