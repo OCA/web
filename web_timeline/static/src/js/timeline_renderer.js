@@ -380,66 +380,87 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
          * @returns {Array}
          */
         split_groups: async function (events, group_bys) {
-            if (group_bys.length === 0) {
-                return events;
-            }
-            const groups = [];
-            groups.push({id: -1, content: _t("<b>UNASSIGNED</b>"), order: -1});
-            var seq = 1;
+            if (group_bys.length === 0) return events;
+
+            const groups = [{id: -1, content: _t("<b>UNASSIGNED</b>"), order: -1}];
+            const grouped_field = _.first(group_bys);
+            const fields = await this._rpc({
+                model: this.modelName,
+                method: "fields_get",
+                args: [[grouped_field]],
+                context: this.getSession().user_context,
+            });
+            const fieldType = fields[grouped_field].type;
+            const relation = fields[grouped_field].relation;
+
+            const groupIds = new Set();
             for (const evt of events) {
-                const grouped_field = _.first(group_bys);
                 const group_name = evt[grouped_field];
                 if (group_name) {
                     if (group_name instanceof Array) {
-                        const group = _.find(
-                            groups,
-                            (existing_group) => existing_group.id === group_name[0]
-                        );
-                        if (_.isUndefined(group)) {
-                            // Check if group is m2m in this case add id -> value of all
-                            // found entries.
-                            await this._rpc({
-                                model: this.modelName,
-                                method: "fields_get",
-                                args: [[grouped_field]],
-                                context: this.getSession().user_context,
-                            }).then(async (fields) => {
-                                if (fields[grouped_field].type === "many2many") {
-                                    const list_values =
-                                        await this.get_m2m_grouping_datas(
-                                            fields[grouped_field].relation,
-                                            group_name
-                                        );
-                                    for (const vals of list_values) {
-                                        let is_inside = false;
-                                        for (const gr of groups) {
-                                            if (vals.id === gr.id) {
-                                                is_inside = true;
-                                                break;
-                                            }
-                                        }
-                                        if (!is_inside) {
-                                            vals.order = seq;
-                                            seq += 1;
-                                            groups.push(vals);
-                                        }
-                                    }
-                                } else {
-                                    groups.push({
-                                        id: group_name[0],
-                                        content: group_name[1],
-                                        order: seq,
-                                    });
-                                    seq += 1;
-                                }
-                            });
-                        }
+                        groupIds.add(group_name[0]);
+                    } else {
+                        groupIds.add(group_name);
+                    }
+                }
+            }
+            const idToOrder = {};
+            if (groupIds.size > 0 && relation) {
+                const relatedRecords = await this._rpc({
+                    model: relation,
+                    method: "search_read",
+                    args: [[["id", "in", Array.from(groupIds)]]],
+                    context: this.getSession().user_context,
+                });
+                relatedRecords.forEach((record, index) => {
+                    idToOrder[record.id] = index + 1;
+                });
+            }
+
+            for (const evt of events) {
+                const group_name = evt[grouped_field];
+                if (!group_name) continue;
+
+                const group_id =
+                    group_name instanceof Array ? group_name[0] : group_name;
+                const group_content =
+                    group_name instanceof Array ? group_name[1] : group_name;
+
+                const group = _.find(
+                    groups,
+                    (existing_group) => existing_group.id === group_id
+                );
+                if (group) continue;
+
+                if (fieldType !== "many2one" && fieldType !== "many2many") {
+                    groups.push({
+                        id: group_id,
+                        content: group_content,
+                        order: idToOrder[group_id] || groups.length,
+                    });
+                    continue;
+                }
+
+                if (fieldType === "many2one") {
+                    groups.push({
+                        id: group_id,
+                        content: group_content,
+                        order: idToOrder[group_id] || groups.length,
+                    });
+                } else if (fieldType === "many2many") {
+                    const list_values = await this.get_m2m_grouping_datas(
+                        relation,
+                        group_name
+                    );
+                    for (const vals of list_values) {
+                        if (groups.some((gr) => gr.id === vals.id)) continue;
+                        vals.order = idToOrder[vals.id] || groups.length;
+                        groups.push(vals);
                     }
                 }
             }
             return groups;
         },
-
         get_m2m_grouping_datas: async function (model, group_name) {
             const groups = [];
             for (const gr of group_name) {
@@ -507,12 +528,13 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
         event_data_transform: function (evt) {
             const [date_start, date_stop] = this._get_event_dates(evt);
             let group = evt[this.last_group_bys[0]];
-            if (group && group instanceof Array && group.length > 0) {
-                group = _.first(group);
+            if (group) {
+                if (group instanceof Array && group.length > 0) {
+                    group = _.first(group);
+                }
             } else {
                 group = -1;
             }
-
             for (const color of this.colors) {
                 if (py.eval(`'${evt[color.field]}' ${color.opt} '${color.value}'`)) {
                     this.color = color.color;
