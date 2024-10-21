@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" name="text_count_widget" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link href="/web_widget_text_count/static/src/scss/field_text_count.scss" rel="stylesheet" type="text/scss"/>
+            <script src="/web_widget_text_count/static/src/js/fields_text_count.js" type="text/javascript"/>
+        </xpath>
+    </template>
+</odoo>
