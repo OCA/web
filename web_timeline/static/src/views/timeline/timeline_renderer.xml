@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_timeline.TimelineRenderer">
+        <div class="oe_timeline_view" t-ref="root">
+            <div class="oe_timeline_buttons">
+                <button
+                    t-att-class="'oe_timeline_button_today btn ' + (mode.data == 'today' ? ' btn-primary' : 'btn-default')"
+                    t-on-click="_onTodayClicked"
+                >Today</button>
+                <div class="btn-group btn-sm">
+                    <button
+                        t-att-class="'oe_timeline_button_scale_day btn ' + (mode.data == 'day' ? ' btn-primary' : 'btn-default')"
+                        t-on-click="_onScaleDayClicked"
+                    >Day</button>
+                    <button
+                        t-att-class="'oe_timeline_button_scale_week btn ' + (mode.data == 'week' ? ' btn-primary' : 'btn-default')"
+                        t-on-click="_onScaleWeekClicked"
+                    >Week</button>
+                    <button
+                        t-att-class="'oe_timeline_button_scale_month btn ' + (mode.data == 'month' ? ' btn-primary' : 'btn-default')"
+                        t-on-click="_onScaleMonthClicked"
+                    >Month</button>
+                    <button
+                        t-att-class="'oe_timeline_button_scale_year btn ' + (mode.data == 'year' ? ' btn-primary' : 'btn-default')"
+                        t-on-click="_onScaleYearClicked"
+                    >Year</button>
+                </div>
+            </div>
+            <div class="oe_timeline_widget" t-ref="canvas" />
+        </div>
+    </t>
+    <svg t-name="TimelineView.Canvas" class="oe_timeline_view_canvas">
+        <defs>
+            <marker
+                id="arrowhead"
+                markerWidth="10"
+                markerHeight="7"
+                refX="10"
+                refY="3.5"
+                orient="auto"
+            >
+                <polygon points="10 0, 10 7, 0 3.5" />
+            </marker>
+        </defs>
+    </svg>
+</templates>
