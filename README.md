@@ -101,6 +101,7 @@ addon | version | maintainers | summary
 [web_widget_one2many_product_picker_sale_stock_available_info_popup](web_widget_one2many_product_picker_sale_stock_available_info_popup/) | 12.0.1.0.1 |  | Adds support for stock in the one2many product picker widget
 [web_widget_open_tab](web_widget_open_tab/) | 12.0.1.0.1 |  | Allow to open record from trees on new tab from tree views
 [web_widget_plotly_chart](web_widget_plotly_chart/) | 12.0.1.0.1 |  | Allow to draw plotly charts.
+[web_widget_text_count](web_widget_text_count/) | 12.0.1.0.0 |  | Web Textarea with Counter
 [web_widget_timepicker](web_widget_timepicker/) | 12.0.1.0.1 |  | Web Timepicker Widget
 [web_widget_url_advanced](web_widget_url_advanced/) | 12.0.1.0.1 |  | This module extends URL widget for displaying anchors with custom labels.
 [web_widget_url_translatable](web_widget_url_translatable/) | 12.0.1.0.0 |  | Enable to set translation on fields using URL widget
