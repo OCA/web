@@ -155,7 +155,7 @@ patch(many2OneField, {
         return props;
     },
 
-    m2o_options_props(props, attrs, options) {
+    m2oOptionsProps(props, attrs, options) {
         props = this.m2oOptionsPropsCreate(props, attrs, options);
         props = this.m2oOptionsPropsCreateEdit(props, attrs, options);
         props = this.m2oOptionsPropsLimit(props, attrs, options);
@@ -170,7 +170,7 @@ patch(many2OneField, {
             {attrs, context, decorations, options, string},
             dynamicInfo
         );
-        const new_props = this.m2o_options_props(props, attrs, options);
+        const new_props = this.m2oOptionsProps(props, attrs, options);
         return new_props;
     },
 });
@@ -275,7 +275,7 @@ patch(many2ManyTagsField, {
         return props;
     },
 
-    m2m_options_props(props, attrs, options) {
+    m2mOptionsProps(props, attrs, options) {
         props = this.m2mOptionsPropsCreate(props, attrs, options);
         props = this.m2mOptionsPropsCreateEdit(props, attrs, options);
         props = this.m2mOptionsPropsLimit(props, attrs, options);
@@ -286,7 +286,7 @@ patch(many2ManyTagsField, {
     },
     extractProps({attrs, options, string}, dynamicInfo) {
         const props = super.extractProps({attrs, options, string}, dynamicInfo);
-        const new_props = this.m2m_options_props(props, attrs, options);
+        const new_props = this.m2mOptionsProps(props, attrs, options);
         return new_props;
     },
 });
