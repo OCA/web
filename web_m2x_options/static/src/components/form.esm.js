@@ -1,4 +1,5 @@
 /** @odoo-module **/
+import {registry} from "@web/core/registry";
 import {
     Many2ManyTagsField,
     Many2ManyTagsFieldColorEditable,
@@ -377,4 +378,19 @@ patch(FormController.prototype, {
             }
         }
     },
+});
+
+// O.W.L. v18+: schema is validated in dev mode on adding to registry
+patch(registry.category("fields").validationSchema, {
+    m2oOptionsPropsCreate: {type: Function, optional: true},
+    m2oOptionsPropsCreateEdit: {type: Function, optional: true},
+    m2oOptionsPropsLimit: {type: Function, optional: true},
+    m2oOptionsPropsSearchMore: {type: Function, optional: true},
+    m2oOptionsPropsOpen: {type: Function, optional: true},
+    m2oOptionsProps: {type: Function, optional: true},
+    m2mOptionsPropsCreate: {type: Function, optional: true},
+    m2mOptionsPropsCreateEdit: {type: Function, optional: true},
+    m2mOptionsPropsLimit: {type: Function, optional: true},
+    m2mOptionsPropsSearchMore: {type: Function, optional: true},
+    m2mOptionsProps: {type: Function, optional: true},
 });
