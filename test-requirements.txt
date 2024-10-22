@@ -1,0 +1,1 @@
+odoo-addon-web_m2x_options @ git+https://github.com/OCA/web.git@refs/pull/2772/head#subdirectory=web_m2x_options
