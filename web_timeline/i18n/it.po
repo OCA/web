@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-27 11:34+0000\n"
+"PO-Revision-Date: 2024-10-22 09:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: web_timeline
 #. odoo-javascript
@@ -26,7 +26,7 @@ msgstr "<b>NON ASSEGNATO</b>"
 #. module: web_timeline
 #: model:ir.model,name:web_timeline.model_ir_actions_act_window_view
 msgid "Action Window View"
-msgstr ""
+msgstr "Vista maschera azione"
 
 #. module: web_timeline
 #. odoo-javascript
@@ -40,7 +40,7 @@ msgstr "Si è sicuri di cancellare questo record?"
 #: code:addons/web_timeline/static/src/views/timeline/timeline_controller.esm.js:0
 #, python-format
 msgid "Confirm"
-msgstr ""
+msgstr "Conferma"
 
 #. module: web_timeline
 #. odoo-javascript
@@ -54,7 +54,7 @@ msgstr "Giorno"
 #: code:addons/web_timeline/static/src/views/timeline/timeline_controller.esm.js:0
 #, python-format
 msgid "Discard"
-msgstr ""
+msgstr "Abbandona"
 
 #. module: web_timeline
 #. odoo-javascript
@@ -84,7 +84,7 @@ msgstr "La vista cronologia non ha l'attributo 'date_start' definito."
 #: code:addons/web_timeline/static/src/views/timeline/timeline_arch_parser.esm.js:0
 #, python-format
 msgid "Timeline view has not defined 'default_group_by' attribute."
-msgstr ""
+msgstr "La vista cronologia non ha l'attributo 'default_group_by' definito."
 
 #. module: web_timeline
 #. odoo-javascript
