@@ -43,6 +43,7 @@ patch(SearchPanel.prototype, "web_responsive.SearchPanelMobile", {
             }
             if (filterValues.length) {
                 selection.push({
+                    id: filter.id,
                     values: filterValues,
                     icon: filter.icon,
                     color: filter.color,
