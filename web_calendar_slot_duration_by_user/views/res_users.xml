@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<!--
+    Copyright 2024 Nomadi Plus Tecnologia LTDA - Italo LOPES
+    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+-->
+<odoo>
+    <record id="view_users_form" model="ir.ui.view">
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <page name="preferences" position="inside">
+                <group name="Calendar View Preference">
+                    <field name="slot_duration" widget="float_time" />
+                </group>
+            </page>
+        </field>
+    </record>
+</odoo>
