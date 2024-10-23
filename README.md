@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [web_environment_ribbon](web_environment_ribbon/) | 18.0.1.0.0 |  | Web Environment Ribbon
+[web_notify](web_notify/) | 18.0.1.0.0 |  | Send notification messages to user
 
 [//]: # (end addons)
 
