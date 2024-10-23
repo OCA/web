@@ -1118,13 +1118,20 @@ export class RTreeModel extends RelationalModel {
                 // Index per parent field.
                 const index = {};
                 for (const record of result.records) {
-                    const id = record[field][0];
-                    let children = index[id];
-                    if (children === undefined) {
-                        children = [];
-                        index[id] = children;
+                    // Field can contain multiple ids if it is a x2many. If it
+                    // is a many2one, it contains an id and a display name.
+                    for (const id of record[field]) {
+                        if (typeof id === "string") {
+                            // This is the 2nd element of a many2one.
+                            break;
+                        }
+                        let children = index[id];
+                        if (children === undefined) {
+                            children = [];
+                            index[id] = children;
+                        }
+                        children.push(record);
                     }
-                    children.push(record);
                 }
                 modelData.index = index;
                 return result;
