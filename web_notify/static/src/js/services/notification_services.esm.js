@@ -4,10 +4,11 @@ import {browser} from "@web/core/browser/browser";
 import {registry} from "@web/core/registry";
 
 export const webNotificationService = {
-    dependencies: ["bus_service", "notification", "action"],
+    dependencies: ["bus_service", "notification", "action", "orm"],
 
-    start(env, {bus_service, notification, action}) {
+    start(env, {bus_service, notification, action, orm}) {
         let webNotifTimeouts = {};
+        const displayedNotifications = {};
         /**
          * Displays the web notification on user's screen
          * @param {*} notifications
@@ -44,10 +45,17 @@ export const webNotificationService = {
                             button.onClick = async () => {
                                 await onClick();
                                 notificationRemove();
+                                await orm.call("res.users", "notify_dismiss", [
+                                    notif.id,
+                                ]);
                             };
                             return button;
                         }),
+                        onClose: async () => {
+                            await orm.call("res.users", "notify_dismiss", [notif.id]);
+                        },
                     });
+                    displayedNotifications[notif.id] = notificationRemove;
                 });
             });
         }
@@ -56,9 +64,16 @@ export const webNotificationService = {
             for (const {payload, type} of notifications) {
                 if (type === "web.notify") {
                     displaywebNotification(payload);
+                } else if (type === "web.notify.dismiss") {
+                    const notifId = payload[0].id;
+                    if (displayedNotifications[notifId]) {
+                        displayedNotifications[notifId]();
+                        delete displayedNotifications[notifId];
+                    }
                 }
             }
         });
+
         bus_service.start();
     },
 };
