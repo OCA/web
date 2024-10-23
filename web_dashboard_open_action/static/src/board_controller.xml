@@ -1,0 +1,13 @@
+<template>
+    <t t-inherit="board.Content" t-inherit-mode="extension" owl="1">
+        <xpath expr="//h3/span[1]" position="attributes">
+            <attribute name="t-on-click">() => this.openAction(action)</attribute>
+        </xpath>
+        <xpath expr="//h3" position="inside">
+            <span
+                class="btn float-end p-1 text-muted"
+                t-on-click="() => this.openAction(action)"
+            ><i class="fa fa-arrows-alt" /></span>
+        </xpath>
+    </t>
+</template>
