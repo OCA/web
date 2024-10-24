@@ -43,7 +43,7 @@ odoo.define("web_widget_open_tab.FieldOpenTab", function (require) {
                 delay: {show: 1000, hide: 0},
                 title: function () {
                     return qweb.render("WidgetButton.tooltip", {
-                        debug: config.debug,
+                        debug: config.isDebug(),
                         state: self.record,
                         node: {
                             attrs: {
