@@ -1,0 +1,54 @@
+.md_preserved {
+    background-color: #90EE90;
+    color: Black;
+    font-size: 100%;
+    padding: 2px;
+}
+.md_not_preserved {
+    background-color: #FFB6C1;
+    color: Black;
+    font-size: 100%;
+    padding: 2px;
+}
+.o_field_text_markdown blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 1em 10px 0.1em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+}
+div.oe_form_field_html table
+{
+    border: solid 0.5px;
+    width:100%;
+    padding:10px;
+    margin:10px 10px 10px 10px;
+}
+div.oe_form_field_html table tr
+{
+    border: solid 0.5px;
+    width:100%;
+}
+div.oe_form_field_html table tr
+{
+    border: solid 0.5px;
+    width:100%;
+}
+
+div.oe_form_field_html table tr td
+{
+    border: solid 0.5px;
+    padding-left:10px;
+    border-right: solid  0.5px;
+}
+div.oe_form_field_html  thead {
+    font-weight: bold;
+    background-color:lightgrey;
+    border: solid 0.5px 0.5px 0.5px 0.5px
+}
+div.oe_form_field_html  thead th {
+    font-weight: bold;
+    background-color:lightgrey;
+    border-right: solid  0.5px;
+    padding-left: 10px;
+}
