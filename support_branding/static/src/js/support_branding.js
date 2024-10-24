@@ -70,6 +70,9 @@ odoo.define("support_branding.CrashManager", function (require) {
                 var $footer = $form.parents(".modal-dialog").find(".modal-footer");
                 // Self.wysiwyg.attachTo($description);
 
+                // Avoid prepending if form already exist
+                if ($form.length > 0) return;
+
                 $statement.prepend(inputs);
                 if (self.support_cp_email) {
                     if (self.support_cp_name) {
