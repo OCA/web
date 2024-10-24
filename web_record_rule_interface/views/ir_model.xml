@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Inherited views -->
+    <record id="view_rule_form_inherit" model="ir.ui.view">
+        <field name="name">view.rule.form.inherit</field>
+        <field name="model">ir.rule</field>
+        <field name="inherit_id" ref="base.view_rule_form" />
+        <field name="arch" type="xml">
+            <field name="domain_force" position="after">
+                <label for="original_domain" />
+                <br />
+                <field name="original_domain" colspan="2" nolabel="1" />
+                <br />
+                <button
+                    name="action_restore_original_domain"
+                    type="object"
+                    string="Restore Original Domain"
+                    class="btn-primary"
+                    confirm="Are you sure want to restore original domain?"
+                />
+            </field>
+            <field name="domain_force" position="before">
+                <field name="model_name" invisible="1" />
+                <field
+                    name="domain"
+                    widget="domain"
+                    options="{'model': 'model_name'}"
+                />
+                <label for="domain_force" string="Final Domain" />
+            </field>
+        </field>
+    </record>
+
+    <!-- New views -->
+    <record id="view_custom_rule_form" model="ir.ui.view">
+        <field name="model">ir.rule</field>
+        <field name="arch" type="xml">
+            <form string="Custom Record Rule">
+                <sheet>
+                    <group>
+                        <group string="General">
+                            <field name="name" />
+                            <field name="custom_rule_type" invisible="1" />
+                            <field name="model_id" />
+                            <field name="active" widget="boolean_toggle" />
+                        </group>
+                        <group string="Info">
+                            <div
+                                colspan="2"
+                                attrs="{'invisible': [('custom_rule_type', '!=', 'invisible')]}"
+                            >
+                                <span
+                                >Records that does not match domain are invisible.</span>
+                                <p>Records matching domain are visible.</p>
+                            </div>
+                            <field name="perm_read" invisible="1" />
+                            <field name="perm_write" invisible="1" />
+                            <field name="perm_create" invisible="1" />
+                            <field name="perm_unlink" invisible="1" />
+                            <field name="domain_force" invisible="1" />
+                        </group>
+                    </group>
+                    <separator
+                        string="Domain of visible records"
+                        attrs="{'invisible': [('custom_rule_type', '!=', 'invisible')]}"
+                    />
+                    <field name="model_name" invisible="1" />
+                    <field
+                        name="domain"
+                        widget="domain"
+                        options="{'model': 'model_name'}"
+                    />
+                    <group string="Groups (no group = global)">
+                        <field name="global" />
+                        <field name="groups" nolabel="1" colspan="4" />
+                    </group>
+                    <i
+                        class="fa fa-info fa-3x text-info float-left"
+                        role="img"
+                        aria-label="Info"
+                        title="Info"
+                    />
+                    <h3>Interaction between rules</h3>
+                    <div>
+                        <p>
+                            Global rules (non group-specific) are restrictions, and
+                            cannot be bypassed.
+                            Group-specific rules grant additional permissions, but are
+                            constrained within the bounds of global ones.
+                            The first group rules restrict further the global rules, but
+                            can be relaxed by additional group rules.
+                        </p>
+                        <p>
+                            Detailed algorithm:
+                            <ol>
+                                <li>Global rules are combined together with a logical
+                                    AND operator, and with the result of the following
+                                    steps</li>
+                                <li>Group-specific rules are combined together with a
+                                    logical OR operator</li>
+                                <li>If user belongs to several groups, the results from
+                                    step 2 are combined with logical OR operator</li>
+                            </ol>
+                        </p>
+                        <p>Example: GLOBAL_RULE_1 AND GLOBAL_RULE_2 AND (
+                            (GROUP_A_RULE_1 OR GROUP_A_RULE_2) OR (GROUP_B_RULE_1 OR
+                            GROUP_B_RULE_2) )</p>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_custom_rules_tree" model="ir.ui.view">
+        <field name="model">ir.rule</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="model_name" />
+                <field name="groups" />
+                <field name="domain" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_custom_invisible_rule" model="ir.actions.act_window">
+        <field name="name">Invisible Rules</field>
+        <field name="res_model">ir.rule</field>
+        <field name="view_id" ref="view_custom_rules_tree" />
+        <field name="domain">[('custom_rule_type', '=', 'invisible')]</field>
+        <field
+            name="view_ids"
+            eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_custom_rules_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_custom_rule_form')})]"
+        />
+        <field name="context">
+            {
+                "default_custom_rule_type": "invisible",
+                "default_perm_read": True,
+                "default_perm_write": True,
+                "default_perm_create": False,
+                "default_perm_unlink": True,
+            }
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_custom_access_rules"
+        parent="base.menu_security"
+        sequence="15"
+        name="Custom Record Rules"
+    />
+    <menuitem
+        action="action_custom_invisible_rule"
+        id="menu_action_invisible_rule"
+        parent="menu_custom_access_rules"
+        sequence="1"
+    />
+
+</odoo>
