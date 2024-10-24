@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.web_refresh</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//widget[@name='res_config_dev_tool']" position="before">
+                    <h2>Automatic view refresh</h2>
+                    <div class="row mt16 o_settings_container" name="web_refresh">
+                        <div
+                        class="col-12 col-lg-6 o_setting_box"
+                        id="web_refresh_setting_every"
+                    >
+                            <div class="o_setting_left_pane">
+                                <field name="group_web_refresh_allow_refresh_every" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="group_web_refresh_allow_refresh_every" />
+                                <div class="text-muted">
+                                    Users can activate this feature by long pushing the refresh icon
+                                </div>
+                                <div
+                                attrs="{'invisible': [('group_web_refresh_allow_refresh_every', '=', False)]}"
+                            >
+                                    <div class="content-group mt16">
+                                        <label
+                                        for="web_refresh_default_refresh_every"
+                                        class="o_light_label"
+                                    />
+                                        <field
+                                        name="web_refresh_default_refresh_every"
+                                        class="w-25"
+                                    />
+                                    </div>
+                                    <div class="content-group mt16">
+                                        <label
+                                        for="web_refresh_min_refresh_every"
+                                        class="o_light_label"
+                                    />
+                                        <field
+                                        name="web_refresh_min_refresh_every"
+                                        class="w-25"
+                                    />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                        class="col-12 col-lg-6 o_setting_box"
+                        id="web_refresh_setting_every"
+                    >
+                            <div class="o_setting_left_pane">
+                                <field name="group_web_refresh_watch_changes" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="group_web_refresh_watch_changes" />
+                                <div class="text-muted">
+                                    Users can activate this feature by long pushing the refresh icon
+                                </div>
+                                <div
+                                class="content-group mt16"
+                                attrs="{'invisible': [('group_web_refresh_watch_changes','=',False)]}"
+                            >
+                                    <div class="mt16 text-warning"><strong
+                                    >Warning!</strong> This feature earns much server resources.<br
+                                    />
+                                    Disable it if you have performance issues.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

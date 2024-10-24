@@ -1,0 +1,116 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_refresh
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-20 09:45+0000\n"
+"PO-Revision-Date: 2021-07-20 09:45+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_refresh
+#: model_terms:ir.ui.view,arch_db:web_refresh.res_config_settings_view_form
+msgid ""
+"<strong>Warning!</strong> This feature earns much server resources.<br/>\n"
+"                                    Disable it if you have performance issues."
+msgstr ""
+
+#. module: web_refresh
+#: model:ir.model.fields,field_description:web_refresh.field_res_config_settings__group_web_refresh_allow_refresh_every
+#: model:res.groups,name:web_refresh.group_allow_refresh_every
+msgid "Allow periodic refresh"
+msgstr ""
+
+#. module: web_refresh
+#: model:ir.model.fields,field_description:web_refresh.field_res_config_settings__group_web_refresh_watch_changes
+#: model:res.groups,name:web_refresh.group_watch_changes
+msgid "Allow refresh on server changes"
+msgstr ""
+
+#. module: web_refresh
+#. openerp-web
+#: code:addons/web_refresh/static/src/components/custom_menuitem.xml:0
+#, python-format
+msgid "Auto refresh every"
+msgstr ""
+
+#. module: web_refresh
+#: model_terms:ir.ui.view,arch_db:web_refresh.res_config_settings_view_form
+msgid "Automatic view refresh"
+msgstr ""
+
+#. module: web_refresh
+#: model:ir.model,name:web_refresh.model_base
+msgid "Base"
+msgstr ""
+
+#. module: web_refresh
+#: model:ir.model,name:web_refresh.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: web_refresh
+#. openerp-web
+#: code:addons/web_refresh/static/src/components/custom_menuitem.xml:0
+#, python-format
+msgid "Configure"
+msgstr ""
+
+#. module: web_refresh
+#: model:ir.model.fields,field_description:web_refresh.field_res_config_settings__web_refresh_default_refresh_every
+msgid "Default refresh timeout"
+msgstr ""
+
+#. module: web_refresh
+#: model:ir.model.fields,field_description:web_refresh.field_ir_http__display_name
+#: model:ir.model.fields,field_description:web_refresh.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_refresh
+#: model:ir.model,name:web_refresh.model_ir_http
+msgid "HTTP Routing"
+msgstr ""
+
+#. module: web_refresh
+#: model:ir.model.fields,field_description:web_refresh.field_ir_http__id
+#: model:ir.model.fields,field_description:web_refresh.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: web_refresh
+#: model:ir.model.fields,field_description:web_refresh.field_ir_http____last_update
+#: model:ir.model.fields,field_description:web_refresh.field_res_config_settings____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_refresh
+#: model:ir.model.fields,field_description:web_refresh.field_res_config_settings__web_refresh_min_refresh_every
+msgid "Minimum refresh timeout"
+msgstr ""
+
+#. module: web_refresh
+#. openerp-web
+#: code:addons/web_refresh/static/src/components/custom_menuitem.xml:0
+#, python-format
+msgid "Set"
+msgstr ""
+
+#. module: web_refresh
+#: model_terms:ir.ui.view,arch_db:web_refresh.res_config_settings_view_form
+msgid "Users can activate this feature by long pushing the refresh icon"
+msgstr ""
+
+#. module: web_refresh
+#. openerp-web
+#: code:addons/web_refresh/static/src/components/custom_menuitem.xml:0
+#, python-format
+msgid "secs"
+msgstr ""
