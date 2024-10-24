@@ -46,6 +46,7 @@ setuptools.setup(
         'odoo14-addon-web_remember_tree_column_width',
         'odoo14-addon-web_responsive',
         'odoo14-addon-web_search_with_and',
+        'odoo14-addon-web_select_all_companies',
         'odoo14-addon-web_send_message_popup',
         'odoo14-addon-web_sheet_full_width',
         'odoo14-addon-web_switch_context_warning',
