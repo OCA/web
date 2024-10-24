@@ -25,12 +25,15 @@ odoo.define("web_ir_actions_act_view_reload.ir_actions_act_view_reload", functio
          * Handle 'ir.actions.act_view_reload' action
          * @returns {Promise} Resolved promise
          */
-        _executeReloadAction: function () {
+        _executeReloadAction: function (action, options) {
             var controller = this.getCurrentController();
             if (controller && controller.widget) {
                 controller.widget.reload();
             }
 
+            if (action.tag === "close") {
+                return this._executeCloseAction(action, options);
+            }
             return Promise.resolve();
         },
     });
