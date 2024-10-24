@@ -1,3 +1,14 @@
+14.0.2.0.0 (2021-09-21)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Restore the 'is in selection' operator.
+
+  The 'is in selection' operator offers a really convenient way to either pick a
+  selection of related records, or specify criteria / filters to define a domain for
+  the related records.
+
+  [NL66278]
+
 11.0.1.0.2 (2018-10-31)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -8,7 +19,6 @@
   the dialog must be already opened.
 
   [simahawk]
-
 
 11.0.1.0.1 (2018-09-18)
 ~~~~~~~~~~~~~~~~~~~~~~~
