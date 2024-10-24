@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+
+    <t
+        t-name="web_hierarchy_list.HierarchyListRenderer"
+        t-inherit="web.ListRenderer"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//div[hasclass('o_list_renderer')]/*[1]" position="before">
+            <HierarchyListBreadcrumb
+                parentRecords="state.breadcrumbState"
+                getDisplayName.bind="getDisplayName"
+                navigate.bind="navigate"
+                reset.bind="reset"
+            />
+        </xpath>
+        <xpath expr="//table[@t-ref='table']/thead//tr/th[1]" position="after">
+            <th class="o_hierarchy_list_drill_down_column_header" />
+        </xpath>
+
+    </t>
+
+    <t
+        t-name="web_hierarchy_list.HierarchyListRenderer.Rows"
+        t-inherit="web.ListRenderer.Rows"
+        t-inherit-mode="primary"
+    >
+        <xpath
+            expr="//t[@t-if='!list.isGrouped']//td[hasclass('o_field_x2many_list_row_add')]"
+            position="before"
+        >
+            <td class="o_hierarchy_list_drill_down_column">
+            </td>
+        </xpath>
+        <xpath
+            expr="//t[@t-else]//td[hasclass('o_group_field_row_add')]"
+            position="before"
+        >
+            <td class="o_hierarchy_list_drill_down_column">
+            </td>
+        </xpath>
+        <xpath expr="//tr[@t-foreach='getEmptyRowIds']">
+            <td class="o_hierarchy_list_drill_down_column">
+            </td>
+        </xpath>
+    </t>
+
+    <t
+        t-name="web_hierarchy_list.HierarchyListRenderer.RecordRow"
+        t-inherit="web.ListRenderer.RecordRow"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//tr[@class='o_data_row']/td[1]" position="after">
+            <td class="text-end o_hierarchy_list_drill_down_column">
+                <i
+                    t-if="canDrillDown(record)"
+                    t-attf-class="pr-2 cursor-pointer fa fa-{{props.archInfo.drillDownIcon || 'plus-square-o'}}"
+                    t-on-click.stop="() => this.navigate(record)"
+                />
+            </td>
+        </xpath>
+    </t>
+
+</templates>

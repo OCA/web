@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+
+    <t t-name="web_hierarchy_list.Breadcrumb">
+        <div class="d-flex flex-row o_hierarchy_list_breadcrumb container-fluid py-2">
+            <nav aria-label="breadcrumb">
+                <i
+                    class="fa fa-times pe-2 cursor-pointer"
+                    t-on-click="props.reset"
+                    t-if="props.parentRecords.length > 0"
+                />
+                <ol class="breadcrumb bg-transparent d-inline-flex">
+                    <t
+                        t-foreach="props.parentRecords"
+                        t-as="parentRecord"
+                        t-key="parentRecord.resId"
+                    >
+                        <HierarchyListBreadcrumbItem
+                            record="parentRecord"
+                            getDisplayName="props.getDisplayName"
+                            navigate="props.navigate"
+                        />
+                    </t>
+                </ol>
+            </nav>
+        </div>
+    </t>
+
+</templates>
