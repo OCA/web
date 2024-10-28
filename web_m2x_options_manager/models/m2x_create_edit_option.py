@@ -1,7 +1,7 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.cache import ormcache
 from odoo.tools.safe_eval import safe_eval
@@ -123,7 +123,7 @@ class M2xCreateEditOption(models.Model):
     def _check_field_in_model(self):
         for opt in self:
             if opt.field_id.model_id != opt.model_id:
-                msg = _(
+                msg = self.env._(
                     "'%(field_name)s' is not a valid field for model '%(model_name)s'!",
                     field_name=opt.field_name,
                     model_name=opt.model_name,
@@ -134,7 +134,7 @@ class M2xCreateEditOption(models.Model):
     def _check_field_type(self):
         ttypes = ("many2many", "many2one")
         if any(o.field_id.ttype not in ttypes for o in self):
-            msg = _("Only Many2many and Many2one fields can be chosen!")
+            msg = self.env._("Only Many2many and Many2one fields can be chosen!")
             raise ValidationError(msg)
 
     def _apply_options(self, node):
@@ -145,14 +145,14 @@ class M2xCreateEditOption(models.Model):
             options = safe_eval(options, dict(self.env.context or [])) or {}
 
         for k in ("create", "create_edit"):
-            opt = self["option_%s" % k]
+            opt = self[f"option_{k}"]
             if opt == "none":
                 continue
             mode, val = opt.split("_")
             if k not in options:
                 options[k] = val == "true"
             if mode == "force":
-                options["no_%s" % k] = val == "false"
+                options[f"no_{k}"] = val == "false"
         if not self.option_create_edit_wizard:
             options["no_quick_create"] = True
         node.set("options", str(options))
