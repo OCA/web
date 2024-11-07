@@ -75,6 +75,10 @@ odoo.define("web_timeline.TimelineView", function (require) {
                 (item) => item.attrs.name
             );
             fieldNames = _.union(fieldNames, archFieldNames);
+            if (attrs.readonly_field) {
+                fieldNames.push(attrs.readonly_field);
+            }
+            const readonly_field = attrs.readonly_field;
 
             const colors = this.parse_colors();
             for (const color of colors) {
@@ -111,6 +115,7 @@ odoo.define("web_timeline.TimelineView", function (require) {
             this.rendererParams.date_stop = date_stop;
             this.rendererParams.date_delay = date_delay;
             this.rendererParams.colors = colors;
+            this.rendererParams.readonly_field = readonly_field;
             this.rendererParams.fieldNames = fieldNames;
             this.rendererParams.default_group_by = attrs.default_group_by;
             this.rendererParams.min_height = min_height;
