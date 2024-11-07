@@ -32,6 +32,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
             this.can_create = params.can_create;
             this.can_update = params.can_update;
             this.can_delete = params.can_delete;
+            this.can_update_group = params.can_update_group;
             this.min_height = params.min_height;
             this.date_start = params.date_start;
             this.date_stop = params.date_stop;
@@ -202,7 +203,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                 // Drag items horizontally
                 this.options.editable.updateTime = true;
                 // Drag items from one group to another
-                this.options.editable.updateGroup = true;
+                this.options.editable.updateGroup = this.can_update_group;
                 if (this.can_create && this.modelClass.data.rights.create) {
                     this.options.onAdd = this.on_add;
                     // Add new items by double tapping
