@@ -1,0 +1,83 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_pwa_customize
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-08 16:57+0000\n"
+"PO-Revision-Date: 2024-11-08 16:57+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_pwa_customize
+#: model_terms:ir.ui.view,arch_db:web_pwa_customize.res_config_settings_view_form
+msgid "<span class=\"d-block w-75 py-2\">Background Color</span>"
+msgstr "<span class=\"d-block w-75 py-2\">Color de fondo</span>"
+
+#. module: web_pwa_customize
+#: model_terms:ir.ui.view,arch_db:web_pwa_customize.res_config_settings_view_form
+msgid "<span class=\"d-block w-75 py-2\">Theme Color</span>"
+msgstr "<span class=\"d-block w-75 py-2\">Color del tema</span>"
+
+#. module: web_pwa_customize
+#: model:ir.model.fields,field_description:web_pwa_customize.field_res_config_settings__pwa_background_color
+msgid "Background Color"
+msgstr "Color de fondo"
+
+#. module: web_pwa_customize
+#: model_terms:ir.ui.view,arch_db:web_pwa_customize.res_config_settings_view_form
+msgid "Colors"
+msgstr "Colores"
+
+#. module: web_pwa_customize
+#: model:ir.model,name:web_pwa_customize.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: web_pwa_customize
+#: model:ir.model.fields,field_description:web_pwa_customize.field_res_config_settings__pwa_icon
+#: model_terms:ir.ui.view,arch_db:web_pwa_customize.res_config_settings_view_form
+msgid "Icon"
+msgstr "Icono"
+
+#. module: web_pwa_customize
+#: model_terms:ir.ui.view,arch_db:web_pwa_customize.res_config_settings_view_form
+msgid "Odoo"
+msgstr "Odoo"
+
+#. module: web_pwa_customize
+#: model:ir.model.fields,field_description:web_pwa_customize.field_res_config_settings__pwa_theme_color
+msgid "Theme Color"
+msgstr "Color del tema"
+
+#. module: web_pwa_customize
+#: model:ir.model.fields,field_description:web_pwa_customize.field_res_config_settings__pwa_short_name
+msgid "Web App Short Name"
+msgstr "Nombre corto de la aplicación"
+
+#. module: web_pwa_customize
+#. odoo-python
+#: code:addons/web_pwa_customize/models/res_config_settings.py:0
+#, python-format
+msgid "You can only upload PNG files bigger than 512x512"
+msgstr "Solo puede cargar archivos PNG de más de 512 x 512"
+
+#. module: web_pwa_customize
+#. odoo-python
+#: code:addons/web_pwa_customize/models/res_config_settings.py:0
+#, python-format
+msgid "You can only upload SVG or PNG files. Found: %s."
+msgstr "Solo puedes cargar archivos SVG o PNG. Encontrado: %s."
+
+#. module: web_pwa_customize
+#. odoo-python
+#: code:addons/web_pwa_customize/models/res_config_settings.py:0
+#, python-format
+msgid "You can't upload a file with more than 2 MB."
+msgstr "No puede cargar un archivo con más de 2 MB."
