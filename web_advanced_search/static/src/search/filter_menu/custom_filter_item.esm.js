@@ -15,19 +15,21 @@ patch(CustomFilterItem.prototype, "web_advanced_search.CustomFilterItem", {
         this._super.apply(this, arguments);
         this.OPERATORS.relational = this.OPERATORS.char;
         this.FIELD_TYPES.many2one = "relational";
+        this.FIELD_TYPES.many2many = "relational";
+        this.FIELD_TYPES.one2many = "relational";
     },
     /**
      * @override
      */
     setDefaultValue(condition) {
-        const res = this._super.apply(this, arguments);
         const fieldType = this.fields[condition.field].type;
         const genericType = this.FIELD_TYPES[fieldType];
         if (genericType === "relational") {
             condition.value = 0;
             condition.displayedValue = "";
+            return;
         }
-        return res;
+        return this._super.apply(this, arguments);
     },
     /**
      * Add displayed value to preFilters for "relational" types.
