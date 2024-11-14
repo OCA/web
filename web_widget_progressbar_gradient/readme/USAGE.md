@@ -1,0 +1,1 @@
+- When declaring a progressbar field, use the 'progressbar_color' widget.

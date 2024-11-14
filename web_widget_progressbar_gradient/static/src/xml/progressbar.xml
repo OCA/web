@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_widget_progressbar_color.ProgressBarFieldGradient"
+        t-inherit="web.ProgressBarField"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+        <xpath expr="//div[@t-attf-class]" position="attributes">
+            <attribute
+                name="t-attf-class"
+                add="{{'o_progressbar_gradient'}}"
+                separator=" "
+            />
+        </xpath>
+    </t>
+</templates>
