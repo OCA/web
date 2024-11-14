@@ -9,12 +9,5 @@
         t-inherit-mode="primary"
         owl="1"
     >
-        <xpath expr="//div[@t-attf-class]" position="attributes">
-            <attribute
-                name="t-attf-class"
-                add="{{'o_progressbar_gradient'}}"
-                separator=" "
-            />
-        </xpath>
     </t>
 </templates>

@@ -32,9 +32,16 @@ This module allows to display progress bars with colorized gradient bar.
 The color will increase following value from green passing per yellow
 and finishing to red.
 
+- Normal rendering:
+
 |Progressbar Gradient|
 
+- Reverse rendering:
+
+|Progressbar Inverse Gradient|
+
 .. |Progressbar Gradient| image:: https://raw.githubusercontent.com/OCA/web/16.0/web_widget_progressbar_gradient/static/description/progressbar_gradient.png
+.. |Progressbar Inverse Gradient| image:: https://raw.githubusercontent.com/OCA/web/16.0/web_widget_progressbar_gradient/static/description/progressbar_gradient_inverse.png
 
 **Table of contents**
 
@@ -46,6 +53,8 @@ Usage
 
 - When declaring a progressbar field, use the 'progressbar_color'
   widget.
+- Add the inverse option to reverse the colors on the progress bar
+  field: ``options="{'inverse': true}"``
 
 Known issues / Roadmap
 ======================
@@ -76,6 +85,7 @@ Contributors
 
 - Denis Roussel denis.roussel@acsone.eu
 - Jacques-Etienne Baudoux je@bcim.be
+- Souheil Bejaoui souheil.bejaoui@acsone.eu
 
 Maintainers
 -----------

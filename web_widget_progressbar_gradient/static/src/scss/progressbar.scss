@@ -8,7 +8,8 @@ div:has(div.o_progressbar_gradient) .o_progressbar .o_progress {
     -webkit-mask: linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0);
 }
-.o_progressbar .o_progress .o_progressbar_gradient::before {
+
+.o_progressbar .o_progress .o_progressbar_gradient.o_inverse::before {
     content: "";
     position: absolute;
     top: 0;
@@ -16,4 +17,14 @@ div:has(div.o_progressbar_gradient) .o_progressbar .o_progress {
     right: 0;
     bottom: 0;
     background-image: linear-gradient(to right, #198754, #ffc107, #dc3545);
+}
+
+.o_progressbar .o_progress .o_progressbar_gradient::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(to right, #dc3545, #ffc107, #198754);
 }
