@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates id="template" xml:space="preserve">
-    <t t-name="web_editor_class_selector.custom_class_css">
-        <t t-jquery="#decoration" t-operation="before">
-
-            <div id="custom_class" class="btn-group dropdown">
+    <t t-inherit="web_editor.toolbar" t-inherit-mode="extension">
+        <xpath expr="//div[@id='chatgpt']" position="after">
+            <div
+                id="custom_class"
+                class="btn-group dropdown"
+                t-if="props.custom_class_css and props.custom_class_css.length"
+            >
                 <button
                     type="button"
                     class="btn dropdown-toggle"
@@ -16,7 +19,7 @@
                     <span>Custom CSS</span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li t-foreach="custom_class_css" t-as="line">
+                    <li t-foreach="props.custom_class_css" t-as="line" t-key="line.id">
                         <a
                             class="dropdown-item css_selector"
                             t-att-id="line.class_name"
@@ -27,7 +30,6 @@
                     </li>
                 </ul>
             </div>
-        </t>
-
+        </xpath>
     </t>
 </templates>

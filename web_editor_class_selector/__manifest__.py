@@ -1,6 +1,6 @@
 {
     "name": "Web editor class selector",
-    "version": "16.0.1.0.1",
+    "version": "17.0.1.0.0",
     "summary": "",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
@@ -18,12 +18,12 @@
     "assets": {
         "web.assets_backend": [
             "web_editor_class_selector/static/src/js/backend/**/*",
-            "web_editor_class_selector/static/src/xml/**/",
         ],
-        "web_editor.assets_wysiwyg": [
+        "web_editor.backend_assets_wysiwyg": [
             "web_editor_class_selector/static/src/js/odoo-editor/**/*",
             "web_editor_class_selector/static/src/js/wysiwyg/**/*",
             "web_editor_class_selector/static/src/scss/demo_styles.scss",
+            "web_editor_class_selector/static/src/xml/**/",
         ],
     },
     "installable": True,

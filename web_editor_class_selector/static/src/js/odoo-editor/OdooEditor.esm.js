@@ -1,16 +1,16 @@
 /** @odoo-module **/
-import {_t} from "web.core";
-import {patch} from "web.utils";
 import {
     closestElement,
     getSelectedNodes,
     isVisibleTextNode,
 } from "@web_editor/js/editor/odoo-editor/src/utils/utils";
 import {OdooEditor} from "@web_editor/js/editor/odoo-editor/src/OdooEditor";
+import {_t} from "@web/core/l10n/translation";
+import {patch} from "@web/core/utils/patch";
 
-patch(OdooEditor.prototype, "web_editor_class_selector.OdooEditor", {
+patch(OdooEditor.prototype, {
     _updateToolbar(show) {
-        const res = this._super(show);
+        const res = super._updateToolbar(show);
         if (!this.toolbar || !this.custom_class_css) {
             return res;
         }

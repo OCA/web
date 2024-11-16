@@ -5,9 +5,9 @@ import {useService} from "@web/core/utils/hooks";
 
 const {onWillStart} = owl;
 
-patch(HtmlField.prototype, "web_editor_class_selector.HtmlField", {
+patch(HtmlField.prototype, {
     setup() {
-        this._super(...arguments);
+        super.setup(...arguments);
         this.orm = useService("orm");
         this.custom_class_css = [];
         onWillStart(async () => {
@@ -18,10 +18,14 @@ patch(HtmlField.prototype, "web_editor_class_selector.HtmlField", {
             );
         });
     },
-    async startWysiwyg(wysiwyg) {
-        // Provide the custom class css to the wysiwyg editor
-        // to render the custom class css in the toolbar
-        wysiwyg.options.custom_class_css = this.custom_class_css;
-        return this._super(wysiwyg);
+    get wysiwygOptions() {
+        // Provide the custom_class_css to the toolbar through the toolbarOptions.
+        return {
+            ...super.wysiwygOptions,
+            toolbarOptions: {
+                ...super.wysiwygOptions.toolbarOptions,
+                custom_class_css: this.custom_class_css,
+            },
+        };
     },
 });
