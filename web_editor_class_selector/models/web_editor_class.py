@@ -8,7 +8,8 @@ class WebEditorClass(models.Model):
     name = fields.Char(required=True)
     class_name = fields.Char(
         required=True,
-        help="The class name to be added to the tag. It must be created in the CSS file.",
+        help="The class name to be added to the tag. "
+        "It must be created in the CSS file.",
     )
     active = fields.Boolean(default=True)
 
