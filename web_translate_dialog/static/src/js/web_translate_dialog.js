@@ -66,11 +66,24 @@ var TranslateDialog = Dialog.extend({
             }
         });
     },
+    get_list_hidden_field_names: function(parent) {
+        var field_list = [];
+        var record_id = this.record_id;
+        _.each(parent.renderer.allModifiersData, function(modifier){
+            var evaluatedmodifier = modifier.evaluatedModifiers[record_id];
+            if (modifier.node.tag == 'field' && evaluatedmodifier && evaluatedmodifier.hasOwnProperty("invisible") && evaluatedmodifier.invisible == true){
+                field_list.push(modifier.node.attrs.name);
+            }
+        });
+        return field_list;
+    }
+    ,
     get_translatable_fields: function(parent) {
         var field_list = {};
+        var hidden_fields = this.get_list_hidden_field_names(parent);
         _.each(parent.renderer.state.fields, function(field, name){
             var related_readonly = typeof field.related !== 'undefined' && field.readonly;
-            if (field.translate == true && !related_readonly && parent.renderer.state.getFieldNames().includes(name)){
+            if (field.translate == true && !related_readonly && parent.renderer.state.getFieldNames().includes(name) && !hidden_fields.includes(name)){
                 field_list[name] = field;
             }
         });
