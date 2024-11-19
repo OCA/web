@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_timeline.TimelineView">
+        <div t-att-class="props.className" t-ref="root">
+            <Layout
+                className="model.useSampleModel ? 'o_view_sample_data' : ''"
+                display="props.display"
+            >
+                <t t-set-slot="layout-actions">
+                    <SearchBar t-if="searchBarToggler.state.showSearchBar" />
+                </t>
+                <t t-component="props.Renderer" t-props="rendererProps" />
+            </Layout>
+        </div>
+    </t>
+
+</templates>

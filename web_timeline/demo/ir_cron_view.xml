@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Add demo timeline view on crons so we can showcase this module without project_timeline. -->
+    <record id="ir_cron_timeline" model="ir.ui.view">
+        <field name="model">ir.cron</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+            <timeline date_start="nextcall" default_group_by="model_id" />
+        </field>
+    </record>
+    <record id="base.ir_cron_act" model="ir.actions.act_window">
+        <field name="view_mode">tree,form,calendar,timeline</field>
+    </record>
+</odoo>
