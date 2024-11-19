@@ -3,8 +3,7 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 import {useBus} from "@web/core/utils/hooks";
 
-const {Component, QWeb} = owl;
-const {useState} = owl.hooks;
+const {Component, useState} = owl;
 import * as dates from "@web/search/utils/dates";
 const {DateTime} = luxon; // eslint-disable-line no-undef
 var ID_CUSTOM_DATE = 0;
@@ -120,4 +119,3 @@ DropdownItemCustomPeriod.props = {
     field: {type: Object, optional: true},
     comparisonItems: {type: Object, optional: true},
 };
-QWeb.registerComponent("DropdownItemCustomPeriod", DropdownItemCustomPeriod);

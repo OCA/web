@@ -84,9 +84,13 @@ patch(dates, "patch dates", {
             };
             if (otherOptions.length) {
                 for (const option of otherOptions) {
+                    const year_param =
+                        option.granularity === "week"
+                            ? {weekYear: yearOption.setParam.year}
+                            : yearOption.setParam;
                     const setParam = Object.assign(
                         {},
-                        yearOption.setParam,
+                        year_param,
                         option ? option.setParam : {}
                     );
                     const {granularity, custom_period} = option;
