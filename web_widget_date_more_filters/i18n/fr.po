@@ -1,0 +1,73 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hr_timesheet_custom_date_filter
+
+#. module: hr_timesheet_custom_date_filter
+#. odoo-javascript
+#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
+#, python-format
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#. module: hr_timesheet_custom_date_filter
+#. odoo-javascript
+#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
+#, python-format
+msgid "Yesterday"
+msgstr "Hier"
+
+#. module: hr_timesheet_custom_date_filter
+#. odoo-javascript
+#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
+#, python-format
+msgid "This week"
+msgstr "Cette semaine"
+
+#. module: hr_timesheet_custom_date_filter
+#. odoo-javascript
+#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
+#, python-format
+msgid "Last week"
+msgstr "La semaine dernière"
+
+#. module: hr_timesheet_custom_date_filter
+#. odoo-javascript
+#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
+#, python-format
+msgid "Last 7 days"
+msgstr "7 derniers jours"
+
+#. module: hr_timesheet_custom_date_filter
+#. odoo-javascript
+#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
+#, python-format
+msgid "Last 30 days"
+msgstr "30 derniers jours"
+
+#. module: hr_timesheet_custom_date_filter
+#. odoo-javascript
+#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
+#, python-format
+msgid "Last 365 days"
+msgstr "365 derniers jours"
+
+#. module: hr_timesheet_custom_date_filter
+#. odoo-javascript
+#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
+#, python-format
+msgid "From Date"
+msgstr "À partir du"
+
+#. module: hr_timesheet_custom_date_filter
+#. odoo-javascript
+#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
+#, python-format
+msgid "Until"
+msgstr "Jusqu'au"
+
+#. module: hr_timesheet_custom_date_filter
+#. odoo-javascript
+#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
+#, python-format
+msgid "Week"
+msgstr "Semaine"
