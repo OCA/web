@@ -50,7 +50,6 @@ msgstr "Creato il"
 #. odoo-javascript
 #: code:addons/web_editor_class_selector/static/src/js/odoo-editor/OdooEditor.esm.js:0
 #: code:addons/web_editor_class_selector/static/src/xml/web_editor.xml:0
-#: code:addons/web_editor_class_selector/static/src/xml/web_editor.xml:0
 #, python-format
 msgid "Custom CSS"
 msgstr "CSS personalizzato"
@@ -64,11 +63,6 @@ msgstr "Nome visualizzato"
 #: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__id
 msgid "ID"
 msgstr "ID"
-
-#. module: web_editor_class_selector
-#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: web_editor_class_selector
 #: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__write_uid
@@ -112,3 +106,6 @@ msgstr "Classe editor web"
 #: model:ir.model,name:web_editor_class_selector.model_web_editor_class
 msgid "Web editor class selector"
 msgstr "Selettore classe editore web"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
