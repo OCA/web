@@ -11,12 +11,11 @@ _logger = logging.getLogger(__name__)
 try:
     import mpld3
     from bs4 import BeautifulSoup
-except (ImportError, IOError) as err:
+except (OSError, ImportError) as err:
     _logger.debug(err)
 
 
 class AbstractMpld3Parser(models.AbstractModel):
-
     _name = "abstract.mpld3.parser"
     _description = "Utility to parse ploot figure to json data for widget Mpld3"
 
