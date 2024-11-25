@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /* Copyright 2022 Tecnativa - Alexandre D. Díaz
  * Copyright 2022 Tecnativa - Carlos Roca
  * Copyright 2023 Taras Shabaranskyi
