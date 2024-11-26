@@ -2,7 +2,7 @@
 
 {
     "name": "Web Time Range Menu Custom",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/web",
@@ -11,7 +11,11 @@
     "auto_install": False,
     "assets": {
         "web.assets_backend": [
-            "/web_time_range_menu_custom/static/src/js/*.esm.js",
+            (
+                "after",
+                "/web/static/src/search/utils/dates.js",
+                "/web_time_range_menu_custom/static/src/js/*.esm.js",
+            ),
             "/web_time_range_menu_custom/static/src/scss/*.scss",
             "/web_time_range_menu_custom/static/src/xml/*.xml",
         ],

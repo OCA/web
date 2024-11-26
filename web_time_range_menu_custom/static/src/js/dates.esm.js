@@ -40,7 +40,7 @@ Object.assign(dates.PER_YEAR, {
 const _getSetParam = dates.getSetParam;
 
 // Patch of functions defined before
-patch(dates, "patch dates", {
+patch(dates, {
     /*
      * Redefine function to avoid the exclusion of days and weeks.
      */

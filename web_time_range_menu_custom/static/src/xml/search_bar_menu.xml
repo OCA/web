@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.SearchBarMenu" t-inherit-mode="extension">
+        <xpath
+            expr="//t[@t-foreach='filterItems']//AccordionItem//t[@t-foreach='item.options']"
+            position="after"
+        >
+            <DropdownItemCustomPeriod
+                t-if="item.type == 'dateFilter'"
+                field="item"
+                type="'filter'"
+            />
+        </xpath>
+        <xpath expr="//t[@t-foreach='comparisonItems']" position="after">
+            <DropdownItemCustomPeriod
+                comparisonItems="comparisonItems"
+                type="'comparison'"
+            />
+        </xpath>
+    </t>
+</templates>

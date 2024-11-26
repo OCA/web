@@ -17,70 +17,70 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: web_time_range_menu_custom
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "Add"
 msgstr "Añadir"
 
 #. module: web_time_range_menu_custom
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "Custom period"
 msgstr "Período personalizado"
 
 #. module: web_time_range_menu_custom
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "Day"
 msgstr "Día"
 
 #. module: web_time_range_menu_custom
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "Month"
 msgstr "Mes"
 
 #. module: web_time_range_menu_custom
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "Week"
 msgstr "Semana"
 
 #. module: web_time_range_menu_custom
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "Year"
 msgstr "Año"
 
 #. module: web_time_range_menu_custom
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "day"
 msgstr ""
 
 #. module: web_time_range_menu_custom
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "month"
 msgstr ""
 
 #. module: web_time_range_menu_custom
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "week"
 msgstr ""
 
 #. module: web_time_range_menu_custom
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "year"
