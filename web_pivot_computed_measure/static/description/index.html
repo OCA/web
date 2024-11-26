@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -9,10 +8,11 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
 
 See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
@@ -275,7 +275,7 @@ pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
   margin-right: 2em }
 
-pre.code .ln { color: grey; } /* line numbers */
+pre.code .ln { color: gray; } /* line numbers */
 pre.code, code { background-color: #eeeeee }
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
@@ -301,7 +301,7 @@ span.option {
 span.pre {
   white-space: pre }
 
-span.problematic {
+span.problematic, pre.problematic {
   color: red }
 
 span.section-subtitle {
@@ -369,7 +369,7 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:4cef60dd775467b756ccbacb8c215bba0bc74fd32e1917c8b15c3be9de6302a1
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/16.0/web_pivot_computed_measure"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_pivot_computed_measure"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/18.0/web_pivot_computed_measure"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_pivot_computed_measure"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>Adds support for computed measures on the pivot view.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
@@ -387,48 +387,45 @@ ul.auto-toc {
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
-<p>Go to pivot view and click on the “Measures” menu, you will see
-a new option called ‘Computed Measure’.</p>
-<dl class="docutils">
-<dt>You have the follow options to create a ‘computed measure’:</dt>
-<dd><ul class="first last simple">
-<li>Measure 1: Used in ‘operation formula’ as ‘m1’</li>
-<li>Measure 2: Used in ‘operation formula’ as ‘m2’</li>
-<li><dl class="first docutils">
-<dt>Operation: The formula</dt>
-<dd><ul class="first last">
+<p>Go to pivot view and click on the “Measures” menu, you will see a new
+option called ‘Computed Measure’.</p>
+<p>You have the follow options to create a ‘computed measure’:</p>
+<ul>
+<li><p class="first">Measure 1: Used in ‘operation formula’ as ‘m1’</p>
+</li>
+<li><p class="first">Measure 2: Used in ‘operation formula’ as ‘m2’</p>
+</li>
+<li><p class="first">Operation: The formula</p>
+<ul class="simple">
 <li>Sum: m1 + m2</li>
 <li>Sub: m1 - m2</li>
 <li>Mult: m1 * m2</li>
 <li>Div: m1 / m2 (Format: Float)</li>
 <li>Perc m1 / m2 (Format: Percentage)</li>
-<li>Custom: Special option only visible in debug mode to write a custom formula.</li>
+<li>Custom: Special option only visible in debug mode to write a
+custom formula.</li>
 </ul>
-</dd>
-</dl>
 </li>
-<li>Name: The name of the new measure (emtpy = auto-generated)</li>
-<li><dl class="first docutils">
-<dt>Format: How will the value be printed</dt>
-<dd><ul class="first last">
+<li><p class="first">Name: The name of the new measure (emtpy = auto-generated)</p>
+</li>
+<li><p class="first">Format: How will the value be printed</p>
+<ul class="simple">
 <li>Integer</li>
 <li>Float</li>
 <li>Percentage (value * 100)</li>
 </ul>
-</dd>
-</dl>
 </li>
-<li><dl class="first docutils">
-<dt>Formula*: Custom operation formula</dt>
-<dd>These formula is evaluated using ‘PY.eval’</dd>
-</dl>
+<li><div class="first line-block">
+<div class="line">Formula*: Custom operation formula</div>
+<div class="line">These formula is evaluated using ‘PY.eval’</div>
+</div>
 </li>
 </ul>
-</dd>
-</dl>
-<p>These computed measures can be mixed (You can reuse it to make new computed measures) and saved as favorites.</p>
-<p>Notice that “measures/computed measures” involved in an active ‘computed measure’
-can’t be deactivated until you have deactivate the ‘computed measure’.</p>
+<p>These computed measures can be mixed (You can reuse it to make new
+computed measures) and saved as favorites.</p>
+<p>Notice that “measures/computed measures” involved in an active ‘computed
+measure’ can’t be deactivated until you have deactivate the ‘computed
+measure’.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
 <h1><a class="toc-backref" href="#toc-entry-2">Known issues / Roadmap</a></h1>
@@ -442,7 +439,7 @@ can’t be deactivated until you have deactivate the ‘computed measure’.</p>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_pivot_computed_measure%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_pivot_computed_measure%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -468,13 +465,15 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <div class="section" id="maintainers">
 <h2><a class="toc-backref" href="#toc-entry-7">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
-<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
 <p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
 <p><a class="reference external image-reference" href="https://github.com/CarlosRoca13"><img alt="CarlosRoca13" src="https://github.com/CarlosRoca13.png?size=40px" /></a></p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/16.0/web_pivot_computed_measure">OCA/web</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/18.0/web_pivot_computed_measure">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
