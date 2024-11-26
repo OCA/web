@@ -148,7 +148,7 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
             if (subGroupData.__count === 0) {
                 subGroupData[cm.id] = false;
             } else {
-                // eslint-disable-next-line no-undef
+
                 subGroupData[cm.id] = evalOperation(cm.operation, subGroupData);
             }
         }

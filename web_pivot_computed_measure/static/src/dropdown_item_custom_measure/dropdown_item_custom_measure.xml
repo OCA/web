@@ -39,10 +39,10 @@
                 Computed Measure
 
                 <span class="o_submenu_switcher" data-id="__computed__">
-                    <span
-                        t-att-class="isOpen.value ? 'fa fa-caret-down' : 'fa fa-caret-right'"
-                    />
-                </span>
+                <span
+                    t-att-class="isOpen.value ? 'fa fa-caret-down' : 'fa fa-caret-right'"
+                />
+            </span>
             </a>
             <t t-if="isOpen.value">
                 <div id="add_computed_measure_wrapper" class="d-table">
