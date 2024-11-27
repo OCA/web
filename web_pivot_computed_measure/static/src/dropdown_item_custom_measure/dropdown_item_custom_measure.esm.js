@@ -17,16 +17,18 @@ export class DropdownItemCustomMeasure extends Component {
     }
 
     addMeasure(ev) {
-        const $target = $(ev.target).closest("#add_computed_measure_wrapper");
+        const target = ev.target.closest("#add_computed_measure_wrapper");
         const id = new Date().getTime();
-        const field1 = $target.find("#computed_measure_field_1").val();
-        const field2 = $target.find("#computed_measure_field_2").val();
-        let operation = $target.find("#computed_measure_operation").val();
+        const field1 = target.querySelector("#computed_measure_field_1").value;
+        const field2 = target.querySelector("#computed_measure_field_2").value;
+        let operation = target.querySelector("#computed_measure_operation").value;
         if (operation === "custom") {
-            operation = $target.find("#computed_measure_operation_custom").val();
+            operation = target.querySelector(
+                "#computed_measure_operation_custom"
+            ).value;
         }
-        const name = $target.find("#computed_measure_name").val();
-        const format = $target.find("#computed_measure_format").val();
+        const name = target.querySelector("#computed_measure_name").value;
+        const format = target.querySelector("#computed_measure_format").value;
         this.props.model.addComputedMeasure(
             id,
             field1,
@@ -35,8 +37,6 @@ export class DropdownItemCustomMeasure extends Component {
             name,
             format
         );
-        // Click on measures button to close the modal and recompute the measures added
-        $(ev.target).closest(".dropdown").find(".dropdown-toggle").trigger("click");
     }
 }
 DropdownItemCustomMeasure.template =

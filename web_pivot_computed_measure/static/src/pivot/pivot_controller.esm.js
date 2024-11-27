@@ -4,9 +4,8 @@
 
 import {PivotController} from "@web/views/pivot/pivot_controller";
 import {patch} from "@web/core/utils/patch";
-import {DropdownItemCustomMeasure} from "../dropdown_item_custom_measure/dropdown_item_custom_measure.esm";
 
-patch(PivotController.prototype, "web_pivot_computed_measure.PivotController", {
+patch(PivotController.prototype, {
     /**
      * Add computed_measures to context key to avoid loosing info when saving the
      * filter to favorites.
@@ -14,13 +13,8 @@ patch(PivotController.prototype, "web_pivot_computed_measure.PivotController", {
      * @override
      */
     getContext() {
-        var res = this._super(...arguments);
+        var res = super.getContext(...arguments);
         res.pivot_computed_measures = this.model._computed_measures;
         return res;
     },
 });
-
-PivotController.components = {
-    ...PivotController.components,
-    DropdownItemCustomMeasure,
-};

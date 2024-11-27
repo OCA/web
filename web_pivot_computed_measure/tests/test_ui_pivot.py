@@ -30,7 +30,7 @@ class TestUIPivot(common.HttpCase):
 
     def test_ui(self):
         self.start_tour(
-            "/web",
+            "/odoo",
             "web_pivot_computed_measure_tour",
             login="admin",
             step_delay=100,
