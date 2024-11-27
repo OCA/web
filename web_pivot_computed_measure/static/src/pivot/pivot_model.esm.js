@@ -8,14 +8,14 @@ import {patch} from "@web/core/utils/patch";
 import {computeReportMeasures} from "@web/views/utils";
 import {evalOperation} from "../helpers/utils.esm";
 
-patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
+patch(PivotModel.prototype, {
     /**
      * Add _computed_measures to avoid recompute them until page is recharged
      *
      * @override
      */
     setup() {
-        this._super(...arguments);
+        super.setup(...arguments);
         this._computed_measures = [];
     },
 
@@ -31,7 +31,7 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
      * @returns a promise
      */
     addComputedMeasure(id, field1, field2, operation, name, format) {
-        const measure = _.find(this._computed_measures, (item) => {
+        const measure = this._computed_measures.find((item) => {
             return (
                 item.field1 === field1 &&
                 item.field2 === field2 &&
@@ -92,7 +92,7 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
             // Used to know if is a computed measure field
             __computed_id: cmDef.id,
             // Operator used for group the measure added.
-            group_operator: "sum",
+            aggregator: "sum",
         };
         const metaData = (config && config.metaData) || this.metaData;
         metaData.measures[cmDef.id] = arrFields[cmDef.id];
@@ -133,7 +133,7 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
             (config && config.metaData.activeMeasures) ||
             this.metaData.activeMeasures ||
             [];
-        return _.contains(activeMeasures, field);
+        return activeMeasures.includes(field);
     },
 
     /**
@@ -148,7 +148,6 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
             if (subGroupData.__count === 0) {
                 subGroupData[cm.id] = false;
             } else {
-
                 subGroupData[cm.id] = evalOperation(cm.operation, subGroupData);
             }
         }
@@ -165,7 +164,7 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
                 this._fillComputedMeasuresData(subGroup, config);
             }
         }
-        this._super(...arguments);
+        super._prepareData(...arguments);
     },
 
     /**
@@ -177,16 +176,16 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
      *
      * @override
      */
-    _getGroupSubdivision(group, rowGroupBy, colGroupBy, config) {
+    async _getGroupSubdivision(group, rowGroupBy, colGroupBy, config) {
         const computed_measures = [];
-        for (let i = 0; i < config.metaData.activeMeasures.length; i++)
-            if (config.metaData.activeMeasures[i].startsWith("__computed_")) {
-                computed_measures.push(config.metaData.activeMeasures[i]);
-                config.metaData.activeMeasures.splice(i, 1);
+        for (let i = 0; i < config.measureSpecs.length; i++)
+            if (config.measureSpecs[i].startsWith("__computed_")) {
+                computed_measures.push(config.measureSpecs[i]);
+                config.measureSpecs.splice(i, 1);
                 i--;
             }
-        const res = this._super(...arguments);
-        $.merge(config.metaData.activeMeasures, computed_measures);
+        const res = await super._getGroupSubdivision(...arguments);
+        Object.assign(config.measureSpecs, computed_measures);
         return res;
     },
 
@@ -199,7 +198,7 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
     toggleMeasure(fieldName) {
         if (this._isMeasureEnabled(fieldName)) {
             // Mesaure is enabled
-            const umeasures = _.filter(this._computed_measures, (item) => {
+            const umeasures = this._computed_measures.filter((item) => {
                 return item.field1 === fieldName || item.field2 === fieldName;
             });
             if (umeasures.length && this._isMeasureEnabled(umeasures[0].id)) {
@@ -219,8 +218,8 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
                 const fieldDef = this.metaData.fields[afield];
                 // Need to check if fieldDef exists to avoid problems with __count
                 if (fieldDef && fieldDef.__computed_id) {
-                    const cm = _.find(this._computed_measures, {
-                        id: fieldDef.__computed_id,
+                    const cm = this._computed_measures.find((item) => {
+                        return item.id === fieldDef.__computed_id;
                     });
                     toAnalyze.push(cm.field1, cm.field2);
                     const toEnableFields = [];
@@ -238,11 +237,11 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
                 this._activeMeasures(
                     // Transform the array of arrays to a simple array.
                     // [1, [2, 3]] => [1, 2, 3]
-                    _.flatten(toEnable.reverse())
+                    toEnable.reverse().flat(Infinity)
                 );
             }
         }
-        return this._super(...arguments);
+        return super.toggleMeasure(...arguments);
     },
     /**
      * Load the measures added to selected favorite filters
@@ -250,7 +249,7 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
      * @override
      */
     async load(searchParams) {
-        var _super = this._super.bind(this);
+        var _super = super.load.bind(this);
         var config = {metaData: this.metaData, data: this.data};
         if (!this.metaData.measures) {
             const metaData = this._buildMetaData();
@@ -278,15 +277,14 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
         for (const fieldName of fieldNames) {
             const field = this.metaData.fields[fieldName];
             if (field.__computed_id) {
-                const cm = _.find(this._computed_measures, {
-                    id: field.__computed_id,
+                const cm = this._computed_measures.find((item) => {
+                    return item.id === field.__computed_id;
                 });
                 if (!cm) {
                     delete this.metaData.fields[fieldName];
                     delete this.metaData.measures[fieldName];
-                    this.metaData.activeMeasures = _.without(
-                        this.metaData.activeMeasures,
-                        fieldName
+                    this.metaData.activeMeasures = this.metaData.activeMeasures.filter(
+                        (item) => item !== fieldName
                     );
                 }
             }

@@ -5,11 +5,11 @@
 import {PivotRenderer} from "@web/views/pivot/pivot_renderer";
 import {patch} from "@web/core/utils/patch";
 
-patch(PivotRenderer.prototype, "web_pivot_computed_measure.PivotRenderer", {
+patch(PivotRenderer.prototype, {
     getFormattedValue(cell) {
         if (cell.value === Infinity) {
             return "-";
         }
-        return this._super(...arguments);
+        return super.getFormattedValue(...arguments);
     },
 });
