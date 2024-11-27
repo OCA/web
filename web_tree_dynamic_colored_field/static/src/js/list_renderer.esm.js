@@ -11,36 +11,35 @@ patch(ListRenderer.prototype, "web_tree_dynamic_colored_field_list_renderer", {
      * @returns {String} style code for the html element
      */
     getDynamicColoredStyle(column, record) {
-        let definition
-            expression
-            color
-        let style = ''
-        if (column.options){
-            if (column?.options?.bg_color){
-                definition = column.options.bg_color
+        let definition = false;
+        var expression = false;
+        var color = false;
+        let style = "";
+        if (column.options) {
+            if (column && column.options && column.options.bg_color) {
+                definition = column.options.bg_color;
                 for (const color_def of definition.split(";")) {
                     var pairList = color_def.split(":"),
-                    color = pairList[0],
-                    expression = pairList[1] ? pairList[1] : "True";
+                        color = pairList[0],
+                        expression = pairList[1] ? pairList[1] : "True";
                     if (evaluateExpr(expression, record.evalContext)) {
                         style += `background-color: ${color} !important;`;
                     }
                 }
             }
-            if (column?.options?.fg_color){
-                definition = column.options.fg_color
+            if (column && column.options && column.options.fg_color) {
+                definition = column.options.fg_color;
                 for (const color_def of definition.split(";")) {
                     var pairList = color_def.split(":"),
-                    color = pairList[0],
-                    expression = pairList[1] ? pairList[1] : "True";
-                    console.log("expression", expression)
+                        color = pairList[0],
+                        expression = pairList[1] ? pairList[1] : "True";
+                    console.log("expression", expression);
                     if (evaluateExpr(expression, record.evalContext)) {
                         style += `color: ${color} !important`;
                     }
                 }
             }
         }
-        return style
+        return style;
     },
-
 });
