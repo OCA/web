@@ -5,7 +5,7 @@ import {useBus} from "@web/core/utils/hooks";
 
 const {Component, useState} = owl;
 import * as dates from "@web/search/utils/dates";
-const {DateTime} = luxon; // eslint-disable-line no-undef
+const {DateTime} = luxon;
 var ID_CUSTOM_DATE = 0;
 
 /**

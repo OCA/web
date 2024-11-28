@@ -351,12 +351,12 @@ patch(dates, {
             globalGranularity === "year"
                 ? "years"
                 : globalGranularity === "month"
-                ? "months"
-                : globalGranularity === "week"
-                ? "weeks"
-                : globalGranularity === "day"
-                ? "days"
-                : "quarters";
+                  ? "months"
+                  : globalGranularity === "week"
+                    ? "weeks"
+                    : globalGranularity === "day"
+                      ? "days"
+                      : "quarters";
         plusParam[key] = num;
         return [plusParam, selectedOptions];
     },

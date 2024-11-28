@@ -7,10 +7,10 @@
                 Custom period
 
                 <span class="o_submenu_switcher" data-id="__computed__">
-                    <span
-                        t-att-class="isOpen.value ? 'fa fa-caret-down' : 'fa fa-caret-right'"
-                    />
-                </span>
+                <span
+                    t-att-class="isOpen.value ? 'fa fa-caret-down' : 'fa fa-caret-right'"
+                />
+            </span>
             </a>
             <t t-if="isOpen.value">
                 <div id="add_custom_period_wrapper" class="d-table">
@@ -26,9 +26,11 @@
                                     t-as="field_item"
                                     t-key="field_item"
                                 >
-                                    <option t-att-value="field_item"><span
+                                    <option t-att-value="field_item">
+                                        <span
                                             t-esc="env.searchModel.searchItems[field_item].description"
-                                        /></option>
+                                        />
+                                    </option>
                                 </t>
                             </select>
                         </div>
