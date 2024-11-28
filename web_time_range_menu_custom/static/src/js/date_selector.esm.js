@@ -1,10 +1,10 @@
-/** @odoo-module **/
 /* Copyright 2022 Tecnativa - Carlos Roca
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 import {useBus} from "@web/core/utils/hooks";
 
 const {Component, useState} = owl;
 import * as dates from "@web/search/utils/dates";
+import {customPeriods} from "./dates.esm";
 const {DateTime} = luxon;
 var ID_CUSTOM_DATE = 0;
 
@@ -61,24 +61,20 @@ export class DropdownItemCustomPeriod extends Component {
                 break;
         }
         const periodSearch = {
-            [key]: {
-                id: key,
-                groupNumber: 3,
-                description:
-                    "Last " + this.quantity.value + " " + this.type.value + "s",
-                format: formatSearch,
-                plusParam: {[plusParamID]: -this.quantity.value},
-                granularity: this.type.value,
-                custom_period: {
-                    is_custom_period: true,
-                    last_period: this.quantity.value,
-                },
+            id: key,
+            groupNumber: 3,
+            description: "Last " + this.quantity.value + " " + this.type.value + "s",
+            format: formatSearch,
+            plusParam: {[plusParamID]: -this.quantity.value},
+            granularity: this.type.value,
+            defaultYearId: "year",
+            custom_period: {
+                is_custom_period: true,
+                last_period: this.quantity.value,
             },
         };
-        Object.assign(dates.PERIOD_OPTIONS, periodSearch);
-        this.env.searchModel.optionGenerators = dates.getPeriodOptions(
-            this.referenceMoment
-        );
+        customPeriods.push(periodSearch);
+        this.env.searchModel.getSearchItems((f) => f.type === "field");
         this.env.searchModel.toggleDateFilter(field_id, key);
     }
 

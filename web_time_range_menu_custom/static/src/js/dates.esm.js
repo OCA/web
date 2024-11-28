@@ -1,9 +1,9 @@
-/** @odoo-module **/
 /* eslint-disable init-declarations */
 /* Copyright 2022 Tecnativa - Carlos Roca
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
 import {patch} from "@web/core/utils/patch";
+import {pick} from "@web/core/utils/objects";
 import {Domain} from "@web/core/domain";
 import {serializeDate, serializeDateTime} from "@web/core/l10n/dates";
 import {localization} from "@web/core/l10n/localization";
@@ -36,8 +36,10 @@ Object.assign(dates.PER_YEAR, {
     day: _getQtyOfCurrentYear("day"),
 });
 
+export const customPeriods = [];
 // This is needed to call the super functions on @web/search/utils/dates
 const _getSetParam = dates.getSetParam;
+const _getPeriodOptions = dates.getPeriodOptions;
 
 // Patch of functions defined before
 patch(dates, {
@@ -46,8 +48,7 @@ patch(dates, {
      */
     constructDateDomain(
         referenceMoment,
-        fieldName,
-        fieldType,
+        searchItem,
         selectedOptionIds,
         comparisonOptionId
     ) {
@@ -56,14 +57,25 @@ patch(dates, {
         if (comparisonOptionId) {
             [plusParam, selectedOptions] = dates.getComparisonParams(
                 referenceMoment,
+                searchItem,
                 selectedOptionIds,
                 comparisonOptionId
             );
         } else {
             selectedOptions = dates.getSelectedOptions(
                 referenceMoment,
+                searchItem,
                 selectedOptionIds
             );
+        }
+        if ("withDomain" in selectedOptions) {
+            return {
+                description: selectedOptions.withDomain[0].description,
+                domain: Domain.and([
+                    selectedOptions.withDomain[0].domain,
+                    searchItem.domain,
+                ]),
+            };
         }
         const yearOptions = selectedOptions.year;
         const otherOptions = [
@@ -75,6 +87,7 @@ patch(dates, {
         dates.sortPeriodOptions(yearOptions);
         dates.sortPeriodOptions(otherOptions);
         const ranges = [];
+        const {fieldName, fieldType} = searchItem;
         for (const yearOption of yearOptions) {
             const constructRangeParams = {
                 referenceMoment,
@@ -202,47 +215,9 @@ patch(dates, {
         }
         return {domain, description};
     },
-    /*
-     * Redefine function to allow process days and weeks.
-     */
-    getPeriodOptions(referenceMoment) {
-        const options = [];
-        const originalOptions = Object.values(dates.PERIOD_OPTIONS);
-        for (const option of originalOptions) {
-            const {id, groupNumber} = option;
-            let description;
-            let defaultYear;
-            switch (option.granularity) {
-                case "quarter":
-                    description = option.description.toString();
-                    defaultYear = referenceMoment.set(option.setParam).year;
-                    break;
-                case "day":
-                case "week":
-                case "month":
-                case "year":
-                    const date = referenceMoment.plus(option.plusParam);
-                    description = option.description || date.toFormat(option.format);
-                    defaultYear = date.year;
-                    break;
-            }
-            const setParam = dates.getSetParam(option, referenceMoment);
-            options.push({id, groupNumber, description, defaultYear, setParam});
-        }
-        const periodOptions = [];
-        for (const option of options) {
-            const {id, groupNumber, description, defaultYear} = option;
-            const yearOption = options.find(
-                (o) => o.setParam && o.setParam.year === defaultYear
-            );
-            periodOptions.push({
-                id,
-                groupNumber,
-                description,
-                defaultYearId: yearOption.id,
-            });
-        }
-        return periodOptions;
+    getPeriodOptions(referenceMoment, optionsParams) {
+        const res = _getPeriodOptions(referenceMoment, optionsParams);
+        return res.concat(customPeriods);
     },
     /*
      * Add selection of month when week or day selected.
@@ -264,17 +239,31 @@ patch(dates, {
         }
         return _getSetParam(...arguments);
     },
-    getSelectedOptions(referenceMoment, selectedOptionIds) {
+    getSelectedOptions(referenceMoment, searchItem, selectedOptionIds) {
         const selectedOptions = {year: []};
+        const periodOptions = dates.getPeriodOptions(
+            referenceMoment,
+            searchItem.optionsParams
+        );
         for (const optionId of selectedOptionIds) {
-            const option = dates.PERIOD_OPTIONS[optionId];
-            const setParam = dates.getSetParam(option, referenceMoment);
+            const option = periodOptions.find((option) => option.id === optionId);
             const custom_period = option.custom_period || {};
             const granularity = option.granularity;
             if (!selectedOptions[granularity]) {
                 selectedOptions[granularity] = [];
             }
-            selectedOptions[granularity].push({granularity, setParam, custom_period});
+            if (option.domain) {
+                selectedOptions[granularity].push(
+                    pick(option, "domain", "description")
+                );
+            } else {
+                const setParam = dates.getSetParam(option, referenceMoment);
+                selectedOptions[granularity].push({
+                    granularity,
+                    setParam,
+                    custom_period,
+                });
+            }
         }
         return selectedOptions;
     },
@@ -282,10 +271,16 @@ patch(dates, {
      * Add support to day and week options.
      *
      */
-    getComparisonParams(referenceMoment, selectedOptionIds, comparisonOptionId) {
+    getComparisonParams(
+        referenceMoment,
+        searchItem,
+        selectedOptionIds,
+        comparisonOptionId
+    ) {
         const comparisonOption = dates.COMPARISON_OPTIONS[comparisonOptionId];
         const selectedOptions = dates.getSelectedOptions(
             referenceMoment,
+            searchItem,
             selectedOptionIds
         );
         if (comparisonOption.plusParam) {
