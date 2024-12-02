@@ -1,0 +1,3 @@
+- Go to the **Invoicing > Customers > Invoices** and add a new line.
+- The product label must be displayed just after the product name.
+- If the product does not have a description, a button must be displayed to add one.

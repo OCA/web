@@ -1,0 +1,3 @@
+- Add compatibility with `sale` module
+- Add compatibility with `purchase_product_matrix` module
+- When this module is installed, the PDF report will always display the column `name` as a combination of the `product code`, `product name`, and `description`. This behavior may differ from the expected behavior, where only the column `name` is displayed and can be customized independently.
