@@ -77,8 +77,8 @@ class ResCompany(models.Model):
             else False
         )
         company = (
-            self.browse(int(company_id.split(",")[0])).sudo()
-            if company_id and self.browse(int(company_id.split(",")[0])).sudo().favicon
+            self.browse(int(company_id.split("-")[0])).sudo()
+            if company_id and self.browse(int(company_id.split("-")[0])).sudo().favicon
             else False
         )
         if company:
