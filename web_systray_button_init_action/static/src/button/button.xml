@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="web_systray_button_init_action.Button" owl="1">
+        <div class="o_ActivityMenuView init_action_div" t-if="showHomeButton">
+            <a
+                class="o_ActivityMenuView_dropdownToggle"
+                name="init_action"
+                title="Init Action"
+                href="#"
+                role="button"
+                t-on-click="onClickInitAction"
+            >
+                <i class="fa fa-lg fa-home" role="img" aria-label="Init Action" />
+            </a>
+        </div>
+    </t>
+</templates>

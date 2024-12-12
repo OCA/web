@@ -1,0 +1,33 @@
+/* @odoo-module */
+/* Copyright 2024 Tecnativa - David Vidal
+ * Copyright 2024 Tecnativa - Carlos Roca
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+import {Component} from "@odoo/owl";
+import {registry} from "@web/core/registry";
+import {useService} from "@web/core/utils/hooks";
+import {session} from "@web/session";
+
+export class InitActionMenu extends Component {
+    setup() {
+        this.action = useService("action");
+        this.showHomeButton = Boolean(session.home_action_id);
+    }
+
+    /**
+     * Go to user init action when clicking it
+     * @private
+     */
+    onClickInitAction() {
+        window.location.href = window.location.origin + "/web";
+    }
+}
+
+InitActionMenu.template = "web_systray_button_init_action.Button";
+
+export const systrayInitAction = {
+    Component: InitActionMenu,
+};
+
+registry
+    .category("systray")
+    .add("web_systray_button_init_action.button", systrayInitAction, {sequence: 100});
