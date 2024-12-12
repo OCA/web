@@ -20,6 +20,7 @@ import {X2ManyField} from "@web/views/fields/x2many/x2many_field";
 import {_t} from "@web/core/l10n/translation";
 import {getActiveHotkey} from "@web/core/hotkeys/hotkey_service";
 import {registry} from "@web/core/registry";
+import {useProductAndLabelAutoresize} from "../../core/utils/product_and_label_autoresize.esm";
 
 export class ProductLabelSectionAndNoteListRender extends SectionAndNoteListRenderer {
     setup() {
@@ -138,7 +139,13 @@ export class ProductLabelSectionAndNoteField extends Many2OneField {
             value: this.props.record.columnIsProductAndLabel,
         });
         this.labelNode = useRef("labelNodeRef");
+        useProductAndLabelAutoresize(this.labelNode, {
+            targetParentName: this.props.name,
+        });
         this.productNode = useRef("productNodeRef");
+        useProductAndLabelAutoresize(this.productNode, {
+            targetParentName: this.props.name,
+        });
 
         useEffect(
             () => {
