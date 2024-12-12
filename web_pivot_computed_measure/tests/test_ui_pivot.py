@@ -28,6 +28,11 @@ class TestUIPivot(common.HttpCase):
         action = cls.env.ref("base.action_res_users")
         action.view_mode += ",pivot"
 
+    @classmethod
+    def tearDownClass(cls):
+        cls.loader.restore_registry()
+        return super().tearDownClass()
+
     def test_ui(self):
         self.start_tour(
             "/web",
