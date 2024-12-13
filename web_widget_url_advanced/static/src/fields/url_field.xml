@@ -6,12 +6,10 @@
         t-inherit="web.UrlField"
         t-inherit-mode="extension"
     >
-
         <xpath expr="//a[hasclass('o_field_widget')]" position="attributes">
             <attribute name="t-esc">title</attribute>
             <attribute name="t-att-href">formattedHrefWithPrefix</attribute>
         </xpath>
-
     </t>
 
     <t
@@ -19,12 +17,10 @@
         t-inherit="web.FormUrlField"
         t-inherit-mode="extension"
     >
-
         <xpath expr="//a[hasclass('o_field_widget')]" position="attributes">
             <attribute name="t-esc">title</attribute>
             <attribute name="t-att-href">formattedHrefWithPrefix</attribute>
         </xpath>
-
     </t>
 
 </templates>
