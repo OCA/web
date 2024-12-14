@@ -6,3 +6,5 @@
 - Joan Sisquella \<<joan.sisquella@forgeflow.com>\>
 - Peerapong Supasompob \<<peerapong.supasompob@gmail.com>\>
 - Nedas Žilinskas \<<nedas.zilinskas@avoin.systems>\>
+- [Komit](https://komit-consulting.com):
+  - Vang Nguyen Phu

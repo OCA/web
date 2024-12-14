@@ -1,5 +1,5 @@
-Use url widget as you do usually, then add an extra parameter text_field
-to indicate which field (present in the view already) must be used for
+Use url, CopyClipboardURL widget as you do usually, then add an extra parameter text_
+field to indicate which field (present in the view already) must be used for
 the anchor text.
 
 ``` xml
