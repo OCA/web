@@ -1,51 +1,58 @@
-/** @odoo-module **/
 /* Copyright 2024 Camptocamp
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl) */
-
-import {DateTimePicker} from "@web/core/datepicker/datepicker";
+import {DateTimePicker} from "@web/core/datetime/datetime_picker";
+import {DateTimePickerPopover} from "@web/core/datetime/datetime_picker_popover";
 import {patch} from "@web/core/utils/patch";
-import {localization} from "@web/core/l10n/localization";
+const {DateTime} = luxon;
 
-patch(DateTimePicker.prototype, "DateTimePickerDefaultTime", {
-    onMounted() {
-        this._super.apply(this, arguments);
-        this.addPickerListener("change", ({date, oldDate}) => {
-            const default_time = this.props.defaultTime;
-            if (date && !oldDate && default_time) {
-                // FIXME: Consider TZ
-                date.set({
-                    hour: default_time.hour,
-                    minute: default_time.minute,
-                    second: default_time.second,
-                });
-                window.$(this.rootRef.el).datetimepicker("date", date);
-            }
-        });
-    },
-    isStrDate(input_string) {
-        return input_string.trim().length == localization.dateFormat.length;
-    },
-    customParseValue(input_value, options) {
-        const default_time = this.props.defaultTime;
-        let [res, error] = this.parseValueOriginal(input_value, options);
-        if (default_time && this.isStrDate(input_value)) {
-            const new_value = res.set({
-                hour: default_time.hour,
-                minute: default_time.minute,
-                second: default_time.second,
-            });
-            res = new_value;
+/**
+ * @typedef {import("@web/core/datetime/datetime_picker").DateTimePickerProps & {
+ *   defaultTime?: { hour: number, minute: number, second: number },
+ *   defaultStartTime?: { hour: number, minute: number, second: number },
+ *   defaultEndTime?: { hour: number, minute: number, second: number },
+ * }} DateTimePickerProps
+ */
+
+patch(DateTimePicker.prototype, {
+    /**
+     * @param {DateTimePickerProps} props
+     */
+    onPropsUpdated(props) {
+        super.onPropsUpdated(props);
+
+        const timeValues = this.values.map((val, index) =>
+            this.getCustomTimeValues(val, index)
+        );
+
+        if (props.range) {
+            this.state.timeValues = timeValues;
+        } else {
+            this.state.timeValues = [];
+            this.state.timeValues[props.focusedDateIndex] =
+                timeValues[props.focusedDateIndex];
         }
-        return [res, error];
+
+        this.adjustFocus(this.values, props.focusedDateIndex);
+        this.handle12HourSystem();
+        this.state.timeValues = this.state.timeValues.map((timeValue) =>
+            timeValue.map(String)
+        );
     },
-    initFormat() {
-        this._super.apply(this, arguments);
-        this.parseValueOriginal = this.parseValue;
-        this.parseValue = this.customParseValue;
+
+    getCustomTimeValues(val, index) {
+        const defaultTime =
+            this.props.defaultTime || this.props.defaultStartTime || DateTime.local();
+        const defaultEndTime =
+            this.props.defaultEndTime || DateTime.local().plus({hour: 1});
+
+        const timeSource = index === 1 ? val || defaultEndTime : val || defaultTime;
+
+        return [timeSource.hour, timeSource.minute || 0, timeSource.second || 0];
     },
 });
 
-DateTimePicker.props = _.extend({}, DateTimePicker.props, {
+DateTimePicker.props = {
+    ...DateTimePicker.props,
     defaultTime: {
         type: Object,
         shape: {
@@ -55,4 +62,24 @@ DateTimePicker.props = _.extend({}, DateTimePicker.props, {
         },
         optional: true,
     },
-});
+    defaultStartTime: {
+        type: Object,
+        shape: {
+            hour: Number,
+            minute: Number,
+            second: Number,
+        },
+        optional: true,
+    },
+    defaultEndTime: {
+        type: Object,
+        shape: {
+            hour: Number,
+            minute: Number,
+            second: Number,
+        },
+        optional: true,
+    },
+};
+
+DateTimePickerPopover.props.pickerProps.shape = DateTimePicker.props;

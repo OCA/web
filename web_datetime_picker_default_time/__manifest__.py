@@ -3,7 +3,7 @@
 {
     "name": "Web Datetime Picker Default Time",
     "summary": "Allows to define a default time on datetime picker",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "web",
     "website": "https://github.com/OCA/web",
     "author": "Camptocamp, Odoo Community Association (OCA)",
@@ -15,7 +15,9 @@
     "assets": {
         "web.assets_backend": [
             "/web_datetime_picker_default_time/static/src/js/*.js",
-            "/web_datetime_picker_default_time/static/src/xml/*.xml",
+        ],
+        "web.assets_unit_tests": [
+            "web_datetime_picker_default_time/static/tests/web_datetime_picker_default_time.test.js",
         ],
     },
 }
