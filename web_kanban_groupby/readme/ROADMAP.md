@@ -1,0 +1,2 @@
+- For the moment this isn't going to be finshed. In any case, the next steps in development would be:
+  - Inject the buttons in the column headers, either using a function similar to `_renderGroupButtons` in the `ListRenderer` or just rendering them in the qweb client view. Maybe this last method could be enough without the need of dealing on the complexities of the `ListModel` implementation.
