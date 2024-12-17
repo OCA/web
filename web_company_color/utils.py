@@ -8,7 +8,7 @@ from PIL import Image
 
 
 def n_rgb_to_hex(_r, _g, _b):
-    return "#{:02x}{:02x}{:02x}".format(int(255 * _r), int(255 * _g), int(255 * _b))
+    return f"#{int(255 * _r):02x}{int(255 * _g):02x}{int(255 * _b):02x}"
 
 
 def convert_to_image(field_binary):
