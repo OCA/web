@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.http import request
 
-from odoo.addons.base.models.assetsbundle import AssetsBundle, ScssStylesheetAsset
+from odoo.addons.base.models.assetsbundle import AssetsBundle
 
 
 class AssetsBundleCompanyColor(AssetsBundle):
@@ -17,6 +17,4 @@ class AssetsBundleCompanyColor(AssetsBundle):
         company_id = (
             self.env["res.company"].browse(active_company_id) or self.env.company
         )
-        asset = ScssStylesheetAsset(self, url=company_id.scss_get_url())
-        compiled = self.compile_css(asset.compile, asset.get_source())
-        return "style", {}, compiled
+        return company_id.scss_get_url()
