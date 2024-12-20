@@ -6,9 +6,7 @@
         <field name='name'>Generate report assets</field>
         <field name='interval_number'>1</field>
         <field name='interval_type'>months</field>
-        <field name="numbercall">-1</field>
         <field name="active" eval="True" />
-        <field name="doall" eval="False" />
         <field
             name="nextcall"
             eval="(datetime.now() + timedelta(minutes=1)).strftime('%Y-%m-%d %H:%M:00')"

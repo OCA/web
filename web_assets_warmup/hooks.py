@@ -7,7 +7,9 @@ import os
 
 import psycopg2
 
-from odoo import fields, registry
+from odoo import fields
+from odoo.modules.registry import Registry
+from odoo.tools import config
 
 logger = logging.getLogger(__name__)
 
@@ -16,8 +18,8 @@ def active_cron_assets():
     """Plan the next execution of the cron responsible to generate assets."""
     if os.environ.get("RUNNING_ENV") == "dev":
         return
-    dbname = os.environ.get("DB_NAME")
-    reg = registry(dbname)
+    dbname = config["db_name"]
+    reg = Registry(dbname)
     with reg.cursor() as cr:
         cron_module, cron_ref = "web_assets_warmup", "cron_generate_assets"
         query = """

@@ -3,7 +3,7 @@
 {
     "name": "Generate assets when Odoo starts",
     "summary": "Ensure that assets are generated when Odoo starts.",
-    "version": "14.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Hidden",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",

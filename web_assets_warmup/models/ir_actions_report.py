@@ -15,23 +15,13 @@ class IrActionsReport(models.Model):
     def cron_generate_assets(self):
         """Ensure that the assets are well-generated in the database."""
         logger.info("Ensure that assets are generated and stored in the database...")
-        # Call `_get_asset_nodes` as done when printing a report based on
-        # `web.report_layout` template (used by `web.html_container`)
-        options = {
-            "commit_assetsbundle": False,
-            "debug": False,
-            "inherit_branding": False,
-            "dev_mode": False,
-            "caller_template": "web.html_container",
-        }
-        assets_template_ids = [
+        bundles = [
             "web.report_assets_common",
-            "web.assets_common",
             "web.report_assets_pdf",
         ]
-        for xml_id in assets_template_ids:
-            self.env["ir.qweb"]._get_asset_nodes(
-                xmlid=xml_id, options=options, css=True, js=True
-            )
+        for bundle in bundles:
+            files = self.env["ir.qweb"]._get_asset_bundle(bundle, css=True, js=True)
+            files.js()
+            files.css()
         logger.info("Ensure that assets are generated and stored in the database: done")
         return True

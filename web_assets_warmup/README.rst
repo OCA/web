@@ -65,8 +65,15 @@ Authors
 Contributors
 ------------
 
--  Sébastien Alix <sebastien.alix@camptocamp.com>
--  Michael Tietz (MT Software) <mtietz@mt-software.de>
+- Sébastien Alix <sebastien.alix@camptocamp.com>
+- Michael Tietz (MT Software) <mtietz@mt-software.de>
+- Do Anh Duy <duyda@trobz.com>
+
+Other credits
+-------------
+
+The migration of this module from 14.0 to 18.0 was financially supported
+by Camptocamp.
 
 Maintainers
 -----------
