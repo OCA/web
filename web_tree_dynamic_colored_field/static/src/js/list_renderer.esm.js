@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {ListRenderer} from "@web/views/list/list_renderer";
 import {evaluateBooleanExpr} from "@web/core/py_js/py";
 import {patch} from "@web/core/utils/patch";
