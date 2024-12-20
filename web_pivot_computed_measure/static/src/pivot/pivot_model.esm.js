@@ -1,12 +1,11 @@
-/** @odoo-module **/
 /* Copyright 2020 Tecnativa - Alexandre Díaz
  * Copyright 2022 Tecnativa - Carlos Roca
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
 import {PivotModel} from "@web/views/pivot/pivot_model";
-import {patch} from "@web/core/utils/patch";
 import {computeReportMeasures} from "@web/views/utils";
 import {evalOperation} from "../helpers/utils.esm";
+import {patch} from "@web/core/utils/patch";
 
 patch(PivotModel.prototype, {
     /**
