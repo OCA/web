@@ -14,3 +14,4 @@
 
 - [Tecnativa](https://www.tecnativa.com):
   - Carlos Roca
+- `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`_

@@ -1,8 +1,9 @@
 /** @odoo-module **/
-import {_lt} from "@web/core/l10n/translation";
+import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {Component, onWillStart, onWillUpdateProps} from "@odoo/owl";
+import {useOwnedDialogs} from "@web/core/utils/hooks";
 
 export class FieldDynamicDropdown extends Component {
     static template = "web.SelectionField";
@@ -12,6 +13,8 @@ export class FieldDynamicDropdown extends Component {
         context: {type: Object},
     };
     setup() {
+        super.setup();
+        this.dialogs = useOwnedDialogs();
         this.type = this.props.record.fields[this.props.name].type;
         onWillStart(async () => {
             this.specialData = await this._fetchSpecialData(this.props);
@@ -34,8 +37,8 @@ export class FieldDynamicDropdown extends Component {
         return specialDataCaches[key];
     }
     get options() {
-        var field_type = this.type || "";
-        if (["char", "integer", "selection"].includes(field_type)) {
+        const fieldType = this.type || "";
+        if (["char", "integer", "selection"].includes(fieldType)) {
             if (
                 this.props.record.data[this.props.name] &&
                 !this.specialData
@@ -58,8 +61,8 @@ export class FieldDynamicDropdown extends Component {
      * @param {Event} ev
      */
     onChange(ev) {
-        var isInvalid = false;
-        var value = JSON.parse(ev.target.value);
+        let isInvalid = false;
+        let value = JSON.parse(ev.target.value);
         if (this.type === "integer") {
             value = Number(value);
             if (!value) {
@@ -79,11 +82,11 @@ export class FieldDynamicDropdown extends Component {
 }
 export const dynamicDropdownField = {
     component: FieldDynamicDropdown,
-    displayName: _lt("Dynamic Dropdown"),
+    displayName: _t("Dynamic Dropdown"),
     supportedTypes: ["char", "integer", "selection"],
-    extractProps: (fieldInfo, dynamicInfo) => ({
-        method: fieldInfo.options?.values,
-        context: dynamicInfo.context,
+    extractProps: ({options}, {context}) => ({
+        method: options?.values,
+        context,
     }),
 };
 registry.category("fields").add("dynamic_dropdown", dynamicDropdownField);
