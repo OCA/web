@@ -216,7 +216,7 @@ patch(PivotModel.prototype, {
                 const afield = toAnalyze.shift();
                 const fieldDef = this.metaData.fields[afield];
                 // Need to check if fieldDef exists to avoid problems with __count
-                if (fieldDef && fieldDef.__computed_id) {
+                if (fieldDef?.__computed_id) {
                     const cm = this._computed_measures.find((item) => {
                         return item.id === fieldDef.__computed_id;
                     });
@@ -275,10 +275,10 @@ patch(PivotModel.prototype, {
         const fieldNames = Object.keys(this.metaData.fields);
         for (const fieldName of fieldNames) {
             const field = this.metaData.fields[fieldName];
-            if (field.__computed_id) {
-                const cm = this._computed_measures.find((item) => {
-                    return item.id === field.__computed_id;
-                });
+            if (field?.__computed_id) {
+                const cm = this._computed_measures.find(
+                    (item) => item.id === field.__computed_id
+                );
                 if (!cm) {
                     delete this.metaData.fields[fieldName];
                     delete this.metaData.measures[fieldName];
