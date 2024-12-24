@@ -1,4 +1,3 @@
-/** @odoo-module */
 /* Copyright 2013 Therp BV (<http://therp.nl>).
  * Copyright 2015 Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
  * Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
