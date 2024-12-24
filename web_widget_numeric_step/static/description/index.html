@@ -369,7 +369,7 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:1062d0c26bb10198c524113d70fa069c5928514e9569f607316544fee88bb6d9
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/17.0/web_widget_numeric_step"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_widget_numeric_step"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/18.0/web_widget_numeric_step"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_widget_numeric_step"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This widget changes input number field and make it easier to increment
 the number thanks to 2 buttons (+ and -). Use JS native logic for input
 number, so you can use the options <tt class="docutils literal">min</tt>, <tt class="docutils literal">max</tt>, <tt class="docutils literal">step</tt>,
@@ -380,11 +380,12 @@ number, so you can use the options <tt class="docutils literal">min</tt>, <tt cl
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-2">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-3">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-4">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-5">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-6">Maintainers</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-2">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-5">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-6">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-7">Maintainers</a></li>
 </ul>
 </li>
 </ul>
@@ -394,7 +395,7 @@ number, so you can use the options <tt class="docutils literal">min</tt>, <tt cl
 <p>In your xml view, add <tt class="docutils literal"><span class="pre">widget=&quot;numeric_step&quot;</span></tt> This will add the 2
 buttons “+” and “-” just next to the input field in edit mode. Iteration
 step by default is 1.</p>
-<p><img alt="image1" src="https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/add_two_buttons.png" /></p>
+<p><img alt="image1" src="https://raw.githubusercontent.com/OCA/web/18.0/web_widget_numeric_step/static/description/add_two_buttons.png" /></p>
 <p><strong>Optional</strong></p>
 <p>Add an option to choose the step iteration and limits (min and max
 values).</p>
@@ -415,33 +416,38 @@ False)</li>
 <p>Iteration with 0.25 step, min to -1 and max to 10.</p>
 <p>Start to increment with button, continue incrementing with scrolling
 mouse.</p>
-<p><img alt="image2" src="https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/step0,25andlimits.gif" /></p>
+<p><img alt="image2" src="https://raw.githubusercontent.com/OCA/web/18.0/web_widget_numeric_step/static/description/step0,25andlimits.gif" /></p>
 <p>Iteration with 10 step, max limit 15, placeholder with onchange</p>
-<p><img alt="image3" src="https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/step10_limit15_placeholder117_with_onchange.gif" /></p>
+<p><img alt="image3" src="https://raw.githubusercontent.com/OCA/web/18.0/web_widget_numeric_step/static/description/step10_limit15_placeholder117_with_onchange.gif" /></p>
 <p><strong>Demo</strong></p>
 <p>You can test the feature by going to Settings &gt; Technical &gt; Scheduled
 Actions. The field “Execute Every” is configured to use the widget with
 2 step, min to 0 and max to 40.</p>
 </div>
+<div class="section" id="known-issues-roadmap">
+<h1><a class="toc-backref" href="#toc-entry-2">Known issues / Roadmap</a></h1>
+<p>When the value is entered using the keyboard, the limits set in the
+widget can be exceeded</p>
+</div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_widget_numeric_step%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_widget_numeric_step%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-3">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-4">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-4">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-5">Authors</a></h2>
 <ul class="simple">
 <li>GRAP</li>
 <li>Tecnativa</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-5">Contributors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-6">Contributors</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="http://www.grap.coop">GRAP</a>:<ul>
 <li>Quentin DUPONT &lt;<a class="reference external" href="mailto:quentin.dupont&#64;grap.coop">quentin.dupont&#64;grap.coop</a>&gt;</li>
@@ -458,7 +464,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-6">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-7">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org">
 <img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
@@ -468,7 +474,7 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
 <p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainers</a>:</p>
 <p><a class="reference external image-reference" href="https://github.com/rafaelbn"><img alt="rafaelbn" src="https://github.com/rafaelbn.png?size=40px" /></a> <a class="reference external image-reference" href="https://github.com/yajo"><img alt="yajo" src="https://github.com/yajo.png?size=40px" /></a></p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/17.0/web_widget_numeric_step">OCA/web</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/18.0/web_widget_numeric_step">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
