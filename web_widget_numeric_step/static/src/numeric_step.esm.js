@@ -1,6 +1,6 @@
 /** @odoo-module */
 
-import {_lt} from "@web/core/l10n/translation";
+import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 import {FloatField} from "@web/views/fields/float/float_field";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
@@ -10,7 +10,7 @@ export class NumericStep extends FloatField {
         super.setup();
     }
     _onStepClick(ev) {
-        const mode = $(ev.target).data("mode");
+        const mode = ev.target.dataset.mode;
         this._doStep(mode);
     }
     _onKeyDown(ev) {
@@ -22,10 +22,19 @@ export class NumericStep extends FloatField {
     }
     _onWheel(ev) {
         ev.preventDefault();
-        if (ev.deltaY > 0) {
-            this._doStep("minus");
-        } else {
-            this._doStep("plus");
+        if (!this._lastWheelTime) {
+            this._lastWheelTime = 0;
+        }
+        const now = Date.now();
+        const throttleLimit = 100;
+        if (now - this._lastWheelTime >= throttleLimit) {
+            this._lastWheelTime = now;
+
+            if (ev.deltaY > 0) {
+                this._doStep("minus");
+            } else {
+                this._doStep("plus");
+            }
         }
     }
     updateField(val) {
@@ -64,7 +73,7 @@ NumericStep.defaultProps = {
 export const numericStep = {
     component: NumericStep,
     supportedTypes: ["float"],
-    displayName: _lt("Numeric Step"),
+    displayName: _t("Numeric Step"),
     extractProps: ({attrs, options}) => {
         return {
             name: attrs.name,

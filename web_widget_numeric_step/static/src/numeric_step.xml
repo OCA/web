@@ -5,7 +5,7 @@ Copyright 2020 Tecnativa - Alexandre Díaz
 License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 -->
 <template>
-    <t t-name="web_widget_numeric_step" owl="1">
+    <t t-name="web_widget_numeric_step">
         <div class="d-flex widget_numeric_step">
             <div class="input-group-prepend widget_numeric_step_btn">
                 <button
