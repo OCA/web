@@ -1,0 +1,19 @@
+<templates>
+    <t
+        t-name="Many2ManyBinaryField.attachment_preview"
+        t-inherit="web.Many2ManyBinaryField.attachment_preview"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_image_box')]/a/span" position="attributes">
+            <attribute name="t-if">!show_preview(file)</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('o_image_box')]/a/span" position="after">
+            <img
+                t-if="show_preview(file)"
+                t-att-src="getImageUrl(file)"
+                aria-label="Download"
+                download=""
+            />
+        </xpath>
+    </t>
+</templates>
