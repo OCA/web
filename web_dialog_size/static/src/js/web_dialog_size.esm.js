@@ -1,7 +1,5 @@
-/** @odoo-module **/
-
-import {ActionDialog} from "@web/webclient/actions/action_dialog";
 import {Component, onMounted} from "@odoo/owl";
+import {ActionDialog} from "@web/webclient/actions/action_dialog";
 import {Dialog} from "@web/core/dialog/dialog";
 import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
 import {patch} from "@web/core/utils/patch";
@@ -19,7 +17,7 @@ export class ExpandButton extends Component {
         onMounted(() => {
             var self = this;
             this.config.then(function (r) {
-                if (r.default_maximize && stop) {
+                if (r.default_maximize) {
                     self.dialog_button_extend();
                 }
             });
