@@ -7,7 +7,7 @@
             class="btn btn-secondary dialog_button_extend"
             t-on-click="dialog_button_restore"
         >
-            <i class="fa fa-compress" />
+            <i class="fa fa-window-restore" />
         </button>
         <button
             t-if="props.getsize() != 'dialog_full_screen'"
@@ -15,7 +15,7 @@
             class="btn btn-secondary dialog_button_restore"
             t-on-click="dialog_button_extend"
         >
-            <i class="fa fa-expand" />
+            <i class="fa fa-window-maximize" />
         </button>
     </t>
 </templates>
