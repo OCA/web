@@ -32,7 +32,24 @@ $button-border-color: #dee2e6;
             border: 0px solid !important;
         }
     }
+
+    .o_field_monetary {
+        /* Prevent to have double border for monetary fields */
+        .o_input {
+            border: 0px solid !important;
+        }
+
+        #list_price_0 {
+            border: 1px solid $input-border-color !important;
+            border-radius: 3px;
+
+            &:focus {
+                border-color: $input-border-color-focus !important;
+            }
+        }
+    }
 }
+
 /***********************************************************
         Form View : Handle Button Borders
 ************************************************************/
@@ -53,6 +70,7 @@ $button-border-color: #dee2e6;
         padding-right: 2px;
     }
 }
+
 /***********************************************************
         Form View : Handle Background for required fields
 ************************************************************/
@@ -79,6 +97,7 @@ $button-border-color: #dee2e6;
 /***********************************************************
         Tree View : Handle style for required fields
 ************************************************************/
+
 .o_list_renderer
     .o_data_row.o_selected_row
     > .o_data_cell.o_required_modifier:not(.o_readonly_modifier) {
