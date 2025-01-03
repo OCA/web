@@ -7,18 +7,17 @@
         t-inherit="web.ImageField"
         t-inherit-mode="extension"
     >
-        <xpath expr="//FileUploader/../.." position="after">
+        <xpath expr="//button[hasclass('o_select_file_button')]" position="before">
             <div
-                t-attf-class="position-absolute top-0 opacity-0 opacity-100-hover {{isMobile ? 'o_mobile_controls' : ''}}"
-                aria-atomic="true"
-                t-att-style="sizeStyle"
+                class="position-absolute"
+                t-att-style="'transform: translate(0, -55px); left: 0px; z-index: 10;'"
             >
                 <button
                     t-if="props.record.data[props.name] and state.isValid"
                     class="o_form_binary_file_download btn btn-light border-0 rounded-circle m-1 p-1"
                     data-tooltip="Download"
                     aria-label="Download"
-                    t-on-click="onFileDownload"
+                    t-on-click.stop="onFileDownload"
                 >
                     <i class="fa fa-download fa-fw" />
                 </button>
