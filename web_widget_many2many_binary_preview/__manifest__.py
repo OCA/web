@@ -4,7 +4,7 @@
 {
     "name": "Preview in many2many_binary widget",
     "summary": "Allows developers to enable previews in binary widgets",
-    "version": "16.0.1.0.0",
+    "version": "14.0.1.0.0",
     "development_status": "Alpha",
     "category": "Technical",
     "website": "https://github.com/OCA/web",
@@ -14,10 +14,10 @@
     "depends": [
         "web",
     ],
-    "assets": {
-        "web.assets_backend": [
-            "web_widget_many2many_binary_preview/static/src/*.js",
-            "web_widget_many2many_binary_preview/static/src/*.xml",
-        ],
-    },
+    "data": [
+        "views/templates.xml",
+    ],
+    "qweb": [
+        "static/src/web_widget_many2many_binary_preview.xml",
+    ],
 }

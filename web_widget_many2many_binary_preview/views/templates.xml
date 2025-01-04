@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--
+        License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+    -->
+    <template
+        id="assets_backend"
+        name="web_widget_many2many_binary_preview assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_widget_many2many_binary_preview/static/src/web_widget_many2many_binary_preview.js"
+            />
+        </xpath>
+    </template>
+</odoo>
