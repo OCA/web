@@ -1,8 +1,6 @@
-/** @odoo-module **/
-
 import {Component} from "@odoo/owl";
 import {X2Many2DMatrixRenderer} from "@web_widget_x2many_2d_matrix/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.esm";
-import {archParseBoolean} from "@web/views/utils";
+import {exprToBoolean} from "@web/core/utils/strings";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
@@ -41,15 +39,15 @@ export const x2Many2DMatrixField = {
                 x: attrs.field_x_axis,
                 y: attrs.field_y_axis,
             },
-            isXClickable: archParseBoolean(attrs.x_axis_clickable),
-            isYClickable: archParseBoolean(attrs.y_axis_clickable),
+            isXClickable: exprToBoolean(attrs.x_axis_clickable),
+            isYClickable: exprToBoolean(attrs.y_axis_clickable),
             showRowTotals:
                 "show_row_totals" in attrs
-                    ? archParseBoolean(attrs.show_row_totals)
+                    ? exprToBoolean(attrs.show_row_totals)
                     : true,
             showColumnTotals:
                 "show_column_totals" in attrs
-                    ? archParseBoolean(attrs.show_column_totals)
+                    ? exprToBoolean(attrs.show_column_totals)
                     : true,
         };
     },

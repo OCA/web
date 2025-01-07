@@ -25,11 +25,13 @@
                         <t t-esc="row.text" />
                     </td>
                     <td t-foreach="columns" t-as="column" t-key="column.value">
-                        <t
-                            t-component="ValueFieldComponent"
-                            t-props="getValueFieldProps(column.value, row.value)"
-                            record="getValueFieldProps(column.value, row.value).record"
-                        />
+                        <t t-if="getValueFieldProps(column.value, row.value).record">
+                            <t
+                                t-component="ValueFieldComponent"
+                                t-props="getValueFieldProps(column.value, row.value)"
+                                record="getValueFieldProps(column.value, row.value).record"
+                            />
+                        </t>
                     </td>
                     <td
                         t-if="props.showRowTotals and _canAggregate()"
