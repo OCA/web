@@ -17,13 +17,13 @@
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/17.0/web_widget_x2many_2d_matrix
+    :target: https://github.com/OCA/web/tree/18.0/web_widget_x2many_2d_matrix
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_widget_x2many_2d_matrix
+    :target: https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_widget_x2many_2d_matrix
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=17.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -73,12 +73,12 @@ attributes:
 .. code:: xml
 
    <field name="my_field" widget="x2many_2d_matrix" field_x_axis="my_field1" field_y_axis="my_field2" field_value="my_field3">
-       <tree>
+       <list>
            <field name="my_field"/>
            <field name="my_field1"/>
            <field name="my_field2"/>
            <field name="my_field3"/>
-       </tree>
+       </list>
    </field>
 
 You can pass the following parameters:
@@ -142,12 +142,12 @@ Now in our wizard, we can use:
 .. code:: xml
 
    <field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_y_axis="user_id" field_value="planned_hours">
-       <tree>
+       <list>
            <field name="task_ids"/>
            <field name="project_id"/>
            <field name="user_id"/>
            <field name="planned_hours"/>
-       </tree>
+       </list>
    </field>
 
 Known issues / Roadmap
@@ -187,7 +187,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_x2many_2d_matrix%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_x2many_2d_matrix%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -242,6 +242,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-ChrisOForgeFlow| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/17.0/web_widget_x2many_2d_matrix>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/18.0/web_widget_x2many_2d_matrix>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
