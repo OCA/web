@@ -8,12 +8,12 @@ attributes:
 
 ``` xml
 <field name="my_field" widget="x2many_2d_matrix" field_x_axis="my_field1" field_y_axis="my_field2" field_value="my_field3">
-    <tree>
+    <list>
         <field name="my_field"/>
         <field name="my_field1"/>
         <field name="my_field2"/>
         <field name="my_field3"/>
-    </tree>
+    </list>
 </field>
 ```
 
@@ -81,11 +81,11 @@ Now in our wizard, we can use:
 
 ``` xml
 <field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_y_axis="user_id" field_value="planned_hours">
-    <tree>
+    <list>
         <field name="task_ids"/>
         <field name="project_id"/>
         <field name="user_id"/>
         <field name="planned_hours"/>
-    </tree>
+    </list>
 </field>
 ```
