@@ -5,6 +5,11 @@ import {
     Many2ManyTagsFieldColorEditable,
 } from "@web/views/fields/many2many_tags/many2many_tags_field";
 
+import {
+    isMruGlobalOptionEnabled,
+    updateMruLocalStorageValues,
+} from "@web_m2x_options/utils/mru.esm";
+
 import {Dialog} from "@web/core/dialog/dialog";
 import {FormController} from "@web/views/form/form_controller";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
@@ -159,6 +164,7 @@ patch(Many2OneField.prototype, "web_m2x_options.Many2OneField", {
         this._super(...arguments);
         this.ir_options = Component.env.session.web_m2x_options;
     },
+
     /**
      * @override
      */
@@ -170,6 +176,7 @@ patch(Many2OneField.prototype, "web_m2x_options.Many2OneField", {
             searchMore: this.props.searchMore,
             canCreate: this.props.canCreate,
             nodeOptions: this.props.nodeOptions,
+            fieldName: this.props.name,
         };
     },
 
@@ -400,5 +407,58 @@ patch(FormController.prototype, "web_m2x_options.FormController", {
                 fieldInfo.views[viewType].limit = limit;
             }
         }
+    },
+
+    async saveButtonClicked() {
+        const mruChanges = this.getUpdateMruLocalStorageValues();
+        const saved = this._super(...arguments);
+        updateMruLocalStorageValues(this.props.resModel, mruChanges);
+        return saved;
+    },
+
+    async beforeExecuteActionButton() {
+        const mruChanges = this.getUpdateMruLocalStorageValues();
+        const saved = this._super(...arguments);
+        updateMruLocalStorageValues(this.props.resModel, mruChanges);
+        return saved;
+    },
+
+    async beforeLeave() {
+        const mruChanges = this.getUpdateMruLocalStorageValues();
+        const saved = this._super(...arguments);
+        updateMruLocalStorageValues(this.props.resModel, mruChanges);
+        return saved;
+    },
+
+    async onPagerUpdate() {
+        const mruChanges = this.getUpdateMruLocalStorageValues();
+        const saved = this._super(...arguments);
+        updateMruLocalStorageValues(this.props.resModel, mruChanges);
+        return saved;
+    },
+
+    getUpdateMruLocalStorageValues() {
+        if (!this.model.root.isDirty) {
+            return {};
+        }
+        const model = this.model;
+        const changes = model.__bm__._generateChanges(
+            model.__bm__.localData[model.root.__bm_handle__],
+            {changesOnly: true}
+        );
+        const mruChanges = {};
+        let enableMru = false;
+        let nodeOptions = {};
+        Object.keys(changes).forEach(function (key) {
+            nodeOptions = model.__bm__.loadParams.fieldsInfo.form[key].options;
+            enableMru =
+                nodeOptions.search_mru !== undefined
+                    ? nodeOptions.search_mru
+                    : isMruGlobalOptionEnabled();
+            if (enableMru) {
+                mruChanges[key] = changes[key];
+            }
+        });
+        return mruChanges;
     },
 });

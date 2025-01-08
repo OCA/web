@@ -13,6 +13,8 @@ class IrConfigParameter(models.Model):
             "web_m2x_options.search_more",
             "web_m2x_options.m2o_dialog",
             "web_m2x_options.field_limit_entries",
+            "web_m2x_options.search_mru",
+            "web_m2x_options.search_mru_max_length",
         ]
         values = self.sudo().search_read([["key", "in", opts]], ["key", "value"])
         return {res["key"]: res["value"] for res in values}

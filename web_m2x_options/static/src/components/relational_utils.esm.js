@@ -1,8 +1,15 @@
 /** @odoo-module **/
 
+import {
+    getMruKey,
+    getMruValue,
+    isMruGlobalOptionEnabled,
+} from "@web_m2x_options/utils/mru.esm";
+
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {patch} from "@web/core/utils/patch";
 import {sprintf} from "@web/core/utils/strings";
+
 const {Component} = owl;
 
 export function is_option_set(option) {
@@ -16,6 +23,44 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
     setup() {
         this._super(...arguments);
         this.ir_options = Component.env.session.web_m2x_options;
+        const searchMruOption = this.props.nodeOptions.search_mru;
+        this.enableMru =
+            searchMruOption === undefined
+                ? isMruGlobalOptionEnabled()
+                : this.props.nodeOptions.search_mru;
+        if (this.enableMru) {
+            this.mruKey = getMruKey(this.env.model.root.resModel, this.props.fieldName);
+        }
+    },
+
+    async loadRecords(request) {
+        const withMru = this.enableMru && Boolean(!request);
+        this.lastProm = this.orm.call(this.props.resModel, "name_search", [], {
+            name: request,
+            operator: "ilike",
+            args: this.getLoadRecordsDomain(withMru),
+            limit: this.props.searchLimit + 1,
+            context: this.props.context,
+        });
+        const records = await this.lastProm;
+
+        if (withMru) {
+            const cachedIds = getMruValue(this.mruKey);
+            records.sort((record1, record2) => {
+                return cachedIds.indexOf(record1[0]) > cachedIds.indexOf(record2[0]);
+            });
+        }
+
+        return records;
+    },
+
+    getLoadRecordsDomain(withMru) {
+        const domain = this.props.getDomain();
+        const mruValue = withMru ? getMruValue(this.mruKey) : false;
+        if (Boolean(mruValue) && mruValue.length > 0) {
+            domain.push(["id", "in", mruValue]);
+        }
+        return domain;
     },
 
     async loadOptionsSource(request) {
@@ -24,6 +69,7 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
         }
         // Add options limit used to change number of selections record
         // returned.
+
         if (!_.isUndefined(this.ir_options["web_m2x_options.limit"])) {
             this.props.searchLimit = parseInt(
                 this.ir_options["web_m2x_options.limit"],
@@ -41,15 +87,7 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
         this.field_color = this.props.nodeOptions.field_color;
         this.colors = this.props.nodeOptions.colors;
 
-        this.lastProm = this.orm.call(this.props.resModel, "name_search", [], {
-            name: request,
-            operator: "ilike",
-            args: this.props.getDomain(),
-            limit: this.props.searchLimit + 1,
-            context: this.props.context,
-        });
-        const records = await this.lastProm;
-
+        const records = await this.loadRecords(request);
         var options = records.map((result) => ({
             value: result[0],
             id: result[0],

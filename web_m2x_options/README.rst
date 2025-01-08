@@ -92,6 +92,13 @@ in the field's options dict
 
   Deactivates the color picker on many2many_tags buttons to do nothing (ignored if open is set)
 
+``search_mru`` *boolean* (Default: ``False``)
+
+  Allows to display to the user the 5 lasts records he selected for a given field. This list will be displayed
+  when the many2one field is focused and when the user didn't type anything to filter on. The values are stored in
+  the local storage of the browser and updated after a successful saved of the form. This features only works on form
+  views at the moment.
+
 ir.config_parameter options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -122,6 +129,15 @@ If you disable one option, you can enable it for particular field by setting "cr
 
   Number of displayed lines on all One2many fields
 
+``web_m2x_options.search_mru`` *boolean* (Default: default value is ``False``)
+
+  Enable MRU for all many2one fields (form view only).
+
+``web_m2x_options.search_mru_max_length`` *int*
+
+  Changes the length of the records to store and show with MRU feature
+
+
 To add these parameters go to Configuration -> Technical -> Parameters -> System Parameters and add new parameters like:
 
 - web_m2x_options.create: False
@@ -130,6 +146,7 @@ To add these parameters go to Configuration -> Technical -> Parameters -> System
 - web_m2x_options.limit: 10
 - web_m2x_options.search_more: True
 - web_m2x_options.field_limit_entries: 5
+- web_m2x_options.search_mru: True
 
 
 Example

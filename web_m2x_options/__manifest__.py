@@ -16,6 +16,11 @@
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "depends": ["web"],
-    "assets": {"web.assets_backend": ["web_m2x_options/static/src/components/*"]},
+    "assets": {
+        "web.assets_backend": [
+            "web_m2x_options/static/src/components/*",
+            "web_m2x_options/static/src/utils/mru.esm.js",
+        ]
+    },
     "installable": True,
 }
