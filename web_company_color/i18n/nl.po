@@ -104,6 +104,11 @@ msgstr "Qweb"
 msgid "SCSS Modif. Timestamp"
 msgstr ""
 
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_submenu_text
+msgid "Submenu Text Color"
+msgstr ""
+
 #~ msgid "Navbar Colors"
 #~ msgstr "Navigatiebalk Kleuren"
 

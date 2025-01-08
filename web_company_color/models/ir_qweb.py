@@ -30,6 +30,30 @@ class QWeb(models.AbstractModel):
             res += [asset.get_company_color_asset_node()]
         return res
 
+    def _generate_asset_links(
+        self,
+        bundle,
+        css=True,
+        js=True,
+        debug_assets=False,
+        assets_params=None,
+        rtl=False,
+    ):
+        res = super()._generate_asset_links(
+            bundle,
+            css=css,
+            js=js,
+            debug_assets=debug_assets,
+            assets_params=assets_params,
+            rtl=rtl,
+        )
+        if bundle == "web_company_color.company_color_assets":
+            asset = AssetsBundleCompanyColor(
+                bundle, [], env=self.env, css=True, js=True
+            )
+            res += [asset.get_company_color_asset_node()]
+        return res
+
     def _get_asset_content(self, bundle, assets_params=None):
         """Handle 'special' web_company_color bundle"""
         if bundle == "web_company_color.company_color_assets":

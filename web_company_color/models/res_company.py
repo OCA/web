@@ -120,6 +120,9 @@ class ResCompany(models.Model):
                 background-color: %(color_navbar_bg_hover)s !important;
             }
         }
+        .dropdown-item{
+            color: %(color_submenu_text)s !important;
+        }
     """
 
     company_colors = fields.Serialized()
@@ -137,6 +140,7 @@ class ResCompany(models.Model):
     color_link_text_hover = fields.Char(
         "Link Text Color Hover", sparse="company_colors"
     )
+    color_submenu_text = fields.Char("Submenu Text Color", sparse="company_colors")
     scss_modif_timestamp = fields.Char("SCSS Modif. Timestamp")
 
     @api.model_create_multi
@@ -213,6 +217,7 @@ class ResCompany(models.Model):
                 "color_link_text": values.get("color_link_text") or "#71639e",
                 "color_link_text_hover": values.get("color_link_text_hover")
                 or "darken(#71639e, 10%)",
+                "color_submenu_text": values.get("color_link_text") or "#374151",
             }
         )
         return values
