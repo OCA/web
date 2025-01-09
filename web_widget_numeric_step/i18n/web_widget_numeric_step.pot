@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,22 +16,17 @@ msgstr ""
 #. module: web_widget_numeric_step
 #. odoo-javascript
 #: code:addons/web_widget_numeric_step/static/src/numeric_step.xml:0
-#: code:addons/web_widget_numeric_step/static/src/numeric_step.xml:0
-#, python-format
 msgid "Minus"
 msgstr ""
 
 #. module: web_widget_numeric_step
 #. odoo-javascript
 #: code:addons/web_widget_numeric_step/static/src/numeric_step.esm.js:0
-#, python-format
 msgid "Numeric Step"
 msgstr ""
 
 #. module: web_widget_numeric_step
 #. odoo-javascript
 #: code:addons/web_widget_numeric_step/static/src/numeric_step.xml:0
-#: code:addons/web_widget_numeric_step/static/src/numeric_step.xml:0
-#, python-format
 msgid "Plus"
 msgstr ""
