@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /*
     Copyright 2023 Camptocamp SA (https://www.camptocamp.com).
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
@@ -22,15 +21,18 @@ patch(FormCompiler.prototype, {
             ".o-mail-Form-chatter:not(.o-isInFormSheetBg)"
         );
         if (!chatterContainerHookXml) {
-            return res; // No chatter, keep the result as it is
+            // No chatter, keep the result as it is
+            return res;
         }
         const chatterContainerXml = chatterContainerHookXml.querySelector(
             "t[t-component='__comp__.mailComponents.Chatter']"
         );
+        // Const chatterParent = chatterContainerXml.parentNode;
         const formSheetBgXml = res.querySelector(".o_form_sheet_bg");
         const parentXml = formSheetBgXml && formSheetBgXml.parentNode;
         if (!parentXml) {
-            return res; // Miss-config: a sheet-bg is required for the rest
+            // Miss-config: a sheet-bg is required for the rest
+            return res;
         }
 
         // Don't patch anything if the setting is "auto": this is the core behaviour
@@ -44,7 +46,7 @@ patch(FormCompiler.prototype, {
                 isChatterAside: `__comp__.uiService.size >= ${SIZES.XXL}`,
             });
             setAttributes(chatterContainerHookXml, {
-                "t-attf-class": `{{ __comp__.uiService.size >= ${SIZES.XXL} ? "o-aside" : "" }}`,
+                class: "o-aside",
             });
             // For "bottom", we keep the chatter in the form sheet
             // (the one used for the attachment viewer case)
@@ -67,7 +69,7 @@ patch(FormCompiler.prototype, {
                 setAttributes(sheetBgChatterContainerHookXml, {
                     "t-if": "true",
                     "t-attf-class": `{{ (__comp__.uiService.size >= ${SIZES.XXL} && ${
-                        odoo.web_chatter_position != "bottom"
+                        odoo.web_chatter_position !== "bottom"
                     }) ? "o-aside" : "mt-4 mt-md-0" }}`,
                 });
                 append(formSheetBgXml, sheetBgChatterContainerHookXml);
@@ -85,5 +87,16 @@ patch(FormCompiler.prototype, {
             }
         }
         return res;
+    },
+    compileForm(el, params) {
+        const form = super.compileForm(el, params);
+        const sheet = form.querySelector(".o_form_sheet_bg");
+        if (sheet && odoo.web_chatter_position === "sided") {
+            setAttributes(form, {
+                "t-attf-class": "",
+                class: "d-flex d-print-block flex-nowrap h-100",
+            });
+        }
+        return form;
     },
 });
