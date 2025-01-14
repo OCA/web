@@ -28,8 +28,7 @@ msgstr "Favicon azienda"
 
 #. module: web_favicon
 #: model:ir.model.fields,help:web_favicon.field_res_company__favicon
-msgid ""
-"This field holds the image used to display favicon for a given company."
+msgid "This field holds the image used to display favicon for a given company."
 msgstr ""
 "Questo campo contiene l'immagine utilizzata per visualizzare la favicon per "
 "una data azienda."
