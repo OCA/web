@@ -44,7 +44,7 @@
 }
 
 // hide and save odoo default QUnit tests
-.o_navbar_apps_menu.hide .dropdown-toggle {
+.o_navbar_apps_menu.hide {
     position: absolute !important;
     z-index: -100 !important;
 }

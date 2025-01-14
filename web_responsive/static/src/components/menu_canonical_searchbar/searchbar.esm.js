@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /* Copyright 2018 Tecnativa - Jairo Llopis
  * Copyright 2021 ITerra - Sergey Shebanin
  * Copyright 2023 Onestein - Anjeel Haria
@@ -166,6 +165,7 @@ export class AppsMenuCanonicalSearchBar extends Component {
         if (highlightedElement) {
             highlightedElement.click();
         } else {
+            /* eslint-disable-next-line no-undef */
             console.warn("Highlighted search item is not found");
         }
     }

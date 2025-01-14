@@ -53,6 +53,12 @@
     }
 }
 
+.o-FileViewer-headerButton {
+    .fa-window-minimize {
+        height: 24px;
+    }
+}
+
 .o_apps_menu_opened .o-FileViewerContainer {
     display: none !important;
 }

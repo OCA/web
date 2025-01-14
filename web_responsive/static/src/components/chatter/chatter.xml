@@ -10,10 +10,7 @@
         <xpath expr="//SuggestedRecipientsList" position="attributes">
             <attribute name="styleString">''</attribute>
         </xpath>
-        <xpath
-            expr="//button[hasclass('o-mail-Chatter-recipientListButton')]/.."
-            position="attributes"
-        >
+        <xpath expr="//BaseRecipientsList/.." position="attributes">
             <attribute name="style" />
             <attribute name="class" add="o-mail-Chatter-recipientList" separator=" " />
         </xpath>
@@ -22,7 +19,6 @@
             position="replace"
         >
             <button
-                t-if="props.hasMessageList"
                 class="o-mail-Chatter-sendMessage btn text-nowrap me-1"
                 t-att-class="{
                     'btn-secondary': state.composerType !== 'message',
@@ -39,13 +35,13 @@
         </xpath>
         <xpath expr="//button[hasclass('o-mail-Chatter-logNote')]" position="replace">
             <button
-                t-if="props.hasMessageList"
                 class="o-mail-Chatter-logNote btn text-nowrap me-2"
                 t-att-class="{
                     'btn-primary active': state.composerType === 'note',
                     'btn-secondary': state.composerType !== 'note',
                     'my-2': !props.compactHeight
                 }"
+                t-att-disabled="!state.thread.hasWriteAccess and !(state.thread.hasReadAccess and state.thread.canPostOnReadonly) and props.threadId"
                 data-hotkey="shift+m"
                 t-on-click="() => this.toggleComposer('note')"
             >

@@ -4,10 +4,9 @@
 import json
 import re
 
-from odoo.tests import HttpCase, tagged
+from odoo.tests import HttpCase
 
 
-@tagged("-at_install", "post_install")
 class TestIrHttp(HttpCase):
     def _test_session_info(self, session_info):
         apps_menu = session_info.get("apps_menu")

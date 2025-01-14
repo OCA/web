@@ -61,13 +61,9 @@ This module adds responsiveness to web backend.
 **Features for mobile**: \* View type picker dropdown displays
 comfortably
 
--  Control panel buttons use icons to save space.
-
-   |image6|
-
 -  Followers and send button is displayed on mobile. Avatar is hidden.
 
-   |image7|
+   |image6|
 
 -  Big inputs on form in edit mode
 
@@ -79,23 +75,23 @@ comfortably
    be more intuitive or accessible by fingers of one hand. F.x. Alt + S
    for Save
 
-   |image8|
+   |image7|
 
 -  Autofocus on search menu box when opening the app menu
 
-   |image9|
+   |image8|
 
 -  When the chatter is on the side part, the document viewer fills that
    part for side-by-side reading instead of full screen. You can still
    put it on full width preview clicking on the new maximize button.
 
-   |image10|
+   |image9|
 
 -  When the user chooses to send a public message the color of the
    composer is different from the one when the message is an internal
    log.
 
-   |image11|
+   |image10|
 
 .. |image| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/redirecthome.gif
 .. |image1| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/appmenu.gif
@@ -103,12 +99,11 @@ comfortably
 .. |image3| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/listview.gif
 .. |image4| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/formview.gif
 .. |image5| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/listview.gif
-.. |image6| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/form_buttons.gif
-.. |image7| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/chatter.png
-.. |image8| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/shortcuts.gif
-.. |image9| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/appsearch.gif
-.. |image10| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/document_viewer.gif
-.. |image11| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/chatter-colors.png
+.. |image6| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/chatter.png
+.. |image7| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/shortcuts.gif
+.. |image8| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/appsearch.gif
+.. |image9| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/document_viewer.gif
+.. |image10| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/chatter-colors.png
 
 **Table of contents**
 
@@ -178,6 +173,14 @@ Contributors
 -  Taras Shabaranskyi <shabaranskij@gmail.com>
 
 -  Angel Patel <patelangel1414@gmail.com>
+
+-  Chau Le <chaulb@trobz.com>
+
+Other credits
+-------------
+
+The migration of this module from 17.0 to 18.0 was financially supported
+by Trobz.
 
 Maintainers
 -----------

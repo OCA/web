@@ -32,10 +32,6 @@ their profile settings.
 **Features for mobile**: \* View type picker dropdown displays
 comfortably
 
-- Control panel buttons use icons to save space.
-
-  ![image](../static/img/form_buttons.gif)
-
 - Followers and send button is displayed on mobile. Avatar is hidden.
 
   ![image](../static/img/chatter.png)

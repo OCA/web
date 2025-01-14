@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /* Copyright 2018 Tecnativa - Jairo Llopis
  * Copyright 2021 ITerra - Sergey Shebanin
  * Copyright 2023 Onestein - Anjeel Haria
@@ -16,16 +15,11 @@ export class AppMenuItem extends Component {
     }
 
     get isActive() {
-        const {currentApp} = this.props;
-        return currentApp && currentApp.id === this.props.app.id;
+        return this.props.currentApp?.id === this.props.app.id;
     }
 
     get className() {
-        const classItems = ["o-app-menu-item"];
-        if (this.isActive) {
-            classItems.push("active");
-        }
-        return classItems.join(" ");
+        return ["o-app-menu-item", this.isActive && "active"].filter(Boolean).join(" ");
     }
 
     onUpdateProps(nextProps) {
@@ -33,21 +27,17 @@ export class AppMenuItem extends Component {
     }
 
     onClick() {
-        if (typeof this.props.onClick === "function") {
-            this.props.onClick(this.props.app);
-        }
+        this.props.onClick?.(this.props.app);
     }
 }
 
-Object.assign(AppMenuItem, {
-    template: "web_responsive.AppMenuItem",
-    props: {
-        app: Object,
-        href: String,
-        currentApp: {
-            type: Object,
-            optional: true,
-        },
-        onClick: Function,
+AppMenuItem.template = "web_responsive.AppMenuItem";
+AppMenuItem.props = {
+    app: Object,
+    href: String,
+    currentApp: {
+        type: Object,
+        optional: true,
     },
-});
+    onClick: Function,
+};

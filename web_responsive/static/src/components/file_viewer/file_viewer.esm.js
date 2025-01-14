@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /* Copyright 2021 ITerra - Sergey Shebanin
  * Copyright 2023 Onestein - Anjeel Haria
  * Copyright 2023 Taras Shabaranskyi
@@ -7,6 +6,10 @@
 import {onMounted, onWillStart, useExternalListener, useRef} from "@odoo/owl";
 import {FileViewer} from "@web/core/file_viewer/file_viewer";
 import {patch} from "@web/core/utils/patch";
+
+/* global document */
+/* global window */
+/* global requestAnimationFrame */
 
 const formChatterClassName = ".o-mail-Form-chatter";
 const formViewSheetClassName = ".o_form_view_container .o_form_sheet_bg";
