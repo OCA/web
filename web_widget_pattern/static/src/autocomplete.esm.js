@@ -3,9 +3,9 @@
 import {AutoComplete} from "@web/core/autocomplete/autocomplete";
 
 const _extractProps = AutoComplete.extractProps;
-AutoComplete.extractProps = ({attrs, field}) => {
-    return Object.assign(_extractProps({attrs, field}), {
-        pattern: attrs.pattern || field.pattern,
+AutoComplete.extractProps = (fieldInfo) => {
+    return Object.assign(_extractProps(fieldInfo), {
+        pattern: fieldInfo.attrs.pattern || fieldInfo.field.pattern,
     });
 };
 

@@ -1,1 +1,2 @@
 -   Holger Brunn \<mail@hunki-enterprises.com> (https://hunki-enteprises.com)
+-   Sensible Consulting Services \<info@sensiblecs.com> (https://sensiblecs.com)
