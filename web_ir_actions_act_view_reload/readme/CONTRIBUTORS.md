@@ -1,0 +1,3 @@
+- Petar Najman \<petar.najman@modoolar.com\>
+- [CorporateHub](https://corporatehub.eu/)
+  - Alexey Pelykh \<alexey.pelykh@corphub.eu\>
