@@ -115,7 +115,8 @@ class ResCompany(models.Model):
             background-color: %(color_navbar_bg_hover)s !important;
           }
         }
-        .o-mail-DiscussSystray-class {
+        .o_menu_systray .o-dropdown .dropdown-toggle {
+            color: %(color_navbar_text)s !important;
             &:hover, &:focus, &:active, &:focus:active {
                 background-color: %(color_navbar_bg_hover)s !important;
             }
