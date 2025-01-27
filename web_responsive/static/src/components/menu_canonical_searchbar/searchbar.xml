@@ -29,7 +29,7 @@
                     <li t-attf-class="search-item {{highlighted(menu_index)}}">
                         <a
                             t-attf-class="search-item__link"
-                            t-attf-href="#menu_id={{menu.id}}&amp;action={{menu.actionID}}"
+                            t-att-href="menu.path"
                             t-att-data-menu-id="menu.id"
                             t-att-data-action-id="menu.actionID"
                             draggable="false"
@@ -63,7 +63,7 @@
                     <li t-attf-class="search-item {{highlighted(menu_index, true)}}">
                         <a
                             t-attf-class="search-item__link"
-                            t-attf-href="#menu_id={{menu.id}}&amp;action={{menu.actionID}}"
+                            t-att-href="menu.path"
                             t-att-data-menu-id="menu.id"
                             t-att-data-action-id="menu.actionID"
                             draggable="false"

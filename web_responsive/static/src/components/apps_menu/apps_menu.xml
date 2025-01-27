@@ -6,12 +6,16 @@
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
 <templates>
     <t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
-        <xpath expr="//Dropdown" position="attributes">
-            <attribute name="class">'o_navbar_apps_menu hide'</attribute>
-            <attribute name="skipTogglerTabbing">true</attribute>
-            <attribute name="hotkey" remove="'h'" add="'shift+h'" separator=" " />
+        <!-- odoo 18 has created a left sidebar where the button of all apps
+        and the dropdown for the user where can logout
+        we had to disable the lef sidebar to keep our web_resposive toggle button working
+        and to keep the user dropdown in its original place -->
+        <xpath expr="//t[@t-if='env.isSmall']" position="attributes">
+            <attribute name="t-if">false</attribute>
         </xpath>
-        <xpath expr="//Dropdown" position="after">
+        <!-- The kanban dropdown is replaced with the odoo default one
+        as the default one took physical place in the DOM -->
+        <xpath expr="//Dropdown" position="replace">
             <AppsMenu>
                 <t t-set-slot="search_bar">
                     <AppsMenuSearchBar />

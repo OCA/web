@@ -11,24 +11,16 @@
             <attribute name="styleString">''</attribute>
         </xpath>
         <xpath
-            expr="//button[hasclass('o-mail-Chatter-recipientListButton')]/.."
-            position="attributes"
-        >
-            <attribute name="style" />
-            <attribute name="class" add="o-mail-Chatter-recipientList" separator=" " />
-        </xpath>
-        <xpath
             expr="//button[hasclass('o-mail-Chatter-sendMessage')]"
             position="replace"
         >
             <button
-                t-if="props.hasMessageList"
                 class="o-mail-Chatter-sendMessage btn text-nowrap me-1"
                 t-att-class="{
-                    'btn-secondary': state.composerType !== 'message',
-                    'btn-primary active': state.composerType === 'message',
-                    'my-2': !props.compactHeight
-                }"
+                'btn-secondary': state.composerType !== 'message',
+                'btn-primary active': state.composerType === 'message',
+                'my-2': !props.compactHeight
+            }"
                 t-att-disabled="!state.thread.hasWriteAccess and !(state.thread.hasReadAccess and state.thread.canPostOnReadonly) and props.threadId"
                 data-hotkey="m"
                 t-on-click="() => this.toggleComposer('message')"
@@ -39,13 +31,13 @@
         </xpath>
         <xpath expr="//button[hasclass('o-mail-Chatter-logNote')]" position="replace">
             <button
-                t-if="props.hasMessageList"
                 class="o-mail-Chatter-logNote btn text-nowrap me-2"
                 t-att-class="{
-                    'btn-primary active': state.composerType === 'note',
-                    'btn-secondary': state.composerType !== 'note',
-                    'my-2': !props.compactHeight
-                }"
+                'btn-primary active': state.composerType === 'note',
+                'btn-secondary': state.composerType !== 'note',
+                'my-2': !props.compactHeight
+            }"
+                t-att-disabled="!state.thread.hasWriteAccess and !(state.thread.hasReadAccess and state.thread.canPostOnReadonly) and props.threadId"
                 data-hotkey="shift+m"
                 t-on-click="() => this.toggleComposer('note')"
             >

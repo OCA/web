@@ -21,3 +21,5 @@
 - Taras Shabaranskyi \<<shabaranskij@gmail.com>\>
 
 - Angel Patel \<<patelangel1414@gmail.com>\>
+
+- Mohamed Alkobrosli \<<malkobrosly@kencove.com>\>

@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /* Copyright 2024 Taras Shabaranskyi
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
@@ -7,7 +6,7 @@ import {FormRenderer} from "@web/views/form/form_renderer";
 
 export const unpatchDisableFilePreview = patch(FormRenderer.prototype, {
     /** @returns {Boolean}*/
-    hasFileViewer() {
+    hasFile() {
         return false;
     },
 });

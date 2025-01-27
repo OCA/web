@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /* Copyright 2018 Tecnativa - Jairo Llopis
  * Copyright 2021 ITerra - Sergey Shebanin
  * Copyright 2023 Onestein - Anjeel Haria
