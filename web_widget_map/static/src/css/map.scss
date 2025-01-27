@@ -1,0 +1,56 @@
+.o_map_field {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.o_map_location_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.o_map_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.o_map_label {
+    font-size: 0.85rem;
+    font-weight: bold;
+    width: 100px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.o_map_data {
+    font-size: 0.85rem;
+}
+
+.o_map_button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #007bff; // Color azul para el botón
+    color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    i {
+        font-size: 1.2rem;
+    }
+
+    &:hover {
+        background-color: #0056b3;
+    }
+}
