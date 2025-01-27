@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
-
     <t
         t-name="web_responsive.CustomFavoriteItem"
         t-inherit="web.CustomFavoriteItem"
@@ -16,5 +15,4 @@
             <attribute name="class" add="o_add_favorite_name" separator=" " />
         </xpath>
     </t>
-
 </templates>
