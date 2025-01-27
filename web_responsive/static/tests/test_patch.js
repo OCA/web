@@ -1,19 +1,25 @@
 /* Copyright 2021 ITerra - Sergey Shebanin
+ * Copyright 2025 Carlos Lopez - Tecnativa
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
-odoo.define("web_responsive.test_patch", function (require) {
-    "use strict";
+odoo.define(
+    "web_responsive.test_patch",
+    ["@web_tour/tour_service/tour_utils", "@web/core/utils/patch"],
+    function (require) {
+        "use strict";
 
-    const utils = require("web_tour.TourStepUtils");
+        const {stepUtils} = require("@web_tour/tour_service/tour_utils");
+        const {patch} = require("@web/core/utils/patch");
 
-    /* Make base odoo JS tests working */
-    utils.include({
-        showAppsMenuItem() {
-            return {
-                edition: "community",
-                trigger: ".o_navbar_apps_menu",
-                auto: true,
-                position: "bottom",
-            };
-        },
-    });
-});
+        patch(stepUtils, {
+            /* Make base odoo JS tests working */
+            showAppsMenuItem() {
+                return {
+                    edition: "community",
+                    trigger: "button.o_grid_apps_menu__button",
+                    auto: true,
+                    position: "bottom",
+                };
+            },
+        });
+    }
+);
