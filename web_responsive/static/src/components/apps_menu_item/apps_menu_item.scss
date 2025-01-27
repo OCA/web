@@ -22,7 +22,10 @@
     flex-direction: column;
     border-radius: 4px;
     gap: 0.25rem;
-    transition: ease box-shadow, transform, 0.3s;
+    transition:
+        ease box-shadow,
+        transform,
+        0.3s;
     background: unset;
     outline: unset;
     border: unset;

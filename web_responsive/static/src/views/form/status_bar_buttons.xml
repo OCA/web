@@ -4,7 +4,6 @@
     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 <templates>
-
     <t
         t-name="web_responsive.StatusBarButtons"
         t-inherit="web.StatusBarButtons"
@@ -20,5 +19,4 @@
             </t>
         </xpath>
     </t>
-
 </templates>

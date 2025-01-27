@@ -69,7 +69,9 @@ $chatter_zone_width: 35% !important;
         // Some UX improvements for form in edit mode
         @include media-breakpoint-down(sm) {
             &.o_form_editable .o_field_widget {
-                &:not(.o_stat_info):not(.o_readonly_modifier):not(.oe_form_field_html):not(.o_field_image) {
+                &:not(.o_stat_info):not(.o_readonly_modifier):not(
+                        .oe_form_field_html
+                    ):not(.o_field_image) {
                     min-height: 35px;
                 }
 
