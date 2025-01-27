@@ -1,4 +1,4 @@
-/** @odoo-module **/
+/* global console */
 /* Copyright 2018 Tecnativa - Jairo Llopis
  * Copyright 2021 ITerra - Sergey Shebanin
  * Copyright 2023 Onestein - Anjeel Haria
@@ -107,6 +107,35 @@ export class AppsMenuCanonicalSearchBar extends Component {
             return;
         }
         const searchField = (item) => item.displayName;
+        // Update search results paths
+        for (const root in this.rootMenuItems) {
+            // Root is an app
+            if (this.rootMenuItems[root]?.actionPath) {
+                this.rootMenuItems[root].path =
+                    `/odoo/${this.rootMenuItems[root].actionPath}`;
+            }
+            // Root is a module
+            else {
+                this.rootMenuItems[root].path =
+                    `/odoo/action-${this.rootMenuItems[root].actionID}`;
+            }
+        }
+        for (const item in this.subMenuItems) {
+            for (const root in this.rootMenuItems) {
+                if (this.subMenuItems[item].appID === this.rootMenuItems[root].appID) {
+                    // Root is an app
+                    if (this.rootMenuItems[root]?.actionPath) {
+                        this.subMenuItems[item].path =
+                            `/odoo/${this.rootMenuItems[root].actionPath}/action-${this.subMenuItems[item].actionID}`;
+                    }
+                    // Root is a module
+                    else {
+                        this.subMenuItems[item].path =
+                            `/odoo/action-${this.subMenuItems[item].actionID}`;
+                    }
+                }
+            }
+        }
         state.rootItems = fuzzyLookup(query, this.rootMenuItems, searchField);
         state.subItems = fuzzyLookup(query, this.subMenuItems, searchField);
     }

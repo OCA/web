@@ -1,19 +1,18 @@
-/** @odoo-module **/
 /* global QUnit */
 /* eslint init-declarations: "warn" */
 /* Copyright 2023 Taras Shabaranskyi
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-import {click, getFixture, mount, patchWithCleanup} from "@web/../tests/helpers/utils";
 import {Component, xml} from "@odoo/owl";
-import {makeTestEnv} from "@web/../tests/helpers/mock_env";
+import {click, getFixture, mount, patchWithCleanup} from "@web/../tests/helpers/utils";
+import {NavBar} from "@web/webclient/navbar/navbar";
 import {actionService} from "@web/webclient/actions/action_service";
 import {browser} from "@web/core/browser/browser";
+import {hotkeyService} from "@web/core/hotkeys/hotkey_service";
+import {makeTestEnv} from "@web/../tests/helpers/mock_env";
 import {menuService} from "@web/webclient/menus/menu_service";
 import {notificationService} from "@web/core/notifications/notification_service";
-import {NavBar} from "@web/webclient/navbar/navbar";
 import {registry} from "@web/core/registry";
-import {hotkeyService} from "@web/core/hotkeys/hotkey_service";
 import {uiService} from "@web/core/ui/ui_service";
 
 const serviceRegistry = registry.category("services");
@@ -21,8 +20,8 @@ const serviceRegistry = registry.category("services");
 class MySystrayItem extends Component {}
 
 MySystrayItem.template = xml`<li class="my-item">my item</li>`;
-let baseConfig;
-let target;
+let baseConfig = {};
+let target = {};
 
 QUnit.module("AppsMenu Search", {
     async beforeEach() {

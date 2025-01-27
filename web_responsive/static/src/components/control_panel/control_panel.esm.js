@@ -1,10 +1,11 @@
-/** @odoo-module **/
+/* global clearTimeout, setTimeout */
+
 /* Copyright 2023 Taras Shabaranskyi
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 import {ControlPanel} from "@web/search/control_panel/control_panel";
-import {patch} from "@web/core/utils/patch";
 import {browser} from "@web/core/browser/browser";
+import {patch} from "@web/core/utils/patch";
 
 export const STICKY_CLASS = "o_mobile_sticky";
 
