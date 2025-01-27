@@ -16,7 +16,7 @@
     "Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "installable": True,
-    "depends": ["web", "mail"],
+    "depends": ["web_tour", "mail"],
     "development_status": "Production/Stable",
     "maintainers": ["Tardo", "SplashS"],
     "excludes": ["web_enterprise"],
