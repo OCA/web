@@ -40,7 +40,6 @@ class CustomFieldRestriction(models.Model):
     model_name = fields.Char(
         compute="_compute_model_name",
         store=True,
-        string="Model Name",
         index=True,
     )
     condition_domain = fields.Char()
@@ -142,7 +141,7 @@ class CustomFieldRestriction(models.Model):
                     "name": field_name,
                     "model_id": rec_model_id,
                     "state": "manual",
-                    "field_description": "%s %s field" % (self.field_id.name, f_type),
+                    "field_description": f"{self.field_id.name} {f_type} field",
                     "store": False,
                     "ttype": "boolean",
                     "compute": "for r in self: r._compute_restrictions_fields()",
@@ -153,16 +152,13 @@ class CustomFieldRestriction(models.Model):
 
     def get_field_name(self, f_type):
         # e.g. x_computed_res_partner_name_readonly
-        res = "x_computed_%s_%s_%s" % (
-            self.field_id.model.replace(".", "_"),
-            self.field_id.name,
-            f_type,
-        )
-        return res
+        model_name = self.field_id.model.replace(".", "_")
+        field_name = self.field_id.name
+        return f"x_computed_{model_name}_{field_name}_{f_type}"
 
     def unlink(self):
         for rec in self:
             rec.visibility_field_id.unlink()
             rec.readonly_field_id.unlink()
             rec.required_field_id.unlink()
-        return super(CustomFieldRestriction, self).unlink()
+        return super().unlink()

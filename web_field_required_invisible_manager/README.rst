@@ -17,20 +17,22 @@ Web Field Required Invisible Readonly Managerr
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/14.0/web_field_required_invisible_manager
+    :target: https://github.com/OCA/web/tree/17.0/web_field_required_invisible_manager
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-14-0/web-14-0-web_field_required_invisible_manager
+    :target: https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_field_required_invisible_manager
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=14.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module allows to set a field required, invisible or readonly for users belonging to a specific group.
+This module allows to set a field required, invisible or readonly for
+users belonging to a specific group.
 
-The field can be required, invisible or readonly in any case, or according to specific conditions.
+The field can be required, invisible or readonly in any case, or
+according to specific conditions.
 
 **Table of contents**
 
@@ -42,18 +44,22 @@ Usage
 
 Go to Settings > Technical > Models
 
-Select a model > in tab "Custom required fields", "Custom invisible fields" or "Custom readonly fields" add a line
+Select a model > in tab "Custom required fields", "Custom invisible
+fields" or "Custom readonly fields" add a line
 
-Select a field, add one or more group and enable flag "Required", "Invisible" or "Readonly"
+Select a field, add one or more group and enable flag "Required",
+"Invisible" or "Readonly"
 
-If needed, set a condition for which the field should be required, invisible or readonly for users of those groups.
+If needed, set a condition for which the field should be required,
+invisible or readonly for users of those groups.
 
 Known issues / Roadmap
 ======================
 
-When one model inherits another (e.g. res.users inherits res.partner) and new custom
-field is created, then same field is created for inheriting model as well, which should
-be avoided or at least duplicated field should be also manual, but created as base.
+When one model inherits another (e.g. res.users inherits res.partner)
+and new custom field is created, then same field is created for
+inheriting model as well, which should be avoided or at least duplicated
+field should be also manual, but created as base.
 
 Bug Tracker
 ===========
@@ -61,7 +67,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_field_required_invisible_manager%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_field_required_invisible_manager%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -69,20 +75,20 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Ilyas
 * ooops404
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Ooops404 <https://www.ooops404.com>`__:
+-  `Ooops404 <https://www.ooops404.com>`__:
 
-  * Ilyas <irazor147@gmail.com>
+   -  Ilyas <irazor147@gmail.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -102,6 +108,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-ilyasProgrammer| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/14.0/web_field_required_invisible_manager>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/17.0/web_field_required_invisible_manager>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

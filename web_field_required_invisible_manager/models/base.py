@@ -8,7 +8,7 @@ class Base(models.AbstractModel):
     _inherit = "base"
 
     def default_get(self, fields_list):
-        res = super(Base, self).default_get(fields_list)
+        res = super().default_get(fields_list)
         if self.env.user.has_group("base.group_user"):
             vals = self._default_get_compute_restrictions_fields()
             if vals:

@@ -7,7 +7,7 @@ from odoo.tests import Form, common
 class TestFieldRequiredIvisibleManager(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestFieldRequiredIvisibleManager, cls).setUpClass()
+        super().setUpClass()
         cls.view_model = cls.env["ir.ui.view"].sudo()
         cls.partner_name_field_id = cls.env["ir.model.fields"].search(
             [("model", "=", "res.partner"), ("name", "=", "name")]

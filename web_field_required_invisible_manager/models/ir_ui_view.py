@@ -60,7 +60,7 @@ class IrUiView(models.Model):
                         z_arch["arch"] = self.create_restrictions_fields(
                             restr, view_type, z_arch["arch"]
                         )
-                        if type(z_arch["arch"]) is bytes:
+                        if isinstance(z_arch["arch"], bytes):
                             z_arch["arch"] = z_arch["arch"].decode("utf-8")
                         name_manager = NameManager(False, self.env[restr.model_name])
                         if restr.readonly_field_id and restr.readonly_model_id:
@@ -89,9 +89,9 @@ class IrUiView(models.Model):
     def create_restrictions_fields(self, restrictions, view_type, arch):
         doc = etree.XML(arch)
         for node in doc.xpath("//field"):
-            name = node.attrib.get("name")
+            field_name = node.attrib.get("name")
             restrictions_filtered = restrictions.filtered(
-                lambda x: x.field_id.name == name
+                lambda x, field_name=field_name: x.field_id.name == field_name
             )
             if not restrictions_filtered:
                 continue
