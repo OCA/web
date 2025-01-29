@@ -71,23 +71,23 @@ class IrUiView(models.Model):
                             model_field_infos = name_manager.fields_get.get(
                                 restr.readonly_field_id.name
                             )
-                            z_arch["fields"][
-                                restr.readonly_field_id.name
-                            ] = model_field_infos
+                            z_arch["fields"][restr.readonly_field_id.name] = (
+                                model_field_infos
+                            )
                         if restr.visibility_field_id and restr.invisible_model_id:
                             model_field_infos = name_manager.fields_get.get(
                                 restr.visibility_field_id.name
                             )
-                            z_arch["fields"][
-                                restr.visibility_field_id.name
-                            ] = model_field_infos
+                            z_arch["fields"][restr.visibility_field_id.name] = (
+                                model_field_infos
+                            )
                         if restr.required_field_id and restr.required_model_id:
                             model_field_infos = name_manager.fields_get.get(
                                 restr.required_field_id.name
                             )
-                            z_arch["fields"][
-                                restr.required_field_id.name
-                            ] = model_field_infos
+                            z_arch["fields"][restr.required_field_id.name] = (
+                                model_field_infos
+                            )
         return arch
 
     def create_restrictions_fields(self, restrictions, view_type, arch):
