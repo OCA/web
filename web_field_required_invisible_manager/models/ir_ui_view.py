@@ -1,10 +1,12 @@
 # Copyright 2023 ooops404
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html)
-import json
+
+import ast
 
 from lxml import etree
 
 from odoo import models
+from odoo.osv.expression import distribute_not, normalize_domain
 
 from odoo.addons.base.models.ir_ui_view import NameManager
 
@@ -12,8 +14,10 @@ from odoo.addons.base.models.ir_ui_view import NameManager
 class IrUiView(models.Model):
     _inherit = "ir.ui.view"
 
-    def postprocess_and_fields(self, node, model=None, validate=False):
-        arch, new_fields = super().postprocess_and_fields(node, model, validate)
+    def postprocess_and_fields(self, node, model=None, validate=False, **options):
+        arch, new_fields = super().postprocess_and_fields(
+            node, model, validate=validate, **options
+        )
         if self.type not in ["form", "tree"] and node.tag not in ["form", "tree"]:
             return arch, new_fields
         restrictions = self.env["custom.field.restriction"].search(
@@ -91,47 +95,76 @@ class IrUiView(models.Model):
         for node in doc.xpath("//field"):
             field_name = node.attrib.get("name")
             restrictions_filtered = restrictions.filtered(
-                lambda x, field_name=field_name: x.field_id.name == field_name
+                lambda r, field_name=field_name: r.field_id.name == field_name
             )
             if not restrictions_filtered:
                 continue
+
             for r in restrictions_filtered:
-                field_node_str = "<field name='%s' invisible='1'/>"
-                field_node_mod = bytes(
-                    '{"invisible": true,"column_invisible": true}', "utf-8"
+                domain = (
+                    (
+                        ast.literal_eval(r.condition_domain)
+                        if isinstance(r.condition_domain, str)
+                        else r.condition_domain
+                    )
+                    if r.condition_domain
+                    else None
                 )
-                if view_type == "tree":
-                    field_node_str = (
-                        "<field name='%s' column_invisible='1' optional='hide'/>"
-                    )
+
                 if r.field_invisible and r.invisible_model_id:
-                    modifiers = json.loads(node.get("modifiers"))
-                    visibility_field_name = r.get_field_name("visibility")
-                    modifiers["invisible"] = (
-                        "[('%s', '=', True)]" % visibility_field_name
+                    node.set(
+                        "invisible",
+                        self.domain_to_expression(domain)
+                        or r.get_field_name("visibility"),
                     )
-                    node.set("modifiers", json.dumps(modifiers))
-                    new_node = etree.fromstring(field_node_str % visibility_field_name)
-                    new_node.set("invisible", "1")
-                    new_node.set("modifiers", field_node_mod)
-                    node.getparent().append(new_node)
                 if r.required_field_id and r.required_model_id:
-                    modifiers = json.loads(node.get("modifiers"))
-                    required_field_name = r.get_field_name("required")
-                    modifiers["required"] = "[('%s', '=', True)]" % required_field_name
-                    node.set("modifiers", json.dumps(modifiers))
-                    new_node = etree.fromstring(field_node_str % required_field_name)
-                    new_node.set("invisible", "1")
-                    new_node.set("modifiers", field_node_mod)
-                    node.getparent().append(new_node)
+                    node.set(
+                        "required",
+                        self.domain_to_expression(domain)
+                        or r.get_field_name("required"),
+                    )
                 if r.readonly_field_id and r.readonly_model_id:
-                    modifiers = json.loads(node.get("modifiers"))
-                    readonly_field_name = r.get_field_name("readonly")
-                    modifiers["readonly"] = "[('%s', '=', True)]" % readonly_field_name
-                    node.set("modifiers", json.dumps(modifiers))
-                    new_node = etree.fromstring(field_node_str % readonly_field_name)
-                    new_node.set("invisible", "1")
-                    new_node.set("modifiers", field_node_mod)
-                    node.getparent().append(new_node)
-            arch = etree.tostring(doc)
-        return arch
+                    node.set(
+                        "readonly",
+                        self.domain_to_expression(domain)
+                        or r.get_field_name("readonly"),
+                    )
+
+        return etree.tostring(doc, encoding="unicode")
+
+    @staticmethod
+    def domain_to_expression(domain):
+        """Convert the given domain into a python expression"""
+        domain = normalize_domain(domain)
+        domain = distribute_not(domain)
+        expression = []
+        for leaf in reversed(domain):
+            if leaf == "&":
+                right = expression.pop()
+                left = expression.pop()
+                expression.append(f"({left} and {right})")
+            elif leaf == "|":
+                right = expression.pop()
+                left = expression.pop()
+                expression.append(f"({left} or {right})")
+            elif leaf == "!":
+                expr = expression.pop()
+                expression.append(f"(not {expr})")
+            elif isinstance(leaf, tuple | list):
+                left, operator, right = leaf
+                if operator == "=":
+                    operator = "=="
+                elif operator == "<>":
+                    operator = "!="
+                if operator in ["in", "not in"] and not isinstance(right, list | tuple):
+                    right = [right]
+                if operator == "in":
+                    expr = f"{right!r} in {left}"
+                elif operator == "not in":
+                    expr = f"{right!r} not in {left}"
+                else:
+                    expr = f"{left} {operator} {right!r}"
+                expression.append(expr)
+            else:
+                expression.append(str(leaf))
+        return " ".join(expression)
