@@ -116,17 +116,17 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
                 "model": "res.company",
                 "type": "tree",
                 "mode": "primary",
-                "arch": "<tree><field name='city'/>"
+                "arch": "<list><field name='city'/>"
                 "<field name='street'/>"
-                "<field name='name'/></tree>",
+                "<field name='name'/></list>",
             }
         )
         cls.view_users_form_arch_orig = cls.view_users_form.arch
         cls.view_users_form.arch = cls.view_users_form.arch.replace(
             "</notebook>",
-            "</notebook><field name='company_ids'><tree><field name='city'/>"
+            "</notebook><field name='company_ids'><list><field name='city'/>"
             "<field name='street'/>"
-            "<field name='name'/></tree></field>",
+            "<field name='name'/></list></field>",
         )
 
     def test_model_form(self):
@@ -148,7 +148,7 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
 
     def test_relational_fields(self):
         """res.users has company_ids field. It has restrictions.
-        Restrictions should be added into company tree view"""
+        Restrictions should be added into company list view"""
         user = self.env["res.users"].search([], limit=1)
         arch = user.fields_view_get(view_id=self.view_users_form.id, view_type="form")
         sub_arch = arch["fields"]["company_ids"]["views"]["tree"]["arch"]

@@ -108,7 +108,7 @@ class IrUiView(models.Model):
                         else r.condition_domain
                     )
                     if r.condition_domain
-                    else None
+                    else []
                 )
 
                 if r.field_invisible and r.invisible_model_id:

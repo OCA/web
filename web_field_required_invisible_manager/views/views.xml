@@ -15,22 +15,18 @@
                         nolabel="1"
                         context="{'default_required_model_id': model, 'show_required_form': True}"
                     >
-                        <tree>
-                            <field name="required_model_id" column_invisible="True" />
-                            <field name="invisible_model_id" column_invisible="True" />
-                            <field name="model_name" column_invisible="True" />
+                        <list>
                             <field
                                 name="field_id"
                                 context="{'search_by_technical_name': True, 'display_technical_name': True}"
                                 domain="[('model_id.model', '=', model_name)]"
                                 options="{'create': False, 'create_edit': False}"
                             />
-                            <field name="default_required" column_invisible="True" />
                             <field name="required" readonly="default_required" />
                             <field name="condition_domain" />
                             <field name="group_ids" widget="many2many_tags" />
                             <field name="required_field_id" optional="hide" />
-                        </tree>
+                        </list>
                     </field>
                 </page>
                 <page
@@ -42,22 +38,18 @@
                         nolabel="1"
                         context="{'default_invisible_model_id': model, 'show_invisible_form': True}"
                     >
-                        <tree>
-                            <field name="required_model_id" column_invisible="True" />
-                            <field name="invisible_model_id" column_invisible="True" />
-                            <field name="model_name" column_invisible="True" />
+                        <list>
                             <field
                                 name="field_id"
                                 context="{'search_by_technical_name': True, 'display_technical_name': True}"
                                 domain="[('model_id.model', '=', model_name)]"
                                 options="{'create': False, 'create_edit': False}"
                             />
-                            <field name="default_required" column_invisible="True" />
                             <field name="field_invisible" />
                             <field name="condition_domain" />
                             <field name="group_ids" widget="many2many_tags" />
                             <field name="visibility_field_id" optional="hide" />
-                        </tree>
+                        </list>
                     </field>
                 </page>
                 <page
@@ -69,23 +61,18 @@
                         nolabel="1"
                         context="{'default_readonly_model_id': model, 'show_readonly_form': True}"
                     >
-                        <tree>
-                            <field name="required_model_id" column_invisible="True" />
-                            <field name="invisible_model_id" column_invisible="True" />
-                            <field name="readonly_model_id" column_invisible="True" />
-                            <field name="model_name" column_invisible="True" />
+                        <list>
                             <field
                                 name="field_id"
                                 context="{'search_by_technical_name': True, 'display_technical_name': True}"
                                 domain="[('model_id.model', '=', model_name)]"
                                 options="{'create': False, 'create_edit': False}"
                             />
-                            <field name="default_required" column_invisible="True" />
                             <field name="field_readonly" />
                             <field name="condition_domain" />
                             <field name="group_ids" widget="many2many_tags" />
                             <field name="readonly_field_id" optional="hide" />
-                        </tree>
+                        </list>
                     </field>
                 </page>
             </xpath>
@@ -162,10 +149,10 @@
     </record>
 
     <record id="cfr_required_view_tree" model="ir.ui.view">
-        <field name="name">custom.field.restriction.required.view.tree</field>
+        <field name="name">custom.field.restriction.required.view.list</field>
         <field name="model">custom.field.restriction</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="field_id" />
                 <field name="field_name" />
                 <field name="required_model_id" />
@@ -175,15 +162,15 @@
                 <field name="default_required" />
                 <field name="required" />
                 <field name="required_field_id" />
-            </tree>
+            </list>
         </field>
     </record>
 
     <record id="cfr_invisible_view_tree" model="ir.ui.view">
-        <field name="name">custom.field.restriction.invisible.view.tree</field>
+        <field name="name">custom.field.restriction.invisible.view.list</field>
         <field name="model">custom.field.restriction</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="field_id" />
                 <field name="field_name" />
                 <field name="invisible_model_id" />
@@ -192,15 +179,15 @@
                 <field name="group_ids" widget="many2many_tags" />
                 <field name="field_invisible" />
                 <field name="visibility_field_id" />
-            </tree>
+            </list>
         </field>
     </record>
 
     <record id="cfr_readonly_view_tree" model="ir.ui.view">
-        <field name="name">custom.field.restriction.readonly.view.tree</field>
+        <field name="name">custom.field.restriction.readonly.view.list</field>
         <field name="model">custom.field.restriction</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="field_id" />
                 <field name="field_name" />
                 <field name="readonly_model_id" />
@@ -209,15 +196,15 @@
                 <field name="group_ids" widget="many2many_tags" />
                 <field name="field_readonly" />
                 <field name="readonly_field_id" />
-            </tree>
+            </list>
         </field>
     </record>
 
     <record id="cfr_all_view_tree" model="ir.ui.view">
-        <field name="name">custom.field.restriction.all.view.tree</field>
+        <field name="name">custom.field.restriction.all.view.list</field>
         <field name="model">custom.field.restriction</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="field_id" />
                 <field name="field_name" />
                 <field name="invisible_model_id" />
@@ -233,7 +220,7 @@
                 <field name="readonly_field_id" />
                 <field name="field_invisible" />
                 <field name="visibility_field_id" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -241,7 +228,7 @@
     <record id="action_field_manager_required_view_tree" model="ir.actions.act_window">
         <field name="name">Required Fields</field>
         <field name="res_model">custom.field.restriction</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('required', '=', True)]</field>
         <field name="context">{'show_required_form': True}</field>
         <field
@@ -253,7 +240,7 @@
     <record id="action_cfr_invisible_view_tree" model="ir.actions.act_window">
         <field name="name">Invisible Fields</field>
         <field name="res_model">custom.field.restriction</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('field_invisible', '=', True)]</field>
         <field name="context">{'show_invisible_form': True}</field>
         <field
@@ -265,7 +252,7 @@
     <record id="action_cfr_readonly_view_tree" model="ir.actions.act_window">
         <field name="name">Readonly Fields</field>
         <field name="res_model">custom.field.restriction</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('field_readonly', '=', True)]</field>
         <field name="context">{'show_readonly_form': True}</field>
         <field
@@ -277,7 +264,7 @@
     <record id="action_cfr_all_view_tree" model="ir.actions.act_window">
         <field name="name">All Fields Restrictions</field>
         <field name="res_model">custom.field.restriction</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field
             name="context"
         >{'show_readonly_form': True, 'show_invisible_form': True, 'show_required_form': True, 'hide_title': True}</field>
