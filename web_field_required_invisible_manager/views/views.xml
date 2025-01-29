@@ -16,20 +16,17 @@
                         context="{'default_required_model_id': model, 'show_required_form': True}"
                     >
                         <tree>
-                            <field name="required_model_id" invisible="1" />
-                            <field name="invisible_model_id" invisible="1" />
-                            <field name="model_name" invisible="1" />
+                            <field name="required_model_id" column_invisible="True" />
+                            <field name="invisible_model_id" column_invisible="True" />
+                            <field name="model_name" column_invisible="True" />
                             <field
                                 name="field_id"
                                 context="{'search_by_technical_name': True, 'display_technical_name': True}"
                                 domain="[('model_id.model', '=', model_name)]"
                                 options="{'create': False, 'create_edit': False}"
                             />
-                            <field name="default_required" invisible="1" />
-                            <field
-                                name="required"
-                                attrs="{'readonly':[('default_required', '=', True)]}"
-                            />
+                            <field name="default_required" column_invisible="True" />
+                            <field name="required" readonly="default_required" />
                             <field name="condition_domain" />
                             <field name="group_ids" widget="many2many_tags" />
                             <field name="required_field_id" optional="hide" />
@@ -46,16 +43,16 @@
                         context="{'default_invisible_model_id': model, 'show_invisible_form': True}"
                     >
                         <tree>
-                            <field name="required_model_id" invisible="1" />
-                            <field name="invisible_model_id" invisible="1" />
-                            <field name="model_name" invisible="1" />
+                            <field name="required_model_id" column_invisible="True" />
+                            <field name="invisible_model_id" column_invisible="True" />
+                            <field name="model_name" column_invisible="True" />
                             <field
                                 name="field_id"
                                 context="{'search_by_technical_name': True, 'display_technical_name': True}"
                                 domain="[('model_id.model', '=', model_name)]"
                                 options="{'create': False, 'create_edit': False}"
                             />
-                            <field name="default_required" invisible="1" />
+                            <field name="default_required" column_invisible="True" />
                             <field name="field_invisible" />
                             <field name="condition_domain" />
                             <field name="group_ids" widget="many2many_tags" />
@@ -73,17 +70,17 @@
                         context="{'default_readonly_model_id': model, 'show_readonly_form': True}"
                     >
                         <tree>
-                            <field name="required_model_id" invisible="1" />
-                            <field name="invisible_model_id" invisible="1" />
-                            <field name="readonly_model_id" invisible="1" />
-                            <field name="model_name" invisible="1" />
+                            <field name="required_model_id" column_invisible="True" />
+                            <field name="invisible_model_id" column_invisible="True" />
+                            <field name="readonly_model_id" column_invisible="True" />
+                            <field name="model_name" column_invisible="True" />
                             <field
                                 name="field_id"
                                 context="{'search_by_technical_name': True, 'display_technical_name': True}"
                                 domain="[('model_id.model', '=', model_name)]"
                                 options="{'create': False, 'create_edit': False}"
                             />
-                            <field name="default_required" invisible="1" />
+                            <field name="default_required" column_invisible="True" />
                             <field name="field_readonly" />
                             <field name="condition_domain" />
                             <field name="group_ids" widget="many2many_tags" />
@@ -112,8 +109,7 @@
                     </div>
                     <group>
                         <group
-                            attrs="{'invisible': ['|', ('required_model_id', '!=', False), ('readonly_model_id', '!=', False)]}"
-                            invisible="not context.get('show_invisible_form', False)"
+                            invisible="not context.get('show_invisible_form', False) or (required_model_id or readonly_model_id)"
                         >
                             <field
                                 name="invisible_model_id"
@@ -123,23 +119,18 @@
                             <field name="visibility_field_id" readonly="1" />
                         </group>
                         <group
-                            attrs="{'invisible': ['|', ('invisible_model_id', '!=', False), ('readonly_model_id', '!=', False)]}"
-                            invisible="not context.get('show_required_form', False)"
+                            invisible="not context.get('show_required_form', False) or (invisible_model_id or readonly_model_id)"
                         >
                             <field
                                 name="required_model_id"
                                 required="context.get('show_required_form', False)"
                             />
                             <field name="default_required" readonly="1" />
-                            <field
-                                name="required"
-                                attrs="{'readonly':[('default_required', '=', True)]}"
-                            />
+                            <field name="required" readonly="default_required" />
                             <field name="required_field_id" readonly="1" />
                         </group>
                         <group
-                            attrs="{'invisible': ['|', ('required_model_id', '!=', False), ('invisible_model_id', '!=', False)]}"
-                            invisible="not context.get('show_readonly_form', False)"
+                            invisible="not context.get('show_readonly_form', False) or (required_model_id or invisible_model_id)"
                         >
                             <field
                                 name="readonly_model_id"
