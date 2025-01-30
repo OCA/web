@@ -8,7 +8,12 @@
             <timeline date_start="nextcall" default_group_by="model_id" />
         </field>
     </record>
-    <record id="base.ir_cron_act" model="ir.actions.act_window">
-        <field name="view_mode">tree,form,calendar,timeline</field>
-    </record>
+    <!-- Append our view_mode this way to avoid overwriting changes done by other modules. -->
+    <function model="ir.actions.act_window" name="write">
+        <value eval="[ref('base.ir_cron_act')]" />
+        <value
+            model="ir.actions.act_window"
+            eval="{'view_mode': obj().env.ref('base.ir_cron_act').view_mode + ',timeline'}"
+        />
+    </function>
 </odoo>
