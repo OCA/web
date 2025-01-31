@@ -23,13 +23,17 @@ $chatter_zone_width: 35% !important;
         align-items: center;
         height: 35px;
     }
-    .o_calendar_widget {
-        .fc-dayGridMonth-view {
-            .fc-week-number {
-                display: none;
+    .o_calendar_view .o_calendar_widget {
+        .fc-timeGridDay-view .fc-axis,
+        .fc-timeGridWeek-view .fc-axis {
+            padding-left: 0px;
+        }
+        .fc-dayGridYear-view {
+            padding-left: 0px;
+            > .fc-month-container {
+                width: 95%;
             }
         }
-
         .fc-timeGridDay-view {
             .fc-day-header {
                 vertical-align: middle;
