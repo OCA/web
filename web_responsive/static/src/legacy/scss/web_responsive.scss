@@ -24,12 +24,6 @@ $chatter_zone_width: 35% !important;
         height: 35px;
     }
     .o_calendar_widget {
-        .fc-dayGridMonth-view {
-            .fc-week-number {
-                display: none;
-            }
-        }
-
         .fc-timeGridDay-view {
             .fc-day-header {
                 vertical-align: middle;
