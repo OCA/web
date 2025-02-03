@@ -1,8 +1,22 @@
-/** @odoo-module **/
-
+/* global document,console */
 import {Component, markup, onMounted, onPatched, onWillStart, useRef} from "@odoo/owl";
-import {loadBundle} from "@web/core/assets";
+import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
+
+export async function loadBokehLibraries() {
+    const scripts = [
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.6.3.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.6.3.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.6.3.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.6.3.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.6.3.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.6.3.min.js",
+    ];
+
+    for (const script of scripts) {
+        await loadJS(script);
+    }
+}
 
 export default class BokehChartJsonWidget extends Component {
     setup() {
@@ -17,18 +31,7 @@ export default class BokehChartJsonWidget extends Component {
             script.text = this.props.record.data[this.props.name].script;
             this.widget.el.append(script);
         });
-        onWillStart(() =>
-            loadBundle({
-                jsLibs: [
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.4.1.min.js",
-                ],
-            })
-        );
+        onWillStart(() => loadBokehLibraries());
     }
     markup(value) {
         console.log("Marking up...");
