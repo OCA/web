@@ -1,10 +1,23 @@
-/** @odoo-module **/
-
+/* global document */
 import {markup, onMounted, onPatched, onWillStart, useRef} from "@odoo/owl";
-import {CharField} from "@web/views/fields/char/char_field";
-import {loadBundle} from "@web/core/assets";
+import {CharField, charField} from "@web/views/fields/char/char_field";
+import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 
+export async function loadBokehLibraries() {
+    const scripts = [
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.6.3.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.6.3.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.6.3.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.6.3.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.6.3.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.6.3.min.js",
+    ];
+
+    for (const script of scripts) {
+        await loadJS(script);
+    }
+}
 export default class BokehChartWidget extends CharField {
     setup() {
         this.widget = useRef("widget");
@@ -19,18 +32,7 @@ export default class BokehChartWidget extends CharField {
             this.widget.el.append(script);
         });
         super.setup();
-        onWillStart(() =>
-            loadBundle({
-                jsLibs: [
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.4.1.min.js",
-                ],
-            })
-        );
+        onWillStart(() => loadBokehLibraries());
     }
     get json_value() {
         var value = false;
@@ -46,7 +48,7 @@ export default class BokehChartWidget extends CharField {
 BokehChartWidget.template = "web_widget_bokeh_chart.BokehChartField";
 
 export const bokehChartWidget = {
-    ...CharField,
+    ...charField,
     component: BokehChartWidget,
 };
 
