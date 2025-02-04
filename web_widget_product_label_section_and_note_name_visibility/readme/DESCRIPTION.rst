@@ -1,1 +1,0 @@
-This module unifies the product and name into a single column, making it more user-friendly and space-saving.
