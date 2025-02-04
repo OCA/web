@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_text_limit_form">
+        <field name="name">Text Limit Form</field>
+        <field name="model">text.limit</field>
+        <field name="arch" type="xml">
+            <form string="Text Limit">
+                <sheet>
+                    <group col="4">
+                        <field
+                            name="name"
+                            attrs="{'readonly': [('id', '!=', False)]}"
+                        />
+                        <field name="value" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_text_limit_tree">
+        <field name="name">Text Limit List</field>
+        <field name="model">text.limit</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="value" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_text_limit_form">
+            <field name="name">Text Limits</field>
+            <field name="res_model">text.limit</field>
+    </record>
+    <menuitem
+        parent="base.next_id_2"
+        id="menu_text_limit_form"
+        action="action_text_limit_form"
+    />
+</odoo>
