@@ -3,7 +3,6 @@
 
     <t
         t-name="web_widget_product_label_section_and_note.ProductLabelSectionAndNoteField"
-        owl="1"
     >
         <div class="o_field_product_label_section_and_note_cell">
             <t t-if="props.readonly">
@@ -96,12 +95,12 @@
                         <button
                             t-if="hasExternalButton"
                             aria-label="Internal link"
-                            class="btn btn-secondary fa o_external_button"
+                            class="btn btn-link text-action oi o_external_button"
                             data-tooltip="Internal link"
                             draggable="false"
                             tabindex="-1"
                             type="button"
-                            t-att-class="(props.openTarget === 'current' and !env.inDialog )? 'fa-arrow-right' : 'fa-external-link'"
+                            t-att-class="env.inDialog ? 'oi-launch' : 'oi-arrow-right'"
                             t-on-click="onExternalBtnClick"
                         />
                         <button
@@ -181,18 +180,18 @@
         t-name="web_widget_product_label_section_and_note.ProductLabelSectionAndNoteFieldAutocomplete"
         t-inherit="web.Many2XAutocomplete"
         t-inherit-mode="primary"
-        owl="1"
     >
         <xpath expr="//AutoComplete[@t-else='']" position="replace">
             <t t-else="">
                 <t t-if="!isSectionOrNote">
                     <AutoComplete
+                        autofocus="props.autofocus"
                         autoSelect="props.autoSelect"
+                        dropdown="props.dropdown"
                         id="props.id"
                         onChange.bind="onChange"
                         onInput.bind="onInput"
                         onSelect.bind="onSelect"
-                        onCancel.bind="onCancel"
                         placeholder="props.placeholder"
                         resetOnSelect="props.value === ''"
                         sources="sources"
@@ -211,7 +210,7 @@
                 </t>
             </t>
         </xpath>
-        <xpath expr="//a[@class='o_dropdown_button']" position="attributes">
+        <xpath expr="//span[hasclass('o_dropdown_button')]" position="attributes">
             <attribute name="t-if">!isSectionOrNote</attribute>
         </xpath>
     </t>

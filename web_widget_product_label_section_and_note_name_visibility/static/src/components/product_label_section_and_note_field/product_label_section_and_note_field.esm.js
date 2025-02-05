@@ -7,7 +7,6 @@ import {
     onMounted,
     onPatched,
     onWillUnmount,
-    onWillUpdateProps,
     useEffect,
     useRef,
     useState,
@@ -15,9 +14,13 @@ import {
 import {AutoComplete} from "@web/core/autocomplete/autocomplete";
 import {Many2OneField} from "@web/views/fields/many2one/many2one_field";
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
-import {SectionAndNoteListRenderer} from "@account/components/section_and_note_fields_backend/section_and_note_fields_backend";
-import {X2ManyField} from "@web/views/fields/x2many/x2many_field";
+import {
+    SectionAndNoteListRenderer,
+    sectionAndNoteFieldOne2Many,
+} from "@account/components/section_and_note_fields_backend/section_and_note_fields_backend";
+import {X2ManyField, x2ManyField} from "@web/views/fields/x2many/x2many_field";
 import {_t} from "@web/core/l10n/translation";
+import {useRecordObserver} from "@web/model/relational_model/utils";
 import {getActiveHotkey} from "@web/core/hotkeys/hotkey_service";
 import {registry} from "@web/core/registry";
 import {useProductAndLabelAutoresize} from "../../core/utils/product_and_label_autoresize.esm";
@@ -70,19 +73,23 @@ export class ProductLabelSectionAndNoteListRender extends SectionAndNoteListRend
     }
 }
 
-export class ProductLabelSectionAndNoteOne2Many extends X2ManyField {}
-ProductLabelSectionAndNoteOne2Many.components = {
-    ...X2ManyField.components,
-    ListRenderer: ProductLabelSectionAndNoteListRender,
-};
-ProductLabelSectionAndNoteOne2Many.additionalClasses =
-    SectionAndNoteListRenderer.additionalClasses;
+export class ProductLabelSectionAndNoteOne2Many extends X2ManyField {
+    static components = {
+        ...X2ManyField.components,
+        ListRenderer: ProductLabelSectionAndNoteListRender,
+    };
+}
 
+export const productLabelSectionAndNoteOne2Many = {
+    ...x2ManyField,
+    component: ProductLabelSectionAndNoteOne2Many,
+    additionalClasses: sectionAndNoteFieldOne2Many.additionalClasses,
+};
 registry
     .category("fields")
     .add(
         "product_label_section_and_note_field_o2m",
-        ProductLabelSectionAndNoteOne2Many
+        productLabelSectionAndNoteOne2Many
     );
 
 export class ProductLabelSectionAndNoteAutocomplete extends AutoComplete {
@@ -107,6 +114,19 @@ export class ProductLabelSectionAndNoteAutocomplete extends AutoComplete {
 }
 
 export class ProductLabelSectionAndNoteFieldAutocomplete extends Many2XAutocomplete {
+    static components = {
+        ...Many2XAutocomplete.components,
+        AutoComplete: ProductLabelSectionAndNoteAutocomplete,
+    };
+    static props = {
+        ...Many2XAutocomplete.props,
+        isNote: {type: Boolean},
+        isSection: {type: Boolean},
+        onFocusout: {type: Function, optional: true},
+        updateLabel: {type: Function, optional: true},
+    };
+    static template =
+        "web_widget_product_label_section_and_note.ProductLabelSectionAndNoteFieldAutocomplete";
     setup() {
         super.setup();
         this.input = useRef("section_and_note_input");
@@ -121,14 +141,13 @@ export class ProductLabelSectionAndNoteFieldAutocomplete extends Many2XAutocompl
     }
 }
 
-ProductLabelSectionAndNoteFieldAutocomplete.components = {
-    ...Many2XAutocomplete.components,
-    AutoComplete: ProductLabelSectionAndNoteAutocomplete,
-};
-ProductLabelSectionAndNoteFieldAutocomplete.template =
-    "web_widget_product_label_section_and_note.ProductLabelSectionAndNoteFieldAutocomplete";
-
 export class ProductLabelSectionAndNoteField extends Many2OneField {
+    static components = {
+        ...Many2OneField.components,
+        Many2XAutocomplete: ProductLabelSectionAndNoteFieldAutocomplete,
+    };
+    static template =
+        "web_widget_product_label_section_and_note.ProductLabelSectionAndNoteField";
     setup() {
         super.setup();
         this.isPrintMode = useState({value: false});
@@ -183,8 +202,8 @@ export class ProductLabelSectionAndNoteField extends Many2OneField {
             window.removeEventListener("beforeprint", this.onBeforePrint);
             window.removeEventListener("afterprint", this.onAfterPrint);
         });
-        onWillUpdateProps((newProps) => {
-            const label = newProps.record.data.name || "";
+        useRecordObserver(async (record) => {
+            const label = record.data.name || "";
             this.isProductVisible.value = label.includes(this.productName);
         });
     }
@@ -266,13 +285,10 @@ export class ProductLabelSectionAndNoteField extends Many2OneField {
     }
 }
 
-ProductLabelSectionAndNoteField.components = {
-    ...Many2OneField.components,
-    Many2XAutocomplete: ProductLabelSectionAndNoteFieldAutocomplete,
+export const productLabelSectionAndNoteField = {
+    ...Many2OneField,
+    component: ProductLabelSectionAndNoteField,
 };
-ProductLabelSectionAndNoteField.template =
-    "web_widget_product_label_section_and_note.ProductLabelSectionAndNoteField";
-
 registry
     .category("fields")
-    .add("product_label_section_and_note_field", ProductLabelSectionAndNoteField);
+    .add("product_label_section_and_note_field", productLabelSectionAndNoteField);

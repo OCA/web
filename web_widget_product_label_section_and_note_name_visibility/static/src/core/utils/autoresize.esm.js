@@ -5,6 +5,7 @@
 
 import {useEffect} from "@odoo/owl";
 import {browser} from "@web/core/browser/browser";
+import {resizeTextArea} from "@web/core/utils/autoresize";
 
 function resizeInput(input) {
     // This mesures the maximum width of the input which can get from the flex layout.
@@ -23,37 +24,6 @@ function resizeInput(input) {
         return;
     }
     input.style.width = input.scrollWidth + 5 + (isSafari16 ? 8 : 0) + "px";
-}
-
-export function resizeTextArea(textarea, options = {}) {
-    const minimumHeight = options.minimumHeight || 0;
-    let heightOffset = 0;
-    const style = window.getComputedStyle(textarea);
-    if (style.boxSizing === "border-box") {
-        const paddingHeight =
-            parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
-        const borderHeight =
-            parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
-        heightOffset = borderHeight + paddingHeight;
-    }
-    const previousStyle = {
-        borderTopWidth: style.borderTopWidth,
-        borderBottomWidth: style.borderBottomWidth,
-        padding: style.padding,
-    };
-    Object.assign(textarea.style, {
-        height: "auto",
-        borderTopWidth: 0,
-        borderBottomWidth: 0,
-        paddingTop: 0,
-        paddingRight: style.paddingRight,
-        paddingBottom: 0,
-        paddingLeft: style.paddingLeft,
-    });
-    textarea.style.height = "auto";
-    const height = Math.max(minimumHeight, textarea.scrollHeight + heightOffset);
-    Object.assign(textarea.style, previousStyle, {height: `${height}px`});
-    textarea.parentElement.style.height = `${height}px`;
 }
 
 /**
