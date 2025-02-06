@@ -1,5 +1,6 @@
 from odoo.tests.common import TransactionCase
 
+
 class TestIrActionsActMulti(TransactionCase):
 
     def setUp(self):
