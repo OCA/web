@@ -2,13 +2,14 @@
 # Copyright 2018 Brainbean Apps
 # Copyright 2020 Manuel Calero
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
+# Copyright 2025 Leonardo Caballero, Binhex (https://www.binhex.cloud/)
 # License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
 
 {
     "name": "Web Actions Multi",
     "summary": "Enables triggering of more than one action on ActionManager",
     "category": "Web",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "license": "LGPL-3",
     "author": "Modoolar, " "CorporateHub, " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
