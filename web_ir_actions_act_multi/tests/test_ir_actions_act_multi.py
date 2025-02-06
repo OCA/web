@@ -2,7 +2,6 @@ from odoo.tests.common import TransactionCase
 
 
 class TestIrActionsActMulti(TransactionCase):
-
     def setUp(self):
         super(TestIrActionsActMulti, self).setUp()
         self.IrActionsActMulti = self.env["ir.actions.act_multi"]
