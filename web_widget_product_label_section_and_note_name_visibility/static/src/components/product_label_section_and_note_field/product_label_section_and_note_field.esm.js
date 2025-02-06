@@ -154,6 +154,7 @@ export class ProductLabelSectionAndNoteField extends Many2OneField {
         this.labelVisibility = useState({value: false});
         this.isProductVisible = useState({value: false});
         this.switchToLabel = false;
+        this.changeProductVisibility = true;
         this.columnIsProductAndLabel = useState({
             value: this.props.record.columnIsProductAndLabel,
         });
@@ -203,8 +204,10 @@ export class ProductLabelSectionAndNoteField extends Many2OneField {
             window.removeEventListener("afterprint", this.onAfterPrint);
         });
         useRecordObserver(async (record) => {
-            const label = record.data.name || "";
-            this.isProductVisible.value = label.includes(this.productName);
+            if (this.changeProductVisibility) {
+                const label = record.data.name || "";
+                this.isProductVisible.value = label.includes(this.productName);
+            }
         });
     }
 
@@ -276,9 +279,12 @@ export class ProductLabelSectionAndNoteField extends Many2OneField {
     }
 
     updateLabel(value) {
+        this.changeProductVisibility = false;
         this.props.record.update({
             name:
-                this.productName && this.productName !== value
+                this.productName &&
+                this.productName !== value &&
+                this.isProductVisible.value
                     ? `${this.productName}\n${value}`
                     : value,
         });
