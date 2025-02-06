@@ -84,6 +84,9 @@ Contributors
 
 -  Manuel Calero - Tecnativa
 -  Matias Peralta, Juan Rivero - Adhoc
+-  `Binhex <https://www.binhex.cloud/>`__
+
+   -  Leonardo J. Caballero G. <l.caballero@binhex.cloud>>
 
 Maintainers
 -----------
