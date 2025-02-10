@@ -1,0 +1,1 @@
+To define a custom auto-refresh interval, you can set the parameter `web_refresher_auto.interval_time_seconds` in the system parameters to the desired value in seconds. The default value is 60 seconds if no system parameter is defined.
