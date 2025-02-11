@@ -1,8 +1,6 @@
-/** @odoo-module */
-
+import {FloatField} from "@web/views/fields/float/float_field";
 import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
-import {FloatField} from "@web/views/fields/float/float_field";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class NumericStep extends FloatField {
