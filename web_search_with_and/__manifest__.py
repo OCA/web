@@ -4,7 +4,7 @@
 
 {
     "name": "Use AND conditions on omnibar search",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "author": """Sandip SCS, Versada UAB, ACSONE SA/NV, Serincloud,
     Odoo Community Association (OCA)""",
     "license": "AGPL-3",
