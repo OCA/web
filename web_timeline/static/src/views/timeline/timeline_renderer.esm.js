@@ -195,7 +195,6 @@ export class TimelineRenderer extends Component {
             // Delete an item by tapping the delete button top right
             this.options.editable.remove = true;
         }
-        this.options.xss = {disabled: true};
         this.timeline = new vis.Timeline(this.canvasRef.el, {}, this.options);
         this.timeline.on("click", this.on_timeline_click.bind(this));
         if (!this.options.onUpdate) {
