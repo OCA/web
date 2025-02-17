@@ -17,13 +17,13 @@ Web Widget Plotly
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/17.0/web_widget_plotly_chart
+    :target: https://github.com/OCA/web/tree/18.0/web_widget_plotly_chart
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_widget_plotly_chart
+    :target: https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_widget_plotly_chart
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=17.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -31,8 +31,7 @@ Web Widget Plotly
 This module add the possibility to insert Plotly charts into Odoo
 standard views.
 
-.. image:: https://raw.githubusercontent.com/OCA/web/17.0/web_widget_plotly_chart/static/description/example.png
-   :alt: Plotly Chart inserted into an Odoo view
+|Plotly Chart inserted into an Odoo view|
 
 `Plotly <https://plot.ly/>`__ is a Python interactive visualization
 library built on top of d3.js and stack.gl, plotly.js is a high-level,
@@ -42,6 +41,8 @@ financial charts, and more.
 
 If you want to see some samples of plotly's capabilities follow this
 `link <https://github.com/plotly/plotly.py#overview>`__.
+
+.. |Plotly Chart inserted into an Odoo view| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_widget_plotly_chart/static/description/example.png
 
 **Table of contents**
 
@@ -101,7 +102,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_plotly_chart%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_plotly_chart%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -116,16 +117,16 @@ Authors
 Contributors
 ------------
 
--  Roberto Fichera <roberto.fichera@levelprime.com>
--  Michele Zaccheddu <michele.zaccheddu@levelprime.com>
+- Roberto Fichera <roberto.fichera@levelprime.com>
+- Michele Zaccheddu <michele.zaccheddu@levelprime.com>
 
 Other credits
 -------------
 
--  This module uses the library
-   `Plotly.js <https://github.com/plotly/plotly.js>`__ which is under
-   the open-source MIT License. Copyright (c) 2019 Plotly, Inc
--  Odoo Community Association (OCA)
+- This module uses the library
+  `Plotly.js <https://github.com/plotly/plotly.js>`__ which is under the
+  open-source MIT License. Copyright (c) 2019 Plotly, Inc
+- Odoo Community Association (OCA)
 
 Maintainers
 -----------
@@ -148,6 +149,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-robyf70| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/17.0/web_widget_plotly_chart>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/18.0/web_widget_plotly_chart>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
