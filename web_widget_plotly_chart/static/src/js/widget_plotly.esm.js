@@ -1,7 +1,5 @@
-/** @odoo-module **/
-
 import {CharField} from "@web/views/fields/char/char_field";
-import {loadBundle} from "@web/core/assets";
+import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 
 import {onPatched, onWillStart, useEffect, useRef} from "@odoo/owl";
@@ -21,17 +19,15 @@ export class PlotlyChartWidget extends CharField {
         });
 
         onWillStart(() =>
-            loadBundle({
-                jsLibs: [
-                    "/web_widget_plotly_chart/static/src/lib/plotly/plotly-2.32.0.min.js",
-                ],
-            })
+            loadJS(
+                "/web_widget_plotly_chart/static/src/lib/plotly/plotly-2.32.0.min.js"
+            )
         );
     }
     updatePlotly(value) {
-        const value_html = $(value);
-        const div = value_html.find(".plotly-graph-div").get(0).outerHTML || "";
-        const script = value_html.find("script").get(0).textContent || "";
+        const value_html = new DOMParser().parseFromString(value, "text/html");
+        const div = value_html.querySelector(".plotly-graph-div")?.outerHTML || "";
+        const script = value_html.querySelector("script")?.textContent || "";
 
         if (this.widget.el) {
             this.widget.el.innerHTML = div;
