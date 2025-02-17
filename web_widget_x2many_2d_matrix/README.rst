@@ -153,18 +153,18 @@ Now in our wizard, we can use:
 Known issues / Roadmap
 ======================
 
-- Support extra attributes on each field cell via field_extra_attrs
-  param. We could set a cell as not editable, required or readonly for
-  instance. The readonly case will also give the ability to click on m2o
-  to open related records.
-- Support limit total records in the matrix. Ref:
-  https://github.com/OCA/web/issues/901
-- Support cell traversal through keyboard arrows.
-- Entering the widget from behind by pressing ``Shift+TAB`` in your
-  keyboard will enter into the 1st cell until
-  https://github.com/odoo/odoo/pull/26490 is merged.
-- Support extra invisible fields inside each cell.
-- Support kanban mode. Current behaviour forces list mode.
+-  Support extra attributes on each field cell via field_extra_attrs
+   param. We could set a cell as not editable, required or readonly for
+   instance. The readonly case will also give the ability to click on
+   m2o to open related records.
+-  Support limit total records in the matrix. Ref:
+   https://github.com/OCA/web/issues/901
+-  Support cell traversal through keyboard arrows.
+-  Entering the widget from behind by pressing ``Shift+TAB`` in your
+   keyboard will enter into the 1st cell until
+   https://github.com/odoo/odoo/pull/26490 is merged.
+-  Support extra invisible fields inside each cell.
+-  Support kanban mode. Current behaviour forces list mode.
 
 Changelog
 =========
@@ -172,14 +172,14 @@ Changelog
 12.0.1.0.1 (2018-12-07)
 -----------------------
 
-- [FIX] Cells are unable to render property.
-  (`#1126 <https://github.com/OCA/web/issues/1126>`__)
+-  [FIX] Cells are unable to render property.
+   (`#1126 <https://github.com/OCA/web/issues/1126>`__)
 
 12.0.1.0.0 (2018-11-20)
 -----------------------
 
-- [12.0][MIG] web_widget_x2many_2d_matrix
-  (`#1101 <https://github.com/OCA/web/issues/1101>`__)
+-  [12.0][MIG] web_widget_x2many_2d_matrix
+   (`#1101 <https://github.com/OCA/web/issues/1101>`__)
 
 Bug Tracker
 ===========

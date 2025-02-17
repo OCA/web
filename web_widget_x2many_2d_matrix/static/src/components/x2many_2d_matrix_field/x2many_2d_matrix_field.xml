@@ -13,6 +13,7 @@
                 canWrite="props.canWrite"
                 canQuickCreate="props.canQuickCreate"
                 canCreateEdit="props.canCreateEdit"
+                domain="props.domain"
             />
         </div>
     </t>
