@@ -2,3 +2,5 @@
 beautifulsoup4
 bokeh==3.6.3
 mpld3==0.5.10
+plotly==5.22.0
+
