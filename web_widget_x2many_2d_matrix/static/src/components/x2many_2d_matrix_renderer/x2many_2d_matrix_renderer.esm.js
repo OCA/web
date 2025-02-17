@@ -1,5 +1,7 @@
 import {Component, onWillUpdateProps} from "@odoo/owl";
 import {registry} from "@web/core/registry";
+import {Domain} from "@web/core/domain";
+import {evaluateExpr} from "@web/core/py_js/py";
 const fieldRegistry = registry.category("fields");
 
 export class X2Many2DMatrixRenderer extends Component {
@@ -165,6 +167,12 @@ export class X2Many2DMatrixRenderer extends Component {
             canQuickCreate: this.props.canQuickCreate,
             canCreateEdit: this.props.canCreateEdit,
         };
+        const domain = record.fields[this.matrixFields.value].domain;
+        if ((Array.isArray(value) || typeof value === "string") && domain.length) {
+            result.domain = new Domain(
+                evaluateExpr(domain, record.evalContext)
+            ).toList();
+        }
         if (value === null) {
             result.readonly = true;
         }
@@ -177,6 +185,7 @@ X2Many2DMatrixRenderer.props = {
     list: {type: Object, optional: true},
     matrixFields: {type: Object, optional: true},
     readonly: {type: Boolean, optional: true},
+    domain: {type: [Array, Function], optional: true},
     showRowTotals: {type: Boolean, optional: true},
     showColumnTotals: {type: Boolean, optional: true},
     canOpen: {type: Boolean, optional: true},
