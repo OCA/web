@@ -83,6 +83,11 @@ msgid "Name..."
 msgstr ""
 
 #. module: web_editor_class_selector
+#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: web_editor_class_selector
 #: model_terms:ir.ui.view,arch_db:web_editor_class_selector.view_web_editor_class_form
 msgid "Some CSS class"
 msgstr ""
