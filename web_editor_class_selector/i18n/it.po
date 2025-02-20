@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-10-07 10:06+0000\n"
+"PO-Revision-Date: 2025-02-20 11:07+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -87,7 +87,7 @@ msgstr "Nome..."
 #. module: web_editor_class_selector
 #: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sequenza"
 
 #. module: web_editor_class_selector
 #: model_terms:ir.ui.view,arch_db:web_editor_class_selector.view_web_editor_class_form
