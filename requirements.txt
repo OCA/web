@@ -1,2 +1,2 @@
 # generated from manifests external_dependencies
-plotly==5.22.0
+bokeh==3.4.1
