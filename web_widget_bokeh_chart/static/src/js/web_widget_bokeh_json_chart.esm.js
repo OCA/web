@@ -1,7 +1,5 @@
-/** @odoo-module **/
-
 import {Component, markup, onMounted, onPatched, onWillStart, useRef} from "@odoo/owl";
-import {loadBundle} from "@web/core/assets";
+import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 
 export default class BokehChartJsonWidget extends Component {
@@ -17,18 +15,26 @@ export default class BokehChartJsonWidget extends Component {
             script.text = this.props.record.data[this.props.name].script;
             this.widget.el.append(script);
         });
-        onWillStart(() =>
-            loadBundle({
-                jsLibs: [
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.4.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.4.1.min.js",
-                ],
-            })
-        );
+        onWillStart(async () => {
+            await loadJS(
+                "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.4.1.min.js"
+            );
+            await loadJS(
+                "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.4.1.min.js"
+            );
+            await loadJS(
+                "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.4.1.min.js"
+            );
+            await loadJS(
+                "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.4.1.min.js"
+            );
+            await loadJS(
+                "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.4.1.min.js"
+            );
+            await loadJS(
+                "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.4.1.min.js"
+            );
+        });
     }
     markup(value) {
         console.log("Marking up...");
