@@ -1,0 +1,9 @@
+- [Onestein](https://www.onestein.nl):
+  - Dennis Sluijk \<<d.sluijk@onestein.nl>\>
+  - Andrea Stirpe \<<a.stirpe@onestein.nl>\>
+- [Tecnativa](https://www.tecnativa.com):
+  - David Vidal
+  - João Marques
+  - Alexandre Díaz
+  - Víctor Martínez
+  - David Vidal
