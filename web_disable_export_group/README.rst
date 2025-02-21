@@ -45,7 +45,7 @@ Configuration
 =============
 
 Enable the group *Direct Export* to the users who are allowed to make
-use of the option 'Export xlsx' from the list view.
+use of the option 'Export All' from the list view.
 
 Usage
 =====
@@ -84,11 +84,11 @@ Contributors
 
 - `Tecnativa <https://www.tecnativa.com>`__:
 
-  - David Vidal
   - João Marques
   - Alexandre Díaz
   - Víctor Martínez
   - David Vidal
+  - Carlos Lopez
 
 Maintainers
 -----------
