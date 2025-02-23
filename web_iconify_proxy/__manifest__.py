@@ -4,13 +4,13 @@
 {
     "name": "Web Iconify Proxy",
     "summary": "Proxies requests to the Iconify API, providing SVG icons, CSS,"
-    " and JSON data. It also implements caching using Odoo's ir.attachment "
-    "model.",
+    " and JSON data. It also implements caching using Odoo's "
+    "ir.attachment model.",
     "version": "18.0.1.0.0",
     "category": "Website",
     "website": "https://github.com/OCA/web",
     "author": "jaco.tech, Odoo Community Association (OCA)",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     "depends": ["web"],
     "data": [],
     "assets": {
@@ -20,4 +20,5 @@
     },
     "installable": True,
     "auto_install": False,
+    "tests": ["tests/test_main.py"],
 }

@@ -34,11 +34,11 @@ This technical module allows you to send instant notification messages
 from the server to the user in live. Two kinds of notification are
 supported.
 
--  Success: Displayed in a success theme color flying popup div
--  Danger: Displayed in a danger theme color flying popup div
--  Warning: Displayed in a warning theme color flying popup div
--  Information: Displayed in a info theme color flying popup div
--  Default: Displayed in a default theme color flying popup div
+- Success: Displayed in a success theme color flying popup div
+- Danger: Displayed in a danger theme color flying popup div
+- Warning: Displayed in a warning theme color flying popup div
+- Information: Displayed in a info theme color flying popup div
+- Default: Displayed in a default theme color flying popup div
 
 **Table of contents**
 
@@ -87,8 +87,8 @@ or
 
 The notifications can bring interactivity with some buttons.
 
--  One allowing to refresh the active view
--  Another allowing to send a window / client action
+- One allowing to refresh the active view
+- Another allowing to send a window / client action
 
 The reload button is activated when sending the notification with:
 
@@ -142,17 +142,17 @@ Authors
 Contributors
 ------------
 
--  Laurent Mignon <laurent.mignon@acsone.eu>
--  Serpent Consulting Services Pvt. Ltd.<jay.vora@serpentcs.com>
--  Aitor Bouzas <aitor.bouzas@adaptivecity.com>
--  Shepilov Vladislav <shepilov.v@protonmail.com>
--  Kevin Khao <kevin.khao@akretion.com>
--  `Tecnativa <https://www.tecnativa.com>`__:
+- Laurent Mignon <laurent.mignon@acsone.eu>
+- Serpent Consulting Services Pvt. Ltd.<jay.vora@serpentcs.com>
+- Aitor Bouzas <aitor.bouzas@adaptivecity.com>
+- Shepilov Vladislav <shepilov.v@protonmail.com>
+- Kevin Khao <kevin.khao@akretion.com>
+- `Tecnativa <https://www.tecnativa.com>`__:
 
-   -  David Vidal
+  - David Vidal
 
--  Nikul Chaudhary <nchaudhary@opensourceintegrators.com>
--  Tris Doan <tridm@trobz.com>
+- Nikul Chaudhary <nchaudhary@opensourceintegrators.com>
+- Tris Doan <tridm@trobz.com>
 
 Other credits
 -------------

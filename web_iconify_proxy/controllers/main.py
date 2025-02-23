@@ -32,18 +32,18 @@ class IconifyProxyController(http.Controller):
 
         # Validate prefix
         if not re.match(r"^[a-z0-9-]+$", prefix):
-            return request.not_found()
+            raise request.not_found()
 
         # Validate icon (if provided)
         if icon and not re.match(r"^[a-z0-9:-]+$", icon):
-            return request.not_found()
+            raise request.not_found()
 
         # Validate icons (if provided)
         if icons:
             icon_list = icons.split(",")
             for single_icon in icon_list:
                 if not re.match(r"^[a-z0-9:-]+$", single_icon):
-                    return request.not_found()
+                    raise request.not_found()
             icons = ",".join(icon_list)  # Reconstruct to prevent injection
 
         Attachment = request.env["ir.attachment"].sudo()
@@ -57,7 +57,7 @@ class IconifyProxyController(http.Controller):
             name = f"{prefix}-{icons}"
             res_model = "iconify.json"
         else:
-            return request.not_found()
+            raise request.not_found()
 
         attachment = Attachment.search(
             [("res_model", "=", res_model), ("name", "=", name)], limit=1
@@ -79,7 +79,7 @@ class IconifyProxyController(http.Controller):
             response.raise_for_status()  # Raise HTTPError for bad responses
         except requests.exceptions.RequestException as e:
             _logger.error(f"Request to Iconify API failed: {e}")
-            return request.not_found()
+            raise request.not_found() from e
 
         data = response.content
         attachment = Attachment.create(
@@ -139,7 +139,7 @@ class IconifyProxyController(http.Controller):
         """
         icons = params.get("icons")
         if not icons:
-            return request.not_found()
+            raise request.not_found()
         upstream_url = f"https://api.iconify.design/{prefix}.css?icons={icons}"
         return self._fetch_iconify_data(upstream_url, "text/css", prefix, icons=icons)
 
@@ -162,7 +162,7 @@ class IconifyProxyController(http.Controller):
         """
         icons = params.get("icons")
         if not icons:
-            return request.not_found()
+            raise request.not_found()
         upstream_url = f"https://api.iconify.design/{prefix}.json?icons={icons}"
         return self._fetch_iconify_data(
             upstream_url, "application/json", prefix, icons=icons
@@ -186,7 +186,7 @@ class IconifyProxyController(http.Controller):
         """
         prefixes = params.get("prefixes")
         if not prefixes:
-            return request.not_found()
+            raise request.not_found()
 
         prefixes_list = prefixes.split(",")
 
@@ -202,7 +202,7 @@ class IconifyProxyController(http.Controller):
         )
 
         if not attachments:
-            return request.not_found()
+            raise request.not_found()
 
         # Find the latest create_date
         latest_timestamp = max(
