@@ -1,3 +1,4 @@
+import ast
 import base64
 import datetime
 import logging
@@ -15,7 +16,13 @@ class IconifyProxyController(http.Controller):
     """Controller for proxying Iconify requests."""
 
     def _fetch_iconify_data(
-        self, upstream_url, content_type, prefix, icons=None, icon=None
+        self,
+        upstream_url,
+        content_type,
+        prefix,
+        icons=None,
+        icon=None,
+        normalized_params_string="",
     ):
         """Fetches data from the Iconify API or the local cache.
 
@@ -25,22 +32,28 @@ class IconifyProxyController(http.Controller):
             prefix (str): The icon prefix.
             icons (str, optional): Comma-separated list of icons (for CSS and JSON).
             icon (str, optional): The icon name (for SVG).
+            normalized_params_string (str, optional): Normalized parameters string.
 
         Returns:
             Response: The HTTP response.
         """
 
         # Validate prefix
+        prefix = prefix.lower()
+
+        # Validate prefix
         if not re.match(r"^[a-z0-9-]+$", prefix):
             raise request.not_found()
 
         # Validate icon (if provided)
-        if icon and not re.match(r"^[a-z0-9:-]+$", icon):
-            raise request.not_found()
+        if icon:
+            icon = icon.lower()
+            if not re.match(r"^[a-z0-9:-]+$", icon):
+                raise request.not_found()
 
         # Validate icons (if provided)
         if icons:
-            icon_list = icons.split(",")
+            icon_list = [i.lower() for i in icons.split(",")]
             for single_icon in icon_list:
                 if not re.match(r"^[a-z0-9:-]+$", single_icon):
                     raise request.not_found()
@@ -48,13 +61,13 @@ class IconifyProxyController(http.Controller):
 
         Attachment = request.env["ir.attachment"].sudo()
         if content_type == "image/svg+xml":
-            name = f"{prefix}-{icon}"
+            name = f"{prefix}-{icon}-{normalized_params_string.lower()}"
             res_model = "iconify.svg"
         elif content_type == "text/css":
-            name = f"{prefix}-{icons}"
+            name = f"{prefix}-{icons}-{normalized_params_string.lower()}"
             res_model = "iconify.css"
         elif content_type == "application/json":
-            name = f"{prefix}-{icons}"
+            name = f"{prefix}-{icons}-{normalized_params_string.lower()}"
             res_model = "iconify.json"
         else:
             raise request.not_found()
@@ -98,6 +111,36 @@ class IconifyProxyController(http.Controller):
         ]
         return request.make_response(data, headers)
 
+    def _normalize_params_common(self, params):
+        """Normalizes common parameters for Iconify requests."""
+        normalized = []
+        for key in sorted(params.keys()):  # Sort keys alphabetically
+            normalized.append(f"{key.lower()}={params[key]}")
+        return ";".join(normalized)
+
+    def _normalize_params_svg(self, params):
+        """Normalizes parameters specifically for SVG requests."""
+        allowed_params = ["color", "width", "height", "flip", "rotate", "box"]
+        normalized = []
+        for key in sorted(params.keys()):
+            if key in allowed_params:
+                value = params[key]
+                key = key.lower()
+                # Basic type validation
+                if key in ("width", "height", "rotate") and not (
+                    isinstance(value, str) or isinstance(value, int)
+                ):
+                    continue  # Skip invalid values
+                if key == "box":
+                    try:
+                        value = ast.literal_eval(str(value).lower())
+                        if not isinstance(value, bool):
+                            continue
+                    except (ValueError, SyntaxError):
+                        continue
+                normalized.append(f"{key}={value}")
+        return ";".join(normalized)
+
     @http.route(
         "/web_iconify_proxy/<string:prefix>/<string:icon>.svg",
         type="http",
@@ -115,9 +158,21 @@ class IconifyProxyController(http.Controller):
         Returns:
             Response: The HTTP response containing the SVG data.
         """
-        upstream_url = f"https://api.iconify.design/{prefix}/{icon}.svg"
+        normalized_params = self._normalize_params_svg(params)
+        if normalized_params:
+            query_string = normalized_params.replace(";", "&")
+            upstream_url = (
+                f"https://api.iconify.design/{prefix}/{icon}.svg?{query_string}"
+            )
+        else:
+            upstream_url = f"https://api.iconify.design/{prefix}/{icon}.svg"
+
         return self._fetch_iconify_data(
-            upstream_url, "image/svg+xml", prefix, icon=icon
+            upstream_url,
+            "image/svg+xml",
+            prefix,
+            icon=icon,
+            normalized_params_string=normalized_params,
         )
 
     @http.route(
