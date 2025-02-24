@@ -65,7 +65,9 @@ export class DomainEditorDialog extends SelectCreateDialog {
         ).component.model.root;
         let domain = dynamicList.domain;
         let group_domain = [];
-        if ($(".o_list_record_selector input").prop("checked")) {
+        const checkbox = document.querySelector(".o_list_record_selector input");
+        const isChecked = checkbox ? checkbox.checked : false;
+        if (isChecked) {
             if (dynamicList.groupBy.length) {
                 group_domain = this._getDomainOfGroups(dynamicList.groups, domain);
             }
