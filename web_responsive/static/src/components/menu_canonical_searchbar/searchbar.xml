@@ -25,7 +25,7 @@
                 class="list-unstyled search-list"
                 t-ref="searchItems"
             >
-                <t t-foreach="state.rootItems" t-as="menu" t-key="menu.xmlid">
+                <t t-foreach="state.rootItems" t-as="menu" t-key="menu.id">
                     <li t-attf-class="search-item {{highlighted(menu_index)}}">
                         <a
                             t-attf-class="search-item__link"
@@ -59,7 +59,7 @@
                 >
                     <hr class="w-100" />
                 </li>
-                <t t-foreach="state.subItems" t-as="menu" t-key="menu.xmlid">
+                <t t-foreach="state.subItems" t-as="menu" t-key="menu.id">
                     <li t-attf-class="search-item {{highlighted(menu_index, true)}}">
                         <a
                             t-attf-class="search-item__link"
