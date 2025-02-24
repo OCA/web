@@ -111,13 +111,6 @@ class IconifyProxyController(http.Controller):
         ]
         return request.make_response(data, headers)
 
-    def _normalize_params_common(self, params):
-        """Normalizes common parameters for Iconify requests."""
-        normalized = []
-        for key in sorted(params.keys()):  # Sort keys alphabetically
-            normalized.append(f"{key.lower()}={params[key]}")
-        return ";".join(normalized)
-
     def _normalize_params_svg(self, params):
         """Normalizes parameters specifically for SVG requests."""
         allowed_params = ["color", "width", "height", "flip", "rotate", "box"]
