@@ -31,13 +31,6 @@ msgstr ""
 msgid "HTTP Routing"
 msgstr "Encaminhamento HTTP"
 
-#. module: web_disable_export_group
-#. openerp-web
-#: code:addons/web_disable_export_group/static/src/xml/export_xls_views.xml:0
-#, python-format
-msgid "widget.is_action_enabled('export_xlsx') and widget.isExportXlsEnable"
-msgstr ""
-
 #, python-format
 #~ msgid "Export"
 #~ msgstr "Exportar"
