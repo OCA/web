@@ -13,7 +13,7 @@ class TestResCompany(common.TransactionCase):
 
     def _test_scss_attachment(self):
         num_scss = self.env["ir.attachment"].search_count(
-            [("url", "ilike", "%s%%" % URL_BASE)]
+            [("url", "ilike", f"{URL_BASE}%")]
         )
         num_companies = self.env["res.company"].search_count([])
         self.assertEqual(num_scss, num_companies, "Invalid scss attachments")
