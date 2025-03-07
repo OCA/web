@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {patch} from "@web/core/utils/patch";
 import {rankInterval} from "@web/search/utils/dates";
 import {SearchModel} from "@web/search/search_model";
