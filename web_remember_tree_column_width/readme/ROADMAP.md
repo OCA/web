@@ -1,0 +1,1 @@
+In certain cases, an event may pass a th element that cannot be used to retrieve the corresponding td element. When this happens, the modified column width is not stored.
