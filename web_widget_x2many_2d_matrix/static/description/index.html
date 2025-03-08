@@ -460,12 +460,12 @@ hours for one task per project per user. In this case, we can use
 <tt class="docutils literal">project.task</tt> as our data model and point to it from our wizard. The
 crucial part is that we fill the field in the default function:</p>
 <pre class="code python literal-block">
-<span class="kn">from</span> <span class="nn">odoo</span> <span class="kn">import</span> <span class="n">fields</span><span class="p">,</span> <span class="n">models</span><span class="w">
+<span class="kn">from</span><span class="w"> </span><span class="nn">odoo</span><span class="w"> </span><span class="kn">import</span> <span class="n">fields</span><span class="p">,</span> <span class="n">models</span><span class="w">
 
-</span><span class="k">class</span> <span class="nc">MyWizard</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TransientModel</span><span class="p">):</span><span class="w">
+</span><span class="k">class</span><span class="w"> </span><span class="nc">MyWizard</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TransientModel</span><span class="p">):</span><span class="w">
 </span>    <span class="n">_name</span> <span class="o">=</span> <span class="s1">'my.wizard'</span><span class="w">
 
-</span>    <span class="k">def</span> <span class="nf">_default_task_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span><span class="w">
+</span>    <span class="k">def</span><span class="w"> </span><span class="nf">_default_task_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span><span class="w">
 </span>        <span class="c1"># your list of project should come from the context, some selection</span><span class="w">
 </span>        <span class="c1"># in a previous wizard or wherever else</span><span class="w">
 </span>        <span class="n">projects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s1">'project.project'</span><span class="p">]</span><span class="o">.</span><span class="n">browse</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="w">
@@ -475,16 +475,16 @@ crucial part is that we fill the field in the default function:</p>
 </span>            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="w">
 </span>                <span class="s1">'name'</span><span class="p">:</span> <span class="s1">'Sample task name'</span><span class="p">,</span><span class="w">
 </span>                <span class="s1">'project_id'</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w">
-</span>                <span class="s1">'user_id'</span><span class="p">:</span> <span class="n">u</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w">
-</span>                <span class="s1">'planned_hours'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="w">
+</span>                <span class="s1">'user_ids'</span><span class="p">:</span> <span class="n">u</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span><span class="w">
+</span>                <span class="s1">'allocated_hours'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="w">
 </span>                <span class="s1">'message_needaction'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span><span class="w">
 </span>                <span class="s1">'date_deadline'</span><span class="p">:</span> <span class="n">fields</span><span class="o">.</span><span class="n">Date</span><span class="o">.</span><span class="n">today</span><span class="p">(),</span><span class="w">
 </span>            <span class="p">})</span><span class="w">
 </span>            <span class="c1"># if the project doesn't have a task for the user,</span><span class="w">
 </span>            <span class="c1"># create a new one</span><span class="w">
-</span>            <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">task_ids</span><span class="o">.</span><span class="n">filtered</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">u</span><span class="p">)</span> <span class="k">else</span><span class="w">
+</span>            <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">task_ids</span><span class="o">.</span><span class="n">filtered</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">user_ids</span><span class="p">)</span> <span class="k">else</span><span class="w">
 </span>            <span class="c1"># otherwise, return the task</span><span class="w">
-</span>            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">task_ids</span><span class="o">.</span><span class="n">filtered</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">u</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="w">
+</span>            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">task_ids</span><span class="o">.</span><span class="n">filtered</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">user_ids</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="w">
 </span>            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">projects</span><span class="w">
 </span>            <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">users</span><span class="w">
 </span>        <span class="p">]</span><span class="w">
@@ -493,12 +493,11 @@ crucial part is that we fill the field in the default function:</p>
 </pre>
 <p>Now in our wizard, we can use:</p>
 <pre class="code xml literal-block">
-<span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;task_ids&quot;</span><span class="w"> </span><span class="na">widget=</span><span class="s">&quot;x2many_2d_matrix&quot;</span><span class="w"> </span><span class="na">field_x_axis=</span><span class="s">&quot;project_id&quot;</span><span class="w"> </span><span class="na">field_y_axis=</span><span class="s">&quot;user_id&quot;</span><span class="w"> </span><span class="na">field_value=</span><span class="s">&quot;planned_hours&quot;</span><span class="nt">&gt;</span><span class="w">
+<span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;task_ids&quot;</span><span class="w"> </span><span class="na">widget=</span><span class="s">&quot;x2many_2d_matrix&quot;</span><span class="w"> </span><span class="na">field_x_axis=</span><span class="s">&quot;project_id&quot;</span><span class="w"> </span><span class="na">field_y_axis=</span><span class="s">&quot;display_name&quot;</span><span class="w"> </span><span class="na">field_value=</span><span class="s">&quot;allocated_hours&quot;</span><span class="nt">&gt;</span><span class="w">
     </span><span class="nt">&lt;tree&gt;</span><span class="w">
-        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;task_ids&quot;</span><span class="nt">/&gt;</span><span class="w">
         </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;project_id&quot;</span><span class="nt">/&gt;</span><span class="w">
-        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;user_id&quot;</span><span class="nt">/&gt;</span><span class="w">
-        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;planned_hours&quot;</span><span class="nt">/&gt;</span><span class="w">
+        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;display_name&quot;</span><span class="nt">/&gt;</span><span class="w">
+        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;allocated_hours&quot;</span><span class="nt">/&gt;</span><span class="w">
     </span><span class="nt">&lt;/tree&gt;</span><span class="w">
 </span><span class="nt">&lt;/field&gt;</span>
 </pre>
@@ -509,8 +508,8 @@ crucial part is that we fill the field in the default function:</p>
 <ul class="simple">
 <li>Support extra attributes on each field cell via field_extra_attrs
 param. We could set a cell as not editable, required or readonly for
-instance. The readonly case will also give the ability to click on m2o
-to open related records.</li>
+instance. The readonly case will also give the ability to click on
+m2o to open related records.</li>
 <li>Support limit total records in the matrix. Ref:
 <a class="reference external" href="https://github.com/OCA/web/issues/901">https://github.com/OCA/web/issues/901</a></li>
 <li>Support cell traversal through keyboard arrows.</li>
