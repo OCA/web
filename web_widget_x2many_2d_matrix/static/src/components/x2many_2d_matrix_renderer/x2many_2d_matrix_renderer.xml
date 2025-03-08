@@ -26,6 +26,7 @@
                     </td>
                     <td t-foreach="columns" t-as="column" t-key="column.value">
                         <t
+                            t-if="!!getValueFieldProps(column.value, row.value).record"
                             t-component="ValueFieldComponent"
                             t-props="getValueFieldProps(column.value, row.value)"
                             record="getValueFieldProps(column.value, row.value).record"
