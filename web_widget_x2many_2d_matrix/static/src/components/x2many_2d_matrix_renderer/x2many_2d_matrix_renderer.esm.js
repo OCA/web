@@ -95,10 +95,18 @@ export class X2Many2DMatrixRenderer extends Component {
 
     _getValueFieldComponent() {
         const field = this.list.fields[this.matrixFields.value];
-        if (!field.widget) {
-            return fieldRegistry.get(field.type).component;
+        const fieldWidget = this._getValueFieldWidget();
+        if (fieldWidget) {
+            return fieldRegistry.get(fieldWidget).component;
         }
-        return fieldRegistry.get(field.widget).component;
+        return fieldRegistry.get(field.type).component;
+    }
+
+    _getValueFieldWidget() {
+        const field = this.props.x2mListColumns.find(
+            (c) => c.name === this.matrixFields.value
+        );
+        return field.widget;
     }
 
     _getValueFieldType() {
@@ -192,9 +200,5 @@ X2Many2DMatrixRenderer.props = {
     domain: {type: [Array, Function], optional: true},
     showRowTotals: {type: Boolean, optional: true},
     showColumnTotals: {type: Boolean, optional: true},
-    canOpen: {type: Boolean, optional: true},
-    canCreate: {type: Boolean, optional: true},
-    canWrite: {type: Boolean, optional: true},
-    canQuickCreate: {type: Boolean, optional: true},
-    canCreateEdit: {type: Boolean, optional: true},
+    x2mListColumns: {type: Array, optional: true},
 };

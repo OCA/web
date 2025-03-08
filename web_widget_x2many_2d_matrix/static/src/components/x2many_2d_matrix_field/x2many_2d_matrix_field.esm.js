@@ -2,6 +2,7 @@
 
 import {Component} from "@odoo/owl";
 import {X2Many2DMatrixRenderer} from "@web_widget_x2many_2d_matrix/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.esm";
+import {X2ManyField} from "@web/views/fields/x2many/x2many_field";
 import {archParseBoolean} from "@web/views/utils";
 import {evaluateBooleanExpr} from "@web/core/py_js/py";
 import {registry} from "@web/core/registry";
@@ -22,6 +23,7 @@ export class X2Many2DMatrixField extends Component {
 }
 
 X2Many2DMatrixField.template = "web_widget_x2many_2d_matrix.X2Many2DMatrixField";
+X2Many2DMatrixField.components = {X2Many2DMatrixRenderer, X2ManyField};
 X2Many2DMatrixField.props = {
     ...standardFieldProps,
     list: {type: Object, optional: true},
@@ -35,12 +37,13 @@ X2Many2DMatrixField.props = {
     canWrite: {type: Boolean, optional: true},
     canQuickCreate: {type: Boolean, optional: true},
     canCreateEdit: {type: Boolean, optional: true},
+    views: {type: Object, optional: true},
+    x2mListColumns: {type: Array, optional: true},
 };
 
-X2Many2DMatrixField.components = {X2Many2DMatrixRenderer};
 export const x2Many2DMatrixField = {
     component: X2Many2DMatrixField,
-    extractProps({attrs, options}) {
+    extractProps({attrs, options, views}) {
         const hasCreatePermission = attrs.can_create
             ? evaluateBooleanExpr(attrs.can_create)
             : true;
@@ -69,6 +72,7 @@ export const x2Many2DMatrixField = {
             canWrite: hasWritePermission,
             canQuickCreate: canCreate && !options.no_quick_create,
             canCreateEdit: canCreate && !options.no_create_edit,
+            x2mListColumns: views.list.columns,
         };
     },
 };
