@@ -1,4 +1,5 @@
 /** @odoo-module **/
+/* global console */
 import {X2ManyField} from "@web/views/fields/x2many/x2many_field";
 import {evaluateExpr} from "@web/core/py_js/py";
 import {patch} from "@web/core/utils/patch";
@@ -25,12 +26,13 @@ patch(X2ManyField.prototype, {
                             expr,
                             self.props.record.data
                         );
-                    } catch (ignored) {
-                        console.log(
+                    } catch (error) {
+                        console.warn(
                             "[web_action_conditionable] unrecognized expr '" +
                                 expr +
                                 "', ignoring"
                         );
+                        console.warn(error);
                     }
                 }
             });
