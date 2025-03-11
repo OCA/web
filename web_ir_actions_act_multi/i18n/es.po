@@ -71,6 +71,11 @@ msgid "External ID"
 msgstr "ID Externa"
 
 #. module: web_ir_actions_act_multi
+#: model:ir.model,name:web_ir_actions_act_multi.model_ir_model_fields
+msgid "Fields"
+msgstr ""
+
+#. module: web_ir_actions_act_multi
 #: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__id
 msgid "ID"
 msgstr "ID (identificación)"
@@ -89,6 +94,16 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__write_date
 msgid "Last Updated on"
 msgstr "Última Actualización el"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model,name:web_ir_actions_act_multi.model_ir_model_data
+msgid "Model Data"
+msgstr ""
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model,name:web_ir_actions_act_multi.model_ir_model
+msgid "Models"
+msgstr ""
 
 #. module: web_ir_actions_act_multi
 #: model:ir.model.fields,help:web_ir_actions_act_multi.field_ir_actions_act_multi__help
