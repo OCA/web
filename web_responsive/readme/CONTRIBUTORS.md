@@ -21,3 +21,6 @@
 - Taras Shabaranskyi \<<shabaranskij@gmail.com>\>
 
 - Angel Patel \<<patelangel1414@gmail.com>\>
+
+- [SerpentCS](https://www.serpentcs.com):
+  - Parvez Qureshi \<<parvez.qureshi@serpentcs.com>\>
