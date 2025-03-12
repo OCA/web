@@ -31,6 +31,9 @@ class ResUsers(models.Model):
         store=True,
         readonly=False,
     )
+    display_file_viewer = fields.Boolean(
+        help="Enable this to display the file viewer for preview.",
+    )
 
     @api.depends("action_id")
     def _compute_redirect_home(self):

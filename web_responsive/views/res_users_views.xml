@@ -70,8 +70,20 @@
             <data>
                 <field name="action_id" position="after">
                     <field name="is_redirect_home" invisible="action_id" />
+                    <field name="display_file_viewer" />
                 </field>
             </data>
+        </field>
+    </record>
+
+    <record id="res_users_view_form_preferences_web_responsive" model="ir.ui.view">
+        <field name="name">res.users.preferences.form.web.responsive</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif" />
+        <field name="arch" type="xml">
+            <field name="tz" position="after">
+                <field name="display_file_viewer" />
+            </field>
         </field>
     </record>
 </odoo>
