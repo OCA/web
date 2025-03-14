@@ -27,12 +27,24 @@ X2Many2DMatrixField.props = {
     isYClickable: {type: Boolean, optional: true},
     showRowTotals: {type: Boolean, optional: true},
     showColumnTotals: {type: Boolean, optional: true},
+    canOpen: {type: Boolean, optional: true},
+    canCreate: {type: Boolean, optional: true},
+    canWrite: {type: Boolean, optional: true},
+    canQuickCreate: {type: Boolean, optional: true},
+    canCreateEdit: {type: Boolean, optional: true},
 };
 
 X2Many2DMatrixField.components = {X2Many2DMatrixRenderer};
 export const x2Many2DMatrixField = {
     component: X2Many2DMatrixField,
-    extractProps({attrs}) {
+    extractProps({attrs, options}) {
+        const hasCreatePermission = attrs.can_create
+            ? exprToBoolean(attrs.can_create)
+            : true;
+        const hasWritePermission = attrs.can_write
+            ? exprToBoolean(attrs.can_write)
+            : true;
+        const canCreate = options.no_create ? false : hasCreatePermission;
         return {
             matrixFields: {
                 value: attrs.field_value,
@@ -49,6 +61,11 @@ export const x2Many2DMatrixField = {
                 "show_column_totals" in attrs
                     ? exprToBoolean(attrs.show_column_totals)
                     : true,
+            canOpen: !options.no_open,
+            canCreate,
+            canWrite: hasWritePermission,
+            canQuickCreate: canCreate && !options.no_quick_create,
+            canCreateEdit: canCreate && !options.no_create_edit,
         };
     },
 };
