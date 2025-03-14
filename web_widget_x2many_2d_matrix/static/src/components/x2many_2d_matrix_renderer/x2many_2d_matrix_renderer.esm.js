@@ -159,6 +159,11 @@ export class X2Many2DMatrixRenderer extends Component {
             readonly: this.props.readonly,
             record: record,
             name: this.matrixFields.value,
+            canCreate: this.props.canCreate,
+            canOpen: this.props.canOpen,
+            canWrite: this.props.canWrite,
+            canQuickCreate: this.props.canQuickCreate,
+            canCreateEdit: this.props.canCreateEdit,
         };
         if (value === null) {
             result.readonly = true;
@@ -174,4 +179,9 @@ X2Many2DMatrixRenderer.props = {
     readonly: {type: Boolean, optional: true},
     showRowTotals: {type: Boolean, optional: true},
     showColumnTotals: {type: Boolean, optional: true},
+    canOpen: {type: Boolean, optional: true},
+    canCreate: {type: Boolean, optional: true},
+    canWrite: {type: Boolean, optional: true},
+    canQuickCreate: {type: Boolean, optional: true},
+    canCreateEdit: {type: Boolean, optional: true},
 };
