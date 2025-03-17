@@ -10,7 +10,8 @@
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
-            "web_form_view_resizable/static/src/js/form_view_resizable.esm.js"
+            "web_form_view_resizable/static/src/js/form_view_resizable.esm.js",
+            "web_form_view_resizable/static/src/scss/form_view_resizable.scss",
         ]
     },
 }

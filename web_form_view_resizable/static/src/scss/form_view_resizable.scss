@@ -1,0 +1,11 @@
+// Unset flex property otherwise, when clicking on handler,
+// the div tries to grow before actually dragging the div
+.remove_flex {
+    flex: unset !important;
+}
+
+// Unset pointer-event while dragging otherwise,
+// when hovering the div while dragging, it will stop the scaling of the div
+.remove_hover_effect {
+    pointer-events: none !important;
+}

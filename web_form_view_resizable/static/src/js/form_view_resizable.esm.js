@@ -10,8 +10,18 @@ patch(FormRenderer.prototype, "web_form_view_resizable", {
     _mounted() {
         $("div.o_form_view_container").resizable({
             handles: "e",
-            minWidth: 400,
-            maxWidth: 1200,
+            minWidth: window.innerWidth * 0.1,
+            maxWidth: window.innerWidth * 0.9,
+            classes: {
+                "ui-resizable": "remove_flex",
+            },
+            // Allow user to drag over the preview of a pdf
+            start: function () {
+                $("div.o_attachment_preview").addClass("remove_hover_effect");
+            },
+            stop: function () {
+                $("div.o_attachment_preview").removeClass("remove_hover_effect");
+            },
         });
     },
 });
