@@ -16,7 +16,6 @@ $x2many_2d_matrix_max_height: 450px;
             position: sticky;
             top: 0;
             z-index: 1;
-            background-color: $o-list-footer-bg-color;
 
             &.total {
                 right: 0;
@@ -26,14 +25,7 @@ $x2many_2d_matrix_max_height: 450px;
         > tbody {
             > tr {
                 &:nth-of-type(2n + 1) td.row-total,
-                &:nth-of-type(2n + 1) td:first-child {
-                    background-color: mix(#000, #fff, 1%);
-                }
                 &:nth-of-type(2n) td.row-total,
-                &:nth-of-type(2n) td:first-child {
-                    background-color: white;
-                }
-
                 > td {
                     text-align: right;
 
@@ -48,7 +40,6 @@ $x2many_2d_matrix_max_height: 450px;
                         border-right-width: 1px;
                         border-right-color: $gray-300;
                         border-right-style: solid;
-                        box-shadow: -1px 5px 10px $gray-300;
                     }
                     &.row-total {
                         padding: 0.5rem 0.75rem;
@@ -58,7 +49,6 @@ $x2many_2d_matrix_max_height: 450px;
                         border-left-width: 1px;
                         border-left-color: $gray-300;
                         border-left-style: solid;
-                        box-shadow: -1px 5px 10px $gray-300;
                     }
                 }
             }
@@ -66,7 +56,6 @@ $x2many_2d_matrix_max_height: 450px;
 
         > tfoot > tr > th {
             text-align: right;
-            background-color: $o-list-footer-bg-color;
             position: sticky;
             bottom: 0;
 
@@ -76,7 +65,6 @@ $x2many_2d_matrix_max_height: 450px;
                 border-left-width: 1px;
                 border-left-color: $gray-300;
                 border-left-style: solid;
-                background-color: white;
             }
         }
     }
