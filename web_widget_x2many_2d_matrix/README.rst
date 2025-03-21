@@ -153,18 +153,18 @@ Now in our wizard, we can use:
 Known issues / Roadmap
 ======================
 
-- Support extra attributes on each field cell via field_extra_attrs
-  param. We could set a cell as not editable, required or readonly for
-  instance. The readonly case will also give the ability to click on m2o
-  to open related records.
-- Support limit total records in the matrix. Ref:
-  https://github.com/OCA/web/issues/901
-- Support cell traversal through keyboard arrows.
-- Entering the widget from behind by pressing ``Shift+TAB`` in your
-  keyboard will enter into the 1st cell until
-  https://github.com/odoo/odoo/pull/26490 is merged.
-- Support extra invisible fields inside each cell.
-- Support kanban mode. Current behaviour forces list mode.
+-  Support extra attributes on each field cell via field_extra_attrs
+   param. We could set a cell as not editable, required or readonly for
+   instance. The readonly case will also give the ability to click on
+   m2o to open related records.
+-  Support limit total records in the matrix. Ref:
+   https://github.com/OCA/web/issues/901
+-  Support cell traversal through keyboard arrows.
+-  Entering the widget from behind by pressing ``Shift+TAB`` in your
+   keyboard will enter into the 1st cell until
+   https://github.com/odoo/odoo/pull/26490 is merged.
+-  Support extra invisible fields inside each cell.
+-  Support kanban mode. Current behaviour forces list mode.
 
 Changelog
 =========
@@ -172,14 +172,14 @@ Changelog
 12.0.1.0.1 (2018-12-07)
 -----------------------
 
-- [FIX] Cells are unable to render property.
-  (`#1126 <https://github.com/OCA/web/issues/1126>`__)
+-  [FIX] Cells are unable to render property.
+   (`#1126 <https://github.com/OCA/web/issues/1126>`__)
 
 12.0.1.0.0 (2018-11-20)
 -----------------------
 
-- [12.0][MIG] web_widget_x2many_2d_matrix
-  (`#1101 <https://github.com/OCA/web/issues/1101>`__)
+-  [12.0][MIG] web_widget_x2many_2d_matrix
+   (`#1101 <https://github.com/OCA/web/issues/1101>`__)
 
 Bug Tracker
 ===========
@@ -206,20 +206,22 @@ Authors
 Contributors
 ------------
 
-- Holger Brunn <hbrunn@therp.nl>
-- Pedro M. Baeza <pedro.baeza@tecnativa.com>
-- Artem Kostyuk <a.kostyuk@mobilunity.com>
-- Simone Orsi <simone.orsi@camptocamp.com>
-- Timon Tschanz <timon.tschanz@camptocamp.com>
-- Jairo Llopis <jairo.llopis@tecnativa.com>
-- Dennis Sluijk <d.sluijk@onestein.nl>
-- `CorporateHub <https://corporatehub.eu/>`__
+-  Holger Brunn <hbrunn@therp.nl>
+-  Pedro M. Baeza <pedro.baeza@tecnativa.com>
+-  Artem Kostyuk <a.kostyuk@mobilunity.com>
+-  Simone Orsi <simone.orsi@camptocamp.com>
+-  Timon Tschanz <timon.tschanz@camptocamp.com>
+-  Jairo Llopis <jairo.llopis@tecnativa.com>
+-  Dennis Sluijk <d.sluijk@onestein.nl>
+-  `CorporateHub <https://corporatehub.eu/>`__
 
-  - Alexey Pelykh <alexey.pelykh@corphub.eu>
+   -  Alexey Pelykh <alexey.pelykh@corphub.eu>
 
-- Adrià Gil Sorribes <adria.gil@forgeflow.com>
-- Christopher Ormaza <chris.ormaza@forgeflow.com>
-- SodexisTeam <dev@sodexis.com>
+-  Adrià Gil Sorribes <adria.gil@forgeflow.com>
+-  Christopher Ormaza <chris.ormaza@forgeflow.com>
+-  SodexisTeam <dev@sodexis.com>
+-  Jasmin Solanki jasmin.solanki@forgeflow.com
+-  David Jiménez david.jimenez@forgeflow.com
 
 Maintainers
 -----------
@@ -234,13 +236,16 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-.. |maintainer-ChrisOForgeFlow| image:: https://github.com/ChrisOForgeFlow.png?size=40px
-    :target: https://github.com/ChrisOForgeFlow
-    :alt: ChrisOForgeFlow
+.. |maintainer-JasminSForgeFlow| image:: https://github.com/JasminSForgeFlow.png?size=40px
+    :target: https://github.com/JasminSForgeFlow
+    :alt: JasminSForgeFlow
+.. |maintainer-DavidJForgeFlow| image:: https://github.com/DavidJForgeFlow.png?size=40px
+    :target: https://github.com/DavidJForgeFlow
+    :alt: DavidJForgeFlow
 
-Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-ChrisOForgeFlow| 
+|maintainer-JasminSForgeFlow| |maintainer-DavidJForgeFlow| 
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/18.0/web_widget_x2many_2d_matrix>`_ project on GitHub.
 
