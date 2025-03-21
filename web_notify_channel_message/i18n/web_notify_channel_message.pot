@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,13 +14,17 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_notify_channel_message
-#: model:ir.model,name:web_notify_channel_message.model_mail_channel
+#: model:ir.model,name:web_notify_channel_message.model_discuss_channel
 msgid "Discussion Channel"
 msgstr ""
 
 #. module: web_notify_channel_message
+#: model:ir.model,name:web_notify_channel_message.model_res_users
+msgid "User"
+msgstr ""
+
+#. module: web_notify_channel_message
 #. odoo-python
-#: code:addons/web_notify_channel_message/models/mail_channel.py:0
-#, python-format
+#: code:addons/web_notify_channel_message/models/discuss_channel.py:0
 msgid "You have a new message in channel %s"
 msgstr ""
