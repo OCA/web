@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
-
     <t t-name="filter_button.FilterButton" owl="1">
         <t t-set="filters" t-value="shownFilters(model.get('filters'))" />
         <div t-if="filters" class="o_cp_bottom_filter_buttons">
