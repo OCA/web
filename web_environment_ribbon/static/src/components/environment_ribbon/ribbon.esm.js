@@ -2,8 +2,6 @@ import {Component, xml} from "@odoo/owl";
 import {useBus, useService} from "@web/core/utils/hooks";
 import {registry} from "@web/core/registry";
 
-const {document} = globalThis;
-
 export class WebEnvironmentRibbon extends Component {
     setup() {
         this.orm = useService("orm");
