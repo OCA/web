@@ -1,4 +1,3 @@
-/* global document */
 import {markup, onMounted, onPatched, onWillStart, useRef} from "@odoo/owl";
 import {CharField, charField} from "@web/views/fields/char/char_field";
 import {loadJS} from "@web/core/assets";
