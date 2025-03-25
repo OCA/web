@@ -1,4 +1,3 @@
-/* global document,console */
 import {Component, markup, onMounted, onPatched, onWillStart, useRef} from "@odoo/owl";
 import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
