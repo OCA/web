@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
-    <t t-name="filter_button.FilterButton" owl="1">
-        <t t-set="filters" t-value="shownFilters(model.get('filters'))" />
+    <t t-name="filter_button.FilterButton">
+        <t t-set="filters" t-value="this.props.filters" />
         <div t-if="filters" class="o_cp_bottom_filter_buttons">
-            <div class="btn-group">
+            <div class="btn-group" role="group">
                 <button
-                    t-if="filters &amp;&amp; filters.length"
+                    t-if="filters and filters.length"
                     t-attf-class="btn btn-outline-primary"
-                    t-on-click.stop="onClickReset()"
+                    t-on-click.stop="this.onClickReset"
                 >
                     <i class="fa fa-times" />
                 </button>
@@ -22,8 +22,8 @@
                         t-value="options.name !== undefined ? options.name : filter.description"
                     />
                     <button
-                        t-attf-class="btn {{filter.isActive ? `btn-${color}` : `btn-outline-${color}`}}"
-                        t-on-click.stop="onToggleFilter(filter)"
+                        t-attf-class="btn ms-0 border-start-0 {{filter.isActive ? `btn-${color}` : `btn-outline-${color}`}}"
+                        t-on-click.stop="() => this.onToggleFilter(filter)"
                         t-att-data-hotkey="options.hotkey"
                     >
                         <i
