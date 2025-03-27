@@ -38,6 +38,12 @@ msgid "Custom"
 msgstr ""
 
 #. module: web_pivot_computed_measure
+#: model:ir.actions.act_window,name:web_pivot_computed_measure.demo_action_res_partner_report_pivot
+#: model:ir.ui.menu,name:web_pivot_computed_measure.demo_menu_res_partner_report_pivot
+msgid "Demo Pivot"
+msgstr ""
+
+#. module: web_pivot_computed_measure
 #. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 msgid "Div (m1 / m2)"
@@ -95,6 +101,11 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 msgid "Operation"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#: model_terms:ir.ui.view,arch_db:web_pivot_computed_measure.demo_view_res_partner_report_pivot
+msgid "Partners Table"
 msgstr ""
 
 #. module: web_pivot_computed_measure
