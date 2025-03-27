@@ -1,11 +1,10 @@
-/** @odoo-module */
-
+/* eslint no-undef: 0 */
 import {ListRenderer} from "@web/views/list/list_renderer";
 import {patch} from "@web/core/utils/patch";
 
 export const RangeListSelector = {
     setup() {
-        this._super(...arguments);
+        super.setup(...arguments);
         this.range_history = [];
     },
     _getRangeSelection() {
@@ -13,10 +12,11 @@ export const RangeListSelector = {
         // Get start and end
         var start = null,
             end = null;
-        $(".o_list_record_selector input").each(function (i, el) {
-            var id = $(el).closest("tr").data("id");
+        const checkboxes = document.querySelectorAll(".o_list_record_selector input");
+        checkboxes.forEach((el, i) => {
+            const id = el.closest("tr").dataset.id;
             var checked = self.range_history.indexOf(id) !== -1;
-            if (checked && $(this).is(":checked")) {
+            if (checked && el.checked) {
                 if (start === null) {
                     start = i;
                 } else {
@@ -24,24 +24,21 @@ export const RangeListSelector = {
                 }
             }
         });
-        var new_range = this._getSelectionByRange(start, end);
-
-        var current_selection = [];
-        current_selection = _.uniq(current_selection.concat(new_range));
+        const new_range = this._getSelectionByRange(start, end);
+        const current_selection = [...new Set(new_range)];
         return current_selection;
     },
     _getSelectionByRange(start, end) {
         var result = [];
-        $(".o_list_record_selector input")
-            .closest("tr")
-            .each(function (i, el) {
-                var record_id = $(el).data("id");
-                if (start !== null && end !== null && i >= start && i <= end) {
-                    result.push(record_id);
-                } else if (start !== null && end === null && start === i) {
-                    result.push(record_id);
-                }
-            });
+        document.querySelectorAll(".o_list_record_selector input").forEach((el, i) => {
+            const recordId = el.closest("tr").dataset.id;
+            if (
+                (start !== null && end !== null && i >= start && i <= end) ||
+                (start !== null && end === null && start === i)
+            ) {
+                result.push(recordId);
+            }
+        });
         return result;
     },
     _pushRangeHistory(id) {
@@ -57,22 +54,21 @@ export const RangeListSelector = {
         window.getSelection().removeAllRanges();
     },
     _onClickSelectRecord(record, ev) {
-        const el = $(ev.currentTarget);
-        if (el.find("input").prop("checked")) {
-            this._pushRangeHistory(el.closest("tr").data("id"));
+        const el = ev.currentTarget;
+        if (el.querySelector("input").checked) {
+            this._pushRangeHistory(el.closest("tr").dataset.id);
         }
         if (ev.shiftKey) {
             // Get selection
             var selection = this._getRangeSelection();
-            var $rows = $("td.o_list_record_selector input").closest("tr");
-            $rows.each(function () {
-                var record_id = $(this).data("id");
-                if (selection.indexOf(record_id) !== -1) {
-                    $(this)
-                        .find("td.o_list_record_selector input")
-                        .prop("checked", true);
-                }
-            });
+            document
+                .querySelectorAll("td.o_list_record_selector input")
+                .forEach((checkbox) => {
+                    const record_id = checkbox.closest("tr").dataset.id;
+                    if (selection.indexOf(record_id) !== -1) {
+                        checkbox.checked = true;
+                    }
+                });
             // Update selection internally
             this.checkBoxSelections(selection);
             this._deselectTable();
@@ -87,15 +83,11 @@ export const RangeListSelector = {
                 }
                 if (selection[id] === record[line].id) {
                     record[line].selected = true;
-                    record[line].model.trigger("update");
                     continue;
                 }
             }
         }
+        this.render();
     },
 };
-patch(
-    ListRenderer.prototype,
-    "web_listview_range_select.WebListviewRangeSelect",
-    RangeListSelector
-);
+patch(ListRenderer.prototype, RangeListSelector);
