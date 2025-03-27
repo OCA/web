@@ -1,0 +1,5 @@
+- Dennis Sluijk \<<d.sluijk@onestein.nl>\>
+- Aldo Soares \<<soares_aldo@hotmail.com>\>
+- [Tecnativa](https://www.tecnativa.com):
+  - Ernesto Tejeda
+- Nilesh Sheliya \<<nilesh@synodica.com>\>

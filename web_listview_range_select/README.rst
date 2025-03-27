@@ -17,13 +17,13 @@ List Range Selection
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/15.0/web_listview_range_select
+    :target: https://github.com/OCA/web/tree/18.0/web_listview_range_select
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-15-0/web-15-0-web_listview_range_select
+    :target: https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_listview_range_select
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=15.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -40,17 +40,18 @@ Usage
 
 To use this module, you need to:
 
-#. Go to some list view.
-#. Click a record.
-#. Hold shift and click another record.
-#. You can repeat this operation as many times as you want.
+1. Go to some list view.
+2. Click a record.
+3. Hold shift and click another record.
+4. You can repeat this operation as many times as you want.
 
 Known issues / Roadmap
 ======================
 
-* Allow to click on the whole line (not just the checkbox) to select a row.
-* Enable the same behaviour with Ctrl button.
-* Shift and drag to select rows.
+-  Allow to click on the whole line (not just the checkbox) to select a
+   row.
+-  Enable the same behaviour with Ctrl button.
+-  Shift and drag to select rows.
 
 Bug Tracker
 ===========
@@ -58,7 +59,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_listview_range_select%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_listview_range_select%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -66,22 +67,23 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Onestein
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Dennis Sluijk <d.sluijk@onestein.nl>
-* Aldo Soares <soares_aldo@hotmail.com>
-* `Tecnativa <https://www.tecnativa.com>`_:
+-  Dennis Sluijk <d.sluijk@onestein.nl>
+-  Aldo Soares <soares_aldo@hotmail.com>
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  * Ernesto Tejeda
-* Nilesh Sheliya <nilesh@synodica.com>
+   -  Ernesto Tejeda
+
+-  Nilesh Sheliya <nilesh@synodica.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -93,6 +95,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/15.0/web_listview_range_select>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/18.0/web_listview_range_select>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
