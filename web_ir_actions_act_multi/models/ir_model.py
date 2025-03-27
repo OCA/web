@@ -10,7 +10,7 @@ class IrModelData(models.Model):
         # related to ir.actions.act_multi.
         if "web_ir_actions_act_multi" in modules_to_remove:
             self = self.with_context(uninstall_web_ir_actions_act_multi=True)
-        return super(IrModelData, self)._module_data_uninstall(modules_to_remove)
+        return super()._module_data_uninstall(modules_to_remove)
 
 
 class IrModel(models.Model):
