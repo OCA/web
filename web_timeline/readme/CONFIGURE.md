@@ -85,7 +85,7 @@ More evolved example, from `project_timeline`:
     <record id="project.action_view_task" model="ir.actions.act_window">
         <field
             name="view_mode"
-        >kanban,tree,form,calendar,timeline,pivot,graph,activity</field>
+        >kanban,list,form,calendar,timeline,pivot,graph,activity</field>
     </record>
 </odoo>
 ```

@@ -8,16 +8,18 @@ from odoo.tests.common import HttpCase
 class TestWebTimeline(HttpCase):
     def test_timeline_arch(self):
         self.browser_js(
-            "/web/tests?filter=TimelineView - ArchParser",
+            "/web/tests/legacy?mod=web&filter=TimelineView - ArchParser",
             "",
             login="admin",
             timeout=1800,
+            success_signal="QUnit test suite done.",
         )
 
     def test_timeline_view(self):
         self.browser_js(
-            "/web/tests?filter=TimelineView - View",
+            "/web/tests/legacy?mod=web&filter=TimelineView - View",
             "",
             login="admin",
             timeout=1800,
+            success_signal="QUnit test suite done.",
         )
