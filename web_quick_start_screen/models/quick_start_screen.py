@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from collections import defaultdict
 
-from odoo import _, api, fields, models, tools
+from odoo import api, fields, models, tools
 
 
 class QuicktStartScreen(models.Model):
@@ -40,8 +40,8 @@ class QuicktStartScreen(models.Model):
 
     def _prepare_screen_action(self):
         return {
-            "display_name": self.name or _("Start"),
-            "name": self.name or _("Start"),
+            "display_name": self.name or self.env._("Start"),
+            "name": self.name or self.env._("Start"),
             "res_model": "quick.start.screen.action",
             "target": "current",
             "type": "ir.actions.act_window",

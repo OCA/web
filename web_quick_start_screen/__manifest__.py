@@ -3,7 +3,7 @@
 {
     "name": "Quick Start Screen",
     "summary": "Configurable start screen for quick actions",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
@@ -22,7 +22,7 @@
     "assets": {
         "web.assets_backend": [
             "web_quick_start_screen/static/src/scss/quick_start_screen.scss",
-            "web_quick_start_screen/static/src/js/kanban_controller.esm.js",
+            "web_quick_start_screen/static/src/js/**/*",
         ],
     },
 }

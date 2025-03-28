@@ -1,8 +1,8 @@
 <odoo>
-    <record id="quick_start_screen_tree_view" model="ir.ui.view">
+    <record id="quick_start_screen_list_view" model="ir.ui.view">
         <field name="model">quick.start.screen</field>
         <field name="arch" type="xml">
-            <tree editable="top">
+            <list editable="top">
                 <field name="name" />
                 <field
                     name="action_ids"
@@ -16,13 +16,13 @@
                     title="Go to the start screen"
                     icon="fa-flash"
                 />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="start_screen_action_config" model="ir.actions.act_window">
         <field name="res_model">quick.start.screen</field>
         <field name="name">Quick Start Screens</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
     </record>
     <record id="start_screen_action" model="ir.actions.server">
         <field name="name">Quick Start Screen</field>
