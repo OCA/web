@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="quick_start_screen_action_tree" model="ir.ui.view">
+    <record id="quick_start_screen_action_list" model="ir.ui.view">
         <field name="model">quick.start.screen.action</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="description" />
                 <field name="action_ref_id" groups="base.group_system" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="quick_start_screen_action_kanban" model="ir.ui.view">
@@ -23,50 +23,34 @@
                 <field name="color" />
                 <field name="context" />
                 <templates>
-                    <t t-name="kanban-box">
-                        <div class="col-6 col-md-4 col-lg-3 py-4">
-                            <div class="row m-0 w-100 h-100">
-                                <div class="col-lg-4 p-0">
-                                    <div
-                                        class="d-flex w-100 h-100 align-items-start justify-content-center display-3 p-3 text-muted"
-                                    >
-                                        <img
-                                            t-att-src="kanban_image('quick.start.screen.action', 'image', record.id.raw_value)"
-                                            class="o_image_64_cover"
-                                            t-if="record.image.raw_value"
-                                            t-att-alt="record.name.raw_value"
-                                        />
-                                        <i
-                                            t-else=""
-                                            t-attf-class="fa #{record.icon_name.raw_value or 'fa-flash'} o_start_icon_color_#{record.color.raw_value}"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="col-lg-8 p-0">
-                                    <div
-                                        class="card-body d-flex flex-column align-items-start justify-content-start h-100"
-                                    >
-                                        <h3
-                                            class="card-title"
-                                            t-out="record.name.raw_value"
-                                        />
-                                        <a
-                                            type="object"
-                                            data-reload-on-close="true"
-                                            name="run_action"
-                                            role="button"
-                                            href="#"
-                                            class="btn-lnk stretched-link"
-                                            t-att-string="record.name.raw_value"
-                                        >
-                                            <span
-                                                t-out="record.description.raw_value"
-                                            />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <t t-name="card" class="flex-row">
+                        <aside class="d-flex align-items-center me-2">
+                            <field
+                                t-if="record.image.raw_value"
+                                name="image"
+                                widget="image"
+                                options="{'img_class': 'object-fit-contain'}"
+                            />
+                            <i
+                                t-else=""
+                                t-attf-class="fa #{record.icon_name.raw_value or 'fa-flash'} fa-3x o_start_icon_color_#{record.color.raw_value}"
+                                t-att-title="record.name.raw_value"
+                            />
+                        </aside>
+                        <main>
+                            <h3 class="card-title" t-out="record.name.raw_value" />
+                            <a
+                                type="object"
+                                data-reload-on-close="true"
+                                name="run_action"
+                                role="button"
+                                href="#"
+                                class="btn-lnk stretched-link"
+                                t-att-string="record.name.raw_value"
+                            >
+                                <span t-out="record.description.raw_value" />
+                            </a>
+                        </main>
                     </t>
                 </templates>
             </kanban>
@@ -81,15 +65,8 @@
                         <field name="name" />
                         <field name="action_ref_id" groups="base.group_system" />
                         <field name="description" widget="html" />
-                        <field
-                            name="icon_name"
-                            attrs="{'invisible': [('image', '!=', False)]}"
-                        />
-                        <field
-                            name="color"
-                            widget="color_picker"
-                            attrs="{'invisible': [('image', '!=', False)]}"
-                        />
+                        <field name="icon_name" invisible="image" />
+                        <field name="color" widget="color_picker" invisible="image" />
                         <field name="domain" groups="base.group_system" />
                         <field name="context" groups="base.group_system" />
                         <field name="image" widget="image" />
@@ -101,7 +78,7 @@
     <record id="quick_start_screen_action_action" model="ir.actions.act_window">
         <field name="name">Quick Start Screen Actions</field>
         <field name="res_model">quick.start.screen.action</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <menuitem
         id="menu_quick_start_screen_action"

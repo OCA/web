@@ -58,6 +58,7 @@ class DecontracStartScreenAction(models.Model):
         if self.context:
             extra_context = self._get_extra_context()
             # We need to deal with the active_id and overwrite it if needed
+            # MIG TODO: Check if this is affected
             active_id = extra_context.get("active_id", 0)
             action["context"] = dict(
                 safe_eval(action.get("context", "{}"), {"active_id": active_id}),

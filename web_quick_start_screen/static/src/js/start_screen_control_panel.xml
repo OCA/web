@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="start_screen.ControlPanel"
+        t-inherit="web.ControlPanel"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//div[hasclass('o_control_panel')]" position="attributes">
+            <attribute name="class" add="d-none" separator=" " />
+        </xpath>
+    </t>
+</templates>
