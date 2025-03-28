@@ -123,7 +123,7 @@ export class TimelineRenderer extends Component {
     /**
      * Scales the timeline window based on the current window.
      *
-     * @param {function} getHoursFromStart Function which returns the timespan
+     * @param {Function} getHoursFromStart Function which returns the timespan
      * (in hours) the window must be scaled to, starting from the "start" moment.
      * @private
      */
