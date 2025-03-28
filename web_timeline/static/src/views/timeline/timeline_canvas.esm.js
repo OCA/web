@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /* Copyright 2018 Onestein
    Copyright 2024 Tecnativa - Carlos López
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
@@ -15,7 +14,16 @@ export class TimelineCanvas {
      * Clears all drawings (svg elements) from the canvas.
      */
     clear() {
-        $(this.canvas_ref).find(" > :not(defs)").remove();
+        if (this.canvas_ref) {
+            const tempElement = document.createElement("div");
+            tempElement.innerHTML = this.canvas_ref;
+            Array.from(tempElement.children).forEach((child) => {
+                if (child.tagName.toLowerCase() !== "defs") {
+                    child.remove();
+                }
+            });
+            this.canvas_ref = tempElement.innerHTML;
+        }
     }
 
     /**
@@ -107,24 +115,34 @@ export class TimelineCanvas {
      * @param {Number} breakLineAt The space between the line turns
      * @returns {HTMLElement} The created SVG polyline
      */
-    draw_line(from, to, color, width, markerStart, widthMarker, breakLineAt) {
-        const $from = $(from);
-        const childPosFrom = $from.offset();
-        const parentPosFrom = $from.closest(".vis-center").offset();
+    draw_line(
+        from,
+        to,
+        color = "#000",
+        width = 1,
+        markerStart,
+        widthMarker,
+        breakLineAt
+    ) {
+        const fromElement =
+            typeof from === "string" ? document.querySelector(from) : from;
+        const toElement = typeof to === "string" ? document.querySelector(to) : to;
+        if (!fromElement || !toElement) return;
+        const childPosFrom = fromElement.getBoundingClientRect();
+        const parentFrom = fromElement.closest(".vis-center")?.getBoundingClientRect();
         const rectFrom = {
-            x: childPosFrom.left - parentPosFrom.left,
-            y: childPosFrom.top - parentPosFrom.top,
-            w: $from.width(),
-            h: $from.height(),
+            x: childPosFrom.left - (parentFrom?.left || 0),
+            y: childPosFrom.top - (parentFrom?.top || 0),
+            w: fromElement.offsetWidth,
+            h: fromElement.offsetHeight,
         };
-        const $to = $(to);
-        const childPosTo = $to.offset();
-        const parentPosTo = $to.closest(".vis-center").offset();
+        const childPosTo = toElement.getBoundingClientRect();
+        const parentTo = toElement.closest(".vis-center")?.getBoundingClientRect();
         const rectTo = {
-            x: childPosTo.left - parentPosTo.left,
-            y: childPosTo.top - parentPosTo.top,
-            w: $to.width(),
-            h: $to.height(),
+            x: childPosTo.left - (parentTo?.left || 0),
+            y: childPosTo.top - (parentTo?.top || 0),
+            w: toElement.offsetWidth,
+            h: toElement.offsetHeight,
         };
         const points = this.get_polyline_points(
             rectFrom,
@@ -134,13 +152,15 @@ export class TimelineCanvas {
         );
         const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
         line.setAttribute("points", points.flat().join(","));
-        line.setAttribute("stroke", color || "#000");
-        line.setAttribute("stroke-width", width || 1);
+        line.setAttribute("stroke", color);
+        line.setAttribute("stroke-width", width);
         line.setAttribute("fill", "none");
         if (markerStart) {
-            line.setAttribute("marker-start", "url(" + markerStart + ")");
+            line.setAttribute("marker-start", `url(${markerStart})`);
         }
-        this.canvas_ref.append(line);
+        if (this.canvas_ref instanceof HTMLElement) {
+            this.canvas_ref.appendChild(line);
+        }
         return line;
     }
 }

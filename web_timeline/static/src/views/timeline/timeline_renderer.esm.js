@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /* global vis */
 /**
  * Copyright 2024 Tecnativa - Carlos López
@@ -35,7 +34,7 @@ export class TimelineRenderer extends Component {
         this.fields = this.params.fields;
         this.timeline = false;
         this.initial_data_loaded = false;
-        this.canvas_ref = $(renderToString("TimelineView.Canvas", {}));
+        this.canvas_ref = renderToString("TimelineView.Canvas", {});
         onWillUpdateProps(async (props) => {
             this.on_data_loaded(props.model.data);
         });
@@ -55,14 +54,21 @@ export class TimelineRenderer extends Component {
      * Triggered when the timeline is attached to the DOM.
      */
     on_attach_callback() {
-        const $root = $(this.rootRef.el);
-        $root.addClass(this.params.class);
-        const height =
-            $root.parent().height() - $root.find(".oe_timeline_buttons").height();
-        if (height > this.min_height && this.timeline) {
-            this.timeline.setOptions({
-                height: height,
-            });
+        const $root = this.rootRef.el;
+        if (this.params.class) {
+            $root.classList.add(this.params.class);
+        }
+        if (this.rootRef.el) {
+            const parentHeight = this.rootRef.el.parentElement?.clientHeight || 0;
+            const buttonHeight =
+                this.rootRef.el.querySelector(".oe_timeline_buttons")?.clientHeight ||
+                0;
+            const height = parentHeight - buttonHeight;
+            if (height > this.min_height && this.timeline) {
+                this.timeline.setOptions({
+                    height: height,
+                });
+            }
         }
     }
     /**
@@ -202,9 +208,11 @@ export class TimelineRenderer extends Component {
             // In read-only mode, catch double-clicks this way.
             this.timeline.on("doubleClick", this.on_timeline_double_click.bind(this));
         }
-        this.$centerContainer = $(this.timeline.dom.centerContainer);
+        this.$centerContainer = this.timeline.dom.centerContainer;
         this.canvas = new TimelineCanvas(this.canvas_ref);
-        this.canvas_ref.appendTo(this.$centerContainer);
+        if (this.$centerContainer.el) {
+            this.$centerContainer.el.appendChild(this.canvas_ref);
+        }
         this.timeline.on("changed", () => {
             this.draw_canvas();
             this.load_initial_data();

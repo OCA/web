@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import {click, getFixture} from "@web/../tests/helpers/utils";
 import {makeView, setupViewRegistries} from "@web/../tests/views/helpers";
 import {FAKE_ORDER_FIELDS} from "./helpers.esm";
@@ -6,7 +5,7 @@ import {loadBundle} from "@web/core/assets";
 
 let serverData = {};
 let target = null;
-// eslint-disable-next-line no-undef
+
 QUnit.module("Views", (hooks) => {
     loadBundle("web_timeline.vis-timeline_lib");
     hooks.beforeEach(async () => {
@@ -65,9 +64,9 @@ QUnit.module("Views", (hooks) => {
         setupViewRegistries();
         target = getFixture();
     });
-    // eslint-disable-next-line no-undef
+
     QUnit.module("TimelineView - View");
-    // eslint-disable-next-line no-undef
+
     QUnit.test("Test basic timeline view", async (assert) => {
         await makeView({
             type: "timeline",
@@ -77,7 +76,7 @@ QUnit.module("Views", (hooks) => {
         });
         assert.containsOnce(target, ".oe_timeline_view");
     });
-    // eslint-disable-next-line no-undef
+
     QUnit.test("click today slot", async (assert) => {
         await makeView({
             type: "timeline",
@@ -117,7 +116,7 @@ QUnit.module("Views", (hooks) => {
             "year should no have classnames btn-primary"
         );
     });
-    // eslint-disable-next-line no-undef
+
     QUnit.test("click month slot", async (assert) => {
         await makeView({
             type: "timeline",
@@ -157,7 +156,7 @@ QUnit.module("Views", (hooks) => {
             "year should no have classnames btn-primary"
         );
     });
-    // eslint-disable-next-line no-undef
+
     QUnit.test("Check button delete", async (assert) => {
         await makeView({
             type: "timeline",
@@ -174,7 +173,7 @@ QUnit.module("Views", (hooks) => {
         await click($item_content);
         assert.containsOnce($item_content.parentElement, ".vis-delete");
     });
-    // eslint-disable-next-line no-undef
+
     QUnit.test("Check button delete disabled", async (assert) => {
         await makeView({
             type: "timeline",

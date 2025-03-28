@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import {
     TimelineArchParser,
     TimelineParseArchError,
@@ -17,23 +16,23 @@ function check(assert, paramName, paramValue, expectedName, expectedValue) {
     const data = parseArch(arch);
     assert.strictEqual(data[expectedName], expectedValue);
 }
-// eslint-disable-next-line no-undef
+
 QUnit.module("TimelineView - ArchParser");
-// eslint-disable-next-line no-undef
+
 QUnit.test("throw if date_start is not set", (assert) => {
     assert.throws(
         () => parseArch(`<timeline default_group_by="partner_id"/>`),
         TimelineParseArchError
     );
 });
-// eslint-disable-next-line no-undef
+
 QUnit.test("throw if default_group_by is not set", (assert) => {
     assert.throws(
         () => parseArch(`<timeline date_start="date_start"/>`),
         TimelineParseArchError
     );
 });
-// eslint-disable-next-line no-undef
+
 QUnit.test("hasEditDialog", (assert) => {
     check(assert, "event_open_popup", "", "open_popup_action", false);
     check(assert, "event_open_popup", "true", "open_popup_action", true);
@@ -43,7 +42,7 @@ QUnit.test("hasEditDialog", (assert) => {
     check(assert, "event_open_popup", "False", "open_popup_action", false);
     check(assert, "event_open_popup", "0", "open_popup_action", false);
 });
-// eslint-disable-next-line no-undef
+
 QUnit.test("create", (assert) => {
     check(assert, "create", "", "canCreate", true);
     check(assert, "create", "true", "canCreate", true);
@@ -54,7 +53,7 @@ QUnit.test("create", (assert) => {
     check(assert, "create", "0", "canCreate", false);
     check(assert, "create", "12", "canCreate", true);
 });
-// eslint-disable-next-line no-undef
+
 QUnit.test("edit", (assert) => {
     check(assert, "edit", "", "canUpdate", true);
     check(assert, "edit", "true", "canUpdate", true);
@@ -66,7 +65,6 @@ QUnit.test("edit", (assert) => {
     check(assert, "edit", "12", "canUpdate", true);
 });
 
-// eslint-disable-next-line no-undef
 QUnit.test("delete", (assert) => {
     check(assert, "delete", "", "canDelete", true);
     check(assert, "delete", "true", "canDelete", true);
@@ -77,7 +75,7 @@ QUnit.test("delete", (assert) => {
     check(assert, "delete", "0", "canDelete", false);
     check(assert, "delete", "12", "canDelete", true);
 });
-// eslint-disable-next-line no-undef
+
 QUnit.test("mode", (assert) => {
     check(assert, "mode", "day", "mode", "day");
     check(assert, "mode", "week", "mode", "week");
@@ -94,7 +92,7 @@ QUnit.test("mode", (assert) => {
         );
     }, TimelineParseArchError);
 });
-// eslint-disable-next-line no-undef
+
 QUnit.test("colors", (assert) => {
     const archInfo = parseArch(`
             <timeline date_start="start_date" default_group_by="partner_id" colors="gray: state == 'cancel'; #ec7063: state == 'done'"/>
@@ -118,7 +116,7 @@ QUnit.test("colors", (assert) => {
         "fieldNames should include field state"
     );
 });
-// eslint-disable-next-line no-undef
+
 QUnit.test("templates", (assert) => {
     const archInfo = parseArch(`
             <timeline date_start="start_date" default_group_by="partner_id">

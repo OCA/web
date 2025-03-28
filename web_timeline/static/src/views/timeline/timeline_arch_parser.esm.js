@@ -1,10 +1,9 @@
-/** @odoo-module **/
 /**
  * Copyright 2024 Tecnativa - Carlos López
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
  */
 import {_t} from "@web/core/l10n/translation";
-import {archParseBoolean} from "@web/views/utils";
+import {exprToBoolean} from "@web/core/utils/strings";
 import {parseExpr} from "@web/core/py_js/py";
 import {visitXML} from "@web/core/utils/xml";
 
@@ -71,7 +70,7 @@ export class TimelineArchParser {
                             node.getAttribute("dependency_arrow");
                     }
                     if (node.hasAttribute("stack")) {
-                        archInfo.options.stack = archParseBoolean(
+                        archInfo.options.stack = exprToBoolean(
                             node.getAttribute("stack"),
                             true
                         );
@@ -97,24 +96,24 @@ export class TimelineArchParser {
                         }
                     }
                     if (node.hasAttribute("event_open_popup")) {
-                        archInfo.open_popup_action = archParseBoolean(
+                        archInfo.open_popup_action = exprToBoolean(
                             node.getAttribute("event_open_popup")
                         );
                     }
                     if (node.hasAttribute("create")) {
-                        archInfo.canCreate = archParseBoolean(
+                        archInfo.canCreate = exprToBoolean(
                             node.getAttribute("create"),
                             true
                         );
                     }
                     if (node.hasAttribute("edit")) {
-                        archInfo.canUpdate = archParseBoolean(
+                        archInfo.canUpdate = exprToBoolean(
                             node.getAttribute("edit"),
                             true
                         );
                     }
                     if (node.hasAttribute("delete")) {
-                        archInfo.canDelete = archParseBoolean(
+                        archInfo.canDelete = exprToBoolean(
                             node.getAttribute("delete"),
                             true
                         );

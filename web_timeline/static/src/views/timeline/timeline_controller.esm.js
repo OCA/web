@@ -16,11 +16,9 @@ import {useDebounced} from "@web/core/utils/timing";
 import {useModel} from "@web/model/model";
 import {useSearchBarToggler} from "@web/search/search_bar/search_bar_toggler";
 import {useService} from "@web/core/utils/hooks";
-import {useSetupView} from "@web/views/view_hook";
+import {useSetupAction} from "@web/search/action_hook";
 
 const {DateTime} = luxon;
-
-// Import time from "web.time";
 
 export class TimelineController extends Component {
     /**
@@ -29,7 +27,7 @@ export class TimelineController extends Component {
     setup() {
         this.rootRef = useRef("root");
         this.model = useModel(this.props.Model, this.props.modelParams);
-        useSetupView({rootRef: useRef("root")});
+        useSetupAction({rootRef: useRef("root")});
         this.searchBarToggler = useSearchBarToggler();
         this.date_start = this.props.modelParams.date_start;
         this.date_stop = this.props.modelParams.date_stop;
