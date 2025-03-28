@@ -1,5 +1,5 @@
 import {Component, markup, onMounted, onPatched, onWillStart, useRef} from "@odoo/owl";
-import {loadBundle} from "@web/core/assets";
+import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 
 export default class Mpld3ChartJsonWidget extends Component {
@@ -15,14 +15,12 @@ export default class Mpld3ChartJsonWidget extends Component {
             script.text = this.props.record.data[this.props.name].script;
             this.widget.el.append(script);
         });
-        onWillStart(() =>
-            loadBundle({
-                jsLibs: [
-                    "/web_widget_mpld3_chart/static/src/lib/d3/d3.v5.js",
-                    "/web_widget_mpld3_chart/static/src/lib/mpld3/mpld3.v0.5.10.js",
-                ],
-            })
-        );
+        onWillStart(async () => {
+            await loadJS("/web_widget_mpld3_chart/static/src/lib/d3/d3.v5.js");
+            await loadJS(
+                "/web_widget_mpld3_chart/static/src/lib/mpld3/mpld3.v0.5.10.js"
+            );
+        });
     }
     markup(value) {
         console.log("Marking up...");
