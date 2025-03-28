@@ -1,8 +1,6 @@
-/** @odoo-module **/
-
+import {Component, markup, onMounted, onPatched, onWillStart, useRef} from "@odoo/owl";
 import {loadBundle} from "@web/core/assets";
 import {registry} from "@web/core/registry";
-import {Component, markup, onMounted, onPatched, onWillStart, useRef} from "@odoo/owl";
 
 export default class Mpld3ChartJsonWidget extends Component {
     setup() {
