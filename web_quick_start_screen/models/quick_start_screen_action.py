@@ -61,7 +61,7 @@ class DecontracStartScreenAction(models.Model):
             active_id = extra_context.get("active_id", 0)
             action["context"] = dict(
                 safe_eval(action.get("context", "{}"), {"active_id": active_id}),
-                **extra_context
+                **extra_context,
             )
         if self.domain:
             action["domain"] = self._safe_eval(self.domain)

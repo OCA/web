@@ -58,9 +58,11 @@
                                             href="#"
                                             class="btn-lnk stretched-link"
                                             t-att-string="record.name.raw_value"
-                                        ><span
+                                        >
+                                            <span
                                                 t-out="record.description.raw_value"
-                                            /></a>
+                                            />
+                                        </a>
                                     </div>
                                 </div>
                             </div>
