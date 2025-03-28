@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 export const FAKE_ORDER_FIELDS = {
     display_name: {string: "Display Name", type: "char"},
     date_start: {string: "Date start", type: "date"},

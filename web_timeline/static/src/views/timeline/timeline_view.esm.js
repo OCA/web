@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /* Odoo web_timeline
  * Copyright 2015 ACSONE SA/NV
  * Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
@@ -10,13 +9,13 @@ import {TimelineArchParser} from "./timeline_arch_parser.esm";
 import {TimelineController} from "./timeline_controller.esm";
 import {TimelineModel} from "./timeline_model.esm";
 import {TimelineRenderer} from "./timeline_renderer.esm";
-import {_lt} from "@web/core/l10n/translation";
+import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 
 const viewRegistry = registry.category("views");
 
 export const TimelineView = {
-    display_name: _lt("Timeline"),
+    display_name: _t("Timeline"),
     icon: "fa fa-tasks",
     multiRecord: true,
     ArchParser: TimelineArchParser,
