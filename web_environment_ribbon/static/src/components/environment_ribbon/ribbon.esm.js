@@ -58,7 +58,7 @@ export class WebEnvironmentRibbon extends Component {
 }
 
 WebEnvironmentRibbon.props = {};
-WebEnvironmentRibbon.template = xml`<div class="test-ribbon" />`;
+WebEnvironmentRibbon.template = xml`<div class="test-ribbon" style="display:none"/>`;
 
 registry.category("main_components").add("WebEnvironmentRibbon", {
     Component: WebEnvironmentRibbon,
