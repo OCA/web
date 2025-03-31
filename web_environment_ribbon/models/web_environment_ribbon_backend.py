@@ -1,7 +1,10 @@
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import os
+
 from odoo import api, models
+from odoo.tools.config import config
 
 
 class WebEnvironmentRibbonBackend(models.AbstractModel):
@@ -10,7 +13,16 @@ class WebEnvironmentRibbonBackend(models.AbstractModel):
 
     @api.model
     def _prepare_ribbon_format_vals(self):
-        return {"db_name": self.env.cr.dbname}
+        running_env = (
+            config.get("running_env")
+            or os.environ.get("RUNNING_ENV")
+            or os.environ.get("ODOO_STAGE")
+            or "test"
+        )
+        return {
+            "db_name": self.env.cr.dbname,
+            "running_env": running_env,
+        }
 
     @api.model
     def _prepare_ribbon_name(self):
