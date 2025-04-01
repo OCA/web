@@ -1,8 +1,5 @@
-/** @odoo-module **/
-
 import {editInput, getFixture} from "@web/../tests/helpers/utils";
 import {makeView, setupViewRegistries} from "@web/../tests/views/helpers";
-import {QUnit} from "@web/static/lib/qunit/qunit";
 
 let serverData = {};
 let target = getFixture();
