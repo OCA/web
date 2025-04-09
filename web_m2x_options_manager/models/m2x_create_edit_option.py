@@ -151,7 +151,7 @@ class M2xCreateEditOption(models.Model):
         node.set("options", str(options))
         if not self.option_create_edit_wizard:
             node.set("can_create", "false")
-            node.set("can_write", "false")
+            node.set("can_write", "true")
 
     @api.model
     def get(self, model_name, field_name):
