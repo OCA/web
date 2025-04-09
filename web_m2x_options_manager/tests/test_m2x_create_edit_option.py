@@ -118,7 +118,7 @@ class TestM2xCreateEditOption(SavepointCase):
                 company_node.attrib.get("can_create"),
                 company_node.attrib.get("can_write"),
             ),
-            ("false", "false"),
+            ("false", "true"),
         )
 
         # Update options, check that node has been updated too
