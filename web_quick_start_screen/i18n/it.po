@@ -1,0 +1,248 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_quick_start_screen
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-04-15 14:30+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: web_quick_start_screen
+#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_contacts
+msgid "<span>Browse <b>contacts</b></span>"
+msgstr "<span>Sfoglia<b>contatti</b></span>"
+
+#. module: web_quick_start_screen
+#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_config_actions
+msgid "<span>Configure this <b>screen actions</b></span>"
+msgstr "<span>Configura queste <b>azioni schermata</b></span>"
+
+#. module: web_quick_start_screen
+#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_access_rights
+msgid "<span>Explore <b>access rights</b></span>"
+msgstr "<span>Esplora <b>diritti di accesso</b></span>"
+
+#. module: web_quick_start_screen
+#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_access_rights
+msgid "Access rights"
+msgstr "Diritti di accesso"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__action_ids
+msgid "Action"
+msgstr "Azione"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__action_ref_id
+msgid "Action Ref"
+msgstr "Rif. azione"
+
+#. module: web_quick_start_screen
+#: model:ir.model,name:web_quick_start_screen.model_quick_start_screen_action
+msgid "Actions to be launched from a quick start screen"
+msgstr "Azioni da lanciare da una schermata di avvio rapido"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__active
+msgid "Active"
+msgstr "Attiva"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,help:web_quick_start_screen.field_quick_start_screen_action__context
+msgid ""
+"Add extra context if needed. You can use `ref('<xml_id>')` and it will "
+"beevaluated. You can also use `datetime` and `context_today` in the same "
+"way`ir.filters` do."
+msgstr ""
+"Aggiungere contesto aggiuntivo se necessario. Si può usare `ref('<xml_id>')` "
+"e verrà valutato. Si può anche usare `datetime` e `context_today` allo "
+"stesso modo di `ir.filters`."
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,help:web_quick_start_screen.field_quick_start_screen_action__domain
+msgid ""
+"Add extra domain if needed. You can use `ref('<xml_id>')` and it will "
+"beevaluated. You can also use `datetime` and `context_today` in the same "
+"way`ir.filters` do."
+msgstr ""
+"Aggiungere dominio aggiuntivo se necessario. Si può usare `ref('<xml_id>')` "
+"e verrà valutato. Si può anche usare `datetime` e `context_today` allo "
+"stesso modo di `ir.filters`."
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,help:web_quick_start_screen.field_quick_start_screen_action__color
+msgid "Choose the icon color"
+msgstr "Scegli il colore icona"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__color
+msgid "Color"
+msgstr "Colore"
+
+#. module: web_quick_start_screen
+#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_config_actions
+msgid "Configure screen actions"
+msgstr "Configura azioni schermata"
+
+#. module: web_quick_start_screen
+#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_contacts
+msgid "Contacts"
+msgstr "Contatti"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__context
+msgid "Context"
+msgstr "Contesto"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__create_uid
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__create_date
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: web_quick_start_screen
+#: model:quick.start.screen,name:web_quick_start_screen.quick_start_screen_demo
+msgid "Demo start screen"
+msgstr "Schermata avvio demo"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__description
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__display_name
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__domain
+msgid "Domain"
+msgstr "Dominio"
+
+#. module: web_quick_start_screen
+#: model_terms:ir.ui.view,arch_db:web_quick_start_screen.quick_start_screen_list_view
+msgid "Go to the start screen"
+msgstr "Vai alla schermata di avvio"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__id
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__icon_name
+msgid "Icon Name"
+msgstr "Nome icona"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,help:web_quick_start_screen.field_quick_start_screen_action__icon_name
+msgid "Just set the Font Awesome icon name. e.g.: fa-truck"
+msgstr "Imposta solo il nome dell'icona Font Awesome. Es.: fa-truck"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__write_uid
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__write_date
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__name
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: web_quick_start_screen
+#: model:ir.actions.server,name:web_quick_start_screen.start_screen_action
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_res_users__quick_start_screen_id
+#: model:res.groups,name:web_quick_start_screen.group_quick_start_screen
+msgid "Quick Start Screen"
+msgstr "Schermata avvio rapido"
+
+#. module: web_quick_start_screen
+#: model:ir.actions.act_window,name:web_quick_start_screen.quick_start_screen_action_action
+#: model:ir.ui.menu,name:web_quick_start_screen.menu_quick_start_screen_action
+msgid "Quick Start Screen Actions"
+msgstr "Azioni schermata avvio rapido"
+
+#. module: web_quick_start_screen
+#: model:ir.actions.act_window,name:web_quick_start_screen.start_screen_action_config
+#: model:ir.ui.menu,name:web_quick_start_screen.menu_quick_start_screen_action_config
+msgid "Quick Start Screens"
+msgstr "Schermate avvio rapido"
+
+#. module: web_quick_start_screen
+#: model:ir.model,name:web_quick_start_screen.model_quick_start_screen
+msgid "Quick action selection screen"
+msgstr "Schermata selezione azione rapida"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__sequence
+msgid "Sequence"
+msgstr "Sequenza"
+
+#. module: web_quick_start_screen
+#. odoo-python
+#: code:addons/web_quick_start_screen/models/quick_start_screen.py:0
+#: model:ir.ui.menu,name:web_quick_start_screen.menu_start
+#: model:ir.ui.menu,name:web_quick_start_screen.menu_start_screen
+msgid "Start"
+msgstr "Avvio"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__image
+msgid "Start screen icon"
+msgstr "Icona avvio schermata"
+
+#. module: web_quick_start_screen
+#: model:ir.model,name:web_quick_start_screen.model_res_users
+msgid "User"
+msgstr "Utente"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields.selection,name:web_quick_start_screen.selection__quick_start_screen_action__action_ref_id__ir_actions_act_url
+msgid "ir.actions.act_url"
+msgstr "ir.actions.act_url"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields.selection,name:web_quick_start_screen.selection__quick_start_screen_action__action_ref_id__ir_actions_act_window
+msgid "ir.actions.act_window"
+msgstr "ir.actions.act_window"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields.selection,name:web_quick_start_screen.selection__quick_start_screen_action__action_ref_id__ir_actions_client
+msgid "ir.actions.client"
+msgstr "ir.actions.client"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields.selection,name:web_quick_start_screen.selection__quick_start_screen_action__action_ref_id__ir_actions_report
+msgid "ir.actions.report"
+msgstr "ir.actions.report"
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields.selection,name:web_quick_start_screen.selection__quick_start_screen_action__action_ref_id__ir_actions_server
+msgid "ir.actions.server"
+msgstr "ir.actions.server"
