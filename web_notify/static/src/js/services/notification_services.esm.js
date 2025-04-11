@@ -3,6 +3,7 @@
 import {markup} from "@odoo/owl";
 import {browser} from "@web/core/browser/browser";
 import {registry} from "@web/core/registry";
+import { _t } from "@web/core/l10n/translation";
 
 export const webNotificationService = {
     dependencies: ["bus_service", "notification", "action"],
@@ -26,7 +27,7 @@ export const webNotificationService = {
                             (notif.action.context && notif.action.context.params) || {};
                         buttons = [
                             {
-                                name: params.button_name || env._t("Open"),
+                                name: params.button_name || _t("Open"),
                                 primary: true,
                                 onClick: async () => {
                                     await action.doAction(notif.action);
