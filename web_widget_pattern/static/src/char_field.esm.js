@@ -5,7 +5,7 @@ import {_lt} from "@web/core/l10n/translation";
 import {patch} from "@web/core/utils/patch";
 import {sprintf} from "@web/core/utils/strings";
 
-patch(CharField.prototype, "web_widget_pattern", {
+patch(CharField.prototype, {
     parse(value) {
         const result = this._super(...arguments);
         const pattern = this.props.pattern;

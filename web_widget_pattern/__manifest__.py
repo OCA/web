@@ -4,7 +4,7 @@
 {
     "name": "Input patterns",
     "summary": "Allows to define a regex for validating input on the backend",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "development_status": "Alpha",
     "category": "Technical",
     "website": "https://github.com/OCA/web",
