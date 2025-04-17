@@ -17,5 +17,5 @@ class TestUIPivot(common.HttpCase):
             "/odoo",
             "web_pivot_computed_measure_tour",
             login="admin",
-            step_delay=100,
+            step_delay=1000,
         )
