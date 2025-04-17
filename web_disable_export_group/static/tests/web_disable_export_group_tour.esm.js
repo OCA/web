@@ -3,31 +3,48 @@
    Copyright 2022 Tecnativa - Víctor Martínez
    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). */
 
-import tour from "web_tour.tour";
+import {registry} from "@web/core/registry";
 
-tour.register(
-    "export_tour_xlsx_button_ok",
-    {
-        test: true,
-        url: "/web#model=ir.ui.view&view_type=list&cids=&action=base.action_ui_view",
-    },
-    [
+function openCogMenu() {
+    return [
         {
-            content: "Check if 'Export all' button exists",
-            trigger: ".o_list_buttons:has(.o_list_export_xlsx)",
+            content: "Click the cog icon to open the action menu",
+            trigger: ".o_cp_action_menus .o-dropdown .dropdown-toggle",
+            run: "click",
         },
-    ]
-);
-tour.register(
-    "export_tour_xlsx_button_ko",
-    {
-        test: true,
-        url: "/web#model=ir.ui.view&view_type=list&cids=&action=base.action_ui_view",
-    },
-    [
         {
-            content: "Check if 'Export all' button exists",
-            trigger: ".o_list_buttons:not(:has(.o_list_export_xlsx))",
+            content: "Wait for the dropdown menu to be visible",
+            trigger: ".o-dropdown--menu.dropdown-menu.show, .o-dropdown--menu.d-block",
         },
-    ]
-);
+    ];
+}
+
+registry.category("web_tour.tours").add("export_tour_xlsx_button_ok", {
+    test: true,
+    url: "/web#model=ir.ui.view&view_type=list&action=base.action_ui_view",
+    steps: () => [
+        ...openCogMenu(),
+        {
+            content: "Check that the 'Export All' button is visible",
+            trigger: ".dropdown-item.o_export_all_menu",
+            run: () => {
+                // Intentionally left blank
+            },
+        },
+    ],
+});
+
+registry.category("web_tour.tours").add("export_tour_xlsx_button_ko", {
+    test: true,
+    url: "/web#model=ir.ui.view&view_type=list&action=base.action_ui_view",
+    steps: () => [
+        ...openCogMenu(),
+        {
+            content: "Check that the 'Export All' button is NOT visible",
+            trigger: ".o_cp_action_menus:not(:has(.o_export_all_menu))",
+            run: () => {
+                // Intentionally left blank
+            },
+        },
+    ],
+});

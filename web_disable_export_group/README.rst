@@ -90,6 +90,10 @@ Contributors
    -  Víctor Martínez
    -  David Vidal
 
+-  `Jarsa <https://www.jarsa.com>`__:
+
+   -  Alan Ramos
+
 Maintainers
 -----------
 

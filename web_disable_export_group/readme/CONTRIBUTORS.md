@@ -7,3 +7,5 @@
   - Alexandre Díaz
   - Víctor Martínez
   - David Vidal
+- [Jarsa](https://www.jarsa.com):
+  - Alan Ramos
