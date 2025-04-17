@@ -12,7 +12,7 @@ registry.category("web_tour.tours").add("web_pivot_computed_measure_tour", {
         },
         {
             trigger:
-                '.o_app[data-menu-xmlid="web_pivot_computed_measure.demo_menu_res_partner_report_pivot"]',
+                '.o_app[data-menu-xmlid="web_pivot_computed_measure.demo_menu_res_partner_report_pivot"]:visible',
             run: "click",
         },
         {
