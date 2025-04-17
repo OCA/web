@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_web_editor_class_tree" model="ir.ui.view">
         <field name="name">view.web.editor.class.tree</field>
         <field name="model">web.editor.class</field>
@@ -58,5 +57,4 @@
             </p>
         </field>
     </record>
-
 </odoo>

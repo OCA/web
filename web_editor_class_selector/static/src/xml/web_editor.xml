@@ -26,7 +26,9 @@
                             href="#"
                             data-call="setCustomCss"
                             t-att-data-arg1="line.id"
-                        ><span t-att-class="line.class_name" t-out="line.name" /></a>
+                        >
+                            <span t-att-class="line.class_name" t-out="line.name" />
+                        </a>
                     </li>
                 </ul>
             </div>
