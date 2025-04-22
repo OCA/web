@@ -1,6 +1,6 @@
 {
     "name": "Web editor class selector",
-    "version": "17.0.1.1.0",
+    "version": "18.0.1.0.0",
     "summary": "",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
@@ -17,15 +17,14 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "web_editor_class_selector/static/src/js/backend/**/*",
-        ],
-        "web_editor.backend_assets_wysiwyg": [
-            "web_editor_class_selector/static/src/js/odoo-editor/**/*",
-            "web_editor_class_selector/static/src/js/wysiwyg/**/*",
+            "web_editor_class_selector/static/src/js/css_selector/**/*",
             "web_editor_class_selector/static/src/scss/demo_styles.scss",
-            "web_editor_class_selector/static/src/xml/**/",
+            "web_editor_class_selector/static/src/js/fields/**/*",
+            "web_editor_class_selector/static/src/js/utils/**/*",
+            "web_editor_class_selector/static/src/js/wysiwyg/**/*",
         ],
     },
+    "maintainers": ["carlos-lopez-tecnativa"],
     "installable": True,
     "auto_install": False,
     "license": "AGPL-3",

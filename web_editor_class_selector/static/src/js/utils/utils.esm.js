@@ -1,10 +1,7 @@
-/** @odoo-module **/
-import {
-    closestElement,
-    formatsSpecs,
-} from "@web_editor/js/editor/odoo-editor/src/utils/utils";
+import {closestElement} from "@html_editor/utils/dom_traversal";
+import {formatsSpecs} from "@html_editor/utils/formatting";
 
-// This function is called in the _configureToolbar method of the Wysiwyg class
+// This function is called in the getEditorConfig method of the Wysiwyg class
 // It generates the new formatsSpecs object with the custom CSS class
 export function createCustomCssFormats(custom_class_css) {
     const newformatsSpecs = {};
