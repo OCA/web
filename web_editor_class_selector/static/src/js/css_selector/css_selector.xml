@@ -1,0 +1,20 @@
+<templates xml:space="preserve">
+    <t t-name="web_editor_class_selector.CssSelector">
+        <Dropdown>
+            <button class="btn btn-light" t-att-title="props.title">
+                <span class="px-1" t-esc="state.displayName" />
+            </button>
+            <t t-set-slot="content">
+                <t t-foreach="items" t-as="item" t-key="item_index">
+                    <DropdownItem
+                        class="item.class_name"
+                        onSelected="() => this.onSelected(item)"
+                        t-on-pointerdown.prevent="() => {}"
+                    >
+                        <t t-esc="item.name" />
+                    </DropdownItem>
+                </t>
+            </t>
+        </Dropdown>
+    </t>
+</templates>
