@@ -143,6 +143,7 @@ Contributors
 * Aitor Bouzas <aitor.bouzas@adaptivecity.com>
 * Shepilov Vladislav <shepilov.v@protonmail.com>
 * Kevin Khao <kevin.khao@akretion.com>
+* Carlos Jimeno <carlos.jimeno@braintec.com>
 * `Tecnativa <https://www.tecnativa.com>`_:
 
   * David Vidal

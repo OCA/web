@@ -26,6 +26,8 @@ class TestResUsers(common.TransactionCase):
         self.assertEqual(1, len(news))
         test_msg.update({"type": SUCCESS})
         payload = json.loads(news.message)["payload"][0]
+        self.assertIn("id", payload)
+        payload.pop("id", None)
         self.assertDictEqual(test_msg, payload)
 
     def test_notify_danger(self):
@@ -44,6 +46,8 @@ class TestResUsers(common.TransactionCase):
         self.assertEqual(1, len(news))
         test_msg.update({"type": DANGER})
         payload = json.loads(news.message)["payload"][0]
+        self.assertIn("id", payload)
+        payload.pop("id", None)
         self.assertDictEqual(test_msg, payload)
 
     def test_notify_warning(self):
@@ -62,6 +66,8 @@ class TestResUsers(common.TransactionCase):
         self.assertEqual(1, len(news))
         test_msg.update({"type": WARNING})
         payload = json.loads(news.message)["payload"][0]
+        self.assertIn("id", payload)
+        payload.pop("id", None)
         self.assertDictEqual(test_msg, payload)
 
     def test_notify_info(self):
@@ -80,6 +86,8 @@ class TestResUsers(common.TransactionCase):
         self.assertEqual(1, len(news))
         test_msg.update({"type": INFO})
         payload = json.loads(news.message)["payload"][0]
+        self.assertIn("id", payload)
+        payload.pop("id", None)
         self.assertDictEqual(test_msg, payload)
 
     def test_notify_default(self):
@@ -98,6 +106,8 @@ class TestResUsers(common.TransactionCase):
         self.assertEqual(1, len(news))
         test_msg.update({"type": DEFAULT})
         payload = json.loads(news.message)["payload"][0]
+        self.assertIn("id", payload)
+        payload.pop("id", None)
         self.assertDictEqual(test_msg, payload)
 
     def test_notify_many(self):
@@ -117,3 +127,14 @@ class TestResUsers(common.TransactionCase):
     def test_notify_admin_allowed_other_user(self):
         other_user = self.env.ref("base.user_demo")
         other_user.notify_info(message="hello")
+
+    def test_notify_dismiss(self):
+        bus_bus = self.env["bus.bus"]
+        domain = [("channel", "=", self.env.user.notify_default_channel_name)]
+        existing = bus_bus.search(domain)
+        notif_id = "test-notif-id"
+        self.env.user.notify_dismiss(notif_id)
+        news = bus_bus.search(domain) - existing
+        self.assertEqual(1, len(news))
+        payload = json.loads(news.message)["payload"][0]
+        self.assertEqual(payload["id"], notif_id)
