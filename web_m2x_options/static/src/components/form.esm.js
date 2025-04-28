@@ -69,24 +69,23 @@ KanbanMany2ManyTagsAvatarField.props = {
     ...fieldColorProps,
 };
 
+function evaluateSystemParameterDefaultTrue(option) {
+    const isOptionSet = session.web_m2x_options[`web_m2x_options.${option}`];
+    return isOptionSet ? evaluateBooleanExpr(isOptionSet) : true;
+}
+
 patch(many2OneField, {
     m2o_options_props_create(props, attrs, options) {
-        const ir_options = session.web_m2x_options;
+        const canQuickCreate = evaluateSystemParameterDefaultTrue("create");
         if (options.create === false) {
             props.canQuickCreate = false;
         } else if (options.create) {
             props.canQuickCreate = attrs.can_create
                 ? evaluateBooleanExpr(attrs.can_create)
                 : true;
-        } else if (
-            ir_options["web_m2x_options.create"] === "False" &&
-            props.canQuickCreate
-        ) {
+        } else if (!canQuickCreate && props.canQuickCreate) {
             props.canQuickCreate = false;
-        } else if (
-            ir_options["web_m2x_options.create"] === "True" &&
-            !props.canQuickCreate
-        ) {
+        } else if (canQuickCreate && !props.canQuickCreate) {
             props.canQuickCreate = attrs.can_create
                 ? evaluateBooleanExpr(attrs.can_create)
                 : true;
@@ -95,7 +94,7 @@ patch(many2OneField, {
     },
 
     m2o_options_props_create_edit(props, attrs, options) {
-        const ir_options = session.web_m2x_options;
+        const canCreateEdit = evaluateSystemParameterDefaultTrue("create_edit");
         if (options.create_edit === false) {
             props.canCreateEdit = false;
         } else if (options.create_edit) {
@@ -103,15 +102,9 @@ patch(many2OneField, {
             props.canCreateEdit = attrs.can_create
                 ? evaluateBooleanExpr(attrs.can_create)
                 : true;
-        } else if (
-            ir_options["web_m2x_options.create_edit"] === "False" &&
-            props.canCreateEdit
-        ) {
+        } else if (!canCreateEdit && props.canCreateEdit) {
             props.canCreateEdit = false;
-        } else if (
-            ir_options["web_m2x_options.create_edit"] === "True" &&
-            !props.canCreateEdit
-        ) {
+        } else if (canCreateEdit && !props.canCreateEdit) {
             // Same condition set in web/views/fields/many2one/many2one_field
             props.canCreateEdit = attrs.can_create
                 ? evaluateBooleanExpr(attrs.can_create)
@@ -131,31 +124,28 @@ patch(many2OneField, {
     },
 
     m2o_options_props_search_more(props, attrs, options) {
-        const ir_options = session.web_m2x_options;
+        const noSearchMore = !evaluateSystemParameterDefaultTrue("search_more");
         if (options.search_more) {
             props.noSearchMore = false;
         } else if (options.search_more === false) {
             props.noSearchMore = true;
-        } else if (
-            ir_options["web_m2x_options.search_more"] === "True" &&
-            props.noSearchMore
-        ) {
+        } else if (!noSearchMore && props.noSearchMore) {
             props.noSearchMore = false;
-        } else if (ir_options["web_m2x_options.search_more"] === "False") {
+        } else if (noSearchMore) {
             props.noSearchMore = true;
         }
         return props;
     },
 
     m2o_options_props_open(props, attrs, options) {
-        const ir_options = session.web_m2x_options;
+        const canOpen = evaluateSystemParameterDefaultTrue("open");
         if (options.open) {
             props.canOpen = true;
         } else if (options.open === false) {
             props.canOpen = false;
-        } else if (ir_options["web_m2x_options.open"] === "True") {
+        } else if (canOpen) {
             props.canOpen = true;
-        } else if (ir_options["web_m2x_options.open"] === "False") {
+        } else if (!canOpen) {
             props.canOpen = false;
         }
         return props;
@@ -205,18 +195,12 @@ patch(Many2OneField.prototype, {
 
 patch(many2ManyTagsField, {
     m2m_options_props_create(props, attrs, options) {
-        const ir_options = session.web_m2x_options;
+        const canQuickCreate = evaluateSystemParameterDefaultTrue("create");
         // Create option already available for m2m fields
         if (!options.create) {
-            if (
-                ir_options["web_m2x_options.create"] === "False" &&
-                props.canQuickCreate
-            ) {
+            if (!canQuickCreate && props.canQuickCreate) {
                 props.canQuickCreate = false;
-            } else if (
-                ir_options["web_m2x_options.create"] === "True" &&
-                !props.canQuickCreate
-            ) {
+            } else if (canQuickCreate && !props.canQuickCreate) {
                 props.canQuickCreate = attrs.can_create
                     ? evaluateBooleanExpr(attrs.can_create)
                     : true;
@@ -226,7 +210,7 @@ patch(many2ManyTagsField, {
     },
 
     m2m_options_props_create_edit(props, attrs, options) {
-        const ir_options = session.web_m2x_options;
+        const canCreateEdit = evaluateSystemParameterDefaultTrue("create_edit");
         if (options.create_edit === false) {
             props.canCreateEdit = false;
         } else if (options.create_edit) {
@@ -234,15 +218,9 @@ patch(many2ManyTagsField, {
             props.canCreateEdit = attrs.can_create
                 ? evaluateBooleanExpr(attrs.can_create)
                 : true;
-        } else if (
-            ir_options["web_m2x_options.create_edit"] === "False" &&
-            props.canCreateEdit
-        ) {
+        } else if (!canCreateEdit && props.canCreateEdit) {
             props.canCreateEdit = false;
-        } else if (
-            ir_options["web_m2x_options.create_edit"] === "True" &&
-            !props.canCreateEdit
-        ) {
+        } else if (canCreateEdit && !props.canCreateEdit) {
             // Same condition set in web/views/fields/many2one/many2one_field
             props.canCreateEdit = attrs.can_create
                 ? evaluateBooleanExpr(attrs.can_create)
@@ -265,17 +243,14 @@ patch(many2ManyTagsField, {
     },
 
     m2m_options_props_search_more(props, attrs, options) {
-        const ir_options = session.web_m2x_options;
+        const noSearchMore = !evaluateSystemParameterDefaultTrue("search_more");
         if (options.search_more) {
             props.noSearchMore = false;
         } else if (options.search_more === false) {
             props.noSearchMore = true;
-        } else if (
-            ir_options["web_m2x_options.search_more"] === "True" &&
-            props.noSearchMore
-        ) {
+        } else if (!noSearchMore && props.noSearchMore) {
             props.noSearchMore = false;
-        } else if (ir_options["web_m2x_options.search_more"] === "False") {
+        } else if (noSearchMore) {
             props.noSearchMore = true;
         }
         return props;
