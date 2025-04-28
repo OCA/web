@@ -1,13 +1,5 @@
 ## in the field's options dict
 
-`create` *boolean* (Default: depends if user have create rights)
-
-> Whether to display the "Create..." entry in dropdown panel. Only for m2o fields.
-
-`create_edit` *boolean* (Default: depends if user have create rights)
-
-> Whether to display "Create and Edit..." entry in dropdown panel
-
 `limit` *int* (Default: odoo default value is `8`)
 
 > Number of displayed record in drop-down panel
@@ -25,10 +17,6 @@
 
 > A dictionary to link field value with a HTML color. This option has to
 > be used with field_color.
-
-`open` *boolean* (Default: `False`)
-
-> Makes many2one buttons that open the linked resource.
 
 ## ir.config_parameter options
 
@@ -78,6 +66,6 @@ Your XML form view definition could contain:
 
 ``` xml
 ...
-<field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'search_more': true, 'field_color':'type', 'colors':{'contact':'green', 'invoice': 'red', 'delivery': 'blue'}}"/>
+<field name="partner_id" options="{'limit': 10, 'search_more': true, 'field_color':'type', 'colors':{'contact':'green', 'invoice': 'red', 'delivery': 'blue'}}"/>
 ...
 ```
