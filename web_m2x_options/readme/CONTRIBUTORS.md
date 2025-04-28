@@ -20,10 +20,10 @@
 
 - Dhara Solanki \<<dhara.solanki@initos.com>\> (<http://www.initos.com>)
 
-- [Trobz](https://trobz.com):  
+- [Trobz](https://trobz.com):
   - Hoang Diep \<<hoang@trobz.com>\>
 
-- [Sygel](https://sygel.es):  
+- [Sygel](https://sygel.es):
   - Manuel Regidor \<<manuel.regidor@sygel.es>\>
   - Valentín Vinagre \<<valentin.vinagre@sygel.es>\>
   - Harald Panten \<<harald.panten@sygel.es>\>
