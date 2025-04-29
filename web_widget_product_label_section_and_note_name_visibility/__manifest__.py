@@ -1,23 +1,24 @@
 {
     "name": "Web widget product label section and note",
-    "version": "17.0.1.0.0",
-    "summary": "unify the product and name into a single column",
+    "version": "18.0.1.0.0",
+    "summary": "Alternate the visibility of the product and description.",
     "author": "Tecnativa, Odoo Community Association (OCA), Odoo S.A.",
     "website": "https://github.com/OCA/web",
     "depends": [
         "web",
         "account",
     ],
-    "data": [
-        "views/account_move_views.xml",
-    ],
     "assets": {
         "web.assets_backend": [
-            "web_widget_product_label_section_and_note/static/src/core/utils/**/*",
-            "web_widget_product_label_section_and_note/static/src/components/**/*",
+            (
+                "after",
+                "account/static/src/components/**/*",
+                "web_widget_product_label_section_and_note_name_visibility/static/src/components/**/*",
+            )
         ],
     },
     "installable": True,
     "auto_install": False,
     "license": "AGPL-3",
+    "maintainers": ["carlos-lopez-tecnativa"],
 }
