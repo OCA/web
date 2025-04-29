@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
-
     <t
         t-name="web_widget_product_label_section_and_note.ProductLabelSectionAndNoteField"
     >
@@ -214,5 +213,4 @@
             <attribute name="t-if">!isSectionOrNote</attribute>
         </xpath>
     </t>
-
 </templates>
