@@ -16,52 +16,29 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.6.2\n"
 
-#. module: web_widget_product_label_section_and_note
+#. module: web_widget_product_label_section_and_note_name_visibility
 #. odoo-javascript
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#, python-format
-msgid "Click or press enter to add a description"
-msgstr "Fare clic o premere invio per aggiungere una descrizione"
-
-#. module: web_widget_product_label_section_and_note
-#. odoo-javascript
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#, python-format
+#: code:addons/web_widget_product_label_section_and_note_name_visibility/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
 msgid "Click to remove/add the product name from the description."
 msgstr ""
 "Fare clic per rimuovere/aggiungere il nome del prodotto dalla descrizione."
 
-#. module: web_widget_product_label_section_and_note
-#. odoo-javascript
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
 #, python-format
-msgid "Enter a description"
-msgstr "Inserire una descrizione"
+#~ msgid "Click or press enter to add a description"
+#~ msgstr "Fare clic o premere invio per aggiungere una descrizione"
 
-#. module: web_widget_product_label_section_and_note
-#. odoo-javascript
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
 #, python-format
-msgid "Internal link"
-msgstr "Link interno"
+#~ msgid "Enter a description"
+#~ msgstr "Inserire una descrizione"
 
-#. module: web_widget_product_label_section_and_note
-#. odoo-javascript
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
 #, python-format
-msgid "Scan barcode"
-msgstr "Leggi codice a barre"
+#~ msgid "Internal link"
+#~ msgstr "Link interno"
 
-#. module: web_widget_product_label_section_and_note
-#. odoo-javascript
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.esm.js:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
 #, python-format
-msgid "Search a product"
-msgstr "Cerca un prodotto"
+#~ msgid "Scan barcode"
+#~ msgstr "Leggi codice a barre"
+
+#, python-format
+#~ msgid "Search a product"
+#~ msgstr "Cerca un prodotto"
