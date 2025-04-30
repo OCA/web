@@ -107,7 +107,7 @@ class ResCompany(models.Model):
             background-color: %(color_navbar_bg_hover)s !important;
           }
         }
-        .o_menu_sections .o-dropdown .dropdown-toggle {
+        .o_menu_sections .dropdown-toggle {
           background: %(color_navbar_bg)s !important;
           background-color: %(color_navbar_bg)s !important;
           color: %(color_navbar_text)s !important;
