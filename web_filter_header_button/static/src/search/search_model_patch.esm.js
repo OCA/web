@@ -26,7 +26,14 @@ patch(SearchModel.prototype, {
     getHeaderButtonFilters() {
         return Object.values(this.getSearchItems())
             .filter((f) => {
-                return f.context && makeContext([f.context]).shown_in_panel;
+                // Field-type filters are used to filter based on a search, so it
+                // doesn't make sense for them to be set as clickable buttons
+                // at the header level.
+                return (
+                    f.type !== "field" &&
+                    f.context &&
+                    makeContext([f.context]).shown_in_panel
+                );
             })
             .map((f) => {
                 return {...f, context: makeContext([f.context])};
