@@ -201,7 +201,17 @@ export class TimelineRenderer extends Component {
             // Delete an item by tapping the delete button top right
             this.options.editable.remove = true;
         }
-        this.options.xss = {disabled: true};
+        // Configure XSS filtering options to mitigate potential security risks.
+        // Disabling XSS filtering can lead to vulnerabilities, as highlighted in:
+        // - CVE-2020-28487 (https://www.cve.org/CVERecord?id=CVE-2020-28487)
+        // - https://github.com/visjs/vis-timeline/pull/840
+        // The solution is to define a whitelist of allowed HTML elements and attributes.
+        // TODO: Check if this can be removed when this PR is merged: https://github.com/visjs/vis-timeline/pull/1860
+        this.options.xss = {
+            filterOptions: {
+                whiteList: this.getXSSWhiteList(),
+            },
+        };
         this.timeline = new vis.Timeline(this.canvasRef.el, {}, this.options);
         this.timeline.on("click", this.on_timeline_click.bind(this));
         if (!this.options.onUpdate) {
@@ -217,6 +227,23 @@ export class TimelineRenderer extends Component {
             this.draw_canvas();
             this.load_initial_data();
         });
+    }
+    /**
+     * Returns the XSS whitelist for the timeline library.
+     * This is used to filter out potentially harmful HTML elements and attributes.
+     * The white list allows only specific elements and attributes to be rendered.
+     * This is important for security reasons, as it helps prevent XSS attacks.
+     * @returns {Object} The XSS white list.
+     * Key: element name; value: array of allowed attributes.
+     */
+    getXSSWhiteList() {
+        // Add more elements to the whitelist as needed.
+        return {
+            div: ["class", "style"],
+            span: ["class", "name"],
+            small: ["class", "name"],
+            img: ["src", "width", "height", "alt", "loading", "class"],
+        };
     }
 
     /**
