@@ -239,6 +239,7 @@ export class TimelineRenderer extends Component {
     getXSSWhiteList() {
         // Add more elements to the whitelist as needed.
         return {
+            b: [],
             div: ["class", "style"],
             span: ["class", "name"],
             small: ["class", "name"],
