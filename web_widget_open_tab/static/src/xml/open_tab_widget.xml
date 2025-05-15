@@ -8,7 +8,6 @@
             t-on-click="openNewTab"
             t-att-title="props.title"
             t-on-mouseenter="ev => this.loadAttrs(ev)"
-        >
-        </a>
+        />
     </t>
 </template>
