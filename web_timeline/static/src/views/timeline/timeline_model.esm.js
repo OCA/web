@@ -60,11 +60,19 @@ export class TimelineModel extends Model {
         }
         let fields = this.params.fieldNames;
         fields = [...new Set(fields.concat(this.last_group_bys))];
+        // Avoid ordering by many2many fields
+        // because it is not supported by Odoo
+        // In the module sale_timesheet_timeline, it is used
+        // with default_group_by = task_user_ids
+        let field_to_order = this.params.default_group_by;
+        if (this.fields[field_to_order].type === "many2many") {
+            field_to_order = undefined;
+        }
         this.data = await this.keepLast.add(
             this.orm.call(this.model_name, "search_read", [], {
                 fields: fields,
                 domain: searchParams.domain,
-                order: this.params.default_group_by,
+                order: field_to_order,
                 context: searchParams.context,
             })
         );
