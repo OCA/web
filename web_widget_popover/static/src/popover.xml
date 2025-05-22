@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_widget_popover.IconPopoverField">
+        <span
+            t-if="value"
+            t-attf-class="fa {{props.icon}}"
+            t-att-data-tooltip-info='tooltipInfo'
+            data-tooltip-template="web_widget_popover.PopoverTemplate"
+        />
+    </t>
+
+    <t t-name="web_widget_popover.PopoverTemplate">
+        <div class="o-tooltip px-1 py-2">
+            <span style="white-space: pre-wrap;" t-esc="message" />
+        </div>
+    </t>
+
+</templates>
