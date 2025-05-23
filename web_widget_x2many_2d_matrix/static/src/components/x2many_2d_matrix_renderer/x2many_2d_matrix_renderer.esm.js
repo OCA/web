@@ -24,9 +24,13 @@ export class X2Many2DMatrixRenderer extends Component {
                 value: record.data[this.matrixFields.x],
                 text: record.data[this.matrixFields.x],
             };
-            if (record.fields[this.matrixFields.x].type === "many2one") {
+            const fieldType = record.fields[this.matrixFields.x].type; 
+            if (fieldType === "many2one") {
                 column.text = column.value[1];
                 column.value = column.value[0];
+            } else if (fieldType === "reference") {
+                column.text = column.value.displayName;
+                column.value = column.value.resId;
             }
             if (columns.findIndex((c) => c.value === column.value) !== -1) return;
             columns.push(column);
@@ -41,9 +45,13 @@ export class X2Many2DMatrixRenderer extends Component {
                 value: record.data[this.matrixFields.y],
                 text: record.data[this.matrixFields.y],
             };
-            if (record.fields[this.matrixFields.y].type === "many2one") {
+            const fieldType = record.fields[this.matrixFields.y].type; 
+            if (fieldType === "many2one") {
                 row.text = row.value[1];
                 row.value = row.value[0];
+            } else if (fieldType === "reference") {
+                row.text = row.value.displayName;
+                row.value = row.value.resId;
             }
             if (rows.findIndex((r) => r.value === row.value) !== -1) return;
             rows.push(row);
@@ -53,12 +61,19 @@ export class X2Many2DMatrixRenderer extends Component {
 
     _getPointOfRecord(record) {
         let xValue = record.data[this.matrixFields.x];
-        if (record.fields[this.matrixFields.x].type === "many2one") {
+        const xFieldType = record.fields[this.matrixFields.x].type;
+        if (xFieldType === "many2one") {
             xValue = xValue[0];
+        } else if (xFieldType === "reference") {
+            xValue = xValue.resId;
         }
+
         let yValue = record.data[this.matrixFields.y];
-        if (record.fields[this.matrixFields.y].type === "many2one") {
+        const yFieldType = record.fields[this.matrixFields.y].type;
+        if (yFieldType === "many2one") {
             yValue = yValue[0];
+        } else if (yFieldType === "reference") {
+            yValue = yValue.resId;
         }
 
         const x = this.columns.findIndex((c) => c.value === xValue);

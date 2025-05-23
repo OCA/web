@@ -29,13 +29,21 @@ export class X2Many2DMatrixField extends Component {
 
         const matchingRecords = this.list.records.filter((record) => {
             let recordX = record.data[fields.x];
-            let recordY = record.data[fields.y];
-            if (record.fields[fields.x].type === "many2one") {
+            const xType = record.fields[fields.x].type;
+            if (xType === "many2one") {
                 recordX = recordX[0];
+            } else if (xType === "reference") {
+                recordX = recordX.resId;
             }
-            if (record.fields[fields.y].type === "many2one") {
+
+            let recordY = record.data[fields.y];
+            const yType = record.fields[fields.y].type;
+            if (yType === "many2one") {
                 recordY = recordY[0];
+            } else if (yType === "reference") {
+                recordY = recordY.resId;
             }
+
             return recordX === x && recordY === y;
         });
         if (matchingRecords.length === 1) {
