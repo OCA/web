@@ -15,7 +15,6 @@ import {useDebounced} from "@web/core/utils/timing";
  * of a _resizing variable reference and an onStartResize function reference.
  */
 export function useMagicColumnWidths(tableRef, getState, orig) {
-    const onStartResizeOrig = orig.onStartResize;
     const renderer = useComponent();
 
     /**
@@ -25,7 +24,7 @@ export function useMagicColumnWidths(tableRef, getState, orig) {
      */
     function onStartResize(evstart) {
         // Call original method
-        const res = onStartResizeOrig(evstart);
+        const res = this.columnWidths.onStartResizeOrig(evstart);
         const resizeStoppingEvents = ["keydown", "pointerdown", "pointerup"];
 
         // Mouse or keyboard events : stop resize
@@ -101,6 +100,7 @@ export function useMagicColumnWidths(tableRef, getState, orig) {
         useExternalListener(window, "resize", debouncedResizeCallback);
     }
 
+    orig.onStartResizeOrig = orig.onStartResize;
     orig.onStartResize = onStartResize;
     return orig;
 }
