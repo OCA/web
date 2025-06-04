@@ -32,6 +32,9 @@ Configurable chatter position from the user preferences.
 
 Supports Both Community & Enterprise Edition.
 
+Extends the functionality of the web client to get full width in the
+form view sheet.
+
 **Table of contents**
 
 .. contents::
@@ -66,19 +69,19 @@ Authors
 Contributors
 ------------
 
-- Hynsys Technologies <hynsystechnologies@gmail.com>
-- Juan Miguel Sánchez Arce <juan.sanchez@camptocamp.com>
-- `Camptocamp <https://www.camptocamp.com>`__
+-  Hynsys Technologies <hynsystechnologies@gmail.com>
+-  Juan Miguel Sánchez Arce <juan.sanchez@camptocamp.com>
+-  `Camptocamp <https://www.camptocamp.com>`__
 
-  - Iván Todorovich <ivan.todorovich@camptocamp.com>
+   -  Iván Todorovich <ivan.todorovich@camptocamp.com>
 
-- `Alitec Pte Ltd <http://www.alitec.sg>`__
+-  `Alitec Pte Ltd <http://www.alitec.sg>`__
 
-  - Jay Patel <jay@alitec.sg>
+   -  Jay Patel <jay@alitec.sg>
 
-- Trobz
+-  Trobz
 
-  - Tris Doan <tridm@trobz.com>
+   -  Tris Doan <tridm@trobz.com>
 
 Maintainers
 -----------
