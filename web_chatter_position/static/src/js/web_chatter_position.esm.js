@@ -46,12 +46,14 @@ patch(FormCompiler.prototype, {
                 isChatterAside: `__comp__.uiService.size >= ${SIZES.XXL}`,
             });
             setAttributes(chatterContainerHookXml, {
-                class: "o-aside",
+                class: "o-mail-ChatterContainer o-mail-Form-chatter o-aside w-print-100",
             });
             // For "bottom", we keep the chatter in the form sheet
             // (the one used for the attachment viewer case)
             // If it's not there, we create it.
         } else if (odoo.web_chatter_position === "bottom") {
+            // Force full width form view if chatter is set to bottom manually
+            formSheetBgXml.classList.add("o_fullwidth");
             if (webClientViewAttachmentViewHookXml) {
                 const sheetBgChatterContainerHookXml = res.querySelector(
                     ".o-mail-Form-chatter.o-isInFormSheetBg"
