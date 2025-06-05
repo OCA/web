@@ -1,5 +1,5 @@
 # Copyright 2024 Tecnativa - Carlos Roca
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo import api, models
 
