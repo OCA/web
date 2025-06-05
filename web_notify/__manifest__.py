@@ -1,13 +1,13 @@
 # pylint: disable=missing-docstring
 # Copyright 2016 ACSONE SA/NV
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
     "name": "Web Notify",
     "summary": """
         Send notification messages to user""",
-    "version": "18.0.1.0.1",
-    "license": "AGPL-3",
+    "version": "18.0.1.1.0",
+    "license": "LGPL-3",
     "author": "ACSONE SA/NV," "AdaptiveCity," "Odoo Community Association (OCA)",
     "development_status": "Production/Stable",
     "website": "https://github.com/OCA/web",

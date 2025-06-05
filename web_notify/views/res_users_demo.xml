@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 Aitor Bouzas <aitor.bouzas@adaptivecity.com>
-     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
 <odoo>
     <record id="view_users_form_simple_modif_inherit" model="ir.ui.view">
         <field name="name">res.users.form.simple.view.modif.inherit</field>
