@@ -4,7 +4,7 @@
 from odoo.tests import Form, common
 
 
-class TestFieldRequiredIvisibleManager(common.SavepointCase):
+class TestFieldRequiredIvisibleManager(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestFieldRequiredIvisibleManager, cls).setUpClass()
