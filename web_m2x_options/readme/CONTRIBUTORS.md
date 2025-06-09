@@ -27,3 +27,6 @@
   - Manuel Regidor \<<manuel.regidor@sygel.es>\>
   - Valentín Vinagre \<<valentin.vinagre@sygel.es>\>
   - Harald Panten \<<harald.panten@sygel.es>\>
+
+- [ACSONE SA/NV](https://acsone.eu):
+  - Souheil BEJAOUI \<<souheil.bejaoui@acsone.eu>\>
