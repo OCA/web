@@ -7,3 +7,4 @@ your installation.
 - Instead of making the tags rectangle clickable, I think it's better to
   put the text as a clickable link, so we will get a consistent
   behaviour/aspect with other clickable elements (many2one...).
+- Properly support web_m2x_options on Many2OneReferenceField.
