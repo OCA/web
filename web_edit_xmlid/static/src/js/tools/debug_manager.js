@@ -62,57 +62,61 @@ odoo.define("web_edit_xmlid.DebugManager", function (require) {
                             });
                         }
                     );
-                    dialog.$el.on("click", 'a[data-action="edit_xmlid"]', function (
-                        ev
-                    ) {
-                        ev.preventDefault();
-                        var domain = [
-                            ["model", "=", self._action.res_model],
-                            ["res_id", "=", metadata.id],
-                        ];
-                        self._rpc({
-                            model: "ir.model.data",
-                            method: "search",
-                            args: [domain],
-                            limit: 1,
-                        }).then(function (res) {
-                            var xmlid_id = Number(res[0]);
+                    dialog.$el.on(
+                        "click",
+                        'a[data-action="edit_xmlid"]',
+                        function (ev) {
+                            ev.preventDefault();
+                            var domain = [
+                                ["model", "=", self._action.res_model],
+                                ["res_id", "=", metadata.id],
+                            ];
                             self._rpc({
                                 model: "ir.model.data",
-                                method: "get_formview_id",
-                                args: [[xmlid_id]],
-                            }).then(function (viewId) {
-                                new dialogs.FormViewDialog(self, {
-                                    res_model: "ir.model.data",
-                                    res_id: xmlid_id,
-                                    context: session.user_context,
-                                    title: _t("Edit XML ID"),
-                                    view_id: viewId,
-                                    on_saved: function () {
-                                        dialog.close();
-                                        self.get_metadata();
-                                    },
-                                })
-                                    .open()
-                                    .on("closed", self, function () {
-                                        //
-                                    });
+                                method: "search",
+                                args: [domain],
+                                limit: 1,
+                            }).then(function (res) {
+                                var xmlid_id = Number(res[0]);
+                                self._rpc({
+                                    model: "ir.model.data",
+                                    method: "get_formview_id",
+                                    args: [[xmlid_id]],
+                                }).then(function (viewId) {
+                                    new dialogs.FormViewDialog(self, {
+                                        res_model: "ir.model.data",
+                                        res_id: xmlid_id,
+                                        context: session.user_context,
+                                        title: _t("Edit XML ID"),
+                                        view_id: viewId,
+                                        on_saved: function () {
+                                            dialog.close();
+                                            self.get_metadata();
+                                        },
+                                    })
+                                        .open()
+                                        .on("closed", self, function () {
+                                            //
+                                        });
+                                });
                             });
-                        });
-                    });
-                    dialog.$el.on("click", 'a[data-action="create_xmlid"]', function (
-                        ev
-                    ) {
-                        ev.preventDefault();
-                        self._rpc({
-                            model: self._action.res_model,
-                            method: "ensure_xml_id",
-                            args: [metadata.id],
-                        }).then(function (res) {
-                            dialog.close();
-                            self.get_metadata();
-                        });
-                    });
+                        }
+                    );
+                    dialog.$el.on(
+                        "click",
+                        'a[data-action="create_xmlid"]',
+                        function (ev) {
+                            ev.preventDefault();
+                            self._rpc({
+                                model: self._action.res_model,
+                                method: "ensure_xml_id",
+                                args: [metadata.id],
+                            }).then(function (res) {
+                                dialog.close();
+                                self.get_metadata();
+                            });
+                        }
+                    );
                 });
             });
         },
