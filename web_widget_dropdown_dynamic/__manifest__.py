@@ -5,7 +5,7 @@
     "name": "Dynamic Dropdown Widget",
     "summary": "This module adds support for dynamic dropdown widget",
     "category": "Web",
-    "version": "18.0.1.0.1",
+    "version": "18.0.2.0.0",
     "license": "LGPL-3",
     "author": "CorporateHub, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
