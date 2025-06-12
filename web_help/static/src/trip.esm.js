@@ -1,4 +1,5 @@
-/** @odoo-module **/
+import {_t} from "@web/core/l10n/translation";
+import {ensureJQuery} from "@web/core/ensure_jquery";
 import {renderToString} from "@web/core/utils/render";
 
 export class Trip {
@@ -66,10 +67,8 @@ export class Trip {
         return Object.assign(
             {
                 content: step.content,
-                cbBtnText: this.isAtLastStep
-                    ? this.env._t("Finish")
-                    : this.env._t("Got it"),
-                closeBtnText: this.env._t("Close"),
+                cbBtnText: this.isAtLastStep ? _t("Finish") : _t("Got it"),
+                closeBtnText: _t("Close"),
             },
             step.renderContext
         );
@@ -82,7 +81,7 @@ export class Trip {
             cb = this.stop;
         }
         const step = this.steps[this.index];
-
+        await ensureJQuery();
         const $stepRender = $(
             renderToString(this._getStepTemplate(), this._getStepRenderContext())
         );

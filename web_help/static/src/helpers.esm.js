@@ -1,6 +1,5 @@
-/** @odoo-module **/
-import {registry} from "@web/core/registry";
 import {Component} from "@odoo/owl";
+import {registry} from "@web/core/registry";
 
 export async function findTrip(model, viewType) {
     const trips = registry.category("trips").getAll();
@@ -9,7 +8,7 @@ export async function findTrip(model, viewType) {
     );
     const matchedTrips = trips.filter((trip, i) => selectorResults[i]);
     if (matchedTrips.length >= 1) {
-        if (matchedTrips.length != 1) {
+        if (matchedTrips.length !== 1) {
             console.warn("More than one trip found", model, viewType);
         }
         return matchedTrips[0].Trip;
@@ -33,8 +32,5 @@ export async function waitUntilAvailable(selector, ms = 50) {
 }
 
 export async function doAction(xmlId, options = {}) {
-    Component.env.bus.trigger("do-action", {
-        action: xmlId,
-        options: options,
-    });
+    Component.env.services.action.doAction(xmlId, options);
 }

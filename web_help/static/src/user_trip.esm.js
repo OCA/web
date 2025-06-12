@@ -1,26 +1,26 @@
-/** @odoo-module **/
 import {Trip} from "@web_help/trip.esm";
+import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 
 export class UserTrip extends Trip {
     setup() {
         this.addStep({
             selector: ".o_list_button_add, .o-kanban-button-new",
-            content: this.env._t("To create a new user click here."),
+            content: _t("To create a new user click here."),
         });
 
         this.addStep({
-            selector: ".o_cp_searchview, .o_enable_searchview",
-            content: this.env._t("Use the searchbar to find specific users."),
+            selector: ".o_cp_searchview",
+            content: _t("Use the searchbar to find specific users."),
             renderContext: {
-                cbBtnText: this.env._t("Next"),
-                closeBtnText: this.env._t("Cancel"),
+                cbBtnText: _t("Next"),
+                closeBtnText: _t("Cancel"),
             },
         });
 
         this.addStep({
             selector: ".o_cp_switch_buttons",
-            content: this.env._t("You can switch to different views here."),
+            content: _t("You can switch to different views here."),
         });
     }
 }

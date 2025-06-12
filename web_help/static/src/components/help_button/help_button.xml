@@ -11,21 +11,14 @@
             <i class="fa fa-question" />
         </button>
     </t>
-    <t t-inherit="web.ControlPanel.Regular" t-inherit-mode="extension">
-        <xpath expr="//div[hasclass('o_cp_bottom_right')]" t-operation="inside">
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension">
+        <xpath
+            expr="//div[hasclass('o_control_panel_navigation')]"
+            t-operation="inside"
+        >
             <nav class="btn-group">
                 <HelpButton
-                    resModel="env.searchModel.resModel"
-                    viewType="env.config.viewType"
-                />
-            </nav>
-        </xpath>
-    </t>
-    <t t-inherit="web.ControlPanel.Small" t-inherit-mode="extension">
-        <xpath expr="//div[hasclass('o_cp_bottom_right')]" t-operation="inside">
-            <nav class="btn-group">
-                <HelpButton
-                    resModel="env.searchModel.resModel"
+                    actionId="env.config.actionId"
                     viewType="env.config.viewType"
                 />
             </nav>

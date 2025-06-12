@@ -1,13 +1,19 @@
-/** @odoo-module **/
 import {Component, EventBus, useRef, useState} from "@odoo/owl";
 import {registry} from "@web/core/registry";
+import {sprintf} from "@web/core/utils/strings";
 
 export class Highlighter extends Component {
+    static props = {
+        bus: {type: EventBus},
+    };
     setup() {
         this.state = useState({visible: false});
-        this.bus = this.props.bus;
-        this.bus.on("hide", this, () => this.hide());
-        this.bus.on("highlight", this, (options) => this.highlight(options));
+        this.props.bus.addEventListener("HIDE", this.hide.bind(this));
+        this.props.bus.addEventListener(
+            "HIGHLIGHT",
+            ({detail: {selector, content, animate, padding}}) =>
+                this.highlight(selector, content, animate, padding)
+        );
         this.highlightRef = useRef("highlightRef");
         this.overlayRef = useRef("overlay");
     }
@@ -47,7 +53,7 @@ export class Highlighter extends Component {
         return bounds;
     }
 
-    highlight({selector, content, animate = 250, padding = 10}) {
+    highlight(selector, content, animate = 250, padding = 10) {
         const selection = $(selector);
 
         if (!selection.length) {
@@ -64,15 +70,15 @@ export class Highlighter extends Component {
         $el.popover("dispose");
         $el.animate(
             {
-                top: _.str.sprintf("%spx", Math.floor(bounds.y) - padding),
-                left: _.str.sprintf("%spx", Math.floor(bounds.x) - padding),
-                width: _.str.sprintf("%spx", Math.floor(bounds.width) + padding * 2),
-                height: _.str.sprintf("%spx", Math.floor(bounds.height) + padding * 2),
+                top: sprintf("%spx", Math.floor(bounds.y) - padding),
+                left: sprintf("%spx", Math.floor(bounds.x) - padding),
+                width: sprintf("%spx", Math.floor(bounds.width) + padding * 2),
+                height: sprintf("%spx", Math.floor(bounds.height) + padding * 2),
             },
             animate ? animate : 0,
             function () {
                 $el.popover(
-                    _.extend(this._getPopoverOptions(), {
+                    Object.assign({}, this._getPopoverOptions(), {
                         content: content,
                     })
                 ).popover("show");
@@ -116,9 +122,9 @@ export const highlighterService = {
         });
 
         return {
-            hide: () => bus.trigger("hide"),
+            hide: () => bus.trigger("HIDE"),
             highlight: (selector, content, animate = 250, padding = 10) =>
-                bus.trigger("highlight", {
+                bus.trigger("HIGHLIGHT", {
                     selector: selector,
                     content: content,
                     animate: animate,

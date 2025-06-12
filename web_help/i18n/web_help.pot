@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,69 +16,59 @@ msgstr ""
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/user_trip.esm.js:0
-#, python-format
 msgid "Cancel"
 msgstr ""
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/change_password_trip.esm.js:0
-#, python-format
 msgid "Change the password here, make sure it's secure."
 msgstr ""
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/change_password_trip.esm.js:0
-#, python-format
 msgid "Click here to confirm it."
 msgstr ""
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/trip.esm.js:0
-#, python-format
 msgid "Close"
 msgstr ""
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/trip.esm.js:0
-#, python-format
 msgid "Finish"
 msgstr ""
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/trip.esm.js:0
-#, python-format
 msgid "Got it"
 msgstr ""
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/user_trip.esm.js:0
-#, python-format
 msgid "Next"
 msgstr ""
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/user_trip.esm.js:0
-#, python-format
 msgid "To create a new user click here."
 msgstr ""
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/user_trip.esm.js:0
-#, python-format
 msgid "Use the searchbar to find specific users."
 msgstr ""
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/user_trip.esm.js:0
-#, python-format
 msgid "You can switch to different views here."
 msgstr ""

@@ -1,17 +1,17 @@
-/** @odoo-module **/
 import {Trip} from "@web_help/trip.esm";
+import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 
 export class ChangePasswordTrip extends Trip {
     setup() {
         this.addStep({
             selector: "th[data-name='new_passwd'], td[name='new_passwd']",
-            content: this.env._t("Change the password here, make sure it's secure."),
+            content: _t("Change the password here, make sure it's secure."),
         });
 
         this.addStep({
             selector: "button[name='change_password_button']",
-            content: this.env._t("Click here to confirm it."),
+            content: _t("Click here to confirm it."),
         });
     }
 }
