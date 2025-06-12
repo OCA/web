@@ -6,12 +6,12 @@
                 <t t-out="content" />
             </div>
 
-            <button class="btn btn-lg btn-outline-light web_help_cb_button mr8"><t
-                    t-esc="cbBtnText"
-                /></button>
-            <button class="btn btn-lg btn-outline-light web_help_close pull-right"><t
-                    t-esc="closeBtnText"
-                /></button>
+            <button class="btn btn-lg btn-outline-light web_help_cb_button mr8">
+                <t t-esc="cbBtnText" />
+            </button>
+            <button class="btn btn-lg btn-outline-light web_help_close pull-right">
+                <t t-esc="closeBtnText" />
+            </button>
         </div>
     </t>
 
@@ -21,9 +21,9 @@
                 <t t-out="content" />
             </div>
 
-            <button class="btn btn-lg btn-outline-light web_help_cb_button"><t
-                    t-esc="cbBtnText"
-                /></button>
+            <button class="btn btn-lg btn-outline-light web_help_cb_button">
+                <t t-esc="cbBtnText" />
+            </button>
         </div>
     </t>
 </templates>
