@@ -1,7 +1,7 @@
 import {Component, onWillUpdateProps} from "@odoo/owl";
-import {registry} from "@web/core/registry";
 import {Domain} from "@web/core/domain";
 import {evaluateExpr} from "@web/core/py_js/py";
+import {registry} from "@web/core/registry";
 const fieldRegistry = registry.category("fields");
 
 export class X2Many2DMatrixRenderer extends Component {
@@ -142,6 +142,11 @@ export class X2Many2DMatrixRenderer extends Component {
         );
     }
 
+    // More options can be included in the future, here are only added the ones tested initially.
+    _canOptions() {
+        return ["many2one"].includes(this.list.fields[this.matrixFields.value].type);
+    }
+
     getValueFieldProps(column, row) {
         const x = this.columns.findIndex((c) => c.value === column);
         const y = this.rows.findIndex((r) => r.value === row);
@@ -166,6 +171,13 @@ export class X2Many2DMatrixRenderer extends Component {
             canWrite: this.props.canWrite,
             canQuickCreate: this.props.canQuickCreate,
             canCreateEdit: this.props.canCreateEdit,
+            ...(this._canOptions() && {
+                canCreate: this.props.canCreate,
+                canOpen: this.props.canOpen,
+                canWrite: this.props.canWrite,
+                canQuickCreate: this.props.canQuickCreate,
+                canCreateEdit: this.props.canCreateEdit,
+            }),
         };
         const domain = record.fields[this.matrixFields.value].domain;
         if ((Array.isArray(value) || typeof value === "string") && domain.length) {
