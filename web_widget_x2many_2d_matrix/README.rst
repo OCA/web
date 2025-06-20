@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===========================
 2D matrix for x2many fields
 ===========================
@@ -17,7 +13,7 @@
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -99,6 +95,23 @@ want to calculate row totals. True by default
 show_column_totals If field_value is a numeric field, it indicates if
 you want to calculate column totals. True by default
 
+For the value field, you can set any attributes you'd set in a normal
+list view, ie if your value field is a many2one field and you want to
+disable creating records via this field, you'd write
+
+.. code:: xml
+
+   <field name="my_field3" options="{'no_create': true}"/>
+
+or if you want to have a custom domain or context
+
+.. code:: xml
+
+   <field name="my_field3" domain="[('some_field', '=', my_field1)]" context="{'default_some_field': my_field1}" />
+
+Note that to be able to refer to other fields than the ones used as
+coordinates or value, you have to add them inside the ``list`` node.
+
 Example
 -------
 
@@ -157,18 +170,13 @@ Now in our wizard, we can use:
 Known issues / Roadmap
 ======================
 
-- Support extra attributes on each field cell via field_extra_attrs
-  param. We could set a cell as not editable, required or readonly for
-  instance. The readonly case will also give the ability to click on m2o
-  to open related records.
-- Support limit total records in the matrix. Ref:
-  https://github.com/OCA/web/issues/901
-- Support cell traversal through keyboard arrows.
-- Entering the widget from behind by pressing ``Shift+TAB`` in your
-  keyboard will enter into the 1st cell until
-  https://github.com/odoo/odoo/pull/26490 is merged.
-- Support extra invisible fields inside each cell.
-- Support kanban mode. Current behaviour forces list mode.
+-  Support limit total records in the matrix. Ref:
+   https://github.com/OCA/web/issues/901
+-  Support cell traversal through keyboard arrows.
+-  Entering the widget from behind by pressing ``Shift+TAB`` in your
+   keyboard will enter into the 1st cell until
+   https://github.com/odoo/odoo/pull/26490 is merged.
+-  Support kanban mode. Current behaviour forces list mode.
 
 Changelog
 =========
@@ -176,14 +184,14 @@ Changelog
 12.0.1.0.1 (2018-12-07)
 -----------------------
 
-- [FIX] Cells are unable to render property.
-  (`#1126 <https://github.com/OCA/web/issues/1126>`__)
+-  [FIX] Cells are unable to render property.
+   (`#1126 <https://github.com/OCA/web/issues/1126>`__)
 
 12.0.1.0.0 (2018-11-20)
 -----------------------
 
-- [12.0][MIG] web_widget_x2many_2d_matrix
-  (`#1101 <https://github.com/OCA/web/issues/1101>`__)
+-  [12.0][MIG] web_widget_x2many_2d_matrix
+   (`#1101 <https://github.com/OCA/web/issues/1101>`__)
 
 Bug Tracker
 ===========
@@ -210,22 +218,22 @@ Authors
 Contributors
 ------------
 
-- Holger Brunn <hbrunn@therp.nl>
-- Pedro M. Baeza <pedro.baeza@tecnativa.com>
-- Artem Kostyuk <a.kostyuk@mobilunity.com>
-- Simone Orsi <simone.orsi@camptocamp.com>
-- Timon Tschanz <timon.tschanz@camptocamp.com>
-- Jairo Llopis <jairo.llopis@tecnativa.com>
-- Dennis Sluijk <d.sluijk@onestein.nl>
-- `CorporateHub <https://corporatehub.eu/>`__
+-  Holger Brunn <hbrunn@therp.nl>
+-  Pedro M. Baeza <pedro.baeza@tecnativa.com>
+-  Artem Kostyuk <a.kostyuk@mobilunity.com>
+-  Simone Orsi <simone.orsi@camptocamp.com>
+-  Timon Tschanz <timon.tschanz@camptocamp.com>
+-  Jairo Llopis <jairo.llopis@tecnativa.com>
+-  Dennis Sluijk <d.sluijk@onestein.nl>
+-  `CorporateHub <https://corporatehub.eu/>`__
 
-  - Alexey Pelykh <alexey.pelykh@corphub.eu>
+   -  Alexey Pelykh <alexey.pelykh@corphub.eu>
 
-- Adrià Gil Sorribes <adria.gil@forgeflow.com>
-- Christopher Ormaza <chris.ormaza@forgeflow.com>
-- SodexisTeam <dev@sodexis.com>
-- Jasmin Solanki jasmin.solanki@forgeflow.com
-- David Jiménez david.jimenez@forgeflow.com
+-  Adrià Gil Sorribes <adria.gil@forgeflow.com>
+-  Christopher Ormaza <chris.ormaza@forgeflow.com>
+-  SodexisTeam <dev@sodexis.com>
+-  Jasmin Solanki jasmin.solanki@forgeflow.com
+-  David Jiménez david.jimenez@forgeflow.com
 
 Maintainers
 -----------

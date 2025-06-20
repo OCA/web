@@ -16,36 +16,33 @@ export class X2Many2DMatrixField extends Component {
     get list() {
         return this.getList();
     }
+
+    getListView() {
+        return this.props.list_view;
+    }
+
+    get list_view() {
+        return this.getListView();
+    }
 }
 
 X2Many2DMatrixField.template = "web_widget_x2many_2d_matrix.X2Many2DMatrixField";
 X2Many2DMatrixField.props = {
     ...standardFieldProps,
-    list: {type: Object, optional: true},
-    matrixFields: {type: Object, optional: true},
+    list_view: {type: Object, optional: false},
+    matrixFields: {type: Object, optional: false},
     isXClickable: {type: Boolean, optional: true},
     isYClickable: {type: Boolean, optional: true},
     showRowTotals: {type: Boolean, optional: true},
     showColumnTotals: {type: Boolean, optional: true},
-    canOpen: {type: Boolean, optional: true},
-    canCreate: {type: Boolean, optional: true},
-    canWrite: {type: Boolean, optional: true},
-    canQuickCreate: {type: Boolean, optional: true},
-    canCreateEdit: {type: Boolean, optional: true},
 };
 
 X2Many2DMatrixField.components = {X2Many2DMatrixRenderer};
 export const x2Many2DMatrixField = {
     component: X2Many2DMatrixField,
-    extractProps({attrs, options}) {
-        const hasCreatePermission = attrs.can_create
-            ? exprToBoolean(attrs.can_create)
-            : true;
-        const hasWritePermission = attrs.can_write
-            ? exprToBoolean(attrs.can_write)
-            : true;
-        const canCreate = options.no_create ? false : hasCreatePermission;
+    extractProps({attrs, views}) {
         return {
+            list_view: views.list,
             matrixFields: {
                 value: attrs.field_value,
                 x: attrs.field_x_axis,
@@ -61,11 +58,6 @@ export const x2Many2DMatrixField = {
                 "show_column_totals" in attrs
                     ? exprToBoolean(attrs.show_column_totals)
                     : true,
-            canOpen: !options.no_open,
-            canCreate,
-            canWrite: hasWritePermission,
-            canQuickCreate: canCreate && !options.no_quick_create,
-            canCreateEdit: canCreate && !options.no_create_edit,
         };
     },
 };
