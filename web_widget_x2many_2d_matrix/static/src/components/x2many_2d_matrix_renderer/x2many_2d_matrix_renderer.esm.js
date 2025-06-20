@@ -1,6 +1,7 @@
 import {Component, onWillUpdateProps} from "@odoo/owl";
+import {evaluateBooleanExpr, evaluateExpr} from "@web/core/py_js/py";
 import {Domain} from "@web/core/domain";
-import {evaluateExpr} from "@web/core/py_js/py";
+import {getFieldContext} from "@web/model/relational_model/utils";
 import {registry} from "@web/core/registry";
 const fieldRegistry = registry.category("fields");
 
@@ -91,12 +92,16 @@ export class X2Many2DMatrixRenderer extends Component {
         return this.props.matrixFields;
     }
 
-    _getValueFieldComponent() {
+    _getValueField() {
         const field = this.list.fields[this.matrixFields.value];
         if (!field.widget) {
-            return fieldRegistry.get(field.type).component;
+            return fieldRegistry.get(field.type);
         }
-        return fieldRegistry.get(field.widget).component;
+        return fieldRegistry.get(field.widget);
+    }
+
+    _getValueFieldComponent() {
+        return this._getValueField().component;
     }
 
     _getValueFieldType() {
@@ -117,6 +122,7 @@ export class X2Many2DMatrixRenderer extends Component {
         const x = this.columns.findIndex((c) => c.value === column);
 
         const total = this.matrix
+
             .map((r) => r[x])
             .map((r) => r.value)
             .reduce((aggr, y) => aggr + y);
@@ -157,35 +163,43 @@ export class X2Many2DMatrixRenderer extends Component {
         }
         value = record ? record.data[this.matrixFields.value] : value;
         this.matrix[y][x].value = value;
+        const fieldInfo =
+            this.props.list_view.fieldNodes[this.matrixFields.value + "_0"];
+        const dynamicInfo = {
+            get context() {
+                return getFieldContext(record, fieldInfo.name, fieldInfo.context);
+            },
+            domain() {
+                const evalContext = record.evalContext;
+                if (fieldInfo.domain) {
+                    return new Domain(
+                        evaluateExpr(fieldInfo.domain, evalContext)
+                    ).toList();
+                }
+            },
+            required: evaluateBooleanExpr(
+                fieldInfo.required,
+                record.evalContextWithVirtualIds
+            ),
+            readonly:
+                this.props.readonly ||
+                evaluateBooleanExpr(
+                    fieldInfo.readonly,
+                    record.evalContextWithVirtualIds
+                ),
+        };
+        const valueField = this._getValueField();
         const result = {
-            readonly: this.props.readonly,
+            readonly: dynamicInfo.readonly,
             record: record,
             name: this.matrixFields.value,
-            canCreate: this.props.canCreate,
-            canOpen: this.props.canOpen,
-            canWrite: this.props.canWrite,
-            canQuickCreate: this.props.canQuickCreate,
-            canCreateEdit: this.props.canCreateEdit,
+            ...(valueField.extractProps || (() => ({}))).apply(valueField, [
+                fieldInfo,
+                dynamicInfo,
+            ]),
         };
-        const domain = record.fields[this.matrixFields.value].domain;
-        if (
-            domain &&
-            (Array.isArray(value) || typeof value === "string") &&
-            domain.length
-        ) {
-            result.domain = new Domain(
-                evaluateExpr(domain, record.evalContext)
-            ).toList();
-        }
         if (value === null) {
             result.readonly = true;
-        }
-        // Remove all props the field value component doesn't define
-        const valid_props = this._getValueFieldComponent().props;
-        for (const prop in result) {
-            if (!(prop in valid_props)) {
-                delete result[prop];
-            }
         }
         return result;
     }
@@ -193,15 +207,11 @@ export class X2Many2DMatrixRenderer extends Component {
 
 X2Many2DMatrixRenderer.template = "web_widget_x2many_2d_matrix.X2Many2DMatrixRenderer";
 X2Many2DMatrixRenderer.props = {
-    list: {type: Object, optional: true},
-    matrixFields: {type: Object, optional: true},
+    list: {type: Object, optional: false},
+    list_view: {type: Object, optional: false},
+    matrixFields: {type: Object, optional: false},
     readonly: {type: Boolean, optional: true},
     domain: {type: [Array, Function], optional: true},
     showRowTotals: {type: Boolean, optional: true},
     showColumnTotals: {type: Boolean, optional: true},
-    canOpen: {type: Boolean, optional: true},
-    canCreate: {type: Boolean, optional: true},
-    canWrite: {type: Boolean, optional: true},
-    canQuickCreate: {type: Boolean, optional: true},
-    canCreateEdit: {type: Boolean, optional: true},
 };
