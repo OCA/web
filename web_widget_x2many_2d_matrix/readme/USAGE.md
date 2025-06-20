@@ -36,6 +36,12 @@ show_column_totals
 If field_value is a numeric field, it indicates if you want to calculate
 column totals. True by default
 
+x_axis_clickable
+If the x axis field is a many2one field, render the values as links to the record in question
+
+y_axis_clickable
+If the y axis field is a many2one field, render the values as links to the record in question
+
 For the value field, you can set any attributes you'd set in a normal list view, ie if your value field is a many2one field and you want to disable creating records via this field, you'd write
 
 ```xml
