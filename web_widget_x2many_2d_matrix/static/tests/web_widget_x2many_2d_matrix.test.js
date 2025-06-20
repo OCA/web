@@ -158,3 +158,20 @@ test("matrix displaying many2one fields can be configured", async () => {
     expect(".o_field_many2one_selection").toHaveCount(2);
     expect(".o_form_uri").toHaveCount(2);
 });
+test("matrix axis can be clickable", async () => {
+    await mountView({
+        type: "form",
+        resModel: "main",
+        resId: 1,
+        arch: `
+        <form>
+            <field name="line_ids" widget="x2many_2d_matrix" field_x_axis="value_many2one" field_y_axis="value_many2one" field_value="value_float" x_axis_clickable="True" y_axis_clickable="True">
+                <list>
+                    <field name="value_float" />
+                    <field name="value_many2one" />
+                </list>
+            </field>
+        </form>`,
+    });
+    expect(".o_form_uri").toHaveCount(2);
+});
