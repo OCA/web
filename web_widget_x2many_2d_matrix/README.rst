@@ -215,6 +215,7 @@ Credits
 Authors
 -------
 
+* Hunki Enterprises BV
 * Therp BV
 * Tecnativa
 * Camptocamp
@@ -224,7 +225,7 @@ Authors
 Contributors
 ------------
 
--  Holger Brunn <hbrunn@therp.nl>
+-  Holger Brunn <mail@hunki-enterprises.com>
 -  Pedro M. Baeza <pedro.baeza@tecnativa.com>
 -  Artem Kostyuk <a.kostyuk@mobilunity.com>
 -  Simone Orsi <simone.orsi@camptocamp.com>
@@ -256,10 +257,13 @@ promote its widespread use.
 .. |maintainer-JasminSForgeFlow| image:: https://github.com/JasminSForgeFlow.png?size=40px
     :target: https://github.com/JasminSForgeFlow
     :alt: JasminSForgeFlow
+.. |maintainer-hbrunn| image:: https://github.com/hbrunn.png?size=40px
+    :target: https://github.com/hbrunn
+    :alt: hbrunn
 
-Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-JasminSForgeFlow| 
+|maintainer-JasminSForgeFlow| |maintainer-hbrunn| 
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/17.0/web_widget_x2many_2d_matrix>`_ project on GitHub.
 
