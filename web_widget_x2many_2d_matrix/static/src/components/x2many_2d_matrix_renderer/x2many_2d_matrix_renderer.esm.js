@@ -109,6 +109,14 @@ export class X2Many2DMatrixRenderer extends Component {
         return field.type;
     }
 
+    _getXAxisField() {
+        return this.list.fields[this.matrixFields.x];
+    }
+
+    _getYAxisField() {
+        return this.list.fields[this.matrixFields.y];
+    }
+
     _aggregateRow(row) {
         const y = this.rows.findIndex((r) => r.value === row);
         const total = this.matrix[y].map((r) => r.value).reduce((aggr, x) => aggr + x);
@@ -214,4 +222,6 @@ X2Many2DMatrixRenderer.props = {
     domain: {type: [Array, Function], optional: true},
     showRowTotals: {type: Boolean, optional: true},
     showColumnTotals: {type: Boolean, optional: true},
+    isXClickable: {type: Boolean, optional: true},
+    isYClickable: {type: Boolean, optional: true},
 };
