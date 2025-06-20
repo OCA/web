@@ -6,9 +6,10 @@
 {
     "name": "2D matrix for x2many fields",
     "version": "18.0.1.0.6",
-    "maintainers": ["JasminSForgeFlow", "DavidJForgeFlow"],
+    "maintainers": ["JasminSForgeFlow", "DavidJForgeFlow", "hbrunn"],
     "development_status": "Production/Stable",
     "author": (
+        "Hunki Enterprises BV, "
         "Therp BV, "
         "Tecnativa, "
         "Camptocamp, "
