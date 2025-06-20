@@ -1,4 +1,4 @@
-- Holger Brunn \<<hbrunn@therp.nl>\>
+- Holger Brunn \<<mail@hunki-enterprises.com>\>
 - Pedro M. Baeza \<<pedro.baeza@tecnativa.com>\>
 - Artem Kostyuk \<<a.kostyuk@mobilunity.com>\>
 - Simone Orsi \<<simone.orsi@camptocamp.com>\>
