@@ -36,5 +36,8 @@
             "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_field/"
             "x2many_2d_matrix_field.scss",
         ],
+        "web.assets_unit_tests": [
+            "web_widget_x2many_2d_matrix/static/tests/*",
+        ],
     },
 }
