@@ -144,11 +144,6 @@ export class X2Many2DMatrixRenderer extends Component {
         );
     }
 
-    // More options can be included in the future, here are only added the ones tested initially.
-    _canOptions() {
-        return ["many2one"].includes(this.list.fields[this.matrixFields.value].type);
-    }
-
     getValueFieldProps(column, row) {
         const x = this.columns.findIndex((c) => c.value === column);
         const y = this.rows.findIndex((r) => r.value === row);
@@ -168,22 +163,28 @@ export class X2Many2DMatrixRenderer extends Component {
             readonly: this.props.readonly,
             record: record,
             name: this.matrixFields.value,
-            ...(this._canOptions() && {
-                canCreate: this.props.canCreate,
-                canOpen: this.props.canOpen,
-                canWrite: this.props.canWrite,
-                canQuickCreate: this.props.canQuickCreate,
-                canCreateEdit: this.props.canCreateEdit,
-            }),
         };
-        const domain = record.fields[this.matrixFields.value].domain;
-        if (domain) {
-            result.domain = new Domain(
-                evaluateExpr(domain, record.evalContext)
-            ).toList();
-        }
-        if (value === null) {
-            result.readonly = true;
+        if (record) {
+            const domain = record.fields[this.matrixFields.value].domain;
+            if (
+                domain &&
+                (Array.isArray(value) || typeof value === "string") &&
+                domain.length
+            ) {
+                result.domain = new Domain(
+                    evaluateExpr(domain, record.evalContext)
+                ).toList();
+            }
+            if (value === null) {
+                result.readonly = true;
+            }
+            // Remove all props the field value component doesn't define
+            const valid_props = this._getValueFieldComponent().props;
+            for (const prop in result) {
+                if (!(prop in valid_props)) {
+                    delete result[prop];
+                }
+            }
         }
         return result;
     }
