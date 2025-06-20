@@ -9,6 +9,8 @@
                 showRowTotals="props.showRowTotals"
                 showColumnTotals="props.showColumnTotals"
                 readonly="props.readonly"
+                isXClickable="props.isXClickable"
+                isYClickable="props.isYClickable"
             />
         </div>
     </t>

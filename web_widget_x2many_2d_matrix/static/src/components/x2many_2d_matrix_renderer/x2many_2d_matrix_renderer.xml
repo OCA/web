@@ -14,7 +14,15 @@
                         t-key="column.value"
                         class="text-center"
                     >
-                        <t t-esc="column.text" />
+                        <t t-if="props.isXClickable and _getXAxisField().relation">
+                            <a
+                                class="o_form_uri"
+                                t-attf-href="/odoo/{{_getXAxisField().relation}}/{{column.value}}"
+                            >
+                                <t t-esc="column.text" />
+                            </a>
+                        </t>
+                        <t t-else="" t-esc="column.text" />
                     </th>
                     <th t-if="props.showRowTotals" />
                 </tr>
@@ -22,7 +30,15 @@
             <tbody>
                 <tr t-foreach="rows" t-as="row" t-key="row.value">
                     <td>
-                        <t t-esc="row.text" />
+                        <t t-if="props.isYClickable and _getYAxisField().relation">
+                            <a
+                                class="o_form_uri"
+                                t-attf-href="/odoo/{{_getYAxisField().relation}}/{{row.value}}"
+                            >
+                                <t t-esc="row.text" />
+                            </a>
+                        </t>
+                        <t t-else="" t-esc="row.text" />
                     </td>
                     <td t-foreach="columns" t-as="column" t-key="column.value">
                         <t t-if="getValueFieldProps(column.value, row.value).record">
