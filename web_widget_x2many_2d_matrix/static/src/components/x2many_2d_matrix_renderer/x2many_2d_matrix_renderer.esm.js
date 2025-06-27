@@ -176,14 +176,16 @@ export class X2Many2DMatrixRenderer extends Component {
                 canCreateEdit: this.props.canCreateEdit,
             }),
         };
-        const domain = record.fields[this.matrixFields.value].domain;
-        if (domain) {
-            result.domain = new Domain(
-                evaluateExpr(domain, record.evalContext)
-            ).toList();
-        }
-        if (value === null) {
-            result.readonly = true;
+        if (record) {
+            const domain = record.fields[this.matrixFields.value].domain;
+            if (
+                (Array.isArray(domain) || typeof domain === "string") &&
+                domain.length
+            ) {
+                result.domain = new Domain(
+                    evaluateExpr(domain, record.evalContext)
+                ).toList();
+            }
         }
         return result;
     }
