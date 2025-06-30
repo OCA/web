@@ -16,6 +16,10 @@
         <!-- The kanban dropdown is replaced with the odoo default one
         as the default one took physical place in the DOM -->
         <xpath expr="//Dropdown" position="replace">
+            <t t-if="env.isSmall">
+                <t t-call="web.NavBar.AppsMenu.Sidebar" />
+            </t>
+            <t t-else="" />
             <AppsMenu>
                 <t t-set-slot="search_bar">
                     <AppsMenuSearchBar />
@@ -51,5 +55,38 @@
                 </div>
             </div>
         </div>
+    </t>
+
+    <!-- Apps Menu Sidebar -->
+    <t t-inherit="web.NavBar.AppsMenu.Sidebar" t-inherit-mode="extension">
+        <xpath expr="//i[hasclass('fa fa-bars')]" position="replace">
+            <!-- Remove the burger menu icon -->
+        </xpath>
+
+        <xpath expr="//div[hasclass('o_app_menu_sidebar')]" position="attributes">
+            <attribute
+                name="class"
+            >o_app_menu_sidebar position-fixed top-0 bottom-0 start-100 d-flex flex-column flex-nowrap</attribute>
+        </xpath>
+    </t>
+
+    <!-- Section Menu Items -->
+    <t t-inherit="web.SectionMenu" t-inherit-mode="extension">
+        <!-- Add cursor pointer to menu items -->
+        <xpath expr="//li[@t-on-click]" position="attributes">
+            <attribute name="class">cursor-pointer</attribute>
+        </xpath>
+    </t>
+
+    <!-- Burger Menu -->
+    <t t-inherit="web.BurgerMenu" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o_mobile_menu_toggle')]" position="after">
+            <button
+                class="o_mobile_menu_toggle o_nav_entry o-no-caret d-md-none border-0 pe-3"
+                t-on-click.prevent="_openAppMenuSidebarMobile"
+            >
+                <i class="oi oi-panel-right" />
+            </button>
+        </xpath>
     </t>
 </templates>
