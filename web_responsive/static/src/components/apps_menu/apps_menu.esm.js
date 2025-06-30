@@ -18,6 +18,7 @@ import {router} from "@web/core/browser/router";
 import {session} from "@web/session";
 import {useHotkey} from "@web/core/hotkeys/hotkey_hook";
 import {user} from "@web/core/user";
+import {BurgerMenu} from "@web/webclient/burger_menu/burger_menu";
 
 // Patch WebClient to show AppsMenu instead of default app
 patch(WebClient.prototype, {
@@ -161,6 +162,22 @@ export class AppsMenu extends Component {
     }
 }
 
+// Add this patch after the WebClient patch
+patch(NavBar.prototype, {
+    setup() {
+        super.setup();
+
+        useBus(this.env.bus, "APP_MENU:TOGGLE_SIDEBAR", () => {
+            this._openAppMenuSidebar();
+        });
+    },
+
+    openAppMenu() {
+        this.env.bus.trigger("APP_MENU:OPEN_APP_MENU");
+        this._closeAppMenuSidebar();
+    },
+});
+
 Object.assign(AppsMenu, {
     template: "web_responsive.AppsMenu",
     props: {
@@ -172,3 +189,14 @@ Object.assign(AppsMenu, {
 });
 
 Object.assign(NavBar.components, {AppsMenu, AppMenuItem, AppsMenuSearchBar});
+
+// Add this patch after the WebClient patch
+patch(BurgerMenu.prototype, {
+    setup() {
+        super.setup();
+    },
+
+    _openAppMenuSidebarMobile() {
+        this.env.bus.trigger("APP_MENU:TOGGLE_SIDEBAR");
+    },
+});
