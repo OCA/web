@@ -11,6 +11,6 @@ class WebSessionAutoCloseController(http.Controller):
         timeout_sec = (
             request.env["ir.config_parameter"]
             .sudo()
-            .get_param("web_session_auto_close.timeout", 15)
+            .get_param("web_session_auto_close.timeout", 600)
         )
         return int(timeout_sec) * 1000

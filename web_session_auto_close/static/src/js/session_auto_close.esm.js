@@ -7,7 +7,7 @@ import {rpc} from "@web/core/network/rpc";
 import {session} from "@web/session";
 
 // Default session timeout in ms (will be updated from server settings)
-let SESSION_TIMEOUT = 15000;
+let SESSION_TIMEOUT = 600000;
 
 /**
  * Get the last recorded user activity timestamp from localStorage

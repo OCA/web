@@ -10,5 +10,5 @@ class ResConfigSettings(models.TransientModel):
     session_auto_close_timeout = fields.Integer(
         string="Session Auto-Close Timeout (seconds)",
         config_parameter="web_session_auto_close.timeout",
-        default=15,
+        default=600,
     )
