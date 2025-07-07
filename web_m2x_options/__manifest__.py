@@ -24,6 +24,11 @@
                 "web/static/src/views/fields/*",
                 "web_m2x_options/static/src/components/form.esm.js",
             ),
+            (
+                "after",
+                "web/static/src/views/fields/standard_field_props.js",
+                "web_m2x_options/static/src/views/fields/standard_field_props.esm.js",
+            ),
             "web_m2x_options/static/src/components/base.xml",
         ]
     },

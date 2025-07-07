@@ -118,11 +118,11 @@ create rights)
 To add these parameters go to Configuration -> Technical -> Parameters
 -> System Parameters and add new parameters like:
 
--  web_m2x_options.create: False
--  web_m2x_options.create_edit: False
--  web_m2x_options.limit: 10
--  web_m2x_options.search_more: True
--  web_m2x_options.field_limit_entries: 5
+- web_m2x_options.create: False
+- web_m2x_options.create_edit: False
+- web_m2x_options.limit: 10
+- web_m2x_options.search_more: True
+- web_m2x_options.field_limit_entries: 5
 
 Example
 -------
@@ -144,9 +144,9 @@ set on a field ! If nothing works, add a debugger in the first line of
 something in a many2one field, javascript debugger should pause. If not
 verify your installation.
 
--  Instead of making the tags rectangle clickable, I think it's better
-   to put the text as a clickable link, so we will get a consistent
-   behaviour/aspect with other clickable elements (many2one...).
+- Instead of making the tags rectangle clickable, I think it's better to
+  put the text as a clickable link, so we will get a consistent
+  behaviour/aspect with other clickable elements (many2one...).
 
 Bug Tracker
 ===========
@@ -173,38 +173,38 @@ Authors
 Contributors
 ------------
 
--  David Coninckx <davconinckx@gmail.com>
+- David Coninckx <davconinckx@gmail.com>
 
--  Emanuel Cino <ecino@compassion.ch>
+- Emanuel Cino <ecino@compassion.ch>
 
--  Holger Brunn <hbrunn@therp.nl>
+- Holger Brunn <hbrunn@therp.nl>
 
--  Nicolas JEUDY <nicolas@sudokeys.com>
+- Nicolas JEUDY <nicolas@sudokeys.com>
 
--  Yannick Vaucher <yannick.vaucher@camptocamp.com>
+- Yannick Vaucher <yannick.vaucher@camptocamp.com>
 
--  Zakaria Makrelouf <z.makrelouf@gmail.com>
+- Zakaria Makrelouf <z.makrelouf@gmail.com>
 
--  `Tecnativa <https://www.tecnativa.com>`__:
+- `Tecnativa <https://www.tecnativa.com>`__:
 
-   -  Jairo Llopis <jairo.llopis@tecnativa.com>
-   -  David Vidal <david.vidal@tecnativa.com>
-   -  Ernesto Tejeda <ernesto.tejeda87@gmail.com>
-   -  Carlos Roca
+  - Jairo Llopis <jairo.llopis@tecnativa.com>
+  - David Vidal <david.vidal@tecnativa.com>
+  - Ernesto Tejeda <ernesto.tejeda87@gmail.com>
+  - Carlos Roca
 
--  Bhavesh Odedra <bodedra@opensourceintegrators.com>
+- Bhavesh Odedra <bodedra@opensourceintegrators.com>
 
--  Dhara Solanki <dhara.solanki@initos.com> (http://www.initos.com)
+- Dhara Solanki <dhara.solanki@initos.com> (http://www.initos.com)
 
--  `Trobz <https://trobz.com>`__:
+- `Trobz <https://trobz.com>`__:
 
-   -  Hoang Diep <hoang@trobz.com>
+  - Hoang Diep <hoang@trobz.com>
 
--  `Sygel <https://sygel.es>`__:
+- `Sygel <https://sygel.es>`__:
 
-   -  Manuel Regidor <manuel.regidor@sygel.es>
-   -  Valentín Vinagre <valentin.vinagre@sygel.es>
-   -  Harald Panten <harald.panten@sygel.es>
+  - Manuel Regidor <manuel.regidor@sygel.es>
+  - Valentín Vinagre <valentin.vinagre@sygel.es>
+  - Harald Panten <harald.panten@sygel.es>
 
 Other credits
 -------------
