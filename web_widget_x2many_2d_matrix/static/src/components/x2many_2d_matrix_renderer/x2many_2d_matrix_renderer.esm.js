@@ -28,9 +28,22 @@ export class X2Many2DMatrixRenderer extends Component {
                 value: record.data[this.matrixFields.x],
                 text: record.data[this.matrixFields.x],
             };
-            if (record.fields[this.matrixFields.x].type === "many2one") {
-                column.text = column.value[1];
-                column.value = column.value[0];
+            switch (record.fields[this.matrixFields.x].type) {
+                case "many2one": {
+                    column.text = column.value[1];
+                    column.value = column.value[0];
+                    break;
+                }
+                case "selection": {
+                    // Find the label for the selection value
+                    const selection =
+                        record.fields[this.matrixFields.x].selection || [];
+                    const found = selection.find(([val]) => val === column.value);
+                    if (found) {
+                        column.text = found[1];
+                    }
+                    break;
+                }
             }
             if (columns.findIndex((c) => c.value === column.value) !== -1) return;
             columns.push(column);
