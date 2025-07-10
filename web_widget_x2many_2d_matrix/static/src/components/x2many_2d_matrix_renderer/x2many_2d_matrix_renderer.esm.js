@@ -171,6 +171,9 @@ export class X2Many2DMatrixRenderer extends Component {
         }
         value = record ? record.data[this.matrixFields.value] : value;
         this.matrix[y][x].value = value;
+        if (!record) {
+            return null;
+        }
         const fieldInfo =
             this.props.list_view.fieldNodes[this.matrixFields.value + "_0"];
         const dynamicInfo = {
