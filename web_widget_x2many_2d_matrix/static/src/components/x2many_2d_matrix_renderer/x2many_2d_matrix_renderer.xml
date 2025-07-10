@@ -41,13 +41,15 @@
                         <t t-else="" t-esc="row.text" />
                     </td>
                     <td t-foreach="columns" t-as="column" t-key="column.value">
-                        <t t-if="getValueFieldProps(column.value, row.value).record">
-                            <t
-                                t-component="ValueFieldComponent"
-                                t-props="getValueFieldProps(column.value, row.value)"
-                                record="getValueFieldProps(column.value, row.value).record"
-                            />
-                        </t>
+                        <t
+                            t-set="value_field_props"
+                            t-value="getValueFieldProps(column.value, row.value)"
+                        />
+                        <t
+                            t-if="value_field_props"
+                            t-component="ValueFieldComponent"
+                            t-props="value_field_props"
+                        />
                     </td>
                     <td
                         t-if="props.showRowTotals and _canAggregate()"
