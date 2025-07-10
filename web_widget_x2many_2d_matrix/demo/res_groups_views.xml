@@ -1,0 +1,106 @@
+<odoo>
+    <record id="view_groups_form" model="ir.ui.view">
+        <field name="model">res.groups</field>
+        <field name="inherit_id" ref="base.view_groups_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Matrix widget">
+                    <div
+                        class="o_form_label"
+                    >Many2one field as value and y axis, options and domain set on value field</div>
+                    <field
+                        name="users"
+                        widget="x2many_2d_matrix"
+                        field_x_axis="login"
+                        field_y_axis="partner_id"
+                        field_value="country_id"
+                    >
+                        <list>[
+                            <field name="login" />
+                            <field name="partner_id" />
+                            <field
+                            name="country_id"
+                            domain="[('name', 'like', 'land')]"
+                            options="{'no_create': True}"
+                            readonly="login == 'demo'"
+                            required="login == 'admin'"
+                        />
+                        </list>
+                    </field>
+                    <div class="o_form_label">Char field as value</div>
+                    <field
+                        name="users"
+                        widget="x2many_2d_matrix"
+                        field_x_axis="country_id"
+                        field_y_axis="partner_id"
+                        field_value="name"
+                    >
+                        <list>[
+                            <field name="name" />
+                            <field name="partner_id" />
+                            <field
+                            name="country_id"
+                            domain="[('name', 'like', 'land')]"
+                            options="{'no_create': True}"
+                        />
+                        </list>
+                    </field>
+                    <div class="o_form_label">Boolean field as value</div>
+                    <field
+                        name="users"
+                        widget="x2many_2d_matrix"
+                        field_x_axis="country_id"
+                        field_y_axis="partner_id"
+                        field_value="active"
+                    >
+                        <list>[
+                            <field name="active" />
+                            <field name="partner_id" />
+                            <field
+                            name="country_id"
+                            domain="[('name', 'like', 'land')]"
+                            options="{'no_create': True}"
+                        />
+                        </list>
+                    </field>
+                    <div class="o_form_label">Selection field as value</div>
+                    <field
+                        name="users"
+                        widget="x2many_2d_matrix"
+                        field_x_axis="country_id"
+                        field_y_axis="partner_id"
+                        field_value="lang"
+                    >
+                        <list>[
+                            <field name="lang" />
+                            <field name="partner_id" />
+                            <field
+                            name="country_id"
+                            domain="[('name', 'like', 'land')]"
+                            options="{'no_create': True}"
+                        />
+                        </list>
+                    </field>
+                    <div class="o_form_label">Float field as value</div>
+                    <field
+                        name="users"
+                        widget="x2many_2d_matrix"
+                        field_x_axis="country_id"
+                        field_y_axis="partner_id"
+                        field_value="partner_latitude"
+                    >
+                        <list>[
+                            <field name="partner_latitude" />
+                            <field name="partner_id" />
+                            <field
+                            name="country_id"
+                            domain="[('name', 'like', 'land')]"
+                            options="{'no_create': True}"
+                        />
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

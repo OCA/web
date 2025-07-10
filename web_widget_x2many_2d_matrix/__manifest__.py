@@ -22,7 +22,9 @@
     "category": "Hidden/Dependency",
     "summary": "Show list fields as a matrix",
     "depends": ["web"],
-    "data": [],
+    "demo": [
+        "demo/res_groups_views.xml",
+    ],
     "installable": True,
     "assets": {
         "web.assets_backend": [
