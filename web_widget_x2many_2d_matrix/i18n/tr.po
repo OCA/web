@@ -20,10 +20,40 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: web_widget_x2many_2d_matrix
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix.view_groups_form
+msgid "Boolean field as value"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix.view_groups_form
+msgid "Char field as value"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix.view_groups_form
+msgid "Float field as value"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix.view_groups_form
+msgid ""
+"Many2one field as value and y axis, options and domain set on value field"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix.view_groups_form
+msgid "Matrix widget"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix
 #. odoo-javascript
 #: code:addons/web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.xml:0
-#, python-format
 msgid "Nothing to display."
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix.view_groups_form
+msgid "Selection field as value"
 msgstr ""
 
 #, fuzzy, python-format
