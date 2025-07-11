@@ -4,16 +4,13 @@
         <div class="table-responsive">
             <X2Many2DMatrixRenderer
                 list="list"
+                list_view="list_view"
                 matrixFields="props.matrixFields"
                 showRowTotals="props.showRowTotals"
                 showColumnTotals="props.showColumnTotals"
                 readonly="props.readonly"
-                domain="props.domain"
-                canOpen="props.canOpen"
-                canCreate="props.canCreate"
-                canWrite="props.canWrite"
-                canQuickCreate="props.canQuickCreate"
-                canCreateEdit="props.canCreateEdit"
+                isXClickable="props.isXClickable"
+                isYClickable="props.isYClickable"
             />
         </div>
     </t>
