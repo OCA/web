@@ -5,17 +5,12 @@
 {
     "name": "Web Export JSON",
     "summary": "Export Data in JSON Format",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Uncategorized",
     "website": "https://github.com/OCA/web",
     "author": "Kencove, Odoo Community Association (OCA)",
     "maintainers": ["Kencove"],
     "license": "AGPL-3",
+    "depends": ["web"],
     "installable": True,
-    "assets": {
-        "web.assets_backend": [
-            "web_export_json/static/src/action_ir_export.xml",
-            "web_export_json/static/src/action_ir_export.esm.js",
-        ],
-    },
 }

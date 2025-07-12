@@ -2,6 +2,7 @@
 # @author Mohamed Alkobrosli <malkobrosly@kencove.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import datetime
 import json
 import logging
 
@@ -15,6 +16,7 @@ _logger = logging.getLogger(__name__)
 
 
 class CustomExport(Export):
+    @http.route("/web/export/formats", type="json", auth="user", readonly=True)
     def formats(self):
         result = super().formats()
         result.append({"tag": "json", "label": "JSON", "error": None})
@@ -73,7 +75,50 @@ class JSONExport(ExportFormat, http.Controller):
     def from_group_data(self, fields, groups):
         raise UserError(_("Exporting grouped data to JSON is not supported."))
 
-    def from_data(self, fields, rows):
-        # Create list of dicts with field:value pairs
-        json_data = [dict(zip(fields, row, strict=False)) for row in rows]
-        return json.dumps(json_data, indent=4).encode("utf-8")
+    def serialize_value(self, v):
+        if v is None or v is False:
+            return ""
+        elif isinstance(v, datetime.date | datetime.datetime):
+            return v.isoformat()
+        elif isinstance(v, bytes):
+            return v.decode("utf-8", errors="ignore")
+        elif isinstance(v, str) and v.startswith(("=", "-", "+")):
+            return "'" + v
+        return v
+
+    def from_data(self, fields, columns_headers, rows):
+        """
+        fields example:
+            [
+                {
+                    'name': 'activity_exception_decoration',
+                    'label': 'Activity Exception Decoration',
+                    'type': 'selection'
+                },
+                {
+                    'name': 'standard_price',
+                    'label': 'Cost',
+                    'type': 'float'
+                },
+                {
+                    'name': 'default_code',
+                    'label': 'Internal Reference',
+                    'type': 'char'
+                },
+            ]
+
+        rows example:
+            [
+                ['', 0.0, False, ''],
+                ['', 120.5, False, 'E-COM11'],
+            ]
+        """
+        field_names = [f["name"] if isinstance(f, dict) else f for f in fields]
+        json_data = [
+            {
+                key: self.serialize_value(value)
+                for key, value in zip(field_names, row, strict=False)
+            }
+            for row in rows
+        ]
+        return json.dumps(json_data, indent=4, ensure_ascii=False).encode("utf-8")
