@@ -75,5 +75,5 @@ class JSONExport(ExportFormat, http.Controller):
 
     def from_data(self, fields, rows):
         # Create list of dicts with field:value pairs
-        json_data = [dict(zip(fields, row)) for row in rows]
+        json_data = [dict(zip(fields, row, strict=False)) for row in rows]
         return json.dumps(json_data, indent=4).encode("utf-8")
