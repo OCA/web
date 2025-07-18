@@ -3,6 +3,7 @@
 from odoo import _, api, exceptions, fields, models
 
 from odoo.addons.bus.models.bus import channel_with_db, json_dump
+from odoo.addons.web.controllers.main import clean_action
 
 DEFAULT_MESSAGE = "Default message"
 
@@ -48,9 +49,10 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         html=False,
+        action=None,
     ):
         title = title or _("Success")
-        self._notify_channel(SUCCESS, message, title, sticky, target, html)
+        self._notify_channel(SUCCESS, message, title, sticky, target, html, action)
 
     def notify_danger(
         self,
@@ -59,9 +61,10 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         html=False,
+        action=None,
     ):
         title = title or _("Danger")
-        self._notify_channel(DANGER, message, title, sticky, target, html)
+        self._notify_channel(DANGER, message, title, sticky, target, html, action)
 
     def notify_warning(
         self,
@@ -70,9 +73,10 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         html=False,
+        action=None,
     ):
         title = title or _("Warning")
-        self._notify_channel(WARNING, message, title, sticky, target, html)
+        self._notify_channel(WARNING, message, title, sticky, target, html, action)
 
     def notify_info(
         self,
@@ -81,9 +85,10 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         html=False,
+        action=None,
     ):
         title = title or _("Information")
-        self._notify_channel(INFO, message, title, sticky, target, html)
+        self._notify_channel(INFO, message, title, sticky, target, html, action)
 
     def notify_default(
         self,
@@ -92,9 +97,10 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         html=False,
+        action=None,
     ):
         title = title or _("Default")
-        self._notify_channel(DEFAULT, message, title, sticky, target, html)
+        self._notify_channel(DEFAULT, message, title, sticky, target, html, action)
 
     def _notify_channel(
         self,
@@ -104,6 +110,7 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         html=False,
+        action=None,
     ):
         if not (self.env.user._is_admin() or self.env.su) and any(
             user.id != self.env.uid for user in self
@@ -113,12 +120,15 @@ class ResUsers(models.Model):
             )
         if not target:
             target = self.env.user.partner_id
+        if action:
+            action = clean_action(action, self.env)
         bus_message = {
             "type": type_message,
             "message": message,
             "title": title,
             "sticky": sticky,
             "html": html,
+            "action": action,
         }
 
         notifications = [[partner, "web.notify", [bus_message]] for partner in target]

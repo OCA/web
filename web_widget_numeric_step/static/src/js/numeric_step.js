@@ -49,12 +49,13 @@ odoo.define("web_widget_numeric_step.field", function (require) {
                 min_val = this.nodeOptions.max;
                 max_val = this.nodeOptions.min;
             }
-
             this._config = {
                 step: Number(this.nodeOptions.step) || 1,
                 min: Number(min_val),
                 max: Number(max_val),
                 autoSelect: this.nodeOptions.auto_select,
+                addClasses: this.nodeOptions.add_class,
+                removeClasses: this.nodeOptions.remove_class,
             };
 
             this._lazyOnChangeTrigger = _.debounce(
@@ -139,6 +140,12 @@ odoo.define("web_widget_numeric_step.field", function (require) {
                     .addClass("numeric_step_editing_cell")
             );
             this._prepareInput(this.$el.find("input.input_numeric_step"));
+            if (this._config.addClasses) {
+                this.$input.addClass(this._config.addClasses);
+            }
+            if (this._config.removeClasses) {
+                this.$input.removeClass(this._config.removeClasses);
+            }
         },
 
         /**

@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Stale PRs and issues policy
-        uses: actions/stale@v4
+        uses: actions/stale@v9
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           # General settings.
@@ -48,7 +48,7 @@ jobs:
       # * Issues that are pending more information
       # * Except Issues marked as "no stale"
       - name: Needs more information stale issues policy
-        uses: actions/stale@v4
+        uses: actions/stale@v9
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           ascending: true

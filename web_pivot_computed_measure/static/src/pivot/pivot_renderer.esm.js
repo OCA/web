@@ -7,7 +7,13 @@ import {patch} from "web.utils";
 
 patch(PivotRenderer.prototype, "web_pivot_computed_measure.PivotRenderer", {
     getFormattedValue(cell) {
-        if (cell.value === Infinity) {
+        if (Math.abs(cell.value) === Infinity) {
+            return "-";
+        }
+        return this._super(...arguments);
+    },
+    getFormattedVariation(cell) {
+        if (Math.abs(cell.value) === Infinity) {
             return "-";
         }
         return this._super(...arguments);

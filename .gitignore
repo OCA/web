@@ -25,6 +25,19 @@ var/
 *.egg
 *.eggs
 
+# Windows installers
+*.msi
+
+# Debian packages
+*.deb
+
+# Redhat packages
+*.rpm
+
+# MacOS packages
+*.dmg
+*.pkg
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt

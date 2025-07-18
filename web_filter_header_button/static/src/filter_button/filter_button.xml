@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+
+    <t t-name="filter_button.FilterButton" owl="1">
+        <t t-set="filters" t-value="shownFilters(model.get('filters'))" />
+        <div t-if="filters" class="o_cp_bottom_filter_buttons">
+            <div class="btn-group">
+                <button
+                    t-if="filters &amp;&amp; filters.length"
+                    t-attf-class="btn btn-outline-primary"
+                    t-on-click.stop="onClickReset()"
+                >
+                    <i class="fa fa-times" />
+                </button>
+                <!-- Directly get the model filters so we can react to changes -->
+                <t t-foreach="filters" t-as="filter" t-key="filter.id">
+                    <t t-set="options" t-value="filter.context.shown_in_panel" />
+                    <t t-set="filter_mapping" t-value="mapFilterType(filter)" />
+                    <t t-set="color" t-value="filter_mapping.color || 'primary'" />
+                    <!-- We can set an empty string on the optional name to show only the icon -->
+                    <t
+                        t-set="name"
+                        t-value="options.name !== undefined ? options.name : filter.description"
+                    />
+                    <button
+                        t-attf-class="btn {{filter.isActive ? `btn-${color}` : `btn-outline-${color}`}}"
+                        t-on-click.stop="onToggleFilter(filter)"
+                        t-att-data-hotkey="options.hotkey"
+                    >
+                        <i
+                            t-if="options.icon"
+                            t-attf-class="fa {{options.icon}} {{name !== '' ? 'mr-1' : ''}}"
+                        />
+                        <t t-esc="name" />
+                    </button>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

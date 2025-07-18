@@ -160,3 +160,59 @@ msgid ""
 msgstr ""
 "Esta medida está utilizada por una 'medida computada'. Por favor, desabilita "
 "la medida computada primero."
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "custom"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "float"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "integer"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "m1*m2"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "m1+m2"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "m1-m2"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "m1/m2"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "percentage"
+msgstr ""
