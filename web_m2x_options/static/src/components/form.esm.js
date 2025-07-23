@@ -179,7 +179,7 @@ patch(many2OneField, {
         // FIXME: field of type === "many2one_reference" does not support m2o_options_props.
         // This no-op prevents crashes, but proper option support is still missing.
         // See roadmap note in PR #3205
-        if (!this.m2m_options_props) {
+        if (!this.m2o_options_props) {
             return props;
         }
         const new_props = this.m2o_options_props(props, attrs, options);
