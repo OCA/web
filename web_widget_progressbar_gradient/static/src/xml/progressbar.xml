@@ -8,6 +8,5 @@
         t-inherit="web.ProgressBarField"
         t-inherit-mode="primary"
         owl="1"
-    >
-    </t>
+    />
 </templates>
