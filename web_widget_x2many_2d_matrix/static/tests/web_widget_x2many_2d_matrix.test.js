@@ -1,5 +1,7 @@
 import {defineModels, fields, models, mountView} from "@web/../tests/web_test_helpers";
-import {expect, test} from "@odoo/hoot";
+import {describe, expect, test} from "@odoo/hoot";
+
+describe.current.tags("desktop");
 
 class Main extends models.Model {
     line_ids = fields.One2many({
