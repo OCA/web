@@ -51,7 +51,7 @@ and finishing to red.
 Usage
 =====
 
-- When declaring a progressbar field, use the 'progressbar_color'
+- When declaring a progressbar field, use the 'progressbar_gradient'
   widget.
 - Add the inverse option to reverse the colors on the progress bar
   field: ``options="{'inverse': true}"``
