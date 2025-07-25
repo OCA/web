@@ -1,4 +1,4 @@
-/** @odoo-module
+/**
  * Copyright 2024 ACSONE SA/NV
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
  * **/
@@ -7,6 +7,12 @@ import {registry} from "@web/core/registry";
 
 const {onMounted} = owl;
 export class ProgressBarFieldGradient extends ProgressBarField {
+    static template = "web_widget_progressbar_color.ProgressBarFieldGradient";
+    static props = {
+        ...ProgressBarField.props,
+        inverse: {type: Boolean, optional: true},
+    };
+
     setup() {
         super.setup();
         onMounted(() => this._mounted());
@@ -23,17 +29,16 @@ export class ProgressBarFieldGradient extends ProgressBarField {
             }
         }
     }
-}
-ProgressBarFieldGradient.extractProps = ({attrs}) => {
-    return {
-        inverse: attrs.options.inverse,
+
+    extractProps = ({attrs}) => {
+        return {
+            inverse: attrs.options.inverse,
+        };
     };
-};
-ProgressBarFieldGradient.template =
-    "web_widget_progressbar_color.ProgressBarFieldGradient";
-ProgressBarFieldGradient.props = {
-    ...ProgressBarField.props,
-    inverse: {type: Boolean, optional: true},
+}
+
+export const ProgressBarFieldGradientWidget = {
+    component: ProgressBarFieldGradient,
 };
 
-registry.category("fields").add("progressbar_gradient", ProgressBarFieldGradient);
+registry.category("fields").add("progressbar_gradient", ProgressBarFieldGradientWidget);
