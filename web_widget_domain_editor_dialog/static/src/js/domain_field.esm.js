@@ -1,11 +1,10 @@
-/** @odoo-module **/
 /* Copyright 2019 Tecnativa - David Vidal
  * Copyright 2024 Tecnativa - Carlos Roca
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
-import {_t} from "@web/core/l10n/translation";
-import {patch} from "@web/core/utils/patch";
 import {DomainEditorDialog} from "./widget_domain_editor_dialog.esm";
 import {DomainField} from "@web/views/fields/domain/domain_field";
+import {_t} from "@web/core/l10n/translation";
+import {patch} from "@web/core/utils/patch";
 
 patch(DomainField.prototype, {
     onButtonClick(ev) {

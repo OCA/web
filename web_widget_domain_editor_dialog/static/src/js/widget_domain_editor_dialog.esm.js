@@ -1,10 +1,9 @@
-/** @odoo-module **/
 /* Copyright 2019 Tecnativa - David Vidal
  * Copyright 2024 Tecnativa - Carlos Roca
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
-import {deepEqual} from "@web/core/utils/objects";
 import {Domain} from "@web/core/domain";
 import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
+import {deepEqual} from "@web/core/utils/objects";
 
 export function findChildren(comp, predicate = (e) => e) {
     const queue = [];
@@ -65,7 +64,9 @@ export class DomainEditorDialog extends SelectCreateDialog {
         ).component.model.root;
         let domain = dynamicList.domain;
         let group_domain = [];
-        if ($(".o_list_record_selector input").prop("checked")) {
+        const checkbox = document.querySelector(".o_list_record_selector input");
+        const isChecked = checkbox ? checkbox.checked : false;
+        if (isChecked) {
             if (dynamicList.groupBy.length) {
                 group_domain = this._getDomainOfGroups(dynamicList.groups, domain);
             }
