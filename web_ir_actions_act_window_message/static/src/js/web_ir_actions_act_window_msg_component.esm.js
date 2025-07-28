@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {Component, onWillStart, useState} from "@odoo/owl";
 import {Dialog} from "@web/core/dialog/dialog";
 import {_t} from "@web/core/l10n/translation";
@@ -38,7 +36,7 @@ export class ActWindowMessageDialog extends Component {
                 classes: "btn btn-default",
             });
         }
-        for (var i = 0; i < action.buttons.length; i++) {
+        for (var i = 0; action.buttons && i < action.buttons.length; i++) {
             const button = action.buttons[i];
             const button_data = {
                 name: button.name || "No name set",
