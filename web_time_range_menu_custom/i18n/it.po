@@ -58,30 +58,18 @@ msgstr "Settimana"
 msgid "Year"
 msgstr "Anno"
 
-#. module: web_time_range_menu_custom
-#. odoo-javascript
-#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
-msgid "day"
-msgstr "giorno"
+#~ msgid "day"
+#~ msgstr "giorno"
 
-#. module: web_time_range_menu_custom
-#. odoo-javascript
-#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
-msgid "month"
-msgstr "mese"
+#~ msgid "month"
+#~ msgstr "mese"
 
-#. module: web_time_range_menu_custom
-#. odoo-javascript
-#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
-msgid "week"
-msgstr "settimana"
+#~ msgid "week"
+#~ msgstr "settimana"
 
-#. module: web_time_range_menu_custom
-#. odoo-javascript
-#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
-msgid "year"
-msgstr "anno"
+#~ msgid "year"
+#~ msgstr "anno"

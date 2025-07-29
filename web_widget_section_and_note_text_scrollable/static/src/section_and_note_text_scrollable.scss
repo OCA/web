@@ -1,0 +1,10 @@
+/*
+    Copyright 2025 Camptocamp SA (https://www.camptocamp.com).
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+*/
+
+.o_field_widget.o_field_section_and_note_text.o_field_text:not(:has(textarea)) {
+    display: block !important;
+    max-height: 10em;
+    overflow-y: auto;
+}

@@ -1,6 +1,6 @@
 [project]
 name = "odoo-addons-oca-web"
-version = "17.0.20250317.0"
+version = "17.0.20250630.0"
 dependencies = [
     "odoo-addon-web_calendar_slot_duration>=17.0dev,<17.1dev",
     "odoo-addon-web_chatter_position>=17.0dev,<17.1dev",
@@ -11,6 +11,7 @@ dependencies = [
     "odoo-addon-web_favicon>=17.0dev,<17.1dev",
     "odoo-addon-web_field_tooltip>=17.0dev,<17.1dev",
     "odoo-addon-web_group_expand>=17.0dev,<17.1dev",
+    "odoo-addon-web_ir_actions_act_multi>=17.0dev,<17.1dev",
     "odoo-addon-web_m2x_options>=17.0dev,<17.1dev",
     "odoo-addon-web_no_bubble>=17.0dev,<17.1dev",
     "odoo-addon-web_notify>=17.0dev,<17.1dev",
@@ -18,9 +19,11 @@ dependencies = [
     "odoo-addon-web_remember_tree_column_width>=17.0dev,<17.1dev",
     "odoo-addon-web_responsive>=17.0dev,<17.1dev",
     "odoo-addon-web_save_discard_button>=17.0dev,<17.1dev",
+    "odoo-addon-web_search_with_and>=17.0dev,<17.1dev",
     "odoo-addon-web_theme_classic>=17.0dev,<17.1dev",
     "odoo-addon-web_time_range_menu_custom>=17.0dev,<17.1dev",
     "odoo-addon-web_timeline>=17.0dev,<17.1dev",
+    "odoo-addon-web_tree_duplicate>=17.0dev,<17.1dev",
     "odoo-addon-web_tree_dynamic_colored_field>=17.0dev,<17.1dev",
     "odoo-addon-web_tree_many2one_clickable>=17.0dev,<17.1dev",
     "odoo-addon-web_widget_bokeh_chart>=17.0dev,<17.1dev",
@@ -32,6 +35,7 @@ dependencies = [
     "odoo-addon-web_widget_open_tab>=17.0dev,<17.1dev",
     "odoo-addon-web_widget_plotly_chart>=17.0dev,<17.1dev",
     "odoo-addon-web_widget_product_label_section_and_note>=17.0dev,<17.1dev",
+    "odoo-addon-web_widget_section_and_note_text_scrollable>=17.0dev,<17.1dev",
     "odoo-addon-web_widget_url_advanced>=17.0dev,<17.1dev",
     "odoo-addon-web_widget_x2many_2d_matrix>=17.0dev,<17.1dev",
 ]

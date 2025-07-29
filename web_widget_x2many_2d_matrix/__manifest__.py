@@ -5,10 +5,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "2D matrix for x2many fields",
-    "version": "17.0.1.1.1",
-    "maintainers": ["JasminSForgeFlow"],
+    "version": "17.0.2.0.0",
+    "maintainers": ["JasminSForgeFlow", "hbrunn"],
     "development_status": "Production/Stable",
     "author": (
+        "Hunki Enterprises BV, "
         "Therp BV, "
         "Tecnativa, "
         "Camptocamp, "
@@ -21,7 +22,9 @@
     "category": "Hidden/Dependency",
     "summary": "Show list fields as a matrix",
     "depends": ["web"],
-    "data": [],
+    "demo": [
+        "demo/res_groups_views.xml",
+    ],
     "installable": True,
     "assets": {
         "web.assets_backend": [

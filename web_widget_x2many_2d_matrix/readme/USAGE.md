@@ -36,6 +36,27 @@ show_column_totals
 If field_value is a numeric field, it indicates if you want to calculate
 column totals. True by default
 
+x_axis_clickable
+If the x axis field is a many2one field, render the values as links to the record in question
+
+y_axis_clickable
+If the y axis field is a many2one field, render the values as links to the record in question
+
+For the value field, you can set any attributes you'd set in a normal list view, ie if your value field is a many2one field and you want to disable creating records via this field, you'd write
+
+```xml
+<field name="my_field3" options="{'no_create': true}"/>
+```
+
+or if you want to have a custom domain or context
+
+```xml
+<field name="my_field3" domain="[('some_field', '=', my_field1)]" context="{'default_some_field': my_field1}" />
+```
+
+Note that to be able to refer to other fields than the ones used as coordinates or value, you have to add them inside the ``list`` node.
+
+
 ## Example
 
 You need a data structure already filled with values. Let's assume we
