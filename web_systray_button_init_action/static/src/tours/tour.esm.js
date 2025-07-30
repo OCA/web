@@ -1,41 +1,34 @@
-/** @odoo-module **/
 /* Copyright 2024 Tecnativa - Carlos Roca
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
-import tour from "web_tour.tour";
+import {registry} from "@web/core/registry";
+import {stepUtils} from "@web_tour/tour_service/tour_utils";
 
-tour.register(
-    "web_systray_button_init_action_not_set_tour",
-    {
-        url: "/web",
-        test: true,
-    },
-    [
+registry.category("web_tour.tours").add("web_systray_button_init_action_not_set_tour", {
+    url: "/web",
+    steps: () => [
         {
-            trigger: ".o_navbar_apps_menu button",
-            extra_trigger: ":not(:has(a[name='init_action']))",
+            trigger: ":not(:has(button[name='init_action']))",
         },
-    ]
-);
-tour.register(
-    "web_systray_button_init_action_set_tour",
-    {
-        url: "/web",
-        test: true,
-    },
-    [
+    ],
+});
+registry.category("web_tour.tours").add("web_systray_button_init_action_set_tour", {
+    url: "/web",
+    steps: () => [
         {
-            trigger: ".o_navbar_apps_menu button",
-            extra_trigger: ".init_action_div:has(a[name='init_action'])",
+            trigger: ".init_action_div:has(button[name='init_action'])",
+        },
+        stepUtils.showAppsMenuItem(),
+        {
+            trigger: ".o_app[data-menu-xmlid='base.menu_administration']",
+            run: "click",
         },
         {
-            trigger: "a[data-menu-xmlid='base.menu_administration']",
+            trigger: "button[name='init_action']",
+            run: "click",
         },
         {
-            trigger: "a[name='init_action']",
+            trigger: ".o_last_breadcrumb_item:has(span:contains('Apps'))",
         },
-        {
-            trigger: ".breadcrumb-item:has(span:contains('Apps'))",
-        },
-    ]
-);
+    ],
+});

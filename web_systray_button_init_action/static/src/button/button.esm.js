@@ -5,12 +5,12 @@
 import {Component} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
-import {session} from "@web/session";
+import {user} from "@web/core/user";
 
 export class InitActionMenu extends Component {
     setup() {
         this.action = useService("action");
-        this.showHomeButton = Boolean(session.home_action_id);
+        this.showHomeButton = Boolean(user.homeActionId);
     }
 
     /**
@@ -18,7 +18,7 @@ export class InitActionMenu extends Component {
      * @private
      */
     onClickInitAction() {
-        window.location.href = window.location.origin + "/web";
+        window.location.href = window.location.origin + "/odoo";
     }
 }
 
