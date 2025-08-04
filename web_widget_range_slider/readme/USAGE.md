@@ -1,12 +1,9 @@
-Use the widget name ``range_slider`` in float fields.
+Use the widget name `range_slider` in float fields.
 
-The available options are:
-- ``min``: Minimum value
-- ``max``: Maximum value 
-- ``step``: Increment steps
+The available options are: - `min`: Minimum value - `max`: Maximum
+value - `step`: Increment steps
 
-Example:
-.. code-block::
+Example: .. code-block:
 
     <?xml version="1.0" encoding="UTF-8" ?>
     <odoo>

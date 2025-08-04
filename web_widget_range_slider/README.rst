@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===================
 Range Slider Widget
 ===================
@@ -17,7 +13,7 @@ Range Slider Widget
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -44,26 +40,25 @@ Usage
 
 Use the widget name ``range_slider`` in float fields.
 
-The available options are:
-- ``min``: Minimum value
-- ``max``: Maximum value 
-- ``step``: Increment steps
+The available options are: - ``min``: Minimum value - ``max``: Maximum
+value - ``step``: Increment steps
 
-Example:
-.. code-block::
+Example: .. code-block:
 
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <odoo>
-        <record id="my_model" model="ir.ui.view">
-            <field name="name">my_model.form</field>
-            <field name="model">my_model</field>
-            <field name="arch" type="xml">
-                ...
-                <field name="float_field" widget="range_slider" options="{'min':0, 'max':55, 'step': 5}"/>
-                ...
-            </field>
-        </record>
-    </odoo>
+::
+
+   <?xml version="1.0" encoding="UTF-8" ?>
+   <odoo>
+       <record id="my_model" model="ir.ui.view">
+           <field name="name">my_model.form</field>
+           <field name="model">my_model</field>
+           <field name="arch" type="xml">
+               ...
+               <field name="float_field" widget="range_slider" options="{'min':0, 'max':55, 'step': 5}"/>
+               ...
+           </field>
+       </record>
+   </odoo>
 
 Bug Tracker
 ===========
@@ -79,17 +74,17 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Miguel Martinez Lopez
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-- Miguel Martinez Lopez \<<python3developer@proton.me>\>
+- Miguel Martinez Lopez <<python3developer@proton.me>>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 

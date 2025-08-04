@@ -1,13 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-
+<?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="InputRangeWidget" owl="1">
         <div class="o_float_slider d-flex">
             <input
                 type="range"
                 class="form-range flex-grow-1 cursor-pointer"
-                t-att-id="props.id" 
+                t-att-id="props.id"
                 t-att-min="props.min"
                 t-att-max="props.max"
                 t-att-step="props.step"
@@ -19,7 +17,12 @@
                 t-on-input="(e)=>this.onInput(e)"
                 style="max-width: 250px"
             />
-            <span class="o_float_slider_box_value ms-2 d-inline-block text-center px-2 py-0 rounded-2" t-esc="props.value" style="background-color: darkslateblue; color: white;" t-ref="rangeInputBoxValue"/>
+            <span
+                class="o_float_slider_box_value ms-2 d-inline-block text-center px-2 py-0 rounded-2"
+                t-esc="props.value"
+                style="background-color: darkslateblue; color: white;"
+                t-ref="rangeInputBoxValue"
+            />
         </div>
     </t>
 </templates>
