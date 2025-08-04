@@ -18,7 +18,7 @@
         <xpath expr="//button/i[(hasclass('fa-cloud-upload'))]" position="replace">
             <span>Save</span>
         </xpath>
-        <xpath expr="//button/i[(hasclass('fa-undo'))]" position="replace">
+        <xpath expr="//button/i[(hasclass('fa-times'))]" position="replace">
             <span>Discard</span>
         </xpath>
     </t>
