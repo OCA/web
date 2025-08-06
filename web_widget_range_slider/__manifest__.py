@@ -9,8 +9,8 @@
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
-            "range_slider_widget/static/src/js/slider.esm.js",
-            "range_slider_widget/static/src/xml/slider.xml",
+            "web_widget_range_slider/static/src/js/slider.esm.js",
+            "web_widget_range_slider/static/src/xml/slider.xml",
         ]
     },
     "auto_install": False,
