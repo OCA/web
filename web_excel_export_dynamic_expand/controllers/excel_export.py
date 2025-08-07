@@ -6,15 +6,15 @@ from collections import OrderedDict
 
 from odoo import http
 
-from odoo.addons.web.controllers.main import ExcelExport
+from odoo.addons.web.controllers.export import ExcelExport
 
 
 class CustomGroupsTreeNode(ExcelExport):
     @http.route("/web/export/xlsx", type="http", auth="user")
-    def index(self, data):
+    def web_export_xlsx(self, data):
         params = json.loads(data)
         self.context = params.get("context", {})
-        response = super().index(data)
+        response = super().web_export_xlsx(data)
         return response
 
     @property
@@ -25,7 +25,7 @@ class CustomGroupsTreeNode(ExcelExport):
     def context(self, value):
         self._context = value
 
-    def from_group_data(self, fields, groups):
+    def from_group_data(self, fields, columns_headers, groups):
         collapse_groups = self.context.get("collapse_groups")
         if collapse_groups:
             for _child_key, child_node in groups.children.items():
@@ -35,4 +35,4 @@ class CustomGroupsTreeNode(ExcelExport):
                 if child_node.data:
                     child_node.data = []
                 child_node.aggregated_values = aggregated_values
-        return super().from_group_data(fields, groups)
+        return super().from_group_data(fields, columns_headers, groups)
