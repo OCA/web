@@ -15,34 +15,37 @@
                         field_y_axis="partner_id"
                         field_value="country_id"
                     >
-                        <list>[
+                        <list>
                             <field name="login" />
                             <field name="partner_id" />
                             <field
-                            name="country_id"
-                            domain="[('name', 'like', 'land')]"
-                            options="{'no_create': True}"
-                            readonly="login == 'demo'"
-                            required="login == 'admin'"
-                        />
+                                name="country_id"
+                                domain="[('name', 'like', 'land')]"
+                                options="{'no_create': True}"
+                                readonly="login == 'demo'"
+                                required="login == 'admin'"
+                            />
                         </list>
                     </field>
-                    <div class="o_form_label">Char field as value</div>
+                    <div
+                        class="o_form_label"
+                    >Char field as value, clickable X axis</div>
                     <field
                         name="users"
                         widget="x2many_2d_matrix"
                         field_x_axis="country_id"
                         field_y_axis="partner_id"
                         field_value="name"
+                        x_axis_clickable="True"
                     >
-                        <list>[
-                            <field name="name" />
+                        <list>
+                            <field name="name" required="login == 'admin'" />
                             <field name="partner_id" />
                             <field
-                            name="country_id"
-                            domain="[('name', 'like', 'land')]"
-                            options="{'no_create': True}"
-                        />
+                                name="country_id"
+                                domain="[('name', 'like', 'land')]"
+                                options="{'no_create': True}"
+                            />
                         </list>
                     </field>
                     <div class="o_form_label">Boolean field as value</div>
@@ -53,14 +56,14 @@
                         field_y_axis="partner_id"
                         field_value="active"
                     >
-                        <list>[
+                        <list>
                             <field name="active" />
                             <field name="partner_id" />
                             <field
-                            name="country_id"
-                            domain="[('name', 'like', 'land')]"
-                            options="{'no_create': True}"
-                        />
+                                name="country_id"
+                                domain="[('name', 'like', 'land')]"
+                                options="{'no_create': True}"
+                            />
                         </list>
                     </field>
                     <div class="o_form_label">Selection field as value</div>
@@ -71,14 +74,14 @@
                         field_y_axis="partner_id"
                         field_value="lang"
                     >
-                        <list>[
+                        <list>
                             <field name="lang" />
                             <field name="partner_id" />
                             <field
-                            name="country_id"
-                            domain="[('name', 'like', 'land')]"
-                            options="{'no_create': True}"
-                        />
+                                name="country_id"
+                                domain="[('name', 'like', 'land')]"
+                                options="{'no_create': True}"
+                            />
                         </list>
                     </field>
                     <div class="o_form_label">Float field as value</div>
@@ -89,14 +92,34 @@
                         field_y_axis="partner_id"
                         field_value="partner_latitude"
                     >
-                        <list>[
+                        <list>
                             <field name="partner_latitude" />
                             <field name="partner_id" />
                             <field
-                            name="country_id"
-                            domain="[('name', 'like', 'land')]"
-                            options="{'no_create': True}"
-                        />
+                                name="country_id"
+                                domain="[('name', 'like', 'land')]"
+                                options="{'no_create': True}"
+                            />
+                        </list>
+                    </field>
+                    <div
+                        class="o_form_label"
+                    >Float field as value with float_time widget</div>
+                    <field
+                        name="users"
+                        widget="x2many_2d_matrix"
+                        field_x_axis="country_id"
+                        field_y_axis="partner_id"
+                        field_value="partner_latitude"
+                    >
+                        <list>
+                            <field name="partner_latitude" widget="float_time" />
+                            <field name="partner_id" />
+                            <field
+                                name="country_id"
+                                domain="[('name', 'like', 'land')]"
+                                options="{'no_create': True}"
+                            />
                         </list>
                     </field>
                 </page>

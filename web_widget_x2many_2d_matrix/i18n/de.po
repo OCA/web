@@ -27,12 +27,17 @@ msgstr ""
 
 #. module: web_widget_x2many_2d_matrix
 #: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix.view_groups_form
-msgid "Char field as value"
+msgid "Char field as value, clickable X axis"
 msgstr ""
 
 #. module: web_widget_x2many_2d_matrix
 #: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix.view_groups_form
 msgid "Float field as value"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix.view_groups_form
+msgid "Float field as value with float_time widget"
 msgstr ""
 
 #. module: web_widget_x2many_2d_matrix
