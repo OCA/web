@@ -43,7 +43,11 @@ class WebManifest(webmanifest.WebManifest):
         return icons
 
     @http.route(
-        "/web/manifest.webmanifest", type="http", auth="public", methods=["GET"]
+        "/web/manifest.webmanifest",
+        type="http",
+        auth="public",
+        methods=["GET"],
+        readonly=True,
     )
     def webmanifest(self):
         """Call super and overwrite the values that we want."""
