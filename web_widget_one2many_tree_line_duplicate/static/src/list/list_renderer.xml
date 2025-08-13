@@ -7,7 +7,7 @@
         owl="1"
     >
         <xpath
-            expr="//th[@t-if='displayOptionalFields or activeActions.onDelete']"
+            expr="//th[hasclass('o_list_controller') and hasclass('o_list_actions_header')]"
             position="before"
         >
             <th

@@ -4,10 +4,11 @@
 
 import {ListRenderer} from "@web/views/list/list_renderer";
 import {patch} from "@web/core/utils/patch";
+import {serializeDate, serializeDateTime} from "@web/core/l10n/dates";
 
-patch(ListRenderer.prototype, "web_widget_one2many_tree_line_duplicate.ListRenderer", {
+patch(ListRenderer.prototype, {
     setup() {
-        this._super(...arguments);
+        super.setup(...arguments);
         const parent = this.__owl__.parent.parent;
         this.displayDuplicateLine =
             parent &&
@@ -16,23 +17,51 @@ patch(ListRenderer.prototype, "web_widget_one2many_tree_line_duplicate.ListRende
             parent.props.fieldInfo.options &&
             parent.props.fieldInfo.options.allow_clone;
     },
-    get nbCols() {
-        var nbCols = this._super(...arguments);
-        if (this.displayDuplicateLine) {
-            nbCols++;
-        }
-        return nbCols;
-    },
     async onCloneIconClick(record) {
-        const editedRecord = this.props.list.editedRecord;
-        if (editedRecord && editedRecord !== record) {
-            const unselected = await this.props.list.unselectRecord(true);
-            if (!unselected) {
-                return;
+        const toSkip = this.getFieldsToSkip();
+        const vals = {};
+
+        for (const [name, value] of Object.entries(record.data)) {
+            const fieldDef = this.props.list.fields[name];
+            if (toSkip.has(name) || !fieldDef) {
+                continue;
+            }
+            if (fieldDef.type === "many2one" && Array.isArray(value)) {
+                vals[name] = value[0];
+            } else if (fieldDef.type === "many2many" || fieldDef.type === "one2many") {
+                const m2mRecords = Array.isArray(value) ? value : value?.records || [];
+                const ids = m2mRecords
+                    .map((r) => {
+                        if (typeof r.id === "number") return r.id;
+                        if (Array.isArray(r._config?.resIds)) return r._config.resIds;
+                        return null;
+                    })
+                    .flat()
+                    .filter((id) => typeof id === "number");
+
+                vals[name] = [[6, 0, ids]];
+            } else if (fieldDef.type === "datetime" && value) {
+                vals[name] = serializeDateTime(value);
+            } else if (fieldDef.type === "date" && value) {
+                vals[name] = serializeDate(value);
+            } else {
+                vals[name] = value;
             }
         }
-        const context = this.props.list.model.root.context;
-        await this.props.list.cloneRecord(record.__bm_handle__, {context});
-        this.props.list.model.notify();
+        await record.model.orm.call(
+            record._config.resModel,
+            "copy",
+            [[record._config.resId], vals],
+            {context: record._config.context}
+        );
+        await record.model.load();
+    },
+    getFieldsToSkip() {
+        return new Set([
+            "id",
+            "display_name",
+            "__last_update",
+            this.props.list.handleField,
+        ]);
     },
 });

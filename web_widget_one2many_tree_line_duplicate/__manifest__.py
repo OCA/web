@@ -4,7 +4,7 @@
 {
     "name": "Web Widget One2many Tree Line Duplicate",
     "category": "web",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/web",
@@ -13,7 +13,6 @@
     "installable": True,
     "assets": {
         "web.assets_backend": [
-            "/web_widget_one2many_tree_line_duplicate/static/src/legacy/**/*.js",
             "/web_widget_one2many_tree_line_duplicate/static/src/**/*.esm.js",
             (
                 "after",
