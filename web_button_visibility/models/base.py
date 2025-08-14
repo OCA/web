@@ -1,4 +1,5 @@
 # Copyright 2023 ooops404
+# Copyright 2025 Simone Rubino - PyTech
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html)
 import json
 
@@ -22,14 +23,17 @@ class Base(models.AbstractModel):
         if view_type not in ["form"]:
             return arch
         if self.env.user.has_group("base.group_user"):
-            restrictions = self.env["model.button.rule"].search(
-                [
-                    ("model_name", "=", self._name),
-                    ("group_ids", "in", self.env.user.groups_id.ids),
-                    ("action", "=", "hide"),
-                ]
+            restrictions_ids = self.env["model.button.rule"]._get_ids_by_model(
+                self._name
             )
-            if restrictions:
+            if restrictions_ids:
+                restrictions = self.env["model.button.rule"].search(
+                    [
+                        ("id", "in", restrictions_ids),
+                        ("group_ids", "in", self.env.user.groups_id.ids),
+                        ("action", "=", "hide"),
+                    ]
+                )
                 return self.create_hide_button_field(restrictions, arch)
         return arch
 
@@ -65,11 +69,9 @@ class Base(models.AbstractModel):
 
     def _compute_hide_button(self):
         """Compute if button needs to be hidden"""
-        restrictions = self.env["model.button.rule"].search(
-            [("model_name", "=", self._name)]
-        )
-        for record in self:
-            for r in restrictions:
+        restrictions_ids = self.env["model.button.rule"]._get_ids_by_model(self._name)
+        for r in self.env["model.button.rule"].browse(restrictions_ids):
+            for record in self:
                 if r.button_visibility_field_id:
                     field_name = r.button_visibility_field_id.name
                     record[field_name] = False
@@ -92,13 +94,12 @@ class Base(models.AbstractModel):
 
     def _default_get_compute_hide_button_fields(self):
         """Required to hide button at the moment of new record creation"""
-        restrictions = self.env["model.button.rule"].search(
-            [("model_name", "=", self._name)]
-        )
+        restrictions_ids = self.env["model.button.rule"]._get_ids_by_model(self._name)
         values = {}
-        if not restrictions:
+        if not restrictions_ids:
             return values
-        for r in restrictions:
+
+        for r in self.env["model.button.rule"].browse(restrictions_ids):
             if r.button_visibility_field_id:
                 field_name = r.button_visibility_field_id.name
                 values[field_name] = False

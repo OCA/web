@@ -1,7 +1,9 @@
 # Copyright 2023 ooops404
+# Copyright 2025 Simone Rubino - PyTech
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.exceptions import ValidationError
 from odoo.tests import common
+from odoo.tools import get_cache_key_counter
 
 
 class TestButtonInvisible(common.TransactionCase):
@@ -76,3 +78,30 @@ class TestButtonInvisible(common.TransactionCase):
         )
         self.admin_user.read()
         self.env["res.users"].create({"name": "test", "login": "test"})
+
+    def test_cache_found_rules(self):
+        """The Rules found are cached by model."""
+        # Arrange
+        rule_model = self.env["model.button.rule"]
+        rule_cached_method = rule_model._get_ids_by_model
+        record = self.admin_user
+        record_model = record._name
+        rule_cached_method.clear_cache(rule_model)
+
+        cache, key, counter = get_cache_key_counter(rule_cached_method, record_model)
+        starting_hit_count = counter.hit
+        starting_miss_count = counter.miss
+        # pre-condition
+        self.assertNotIn(key, cache)
+
+        # Act 1: Compute the defaults 1st time
+        record.default_get([])
+        # Assert 1: Cache is missed -> the value is computed
+        self.assertEqual(counter.hit, starting_hit_count)
+        self.assertEqual(counter.miss, starting_miss_count + 1)
+
+        # Act 2: Compute the defaults 2nd time
+        record.default_get([])
+        # Assert 2: Cache is used
+        self.assertEqual(counter.hit, starting_hit_count + 1)
+        self.assertEqual(counter.miss, starting_miss_count + 1)
