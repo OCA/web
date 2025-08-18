@@ -1,6 +1,7 @@
 # Copyright 2023 ooops404
+# Copyright 2025 Simone Rubino - PyTech
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html)
-from odoo import api, fields, models
+from odoo import api, fields, models, tools
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -101,6 +102,7 @@ class CustomFieldRestriction(models.Model):
             rec.create_restriction_field("readonly")
         elif rec.required_model_id and rec.required:
             rec.create_restriction_field("required")
+        self.clear_caches()
         return rec
 
     def write(self, vals):
@@ -115,6 +117,8 @@ class CustomFieldRestriction(models.Model):
             elif self.required_field_id:
                 self.required_field_id.unlink()
                 self.create_restriction_field("required")
+        if "model_name" in vals:
+            self.clear_caches()
         return res
 
     def create_restriction_field(self, f_type):
@@ -165,4 +169,18 @@ class CustomFieldRestriction(models.Model):
             rec.visibility_field_id.unlink()
             rec.readonly_field_id.unlink()
             rec.required_field_id.unlink()
+        self.clear_caches()
         return super(CustomFieldRestriction, self).unlink()
+
+    @tools.ormcache("model_name")
+    def _get_ids_by_model(self, model_name):
+        return (
+            self.env["custom.field.restriction"]
+            .sudo()
+            .search(
+                [
+                    ("model_name", "=", model_name),
+                ],
+            )
+            .ids
+        )
