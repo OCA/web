@@ -14,15 +14,10 @@
                         t-key="column.value"
                         class="text-center"
                     >
-                        <t t-if="props.isXClickable and _getXAxisField().relation">
-                            <a
-                                class="o_form_uri"
-                                t-attf-href="/odoo/{{_getXAxisField().relation}}/{{column.value}}"
-                            >
-                                <t t-esc="column.text" />
-                            </a>
-                        </t>
-                        <t t-else="" t-esc="column.text" />
+                        <t
+                            t-component="xFieldComponent"
+                            t-props="_getAxisFieldProps(column.rawValue, 'x')"
+                        />
                     </th>
                     <th t-if="props.showRowTotals" />
                 </tr>
@@ -30,24 +25,19 @@
             <tbody>
                 <tr t-foreach="rows" t-as="row" t-key="row.value">
                     <td>
-                        <t t-if="props.isYClickable and _getYAxisField().relation">
-                            <a
-                                class="o_form_uri"
-                                t-attf-href="/odoo/{{_getYAxisField().relation}}/{{row.value}}"
-                            >
-                                <t t-esc="row.text" />
-                            </a>
-                        </t>
-                        <t t-else="" t-esc="row.text" />
+                        <t
+                            t-component="yFieldComponent"
+                            t-props="_getAxisFieldProps(row.rawValue, 'y')"
+                        />
                     </td>
                     <td t-foreach="columns" t-as="column" t-key="column.value">
                         <t
                             t-set="value_field_props"
-                            t-value="getValueFieldProps(column.value, row.value)"
+                            t-value="_getValueFieldProps(column.value, row.value)"
                         />
                         <t
                             t-if="value_field_props"
-                            t-component="ValueFieldComponent"
+                            t-component="valueFieldComponent"
                             t-props="value_field_props"
                         />
                     </td>
@@ -55,7 +45,10 @@
                         t-if="props.showRowTotals and _canAggregate()"
                         class="row-total"
                     >
-                        <span t-esc="_aggregateRow(row.value)" />
+                        <t
+                            t-component="valueFieldComponent"
+                            t-props="_getAggregateProps(_aggregateRow(row.value))"
+                        />
                     </td>
                 </tr>
             </tbody>
@@ -63,10 +56,16 @@
                 <tr t-if="props.showColumnTotals and _canAggregate()">
                     <th />
                     <th t-foreach="columns" t-as="column" t-key="column.value">
-                        <span t-esc="_aggregateColumn(column.value)" />
+                        <t
+                            t-component="valueFieldComponent"
+                            t-props="_getAggregateProps(_aggregateColumn(column.value))"
+                        />
                     </th>
                     <th t-if="props.showRowTotals" class="col-total">
-                        <span t-esc="_aggregateAll()" />
+                        <t
+                            t-component="valueFieldComponent"
+                            t-props="_getAggregateProps(_aggregateAll())"
+                        />
                     </th>
                 </tr>
             </tfoot>
