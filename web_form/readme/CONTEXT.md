@@ -1,0 +1,1 @@
+This module can be used to collect data from external users (or partners without a portal account) via a simple web form, then create records in any Odoo model using those submitted values. Each form is tied to a partner-specific secure URL using a one-time rotatable token.

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template id="web_form_base" name="Web Form Base">
+        <div>
+            <h1 t-esc="form.name" />
+            <form
+                t-att-action="'/web_form_create/%s/%s/%d' % (form.code, partner.form_token, partner.id)"
+                method="post"
+                class="container-fluid mt32"
+                enctype="multipart/form-data"
+                data-editable-form="false"
+            >
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    t-att-value="request.csrf_token()"
+                />
+                <t t-foreach="form.form_input_ids" t-as="input">
+                    <t t-if="input.input_type not in ('textarea','freetext')">
+                        <div class="form-group row form-field">
+                            <label
+                                t-esc="'%s%s' % (input.label, (input.required and not input.readonly) and ' (*)' or '')"
+                                class="col-lg-3 col-md-4 col-form-label"
+                                t-att-for="input.name"
+                            />
+                            <div class="col-lg-7 col-md-8">
+                                <t t-if="input.readonly">
+                                    <p
+                                        class="form-control"
+                                        style="background-color: #f8f9fa;"
+                                        t-esc="data[input.name]"
+                                    />
+                                </t>
+                                <t t-else="">
+                                    <input
+                                        t-if="input.required"
+                                        t-att-type="input.input_type"
+                                        class="form-control"
+                                        t-att-name="input.name"
+                                        t-att-value="data[input.name]"
+                                        required=""
+                                    />
+                                    <input
+                                        t-if="not input.required"
+                                        t-att-type="input.input_type"
+                                        class="form-control"
+                                        t-att-name="input.name"
+                                        t-att-value="data[input.name]"
+                                    />
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="input.input_type == 'textarea'">
+                        <div class="form-group row form-field">
+                            <label
+                                t-esc="'%s%s' % (input.label, input.required and ' (*)' or '')"
+                                class="col-lg-3 col-md-4 col-form-label"
+                                t-att-for="input.name"
+                            />
+                            <div class="col-lg-7 col-md-8">
+                                <t t-if="input.readonly">
+                                    <p
+                                        class="form-control"
+                                        style="background-color: #f8f9fa;"
+                                        t-esc="data[input.name]"
+                                    />
+                                </t>
+                                <t t-else="">
+                                    <textarea
+                                        t-if="input.required"
+                                        t-att-placeholder="data[input.name]"
+                                        class="form-control"
+                                        t-att-name="input.name"
+                                        required=""
+                                    />
+                                    <textarea
+                                        t-if="not input.required"
+                                        t-att-placeholder="data[input.name]"
+                                        class="form-control"
+                                        t-att-name="input.name"
+                                    />
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="input.input_type == 'freetext'">
+                        <div class="form-group row form-field">
+                            <p t-esc="data[input.name]" />
+                        </div>
+                    </t>
+                </t>
+                <div class="form-group row">
+                    <div class="offset-lg-3 offset-md-4 col-md-8 col-lg-7">
+                        <button
+                            type="submit"
+                            role="button"
+                            class="btn btn-primary btn-lg"
+                        >
+                            Send
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </template>
+
+    <template id="web_form" name="Web Form">
+        <t t-call="web.layout">
+            <t t-set="html_data" t-value="{'style': 'height: 100%;'}" />
+            <t t-set="head">
+                <t t-call-assets="web.assets_common" t-js="false" />
+                <t t-call-assets="web.assets_frontend" t-js="false" />
+                <t t-call-assets="web.assets_common" t-css="false" />
+                <t t-call-assets="web.assets_frontend" t-css="false" />
+            </t>
+            <style>
+                .mt-5, .my-5 {
+                    margin-top: 0rem !important;
+                }
+                .pb-5, .py-5 {
+                    padding-bottom: 0rem !important;
+                }
+
+                .mb-5, .my-5 {
+                    margin-bottom: 0rem !important;
+                }
+                button.btn.btn-primary.btn-lg {
+                    background-color: #003D51;
+                    margin-left: 50%;
+                }
+                * {
+                    color: #003D52;
+                }
+            </style>
+            <div>
+                <t t-raw="form.form_header" />
+            </div>
+            <div class="container mb-5 pb-5">
+                <div t-attf-class="card border-0 mx-auto mt-5 bg-100">
+                    <div class="card-body">
+                        <t t-call="web_form.web_form_base" />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <t t-raw="form.form_footer" />
+            </div>
+        </t>
+    </template>
+
+    <template id="form_expired" name="Form Expired">
+        <t t-call="web.layout">
+            <t t-set="html_data" t-value="{'style': 'height: 100%;'}" />
+            <t t-set="head">
+                <t t-call-assets="web.assets_common" t-js="false" />
+                <t t-call-assets="web.assets_frontend" t-js="false" />
+                <t t-call-assets="web.assets_common" t-css="false" />
+                <t t-call-assets="web.assets_frontend" t-css="false" />
+            </t>
+            <div class="container mb-5 pb-5">
+                <div t-attf-class="card border-0 mx-auto mt-5 bg-100">
+                    <div class="card-body">
+                        <h1>Not found or expired request.</h1>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="form_not_found" name="Form Not Found">
+        <t t-call="web.layout">
+            <t t-set="html_data" t-value="{'style': 'height: 100%;'}" />
+            <t t-set="head">
+                <t t-call-assets="web.assets_common" t-js="false" />
+                <t t-call-assets="web.assets_frontend" t-js="false" />
+                <t t-call-assets="web.assets_common" t-css="false" />
+                <t t-call-assets="web.assets_frontend" t-css="false" />
+            </t>
+            <div class="container mb-5 pb-5">
+                <div t-attf-class="card border-0 mx-auto mt-5 bg-100">
+                    <div class="card-body">
+                        <h1>Not found request.</h1>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="form_thank_you" name="Form Not Found">
+        <t t-call="web.layout">
+            <t t-set="html_data" t-value="{'style': 'height: 100%;'}" />
+            <t t-set="head">
+                <t t-call-assets="web.assets_common" t-js="false" />
+                <t t-call-assets="web.assets_frontend" t-js="false" />
+                <t t-call-assets="web.assets_common" t-css="false" />
+                <t t-call-assets="web.assets_frontend" t-css="false" />
+            </t>
+            <div class="container mb-5 pb-5">
+                <div t-attf-class="card border-0 mx-auto mt-5 bg-100">
+                    <div class="card-body">
+                        <h1>Thank you.</h1>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="form_unknown_issue" name="Form Not Found">
+        <t t-call="web.layout">
+            <t t-set="html_data" t-value="{'style': 'height: 100%;'}" />
+            <t t-set="head">
+                <t t-call-assets="web.assets_common" t-js="false" />
+                <t t-call-assets="web.assets_frontend" t-js="false" />
+                <t t-call-assets="web.assets_common" t-css="false" />
+                <t t-call-assets="web.assets_frontend" t-css="false" />
+            </t>
+            <div class="container mb-5 pb-5">
+                <div t-attf-class="card border-0 mx-auto mt-5 bg-100">
+                    <div class="card-body">
+                        <h1>We are sorry. Unknown issue.</h1>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
