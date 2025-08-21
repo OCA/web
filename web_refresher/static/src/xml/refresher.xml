@@ -7,16 +7,46 @@
         <nav class="oe_refresher" aria-label="Refresher" aria-atomic="true">
             <div class="btn-group" role="group">
                 <div class="btn-group" role="group">
-                    <button id="auto-refresh-dd" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button
+                        id="auto-refresh-dd"
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
                         Auto Refresh: Off
                     </button>
                     <div class="dropdown-menu" aria-labelledby="auto-refresh-dd">
-                        <button class="dropdown-item" t-on-click="onChangeAutoRefreshInterval" value="-1">Off</button>
-                        <button class="dropdown-item" t-on-click="onChangeAutoRefreshInterval" value="1000">1s</button>
-                        <button class="dropdown-item" t-on-click="onChangeAutoRefreshInterval" value="5000">5s</button>
-                        <button class="dropdown-item" t-on-click="onChangeAutoRefreshInterval" value="10000">10s</button>
-                        <button class="dropdown-item" t-on-click="onChangeAutoRefreshInterval" value="30000">30s</button>
-                        <button class="dropdown-item" t-on-click="onChangeAutoRefreshInterval" value="60000">1min</button>
+                        <button
+                            class="dropdown-item"
+                            t-on-click="onChangeAutoRefreshInterval"
+                            value="-1"
+                        >Off</button>
+                        <button
+                            class="dropdown-item"
+                            t-on-click="onChangeAutoRefreshInterval"
+                            value="1000"
+                        >1s</button>
+                        <button
+                            class="dropdown-item"
+                            t-on-click="onChangeAutoRefreshInterval"
+                            value="5000"
+                        >5s</button>
+                        <button
+                            class="dropdown-item"
+                            t-on-click="onChangeAutoRefreshInterval"
+                            value="10000"
+                        >10s</button>
+                        <button
+                            class="dropdown-item"
+                            t-on-click="onChangeAutoRefreshInterval"
+                            value="30000"
+                        >30s</button>
+                        <button
+                            class="dropdown-item"
+                            t-on-click="onChangeAutoRefreshInterval"
+                            value="60000"
+                        >1min</button>
                     </div>
                 </div>
                 <button
@@ -25,8 +55,9 @@
                     aria-label="Refresh"
                     t-on-click="onClickRefresh"
                     title="Refresh"
-                    tabindex="-1">
-                    <i id="manual-refresh-icon" class="fa fa-refresh"></i>
+                    tabindex="-1"
+                >
+                    <i id="manual-refresh-icon" class="fa fa-refresh" />
                 </button>
             </div>
         </nav>
