@@ -13,10 +13,10 @@ export function useRefreshAnimation(timeout) {
 
     /**
      * @returns {DOMTokenList|null}
-    */
-   function contentClassList() {
-       const content = document.querySelector(".o_content");
-       return content ? content.classList : null;
+     */
+    function contentClassList() {
+        const content = document.querySelector(".o_content");
+        return content ? content.classList : null;
     }
 
     function clearAnimationTimeout() {
@@ -39,7 +39,6 @@ export function useRefreshAnimation(timeout) {
 }
 
 export class Refresher extends Component {
-
     setup() {
         super.setup();
         this.action = useService("action");
@@ -87,8 +86,8 @@ export class Refresher extends Component {
         }
         // Check the refreshInterval is greater than 0 and start a timer for the next refresh
         if (this.refreshInterval > 0) {
-            // always attempt to clear a running timeout in case the refresh was done manually
-            if (typeof this.runningRefresherId === 'number') {
+            // Always attempt to clear a running timeout in case the refresh was done manually
+            if (typeof this.runningRefresherId === "number") {
                 clearTimeout(this.runningRefresherId);
             }
             this.runningRefresherId = setTimeout(() => {
@@ -127,7 +126,8 @@ export class Refresher extends Component {
     }
 
     onChangeAutoRefreshInterval(clickedOption) {
-        const newInterval = parseInt(clickedOption.value ?? clickedOption.target.value) ?? null;
+        const newInterval =
+            parseInt(clickedOption.value ?? clickedOption.target.value) ?? null;
         this.refreshInterval = newInterval;
         this._setIntervalButtonText();
         if (this.runningRefresherId) {
@@ -140,7 +140,7 @@ export class Refresher extends Component {
         let intervalValue;
         if (!this.refreshInterval || this.refreshInterval <= 0) {
             intervalValue = "Off";
-            document.getElementById('manual-refresh-icon').classList.remove('fa-spin');
+            document.getElementById("manual-refresh-icon").classList.remove("fa-spin");
         } else {
             const intervalInSeconds = this.refreshInterval / 1000;
             if (intervalInSeconds >= 60) {
@@ -148,9 +148,10 @@ export class Refresher extends Component {
             } else {
                 intervalValue = `${intervalInSeconds}s`;
             }
-            document.getElementById('manual-refresh-icon').classList.add('fa-spin');
+            document.getElementById("manual-refresh-icon").classList.add("fa-spin");
         }
-        document.getElementById('auto-refresh-dd').textContent = `Auto Refresh: ${intervalValue}`;
+        document.getElementById("auto-refresh-dd").textContent =
+            `Auto Refresh: ${intervalValue}`;
     }
 }
 
