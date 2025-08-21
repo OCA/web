@@ -127,7 +127,7 @@ export class Refresher extends Component {
 
     onChangeAutoRefreshInterval(clickedOption) {
         const newInterval =
-            parseInt(clickedOption.value ?? clickedOption.target.value) ?? null;
+            parseInt(clickedOption.value ?? clickedOption.target.value) ?? -1;
         this.refreshInterval = newInterval;
         this._setIntervalButtonText();
         if (this.runningRefresherId) {
@@ -137,7 +137,7 @@ export class Refresher extends Component {
     }
 
     _setIntervalButtonText() {
-        let intervalValue;
+        let intervalValue = 'Off';
         if (!this.refreshInterval || this.refreshInterval <= 0) {
             intervalValue = "Off";
             document.getElementById("manual-refresh-icon").classList.remove("fa-spin");
