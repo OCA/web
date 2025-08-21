@@ -147,7 +147,8 @@ export class Refresher extends Component {
         } else {
             document.getElementById("manual-refresh-icon").classList.add("fa-spin");
         }
-        document.getElementById("auto-refresh-interval-text").textContent = intervalText;
+        document.getElementById("auto-refresh-interval-text").textContent =
+            intervalText;
     }
 }
 
