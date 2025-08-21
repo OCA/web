@@ -13,10 +13,10 @@ export function useRefreshAnimation(timeout) {
 
     /**
      * @returns {DOMTokenList|null}
-     */
-    function contentClassList() {
-        const content = document.querySelector(".o_content");
-        return content ? content.classList : null;
+    */
+   function contentClassList() {
+       const content = document.querySelector(".o_content");
+       return content ? content.classList : null;
     }
 
     function clearAnimationTimeout() {
@@ -39,11 +39,15 @@ export function useRefreshAnimation(timeout) {
 }
 
 export class Refresher extends Component {
+
     setup() {
         super.setup();
         this.action = useService("action");
         this.refreshAnimation = useRefreshAnimation(1000);
         this.onClickRefresh = useDebounced(this.onClickRefresh, 200);
+        this.onChangeAutoRefreshInterval = this.onChangeAutoRefreshInterval.bind(this);
+        this.refreshInterval = -1;
+        this.runningRefresherId = null;
     }
 
     /**
@@ -81,6 +85,16 @@ export class Refresher extends Component {
         if (!updated) {
             updated = this._searchModelRefresh();
         }
+        // Check the refreshInterval is greater than 0 and start a timer for the next refresh
+        if (this.refreshInterval > 0) {
+            // always attempt to clear a running timeout in case the refresh was done manually
+            if (typeof this.runningRefresherId === 'number') {
+                clearTimeout(this.runningRefresherId);
+            }
+            this.runningRefresherId = setTimeout(() => {
+                this.refresh();
+            }, this.refreshInterval);
+        }
         return updated;
     }
 
@@ -110,6 +124,33 @@ export class Refresher extends Component {
         if (updated) {
             this.refreshAnimation();
         }
+    }
+
+    onChangeAutoRefreshInterval(clickedOption) {
+        const newInterval = parseInt(clickedOption.value ?? clickedOption.target.value) ?? null;
+        this.refreshInterval = newInterval;
+        this._setIntervalButtonText();
+        if (this.runningRefresherId) {
+            clearTimeout(this.runningRefresherId);
+        }
+        this.refresh();
+    }
+
+    _setIntervalButtonText() {
+        let intervalValue;
+        if (!this.refreshInterval || this.refreshInterval <= 0) {
+            intervalValue = "Off";
+            document.getElementById('manual-refresh-icon').classList.remove('fa-spin');
+        } else {
+            const intervalInSeconds = this.refreshInterval / 1000;
+            if (intervalInSeconds >= 60) {
+                intervalValue = `${Math.floor(intervalInSeconds / 60)}min`;
+            } else {
+                intervalValue = `${intervalInSeconds}s`;
+            }
+            document.getElementById('manual-refresh-icon').classList.add('fa-spin');
+        }
+        document.getElementById('auto-refresh-dd').textContent = `Auto Refresh: ${intervalValue}`;
     }
 }
 
