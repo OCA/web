@@ -29,7 +29,8 @@ tour.register(
             extra_trigger: ".init_action_div:has(a[name='init_action'])",
         },
         {
-            trigger: "a[data-menu-xmlid='base.menu_administration']",
+            trigger: ".o_app[data-menu-xmlid='base.menu_administration']",
+            run: function () {}, // eslint-disable-line no-empty-function
         },
         {
             trigger: "a[name='init_action']",
