@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-inherit="web.ExportDataDialog" t-inherit-mode="extension">
+        <xpath expr="//div[contains(@class,'o_export_format')]" position="after">
+            <div class="form-check">
+                <input
+                    id="o-export-html-as-text"
+                    class="form-check-input"
+                    type="checkbox"
+                />
+                <label class="form-check-label" for="o-export-html-as-text">
+                    Export HTML as text
+                </label>
+            </div>
+        </xpath>
+    </t>
+</templates>
