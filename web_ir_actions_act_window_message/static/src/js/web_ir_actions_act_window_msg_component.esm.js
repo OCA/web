@@ -1,9 +1,13 @@
 import {Component, onWillStart, useState} from "@odoo/owl";
 import {Dialog} from "@web/core/dialog/dialog";
 import {_t} from "@web/core/l10n/translation";
+import {useService} from "@web/core/utils/hooks";
+import {router} from "@web/core/browser/router";
 
 export class ActWindowMessageDialog extends Component {
     setup() {
+        this.orm = useService("orm");
+        this.action = useService("action");
         this.state = useState({
             buttons: [],
         });
@@ -14,23 +18,28 @@ export class ActWindowMessageDialog extends Component {
         this.generateButtons();
     }
 
-    _refreshWidget(env) {
-        const controller = env.services.action.currentController;
-        const state = env.services.router.current.hash;
+    _refreshWidget() {
+        const controller = this.action.currentController;
+        const state = router.current;
         const props = controller.props;
-        env.services.action.switchView(props.type, {resId: state.id});
+        this.action
+            .switchView(props.type, {
+                resId: state.resId,
+            })
+            .catch((err) => {
+                console.error("Error updating the view:", err);
+                window.location.reload();
+            });
     }
 
     generateButtons() {
         var self = this;
         const action = self.props.action;
-        const env = self.props.env;
         if (action.close_button_title !== false) {
             self.state.buttons.push({
                 name: action.close_button_title || _t("Close"),
                 click: () => {
-                    // Refresh the view before closing the dialog
-                    self._refreshWidget(env);
+                    self._refreshWidget();
                     self.props.close();
                 },
                 classes: "btn btn-default",
@@ -43,23 +52,26 @@ export class ActWindowMessageDialog extends Component {
                 classes: button.classes || "btn btn-default",
                 click: () => {
                     if (button.type === "method") {
-                        env.services
-                            .rpc("/web/dataset/call_button", {
-                                model: button.model,
-                                method: button.method,
-                                args: button.args,
-                                kwargs: button.kwargs,
-                            })
-                            .then(function (result) {
+                        self.orm
+                            .call(
+                                button.model,
+                                button.method,
+                                button.args,
+                                button.kwargs
+                            )
+                            .then((result) => {
                                 if (typeof result === "object") {
-                                    return env.services.action.doAction(result);
+                                    return self.action.doAction(result).then(() => {
+                                        self.props.close();
+                                    });
                                 }
-                                self._refreshWidget(env);
+                                self._refreshWidget();
                             });
                     } else {
-                        return env.services.action.doAction(button);
+                        return self.action.doAction(button).then(() => {
+                            self.props.close();
+                        });
                     }
-                    self.props.close();
                 },
             };
             self.state.buttons.push(button_data);
@@ -82,7 +94,6 @@ ActWindowMessageDialog.props = {
         optional: true,
     },
     action: {type: Object, optional: true},
-    env: {type: Object, optional: true},
     is_html_message: {type: Boolean, optional: true},
     size: {type: String},
     close: Function,

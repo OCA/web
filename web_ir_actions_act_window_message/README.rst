@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =========================
 Client side message boxes
 =========================
@@ -17,7 +13,7 @@ Client side message boxes
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -91,8 +87,8 @@ You are responsible for translating the messages.
 Known issues / Roadmap
 ======================
 
-- add message_type to differenciate between warnings, errors, etc.
-- have one message_type to show a nonmodal warning on top right
+-  add message_type to differenciate between warnings, errors, etc.
+-  have one message_type to show a nonmodal warning on top right
 
 Bug Tracker
 ===========
@@ -116,16 +112,17 @@ Authors
 Contributors
 ------------
 
-- Holger Brunn <hbrunn@therp.nl>
-- Zakaria Makrelouf (ACSONE SA/NV) <z.makrelouf@gmail.com>
-- Benjamin Willig (ACSONE SA/NV) <benjamin.willig@acsone.eu>
-- Ioan Galan (Studio73) <ioan@studio73.es>
-- Abraham Anes (Studio73) <abraham@studio73.es>
-- Miguel Gandia (Studio73) <miguel@studio73.es>
-- `DynApps NV <https://www.dynapps.be>`__:
+-  Holger Brunn <hbrunn@therp.nl>
+-  Zakaria Makrelouf (ACSONE SA/NV) <z.makrelouf@gmail.com>
+-  Benjamin Willig (ACSONE SA/NV) <benjamin.willig@acsone.eu>
+-  Ioan Galan (Studio73) <ioan@studio73.es>
+-  Abraham Anes (Studio73) <abraham@studio73.es>
+-  Miguel Gandia (Studio73) <miguel@studio73.es>
+-  Sergio Martínez (Studio73) <sergio.martinez@studio73.es>
+-  `DynApps NV <https://www.dynapps.be>`__:
 
-  - Koen Loodts
-  - Raf Ven
+   -  Koen Loodts
+   -  Raf Ven
 
 Maintainers
 -----------
