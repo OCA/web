@@ -34,7 +34,6 @@ class IrModelFieldsTooltip(models.Model):
         default=True,
         help="Set active to false to hide the Tooltip without removing it.",
     )
-    field_name = fields.Char(related="field_id.name")
     tooltip_text = fields.Html(required=True)
 
     @api.model
