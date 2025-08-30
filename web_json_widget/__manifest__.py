@@ -28,11 +28,11 @@ Features:
             # content from https://app.unpkg.com/jsoneditor@10.2.0/files/dist
             # source: https://github.com/josdejong/jsoneditor?tab=readme-ov-file
             # licenced under Apache-2.0 license
-            "/web_json_widget/static/src/lib/dark-theme.css",
-            "/web_json_widget/static/src/lib/vanilla-jsoneditor.min.js",
-            "/web_json_widget/static/src/lib/vanilla-jsoneditor.min.css",
+            "/web_json_widget/static/lib/dark-theme.css",
+            "/web_json_widget/static/lib/vanilla-jsoneditor.min.js",
+            "/web_json_widget/static/lib/vanilla-jsoneditor.min.css",
             # be careful not to change the hierarchy to make sure icons are loaded!
-            "/web_json_widget/static/src/lib/img/jsoneditor-icons.svg",
+            "/web_json_widget/static/lib/img/jsoneditor-icons.svg",
         ],
     },
     "installable": True,

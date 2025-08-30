@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="JSON Data">
-                    <field name="demo_json_data" widget="json_editor" />
+                    <field name="demo_json_data" />
                 </page>
             </xpath>
         </field>
