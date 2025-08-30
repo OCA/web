@@ -8,14 +8,7 @@
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 */
 
-import {
-    Component,
-    onMounted,
-    onPatched,
-    onWillUnmount,
-    useRef,
-    useState,
-} from "@odoo/owl";
+import {Component, onMounted, onPatched, onWillUnmount, useRef} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
 import {cookie} from "@web/core/browser/cookie";
 import {registry} from "@web/core/registry";
@@ -35,9 +28,7 @@ export class JsonEditorComponent extends Component {
         this.editorRef = useRef("editor");
         this.resId = this.props.record.resId;
         this.resModel = this.props.record.resModel;
-        this.state = useState({
-            value: this.props.record.data[this.props.name] || {},
-        });
+        this.value = this.props.record.data[this.props.name] || {};
 
         onMounted(() => {
             if (this.editorRef.el) {
@@ -87,7 +78,7 @@ export class JsonEditorComponent extends Component {
             onChange: () => {
                 try {
                     const new_value = this.editor.get();
-                    this.state.value = {...new_value};
+                    this.value = new_value;
                     this.props.record.update({[this.props.name]: new_value});
                 } catch (error) {
                     console.error("Error updating JSON value:", error);
@@ -106,7 +97,7 @@ export class JsonEditorComponent extends Component {
 
         try {
             this.editor = new JSONEditor(this.editorRef.el, options);
-            this.editor.set(this.state.value);
+            this.editor.set(this.value);
         } catch (error) {
             console.error("Failed to create JSON editor:", error);
         }
@@ -130,4 +121,4 @@ export const JsonEditor = {
     // Improvements: add supportedOptions, ExtractProps...
 };
 
-registry.category("fields").add("json_editor", JsonEditor);
+registry.category("fields").add("json", JsonEditor);
