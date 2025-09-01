@@ -131,8 +131,9 @@ export class Refresher extends Component {
         const newInterval =
             parseInt(clickedOption.value ?? clickedOption.target.value) ?? -1;
         localStorage.setItem(this.autoRefreshIntervalKey, newInterval);
+        const newIntervalText = clickedOption.textContent ?? clickedOption.target.textContent;
         this.refreshInterval = newInterval;
-        this._setIntervalButtonText();
+        this._setIntervalButtonText(newIntervalText);
         if (this.runningRefresherId) {
             clearTimeout(this.runningRefresherId);
         }
@@ -142,19 +143,11 @@ export class Refresher extends Component {
     _setIntervalButtonText() {
         let intervalValue = 'Off';
         if (!this.refreshInterval || this.refreshInterval <= 0) {
-            intervalValue = "Off";
             document.getElementById("manual-refresh-icon").classList.remove("fa-spin");
         } else {
-            const intervalInSeconds = this.refreshInterval / 1000;
-            if (intervalInSeconds >= 60) {
-                intervalValue = `${Math.floor(intervalInSeconds / 60)}min`;
-            } else {
-                intervalValue = `${intervalInSeconds}s`;
-            }
             document.getElementById("manual-refresh-icon").classList.add("fa-spin");
         }
-        document.getElementById("auto-refresh-dd").textContent =
-            `Auto Refresh: ${intervalValue}`;
+        document.getElementById("auto-refresh-interval-text").textContent = intervalText;
     }
 }
 
