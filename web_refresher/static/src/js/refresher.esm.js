@@ -46,7 +46,7 @@ export class Refresher extends Component {
         this.refreshAnimation = useRefreshAnimation(1000);
         this.onClickRefresh = useDebounced(this.onClickRefresh, 200);
         this.onChangeAutoRefreshInterval = this.onChangeAutoRefreshInterval.bind(this);
-        this.refreshInterval = localStorage.getItem(this.autoRefreshIntervalKey) ?? -1;
+        this.refreshInterval = parseInt(localStorage.getItem(this.autoRefreshIntervalKey)) ?? -1;
         this._setIntervalButtonText();
         this.runningRefresherId = null;
     }
