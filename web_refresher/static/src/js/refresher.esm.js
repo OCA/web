@@ -39,13 +39,15 @@ export function useRefreshAnimation(timeout) {
 }
 
 export class Refresher extends Component {
+    autoRefreshIntervalKey = "autoRefreshInterval";
     setup() {
         super.setup();
         this.action = useService("action");
         this.refreshAnimation = useRefreshAnimation(1000);
         this.onClickRefresh = useDebounced(this.onClickRefresh, 200);
         this.onChangeAutoRefreshInterval = this.onChangeAutoRefreshInterval.bind(this);
-        this.refreshInterval = -1;
+        this.refreshInterval = localStorage.getItem(this.autoRefreshIntervalKey) ?? -1;
+        this._setIntervalButtonText();
         this.runningRefresherId = null;
     }
 
@@ -128,6 +130,7 @@ export class Refresher extends Component {
     onChangeAutoRefreshInterval(clickedOption) {
         const newInterval =
             parseInt(clickedOption.value ?? clickedOption.target.value) ?? -1;
+        localStorage.setItem(this.autoRefreshIntervalKey, newInterval);
         this.refreshInterval = newInterval;
         this._setIntervalButtonText();
         if (this.runningRefresherId) {
