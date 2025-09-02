@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <record id="view_base_document_layout_inherit_font_size" model="ir.ui.view">
+    <field name="name">base.document.layout.font.size</field>
+    <field name="model">base.document.layout</field>
+    <field name="inherit_id" ref="web.view_base_document_layout" />
+    <field name="priority">50</field>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='font']" position="after">
+        <field name="report_font_size" />
+      </xpath>
+    </field>
+  </record>
+</odoo>

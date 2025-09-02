@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+     <template
+        id="styles_company_report_global_fontsize"
+        inherit_id="web.styles_company_report"
+    >
+        <xpath expr="." position="inside">
+            <t t-set="fs" t-value="(company and company.report_font_size) or '11'" />
+             body, .o_report_layout, .page,
+            .o_report_layout *, .page *,
+            table, td, th, p, li, span, div  {
+                font-size: <t t-esc="fs" />pt !important;
+            }
+            .o_report_layout h1, .page h1 { font-size: 1.6em !important; }
+            .o_report_layout h2, .page h2 { font-size: 1.3em !important; }
+            .o_report_layout h3, .page h3 { font-size: 1.15em !important; }
+        </xpath>
+    </template>
+
+  <!-- Base (se aplica a cualquier layout elegido) -->
+  <template id="external_layout_global_fontsize" inherit_id="web.external_layout">
+    <xpath expr="." position="inside">
+      <t t-set="fs" t-value="(company and company.report_font_size) or '11'" />
+      <style>
+        /* fuente para PDF y preview */
+        body, .o_report_layout, .page,
+        .o_report_layout *, .page *,
+        table, td, th, p, li, span, div {
+          font-size: <t t-esc="fs" />pt !important;
+        }
+        .o_report_layout h1, .page h1 { font-size: 1.6em !important; }
+        .o_report_layout h2, .page h2 { font-size: 1.3em !important; }
+        .o_report_layout h3, .page h3 { font-size: 1.15em !important; }
+      </style>
+    </xpath>
+  </template>
+
+  <!-- Standard -->
+  <template
+        id="external_layout_standard_fontsize"
+        inherit_id="web.external_layout_standard"
+    >
+    <xpath expr="." position="inside">
+      <t t-set="fs" t-value="(company and company.report_font_size) or '11'" />
+      <style>
+        body, .o_report_layout, .page,
+        .o_report_layout *, .page *,
+        table, td, th, p, li, span, div {
+          font-size: <t t-esc="fs" />pt !important;
+        }
+        .o_report_layout h1, .page h1 { font-size: 1.6em !important; }
+        .o_report_layout h2, .page h2 { font-size: 1.3em !important; }
+        .o_report_layout h3, .page h3 { font-size: 1.15em !important; }
+      </style>
+    </xpath>
+  </template>
+
+  <!-- Boxed -->
+  <template id="external_layout_boxed_fontsize" inherit_id="web.external_layout_boxed">
+    <xpath expr="." position="inside">
+      <t t-set="fs" t-value="(company and company.report_font_size) or '11'" />
+      <style>
+        body, .o_report_layout, .page,
+        .o_report_layout *, .page *,
+        table, td, th, p, li, span, div {
+          font-size: <t t-esc="fs" />pt !important;
+        }
+        .o_report_layout h1, .page h1 { font-size: 1.6em !important; }
+        .o_report_layout h2, .page h2 { font-size: 1.3em !important; }
+        .o_report_layout h3, .page h3 { font-size: 1.15em !important; }
+      </style>
+    </xpath>
+  </template>
+
+  <!-- Bold -->
+  <template id="external_layout_bold_fontsize" inherit_id="web.external_layout_bold">
+    <xpath expr="." position="inside">
+      <t t-set="fs" t-value="(company and company.report_font_size) or '11'" />
+      <style>
+        body, .o_report_layout, .page,
+        .o_report_layout *, .page *,
+        table, td, th, p, li, span, div {
+          font-size: <t t-esc="fs" />pt !important;
+        }
+        .o_report_layout h1, .page h1 { font-size: 1.6em !important; }
+        .o_report_layout h2, .page h2 { font-size: 1.3em !important; }
+        .o_report_layout h3, .page h3 { font-size: 1.15em !important; }
+      </style>
+    </xpath>
+  </template>
+
+  <!-- Striped -->
+  <template
+        id="external_layout_striped_fontsize"
+        inherit_id="web.external_layout_striped"
+    >
+    <xpath expr="." position="inside">
+      <t t-set="fs" t-value="(company and company.report_font_size) or '11'" />
+      <style>
+        body, .o_report_layout, .page,
+        .o_report_layout *, .page *,
+        table, td, th, p, li, span, div {
+          font-size: <t t-esc="fs" />pt !important;
+        }
+        .o_report_layout h1, .page h1 { font-size: 1.6em !important; }
+        .o_report_layout h2, .page h2 { font-size: 1.3em !important; }
+        .o_report_layout h3, .page h3 { font-size: 1.15em !important; }
+      </style>
+    </xpath>
+  </template>
+
+</odoo>
