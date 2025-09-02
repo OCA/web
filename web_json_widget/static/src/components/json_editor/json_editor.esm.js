@@ -1,4 +1,3 @@
-// eslint-disable-next-line jsdoc/check-tag-names
 /** @odoo-module **/
 
 /* global JSONEditor */
@@ -15,14 +14,6 @@ import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class JsonEditorComponent extends Component {
-    static template = "web_json_widget.JsonEditor";
-    static components = {};
-    static props = {
-        ...standardFieldProps,
-        // Placeholder: { type: String, optional: true },
-    };
-    static defaultProps = {};
-
     setup() {
         this.editor = null;
         this.editorRef = useRef("editor");
@@ -113,6 +104,13 @@ export class JsonEditorComponent extends Component {
         return cookie.get("color_scheme") === "dark";
     }
 }
+JsonEditorComponent.template = "web_json_widget.JsonEditor";
+JsonEditorComponent.components = {};
+JsonEditorComponent.props = {
+    ...standardFieldProps,
+    // Placeholder: { type: String, optional: true },
+};
+JsonEditorComponent.defaultProps = {};
 
 export const JsonEditor = {
     component: JsonEditorComponent,

@@ -93,6 +93,9 @@ Other credits
   `Apache-2.0 <https://github.com/josdejong/jsoneditor/blob/master/LICENSE>`__
   license.
 
+- The backport of this module from 18.0 to 17.0 was financially
+  supported by Pledra
+
 Maintainers
 -----------
 
