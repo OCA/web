@@ -43,7 +43,7 @@ class IrModelData(models.Model):
                     OR age(now() AT TIME ZONE 'UTC', last_presence) < interval %s
                 )
         """,
-            ("%s seconds" % DISCONNECTION_TIMER, "%s seconds" % AWAY_TIMER),
+            (f"{DISCONNECTION_TIMER} seconds", f"{AWAY_TIMER} seconds"),
         )
         return self.env["res.users"].browse([res[0] for res in self.env.cr.fetchall()])
 
