@@ -51,7 +51,7 @@ export class Refresher extends Component {
         onMounted(() => {
             this.onChangeAutoRefreshInterval({
                 value: intervalValue.refreshInterval,
-                textContent: intervalValue.intervalText
+                textContent: intervalValue.intervalText,
             });
         });
         onWillUnmount(() => {
@@ -159,7 +159,7 @@ export class Refresher extends Component {
         this._setIntervalButtonText(newIntervalText);
         this._setLocalStorageValue({
             refreshInterval: newInterval,
-            intervalText: newIntervalText
+            intervalText: newIntervalText,
         });
         if (this.runningRefresherId) {
             clearTimeout(this.runningRefresherId);
