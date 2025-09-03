@@ -36,3 +36,12 @@ class TestCompanyFontSize(TransactionCase):
         co2.write({"report_font_size": "14"})
         self.assertEqual(co1.report_font_size, "9")
         self.assertEqual(co2.report_font_size, "14")
+
+    def test_multiple_changes_persist_in_sequence(self):
+        co = self.Company.create({"name": "Co G"})
+        co.write({"report_font_size": "14"})
+        self.assertEqual(co.report_font_size, "14")
+        co.write({"report_font_size": "10"})
+        self.assertEqual(co.report_font_size, "10")
+        co.write({"report_font_size": "12"})
+        self.assertEqual(co.report_font_size, "12")
