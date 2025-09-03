@@ -3,7 +3,7 @@
  * Copyright 2023 Taras Shabaranskyi
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-import {Component} from "@odoo/owl";
+import {Component, onMounted, onWillUnmount} from "@odoo/owl";
 import {useDebounced} from "@web/core/utils/timing";
 import {useService} from "@web/core/utils/hooks";
 
@@ -46,11 +46,32 @@ export class Refresher extends Component {
         this.refreshAnimation = useRefreshAnimation(1000);
         this.onClickRefresh = useDebounced(this.onClickRefresh, 200);
         this.onChangeAutoRefreshInterval = this.onChangeAutoRefreshInterval.bind(this);
-        this.refreshInterval = parseInt(localStorage.getItem(this.autoRefreshIntervalKey)) ?? -1;
-        this._setIntervalButtonText();
         this.runningRefresherId = null;
+        const intervalValue = this._getLocalStorageValue();
+        onMounted(() => {
+            this.refreshInterval = intervalValue.refreshInterval;
+            this._setIntervalButtonText(intervalValue.intervalText);
+        });
+        onWillUnmount(() => {
+            if (this.runningRefresherId) {
+                clearTimeout(this.runningRefresherId);
+            }
+        });
     }
 
+    _getLocalStorageValue() {
+        const jsonValue = localStorage.getItem(this.autoRefreshIntervalKey);
+        if (jsonValue) {
+            const { refreshInterval, intervalText } = JSON.parse(jsonValue);
+            return { refreshInterval: parseInt(refreshInterval ?? -1), intervalText };
+        }
+        return { refreshInterval: -1, intervalText: 'Off' };
+    }
+
+    _setLocalStorageValue({ refreshInterval, intervalText }) {
+        const value = JSON.stringify({ refreshInterval, intervalText });
+        localStorage.setItem(this.autoRefreshIntervalKey, value);
+    }
     /**
      * @returns {Boolean}
      * @private
@@ -130,25 +151,29 @@ export class Refresher extends Component {
     onChangeAutoRefreshInterval(clickedOption) {
         const newInterval =
             parseInt(clickedOption.value ?? clickedOption.target.value) ?? -1;
-        localStorage.setItem(this.autoRefreshIntervalKey, newInterval);
         const newIntervalText = clickedOption.textContent ?? clickedOption.target.textContent;
         this.refreshInterval = newInterval;
         this._setIntervalButtonText(newIntervalText);
+        this._setLocalStorageValue({ refreshInterval: newInterval, intervalText: newIntervalText });
         if (this.runningRefresherId) {
             clearTimeout(this.runningRefresherId);
         }
         this.refresh();
     }
 
-    _setIntervalButtonText() {
-        let intervalValue = 'Off';
-        if (!this.refreshInterval || this.refreshInterval <= 0) {
-            document.getElementById("manual-refresh-icon").classList.remove("fa-spin");
-        } else {
-            document.getElementById("manual-refresh-icon").classList.add("fa-spin");
+    _setIntervalButtonText(intervalText = 'Off') {
+        const manualRefreshIcon = document.getElementById("manual-refresh-icon");
+        if (manualRefreshIcon) {
+            if (!this.refreshInterval || this.refreshInterval <= 0) {
+                manualRefreshIcon.classList.remove("fa-spin");
+            } else {
+                manualRefreshIcon.classList.add("fa-spin");
+            }
         }
-        document.getElementById("auto-refresh-interval-text").textContent =
-            intervalText;
+        const refreshText = document.getElementById("auto-refresh-interval-text");
+        if (refreshText) {
+            refreshText.textContent = intervalText;
+        }
     }
 }
 
