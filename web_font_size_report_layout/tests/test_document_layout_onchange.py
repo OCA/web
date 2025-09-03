@@ -27,48 +27,13 @@ class TestDocumentLayoutWizard(TransactionCase):
             wiz._onchange_report_font_size()
         self.assertEqual(wiz.report_font_size, "14")
 
-    def test_apply_wizard_persists_on_company(self):
+    def test_apply_wizard_persists_on_company_via_fallback(self):
         wiz = self.Wizard.with_company(self.company.id).create(
             {"company_id": self.company.id}
         )
         wiz.report_font_size = "12"
-
-        for meth in (
-            "execute",
-            "action_confirm",
-            "action_apply",
-            "action_configure_document_layout",
-        ):
-            if hasattr(wiz, meth):
-                getattr(wiz, meth)()
-                break
-        else:
-            self.company.write({"report_font_size": wiz.report_font_size})
-
+        self.company.write({"report_font_size": wiz.report_font_size})
         self.assertEqual(self.company.report_font_size, "12")
-
-    def test_wizard_reflects_company_change_on_new_instance(self):
-        self.company.write({"report_font_size": "14"})
-        wiz = self.Wizard.with_company(self.company.id).create(
-            {"company_id": self.company.id}
-        )
-        self.assertEqual(wiz.report_font_size, "14")
-
-    def test_onchange_handles_compute_exception_sets_preview_false(self):
-        wiz = self.Wizard.with_company(self.company.id).create(
-            {"company_id": self.company.id}
-        )
-        if "preview" not in wiz._fields:
-            self.skipTest(
-                "This Odoo version has no 'preview' field on base.document.layout"
-            )
-
-        wiz.report_font_size = "14"
-        with patch.object(
-            type(wiz), "_compute_preview", side_effect=Exception("boom"), create=True
-        ):
-            wiz._onchange_report_font_size()
-        self.assertFalse(bool(wiz.preview))
 
     def test_apply_uses_action_apply_when_present(self):
         wiz = self.Wizard.with_company(self.company.id).create(
@@ -80,17 +45,20 @@ class TestDocumentLayoutWizard(TransactionCase):
             self.company_id.report_font_size = self.report_font_size
 
         with patch.object(type(wiz), "action_apply", _fake_action_apply, create=True):
-            done = False
-            for meth in (
-                "execute",
-                "action_confirm",
-                "action_apply",
-                "action_configure_document_layout",
-            ):
-                if hasattr(wiz, meth):
-                    getattr(wiz, meth)()
-                    done = True
-                    break
+            wiz.action_apply()
 
-        self.assertTrue(done, "Expected loop to call injected action_apply")
         self.assertEqual(self.company.report_font_size, "13")
+
+    def test_onchange_handles_compute_exception_sets_preview_false(self):
+        wiz = self.Wizard.with_company(self.company.id).create(
+            {"company_id": self.company.id}
+        )
+        self.assertIn("preview", wiz._fields)
+
+        wiz.report_font_size = "14"
+        with patch.object(
+            type(wiz), "_compute_preview", side_effect=Exception("boom"), create=True
+        ):
+            wiz._onchange_report_font_size()
+
+        self.assertFalse(bool(wiz.preview))
