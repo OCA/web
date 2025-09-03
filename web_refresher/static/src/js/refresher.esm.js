@@ -49,7 +49,10 @@ export class Refresher extends Component {
         this.runningRefresherId = null;
         const intervalValue = this._getLocalStorageValue();
         onMounted(() => {
-            this.onChangeAutoRefreshInterval({ value: intervalValue.refreshInterval, textContent: intervalValue.intervalText });
+            this.onChangeAutoRefreshInterval({
+                value: intervalValue.refreshInterval,
+                textContent: intervalValue.intervalText
+            });
         });
         onWillUnmount(() => {
             if (this.runningRefresherId) {
@@ -61,14 +64,14 @@ export class Refresher extends Component {
     _getLocalStorageValue() {
         const jsonValue = localStorage.getItem(this.autoRefreshIntervalKey);
         if (jsonValue) {
-            const { refreshInterval, intervalText } = JSON.parse(jsonValue);
-            return { refreshInterval: parseInt(refreshInterval ?? -1), intervalText };
+            const {refreshInterval, intervalText} = JSON.parse(jsonValue);
+            return {refreshInterval: parseInt(refreshInterval ?? -1), intervalText};
         }
-        return { refreshInterval: -1, intervalText: 'Off' };
+        return {refreshInterval: -1, intervalText: "Off"};
     }
 
-    _setLocalStorageValue({ refreshInterval, intervalText }) {
-        const value = JSON.stringify({ refreshInterval, intervalText });
+    _setLocalStorageValue({refreshInterval, intervalText}) {
+        const value = JSON.stringify({refreshInterval, intervalText});
         localStorage.setItem(this.autoRefreshIntervalKey, value);
     }
     /**
@@ -150,17 +153,21 @@ export class Refresher extends Component {
     onChangeAutoRefreshInterval(clickedOption) {
         const newInterval =
             parseInt(clickedOption.value ?? clickedOption.target.value) ?? -1;
-        const newIntervalText = clickedOption.textContent ?? clickedOption.target.textContent;
+        const newIntervalText =
+            clickedOption.textContent ?? clickedOption.target.textContent;
         this.refreshInterval = newInterval;
         this._setIntervalButtonText(newIntervalText);
-        this._setLocalStorageValue({ refreshInterval: newInterval, intervalText: newIntervalText });
+        this._setLocalStorageValue({
+            refreshInterval: newInterval,
+            intervalText: newIntervalText
+        });
         if (this.runningRefresherId) {
             clearTimeout(this.runningRefresherId);
         }
         this.refresh();
     }
 
-    _setIntervalButtonText(intervalText = 'Off') {
+    _setIntervalButtonText(intervalText = "Off") {
         const manualRefreshIcon = document.getElementById("manual-refresh-icon");
         if (manualRefreshIcon) {
             if (!this.refreshInterval || this.refreshInterval <= 0) {
