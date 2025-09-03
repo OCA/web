@@ -39,7 +39,7 @@ The module offers the following font size options (in points):
 =========== ==== =========================
 Option      Size Description
 =========== ==== =========================
-Small       8pt  For maximum compactness
+Small       9pt  For maximum compactness
 Standard    10pt Odoo's default size
 Large       12pt Better readability
 Extra Large 14pt For high visibility needs
@@ -93,8 +93,8 @@ Contributors
 ------------
 
 - `Binhex <https://www.binhex.cloud>`__:
-- Mario Montes <m.montes@binhex.cloud>
-- Abraham J. Febres <a.febres@binhex.cloud>
+- Mario Montes<m.montes@binhex.cloud>
+- Abraham J. Febres <afebres@binhex.cloud>
 
 Maintainers
 -----------
