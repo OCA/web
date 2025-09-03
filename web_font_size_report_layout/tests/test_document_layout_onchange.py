@@ -23,7 +23,6 @@ class TestDocumentLayoutWizard(TransactionCase):
             {"company_id": cls.company.id}
         )
         wiz.report_font_size = "14"
-        # Debe ejecutarse el onchange sin excepción
         if hasattr(wiz, "_onchange_report_font_size"):
             wiz._onchange_report_font_size()
         self.assertEqual(wiz.report_font_size, "14")

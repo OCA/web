@@ -10,9 +10,7 @@ class TestCompanyFontSize(TransactionCase):
 
     def test_default_and_selection_values(self):
         co = self.Company.create({"name": "Co A"})
-        # Default del módulo: "11"
         self.assertEqual(co.report_font_size, "11")
-        # Selección válida
         co.report_font_size = "9"
         self.assertEqual(co.report_font_size, "9")
 
@@ -22,7 +20,6 @@ class TestCompanyFontSize(TransactionCase):
 
     def test_write_only_style_field_is_safe(self):
         co = self.Company.create({"name": "Co C"})
-        # Cambiar sólo el tamaño de fuente no debe romper ni requerir otros campos
         co.write({"report_font_size": "14"})
         self.assertEqual(co.report_font_size, "14")
 
