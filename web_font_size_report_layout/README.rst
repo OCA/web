@@ -93,8 +93,8 @@ Contributors
 ------------
 
 - `Binhex <https://www.binhex.cloud>`__:
-- Mario Montes<m.montes@binhex.cloud>
-- Abraham J. Febres <afebres@binhex.cloud>
+- Mario Montes <m.montes@binhex.cloud>
+- Abraham J. Febres <a.febres@binhex.cloud>
 
 Maintainers
 -----------
