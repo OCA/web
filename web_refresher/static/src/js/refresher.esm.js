@@ -71,12 +71,14 @@ export class Refresher extends Component {
         let returnInterval = -1;
         let returnText = "Off";
         if (Object.hasOwn(refreshSettings, lookupKey)) {
-            const {refreshInterval=-1, intervalText="Off"} = refreshSettings[lookupKey];
-            returnInterval = parseInt(refreshInterval ?? -1)
+            const {refreshInterval = -1, intervalText = "Off"} =
+                refreshSettings[lookupKey];
+            returnInterval = parseInt(refreshInterval ?? -1);
             returnText = intervalText;
         } else if (Object.hasOwn(refreshSettings, this.refreshDefaultSettingsKey)) {
-            const {refreshInterval=-1, intervalText="Off"} = refreshSettings[this.refreshDefaultSettingsKey];
-            returnInterval = parseInt(refreshInterval ?? -1)
+            const {refreshInterval = -1, intervalText = "Off"} =
+                refreshSettings[this.refreshDefaultSettingsKey];
+            returnInterval = parseInt(refreshInterval ?? -1);
             returnText = intervalText;
         }
         return {refreshInterval: returnInterval, intervalText: returnText};
@@ -158,9 +160,15 @@ export class Refresher extends Component {
     _isRefreshIntervalDefault() {
         const localStoredIntervals = this._getLocalStorageValue();
 
-        if (Object.hasOwn(localStoredIntervals, this.refreshDefaultSettingsKey)
-            && Object.hasOwn(localStoredIntervals[this.refreshDefaultSettingsKey], 'refreshInterval')
-            && this.refreshInterval === localStoredIntervals[this.refreshDefaultSettingsKey].refreshInterval) {
+        if (
+            Object.hasOwn(localStoredIntervals, this.refreshDefaultSettingsKey) &&
+            Object.hasOwn(
+                localStoredIntervals[this.refreshDefaultSettingsKey],
+                "refreshInterval"
+            ) &&
+            this.refreshInterval ===
+                localStoredIntervals[this.refreshDefaultSettingsKey].refreshInterval
+        ) {
             return true;
         }
         return false;
@@ -180,9 +188,12 @@ export class Refresher extends Component {
     setRefreshAsDefault() {
         this._setLocalStorageValue(this.refreshDefaultSettingsKey, {
             refreshInterval: this.refreshInterval,
-            intervalText: document.getElementById("auto-refresh-interval-text").textContent,
+            intervalText: document.getElementById("auto-refresh-interval-text")
+                .textContent,
         });
-        this._setIntervalUi(document.getElementById("auto-refresh-interval-text").textContent);
+        this._setIntervalUi(
+            document.getElementById("auto-refresh-interval-text").textContent
+        );
     }
 
     onChangeAutoRefreshInterval(clickedOption) {
