@@ -50,6 +50,16 @@
                     </div>
                 </div>
                 <button
+                    id="set-as-default-btn"
+                    class="btn btn-secondary m-0"
+                    aria-label="Set as Default"
+                    t-on-click="setRefreshAsDefault"
+                    title="Set as Default"
+                    tabindex="-1"
+                >
+                    <i id="set-as-default-icon" class="fa" />
+                </button>
+                <button
                     id="manual-refresh-btn"
                     class="btn btn-secondary m-0"
                     aria-label="Refresh"
