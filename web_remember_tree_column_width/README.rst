@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==============================
 Web Remember Tree Column Width
 ==============================
@@ -17,7 +13,7 @@ Web Remember Tree Column Width
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -40,13 +36,6 @@ grouping, or reordering.
 .. contents::
    :local:
 
-Known issues / Roadmap
-======================
-
-In certain cases, an event may pass a th element that cannot be used to
-retrieve the corresponding td element. When this happens, the modified
-column width is not stored.
-
 Bug Tracker
 ===========
 
@@ -68,13 +57,14 @@ Authors
 Contributors
 ------------
 
-- Francisco Javier Luna Vázquez <fluna@vauxoo.com>
-- Tomás Álvarez <tomas@vauxoo.com>
-- `Komit <https://komit-consulting.com/>`__:
+-  Francisco Javier Luna Vázquez <fluna@vauxoo.com>
+-  Tomás Álvarez <tomas@vauxoo.com>
+-  `Komit <https://komit-consulting.com/>`__:
 
-  - Cuong Nguyen Mtm <cuong.nmtm@komit-consulting.com>
+   -  Cuong Nguyen Mtm <cuong.nmtm@komit-consulting.com>
 
-- Jasmin Solanki <jasmin.solanki@forgeflow.com>
+-  Jasmin Solanki <jasmin.solanki@forgeflow.com>
+-  Stefan Rijnhart <stefan@opener.amsterdam>
 
 Maintainers
 -----------
