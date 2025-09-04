@@ -65,6 +65,9 @@ export class Refresher extends Component {
     _getLocalStorageValue(lookupKey) {
         const jsonValue = localStorage.getItem(this.autoRefreshIntervalKey);
         const refreshSettings = jsonValue ? JSON.parse(jsonValue) : {};
+        if (!lookupKey) {
+            return refreshSettings;
+        }
         let returnInterval = -1;
         let returnText = "Off";
         if (Object.hasOwn(refreshSettings, lookupKey)) {
@@ -153,9 +156,11 @@ export class Refresher extends Component {
     }
 
     _isRefreshIntervalDefault() {
-        const intervalValue = this._getLocalStorageValue(this.refreshDefaultSettingsKey);
+        const localStoredIntervals = this._getLocalStorageValue();
 
-        if (Object.hasOwn(intervalValue, 'refreshInterval') && this.refreshInterval === intervalValue.refreshInterval) {
+        if (Object.hasOwn(localStoredIntervals, this.refreshDefaultSettingsKey)
+            && Object.hasOwn(localStoredIntervals[this.refreshDefaultSettingsKey], 'refreshInterval')
+            && this.refreshInterval === localStoredIntervals[this.refreshDefaultSettingsKey].refreshInterval) {
             return true;
         }
         return false;
