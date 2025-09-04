@@ -39,7 +39,8 @@ export function useRefreshAnimation(timeout) {
 }
 
 export class Refresher extends Component {
-    autoRefreshIntervalKey = "autoRefreshInterval";
+    autoRefreshIntervalKey = "oca.web_refresher.auto_refresh";
+    refreshDefaultSettingsKey = "default";
     setup() {
         super.setup();
         this.action = useService("action");
@@ -47,8 +48,8 @@ export class Refresher extends Component {
         this.onClickRefresh = useDebounced(this.onClickRefresh, 200);
         this.onChangeAutoRefreshInterval = this.onChangeAutoRefreshInterval.bind(this);
         this.runningRefresherId = null;
-        const intervalValue = this._getLocalStorageValue();
         onMounted(() => {
+            const intervalValue = this._getLocalStorageValue(window.location.pathname);
             this.onChangeAutoRefreshInterval({
                 value: intervalValue.refreshInterval,
                 textContent: intervalValue.intervalText,
@@ -61,17 +62,29 @@ export class Refresher extends Component {
         });
     }
 
-    _getLocalStorageValue() {
+    _getLocalStorageValue(lookupKey) {
         const jsonValue = localStorage.getItem(this.autoRefreshIntervalKey);
-        if (jsonValue) {
-            const {refreshInterval, intervalText} = JSON.parse(jsonValue);
-            return {refreshInterval: parseInt(refreshInterval ?? -1), intervalText};
+        const refreshSettings = jsonValue ? JSON.parse(jsonValue) : {};
+        let returnInterval = -1;
+        let returnText = "Off";
+        if (Object.hasOwn(refreshSettings, lookupKey)) {
+            const {refreshInterval=-1, intervalText="Off"} = refreshSettings[lookupKey];
+            returnInterval = parseInt(refreshInterval ?? -1)
+            returnText = intervalText;
+        } else if (Object.hasOwn(refreshSettings, this.refreshDefaultSettingsKey)) {
+            const {refreshInterval=-1, intervalText="Off"} = refreshSettings[this.refreshDefaultSettingsKey];
+            returnInterval = parseInt(refreshInterval ?? -1)
+            returnText = intervalText;
         }
-        return {refreshInterval: -1, intervalText: "Off"};
+        return {refreshInterval: returnInterval, intervalText: returnText};
     }
 
-    _setLocalStorageValue({refreshInterval, intervalText}) {
-        const value = JSON.stringify({refreshInterval, intervalText});
+    _setLocalStorageValue(settingsKey, {refreshInterval, intervalText}) {
+        // Get current settings
+        const jsonValue = localStorage.getItem(this.autoRefreshIntervalKey);
+        const refreshSettings = jsonValue ? JSON.parse(jsonValue) : {};
+        refreshSettings[settingsKey] = {refreshInterval, intervalText};
+        const value = JSON.stringify(refreshSettings);
         localStorage.setItem(this.autoRefreshIntervalKey, value);
     }
     /**
@@ -139,6 +152,15 @@ export class Refresher extends Component {
         this.action.doAction(viewAction, options);
     }
 
+    _isRefreshIntervalDefault() {
+        const intervalValue = this._getLocalStorageValue(this.refreshDefaultSettingsKey);
+
+        if (Object.hasOwn(intervalValue, 'refreshInterval') && this.refreshInterval === intervalValue.refreshInterval) {
+            return true;
+        }
+        return false;
+    }
+
     async onClickRefresh() {
         const {searchModel, pagerProps} = this.props;
         if (!searchModel && !pagerProps) {
@@ -150,24 +172,34 @@ export class Refresher extends Component {
         }
     }
 
+    setRefreshAsDefault() {
+        this._setLocalStorageValue(this.refreshDefaultSettingsKey, {
+            refreshInterval: this.refreshInterval,
+            intervalText: document.getElementById("auto-refresh-interval-text").textContent,
+        });
+        this._setIntervalUi(document.getElementById("auto-refresh-interval-text").textContent);
+    }
+
     onChangeAutoRefreshInterval(clickedOption) {
         const newInterval =
             parseInt(clickedOption.value ?? clickedOption.target.value) ?? -1;
         const newIntervalText =
-            clickedOption.textContent ?? clickedOption.target.textContent;
+            clickedOption.textContent ?? clickedOption.target.textContent ?? "Off";
         this.refreshInterval = newInterval;
-        this._setIntervalButtonText(newIntervalText);
-        this._setLocalStorageValue({
-            refreshInterval: newInterval,
-            intervalText: newIntervalText,
-        });
+        this._setIntervalUi(newIntervalText);
         if (this.runningRefresherId) {
             clearTimeout(this.runningRefresherId);
         }
         this.refresh();
+
+        this._setLocalStorageValue(window.location.pathname, {
+            refreshInterval: newInterval,
+            intervalText: newIntervalText,
+        });
     }
 
-    _setIntervalButtonText(intervalText = "Off") {
+    _setIntervalUi(intervalText) {
+        // Check if the refresh is active and spin the refresh button if active
         const manualRefreshIcon = document.getElementById("manual-refresh-icon");
         if (manualRefreshIcon) {
             if (!this.refreshInterval || this.refreshInterval <= 0) {
@@ -176,9 +208,21 @@ export class Refresher extends Component {
                 manualRefreshIcon.classList.add("fa-spin");
             }
         }
+        // Set the interval dropdown text to the selected interval
         const refreshText = document.getElementById("auto-refresh-interval-text");
         if (refreshText) {
             refreshText.textContent = intervalText;
+        }
+        // Check if the current interval is the default and set the star icon accordingly
+        const setAsDefaultIcon = document.getElementById("set-as-default-icon");
+        if (setAsDefaultIcon) {
+            if (this._isRefreshIntervalDefault()) {
+                setAsDefaultIcon.classList.remove("fa-star-o");
+                setAsDefaultIcon.classList.add("fa-star");
+            } else {
+                setAsDefaultIcon.classList.remove("fa-star");
+                setAsDefaultIcon.classList.add("fa-star-o");
+            }
         }
     }
 }
