@@ -4,7 +4,7 @@
 
 {
     "name": "Partner JSON Demo",
-    "version": "18.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Demo",
     "summary": "Adds a JSON field to partners and displays it with the JSON widget.",
     "author": "Lambdao, Odoo Community Association (OCA)",
