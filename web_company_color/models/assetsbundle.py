@@ -10,7 +10,7 @@ class AssetsBundleCompanyColor(AssetsBundle):
         """Process the user active company scss and returns the node to inject"""
         try:
             active_company_id = int(
-                request.httprequest.cookies.get("cids", "").split(",")[0]
+                request.httprequest.cookies.get("cids", "").split("-")[0]
             )
         except Exception:
             active_company_id = False
