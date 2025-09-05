@@ -4,7 +4,7 @@
 {
     "name": "Web Widget Remaining Days Exact Date",
     "summary": "Allows displaying the exact date alongside the remaining days",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "development_status": "Alpha",
     "website": "https://github.com/OCA/web",
     "author": "Tecnativa, Odoo Community Association (OCA)",
