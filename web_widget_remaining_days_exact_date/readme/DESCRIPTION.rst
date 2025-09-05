@@ -1,1 +1,0 @@
-This module allows displaying the exact date alongside the remaining days.
