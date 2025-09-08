@@ -5,6 +5,7 @@ import {registry} from "@web/core/registry";
 
 registry.category("web_tour.tours").add("web_pivot_computed_measure_tour", {
     url: "/odoo",
+    test: true,
     steps: () => [
         {
             trigger: ".o_navbar_apps_menu button",
