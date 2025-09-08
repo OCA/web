@@ -22,7 +22,7 @@ odoo.define("web_widget_url_advanced", function (require) {
         _get_text: function () {
             if (this.text_field) {
                 var field_value = this.recordData[this.text_field];
-                if (_.isObject(field_value) && _.has(field_value.data)) {
+                if (_.isObject(field_value) && _.has(field_value, "data")) {
                     field_value = field_value.data.display_name;
                 }
                 return field_value;
@@ -37,13 +37,14 @@ odoo.define("web_widget_url_advanced", function (require) {
         _renderReadonly: function () {
             // Base widget uses `this.attrs.text` instead of `this.value` when available.
             // TODO: To check better way for update link
-            this.attrs.text = this._get_text();
             this._super.apply(this, arguments);
+            var $link = this.$el.is("a") ? this.$el : this.$el.find("a");
+            if ($link.length) {
+                $link.text(this._get_text() || this.value || "");
+            }
             var prefix = this.attrs.prefix_name || this.attrs.options.prefix_name;
             if (prefix) {
-                this.$el.html(
-                    $(this.$el.html()).attr("href", prefix + ":" + this.value)
-                );
+                $link.attr("href", prefix + this.value);
             }
         },
     });
