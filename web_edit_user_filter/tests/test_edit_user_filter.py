@@ -1,10 +1,11 @@
 # Copyright 2019 Onestein
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SingleTransactionCase, post_install
+from odoo.tests import tagged
+from odoo.tests.common import SingleTransactionCase
 
 
-@post_install(True)
+@tagged("post_install", "-at_install")
 class TestEditUserFilter(SingleTransactionCase):
     def test_filter_facet_inclusion(self):
         self.env["ir.filters"].create(
