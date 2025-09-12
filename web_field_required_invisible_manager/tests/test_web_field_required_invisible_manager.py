@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests import Form, common
+from odoo.tools import mute_logger
 
 
 class TestFieldRequiredIvisibleManager(common.SavepointCase):
@@ -215,9 +216,10 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
         self.env["res.partner.title"].default_get(["shortcut"])
         # onchange_field_id()
         self.assertFalse(self.invisible_title_rec_id.required)
-        self.invisible_title_rec_id.field_id = self.partner_title_name_field_id
-        self.invisible_title_rec_id.required_model_id = self.partner_model_id
-        self.invisible_title_rec_id._compute_model_name()
+        with mute_logger("odoo.modules.registry"):
+            self.invisible_title_rec_id.field_id = self.partner_title_name_field_id
+            self.invisible_title_rec_id.required_model_id = self.partner_model_id
+            self.invisible_title_rec_id._compute_model_name()
         self.assertTrue(self.invisible_title_rec_id.required)
         # unlink
         self.invisible_rec_id.unlink()
