@@ -39,7 +39,7 @@ repos:
         language: fail
         files: '[a-zA-Z0-9_]*/i18n/en\.po$'
   - repo: https://github.com/oca/maintainer-tools
-    rev: d5fab7ee87fceee858a3d01048c78a548974d935
+    rev: f9b919b9868143135a9c9cb03021089cabba8223
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
@@ -104,6 +104,7 @@ repos:
         additional_dependencies:
           - "eslint@7.8.1"
           - "eslint-plugin-jsdoc@"
+          - "globals@"
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
     hooks:

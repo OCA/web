@@ -43,10 +43,17 @@ jobs:
             name: test with OCB
             makepot: "true"
           - container: ghcr.io/oca/oca-ci/py3.6-odoo14.0:latest
-            exclude: "web_widget_model_viewer"
+            include: "web_disable_export_group"
             name: test with Odoo
           - container: ghcr.io/oca/oca-ci/py3.6-ocb14.0:latest
-            exclude: "web_widget_model_viewer"
+            include: "web_disable_export_group"
+            name: test with OCB
+            makepot: "true"
+          - container: ghcr.io/oca/oca-ci/py3.6-odoo14.0:latest
+            exclude: "web_widget_model_viewer,web_disable_export_group"
+            name: test with Odoo
+          - container: ghcr.io/oca/oca-ci/py3.6-ocb14.0:latest
+            exclude: "web_widget_model_viewer,web_disable_export_group"
             name: test with OCB
             makepot: "true"
     services:
