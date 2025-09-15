@@ -6,46 +6,46 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-03-07 08:01+0000\n"
-"Last-Translator: Ediz Duman <neps1192@gmail.com>\n"
+"PO-Revision-Date: 2025-09-15 16:42+0000\n"
+"Last-Translator: Betül Öğmen <betulo@eska.biz>\n"
 "Language-Team: none\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: web_responsive
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/views/form/status_bar_buttons.xml:0
 #, python-format
 msgid "Action"
-msgstr ""
+msgstr "Eylem"
 
 #. module: web_responsive
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/components/menu_canonical_searchbar/searchbar.xml:0
 #, python-format
 msgid "App Icon"
-msgstr ""
+msgstr "Uygulama simgesi"
 
 #. module: web_responsive
 #: model:ir.actions.act_window,name:web_responsive.res_users_view_form_apps_menu_preferences_action
 msgid "Apps Menu Preferences"
-msgstr ""
+msgstr "Uygulamalar Menüsü Tercihleri"
 
 #. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__apps_menu_search_type
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Apps Menu Search Type"
-msgstr ""
+msgstr "Uygulamalar Menüsü Arama Türü"
 
 #. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__apps_menu_theme
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Apps Menu Theme"
-msgstr ""
+msgstr "Uygulamalar Menü Teması"
 
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_search_type__canonical
@@ -57,12 +57,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_search_type__command_palette
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Command Palette"
-msgstr ""
+msgstr "Komut Paleti"
 
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_theme__community
 msgid "Community"
-msgstr ""
+msgstr "Topluluk"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -76,18 +76,18 @@ msgstr "Vazgeç"
 #: code:addons/web_responsive/static/src/components/command_palette/main.xml:0
 #, python-format
 msgid "Exit"
-msgstr ""
+msgstr "Çıkış"
 
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_search_type__fuse
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Fuse"
-msgstr ""
+msgstr "Sigorta"
 
 #. module: web_responsive
 #: model:ir.model,name:web_responsive.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Yönlendirme"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -101,7 +101,7 @@ msgstr "Ana Menü"
 #: code:addons/web_responsive/static/src/components/chatter/chatter.xml:0
 #, python-format
 msgid "Log note"
-msgstr ""
+msgstr "Not Ekle"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -113,7 +113,7 @@ msgstr "Büyütme"
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_theme__milk
 msgid "Milk"
-msgstr ""
+msgstr "Süt"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -127,24 +127,24 @@ msgstr "Küçültme"
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "New"
-msgstr ""
+msgstr "Yeni"
 
 #. module: web_responsive
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/components/menu_canonical_searchbar/searchbar.xml:0
 #, python-format
 msgid "Nothing to show"
-msgstr ""
+msgstr "Gösterilecek bir şey yok"
 
 #. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__is_redirect_home
 msgid "Redirect to Home"
-msgstr ""
+msgstr "Ana Sayfaya Yönlendir"
 
 #. module: web_responsive
 #: model:ir.model.fields,help:web_responsive.field_res_users__is_redirect_home
 msgid "Redirect to dashboard after signing in"
-msgstr ""
+msgstr "Oturum açtıktan sonra panoya yönlendir"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -156,12 +156,12 @@ msgstr "Kaydet"
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Search Type"
-msgstr ""
+msgstr "Arama Türü"
 
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Search Type Help"
-msgstr ""
+msgstr "Arama Türü Yardımı"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -176,32 +176,32 @@ msgstr "Arama menüleri..."
 #: code:addons/web_responsive/static/src/components/chatter/chatter.xml:0
 #, python-format
 msgid "Send message"
-msgstr ""
+msgstr "Mesaj Gönder"
 
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #. module: web_responsive
 #: model:ir.model,name:web_responsive.model_res_users
 msgid "User"
-msgstr ""
+msgstr "Kullanıcı"
 
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "a new search algorithm is used"
-msgstr ""
+msgstr "yeni bir arama algoritması kullanılıyor"
 
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "the standard odoo search tool"
-msgstr ""
+msgstr "standart odoo arama aracı"
 
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "uses a standard algorithm"
-msgstr ""
+msgstr "standart bir algoritma kullanır"
 
 #, python-format
 #~ msgid "All"
