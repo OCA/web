@@ -37,6 +37,8 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
             this.date_stop = params.date_stop;
             this.date_delay = params.date_delay;
             this.colors = params.colors;
+            this.readonly_field = params.readonly_field;
+
             this.fieldNames = params.fieldNames;
             this.default_group_by = params.default_group_by;
             this.dependency_arrow = params.dependency_arrow;
@@ -537,6 +539,9 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
             // ➔ Instantaneous events / those with inverted dates are displayed as points.
             if (date_stop && moment(date_start).isBefore(date_stop)) {
                 r.end = date_stop;
+            }
+            if (this.readonly_field && evt[this.readonly_field]) {
+                r.editable = false;
             }
             this.color = null;
             return r;
