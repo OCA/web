@@ -37,6 +37,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
             this.date_stop = params.date_stop;
             this.date_delay = params.date_delay;
             this.colors = params.colors;
+            this.color_field = params.color_field;
             this.fieldNames = params.fieldNames;
             this.default_group_by = params.default_group_by;
             this.dependency_arrow = params.dependency_arrow;
@@ -512,7 +513,9 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
             } else {
                 group = -1;
             }
-
+            if (this.color_field) {
+                this.color = evt[this.color_field];
+            }
             for (const color of this.colors) {
                 if (py.eval(`'${evt[color.field]}' ${color.opt} '${color.value}'`)) {
                     this.color = color.color;
