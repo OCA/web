@@ -1,4 +1,5 @@
 # Copyright 2023 ooops404
+# Copyright 2025 Simone Rubino - PyTech
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html)
 import json
 
@@ -16,9 +17,12 @@ class IrUiView(models.Model):
         arch, new_fields = super().postprocess_and_fields(node, model, validate)
         if self.type not in ["form", "tree"] and node.tag not in ["form", "tree"]:
             return arch, new_fields
+        restrictions_ids = self.env["custom.field.restriction"]._get_ids_by_model(
+            model or self.model
+        )
         restrictions = self.env["custom.field.restriction"].search(
             [
-                ("model_name", "=", model or self.model),
+                ("id", "in", restrictions_ids),
                 ("group_ids", "in", self.env.user.groups_id.ids),
             ]
         )
@@ -36,10 +40,14 @@ class IrUiView(models.Model):
             for k in view_model.field_id
             if k.ttype in ["many2many", "many2one", "one2many"]
         ]
-        related_models_names = [r[1] for r in related_fields]
+        restrictions_ids = []
+        for model_name in [r[1] for r in related_fields]:
+            restrictions_ids += self.env["custom.field.restriction"]._get_ids_by_model(
+                model_name
+            )
         restrictions = self.env["custom.field.restriction"].search(
             [
-                ("model_name", "in", related_models_names),
+                ("id", "in", restrictions_ids),
                 ("group_ids", "in", self.env.user.groups_id.ids),
             ]
         )

@@ -1,7 +1,9 @@
 # Copyright 2023 ooops404
+# Copyright 2025 Simone Rubino - PyTech
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests import Form, common
+from odoo.tools import get_cache_key_counter
 
 
 class TestFieldRequiredIvisibleManager(common.SavepointCase):
@@ -229,3 +231,32 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
         )
         self.env.user.fields_view_get(view_id=self.view_users_form.id, view_type="form")
         self.env.user.fields_view_get(view_id=self.view_users_tree.id, view_type="tree")
+
+    def test_cache_found_restrictions(self):
+        """The Restrictions found are cached by model."""
+        # Arrange
+        restriction_model = self.env["custom.field.restriction"]
+        restriction_cached_method = restriction_model._get_ids_by_model
+        record = self.deco_addict
+        record_model = record._name
+        restriction_cached_method.clear_cache(restriction_model)
+
+        cache, key, counter = get_cache_key_counter(
+            restriction_cached_method, record_model
+        )
+        starting_hit_count = counter.hit
+        starting_miss_count = counter.miss
+        # pre-condition
+        self.assertNotIn(key, cache)
+
+        # Act 1: Compute the defaults 1st time
+        record.default_get([])
+        # Assert 1: Cache is missed -> the value is computed
+        self.assertEqual(counter.hit, starting_hit_count)
+        self.assertEqual(counter.miss, starting_miss_count + 1)
+
+        # Act 2: Compute the defaults 2nd time
+        record.default_get([])
+        # Assert 2: Cache is used
+        self.assertEqual(counter.hit, starting_hit_count + 1)
+        self.assertEqual(counter.miss, starting_miss_count + 1)
