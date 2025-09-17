@@ -4,7 +4,7 @@
 {
     "name": "Edit User Filters",
     "category": "Extra Tools",
-    "version": "14.0.1.0.2",
+    "version": "14.0.1.0.3",
     "author": "Onestein,Level Prime Srl,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "development_status": "Production/Stable",
