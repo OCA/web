@@ -3,7 +3,7 @@
 {
     "name": "Web Button Visibility",
     "category": "Web",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "license": "AGPL-3",
     "author": "Ilyas, ooops404, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",

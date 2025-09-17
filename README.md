@@ -31,7 +31,7 @@ addon | version | maintainers | summary
 [web_action_conditionable](web_action_conditionable/) | 14.0.1.0.1 |  | web_action_conditionable
 [web_advanced_search](web_advanced_search/) | 14.0.1.0.1 |  | Easier and more powerful searching tools
 [web_assets_warmup](web_assets_warmup/) | 14.0.1.0.0 |  | Ensure that assets are generated when Odoo starts.
-[web_button_visibility](web_button_visibility/) | 14.0.1.0.0 | <a href='https://github.com/ilyasProgrammer'><img src='https://github.com/ilyasProgrammer.png' width='32' height='32' style='border-radius:50%;' alt='ilyasProgrammer'/></a> | Web Button Visibility
+[web_button_visibility](web_button_visibility/) | 14.0.1.1.0 | <a href='https://github.com/ilyasProgrammer'><img src='https://github.com/ilyasProgrammer.png' width='32' height='32' style='border-radius:50%;' alt='ilyasProgrammer'/></a> | Web Button Visibility
 [web_calendar_color_field](web_calendar_color_field/) | 14.0.1.0.0 |  | Calendar Color Field
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 14.0.1.0.0 | <a href='https://github.com/Yajo'><img src='https://github.com/Yajo.png' width='32' height='32' style='border-radius:50%;' alt='Yajo'/></a> | Customizable calendar slot durations
 [web_company_color](web_company_color/) | 14.0.2.0.0 |  | Web Company Color
@@ -45,7 +45,7 @@ addon | version | maintainers | summary
 [web_drop_target](web_drop_target/) | 14.0.1.1.2 |  | Allows to drag files into Odoo
 [web_edit_user_filter](web_edit_user_filter/) | 14.0.1.0.3 |  | Edit User Filters
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 |  | Web Environment Ribbon
-[web_field_required_invisible_manager](web_field_required_invisible_manager/) | 14.0.2.3.3 | <a href='https://github.com/ilyasProgrammer'><img src='https://github.com/ilyasProgrammer.png' width='32' height='32' style='border-radius:50%;' alt='ilyasProgrammer'/></a> | Web Field Required Invisible Readonly Managerr
+[web_field_required_invisible_manager](web_field_required_invisible_manager/) | 14.0.2.4.0 | <a href='https://github.com/ilyasProgrammer'><img src='https://github.com/ilyasProgrammer.png' width='32' height='32' style='border-radius:50%;' alt='ilyasProgrammer'/></a> | Web Field Required Invisible Readonly Managerr
 [web_fix_modules_load](web_fix_modules_load/) | 14.0.1.0.0 | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Fix translations loading from frontend with many modules
 [web_group_expand](web_group_expand/) | 14.0.1.0.0 |  | Group Expand Buttons
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 14.0.1.0.2 |  | Enables triggering of more than one action on ActionManager
