@@ -380,15 +380,20 @@ on form load/save/reload.</p>
 <li><a class="reference internal" href="#usage" id="id1">Usage</a><ul>
 <li><a class="reference internal" href="#usage-of-message-fields" id="id2">Usage of message fields:</a></li>
 <li><a class="reference internal" href="#evaluation-context-variables-available-in-message-value-code" id="id3">Evaluation context variables available in Message Value Code:</a></li>
-<li><a class="reference internal" href="#message-setting-examples" id="id4">Message setting examples:</a></li>
+<li><a class="reference internal" href="#trigger-fields" id="id4">Trigger Fields</a></li>
+<li><a class="reference internal" href="#message-setting-examples" id="id5">Message setting examples:</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="id5">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="id6">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="id7">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="id8">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="id9">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="id10">Maintainers</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="id6">Known issues / Roadmap</a><ul>
+<li><a class="reference internal" href="#banner-presentation-inside-group" id="id7">Banner presentation inside <cite>&lt;group&gt;</cite></a></li>
+<li><a class="reference internal" href="#limitations-of-draft-eval-context-variable" id="id8">Limitations of <cite>draft</cite> eval context variable</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bug-tracker" id="id9">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id10">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id11">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id12">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="id13">Maintainers</a></li>
 </ul>
 </li>
 </ul>
@@ -397,8 +402,9 @@ on form load/save/reload.</p>
 <h1><a class="toc-backref" href="#id1">Usage</a></h1>
 <ol class="arabic simple">
 <li>Go to <em>Settings &gt; Tachnical &gt; User Interface &gt; Form Banner Rules</em> and create a rule.</li>
-<li>Choose Model, (optionally) restrict Form Views, set Default Severity, Target XPath
-(insertion point), Position, and configure the message.</li>
+<li>Choose Model, select Trigger Fields (optional), set Default Severity, select Views
+(optional), update Target XPath (insertion point) and Position, and configure the
+message.</li>
 <li>Save. Open any matching form record—the banner will appear and auto-refresh after
 load/save/reload.</li>
 </ol>
@@ -423,6 +429,13 @@ variables are available.</li>
 <li><cite>user</cite>: Current user (<cite>env.user</cite>).</li>
 <li><cite>ctx</cite>: Copy of the current context (<cite>dict(env.context)</cite>).</li>
 <li><cite>record</cite>: Current record (the form’s record).</li>
+<li><cite>draft</cite>: The persisted field values of the ORM record (before applying the current
+form’s unsaved changes) + the current unsaved changes on trigger fields.
+Should be used instead of <cite>record</cite> when your rule is triggered dynamically by an
+update to a trigger field. It doesn’t include any values from complex fields
+(x2many/reference, etc).</li>
+<li><cite>record_id</cite>: Integer id of the record being edited, or <cite>False</cite> if the form
+is creating a new record.</li>
 <li><cite>model</cite>: Shortcut to the current model (<cite>env[record._name]</cite>).</li>
 <li><cite>url_for(obj)</cite>: Helper that returns a backend form URL for <cite>obj</cite>.</li>
 <li><cite>context_today(ts=None)</cite>: User-timezone “today” (date) for reliable date comparisons.</li>
@@ -434,8 +447,18 @@ comparisons/rounding.</li>
 </ul>
 <p>All of the above are injected by the module to the safe_eval locals.</p>
 </div>
+<div class="section" id="trigger-fields">
+<h2><a class="toc-backref" href="#id4">Trigger Fields</a></h2>
+<p><em>Trigger Fields</em> is an optional list of model fields that, when changed in the open
+form, cause the banner to <strong>recompute live</strong>. If left empty, the banner does <strong>not</strong>
+auto-refresh as the user edits the form.</p>
+<p>When a trigger fires, the module sends the current draft values to the server, sanitizes
+them, builds an evaluation record, and re-runs your <cite>message_value_code</cite>.</p>
+<p>You should use <cite>draft</cite> instead of <cite>record</cite> to access the current form values if your
+rule is triggered based on an update to a trigger field.</p>
+</div>
 <div class="section" id="message-setting-examples">
-<h2><a class="toc-backref" href="#id4">Message setting examples:</a></h2>
+<h2><a class="toc-backref" href="#id5">Message setting examples:</a></h2>
 <p><strong>A) Missing email on contact (warning)</strong></p>
 <ul class="simple">
 <li>Model: <cite>res.partner</cite></li>
@@ -472,7 +495,7 @@ comparisons/rounding.</li>
 </ul>
 <pre class="code python literal-block">
 <span class="p">{</span>
-  <span class="s2">&quot;visible&quot;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">amount_total</span> <span class="o">&gt;</span> <span class="mi">30000</span><span class="p">,</span>
+  <span class="s2">&quot;visible&quot;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">amount_total</span> <span class="o">&gt;=</span> <span class="mi">30000</span><span class="p">,</span>
   <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;danger&quot;</span> <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">amount_total</span> <span class="o">&gt;=</span> <span class="mi">100000</span> <span class="k">else</span> <span class="s2">&quot;warning&quot;</span><span class="p">,</span>
   <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;amount_total&quot;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">amount_total</span><span class="p">},</span>
 <span class="p">}</span>
@@ -489,7 +512,7 @@ comparisons/rounding.</li>
   <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;validity_date&quot;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">validity_date</span><span class="p">},</span>
 <span class="p">}</span>
 </pre>
-<p><strong>E) Pending activities on a task (uses env)</strong></p>
+<p><strong>E) Pending activities on a task (uses `env`)</strong></p>
 <ul class="simple">
 <li>Model: <cite>project.task</cite></li>
 <li>Message: <cite>There are ${cnt} pending activities.</cite></li>
@@ -499,18 +522,28 @@ comparisons/rounding.</li>
 <span class="n">cnt</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s2">&quot;mail.activity&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">search_count</span><span class="p">([(</span><span class="s2">&quot;res_model&quot;</span><span class="p">,</span><span class="s2">&quot;=&quot;</span><span class="p">,</span><span class="n">record</span><span class="o">.</span><span class="n">_name</span><span class="p">),(</span><span class="s2">&quot;res_id&quot;</span><span class="p">,</span><span class="s2">&quot;=&quot;</span><span class="p">,</span><span class="n">record</span><span class="o">.</span><span class="n">id</span><span class="p">)])</span>
 <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;visible&quot;</span><span class="p">:</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;cnt&quot;</span><span class="p">:</span> <span class="n">cnt</span><span class="p">}}</span>
 </pre>
-<p><strong>F) HTML banner linking to the customer’s last sales order</strong></p>
+<p><strong>F) Product is missing internal reference (uses trigger fields)</strong></p>
+<ul class="simple">
+<li>Model: <cite>product.template</cite></li>
+<li>Trigger Fields: <cite>default_code</cite></li>
+<li>Message: <cite>Make sure to set an internal reference!</cite></li>
+<li>Message Value Code:</li>
+</ul>
+<pre class="code python literal-block">
+<span class="p">{</span><span class="s2">&quot;visible&quot;</span><span class="p">:</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">draft</span><span class="o">.</span><span class="n">default_code</span><span class="p">)}</span>
+</pre>
+<p><strong>G) HTML banner linking to the customer’s last sales order (uses trigger fields)</strong></p>
 <ul class="simple">
 <li>Model: <cite>sale.order</cite></li>
+<li>Trigger Fields: <cite>partner_id</cite></li>
 <li>Message: (leave blank; <cite>html</cite> provided by Message Value Code)</li>
 <li>Message Value Code (multi-line with <cite>result</cite>):</li>
 </ul>
 <pre class="code python literal-block">
-<span class="n">last</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
-  <span class="p">[(</span><span class="s2">&quot;partner_id&quot;</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">partner_id</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">id</span><span class="p">)],</span>
-  <span class="n">order</span><span class="o">=</span><span class="s2">&quot;date_order desc, id desc&quot;</span><span class="p">,</span>
-  <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="n">domain</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;partner_id&quot;</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">draft</span><span class="o">.</span><span class="n">partner_id</span><span class="o">.</span><span class="n">id</span><span class="p">)]</span>
+<span class="k">if</span> <span class="n">record_id</span><span class="p">:</span>
+  <span class="n">domain</span> <span class="o">+=</span> <span class="p">[(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="n">record_id</span><span class="p">)]</span>
+<span class="n">last</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;date_order desc, id desc&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">last</span><span class="p">:</span>
   <span class="n">html</span> <span class="o">=</span> <span class="s2">&quot;&lt;strong&gt;Previous order:&lt;/strong&gt; &lt;a href='</span><span class="si">%s</span><span class="s2">'&gt;</span><span class="si">%s</span><span class="s2">&lt;/a&gt;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">url_for</span><span class="p">(</span><span class="n">last</span><span class="p">),</span> <span class="n">last</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
   <span class="n">result</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;visible&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">:</span> <span class="n">html</span><span class="p">}</span>
@@ -520,13 +553,28 @@ comparisons/rounding.</li>
 </div>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#id5">Known issues / Roadmap</a></h1>
+<h1><a class="toc-backref" href="#id6">Known issues / Roadmap</a></h1>
+<div class="section" id="banner-presentation-inside-group">
+<h2><a class="toc-backref" href="#id7">Banner presentation inside <cite>&lt;group&gt;</cite></a></h2>
 <p>Placing a full-width inline banner inside <cite>&lt;group&gt;</cite> is currently not supported. The
-banner will be limited to 50% of the group’s width, and its label/value ratio will be
-forced to 1:1.</p>
+presentation of the banner and the child fields will be distorted.</p>
+</div>
+<div class="section" id="limitations-of-draft-eval-context-variable">
+<h2><a class="toc-backref" href="#id8">Limitations of <cite>draft</cite> eval context variable</a></h2>
+<ul class="simple">
+<li><cite>draft</cite> is always available in the eval context, but for new records (<cite>record_id</cite> =
+<cite>False</cite>) it only contains the trigger fields from the banner rules.</li>
+<li>For existing records, <cite>draft</cite> overlays the trigger field values on top of the
+persisted record; all other fields come from <cite>Model.new</cite> defaults rather than the
+database.</li>
+<li>Only simple field types are included: <cite>char</cite>, <cite>text</cite>, <cite>html</cite>, <cite>selection</cite>, <cite>boolean</cite>,
+<cite>integer</cite>, <cite>float</cite>, <cite>monetary</cite>, <cite>date</cite>, <cite>datetime</cite>, and <cite>many2one</cite> (normalized to an
+integer ID). <strong>x2many/reference/other types are omitted.</strong></li>
+</ul>
+</div>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#id6">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#id9">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
@@ -534,24 +582,25 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#id7">Credits</a></h1>
+<h1><a class="toc-backref" href="#id10">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#id8">Authors</a></h2>
+<h2><a class="toc-backref" href="#id11">Authors</a></h2>
 <ul class="simple">
 <li>Quartile</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#id9">Contributors</a></h2>
+<h2><a class="toc-backref" href="#id12">Contributors</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="https://www.quartile.co">Quartile</a>:<ul>
 <li>Yoshi Tashiro</li>
+<li>Aung Ko Ko Lin</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#id10">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#id13">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose

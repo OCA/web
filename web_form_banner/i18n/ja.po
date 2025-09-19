@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-17 16:03+0000\n"
-"PO-Revision-Date: 2025-09-17 16:03+0000\n"
+"POT-Creation-Date: 2025-09-20 09:53+0000\n"
+"PO-Revision-Date: 2025-09-20 09:53+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,25 +23,16 @@ msgstr ""
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "<code style=\"white-space: pre-wrap\">\n"
-"last = model.search(\n"
-"  [(\"partner_id\", \"=\", record.partner_id.id), (\"id\", \"&amp;lt;\", record.id)],\n"
-"  order=\"date_order desc, id desc\",\n"
-"  limit=1,\n"
-")\n"
+"domain = [(\"partner_id\", \"=\", draft.partner_id.id)]\n"
+"if record_id:\n"
+"  domain += [(\"id\", \"&amp;lt;\", record_id)]\n"
+"last = model.search(domain, order=\"date_order desc, id desc\", limit=1)\n"
 "if last:\n"
 "  html = \"&amp;lt;strong&amp;gt;Previous order:&amp;lt;/strong&amp;gt; &amp;lt;a href='%s'&amp;gt;%s&amp;lt;/a&amp;gt;\" % (url_for(last), last.name)\n"
 "  result = {\"visible\": True, \"html\": html}\n"
 "else:\n"
 "  result = {\"visible\": False}\n"
 "</code>"
-msgstr ""
-
-#. module: web_form_banner
-#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
-msgid "<code>changes</code>: Dict of sanitized draft values coming from the form. Includes only\n"
-"                                        simple field types; many2one values are normalized to an integer id (or <code>False</code>)\n"
-"                                        and unknown/complex fields are omitted. Useful when rule logic needs the raw\n"
-"                                        user-input values regardless of the proxy overrides applied to <code>record</code>."
 msgstr ""
 
 #. module: web_form_banner
@@ -57,12 +48,21 @@ msgstr ""
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "<code>current_id</code>: Integer id of the record being edited, or <code>False</code> if the form\n"
-"                                        is creating a new record."
+"                                            is creating a new record."
 msgstr ""
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "<code>dateutil</code>: <code>{ \"parser\": dateutil.parser, \"relativedelta\": dateutil.relativedelta }</code>"
+msgstr ""
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "<code>draft</code>: The persisted field values of the ORM record (before applying the current\n"
+"                                            form's unsaved changes) + the current unsaved changes on trigger fields.\n"
+"                                            Should be used instead of <code>record</code> when your rule is triggered dynamically by an\n"
+"                                            update to a trigger field. It doesn't include any values from complex fields\n"
+"                                            (x2many/reference, etc)."
 msgstr ""
 
 #. module: web_form_banner
@@ -152,6 +152,7 @@ msgstr "危険"
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__severity
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_search
 msgid "Default Severity"
 msgstr "デフォルト重要度"
 
@@ -228,7 +229,7 @@ msgid "Info"
 msgstr "情報"
 
 #. module: web_form_banner
-#: code:addons/web_form_banner/models/web_form_banner_rule.py:142
+#: code:addons/web_form_banner/models/web_form_banner_rule.py:121
 #, python-format
 msgid "Invalid XPath:\n"
 "%s"
@@ -294,11 +295,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__sequence
 msgid "Sequence"
 msgstr "付番"
-
-#. module: web_form_banner
-#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_search
-msgid "Severity"
-msgstr "重要度"
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__target_xpath

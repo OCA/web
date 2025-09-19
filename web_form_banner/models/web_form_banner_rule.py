@@ -21,29 +21,6 @@ from odoo.tools.safe_eval import safe_eval
 _logger = logging.getLogger(__name__)
 
 
-class _EvalRecordProxy:
-    """Read-only-ish view of an existing record with field overrides."""
-    __slots__ = ("_b", "_o")
-
-    def __init__(self, base, overrides):
-        self._b = base
-        self._o = overrides
-
-    def __getattr__(self, name):
-        # Prefer explicit overrides; otherwise fall back to the base record
-        if name in self._o:
-            return self._o[name]
-        return getattr(self._b, name)
-
-    def __repr__(self):
-        return f"<_EvalRecordProxy base={self._b} overrides={list(self._o.keys())}>"
-
-    @property
-    def id(self):
-        # Keep the real DB id for RPCs / URL building / permissions
-        return self._b.id
-
-
 _SIMPLE_FIELD_TYPES = frozenset(
     {
         "char", "text", "html", "selection", "boolean",
@@ -191,7 +168,7 @@ class WebFormBannerRule(models.Model):
         return eval_ctx
 
     @api.model
-    def _sanitize_draft(self, model, form_vals):
+    def _sanitize_values(self, model, form_vals):
         """Return a sanitized dict of simple field values safe for new()/eval."""
         flds = self.env[model]._fields
         out = {}
@@ -203,26 +180,16 @@ class WebFormBannerRule(models.Model):
 
     @api.model
     def _build_eval_record(self, model, res_id, vals):
-        """Build the record used for evaluation.
-        - existing record: wrap with overrides but keep real id
-        - new record: new(vals)
-        """
-        if not res_id:
-            return self.env[model].new(vals) if vals else self.env[model]
-        base = self.env[model].browse(int(res_id))
-        if not vals:
-            return base
-        flds = self.env[model]._fields
-        ovr = {}
-        for n, v in vals.items():
-            f = flds[n]
-            if not f:
-                continue
-            if f.type == "many2one" and isinstance(v, int):
-                ovr[n] = self.env[f.comodel_name].browse(v)
-            else:
-                ovr[n] = v
-        return _EvalRecordProxy(base, ovr)
+        """Return (draft, persisted, record_id) for eval context."""
+        Model = self.env[model]
+        vals = vals or {}
+        if res_id:
+            persisted = Model.browse(int(res_id))
+            base_vals = persisted.read(list(vals.keys()))[0] if vals else {}
+            draft = Model.new({**base_vals, **vals})
+            return draft, persisted, persisted.id
+        # new record (no res_id yet): persisted is an empty recordset, not None
+        return Model.new(vals), Model, False
 
     @api.model
     def _run_rule_code(self, rule, eval_ctx):
@@ -259,16 +226,18 @@ class WebFormBannerRule(models.Model):
         rule = self.browse(int(rule_id)).sudo()
         if not rule.exists() or not rule.active:
             return {"visible": False}
-        vals = self._sanitize_draft(model, form_vals)
-        record = self._build_eval_record(model, res_id, vals)
+        values = self._sanitize_values(model, form_vals)
+        draft, record, record_id = self._build_eval_record(model, res_id, values)
         eval_ctx = self._get_eval_context(record)
-        # expose changes for rule code that wants direct access to raw values
         eval_ctx.update(
-            {"changes": vals, "current_id": int(res_id) if res_id else False}
+            {
+                "draft": draft,  # DB base + simple field overrides
+                "record_id": record_id,
+            }
         )
         out = self._run_rule_code(rule, eval_ctx) or {}
         severity = out.get("severity", rule.severity or "danger")
-        visible = out.get("visible", True)  # default True like before
+        visible = out.get("visible", True)
         if not visible:
             return {"visible": False}
         values = out.get("values") or {

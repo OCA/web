@@ -41,11 +41,7 @@ class Base(models.AbstractModel):
                 continue
             # Lightweight placeholder; JS will fill and toggle visibility
             css = "o_form_banner alert alert-%s" % (rule.severity or "danger")
-            triggers_fields = (
-                ",".join(rule.trigger_field_ids.mapped("name"))
-                if getattr(rule, "trigger_field_ids", False)
-                else ""
-            )
+            trigger_fields = ",".join(rule.trigger_field_ids.mapped("name"))
             node = etree.Element(
                 "div",
                 {
@@ -54,7 +50,7 @@ class Base(models.AbstractModel):
                     "data-rule-id": str(rule.id),
                     "data-model": self._name,
                     "data-default-severity": (rule.severity or "danger"),
-                    "data-trigger-fields": triggers_fields,
+                    "data-trigger-fields": trigger_fields,
                     "style": "display:none;",
                 },
             )
