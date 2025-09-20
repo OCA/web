@@ -1,6 +1,6 @@
 /** @odoo-module */
-import { ListRenderer } from "@web/views/list/list_renderer";
-import { patch } from "@web/core/utils/patch";
+import {ListRenderer} from "@web/views/list/list_renderer";
+import {patch} from "@web/core/utils/patch";
 
 patch(ListRenderer.prototype, {
     /**
@@ -37,7 +37,7 @@ patch(ListRenderer.prototype, {
      * Only one group-by level is supported in this implementation.
      */
     isColumnCurrentlyGrouped(column) {
-        const { model } = this.props.list;
+        const {model} = this.props.list;
         const currentGroupBy = model.root.groupBy || [];
         return currentGroupBy.length === 1 && currentGroupBy[0] === column.name;
     },
@@ -56,7 +56,7 @@ patch(ListRenderer.prototype, {
             return;
         }
 
-        const { model } = this.props.list;
+        const {model} = this.props.list;
         const field = model.config.fields[fieldName];
 
         if (
@@ -71,9 +71,9 @@ patch(ListRenderer.prototype, {
         const currentGroupBy = model.root.groupBy || [];
 
         if (currentGroupBy.length === 1 && currentGroupBy[0] === fieldName) {
-            model.load({ groupBy: [] });
+            model.load({groupBy: []});
         } else {
-            model.load({ groupBy: [fieldName] });
+            model.load({groupBy: [fieldName]});
         }
 
         model.notify();
