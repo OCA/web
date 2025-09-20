@@ -18,8 +18,8 @@ fields when field metadata is available).
     "data": [],
     "assets": {
         "web.assets_backend": [
-            "quick_groupby/static/src/xml/list_header_cell.xml",
-            "quick_groupby/static/src/js/list_header_cell.js",
+            "base_quick_groupby/static/src/xml/list_header_cell.xml",
+            "base_quick_groupby/static/src/js/list_header_cell.js",
         ],
     },
     "images": ["static/description/icon.png"],

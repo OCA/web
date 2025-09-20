@@ -1,6 +1,6 @@
-# quick_groupby — List View Column Group By Header Button
+# base_quick_groupby — List View Column Group By Header Button
 
-**Module**: `quick_groupby`  
+**Module**: `base_quick_groupby`  
 **Odoo**: 17.0 (tested)  
 **License**: AGPL-3  
 **Author / Maintainer**: MD Jafor Sadek Khan <rksadeck@gmail.com>  
@@ -31,9 +31,9 @@ The button only appears for fields that are safe to group by:
 
 ## Installation
 
-1. Place the `quick_groupby` module in your Odoo `addons` path (or install via your preferred deployment pipeline).
+1. Place the `base_quick_groupby` module in your Odoo `addons` path (or install via your preferred deployment pipeline).
 2. Update Apps list.
-3. Install `quick_groupby`.
+3. Install `base_quick_groupby`.
 
 > Note: No extra data files are required; the module registers QWeb templates and a JS patch through `web.assets_backend`.
 
