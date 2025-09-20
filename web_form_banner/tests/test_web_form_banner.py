@@ -14,14 +14,10 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
         super().setUpClass()
         cls.Partner = cls.env["res.partner"]
         cls.Rule = cls.env["web.form.banner.rule"]
-        cls.banner_rule = cls.Rule.search(
-            [("model_name", "=", "res.partner")], limit=1,
-        )
-        if not cls.banner_rule:
-            raise AssertionError(
-                "Expected a demo web.form.banner.rule for res.partner (active=True) "
-                "but none was found. Ensure demo data is loaded."
-            )
+        cls.rule_name = cls.env.ref("web_form_banner.demo_rule_partner_name_length")
+        cls.rule_email = cls.env.ref("web_form_banner.demo_rule_partner_email_missing")
+        # Disable the email rule to avoid interference in most tests
+        cls.rule_email.active = False
         cls.partner_form_view = cls.env.ref("base.view_partner_form")
 
         cls.p_len3 = cls.Partner.create({"name": "Bob"})  # 3
@@ -46,8 +42,8 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
 
     def _get_sibling_indexes(self):
         tree = self._get_arch_tree(self.Partner, self.partner_form_view)
-        banner_node = self._find_banner_node(tree, self.banner_rule)
-        targets = tree.xpath(self.banner_rule.target_xpath)
+        banner_node = self._find_banner_node(tree, self.rule_name)
+        targets = tree.xpath(self.rule_name.target_xpath)
         self.assertTrue(targets)
         target = targets[0]
         parent = target.getparent()
@@ -62,18 +58,18 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
 
     def test_injected_once_with_expected_attrs(self):
         tree = self._get_arch_tree(self.Partner, self.partner_form_view)
-        banner_node = self._find_banner_node(tree, self.banner_rule)
+        banner_node = self._find_banner_node(tree, self.rule_name)
         # Basic attributes from the server injection
         self.assertEqual(banner_node.get("data-model"), "res.partner")
         self.assertEqual(
-            banner_node.get("data-default-severity"), self.banner_rule.severity
+            banner_node.get("data-default-severity"), self.rule_name.severity
         )
         self.assertEqual(banner_node.get("role"), "alert")
         self.assertEqual(banner_node.get("style"), "display:none;")
         # Class list includes the expected CSS classes
         classes = (banner_node.get("class") or "").split()
         for required in (
-            "o_form_banner", "alert", "alert-%s" % (self.banner_rule.severity)
+            "o_form_banner", "alert", "alert-%s" % (self.rule_name.severity)
         ):
             self.assertIn(required, classes)
         # Ensure it's not duplicated
@@ -81,13 +77,13 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
         self.assertEqual(len(all_banners), 1)
 
     def test_position_relative_to_sheet(self):
-        self.banner_rule.position = "before"
+        self.rule_name.position = "before"
         i_target, i_banner_node = self._get_sibling_indexes()
         self.assertEqual(
             i_banner_node, i_target - 1,
             "Banner should be inserted immediately before <sheet>"
         )
-        self.banner_rule.position = "after"
+        self.rule_name.position = "after"
         i_target, i_banner_node = self._get_sibling_indexes()
         self.assertEqual(
             i_banner_node, i_target + 1,
@@ -102,7 +98,7 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
         self.assertFalse(tree.xpath("//div[contains(@class,'o_form_banner')]"))
 
     def test_contains_expected_messages_and_severities(self):
-        code = (self.banner_rule.message_value_code or "").strip()
+        code = (self.rule_name.message_value_code or "").strip()
         self.assertIn("This partner's name is very long!", code)
         self.assertIn("This partner's name is a bit long.", code)
         self.assertRegex(code, r"['\"]danger['\"]", "Missing 'danger' literal")
@@ -111,19 +107,19 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
     def test_banner_visibility_and_content(self):
         # Short name: no banner
         out = self.Rule.compute_message(
-            self.banner_rule.id, "res.partner", self.p_len3.id
+            self.rule_name.id, "res.partner", self.p_len3.id
         )
         self.assertFalse(out.get("visible"))
         # Medium name: warning banner
         out = self.Rule.compute_message(
-            self.banner_rule.id, "res.partner", self.p_len12.id
+            self.rule_name.id, "res.partner", self.p_len12.id
         )
         self.assertTrue(out.get("visible"))
         self.assertEqual(out.get("severity"), "warning")
         self.assertIn("bit long", out.get("html", ""))
         # Long name: danger banner
         out = self.Rule.compute_message(
-            self.banner_rule.id, "res.partner", self.p_len22.id
+            self.rule_name.id, "res.partner", self.p_len22.id
         )
         self.assertTrue(out.get("visible"))
         self.assertEqual(out.get("severity"), "danger")
@@ -131,26 +127,27 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
 
     def test_inactive_rule_returns_hidden(self):
         # Flip active off just for this check
-        self.banner_rule.active = False
+        self.rule_name.active = False
         try:
             out = self.Rule.compute_message(
-                self.banner_rule.id, "res.partner", self.p_len22.id
+                self.rule_name.id, "res.partner", self.p_len22.id
             )
             self.assertFalse(out.get("visible"))
         finally:
-            self.banner_rule.active = True
+            self.rule_name.active = True
 
     def test_compute_message_with_unsaved_changes(self):
         """Server must evaluate using form_vals (unsaved draft) when provided."""
+        self.rule_email.active = True
         out = self.Rule.compute_message(
-            self.banner_rule.id, "res.partner", self.p_len3.id
+            self.rule_email.id, "res.partner", self.p_len3.id, form_vals={"email": ""}
         )
-        self.assertFalse(out.get("visible"), "Short name should not show banner")
-        # Pretend user typed a long name but hasn't saved yet
-        form_vals = {"name": "Professor XXXXXXXXX"}
+        self.assertTrue(out.get("visible"))
+        self.assertIn("This partner is missing email!", out.get("html"))
         out = self.Rule.compute_message(
-            self.banner_rule.id, "res.partner", self.p_len3.id, form_vals=form_vals
+            self.rule_email.id,
+            "res.partner",
+            self.p_len3.id,
+            form_vals={"email": "test@example.com"},
         )
-        self.assertTrue(out.get("visible"), "Unsaved long name should show banner")
-        self.assertEqual(out.get("severity"), "warning")
-        self.assertIn("bit long", out.get("html", ""))
+        self.assertFalse(out.get("visible"))
