@@ -4,7 +4,7 @@
 **Odoo**: 17.0 (tested)  
 **License**: AGPL-3  
 **Author / Maintainer**: MD Jafor Sadek Khan <rksadeck@gmail.com>  
-**Repository**: https://github.com/<your-github>/quick_groupby
+**Repository**: https://github.com/MD-Jafor-Sadek-Khan/web/tree/17.0-quick-group-by
 
 ## Summary
 

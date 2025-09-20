@@ -12,7 +12,7 @@ fields when field metadata is available).
     "category": "Tools",
     "author": "MD Jafor Sadek Khan rksadeck@gmail.com",
     "maintainer": "MD Jafor Sadek Khan rksadeck@gmail.com",
-    "website": "https://github.com/<your-github>/quick_groupby",
+    "website": "https://github.com/MD-Jafor-Sadek-Khan/web/tree/17.0-quick-group-by",
     "license": "AGPL-3",
     "depends": ["web"],
     "data": [],
