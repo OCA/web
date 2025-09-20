@@ -37,4 +37,16 @@ else:
 {"visible": not bool(draft.email)}
      ]]></field>
     </record>
+    <record id="demo_rule_partner_tag_missing" model="web.form.banner.rule">
+        <field name="name">Partner tag missing notice (dynamic)</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="trigger_field_ids" eval="[(6, 0, [ref('base.field_res_partner__category_id')])]"/>
+        <field name="severity">warning</field>
+        <field name="target_xpath">//sheet</field>
+        <field name="position">before</field>
+        <field name="message">This partner is missing a tag!</field>
+        <field name="message_value_code"><![CDATA[
+{"visible": not bool(draft.category_id)}
+     ]]></field>
+    </record>
 </odoo>

@@ -13,5 +13,5 @@ Limitations of `draft` eval context variable
   persisted record; all other fields come from `Model.new` defaults rather than the
   database.
 * Only simple field types are included: `char`, `text`, `html`, `selection`, `boolean`,
-  `integer`, `float`, `monetary`, `date`, `datetime`, and `many2one` (normalized to an
-  integer ID). **x2many/reference/other types are omitted.**
+  `integer`, `float`, `monetary`, `date`, `datetime`, `many2one`, and `many2many`.
+  **one2many/reference/other types are omitted.**

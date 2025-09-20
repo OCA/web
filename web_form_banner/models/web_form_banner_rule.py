@@ -30,17 +30,42 @@ _SIMPLE_FIELD_TYPES = frozenset(
 
 
 def _extract_m2o_id(v):
-    """Normalize many2one values to an integer id or False.
-    Accepts: int, (id, ...) tuple/list, or dict with id-ish keys.
-    """
+    """Normalize many2one values to an integer id or False."""
     if isinstance(v, int):
         return v
     if isinstance(v, (list, tuple)) and v and isinstance(v[0], int):
         return v[0]
     if isinstance(v, dict):
-        data = v.get("data") or {}
-        return v.get("res_id") or data.get("id") or v.get("id") or v.get("ref") or False
+        m2o_id = v.get("res_id") or v.get("id")
+        if isinstance(m2o_id, int):
+            return m2o_id
     return False
+
+
+def _m2m_items(value):
+    if isinstance(value, (list, tuple)):
+        return value
+    if isinstance(value, dict):
+        if isinstance(value.get("res_ids"), (list, tuple)):
+            return value["res_ids"]
+        if isinstance(value.get("data"), (list, tuple)):
+            return value["data"]
+    return None
+
+
+def _to_int_id(e):
+    if isinstance(e, int):
+        return e
+    if isinstance(e, str) and e.isdigit():
+        return int(e)
+    if isinstance(e, dict):
+        rid = e.get("res_id")
+        if isinstance(rid, int):
+            return rid
+        iid = e.get("id")
+        if isinstance(iid, int):
+            return iid
+    return None
 
 
 def _sanitize_field(field, value):
@@ -49,9 +74,16 @@ def _sanitize_field(field, value):
         return None
     if field.type == "many2one":
         return _extract_m2o_id(value)
+    if field.type == "many2many":
+        items = _m2m_items(value)
+        if items is None:
+            return None
+        ids = [i for i in (_to_int_id(e) for e in items) if i is not None]
+        # Always return a command, even when empty, to reflect clearing the relation
+        return [(6, 0, ids)]
     if field.type in _SIMPLE_FIELD_TYPES:
         return value
-    return None  # skip x2many/reference/others
+    return None  # skip one2many/reference/others
 
 
 class WebFormBannerRule(models.Model):

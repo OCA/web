@@ -433,7 +433,7 @@ variables are available.</li>
 form’s unsaved changes) + the current unsaved changes on trigger fields.
 Should be used instead of <cite>record</cite> when your rule is triggered dynamically by an
 update to a trigger field. It doesn’t include any values from complex fields
-(x2many/reference, etc).</li>
+(one2many/reference, etc).</li>
 <li><cite>record_id</cite>: Integer id of the record being edited, or <cite>False</cite> if the form
 is creating a new record.</li>
 <li><cite>model</cite>: Shortcut to the current model (<cite>env[record._name]</cite>).</li>
@@ -568,8 +568,8 @@ presentation of the banner and the child fields will be distorted.</p>
 persisted record; all other fields come from <cite>Model.new</cite> defaults rather than the
 database.</li>
 <li>Only simple field types are included: <cite>char</cite>, <cite>text</cite>, <cite>html</cite>, <cite>selection</cite>, <cite>boolean</cite>,
-<cite>integer</cite>, <cite>float</cite>, <cite>monetary</cite>, <cite>date</cite>, <cite>datetime</cite>, and <cite>many2one</cite> (normalized to an
-integer ID). <strong>x2many/reference/other types are omitted.</strong></li>
+<cite>integer</cite>, <cite>float</cite>, <cite>monetary</cite>, <cite>date</cite>, <cite>datetime</cite>, <cite>many2one</cite>, and <cite>many2many</cite>.
+<strong>one2many/reference/other types are omitted.</strong></li>
 </ul>
 </div>
 </div>

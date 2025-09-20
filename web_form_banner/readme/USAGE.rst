@@ -29,7 +29,7 @@ Evaluation context variables available in Message Value Code:
   form's unsaved changes) + the current unsaved changes on trigger fields.
   Should be used instead of `record` when your rule is triggered dynamically by an
   update to a trigger field. It doesn't include any values from complex fields
-  (x2many/reference, etc).
+  (one2many/reference, etc).
 * `record_id`: Integer id of the record being edited, or `False` if the form
   is creating a new record.
 * `model`: Shortcut to the current model (`env[record._name]`).

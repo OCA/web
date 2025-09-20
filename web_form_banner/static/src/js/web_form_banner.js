@@ -35,7 +35,6 @@ odoo.define("web_form_banner.save_plus_load", function (require) {
         if (p && typeof p.always === "function") { p.always(fn); return p; }
         return Promise.resolve(p).finally(fn);
     };
-    // keep only primitives + many2one record ids
     var shrinkDraft = function (d) {
         return Object.entries(d || {}).reduce(function (o, kv) {
             var k = kv[0], v = kv[1], t = typeof v;
@@ -43,6 +42,9 @@ odoo.define("web_form_banner.save_plus_load", function (require) {
                 o[k] = v;
             } else if (v && v.type === "record" && typeof v.res_id === "number") {
                 o[k] = v.res_id;
+            } else if (Array.isArray(v) || (v && (Array.isArray(v.data) || Array.isArray(v.res_ids)))) {
+                // many2many (and possibly other x2many) values; let Python decide
+                o[k] = v;
             }
             return o;
         }, {});
@@ -149,7 +151,6 @@ odoo.define("web_form_banner.save_plus_load", function (require) {
         update: function () {
             return withRefresh(this, this._super, arguments);
         },
-
         // onchange: refresh only when a declared trigger actually changed
         _onFieldChanged: function (ev) {
             var res = this._super.apply(this, arguments);
@@ -162,13 +163,11 @@ odoo.define("web_form_banner.save_plus_load", function (require) {
             after(res, () => refreshBanners(this));
             return res;
         },
-
         activate: function () {
             var res = this._super.apply(this, arguments);
             if (hasBanners(this)) after(res, () => refreshBanners(this));
             return res;
         },
-
         on_attach_callback: function () {
             this._super.apply(this, arguments);
             setTimeout(() => refreshBanners(this));

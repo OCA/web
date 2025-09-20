@@ -16,8 +16,10 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
         cls.Rule = cls.env["web.form.banner.rule"]
         cls.rule_name = cls.env.ref("web_form_banner.demo_rule_partner_name_length")
         cls.rule_email = cls.env.ref("web_form_banner.demo_rule_partner_email_missing")
-        # Disable the email rule to avoid interference in most tests
+        cls.rule_tag = cls.env.ref("web_form_banner.demo_rule_partner_tag_missing")
+        # Disable the email and tag rules to avoid interference in most tests
         cls.rule_email.active = False
+        cls.rule_tag.active = False
         cls.partner_form_view = cls.env.ref("base.view_partner_form")
 
         cls.p_len3 = cls.Partner.create({"name": "Bob"})  # 3
@@ -136,8 +138,7 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
         finally:
             self.rule_name.active = True
 
-    def test_compute_message_with_unsaved_changes(self):
-        """Server must evaluate using form_vals (unsaved draft) when provided."""
+    def test_compute_message_dynamic_simple_field(self):
         self.rule_email.active = True
         out = self.Rule.compute_message(
             self.rule_email.id, "res.partner", self.p_len3.id, form_vals={"email": ""}
@@ -149,5 +150,24 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
             "res.partner",
             self.p_len3.id,
             form_vals={"email": "test@example.com"},
+        )
+        self.assertFalse(out.get("visible"))
+
+    def test_compute_message_dynamic_m2m(self):
+        self.rule_tag.active = True
+        tag = self.env["res.partner.category"].create({"name": "test tag"})
+        out = self.Rule.compute_message(
+            self.rule_tag.id,
+            "res.partner",
+            self.p_len3.id,
+            form_vals={"category_id": []},
+        )
+        self.assertTrue(out.get("visible"))
+        self.assertIn("This partner is missing a tag!", out.get("html"))
+        out = self.Rule.compute_message(
+            self.rule_tag.id,
+            "res.partner",
+            self.p_len3.id,
+            form_vals={"category_id": [tag.id]},
         )
         self.assertFalse(out.get("visible"))

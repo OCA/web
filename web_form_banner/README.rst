@@ -73,7 +73,7 @@ Evaluation context variables available in Message Value Code:
   form's unsaved changes) + the current unsaved changes on trigger fields.
   Should be used instead of `record` when your rule is triggered dynamically by an
   update to a trigger field. It doesn't include any values from complex fields
-  (x2many/reference, etc).
+  (one2many/reference, etc).
 * `record_id`: Integer id of the record being edited, or `False` if the form
   is creating a new record.
 * `model`: Shortcut to the current model (`env[record._name]`).
@@ -221,8 +221,8 @@ Limitations of `draft` eval context variable
   persisted record; all other fields come from `Model.new` defaults rather than the
   database.
 * Only simple field types are included: `char`, `text`, `html`, `selection`, `boolean`,
-  `integer`, `float`, `monetary`, `date`, `datetime`, and `many2one` (normalized to an
-  integer ID). **x2many/reference/other types are omitted.**
+  `integer`, `float`, `monetary`, `date`, `datetime`, `many2one`, and `many2many`.
+  **one2many/reference/other types are omitted.**
 
 Bug Tracker
 ===========
