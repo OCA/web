@@ -45,7 +45,7 @@ on form load/save/reload.
 Usage
 =====
 
-#. Go to *Settings > Tachnical > User Interface > Form Banner Rules* and create a rule.
+#. Go to *Settings > Technical > User Interface > Form Banner Rules* and create a rule.
 #. Choose Model, select Trigger Fields (optional), set Default Severity, select Views
    (optional), update Target XPath (insertion point) and Position, and configure the
    message.
@@ -126,7 +126,7 @@ Message setting examples:
 
   {
     "visible": bool(record.partner_id.comment),
-    values: {"comment": record.partner_id.comment},
+    "values": {"comment": record.partner_id.comment},
   }
 
 It is also possible to use "convenience placeholders" without an explicit `values` key:

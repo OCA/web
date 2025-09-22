@@ -8,10 +8,11 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
 
 See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
@@ -274,7 +275,7 @@ pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
   margin-right: 2em }
 
-pre.code .ln { color: grey; } /* line numbers */
+pre.code .ln { color: gray; } /* line numbers */
 pre.code, code { background-color: #eeeeee }
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
@@ -300,7 +301,7 @@ span.option {
 span.pre {
   white-space: pre }
 
-span.problematic {
+span.problematic, pre.problematic {
   color: red }
 
 span.section-subtitle {
@@ -402,7 +403,7 @@ on form load/save/reload.</p>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
 <ol class="arabic simple">
-<li>Go to <em>Settings &gt; Tachnical &gt; User Interface &gt; Form Banner Rules</em> and create a rule.</li>
+<li>Go to <em>Settings &gt; Technical &gt; User Interface &gt; Form Banner Rules</em> and create a rule.</li>
 <li>Choose Model, select Trigger Fields (optional), set Default Severity, select Views
 (optional), update Target XPath (insertion point) and Position, and configure the
 message.</li>
@@ -478,7 +479,7 @@ rule is triggered based on an update to a trigger field.</p>
 <pre class="code python literal-block">
 <span class="p">{</span><span class="w">
 </span>  <span class="s2">&quot;visible&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">partner_id</span><span class="o">.</span><span class="n">comment</span><span class="p">),</span><span class="w">
-</span>  <span class="n">values</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">partner_id</span><span class="o">.</span><span class="n">comment</span><span class="p">},</span><span class="w">
+</span>  <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">partner_id</span><span class="o">.</span><span class="n">comment</span><span class="p">},</span><span class="w">
 </span><span class="p">}</span>
 </pre>
 <p>It is also possible to use “convenience placeholders” without an explicit <cite>values</cite> key:</p>
@@ -603,7 +604,9 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <div class="section" id="maintainers">
 <h2><a class="toc-backref" href="#toc-entry-13">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
-<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>

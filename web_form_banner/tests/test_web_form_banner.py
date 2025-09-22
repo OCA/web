@@ -20,7 +20,6 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
         cls.rule_email.active = False
         cls.rule_tag.active = False
         cls.partner_form_view = cls.env.ref("base.view_partner_form")
-
         cls.p_len3 = cls.Partner.create({"name": "Bob"})  # 3
         cls.p_len12 = cls.Partner.create({"name": "Yoshi Tashiro"})  # 12
         cls.p_len22 = cls.Partner.create({"name": "Professor Charles Xavier"})  # 22
