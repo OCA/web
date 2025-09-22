@@ -8,16 +8,21 @@
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="model_id" />
-                <field name="trigger_field_ids" widget="many2many_tags" />
-                <field name="view_ids" widget="many2many_tags" />
-                <field name="severity" />
-                <field name="target_xpath" />
-                <field name="position" />
-                <field name="message" />
-                <field name="message_is_html" />
+                <field
+                    name="trigger_field_ids"
+                    widget="many2many_tags"
+                    optional="show"
+                />
+                <field name="view_ids" widget="many2many_tags" optional="show" />
+                <field name="severity" optional="show" />
+                <field name="target_xpath" optional="show" />
+                <field name="position" optional="show" />
+                <field name="message" optional="show" />
+                <field name="message_is_html" optional="show" />
                 <field
                     name="message_value_code"
                     placeholder="return {'visible': True, 'values': {'title': '...'}}"
+                    optional="show"
                 />
             </tree>
         </field>
@@ -28,16 +33,13 @@
         <field name="arch" type="xml">
             <form string="Form Banner Rule">
                 <sheet>
-                    <div class="oe_button_box">
-                        <button
-                            name="toggle_active"
-                            type="object"
-                            class="oe_stat_button"
-                            icon="fa-archive"
-                        >
-                            <field name="active" widget="boolean_button" />
-                        </button>
-                    </div>
+                    <field name="active" invisible="1" />
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only" />
                         <h1>
