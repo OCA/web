@@ -1,12 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
     <record id="demo_rule_partner_name_length" model="web.form.banner.rule">
         <field name="name">Partner name length notice</field>
-        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="model_id" ref="base.model_res_partner" />
         <field name="severity">warning</field>
         <field name="target_xpath">//sheet</field>
         <field name="position">before</field>
-        <field name="message_value_code"><![CDATA[
+        <field
+            name="message_value_code"
+        ><![CDATA[
 name = (record.name or "").strip()
 n = len(name)
 if n > 20:
@@ -27,25 +29,35 @@ else:
     </record>
     <record id="demo_rule_partner_email_missing" model="web.form.banner.rule">
         <field name="name">Partner email missing notice (dynamic)</field>
-        <field name="model_id" ref="base.model_res_partner"/>
-        <field name="trigger_field_ids" eval="[(6, 0, [ref('base.field_res_partner__email')])]"/>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field
+            name="trigger_field_ids"
+            eval="[(6, 0, [ref('base.field_res_partner__email')])]"
+        />
         <field name="severity">warning</field>
         <field name="target_xpath">//sheet</field>
         <field name="position">before</field>
         <field name="message">This partner is missing email!</field>
-        <field name="message_value_code"><![CDATA[
+        <field
+            name="message_value_code"
+        ><![CDATA[
 {"visible": not bool(draft.email)}
      ]]></field>
     </record>
     <record id="demo_rule_partner_tag_missing" model="web.form.banner.rule">
         <field name="name">Partner tag missing notice (dynamic)</field>
-        <field name="model_id" ref="base.model_res_partner"/>
-        <field name="trigger_field_ids" eval="[(6, 0, [ref('base.field_res_partner__category_id')])]"/>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field
+            name="trigger_field_ids"
+            eval="[(6, 0, [ref('base.field_res_partner__category_id')])]"
+        />
         <field name="severity">warning</field>
         <field name="target_xpath">//sheet</field>
         <field name="position">before</field>
         <field name="message">This partner is missing a tag!</field>
-        <field name="message_value_code"><![CDATA[
+        <field
+            name="message_value_code"
+        ><![CDATA[
 {"visible": not bool(draft.category_id)}
      ]]></field>
     </record>
