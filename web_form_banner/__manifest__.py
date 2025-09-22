@@ -14,5 +14,5 @@
         "views/web_form_banner_rule_views.xml",
     ],
     "demo": ["demo/web_form_banner_rule_demo.xml"],
-    'installable': True,
+    "installable": True,
 }
