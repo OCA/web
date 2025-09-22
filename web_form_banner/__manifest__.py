@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Web Form Banner",
-    "version": "12.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Web",
     "author": "Quartile, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
@@ -10,9 +10,14 @@
     "depends": ["web"],
     "data": [
         "security/ir.model.access.csv",
-        "views/assets.xml",
         "views/web_form_banner_rule_views.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "web_form_banner/static/src/js/*.esm.js",
+            "web_form_banner/static/src/scss/*.scss",
+        ],
+    },
     "demo": ["demo/web_form_banner_rule_demo.xml"],
     "installable": True,
 }
