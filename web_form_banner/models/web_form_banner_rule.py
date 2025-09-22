@@ -1,9 +1,7 @@
 # Copyright 2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import datetime as dt
 import logging
-import time
 from functools import lru_cache
 from string import Template
 
@@ -12,7 +10,7 @@ from dateutil.relativedelta import relativedelta
 from lxml import etree
 from pytz import timezone
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, tools
 from odoo.exceptions import ValidationError
 from odoo.tools import html_escape
 from odoo.tools.float_utils import float_compare, float_is_zero, float_round
@@ -115,7 +113,6 @@ class WebFormBannerRule(models.Model):
     )
     position = fields.Selection(
         [("before", "Before target"), ("after", "After target")],
-        string="Position",
         default="before",
         required=True,
         help="Where to insert the placeholder relative to the first matched node.",
@@ -158,7 +155,7 @@ class WebFormBannerRule(models.Model):
             try:
                 etree.XPath(xp or "//sheet")
             except (etree.XPathSyntaxError, etree.XPathEvalError) as e:
-                raise ValidationError(_("Invalid XPath:\n%s") % e)
+                raise ValidationError(_("Invalid XPath:\n%s") % e) from e
 
     @api.model
     def _build_form_url(self, rec):
@@ -179,8 +176,8 @@ class WebFormBannerRule(models.Model):
     def _base_eval_ctx_static(self):
         # Only static, import-heavy items
         return {
-            "time": time,
-            "datetime": dt,
+            "time": tools.safe_eval.time,
+            "datetime": tools.safe_eval.datetime,
             "dateutil": {
                 "parser": dateparse,
                 "relativedelta": relativedelta,
