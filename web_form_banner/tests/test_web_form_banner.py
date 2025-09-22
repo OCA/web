@@ -8,7 +8,6 @@ from odoo.tests.common import SavepointCase, tagged
 
 @tagged("post_install", "-at_install")
 class TestFieldsViewGetPartnerBanner(SavepointCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -37,7 +36,9 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
 
     def _find_banner_node(self, tree, rule):
         """Find the injected placeholder node for the rule."""
-        xpath = "//div[@data-rule-id='%s' and contains(@class,'o_form_banner')]" % rule.id  # noqa: E501
+        xpath = (
+            "//div[@data-rule-id='%s' and contains(@class,'o_form_banner')]" % rule.id
+        )  # noqa: E501
         nodes = tree.xpath(xpath)
         self.assertTrue(nodes, "Expected banner node injected in the form arch.")
         return nodes[0]
@@ -71,7 +72,9 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
         # Class list includes the expected CSS classes
         classes = (banner_node.get("class") or "").split()
         for required in (
-            "o_form_banner", "alert", "alert-%s" % (self.rule_name.severity)
+            "o_form_banner",
+            "alert",
+            "alert-%s" % (self.rule_name.severity),
         ):
             self.assertIn(required, classes)
         # Ensure it's not duplicated
@@ -82,14 +85,16 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
         self.rule_name.position = "before"
         i_target, i_banner_node = self._get_sibling_indexes()
         self.assertEqual(
-            i_banner_node, i_target - 1,
-            "Banner should be inserted immediately before <sheet>"
+            i_banner_node,
+            i_target - 1,
+            "Banner should be inserted immediately before <sheet>",
         )
         self.rule_name.position = "after"
         i_target, i_banner_node = self._get_sibling_indexes()
         self.assertEqual(
-            i_banner_node, i_target + 1,
-            "Banner should be inserted immediately after <sheet>"
+            i_banner_node,
+            i_target + 1,
+            "Banner should be inserted immediately after <sheet>",
         )
 
     def test_not_injected_on_unrelated_model(self):
