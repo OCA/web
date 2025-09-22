@@ -21,13 +21,17 @@ class Base(models.AbstractModel):
         current_view_id = view_id or res.get("view_id")
         if not current_view_id:
             return res
-        rules = self.env["web.form.banner.rule"].sudo().search(
-            [
-                ("model_name", "=", self._name),
-                "|",
-                ("view_ids", "in", current_view_id),
-                ("view_ids", "=", False),
-            ]
+        rules = (
+            self.env["web.form.banner.rule"]
+            .sudo()
+            .search(
+                [
+                    ("model_name", "=", self._name),
+                    "|",
+                    ("view_ids", "in", current_view_id),
+                    ("view_ids", "=", False),
+                ]
+            )
         )
         if not rules:
             return res

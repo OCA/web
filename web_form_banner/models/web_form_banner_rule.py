@@ -1,9 +1,9 @@
 # Copyright 2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import datetime as dt
 import logging
 import time
-import datetime as dt
 from functools import lru_cache
 from string import Template
 
@@ -23,8 +23,16 @@ _logger = logging.getLogger(__name__)
 
 _SIMPLE_FIELD_TYPES = frozenset(
     {
-        "char", "text", "html", "selection", "boolean",
-        "integer", "float", "monetary", "date", "datetime",
+        "char",
+        "text",
+        "html",
+        "selection",
+        "boolean",
+        "integer",
+        "float",
+        "monetary",
+        "date",
+        "datetime",
     }
 )
 
@@ -110,7 +118,7 @@ class WebFormBannerRule(models.Model):
         string="Position",
         default="before",
         required=True,
-        help="Where to insert the placeholder relative to the first matched node."
+        help="Where to insert the placeholder relative to the first matched node.",
     )
     severity = fields.Selection(
         [("info", "Info"), ("warning", "Warning"), ("danger", "Danger")],
@@ -126,7 +134,7 @@ class WebFormBannerRule(models.Model):
     message_is_html = fields.Boolean(
         "HTML",
         help="If checked, 'message' is treated as raw HTML (no escaping). "
-        "If not checked, the rendered text is escaped and newlines become <br/>."
+        "If not checked, the rendered text is escaped and newlines become <br/>.",
     )
     message_value_code = fields.Text(
         help="Python expression evaluated server-side. Must return a dict.\n"
@@ -157,8 +165,10 @@ class WebFormBannerRule(models.Model):
         try:
             if not rec or not getattr(rec, "id", None):
                 return ""
-            base = self.env["ir.config_parameter"].sudo().get_param(
-                "web.base.url", default=""
+            base = (
+                self.env["ir.config_parameter"]
+                .sudo()
+                .get_param("web.base.url", default="")
             )
             return "%s/web#id=%d&model=%s&view_type=form" % (base, rec.id, rec._name)
         except Exception:
@@ -273,7 +283,8 @@ class WebFormBannerRule(models.Model):
         if not visible:
             return {"visible": False}
         values = out.get("values") or {
-            k: v for k, v in out.items()
+            k: v
+            for k, v in out.items()
             if k not in {"visible", "severity", "values", "html"}
         }
         html = self._render_html(rule, values, out.get("html"))
