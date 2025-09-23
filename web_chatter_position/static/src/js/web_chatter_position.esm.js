@@ -3,10 +3,10 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 */
 
-import {FormCompiler} from "@web/views/form/form_compiler";
-import {patch} from "@web/core/utils/patch";
 import {append, setAttributes} from "@web/core/utils/xml";
+import {FormCompiler} from "@web/views/form/form_compiler";
 import {SIZES} from "@web/core/ui/ui_service";
+import {patch} from "@web/core/utils/patch";
 
 patch(FormCompiler.prototype, {
     /**
