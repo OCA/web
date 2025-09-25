@@ -15,7 +15,7 @@
                         field_y_axis="partner_id"
                         field_value="country_id"
                     >
-                        <tree>[
+                        <tree>
                             <field name="login" />
                             <field name="partner_id" />
                             <field
@@ -27,22 +27,26 @@
                             />
                         </tree>
                     </field>
-                    <div class="o_form_label">Char field as value</div>
+                    <div
+                        class="o_form_label"
+                    >Char field as value, clickable X axis</div>
                     <field
                         name="users"
                         widget="x2many_2d_matrix"
                         field_x_axis="country_id"
                         field_y_axis="partner_id"
                         field_value="name"
+                        x_axis_clickable="True"
                     >
-                        <tree>[
-                            <field name="name" />
+                        <tree>
+                            <field name="name" required="login == 'admin'" />
                             <field name="partner_id" />
                             <field
                                 name="country_id"
                                 domain="[('name', 'like', 'land')]"
                                 options="{'no_create': True}"
                             />
+                            <field name="login" />
                         </tree>
                     </field>
                     <div class="o_form_label">Boolean field as value</div>
@@ -53,7 +57,7 @@
                         field_y_axis="partner_id"
                         field_value="active"
                     >
-                        <tree>[
+                        <tree>
                             <field name="active" />
                             <field name="partner_id" />
                             <field
@@ -71,7 +75,7 @@
                         field_y_axis="partner_id"
                         field_value="lang"
                     >
-                        <tree>[
+                        <tree>
                             <field name="lang" />
                             <field name="partner_id" />
                             <field
@@ -91,6 +95,26 @@
                     >
                         <tree>[
                             <field name="partner_latitude" />
+                            <field name="partner_id" />
+                            <field
+                                name="country_id"
+                                domain="[('name', 'like', 'land')]"
+                                options="{'no_create': True}"
+                            />
+                        </tree>
+                    </field>
+                    <div
+                        class="o_form_label"
+                    >Float field as value with float_time widget</div>
+                    <field
+                        name="users"
+                        widget="x2many_2d_matrix"
+                        field_x_axis="country_id"
+                        field_y_axis="partner_id"
+                        field_value="partner_latitude"
+                    >
+                        <tree>
+                            <field name="partner_latitude" widget="float_time" />
                             <field name="partner_id" />
                             <field
                                 name="country_id"
