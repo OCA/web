@@ -93,6 +93,7 @@
     // Display apps in a grid
     align-content: flex-start;
     display: flex !important;
+    z-index: 1024 !important;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;

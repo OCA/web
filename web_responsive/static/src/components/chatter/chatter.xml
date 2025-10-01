@@ -7,9 +7,6 @@
         t-inherit="mail.Chatter"
         t-inherit-mode="extension"
     >
-        <xpath expr="//SuggestedRecipientsList" position="attributes">
-            <attribute name="styleString">''</attribute>
-        </xpath>
         <xpath
             expr="//button[hasclass('o-mail-Chatter-sendMessage')]"
             position="replace"

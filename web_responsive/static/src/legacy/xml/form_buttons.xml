@@ -64,43 +64,6 @@
     </t>
 
     <t
-        t-name="web_responsive.SettingsFormView.Buttons"
-        t-inherit="web.SettingsFormView.Buttons"
-        t-inherit-mode="extension"
-    >
-        <xpath expr="//button[hasclass('o_form_button_save')]" position="replace">
-            <button
-                type="button"
-                class="btn btn-primary o_form_button_save"
-                data-hotkey="s"
-                t-on-click.stop="() => this.saveButtonClicked({closable: true})"
-            >
-                <t t-call="web_responsive.icon_button_save" />
-            </button>
-        </xpath>
-        <xpath expr="//button[hasclass('o_form_button_cancel')]" position="replace">
-            <button
-                type="button"
-                class="btn btn-secondary o_form_button_cancel"
-                data-hotkey="j"
-                t-on-click.stop="discard"
-            >
-                <t t-call="web_responsive.icon_button_discard" />
-            </button>
-        </xpath>
-        <xpath expr="//button[hasclass('o_form_button_create')]" position="replace">
-            <button
-                type="button"
-                class="btn btn-secondary o_form_button_create"
-                data-hotkey="c"
-                t-on-click.stop="create"
-            >
-                <t t-call="web_responsive.icon_button_create" />
-            </button>
-        </xpath>
-    </t>
-
-    <t
         t-name="web_responsive.FormView"
         t-inherit="web.FormView"
         t-inherit-mode="extension"
@@ -119,7 +82,7 @@
             </button>
         </xpath>
         <xpath
-            expr="//button[hasclass('o_form_button_create')][hasclass('btn-secondary')]"
+            expr="//button[hasclass('o_form_button_create')][hasclass('btn-outline-primary')]"
             position="replace"
         >
             <button
@@ -177,12 +140,13 @@
     </t>
     <t
         t-name="web_responsive.ListView.Buttons"
-        t-inherit="web.ListView.Buttons"
+        t-inherit="web.ListView.EditableButtons"
         t-inherit-mode="extension"
     >
         <!-- Add responsive icons to buttons -->
         <xpath expr="//button[hasclass('o_list_button_save')]" position="replace">
             <button
+                t-if="editedRecord"
                 type="button"
                 class="btn btn-primary o_list_button_save"
                 data-hotkey="s"
@@ -193,6 +157,7 @@
         </xpath>
         <xpath expr="//button[hasclass('o_list_button_discard')]" position="replace">
             <button
+                t-if="editedRecord"
                 type="button"
                 class="btn btn-secondary o_list_button_discard"
                 data-hotkey="d"
