@@ -10,15 +10,11 @@ class Base(models.AbstractModel):
     _inherit = "base"
 
     @api.model
-    def fields_view_get(
-        self, view_id=None, view_type="form", toolbar=False, submenu=False
-    ):
-        res = super().fields_view_get(
-            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
-        )
+    def get_view(self, view_id=None, view_type="form", **options):
+        res = super().get_view(view_id=view_id, view_type=view_type, **options)
         if view_type != "form" or not res.get("arch"):
             return res
-        current_view_id = view_id or res.get("view_id")
+        current_view_id = view_id or res.get("id")
         if not current_view_id:
             return res
         rules = (

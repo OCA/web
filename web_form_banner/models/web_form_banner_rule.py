@@ -8,11 +8,11 @@ from string import Template
 from dateutil import parser as dateparse
 from dateutil.relativedelta import relativedelta
 from lxml import etree
+from markupsafe import escape
 from pytz import timezone
 
 from odoo import _, api, fields, models, tools
 from odoo.exceptions import ValidationError
-from odoo.tools import html_escape
 from odoo.tools.float_utils import float_compare, float_is_zero, float_round
 from odoo.tools.safe_eval import safe_eval
 
@@ -52,8 +52,8 @@ def _m2m_items(value):
     if isinstance(value, (list, tuple)):
         return value
     if isinstance(value, dict):
-        if isinstance(value.get("res_ids"), (list, tuple)):
-            return value["res_ids"]
+        if isinstance(value.get("resIds"), (list, tuple)):
+            return value["resIds"]
         if isinstance(value.get("data"), (list, tuple)):
             return value["data"]
     return None
@@ -246,7 +246,7 @@ class WebFormBannerRule(models.Model):
     @api.model
     def _render_html(self, rule, values, html):
         """Render final HTML from template if not already provided."""
-        if html:
+        if isinstance(html, str):
             return html
         tpl = Template(rule.message or "")
         try:
@@ -255,7 +255,9 @@ class WebFormBannerRule(models.Model):
             rendered = rule.message or ""
         if rule.message_is_html:
             return rendered
-        return html_escape(rendered).replace("\n", "<br/>")
+        lines = rendered.split("\n")
+        escaped_lines = [escape(line) for line in lines]
+        return "<br/>".join(escaped_lines)
 
     @api.model
     def compute_message(self, rule_id, model, res_id, form_vals=None):
