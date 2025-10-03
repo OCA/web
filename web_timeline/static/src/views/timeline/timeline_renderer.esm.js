@@ -12,7 +12,6 @@ import {
     useState,
 } from "@odoo/owl";
 import {TimelineCanvas} from "./timeline_canvas.esm";
-import {_t} from "@web/core/l10n/translation";
 import {loadBundle} from "@web/core/assets";
 import {renderToString} from "@web/core/utils/render";
 import {useService} from "@web/core/utils/hooks";
@@ -216,7 +215,7 @@ export class TimelineRenderer extends Component {
             },
         };
         this.timeline = new vis.Timeline(this.canvasRef.el, {}, this.options);
-        this.timeline.on("click", this.on_timeline_click.bind(this));
+        this.timeline.on("doubleClick", this.on_timeline_click.bind(this));
         if (!this.options.onUpdate) {
             // In read-only mode, catch double-clicks this way.
             this.timeline.on("doubleClick", this.on_timeline_double_click.bind(this));
@@ -276,13 +275,15 @@ export class TimelineRenderer extends Component {
         const keys = Object.keys(items);
         for (const key of keys) {
             const item = items[key];
-            const data = datas.get(Number(key));
+            const data = datas.get(key);
             if (!data || !data.evt) {
                 return;
             }
             for (const id of data.evt[this.dependency_arrow]) {
-                if (keys.indexOf(id.toString()) !== -1) {
-                    this.draw_dependency(item, items[id]);
+                for (const k of keys) {
+                    if (k.split("_")[0].toString() === id.toString()) {
+                        this.draw_dependency(item, items[k]);
+                    }
                 }
             }
         }
@@ -330,12 +331,42 @@ export class TimelineRenderer extends Component {
      */
     async on_data_loaded(records, adjust_window) {
         const data = [];
+        this.fieldsGet = await this.get_fields_get(this.model.last_group_bys);
         for (const record of records) {
             if (record[this.date_start]) {
-                data.push(this.model._event_data_transform(record));
+                const transformed = this.model._event_data_transform(
+                    record,
+                    this.fieldsGet
+                );
+                if (Array.isArray(transformed)) {
+                    data.push(...transformed);
+                } else {
+                    data.push(transformed);
+                }
             }
         }
         const groups = await this.split_groups(records);
+        this.groups = groups;
+        for (const d of data) {
+            // Check if the group should be visible
+            // If d.group is 'partner_id-35/category_id-4/city_id-false'
+            // it means there are 3 groups to check
+            // partner_id-35, partner_id-35/category_id-4, partner_id-35/category_id-4/city_id-false
+            const groupParts = d.group.split("/");
+            let groupPath = "";
+            const groupsToCheck = groupParts.map((part, index) => {
+                groupPath = index === 0 ? part : `${groupPath}/${part}`;
+                return groupPath;
+            });
+            for (const gtc of groupsToCheck) {
+                if (gtc.endsWith("-false")) {
+                    const group = groups.find((g) => g.id === gtc);
+                    if (group) {
+                        group.visible = true;
+                    }
+                }
+            }
+        }
         this.timeline.setGroups(groups);
         this.timeline.setItems(data);
         const mode = !this.mode.data || this.mode.data === "fit";
@@ -357,56 +388,136 @@ export class TimelineRenderer extends Component {
             return records;
         }
         const groups = [];
-        groups.push({id: -1, content: _t("<b>UNASSIGNED</b>"), order: -1});
-        var seq = 1;
-        for (const evt of records) {
-            const grouped_field = this.model.last_group_bys[0];
-            const group_name = evt[grouped_field];
-            if (group_name && group_name instanceof Array) {
-                const group = groups.find(
-                    (existing_group) => existing_group.id === group_name[0]
-                );
-                if (group) {
-                    continue;
+        let seq = 1;
+
+        const groupLevel = this.model.last_group_bys.reduce((acc, g, index) => {
+            acc[g] = index + 1;
+            return acc;
+        }, {});
+
+        const createGroup = (id, name, parents, lvl) => {
+            const parentGroups = parents.length ? parents : [null];
+            const createdGroups = [];
+            for (const parent of parentGroups) {
+                const subGroupId = parent ? `${parent.id}/${id}` : id;
+                let group = groups.find((g) => g.id === subGroupId);
+                if (!group) {
+                    const group_record_values = {};
+                    const group_parts = subGroupId.split("/");
+                    for (let i = 0; i < group_parts.length; i++) {
+                        const [groupKey, groupValue] = group_parts[i].split("-");
+                        // Skip updating m2m field as it is complicated to handle drag and drop
+                        if (this.fieldsGet[groupKey].type === "many2many") {
+                            continue;
+                        }
+                        group_record_values[groupKey] =
+                            groupValue === "false"
+                                ? false
+                                : Number(groupValue) || groupValue;
+                    }
+                    group = {
+                        id: subGroupId,
+                        content: name || "UNASSIGNED",
+                        group_record_values,
+                        order: name === "UNASSIGNED" ? -1 : seq,
+                        treeLevel: lvl,
+                        visible: name !== "UNASSIGNED",
+                    };
+                    seq += 1;
+                    groups.push(group);
                 }
-                // Check if group is m2m in this case add id -> value of all
-                // found entries.
-                if (this.fields[grouped_field].type === "many2many") {
-                    const list_values = await this.get_m2m_grouping_datas(
-                        this.fields[grouped_field].relation,
-                        group_name
+                createdGroups.push(group);
+                if (parent) {
+                    if (!parent.nestedGroups) {
+                        parent.nestedGroups = [];
+                    }
+                    if (!parent.nestedGroups.includes(group.id)) {
+                        parent.nestedGroups.push(group.id);
+                    }
+                }
+            }
+            return createdGroups;
+        };
+
+        const processGroup = async (
+            grouped_field,
+            groupValue,
+            groupKey,
+            groupLvl,
+            parentGroups
+        ) => {
+            if (groupValue && Array.isArray(groupValue)) {
+                if (this.fieldsGet[grouped_field].type === "many2many") {
+                    const groupModel = this.fieldsGet[grouped_field].relation;
+                    const listValues = await this.get_m2m_grouping_datas(
+                        groupModel,
+                        groupValue
                     );
-                    for (const vals of list_values) {
-                        const is_inside = groups.some((gr) => gr.id === vals.id);
-                        if (!is_inside) {
-                            vals.order = seq;
-                            seq += 1;
-                            groups.push(vals);
+                    const createdM2mGroups = [];
+                    for (const vals of listValues) {
+                        if (groupValue.includes(vals.id) || vals.id === false) {
+                            const newM2mGroups = createGroup(
+                                `${groupKey}-${vals.id}`,
+                                vals.content,
+                                parentGroups,
+                                groupLvl
+                            );
+                            createdM2mGroups.push(...newM2mGroups);
                         }
                     }
-                } else {
-                    groups.push({
-                        id: group_name[0],
-                        content: group_name[1],
-                        order: seq,
-                    });
-                    seq += 1;
+                    return createdM2mGroups;
                 }
+                const groupId = `${groupKey}-${groupValue[0]}`;
+                const groupName = groupValue[1];
+                return createGroup(groupId, groupName, parentGroups, groupLvl);
+            } else if (groupValue && ["string", "number"].includes(typeof groupValue)) {
+                return createGroup(
+                    `${groupKey}-${groupValue}`,
+                    groupValue,
+                    parentGroups,
+                    groupLvl
+                );
+            }
+            return createGroup(
+                `${groupKey}-false`,
+                "UNASSIGNED",
+                parentGroups,
+                groupLvl
+            );
+        };
+
+        for (const evt of records) {
+            let parentGroups = [null];
+            for (const grouped_field of this.model.last_group_bys) {
+                const groupValue = evt[grouped_field];
+                const groupKey = grouped_field;
+                const groupLvl = groupLevel[grouped_field];
+                parentGroups = await processGroup(
+                    grouped_field,
+                    groupValue,
+                    groupKey,
+                    groupLvl,
+                    parentGroups
+                );
             }
         }
         return groups;
     }
 
-    async get_m2m_grouping_datas(model, group_name) {
-        const groups = [];
-        for (const gr of group_name) {
-            const record_info = await this.orm.call(model, "read", [
+    async get_m2m_grouping_datas(groupModel, groupValue) {
+        const groups = [{id: false, content: "UNASSIGNED"}];
+        for (const gr of groupValue) {
+            const record_info = await this.orm.call(groupModel, "read", [
                 gr,
                 ["display_name"],
             ]);
             groups.push({id: record_info[0].id, content: record_info[0].display_name});
         }
         return groups;
+    }
+
+    async get_fields_get(group_bys) {
+        return await this.orm.call(this.model.model_name, "fields_get", [group_bys]);
     }
 
     /**
@@ -428,6 +539,7 @@ export class TimelineRenderer extends Component {
      * @private
      */
     on_timeline_double_click(e) {
+        this.on_timeline_click(e);
         if (e.what === "item" && e.item !== -1) {
             this.props.onItemDoubleClick(e);
         }

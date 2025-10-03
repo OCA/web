@@ -82,17 +82,41 @@ export class TimelineModel extends Model {
      * Transform Odoo event object to timeline event object.
      *
      * @param {Object} record
+     * @param {Object} fieldsGet - Field metadata for group by fields
      * @private
-     * @returns {Object}
+     * @returns {Object|Array} Single timeline item or array of items for m2m groups
      */
-    _event_data_transform(record) {
+    _event_data_transform(record, fieldsGet) {
         const [date_start, date_stop] = this._get_event_dates(record);
-        let group = record[this.last_group_bys[0]];
-        if (group && Array.isArray(group) && group.length > 0) {
-            group = group[0];
-        } else {
-            group = -1;
+        const evtGroup = [];
+        let group = "undefined-false";
+        for (const grouped_field of this.last_group_bys) {
+            evtGroup.push({[grouped_field]: record[grouped_field]});
         }
+
+        group = evtGroup
+            .reduce((acc, eG) => {
+                const entries = Object.entries(eG).flatMap(([f, value]) => {
+                    if (value instanceof Array) {
+                        if (fieldsGet && fieldsGet[f].type === "many2many") {
+                            return value.length === 0
+                                ? [`${f}-false`]
+                                : value.map((v) => `${f}-${v}`);
+                        }
+                        return [`${f}-${value[0]}`];
+                    } else if (["string", "number"].includes(typeof value)) {
+                        return [`${f}-${value}`];
+                    }
+                    return [`${f}-false`];
+                });
+                if (acc.length === 0) {
+                    return entries.map((e) => [e]);
+                }
+                return acc.flatMap((a) => entries.map((e) => [...a, e]));
+            }, [])
+            .map((g) => g.join("/"))
+            .join(",");
+
         let colorToApply = false;
         for (const color of this.colors) {
             if (evaluate(color.ast, record)) {
@@ -105,21 +129,35 @@ export class TimelineModel extends Model {
             content = this._render_timeline_item(record);
         }
 
-        const timeline_item = {
-            start: date_start.toJSDate(),
-            content: content,
-            id: record.id,
-            order: record.order,
-            group: group,
-            evt: record,
-            style: `background-color: ${colorToApply};`,
-        };
-        // Only specify range end when there actually is one.
-        // ➔ Instantaneous events / those with inverted dates are displayed as points.
-        if (date_stop && DateTime.fromISO(date_start) < DateTime.fromISO(date_stop)) {
-            timeline_item.end = date_stop.toJSDate();
+        const groups = group.split(",");
+        const r_list = [];
+        for (const g of groups) {
+            const r = {
+                start: date_start.toJSDate(),
+                content: content,
+                // Append group to the id to avoid duplicate id, one item can be
+                // appear/duplicated in multiple groups in case group by m2m field.
+                id: record.id + "_" + g,
+                record_id: record.id,
+                order: record.order,
+                group: g,
+                evt: record,
+                style: `background-color: ${colorToApply};`,
+            };
+            // Only specify range end when there actually is one.
+            // ➔ Instantaneous events / those with inverted dates are displayed as points.
+            if (
+                date_stop &&
+                DateTime.fromISO(date_start) < DateTime.fromISO(date_stop)
+            ) {
+                r.end = date_stop.toJSDate();
+            }
+            if (groups.length === 1) {
+                return r;
+            }
+            r_list.push(r);
         }
-        return timeline_item;
+        return r_list;
     }
     /**
      * Get dates from given event

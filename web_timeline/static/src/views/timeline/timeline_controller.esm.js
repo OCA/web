@@ -61,11 +61,17 @@ export class TimelineController extends Component {
      * @param {EventObject} item
      */
     _onGroupClick(item) {
-        const groupField = this.model.last_group_bys[0];
+        const groups = item.group.split("/");
+        const [group_key, group_value] = groups[groups.length - 1].split("-");
+        if (!group_value || group_value === "false") return;
+        // We need to get the fields metadata from the renderer
+        // since it's not available in the controller
+        const group_model = this.model.fields[group_key].relation;
+        if (!group_model) return;
         this.actionService.doAction({
             type: "ir.actions.act_window",
-            res_model: this.model.fields[groupField].relation,
-            res_id: item.group,
+            res_model: group_model,
+            res_id: parseInt(group_value, 10),
             views: [[false, "form"]],
             view_mode: "form",
             target: "new",
@@ -80,7 +86,8 @@ export class TimelineController extends Component {
      * @returns {jQuery.Deferred}
      */
     _onItemDoubleClick(event) {
-        return this.openItem(event.item, false);
+        const item_id = event.item.split("_")[0];
+        return this.openItem(Number(item_id) || item_id, false);
     }
 
     /**
@@ -134,10 +141,6 @@ export class TimelineController extends Component {
     _onMove(item, callback) {
         const event_start = DateTime.fromJSDate(item.start);
         const event_end = item.end ? DateTime.fromJSDate(item.end) : false;
-        let group = false;
-        if (item.group !== -1) {
-            group = item.group;
-        }
         const data = {};
         // In case of a move event, the date_delay stay the same,
         // only date_start and stop must be updated
@@ -157,12 +160,27 @@ export class TimelineController extends Component {
             const diff = event_end.diff(event_start, "hours");
             data[this.date_delay] = diff.hours;
         }
-        const grouped_field = this.model.last_group_bys[0];
-        if (this.model.fields[grouped_field].type !== "many2many") {
-            data[grouped_field] = group;
+
+        // Parse the group string to extract field values for all group levels
+        if (item.group) {
+            const group_parts = item.group.split("/");
+            for (const part of group_parts) {
+                const [groupKey, groupValue] = part.split("-");
+                // Skip m2m fields as they are complicated to handle
+                if (
+                    this.model.fields[groupKey] &&
+                    this.model.fields[groupKey].type !== "many2many"
+                ) {
+                    data[groupKey] =
+                        groupValue === "false"
+                            ? false
+                            : Number(groupValue) || groupValue;
+                }
+            }
         }
+
         this.moveQueue.push({
-            id: item.id,
+            id: item.record_id,
             data,
             item,
             callback,
@@ -202,7 +220,8 @@ export class TimelineController extends Component {
             confirmLabel: _t("Confirm"),
             cancelLabel: _t("Discard"),
             confirm: async () => {
-                await this.model.remove_completed(item);
+                // Use record_id for deletion, not the composite id
+                await this.model.remove_completed({...item, id: item.record_id});
                 callback(item);
             },
             cancel: () => {
@@ -242,8 +261,12 @@ export class TimelineController extends Component {
             const diff = item_end.diff(item_start, "hours");
             context[`default_${this.date_delay}`] = diff.hours;
         }
-        if (item.group > 0) {
-            context[`default_${this.model.last_group_bys[0]}`] = item.group;
+        if (item.group) {
+            const groups = item.group.split("/");
+            for (let i = 0; i < groups.length; i++) {
+                const [group_key, group_value] = groups[i].split("-");
+                context[`default_${group_key}`] = Number(group_value) || group_value;
+            }
         }
         // Show popup
         this.dialogService.add(
