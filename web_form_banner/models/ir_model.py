@@ -36,30 +36,28 @@ class Base(models.AbstractModel):
         except Exception:
             return res
         for rule in rules:
-            target = root.xpath(rule.target_xpath or "//sheet")
-            if not target:
+            targets = root.xpath(rule.target_xpath or "//sheet")
+            if not targets:
                 continue
-            # Lightweight placeholder; JS will fill and toggle visibility
-            css = "o_form_banner alert alert-%s" % (rule.severity or "danger")
+            target = targets[0]
             trigger_fields = ",".join(rule.trigger_field_ids.mapped("name"))
-            node = etree.Element(
+            banner = etree.Element(
                 "div",
                 {
-                    "class": css,
-                    "role": "alert",
+                    "class": "o_form_banner alert o_invisible_modifier",
+                    "role": "status",
                     "data-rule-id": str(rule.id),
                     "data-model": self._name,
-                    "data-default-severity": (rule.severity or "danger"),
                     "data-trigger-fields": trigger_fields,
-                    "style": "display:none;",
                 },
             )
-            parent = target[0].getparent()
-            if parent is None:
-                continue
+            in_group = any(a.tag == "group" for a in target.iterancestors())
+            if in_group:
+                # To avoid the layout distortion issue when the target is inside a group
+                banner.set("colspan", "2")
             if rule.position == "before":
-                parent.insert(parent.index(target[0]), node)
+                target.addprevious(banner)
             else:
-                target[0].addnext(node)
+                target.addnext(banner)
         res["arch"] = etree.tostring(root, encoding="unicode")
         return res

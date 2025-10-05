@@ -212,8 +212,9 @@ Known issues / Roadmap
 Banner presentation inside `<group>`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Placing a full-width inline banner inside `<group>` is currently not supported. The
-presentation of the banner and the child fields will be distorted.
+Placing a full-width inline banner inside a `<group>` is only partially supported.
+Depending on the target XPath (especially when targeting a `<field/>` rendered by
+certain widgets), the banner or surrounding fields may render distorted.
 
 Limitations of `draft` eval context variable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

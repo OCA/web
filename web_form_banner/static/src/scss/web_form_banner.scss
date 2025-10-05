@@ -5,11 +5,6 @@
     padding-bottom: 6px;
 }
 
-// keep only a tiny gap between banners
-.o_form_view .o_form_banner.alert + .o_form_banner.alert {
-    margin-top: 4px;
-}
-
 // avoid extra gaps from paragraphs inside the banner
 .o_form_view .o_form_banner.alert p:last-child {
     margin-bottom: 0;

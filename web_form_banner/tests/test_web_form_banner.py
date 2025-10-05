@@ -3,11 +3,11 @@
 
 from lxml import etree
 
-from odoo.tests.common import SavepointCase, tagged
+from odoo.tests.common import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestFieldsViewGetPartnerBanner(SavepointCase):
+class TestFieldsViewGetPartnerBanner(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -25,12 +25,7 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
         cls.p_len22 = cls.Partner.create({"name": "Professor Charles Xavier"})  # 22
 
     def _get_arch_tree(self, model, view):
-        res = model.fields_view_get(
-            view_id=view.id,
-            view_type="form",
-            toolbar=False,
-            submenu=False,
-        )
+        res = model.get_view(view_id=view.id, view_type="form")
         return etree.fromstring(res["arch"])
 
     def _find_banner_node(self, tree, rule):
@@ -63,18 +58,10 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
         banner_node = self._find_banner_node(tree, self.rule_name)
         # Basic attributes from the server injection
         self.assertEqual(banner_node.get("data-model"), "res.partner")
-        self.assertEqual(
-            banner_node.get("data-default-severity"), self.rule_name.severity
-        )
-        self.assertEqual(banner_node.get("role"), "alert")
-        self.assertEqual(banner_node.get("style"), "display:none;")
+        self.assertEqual(banner_node.get("role"), "status")
         # Class list includes the expected CSS classes
         classes = (banner_node.get("class") or "").split()
-        for required in (
-            "o_form_banner",
-            "alert",
-            "alert-%s" % (self.rule_name.severity),
-        ):
+        for required in ("o_form_banner", "alert", "o_invisible_modifier"):
             self.assertIn(required, classes)
         # Ensure it's not duplicated
         all_banners = tree.xpath("//div[contains(@class,'o_form_banner')]")
@@ -99,7 +86,7 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
     def test_not_injected_on_unrelated_model(self):
         Company = self.env["res.company"]
         view = self.env.ref("base.view_company_form")
-        res = Company.fields_view_get(view_id=view.id, view_type="form")
+        res = Company.get_view(view_id=view.id, view_type="form")
         tree = etree.fromstring(res["arch"])
         self.assertFalse(tree.xpath("//div[contains(@class,'o_form_banner')]"))
 
