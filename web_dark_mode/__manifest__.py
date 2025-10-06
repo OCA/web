@@ -12,11 +12,18 @@
     "excludes": ["web_enterprise"],
     "installable": True,
     "assets": {
-        "web.assets_web_dark": [
-            ("prepend", "web_dark_mode/static/src/scss/variables.scss"),
-        ],
         "web.assets_backend": [
             "web_dark_mode/static/src/js/switch_item.esm.js",
+        ],
+        "web.assets_variables_dark": [
+            (
+                "before",
+                "web/static/src/scss/primary_variables.scss",
+                "web_dark_mode/static/src/scss/primary_variables.dark.scss",
+            ),
+        ],
+        "web.assets_web_dark": [
+            ("include", "web.assets_variables_dark"),
         ],
     },
     "data": [
