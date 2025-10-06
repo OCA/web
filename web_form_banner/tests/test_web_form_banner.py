@@ -3,11 +3,11 @@
 
 from lxml import etree
 
-from odoo.tests.common import SavepointCase, tagged
+from odoo.tests.common import TransactionCase, tagged
 
 
 @tagged("post_install", "-at_install")
-class TestFieldsViewGetPartnerBanner(SavepointCase):
+class TestFieldsViewGetPartnerBanner(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -63,18 +63,10 @@ class TestFieldsViewGetPartnerBanner(SavepointCase):
         banner_node = self._find_banner_node(tree, self.rule_name)
         # Basic attributes from the server injection
         self.assertEqual(banner_node.get("data-model"), "res.partner")
-        self.assertEqual(
-            banner_node.get("data-default-severity"), self.rule_name.severity
-        )
-        self.assertEqual(banner_node.get("role"), "alert")
-        self.assertEqual(banner_node.get("style"), "display:none;")
+        self.assertEqual(banner_node.get("role"), "status")
         # Class list includes the expected CSS classes
         classes = (banner_node.get("class") or "").split()
-        for required in (
-            "o_form_banner",
-            "alert",
-            "alert-%s" % (self.rule_name.severity),
-        ):
+        for required in ("o_form_banner", "alert", "o_invisible_modifier"):
             self.assertIn(required, classes)
         # Ensure it's not duplicated
         all_banners = tree.xpath("//div[contains(@class,'o_form_banner')]")

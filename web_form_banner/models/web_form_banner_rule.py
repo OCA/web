@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import logging
-from functools import lru_cache
 from string import Template
 
 from dateutil import parser as dateparse
@@ -172,9 +171,8 @@ class WebFormBannerRule(models.Model):
             _logger.exception("Failed building form URL for %s", rec)
             return ""
 
-    @lru_cache(maxsize=1)
+    @api.model
     def _base_eval_ctx_static(self):
-        # Only static, import-heavy items
         return {
             "time": tools.safe_eval.time,
             "datetime": tools.safe_eval.datetime,

@@ -67,7 +67,7 @@ const sliceBy = (obj, keys) =>
 const qsa = (el, sel) => Array.from(el ? el.querySelectorAll(sel) : []);
 
 const bannersIn = (ctrl) =>
-    qsa(root(ctrl), '.o_form_view div[role="alert"][data-rule-id]');
+    qsa(root(ctrl), '.o_form_view div[role="status"][data-rule-id]');
 
 const hasBanners = (ctrl) => bannersIn(ctrl).length > 0;
 
@@ -100,10 +100,10 @@ async function refreshBanners(ctrl, extraChanges) {
                 args: args,
             })) || {};
         if (!alive(ctrl)) return;
-        const v = r && r.visible;
-        el.style.display = v ? "" : "none";
-        if (!v) continue;
-        el.className = "o_form_banner alert alert-" + r.severity;
+        // Replace only the alert class
+        el.classList.remove("alert-info", "alert-warning", "alert-danger");
+        el.classList.add("alert-" + r.severity);
+        el.classList.toggle("o_invisible_modifier", !(r && r.visible));
         setHtml(el, r.html);
     }
 }
