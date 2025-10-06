@@ -1,0 +1,131 @@
+// This file is just the things in web/static/src/scss/primary_variables.scss
+// that need to be overridden for dark mode. Anything that does not need to be
+// changed does not make it here.
+// These variables will be loaded right before web/static/src/scss/primary_variables.scss
+// so any variable defined here will override the default ones.
+// The !default flag is included in case any other model needs to override these values again.
+
+// Color-scheme
+$o-webclient-color-scheme: dark !default;
+
+// Colors
+$o-white: #000000 !default;
+$o-black: #ffffff !default;
+
+$o-gray-100: #181818 !default; // L: 9%
+$o-gray-200: #1f1f1f !default; // L: 12%
+$o-gray-300: #303030 !default; // L: 19%
+$o-gray-400: #4a4a4a !default; // L: 29%
+$o-gray-500: #696969 !default; // L: 41%
+$o-gray-600: #8b8b8b !default; // L: 55%
+$o-gray-700: #aeaeae !default; // L: 68%
+$o-gray-800: #c0c0c0 !default; // L: 75%
+$o-gray-900: #c8c8c8 !default; // L: 78%
+
+$o-community-color: $o-gray-200 !default;
+$o-enterprise-color: #71639e !default;
+$o-enterprise-action-color: #00c7c7 !default;
+
+$o-brand-odoo: $o-enterprise-color !default;
+$o-brand-primary: $o-enterprise-color !default;
+
+// This only has 3 uses. The only one I was able to test is at
+// web/static/src/views/form/form_controller.scss which changes form lables
+// to this in mobile. Those are usually gray-900.
+$o-brand-secondary: $o-gray-900 !default;
+
+$o-action: $o-enterprise-action-color !default;
+
+// Font colors
+$o-main-link-color: $o-enterprise-action-color !default;
+
+// Component colors
+$o-view-background-color: $o-gray-200 !default;
+$o-shadow-color: $o-gray-100 !default;
+
+$o-form-lightsecondary: $o-gray-500 !default;
+
+// This is the background color. it is declared in web/static/src/scss/secondary_variables.scss
+// but it really ought to be here
+$o-webclient-background-color: $o-gray-100 !default;
+
+// List group
+$o-list-group-active-bg: $o-gray-300 !default;
+
+// Buttons
+$o-btns-bs-override: () !default;
+$o-btns-bs-override: map-merge(
+    $o-btns-bs-override,
+    (
+        "primary": (
+            background: $o-brand-primary,
+            border: $o-brand-primary,
+            color: $o-black,
+            hover-background: lighten($o-brand-primary, 5%),
+            hover-border: lighten($o-brand-primary, 5%),
+            hover-color: $o-black,
+
+            active-background: lighten($o-brand-primary, 10%),
+            active-border: lighten($o-brand-primary, 10%),
+            active-color: $o-black,
+        ),
+        "secondary": (
+            background: $o-gray-300,
+            border: $o-gray-300,
+            color: $o-gray-900,
+
+            hover-background: $o-gray-400,
+            hover-border: $o-gray-400,
+            hover-color: $o-gray-900,
+
+            active-background: mix($o-action, $o-gray-100, 10%),
+            active-border: $o-action,
+            active-color: $o-black,
+        ),
+        "light": (
+            background: transparent,
+            border: transparent,
+            color: $o-gray-800,
+
+            hover-background: $o-gray-300,
+            hover-border: $o-gray-300,
+            hover-color: $o-gray-900,
+
+            active-background: mix($o-action, $o-gray-100, 10%),
+            active-border: $o-action,
+            active-color: $o-black,
+        ),
+    )
+);
+
+$o-btns-bs-outline-override: () !default;
+$o-btns-bs-outline-override: map-merge(
+    $o-btns-bs-outline-override,
+    (
+        "primary": (
+            background: transparent,
+            border: saturate(lighten($o-brand-primary, 20%), 25%),
+            color: saturate(lighten($o-brand-primary, 20%), 25%),
+            hover-background: lighten($o-brand-primary, 5%),
+            hover-border: lighten($o-brand-primary, 5%),
+            hover-color: $o-black,
+
+            active-background: lighten($o-brand-primary, 10%),
+            active-border: lighten($o-brand-primary, 10%),
+            active-color: $o-black,
+        ),
+        "secondary": (
+            background: transparent,
+            border: $o-gray-300,
+            color: $o-gray-900,
+
+            hover-background: $o-gray-300,
+            hover-border: $o-gray-300,
+            hover-color: $o-gray-900,
+
+            active-background: mix($o-action, $o-gray-100, 10%),
+            active-border: $o-action,
+            active-color: $o-black,
+        ),
+    )
+);
