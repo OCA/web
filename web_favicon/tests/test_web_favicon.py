@@ -7,7 +7,7 @@ from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 from odoo.tools.image import base64_to_image, image_to_base64
 
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.http_routing.tests.common import MockRequest
 
 
 @tagged("post_install", "-at_install")
