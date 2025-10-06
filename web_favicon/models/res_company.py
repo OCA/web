@@ -53,7 +53,7 @@ class ResCompany(models.Model):
     favicon = fields.Binary(
         string="Company Favicon",
         help="This field holds the image used to display favicon for a given company.",
-        default=_get_default_favicon,
+        default=lambda self: self._get_default_favicon(),
     )
 
     @api.model_create_multi
