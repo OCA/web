@@ -46,6 +46,7 @@
         "web.assets_web_dark": [
             ("include", "web.assets_variables_dark"),
             ("include", "web.assets_backend_helpers_dark"),
+            "web_dark_mode/static/src/**/*.dark.scss",
         ],
     },
     "data": [
