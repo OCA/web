@@ -21,6 +21,11 @@
                 "web/static/src/scss/primary_variables.scss",
                 "web_dark_mode/static/src/scss/primary_variables.dark.scss",
             ),
+            (
+                "before",
+                "web/static/src/**/*.variables.scss",
+                "web_dark_mode/static/src/**/*.variables.dark.scss",
+            ),
         ],
         "web.assets_web_dark": [
             ("include", "web.assets_variables_dark"),

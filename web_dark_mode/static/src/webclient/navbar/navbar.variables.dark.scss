@@ -1,0 +1,14 @@
+// The navbar is usually purple, as set by web/static/src/webclient/navbar/navbar.variables.scss
+// We override it here for dark mode.
+$o-navbar-background: $o-view-background-color !default;
+// We do not really need to disable the border, but it helps on web_responsive
+// when we change the color of the navbar to match the app grid background.
+// If we do not disable it, it changes color with a noticeable delay after the navbar.
+$o-navbar-border-bottom: 0px solid $o-navbar-background !default;
+
+$o-navbar-entry-color: $o-gray-900 !default;
+$o-navbar-entry-color--hover: $o-black !default;
+
+$o-navbar-badge-bg: $o-danger !default;
+$o-navbar-badge-color: $o-black !default;
+$o-navbar-badge-text-shadow: 0 !default;
