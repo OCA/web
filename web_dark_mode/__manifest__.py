@@ -15,6 +15,10 @@
         "web.assets_backend": [
             "web_dark_mode/static/src/js/switch_item.esm.js",
         ],
+        "web.assets_backend_lazy_dark": [
+            ("include", "web.assets_variables_dark"),
+            ("include", "web.assets_backend_helpers_dark"),
+        ],
         "web.assets_variables_dark": [
             (
                 "before",
