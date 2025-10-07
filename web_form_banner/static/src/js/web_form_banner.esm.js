@@ -3,8 +3,9 @@
 // License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import {patch} from "@web/core/utils/patch";
-import {onMounted, onPatched, onWillUnmount} from "@odoo/owl";
+import {onMounted, onWillUnmount} from "@odoo/owl";
 import {FormController} from "@web/views/form/form_controller";
+import {Record} from "@web/model/relational_model/record";
 
 const recRoot = (c) => (c && c.model && c.model.root) || null;
 const childSpan = (el) => {
@@ -29,11 +30,12 @@ function normalizeValue(v) {
     if (v === null || v === undefined) return v; // Null/undefined
     const t = typeof v;
     if (t === "string" || t === "number" || t === "boolean") return v;
-    if (Array.isArray(v) && v.length === 2 && typeof v[1] === "string") return v[0]; // M2o [id, name]
+    if (Array.isArray(v))
+        return v.length === 2 && typeof v[1] === "string" ? v[0] : [...v]; // M2o id or cloned m2m ids
     if (t === "object") {
         if (typeof v.res_id === "number") return v.res_id; // M2o snapshot
         if (typeof v.id === "number") return v.id; // M2o env
-        if (Array.isArray(v.resIds)) return v.resIds; // M2m
+        if (Array.isArray(v._currentIds)) return [...v._currentIds]; // M2m
     }
     return undefined; // Ignore others (e.g., command lists)
 }
@@ -119,26 +121,35 @@ function tick(ctrl) {
     }, 180);
 }
 
-patch(FormController.prototype, "web_form_banner.lean", {
+patch(FormController.prototype, {
     setup() {
-        this._super(...arguments);
+        super.setup();
+        this.model.__controller = this;
         onMounted(() => scheduleRefresh(this));
-        onPatched(() => tick(this));
         onWillUnmount(() => clearTimeout(this.__wfbTimer));
     },
-    async edit() {
-        const r = await this._super(...arguments);
-        scheduleRefresh(this);
-        return r;
-    },
     async discard() {
-        const r = await this._super(...arguments);
+        const r = await super.discard(...arguments);
         scheduleRefresh(this);
         return r;
     },
-    async saveButtonClicked(p = {}) {
-        const ok = await this._super(p);
+    async save(p = {}) {
+        const ok = await super.save(p);
         if (ok) scheduleRefresh(this);
         return ok;
+    },
+});
+
+const _superApplyChanges = Record.prototype._applyChanges;
+patch(Record.prototype, {
+    _applyChanges(changes, serverChanges = {}) {
+        const res = _superApplyChanges.call(this, changes, serverChanges);
+        try {
+            if (this.model && this.model.root === this) {
+                const ctrl = this.model.__controller;
+                if (ctrl) tick(ctrl);
+            }
+        } catch {}
+        return res;
     },
 });
