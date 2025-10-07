@@ -1,0 +1,37 @@
+// This overrides the overrides in web/static/src/scss/bootstrap_overridden.scss
+// and also some additional overrides to web/static/lib/bootstrap/scss/_variables.scss
+
+// Shadows
+$box-shadow: 0 0.5rem 1rem rgba($o-white, 0.4) !default;
+$box-shadow-sm: 0 0.125rem 0.25rem rgba($o-white, 0.2) !default;
+$box-shadow-lg: 0 1rem 3rem rgba($o-white, 0.4) !default;
+$box-shadow-inset: inset 0 1px 2px rgba($o-white, 0.2) !default;
+
+// Dropdowns
+$dropdown-bg: $o-white !default;
+
+// Navs
+$nav-tabs-link-active-bg: transparent !default;
+$nav-link-color: $o-main-text-color !default;
+
+// Tooltips
+$tooltip-bg: $o-white !default;
+$tooltip-color: $o-main-text-color !default;
+
+// Modals
+$modal-backdrop-bg: $o-white !default;
+
+// User input typically entered via keyboard
+$kbd-color: $o-gray-100 !default;
+$kbd-bg: $o-gray-900 !default;
+$kbd-box-shadow:
+    0px 1px 1px rgba($o-gray-100, 0.2),
+    inset 0px -1px 1px 1px rgba($o-gray-700, 0.8),
+    inset 0px 2px 0px 0px rgba($o-black, 0.8) !default;
+
+// Input
+$input-focus-box-shadow: 0 !default;
+$input-focus-border-color: $o-enterprise-action-color !default;
+$form-check-input-checked-color: $o-white !default;
+$form-check-input-checked-border-color: $o-enterprise-action-color !default;
+$form-check-input-checked-bg-color: $o-enterprise-action-color !default;
