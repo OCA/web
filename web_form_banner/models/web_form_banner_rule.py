@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import logging
-from functools import lru_cache
 from string import Template
 
 from dateutil import parser as dateparse
@@ -39,7 +38,7 @@ def _extract_m2o_id(v):
     """Normalize many2one values to an integer id or False."""
     if isinstance(v, int):
         return v
-    if isinstance(v, (list, tuple)) and v and isinstance(v[0], int):
+    if isinstance(v, list | tuple) and v and isinstance(v[0], int):
         return v[0]
     if isinstance(v, dict):
         m2o_id = v.get("res_id") or v.get("id")
@@ -49,12 +48,12 @@ def _extract_m2o_id(v):
 
 
 def _m2m_items(value):
-    if isinstance(value, (list, tuple)):
+    if isinstance(value, list | tuple):
         return value
     if isinstance(value, dict):
-        if isinstance(value.get("resIds"), (list, tuple)):
+        if isinstance(value.get("resIds"), list | tuple):
             return value["resIds"]
-        if isinstance(value.get("data"), (list, tuple)):
+        if isinstance(value.get("data"), list | tuple):
             return value["data"]
     return None
 
@@ -172,9 +171,8 @@ class WebFormBannerRule(models.Model):
             _logger.exception("Failed building form URL for %s", rec)
             return ""
 
-    @lru_cache(maxsize=1)
+    @api.model
     def _base_eval_ctx_static(self):
-        # Only static, import-heavy items
         return {
             "time": tools.safe_eval.time,
             "datetime": tools.safe_eval.datetime,
