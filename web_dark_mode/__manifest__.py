@@ -33,6 +33,11 @@
         ],
         "web.assets_backend_helpers_dark": [
             (
+                "before",
+                "web/static/src/scss/bootstrap_overridden.scss",
+                "web_dark_mode/static/src/scss/bootstrap_overridden.dark.scss",
+            ),
+            (
                 "after",
                 "web/static/lib/bootstrap/scss/_functions.scss",
                 "web_dark_mode/static/src/scss/bs_functions_overrides.dark.scss",
