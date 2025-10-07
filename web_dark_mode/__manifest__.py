@@ -27,8 +27,16 @@
                 "web_dark_mode/static/src/**/*.variables.dark.scss",
             ),
         ],
+        "web.assets_backend_helpers_dark": [
+            (
+                "after",
+                "web/static/lib/bootstrap/scss/_functions.scss",
+                "web_dark_mode/static/src/scss/bs_functions_overrides.dark.scss",
+            ),
+        ],
         "web.assets_web_dark": [
             ("include", "web.assets_variables_dark"),
+            ("include", "web.assets_backend_helpers_dark"),
         ],
     },
     "data": [
