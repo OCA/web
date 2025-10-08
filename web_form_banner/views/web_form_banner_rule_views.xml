@@ -4,7 +4,7 @@
         <field name="name">web.form.banner.rule.tree</field>
         <field name="model">web.form.banner.rule</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="model_id" />
@@ -24,7 +24,7 @@
                     placeholder="return {'visible': True, 'values': {'title': '...'}}"
                     optional="show"
                 />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="view_web_form_banner_rule_form" model="ir.ui.view">
@@ -45,7 +45,7 @@
                         <h1>
                             <field
                                 name="name"
-                                placeholder="e.g. Warning on dangeours customers"
+                                placeholder="e.g. Warning on dangerous customers"
                             />
                         </h1>
                     </div>
@@ -197,7 +197,7 @@ else:
     <record id="action_web_form_banner_rule" model="ir.actions.act_window">
         <field name="name">Form Banner Rules</field>
         <field name="res_model">web.form.banner.rule</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <menuitem
         action="action_web_form_banner_rule"

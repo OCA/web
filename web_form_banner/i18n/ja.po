@@ -338,7 +338,7 @@ msgstr "バナー挿入対象ノードのXPath"
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
-msgid "e.g. Warning on dangeours customers"
+msgid "e.g. Warning on dangerous customers"
 msgstr "例: 危険な顧客の警告"
 
 #. module: web_form_banner
