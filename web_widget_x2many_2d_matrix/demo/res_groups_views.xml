@@ -9,7 +9,7 @@
                         class="o_form_label"
                     >Many2one field as value and y axis, options and domain set on value field</div>
                     <field
-                        name="users"
+                        name="user_ids"
                         widget="x2many_2d_matrix"
                         field_x_axis="login"
                         field_y_axis="partner_id"
@@ -31,7 +31,7 @@
                         class="o_form_label"
                     >Char field as value, clickable X axis</div>
                     <field
-                        name="users"
+                        name="user_ids"
                         widget="x2many_2d_matrix"
                         field_x_axis="country_id"
                         field_y_axis="partner_id"
@@ -50,7 +50,7 @@
                     </field>
                     <div class="o_form_label">Boolean field as value</div>
                     <field
-                        name="users"
+                        name="user_ids"
                         widget="x2many_2d_matrix"
                         field_x_axis="country_id"
                         field_y_axis="partner_id"
@@ -68,7 +68,7 @@
                     </field>
                     <div class="o_form_label">Selection field as value</div>
                     <field
-                        name="users"
+                        name="user_ids"
                         widget="x2many_2d_matrix"
                         field_x_axis="country_id"
                         field_y_axis="partner_id"
@@ -86,7 +86,7 @@
                     </field>
                     <div class="o_form_label">Float field as value</div>
                     <field
-                        name="users"
+                        name="user_ids"
                         widget="x2many_2d_matrix"
                         field_x_axis="country_id"
                         field_y_axis="partner_id"
@@ -106,7 +106,7 @@
                         class="o_form_label"
                     >Float field as value with float_time widget</div>
                     <field
-                        name="users"
+                        name="user_ids"
                         widget="x2many_2d_matrix"
                         field_x_axis="country_id"
                         field_y_axis="partner_id"
