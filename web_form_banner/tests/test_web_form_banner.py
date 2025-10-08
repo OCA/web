@@ -30,9 +30,7 @@ class TestFieldsViewGetPartnerBanner(TransactionCase):
 
     def _find_banner_node(self, tree, rule):
         """Find the injected placeholder node for the rule."""
-        xpath = (
-            "//div[@data-rule-id='%s' and contains(@class,'o_form_banner')]" % rule.id
-        )  # noqa: E501
+        xpath = f"//div[@data-rule-id='{rule.id}' and contains(@class,'o_form_banner')]"
         nodes = tree.xpath(xpath)
         self.assertTrue(nodes, "Expected banner node injected in the form arch.")
         return nodes[0]
@@ -154,7 +152,7 @@ class TestFieldsViewGetPartnerBanner(TransactionCase):
             form_vals={"category_id": []},
         )
         self.assertTrue(out.get("visible"))
-        self.assertIn("This partner is missing a tag!", out.get("html"))
+        self.assertIn("Tag is missing!", out.get("html"))
         out = self.Rule.compute_message(
             self.rule_tag.id,
             "res.partner",

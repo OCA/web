@@ -51,10 +51,10 @@ else:
             name="trigger_field_ids"
             eval="[(6, 0, [ref('base.field_res_partner__category_id')])]"
         />
-        <field name="severity">warning</field>
-        <field name="target_xpath">//sheet</field>
+        <field name="severity">danger</field>
+        <field name="target_xpath">//field[@name='category_id']</field>
         <field name="position">before</field>
-        <field name="message">This partner is missing a tag!</field>
+        <field name="message">Tag is missing!</field>
         <field
             name="message_value_code"
         ><![CDATA[
