@@ -23,8 +23,8 @@ export class X2Many2DMatrixRenderer extends Component {
                 rawValue: record.data[this.matrixFields.x],
             };
             if (record.fields[this.matrixFields.x].type === "many2one") {
-                column.text = column.value[1];
-                column.value = column.value[0];
+                column.text = column.value.display_name;
+                column.value = column.value.id;
             }
             if (columns.findIndex((c) => c.value === column.value) !== -1) return;
             columns.push(column);
@@ -41,8 +41,8 @@ export class X2Many2DMatrixRenderer extends Component {
                 rawValue: record.data[this.matrixFields.y],
             };
             if (record.fields[this.matrixFields.y].type === "many2one") {
-                row.text = row.value[1];
-                row.value = row.value[0];
+                row.text = row.value.display_name;
+                row.value = row.value.id;
             }
             if (rows.findIndex((r) => r.value === row.value) !== -1) return;
             rows.push(row);
@@ -53,11 +53,11 @@ export class X2Many2DMatrixRenderer extends Component {
     _getPointOfRecord(record) {
         let xValue = record.data[this.matrixFields.x];
         if (record.fields[this.matrixFields.x].type === "many2one") {
-            xValue = xValue[0];
+            xValue = xValue.id;
         }
         let yValue = record.data[this.matrixFields.y];
         if (record.fields[this.matrixFields.y].type === "many2one") {
-            yValue = yValue[0];
+            yValue = yValue.id;
         }
 
         const x = this.columns.findIndex((c) => c.value === xValue);
