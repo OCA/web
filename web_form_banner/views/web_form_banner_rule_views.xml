@@ -99,48 +99,48 @@
                                     >Available evaluation context variables are as follows:</p>
                                     <ul>
                                         <li><code
-                                            >env</code>: Odoo environment for ORM access.</li>
+                                        >env</code>: Odoo environment for ORM access.</li>
                                         <li><code>user</code>: Current user (<code
-                                            >env.user</code>).</li>
+                                        >env.user</code>).</li>
                                         <li><code
-                                            >ctx</code>: Copy of the current context (<code
-                                            >dict(env.context)</code>).</li>
+                                        >ctx</code>: Copy of the current context (<code
+                                        >dict(env.context)</code>).</li>
                                         <li><code
-                                            >record</code>: Current record (the form's record).</li>
+                                        >record</code>: Current record (the form's record).</li>
                                         <li><code
-                                            >draft</code>: The persisted field values of the ORM record (before applying the current
+                                        >draft</code>: The persisted field values of the ORM record (before applying the current
                                             form's unsaved changes) + the current unsaved changes on trigger fields.
                                             Should be used instead of <code
-                                            >record</code> when your rule is triggered dynamically by an
+                                        >record</code> when your rule is triggered dynamically by an
                                             update to a trigger field. It doesn't include any values from complex fields
                                             (x2many/reference, etc).
                                         </li>
                                         <li><code
-                                            >current_id</code>: Integer id of the record being edited, or <code
-                                            >False</code> if the form
+                                        >current_id</code>: Integer id of the record being edited, or <code
+                                        >False</code> if the form
                                             is creating a new record.
                                         </li>
                                         <li><code
-                                            >model</code>: Shortcut to the current model (<code
-                                            >env[record._name]</code>).</li>
+                                        >model</code>: Shortcut to the current model (<code
+                                        >env[record._name]</code>).</li>
                                         <li><code
-                                            >url_for(obj)</code>: Helper that returns a backend form URL for <code
-                                            >obj</code>.</li>
+                                        >url_for(obj)</code>: Helper that returns a backend form URL for <code
+                                        >obj</code>.</li>
                                         <li><code
-                                            >context_today(ts=None)</code>: User-timezone “today” (date) for reliable date comparisons.</li>
+                                        >context_today(ts=None)</code>: User-timezone “today” (date) for reliable date comparisons.</li>
                                         <li><code
-                                            >time, datetime</code>: Standard Python time/datetime modules.</li>
+                                        >time, datetime</code>: Standard Python time/datetime modules.</li>
                                         <li><code>dateutil</code>: <code
-                                            >{ "parser": dateutil.parser, "relativedelta": dateutil.relativedelta }</code></li>
+                                        >{ "parser": dateutil.parser, "relativedelta": dateutil.relativedelta }</code></li>
                                         <li><code>timezone</code>: <code
-                                            >pytz.timezone</code> for TZ handling.</li>
+                                        >pytz.timezone</code> for TZ handling.</li>
                                         <li><code>float_compare</code>, <code
-                                            >float_is_zero</code>, <code
-                                            >float_round</code>: Odoo float utils for precision-safe comparisons/rounding.</li>
+                                        >float_is_zero</code>, <code
+                                        >float_round</code>: Odoo float utils for precision-safe comparisons/rounding.</li>
                                     </ul>
                                     <p>Example of Message Value Code (model: <code
-                                        >sale.order</code>)</p>
-<code style="white-space: pre-wrap">
+                                    >sale.order</code>)</p>
+                                    <code style="white-space: pre-wrap">
 domain = [("partner_id", "=", draft.partner_id.id)]
 if record_id:
   domain += [("id", "&amp;lt;", record_id)]
