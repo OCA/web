@@ -179,7 +179,7 @@ else:
                     name="inactive"
                     domain="[('active','=',False)]"
                 />
-                <group expand="1" string="Group By">
+                <group>
                     <filter
                         string="Model"
                         name="model"
