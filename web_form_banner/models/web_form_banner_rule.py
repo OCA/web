@@ -10,7 +10,7 @@ from lxml import etree
 from markupsafe import escape
 from pytz import timezone
 
-from odoo import _, api, fields, models, tools
+from odoo import api, fields, models, tools
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare, float_is_zero, float_round
 from odoo.tools.safe_eval import safe_eval
@@ -156,7 +156,7 @@ class WebFormBannerRule(models.Model):
             try:
                 etree.XPath(xp or "//sheet")
             except (etree.XPathSyntaxError, etree.XPathEvalError) as e:
-                raise ValidationError(_("Invalid XPath:\n%s") % e) from e
+                raise ValidationError(self.env._("Invalid XPath:\n%s", e)) from e
 
     @api.model
     def _build_form_url(self, rec):
@@ -168,7 +168,7 @@ class WebFormBannerRule(models.Model):
                 .sudo()
                 .get_param("web.base.url", default="")
             )
-            return "%s/web#id=%d&model=%s&view_type=form" % (base, rec.id, rec._name)
+            return f"{base}/web#id={rec.id}&model={rec._name}&view_type=form"
         except Exception:
             _logger.exception("Failed building form URL for %s", rec)
             return ""
@@ -239,7 +239,7 @@ class WebFormBannerRule(models.Model):
         try:
             out = safe_eval(code, eval_ctx, mode="eval") or {}
         except Exception:
-            safe_eval(code, eval_ctx, mode="exec", nocopy=True)
+            safe_eval(code, eval_ctx, mode="exec")
             out = eval_ctx.get("result") or {}
         return out if isinstance(out, dict) else {}
 
@@ -262,7 +262,7 @@ class WebFormBannerRule(models.Model):
     @api.model
     def compute_message(self, rule_id, model, res_id, form_vals=None):
         """Return {visible, severity, html} for the given rule and record."""
-        lang = self._context.get("lang") or self.env.user.lang
+        lang = self.env.context.get("lang") or self.env.user.lang
         self = self.with_context(lang=lang)
         rule = self.browse(int(rule_id)).sudo()
         if not rule.exists() or not rule.active:
