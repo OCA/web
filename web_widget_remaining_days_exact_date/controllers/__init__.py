@@ -1,1 +1,1 @@
-from . import disable_remaining_days_rule
+from . import main
