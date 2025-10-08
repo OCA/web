@@ -21,13 +21,13 @@
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/18.0/web_widget_x2many_2d_matrix
+    :target: https://github.com/OCA/web/tree/19.0/web_widget_x2many_2d_matrix
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_widget_x2many_2d_matrix
+    :target: https://translation.odoo-community.org/projects/web-19-0/web-19-0-web_widget_x2many_2d_matrix
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=18.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -180,13 +180,14 @@ Now in our wizard, we can use:
 Known issues / Roadmap
 ======================
 
-- Support limit total records in the matrix. Ref:
-  https://github.com/OCA/web/issues/901
-- Support cell traversal through keyboard arrows.
-- Entering the widget from behind by pressing ``Shift+TAB`` in your
-  keyboard will enter into the 1st cell until
-  https://github.com/odoo/odoo/pull/26490 is merged.
-- Support kanban mode. Current behaviour forces list mode.
+-  Support limit total records in the matrix. Ref:
+   `https://github.com/OCA/web/issues/901 <https://github.com/OCA/web/issues/901>`__
+-  Support cell traversal through keyboard arrows.
+-  Entering the widget from behind by pressing ``Shift+TAB`` in your
+   keyboard will enter into the 1st cell until
+   `https://github.com/odoo/odoo/pull/26490 <https://github.com/odoo/odoo/pull/26490>`__
+   is merged.
+-  Support kanban mode. Current behaviour forces list mode.
 
 Changelog
 =========
@@ -194,14 +195,16 @@ Changelog
 12.0.1.0.1 (2018-12-07)
 -----------------------
 
-- [FIX] Cells are unable to render property.
-  (`#1126 <https://github.com/OCA/web/issues/1126>`__)
+-  [FIX] Cells are unable to render property.
+   (`#1126 <https://github.com/OCA/web/issues/1126>`__)
+
+.. _section-1:
 
 12.0.1.0.0 (2018-11-20)
 -----------------------
 
-- [12.0][MIG] web_widget_x2many_2d_matrix
-  (`#1101 <https://github.com/OCA/web/issues/1101>`__)
+-  [12.0][MIG] web_widget_x2many_2d_matrix
+   (`#1101 <https://github.com/OCA/web/issues/1101>`__)
 
 Bug Tracker
 ===========
@@ -209,7 +212,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_x2many_2d_matrix%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_x2many_2d_matrix%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -229,22 +232,22 @@ Authors
 Contributors
 ------------
 
-- Holger Brunn <mail@hunki-enterprises.com>
-- Pedro M. Baeza <pedro.baeza@tecnativa.com>
-- Artem Kostyuk <a.kostyuk@mobilunity.com>
-- Simone Orsi <simone.orsi@camptocamp.com>
-- Timon Tschanz <timon.tschanz@camptocamp.com>
-- Jairo Llopis <jairo.llopis@tecnativa.com>
-- Dennis Sluijk <d.sluijk@onestein.nl>
-- `CorporateHub <https://corporatehub.eu/>`__
+-  Holger Brunn <mail@hunki-enterprises.com>
+-  Pedro M. Baeza <pedro.baeza@tecnativa.com>
+-  Artem Kostyuk <a.kostyuk@mobilunity.com>
+-  Simone Orsi <simone.orsi@camptocamp.com>
+-  Timon Tschanz <timon.tschanz@camptocamp.com>
+-  Jairo Llopis <jairo.llopis@tecnativa.com>
+-  Dennis Sluijk <d.sluijk@onestein.nl>
+-  `CorporateHub <https://corporatehub.eu/>`__
 
-  - Alexey Pelykh <alexey.pelykh@corphub.eu>
+   -  Alexey Pelykh <alexey.pelykh@corphub.eu>
 
-- Adrià Gil Sorribes <adria.gil@forgeflow.com>
-- Christopher Ormaza <chris.ormaza@forgeflow.com>
-- SodexisTeam <dev@sodexis.com>
-- Jasmin Solanki jasmin.solanki@forgeflow.com
-- David Jiménez david.jimenez@forgeflow.com
+-  Adrià Gil Sorribes <adria.gil@forgeflow.com>
+-  Christopher Ormaza <chris.ormaza@forgeflow.com>
+-  SodexisTeam <dev@sodexis.com>
+-  Jasmin Solanki jasmin.solanki@forgeflow.com
+-  David Jiménez david.jimenez@forgeflow.com
 
 Maintainers
 -----------
@@ -273,6 +276,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-JasminSForgeFlow| |maintainer-DavidJForgeFlow| |maintainer-hbrunn| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/18.0/web_widget_x2many_2d_matrix>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/19.0/web_widget_x2many_2d_matrix>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
