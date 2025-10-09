@@ -162,3 +162,17 @@ if last:
 else:
   result = {"visible": False}
 ```
+
+If we set up the rules for a partner record as shown below:
+
+![](../static/description/partner_email_rule.png)
+
+![](../static/description/partner_tag_rule.png)
+
+The banners will be displayed in the partner form view:
+
+![](../static/description/partner_layout_banner.png)
+
+Once the values are filled in, the banners will disappear:
+
+![](../static/description/partner_layout_no_banner.png)

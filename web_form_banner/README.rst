@@ -216,6 +216,25 @@ trigger fields)**
    else:
      result = {"visible": False}
 
+If we set up the rules for a partner record as shown below:
+
+|image1|
+
+|image2|
+
+The banners will be displayed in the partner form view:
+
+|image3|
+
+Once the values are filled in, the banners will disappear:
+
+|image4|
+
+.. |image1| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_form_banner/static/description/partner_email_rule.png
+.. |image2| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_form_banner/static/description/partner_tag_rule.png
+.. |image3| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_form_banner/static/description/partner_layout_banner.png
+.. |image4| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_form_banner/static/description/partner_layout_no_banner.png
+
 Known issues / Roadmap
 ======================
 
