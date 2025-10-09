@@ -1,0 +1,18 @@
+.o_tag {
+    @for $size from 1 through length($o-colors) {
+        &.o_tag_color_#{$size - 1} {
+            $-bg: mix(nth($o-colors, $size), $o-view-background-color, 10%);
+            $-color: scale-color(
+                nth($o-colors, $size),
+                $lightness: 65%,
+                $saturation: 100%
+            );
+
+            &,
+            &::after {
+                --background-color: #{$-bg};
+                --color: #{$-color};
+            }
+        }
+    }
+}
