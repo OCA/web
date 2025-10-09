@@ -1,0 +1,12 @@
+$o-colors: #a2a2a2, #ee2d2d, #dc8534, #e8bb1d, #5794dd, #9f628f, #db8865, #41a9a2,
+    #304be0, #ee2f8a, #61c36e, #9872e6 !default;
+
+// An epically lazy solution to colors that do not do well on the dark background: just delete them.
+// Unfortunately this does introduce a problem where, when there are more calendar users than colors,
+// the event gets a $o-webclient-background-color background and the filter check gets
+// $form-check-input-checked-bg-color. This problem exists in enterprise too,
+// so hopefully they will fix it.
+$o-colors-secondary: #aa4b6b, #30c381, #f7cd1f, #4285f4, #d6145f, #aa3a38, #6be585,
+    #e9d362, #b56969, #bdc3c7, #ea00ff, #ff0026, #8bcc00, #00bfaf, #006aff, #af00bf,
+    #bf6300, #8cff00, #00f2ff, #ff00d0, #ffa600, #3acc00, #00b6bf, #0048ff, #bf7c00,
+    #04ff00, #00d0ff, #ff008c, #00bf49, #0092b3, #0004ff, #b20062 !default;
