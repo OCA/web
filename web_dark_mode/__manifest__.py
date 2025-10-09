@@ -27,6 +27,11 @@
             ),
             (
                 "before",
+                "web/static/src/scss/secondary_variables.scss",
+                "web_dark_mode/static/src/scss/secondary_variables.dark.scss",
+            ),
+            (
+                "before",
                 "web/static/src/**/*.variables.scss",
                 "web_dark_mode/static/src/**/*.variables.dark.scss",
             ),

@@ -1,0 +1,63 @@
+// I really hate this whole loop and with I could just override
+// $color and $color-subtle, but that doesn't seem to be possible.
+@for $i from 1 through length($o-colors-complete) {
+    $color: nth($o-colors-complete, $i);
+    $color-subtle: scale-color(
+        mix($o-white, $color, 30%),
+        $lightness: -20%,
+        $saturation: -35%
+    );
+
+    .o_calendar_renderer {
+        .o_calendar_color_#{$i - 1} {
+            --fc-event-bg-color: #{$color-subtle};
+            --o-event-bg: #{$color};
+            --o-event-bg--subtle-rgb: #{to-rgb($color-subtle)};
+
+            &.fc-bg-event {
+                --fc-bg-event-color: #{$color-subtle};
+            }
+
+            &.o_event_hatched:not(.o_event_dot):not(.fc-daygrid-event):not(
+                    .fc-timegrid-event
+                ),
+            &.o_event_hatched .fc-bg,
+            &.o_attendee_status_tentative:not(.o_event_dot) .fc-bg {
+                background: repeating-linear-gradient(
+                    45deg,
+                    RGBA(to-rgb($color), 0.3),
+                    RGBA(to-rgb($color), 0.3) 10px,
+                    RGBA(to-rgb($color), 0.6) 10px,
+                    RGBA(to-rgb($color), 0.6) 20px
+                ) !important;
+            }
+
+            &.o_event_striked:not(.o_event_dot) {
+                background: linear-gradient(
+                    transparent 0 45%,
+                    $color 45% 55%,
+                    transparent 55% 100%
+                );
+            }
+
+            &.fc-event:not(.o_event_dot):not(.fc-dragging) {
+                --fc-event-text-color: #{color-contrast($color-subtle)};
+                --fc-event-border-color: #{tint-color($color, 50%)};
+            }
+        }
+    }
+
+    .o_cw_filter_color_#{$i - 1} {
+        &.form-check:hover .o_cw_filter_input_bg:not(.no_filter_color) {
+            border-color: shade-color($color, 20%);
+        }
+
+        .o_cw_filter_input_bg {
+            border-color: $color;
+
+            &:checked {
+                background-color: $color;
+            }
+        }
+    }
+}
