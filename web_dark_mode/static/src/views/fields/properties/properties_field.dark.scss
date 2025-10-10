@@ -1,0 +1,27 @@
+.o_field_property_definition_type .o_field_property_dropdown img,
+.o_field_property_definition_type_menu .dropdown-item img {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+.o_property_field_value {
+    select {
+        option {
+            background-color: $dropdown-bg;
+        }
+    }
+}
+
+// This is the < Create "tagname" > link that shows when you type a
+// tag that doesn't exist. It was getting set to purple for some reason
+.o_property_field_value
+    .ui-widget.ui-autocomplete
+    .ui-menu-item.o_field_property_dropdown_add
+    a {
+    color: $o-main-link-color !important;
+}
+
+.o_field_properties div:not([columns="1"]) .o_property_drag_group {
+    background-color: #{mix($o-action, $o-view-background-color, 10%)};
+    border: 1px solid #{rgba($o-action, 0.5)};
+}
