@@ -115,7 +115,9 @@ class ResCompany(models.Model):
             background-color: %(color_navbar_bg_hover)s !important;
           }
         }
-        .o_menu_systray .o-dropdown .dropdown-toggle {
+        .o_menu_systray .o-dropdown .dropdown-toggle,
+        .o_menu_systray .o_mobile_menu_toggle,
+        .o_menu_toggle {
             color: %(color_navbar_text)s !important;
             &:hover, &:focus, &:active, &:focus:active {
                 background-color: %(color_navbar_bg_hover)s !important;
