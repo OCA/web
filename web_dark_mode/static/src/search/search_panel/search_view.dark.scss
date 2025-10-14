@@ -1,0 +1,13 @@
+.o_searchview {
+    --SearchBar-background-color: #{$o-gray-100};
+    &:focus-within {
+        $-searchbar-border-color: rgba($input-focus-border-color, 0.5);
+        border-color: $-searchbar-border-color;
+        + .o_searchview_dropdown_toggler {
+            border-left-color: $-searchbar-border-color;
+            border-top-color: $-searchbar-border-color;
+            border-right-color: $-searchbar-border-color;
+            border-bottom-color: $-searchbar-border-color;
+        }
+    }
+}
