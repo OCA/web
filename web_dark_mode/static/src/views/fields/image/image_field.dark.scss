@@ -1,0 +1,7 @@
+// Unfortunately, images with trasparent backgrounds do
+// not display well on a dark background.
+// I use #ffffff instead of $o-black to ensure that they will
+// always be on a white background no matter what.
+.o_field_image {
+    --ImageField-background-color: #ffffff;
+}
