@@ -1,11 +1,11 @@
 # Copyright 2018 Tecnativa - Jairo Llopis
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.models import Model, api
+from odoo import api, models
 from odoo.tools.safe_eval import const_eval
 
 
-class IrConfigParameter(Model):
+class IrConfigParameter(models.Model):
     _inherit = "ir.config_parameter"
 
     @api.model
