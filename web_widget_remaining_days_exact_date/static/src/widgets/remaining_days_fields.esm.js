@@ -2,14 +2,19 @@
 
 import {RemainingDaysField} from "@web/views/fields/remaining_days/remaining_days_field";
 import {patch} from "@web/core/utils/patch";
+import { session } from "@web/session";
 
 patch(RemainingDaysField.prototype, {
+    setup() {
+        super.setup(...arguments);
+        this.disable_remaining_days_rule = session.disable_remaining_days_rule;
+    },
     /**
      * @override
      */
     get diffString() {
         /* Check if the remaining days field is disabled for the current model */
-        const disable_rules = this.env.config.disable_remaining_days_rule;
+        const disable_rules = this.disable_remaining_days_rule;
 
         // If disable_rules is boolean true, disable for all models
         if (disable_rules === true) {
