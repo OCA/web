@@ -32,7 +32,7 @@ else:
         <field name="model_id" ref="base.model_res_partner" />
         <field
             name="trigger_field_ids"
-            eval="[(6, 0, [ref('base.field_res_partner__email')])]"
+            eval="[Command.set([ref('base.field_res_partner__email')])]"
         />
         <field name="severity">warning</field>
         <field name="target_xpath">//sheet</field>
@@ -49,7 +49,7 @@ else:
         <field name="model_id" ref="base.model_res_partner" />
         <field
             name="trigger_field_ids"
-            eval="[(6, 0, [ref('base.field_res_partner__category_id')])]"
+            eval="[Command.set([ref('base.field_res_partner__category_id')])]"
         />
         <field name="severity">danger</field>
         <field name="target_xpath">//field[@name='category_id']</field>
