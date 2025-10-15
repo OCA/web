@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
 import {ActionDialog} from "@web/webclient/actions/action_dialog";
-import {Component, onMounted} from "@odoo/owl";
+import {Component, onMounted, onWillRender} from "@odoo/owl";
 import {Dialog} from "@web/core/dialog/dialog";
 import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
 import {patch} from "@web/core/utils/patch";
@@ -44,9 +44,15 @@ patch(Dialog.prototype, {
         super.setup();
         this.setSize = this.setSize.bind(this);
         this.getSize = this.getSize.bind(this);
+        onWillRender(() => {
+            if (this._forcedSize && this.props.size !== this._forcedSize) {
+                this.props.size = this._forcedSize;
+            }
+        });
     },
 
     setSize(size) {
+        this._forcedSize = size;
         this.props.size = size;
         this.render();
     },
