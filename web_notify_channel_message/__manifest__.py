@@ -6,7 +6,7 @@
     "name": "Web Notify Channel Message",
     "summary": """
         Send an instant notification to channel users when a new message is posted""",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "license": "AGPL-3",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "development_status": "Alpha",

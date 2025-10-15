@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [web_chatter_position](web_chatter_position/) | 18.0.1.0.0 | <a href='https://github.com/trisdoan'><img src='https://github.com/trisdoan.png' width='32' height='32' style='border-radius:50%;' alt='trisdoan'/></a> | Add an option to change the chatter position
 [web_company_color](web_company_color/) | 18.0.1.0.3 |  | Web Company Color
 [web_copy_confirm](web_copy_confirm/) | 18.0.1.0.0 |  | Show confirmation dialogue before copying records
+[web_datetime_picker_default_time](web_datetime_picker_default_time/) | 18.0.1.0.0 | <a href='https://github.com/grindtildeath'><img src='https://github.com/grindtildeath.png' width='32' height='32' style='border-radius:50%;' alt='grindtildeath'/></a> | Allows to define a default time on datetime picker
 [web_dialog_size](web_dialog_size/) | 18.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_disable_export_group](web_disable_export_group/) | 18.0.1.0.0 |  | Web Disable Export Group
 [web_editor_class_selector](web_editor_class_selector/) | 18.0.1.0.0 | <a href='https://github.com/carlos-lopez-tecnativa'><img src='https://github.com/carlos-lopez-tecnativa.png' width='32' height='32' style='border-radius:50%;' alt='carlos-lopez-tecnativa'/></a> | Web editor class selector
@@ -37,14 +38,15 @@ addon | version | maintainers | summary
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 18.0.1.0.0 |  | Show a message box to users
 [web_m2x_options](web_m2x_options/) | 18.0.1.0.1 |  | web_m2x_options
 [web_no_bubble](web_no_bubble/) | 18.0.1.0.0 |  | Remove the bubbles from the web interface
-[web_notify](web_notify/) | 18.0.1.1.0 |  | Send notification messages to user
-[web_notify_channel_message](web_notify_channel_message/) | 18.0.1.0.0 |  | Send an instant notification to channel users when a new message is posted
+[web_notify](web_notify/) | 18.0.1.1.1 |  | Send notification messages to user
+[web_notify_channel_message](web_notify_channel_message/) | 18.0.1.0.1 |  | Send an instant notification to channel users when a new message is posted
 [web_notify_upgrade](web_notify_upgrade/) | 18.0.1.0.0 |  | Notify active users when a module is installed or updated
 [web_pivot_computed_measure](web_pivot_computed_measure/) | 18.0.1.0.5 | <a href='https://github.com/CarlosRoca13'><img src='https://github.com/CarlosRoca13.png' width='32' height='32' style='border-radius:50%;' alt='CarlosRoca13'/></a> | Web Pivot Computed Measure
 [web_quick_start_screen](web_quick_start_screen/) | 18.0.1.0.0 |  | Configurable start screen for quick actions
 [web_refresher](web_refresher/) | 18.0.1.0.0 |  | Web Refresher
 [web_remember_tree_column_width](web_remember_tree_column_width/) | 18.0.1.0.2 | <a href='https://github.com/frahikLV'><img src='https://github.com/frahikLV.png' width='32' height='32' style='border-radius:50%;' alt='frahikLV'/></a> <a href='https://github.com/luisg123v'><img src='https://github.com/luisg123v.png' width='32' height='32' style='border-radius:50%;' alt='luisg123v'/></a> <a href='https://github.com/cuongnmtm'><img src='https://github.com/cuongnmtm.png' width='32' height='32' style='border-radius:50%;' alt='cuongnmtm'/></a> | Remember the tree columns' widths across sessions.
 [web_responsive](web_responsive/) | 18.0.1.0.2 | <a href='https://github.com/Tardo'><img src='https://github.com/Tardo.png' width='32' height='32' style='border-radius:50%;' alt='Tardo'/></a> <a href='https://github.com/SplashS'><img src='https://github.com/SplashS.png' width='32' height='32' style='border-radius:50%;' alt='SplashS'/></a> | Responsive web client, community-supported
+[web_save_discard_button](web_save_discard_button/) | 18.0.1.0.0 | <a href='https://github.com/synconics'><img src='https://github.com/synconics.png' width='32' height='32' style='border-radius:50%;' alt='synconics'/></a> | Save & Discard Buttons
 [web_search_with_and](web_search_with_and/) | 18.0.1.0.1 |  | Use AND conditions on omnibar search
 [web_send_message_popup](web_send_message_popup/) | 18.0.1.0.0 |  | Web Send Message as Popup
 [web_session_auto_close](web_session_auto_close/) | 18.0.1.0.1 |  | Automatically logs out inactive users based on a configurable timeout.
