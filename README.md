@@ -26,7 +26,7 @@ addon | version | maintainers | summary
 [web_company_color](web_company_color/) | 17.0.1.2.1 |  | Web Company Color
 [web_dialog_size](web_dialog_size/) | 17.0.1.0.1 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_editor_class_selector](web_editor_class_selector/) | 17.0.1.1.0 |  | Web editor class selector
-[web_environment_ribbon](web_environment_ribbon/) | 17.0.1.0.2 |  | Web Environment Ribbon
+[web_environment_ribbon](web_environment_ribbon/) | 17.0.1.0.3 |  | Web Environment Ribbon
 [web_favicon](web_favicon/) | 17.0.1.0.2 |  | Allows to set a custom shortcut icon (aka favicon)
 [web_field_tooltip](web_field_tooltip/) | 17.0.1.0.0 |  | Displays customizable tooltips for fields
 [web_group_expand](web_group_expand/) | 17.0.1.0.0 |  | Group Expand Buttons
