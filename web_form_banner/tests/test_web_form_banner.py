@@ -13,16 +13,64 @@ class TestFieldsViewGetPartnerBanner(TransactionCase):
         super().setUpClass()
         cls.Partner = cls.env["res.partner"]
         cls.Rule = cls.env["web.form.banner.rule"]
-        cls.rule_name = cls.env.ref("web_form_banner.demo_rule_partner_name_length")
-        cls.rule_email = cls.env.ref("web_form_banner.demo_rule_partner_email_missing")
-        cls.rule_tag = cls.env.ref("web_form_banner.demo_rule_partner_tag_missing")
-        # Disable the email and tag rules to avoid interference in most tests
-        cls.rule_email.active = False
-        cls.rule_tag.active = False
+        existing_rules = cls.Rule.search([])
+        cls._disabled_rule_ids = existing_rules.ids
+        if existing_rules:
+            existing_rules.write({"active": False})
+        partner_model_id = cls.env["ir.model"]._get("res.partner").id
+        cls.rule_name = cls.Rule.create(
+            {
+                "name": "Partner name length notice",
+                "model_id": partner_model_id,
+                "message_value_code": """
+name = (record.name or "").strip()
+n = len(name)
+if n > 20:
+    result = {
+        "visible": True,
+        "severity": "danger",
+        "html": "Name too long!",
+    }
+elif n > 10:
+    result = {
+        "visible": True,
+        "severity": "warning",
+        "html": "Name a bit long.",
+    }
+else:
+    result = {"visible": False}
+            """,
+            }
+        )
+        cls.rule_email = cls.Rule.create(
+            {
+                "name": "Partner email missing notice (dynamic)",
+                "model_id": partner_model_id,
+                "message": "Email missing!",
+                "message_value_code": "{'visible': not bool(draft.email)}",
+                "active": False,  # disable to avoid interference in most tests
+            }
+        )
+        cls.rule_tag = cls.Rule.create(
+            {
+                "name": "Partner tag missing notice (dynamic)",
+                "model_id": partner_model_id,
+                "message": "Missing tag!",
+                "message_value_code": "{'visible': not bool(draft.category_id)}",
+                "active": False,  # disable to avoid interference in most tests
+            }
+        )
         cls.partner_form_view = cls.env.ref("base.view_partner_form")
         cls.p_len3 = cls.Partner.create({"name": "Bob"})  # 3
         cls.p_len12 = cls.Partner.create({"name": "Yoshi Tashiro"})  # 12
         cls.p_len22 = cls.Partner.create({"name": "Professor Charles Xavier"})  # 22
+
+    @classmethod
+    def tearDownClass(cls):
+        # restore previously active rules
+        if getattr(cls, "_disabled_rule_ids", None):
+            cls.Rule.browse(cls._disabled_rule_ids).exists().write({"active": True})
+        super().tearDownClass()
 
     def _get_arch_tree(self, model, view):
         res = model.get_view(view_id=view.id, view_type="form")
@@ -90,8 +138,8 @@ class TestFieldsViewGetPartnerBanner(TransactionCase):
 
     def test_contains_expected_messages_and_severities(self):
         code = (self.rule_name.message_value_code or "").strip()
-        self.assertIn("This partner's name is very long!", code)
-        self.assertIn("This partner's name is a bit long.", code)
+        self.assertIn("Name too long!", code)
+        self.assertIn("Name a bit long.", code)
         self.assertRegex(code, r"['\"]danger['\"]", "Missing 'danger' literal")
         self.assertRegex(code, r"['\"]warning['\"]", "Missing 'warning' literal")
 
@@ -114,7 +162,7 @@ class TestFieldsViewGetPartnerBanner(TransactionCase):
         )
         self.assertTrue(out.get("visible"))
         self.assertEqual(out.get("severity"), "danger")
-        self.assertIn("very long", out.get("html", ""))
+        self.assertIn("too long", out.get("html", ""))
 
     def test_inactive_rule_returns_hidden(self):
         # Flip active off just for this check
@@ -133,7 +181,7 @@ class TestFieldsViewGetPartnerBanner(TransactionCase):
             self.rule_email.id, "res.partner", self.p_len3.id, form_vals={"email": ""}
         )
         self.assertTrue(out.get("visible"))
-        self.assertIn("This partner is missing email!", out.get("html"))
+        self.assertIn("Email missing!", out.get("html"))
         out = self.Rule.compute_message(
             self.rule_email.id,
             "res.partner",
@@ -152,7 +200,7 @@ class TestFieldsViewGetPartnerBanner(TransactionCase):
             form_vals={"category_id": []},
         )
         self.assertTrue(out.get("visible"))
-        self.assertIn("Tag is missing!", out.get("html"))
+        self.assertIn("Missing tag!", out.get("html"))
         out = self.Rule.compute_message(
             self.rule_tag.id,
             "res.partner",
