@@ -177,7 +177,7 @@ class DisableRemainingDaysRule(models.Model):
     )
     res_model_name = fields.Char(
         related="res_model_id.model",
-        string="Model",
+        string="Technical model name",
         store=True,
     )
     active = fields.Boolean(string="Active record", default=True)
