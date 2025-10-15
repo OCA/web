@@ -230,10 +230,10 @@ Once the values are filled in, the banners will disappear:
 
 |image4|
 
-.. |image1| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_form_banner/static/description/partner_email_rule.png
-.. |image2| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_form_banner/static/description/partner_tag_rule.png
-.. |image3| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_form_banner/static/description/partner_layout_banner.png
-.. |image4| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_form_banner/static/description/partner_layout_no_banner.png
+.. |image1| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_form_banner/static/description/partner_email_rule.png
+.. |image2| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_form_banner/static/description/partner_tag_rule.png
+.. |image3| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_form_banner/static/description/partner_layout_banner.png
+.. |image4| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_form_banner/static/description/partner_layout_no_banner.png
 
 Known issues / Roadmap
 ======================
