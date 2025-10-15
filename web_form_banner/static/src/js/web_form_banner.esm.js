@@ -133,10 +133,25 @@ patch(FormController.prototype, {
         scheduleRefresh(this);
         return r;
     },
+    async create() {
+        const r = await super.create();
+        scheduleRefresh(this);
+        return r;
+    },
     async save(p = {}) {
         const ok = await super.save(p);
         if (ok) scheduleRefresh(this);
         return ok;
+    },
+    async duplicateRecord() {
+        const r = await super.duplicateRecord();
+        scheduleRefresh(this);
+        return r;
+    },
+    async onPagerUpdate(...args) {
+        const r = await super.onPagerUpdate(...args);
+        scheduleRefresh(this);
+        return r;
     },
 });
 
