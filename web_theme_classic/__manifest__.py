@@ -18,6 +18,13 @@
         "web.assets_backend": [
             "/web_theme_classic/static/src/scss/web_theme_classic.scss",
         ],
+        "web.assets_web_dark": [
+            (
+                "before",
+                "/web_theme_classic/static/src/scss/web_theme_classic.scss",
+                "/web_theme_classic/static/src/scss/web_theme_classic.dark.scss",
+            ),
+        ],
     },
     "installable": True,
     "application": True,
