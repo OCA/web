@@ -13,3 +13,5 @@
 - Sudhir Arya \<<sudhir@erpharbor.com>\>
 - Pierre Pizzetta \<<pierre@devreaction.com>\>
 - Mantas Šniukas \<<mantas@vialaurea.lt>\>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
