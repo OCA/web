@@ -2,7 +2,7 @@
 
 import {RemainingDaysField} from "@web/views/fields/remaining_days/remaining_days_field";
 import {patch} from "@web/core/utils/patch";
-import { session } from "@web/session";
+import {session} from "@web/session";
 
 patch(RemainingDaysField.prototype, {
     setup() {
