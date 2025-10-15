@@ -8,7 +8,8 @@
     "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/web",
-    "author": "Trescloud:César León (github: CILC98), Odoo Community Association (OCA)",
+    "author": "Tecnativa, Trescloud, Odoo Community Association (OCA)",
+    "maintainers": ["CarlosRoca13", "CILC98"],
     "depends": ["web"],
     "data": [
         "security/disable_remaining_days_security.xml",

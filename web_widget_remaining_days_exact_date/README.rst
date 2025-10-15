@@ -71,13 +71,19 @@ Credits
 
 Authors
 -------
-
-* Trescloud (https://www.trescloud.com/)
+* Tecnativa
+* Trescloud
 
 Contributors
 ------------
+* `Tecnativa <https://www.tecnativa.com>`_
 
-- `César León <https://github.com/CILC98>`:
+  * Pedro M. Baeza
+  * Carlos Roca
+
+* `Trescloud <https://www.trescloud.com>`_
+
+  * César León
 
 
 Maintainers
@@ -93,15 +99,18 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-.. |maintainer-CésarLeón| image:: https://www.trescloud.com/web/image/website/1/logo/www.trescloud.com?unique=7be4cb1
-    :target: https://www.trescloud.com/
-    :alt: Trescloud
+
+.. |maintainer-CarlosRoca13| image:: https://github.com/CarlosRoca13.png?size=40px
+    :target: https://github.com/CarlosRoca13
+    :alt: CarlosRoca13
 
 .. |maintainer-CésarLeón| image:: https://github.com/CILC98?size=40px
     :target: https://github.com/CILC98
     :alt: Trescloud:César León
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-CarlosRoca13|
 
 |maintainer-CésarLeón|
 
