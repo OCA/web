@@ -40,7 +40,7 @@
         <xpath expr="//button[hasclass('o-mail-Chatter-logNote')]" position="replace">
             <button
                 t-if="props.hasMessageList"
-                class="o-mail-Chatter-logNote btn text-nowrap me-2"
+                class="o-mail-Chatter-logNote btn text-nowrap me-1"
                 t-att-class="{
                     'btn-primary active': state.composerType === 'note',
                     'btn-secondary': state.composerType !== 'note',
@@ -64,6 +64,47 @@
             position="attributes"
         >
             <attribute name="class" add="d-none d-sm-inline" separator=" " />
+        </xpath>
+        <!-- remove extra padding between the activity separator and the search message -->
+        <xpath
+            expr="//span[hasclass('o-mail-Chatter-topbarGrow')]"
+            position="attributes"
+        >
+            <attribute name="class" remove="pe-2" add="px-0" separator=" " />
+        </xpath>
+        <!-- Align the "Follow" button and text to the left -->
+        <xpath
+            expr="//span[hasclass('o-mail-Chatter-follow')]/../.."
+            position="attributes"
+        >
+            <attribute name="class" add="text-start" separator=" " />
+        </xpath>
+        <xpath expr="//span[hasclass('o-mail-Chatter-follow')]" position="attributes">
+            <attribute name="class" remove="end-0" separator=" " />
+        </xpath>
+        <!-- Hide the icon that is invisible -->
+        <xpath
+            expr="//span[hasclass('o-mail-Chatter-follow')]/..//i"
+            position="attributes"
+        >
+            <attribute name="class" add="d-none" separator=" " />
+        </xpath>
+        <!-- Align the "Unfollow" button and text to the left -->
+        <xpath expr="//button[hasclass('o-mail-Chatter-follow')]" position="attributes">
+            <attribute name="class" add="text-start" separator=" " />
+        </xpath>
+        <xpath
+            expr="//button[hasclass('o-mail-Chatter-follow')]//span[hasclass('end-0')]"
+            position="attributes"
+        >
+            <attribute name="class" remove="end-0" separator=" " />
+        </xpath>
+        <!-- Hide the icon that is invisible -->
+        <xpath
+            expr="//button[hasclass('o-mail-Chatter-follow')]//i"
+            position="attributes"
+        >
+            <attribute name="class" add="d-none" separator=" " />
         </xpath>
     </t>
 </templates>
