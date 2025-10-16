@@ -63,6 +63,17 @@ Contributors
 
 - Telmo Santos <telmo.santos@camptocamp.com>
 
+- ``Trobz <https://trobz.com>``\ \_\_:
+
+  - Tuan Nguyen tuanna@trobz.com
+
+Other credits
+-------------
+
+The migration of this module to 18.0 has been financially supported by:
+
+- `NDA Group <https://www.ndateam.com>`__
+
 Maintainers
 -----------
 
