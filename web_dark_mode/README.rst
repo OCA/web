@@ -63,6 +63,9 @@ Contributors
 ------------
 
 - Florian Kantelberg <florian.kantelberg@initos.com>
+- `Pyxiris <https://github.com/Pyxiris>`__
+
+  - `Liam Noonan <https://github.com/ljmnoonan>`__
 
 Maintainers
 -----------
