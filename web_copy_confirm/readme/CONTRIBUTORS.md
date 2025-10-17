@@ -1,3 +1,5 @@
 - Stefan Rijnhart \<stefan@opener.amsterdam\>
 - Robin Conjour \<rconjour@demolium.com\>
 - Dhara Solanki \<dhara.solanki@initos.com\>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
