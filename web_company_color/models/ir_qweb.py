@@ -9,12 +9,7 @@ class QWeb(models.AbstractModel):
     _inherit = "ir.qweb"
 
     def _generate_asset_links_cache(
-        self,
-        bundle,
-        css=True,
-        js=True,
-        assets_params=None,
-        rtl=False,
+        self, bundle, css=True, js=True, assets_params=None, rtl=False, autoprefix=False
     ):
         res = super()._generate_asset_links_cache(
             bundle,
@@ -22,6 +17,7 @@ class QWeb(models.AbstractModel):
             js=js,
             assets_params=assets_params,
             rtl=rtl,
+            autoprefix=autoprefix,
         )
         if bundle == "web_company_color.company_color_assets":
             asset = AssetsBundleCompanyColor(
@@ -38,6 +34,7 @@ class QWeb(models.AbstractModel):
         debug_assets=False,
         assets_params=None,
         rtl=False,
+        autoprefix=False,
     ):
         res = super()._generate_asset_links(
             bundle,
@@ -46,6 +43,7 @@ class QWeb(models.AbstractModel):
             debug_assets=debug_assets,
             assets_params=assets_params,
             rtl=rtl,
+            autoprefix=autoprefix,
         )
         if bundle == "web_company_color.company_color_assets":
             asset = AssetsBundleCompanyColor(
@@ -69,6 +67,7 @@ class QWeb(models.AbstractModel):
         defer_load=False,
         lazy_load=False,
         media=None,
+        autoprefix=False,
     ):
         res = super()._get_asset_nodes(
             bundle,
@@ -78,6 +77,7 @@ class QWeb(models.AbstractModel):
             defer_load=defer_load,
             lazy_load=lazy_load,
             media=media,
+            autoprefix=autoprefix,
         )
         for tag, attributes in res:
             if tag == "link" and attributes.get("href", "").startswith(

@@ -115,10 +115,7 @@ class ResCompany(models.Model):
             background-color: %(color_navbar_bg_hover)s !important;
           }
         }
-        .o_menu_systray button,
-        .o_navbar_breadcrumbs,
-        .o_main_navbar button,
-        .o_menu_toggle {
+        .o_menu_systray button{
             color: %(color_navbar_text)s !important;
             &:hover, &:focus, &:active, &:focus:active {
                 background-color: %(color_navbar_bg_hover)s !important;
