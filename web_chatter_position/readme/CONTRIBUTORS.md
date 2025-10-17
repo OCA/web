@@ -6,3 +6,5 @@
   - Jay Patel \<<jay@alitec.sg>\>
 - Trobz
   - Tris Doan \<<tridm@trobz.com>\>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
