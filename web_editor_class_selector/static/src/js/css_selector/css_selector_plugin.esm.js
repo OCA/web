@@ -15,7 +15,7 @@ export class CssSelectorPlugin extends Plugin {
             {
                 id: "css-selector",
                 groupId: "css-selector",
-                title: _t("Custom CSS"),
+                description: _t("Custom CSS"),
                 Component: CssSelector,
                 props: {
                     getItems: () => this.custom_class_css,
@@ -48,7 +48,7 @@ export class CssSelectorPlugin extends Plugin {
     }
     get customCssName() {
         const selectedNodes = this.dependencies.selection
-            .getSelectedNodes()
+            .getTargetedNodes()
             .filter(
                 (n) =>
                     n.nodeType === Node.TEXT_NODE &&

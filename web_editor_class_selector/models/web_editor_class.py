@@ -15,6 +15,6 @@ class WebEditorClass(models.Model):
     )
     active = fields.Boolean(default=True)
 
-    _sql_constraints = [
-        ("class_name_uniq", "unique(class_name)", "Class name must be unique")
-    ]
+    _class_name_uniq = models.Constraint(
+        "unique(class_name)", "Class name must be unique"
+    )
