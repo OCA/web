@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
-    <t t-inherit="web.ListView.Buttons" t-inherit-mode="extension" owl="1">
-        <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
+    <t t-inherit="web.ListView.EditableButtons" t-inherit-mode="extension" owl="1">
+        <xpath expr="//button" position="before">
             <t t-if="model.root.isGrouped">
                 <button
                     type="button"
