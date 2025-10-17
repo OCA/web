@@ -28,7 +28,7 @@
                     >
                         <i
                             t-if="options.icon"
-                            t-attf-class="fa {{options.icon}} {{name !== '' ? 'mr-1' : ''}}"
+                            t-attf-class="fa {{options.icon}} {{name !== '' ? 'me-1' : ''}}"
                         />
                         <t t-esc="name" />
                     </button>

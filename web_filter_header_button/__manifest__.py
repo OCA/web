@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Filter Button",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "summary": "Show selected filters as buttons in the control panel",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
