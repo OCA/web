@@ -7,3 +7,5 @@
 - [Factorlibre](https://www.factorlibre.com):
   - Hugo Santos
 - Taras Shabaranskyi
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
