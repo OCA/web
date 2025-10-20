@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-inherit="web.SearchBar" t-inherit-mode="extension">
+        <xpath
+            expr="//input[contains(@class, 'o_searchview_input')]"
+            position="attributes"
+        >
+            <attribute name="t-on-keydown">_onKeyDown</attribute>
+        </xpath>
+    </t>
+</templates>

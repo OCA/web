@@ -92,6 +92,9 @@ Contributors
 - Pedro Guirao <pedro.guirao@ingenieriacloud.com>
 - Nedas Žilinskas <nedas.zilinskas@avoin.systems>
 - Sandip SerpentCS <sandip.v.serpentcs@gmail.com>
+- `Komit <https://komit-consulting.com>`__:
+
+  - Cai Hoang Huynh
 
 Maintainers
 -----------

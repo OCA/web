@@ -4,7 +4,7 @@
 
 {
     "name": "Use AND conditions on omnibar search",
-    "version": "18.0.1.0.1",
+    "version": "19.0.1.0.1",
     "author": """Sandip SCS, Versada UAB, ACSONE SA/NV, Serincloud,
     Odoo Community Association (OCA)""",
     "license": "AGPL-3",
@@ -13,6 +13,7 @@
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
+            "/web_search_with_and/static/src/xml/searchbar_patch.xml",
             "/web_search_with_and/static/src/js/search_model.esm.js",
             "/web_search_with_and/static/src/js/search_bar.esm.js",
         ],
