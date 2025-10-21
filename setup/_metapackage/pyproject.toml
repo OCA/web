@@ -1,6 +1,6 @@
 [project]
 name = "odoo-addons-oca-web"
-version = "17.0.20250729.0"
+version = "17.0.20251021.0"
 dependencies = [
     "odoo-addon-web_calendar_slot_duration>=17.0dev,<17.1dev",
     "odoo-addon-web_chatter_position>=17.0dev,<17.1dev",
@@ -35,6 +35,7 @@ dependencies = [
     "odoo-addon-web_widget_numeric_step>=17.0dev,<17.1dev",
     "odoo-addon-web_widget_open_tab>=17.0dev,<17.1dev",
     "odoo-addon-web_widget_plotly_chart>=17.0dev,<17.1dev",
+    "odoo-addon-web_widget_popover>=17.0dev,<17.1dev",
     "odoo-addon-web_widget_product_label_section_and_note>=17.0dev,<17.1dev",
     "odoo-addon-web_widget_section_and_note_text_scrollable>=17.0dev,<17.1dev",
     "odoo-addon-web_widget_url_advanced>=17.0dev,<17.1dev",
