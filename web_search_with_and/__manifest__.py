@@ -13,6 +13,7 @@
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
+            "/web_search_with_and/static/src/xml/searchbar_patch.xml",
             "/web_search_with_and/static/src/js/search_model.esm.js",
             "/web_search_with_and/static/src/js/search_bar.esm.js",
         ],

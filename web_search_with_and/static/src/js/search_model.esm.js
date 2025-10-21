@@ -1,6 +1,8 @@
+import {SearchModel} from "@web/search/search_model";
 import {patch} from "@web/core/utils/patch";
 import {rankInterval} from "@web/search/utils/dates";
-import {SearchModel} from "@web/search/search_model";
+
+const SPECIAL = Symbol("special");
 
 patch(SearchModel.prototype, {
     _getGroups() {
@@ -21,6 +23,7 @@ patch(SearchModel.prototype, {
             queryElem.groupId = groupId;
             preGroup.queryElements.push(queryElem);
         }
+
         const groups = [];
         for (const preGroup of preGroups) {
             const {queryElements, id} = preGroup;
@@ -28,7 +31,7 @@ patch(SearchModel.prototype, {
             for (const queryElem of queryElements) {
                 const {searchItemId} = queryElem;
                 let activeItem = activeItems.find(
-                    ({searchItemId: id}) => id === searchItemId
+                    ({searchItemId: idx}) => idx === searchItemId
                 );
                 if ("generatorId" in queryElem) {
                     if (!activeItem) {
@@ -44,10 +47,10 @@ patch(SearchModel.prototype, {
                     activeItem.intervalIds.push(queryElem.intervalId);
                 } else if ("autocompleteValue" in queryElem) {
                     if (!activeItem) {
-                        activeItem = {searchItemId, autocompletValues: []};
+                        activeItem = {searchItemId, autocompleteValues: []};
                         activeItems.push(activeItem);
                     }
-                    activeItem.autocompletValues.push(queryElem.autocompleteValue);
+                    activeItem.autocompleteValues.push(queryElem.autocompleteValue);
                 } else if (!activeItem) {
                     activeItem = {searchItemId};
                     activeItems.push(activeItem);
@@ -62,10 +65,14 @@ patch(SearchModel.prototype, {
             }
             groups.push({id, activeItems});
         }
-
         return groups;
     },
     deactivateGroup(groupId) {
+        if (groupId === SPECIAL) {
+            delete this.defaultGroupBy;
+            this._notify();
+            return;
+        }
         this.query = this.query.filter((queryElem) => {
             return queryElem.groupId !== groupId;
         });
@@ -76,7 +83,7 @@ patch(SearchModel.prototype, {
                 this.setDomainParts({[partName]: null});
             }
         }
-        this._checkComparisonStatus();
+
         this._notify();
     },
 });

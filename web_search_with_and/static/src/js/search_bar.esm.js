@@ -1,5 +1,5 @@
-import {patch} from "@web/core/utils/patch";
 import {SearchBar} from "@web/search/search_bar/search_bar";
+import {patch} from "@web/core/utils/patch";
 
 patch(SearchBar.prototype, {
     selectItem(item) {
@@ -9,6 +9,7 @@ patch(SearchBar.prototype, {
 
         const searchItem = this.getSearchItem(item.searchItemId);
         if (
+            (searchItem.fieldType === "selection" && !item.isChild) ||
             (searchItem.type === "field" && searchItem.fieldType === "properties") ||
             (searchItem.type === "field_property" && item.unselectable)
         ) {
@@ -18,33 +19,38 @@ patch(SearchBar.prototype, {
 
         if (!item.unselectable) {
             const {searchItemId, label, operator, value} = item;
-            const autoCompleteValues = {
+            this.env.searchModel.addAutoCompletionValues(searchItemId, {
                 label,
                 operator,
                 value,
                 isShiftKey: this.isShiftKey,
-            };
-            if (value && value[0] === '"' && value[value.length - 1] === '"') {
-                autoCompleteValues.value = value.slice(1, -1);
-                autoCompleteValues.label = label.slice(1, -1);
-                autoCompleteValues.operator = "=";
-                autoCompleteValues.enforceEqual = true;
-            }
-            this.env.searchModel.addAutoCompletionValues(
-                searchItemId,
-                autoCompleteValues
-            );
+            });
         }
 
         if (item.loadMore) {
             item.loadMore();
         } else {
+            this.inputDropdownState.close();
             this.resetState();
         }
     },
 
-    onSearchKeydown(ev) {
+    _onKeyDown(ev) {
         this.isShiftKey = ev.shiftKey || false;
-        super.onSearchKeydown(ev);
+        if (ev.code === "Enter") {
+            ev.preventDefault();
+            const dropdownEl = document.querySelector(
+                ".o_searchview_autocomplete.o-dropdown--menu"
+            );
+            const highlightedElement = dropdownEl.querySelector(
+                ".o-dropdown-item.focus"
+            );
+
+            if (highlightedElement) {
+                highlightedElement.click();
+            } else {
+                this.env.searchModel.search();
+            }
+        }
     },
 });
