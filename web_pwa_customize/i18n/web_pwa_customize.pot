@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -62,20 +62,17 @@ msgstr ""
 #. module: web_pwa_customize
 #. odoo-python
 #: code:addons/web_pwa_customize/models/res_config_settings.py:0
-#, python-format
 msgid "You can only upload PNG files bigger than 512x512"
 msgstr ""
 
 #. module: web_pwa_customize
 #. odoo-python
 #: code:addons/web_pwa_customize/models/res_config_settings.py:0
-#, python-format
 msgid "You can only upload SVG or PNG files. Found: %s."
 msgstr ""
 
 #. module: web_pwa_customize
 #. odoo-python
 #: code:addons/web_pwa_customize/models/res_config_settings.py:0
-#, python-format
 msgid "You can't upload a file with more than 2 MB."
 msgstr ""
