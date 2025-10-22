@@ -10,27 +10,33 @@ import {useService} from "@web/core/utils/hooks";
 export function useRefreshAnimation(timeout) {
     const refreshClass = "o_content__refresh";
     let timeoutId = null;
-
-    /**
-     * @returns {DOMTokenList|null}
-     */
-    function contentClassList() {
-        const content = document.querySelector(".o_content");
-        return content ? content.classList : null;
-    }
+    let cachedElement = null;
 
     function clearAnimationTimeout() {
         if (timeoutId) {
             clearTimeout(timeoutId);
         }
         timeoutId = null;
+        cachedElement = null;
     }
 
     function animate() {
         clearAnimationTimeout();
-        contentClassList().add(refreshClass);
+
+        // Cache the element reference before modifying it
+        const content = document.querySelector(".o_content");
+        if (!content) {
+            return;
+        }
+
+        cachedElement = content;
+        cachedElement.classList.add(refreshClass);
+
         timeoutId = setTimeout(() => {
-            contentClassList().remove(refreshClass);
+            // Only remove class from the same cached element
+            if (cachedElement && cachedElement.classList.contains(refreshClass)) {
+                cachedElement.classList.remove(refreshClass);
+            }
             clearAnimationTimeout();
         }, timeout);
     }
