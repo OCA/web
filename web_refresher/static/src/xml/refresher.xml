@@ -6,7 +6,7 @@
     <t t-name="web_refresher.Button">
         <nav class="oe_refresher" aria-label="Refresher" aria-atomic="true">
             <div class="btn-group" role="group">
-                <div class="btn-group" role="group">
+                <div class="btn-group d-none d-md-block" role="group">
                     <button
                         id="auto-refresh-dd"
                         class="btn btn-secondary dropdown-toggle"
@@ -51,7 +51,7 @@
                 </div>
                 <button
                     id="set-as-default-btn"
-                    class="btn btn-secondary m-0"
+                    class="btn btn-secondary m-0 d-none d-md-block"
                     aria-label="Set as Default"
                     t-on-click="setRefreshAsDefault"
                     title="Set as Default"
