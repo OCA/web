@@ -21,9 +21,12 @@
         border-radius: 0 !important;
         border: none !important;
         background-color: transparent !important;
-        padding: 0 8px !important;
+        padding: 4px 8px !important;
         height: auto !important;
         line-height: normal !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        vertical-align: middle !important;
 
         &:hover,
         &:focus,
@@ -35,8 +38,6 @@
             background-color: rgba(255, 255, 255, 0.1) !important;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
             padding: 4px 10px !important;
-            height: auto !important;
-            max-height: 32px !important;
         }
     }
 
@@ -46,9 +47,12 @@
         background-color: transparent !important;
         border-radius: 0 !important;
         transition: all 0.2s ease !important;
-        padding: 0 8px !important;
+        padding: 4px 8px !important;
         height: auto !important;
         min-height: auto !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        vertical-align: middle !important;
 
         &:hover,
         &:focus,
@@ -58,7 +62,6 @@
             background-color: rgba(255, 255, 255, 0.1) !important;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
             padding: 4px 10px !important;
-            max-height: 32px !important;
         }
     }
 }
