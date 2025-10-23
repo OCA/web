@@ -8,3 +8,40 @@
 .o_main_navbar {
     border-bottom: none !important;
 }
+
+/* Navbar buttons with rounded corners */
+.o_main_navbar {
+    .o_nav_entry,
+    .dropdown-toggle,
+    button,
+    a.btn {
+        border-radius: 8px !important;
+        padding: 4px 12px !important;
+        margin: 0 4px !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        transition: all 0.2s ease !important;
+
+        &:hover,
+        &:focus {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            border-color: rgba(0, 0, 0, 0.2) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    // Apps menu button specific styling
+    .o_grid_apps_menu__button {
+        border-radius: 8px !important;
+        padding: 6px 12px !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+
+        &:hover,
+        &:focus {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            border-color: rgba(0, 0, 0, 0.2) !important;
+        }
+    }
+}
