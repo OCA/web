@@ -219,3 +219,8 @@ body:not(.o_statusbar_buttons) {
         }
     }
 }
+
+// Remove navbar border
+  .o_main_navbar {
+      border-bottom: none !important;
+  }
