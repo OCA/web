@@ -1,8 +1,9 @@
 [project]
 name = "odoo-addons-oca-web"
-version = "19.0.20251001.0"
+version = "19.0.20251023.0"
 dependencies = [
     "odoo-addon-web_environment_ribbon==19.0.*",
+    "odoo-addon-web_favicon==19.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
