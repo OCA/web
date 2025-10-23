@@ -17,15 +17,6 @@ $chatter_zone_width: 35% !important;
     }
 }
 
-header.o_header,
-.o_main_navbar,
-.o_topbar,
-.navbar {
-    border-bottom: none !important;
-    box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-}
-
 @include media-breakpoint-down(sm) {
     .ui-menu-item-wrapper {
         display: inline-flex !important;
