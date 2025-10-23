@@ -2,14 +2,6 @@
  * Copyright 2021 ITerra - Sergey Shebanin
  * Copyright 2023 Taras Shabaranskyi
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
-header.o_header,
-.o_main_navbar,
-.o_topbar,
-.navbar {
-    border-bottom: none !important;
-    box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-}
 
 :root {
     .o_grid_apps_menu[data-theme="milk"] {
