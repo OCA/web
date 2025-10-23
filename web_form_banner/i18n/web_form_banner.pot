@@ -4,13 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-20 09:53+0000\n"
-"PO-Revision-Date: 2025-09-20 09:53+0000\n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -31,15 +28,14 @@ msgstr ""
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid ""
-"<code>ctx</code>: Copy of the current context (<code>dict(env.context)</"
-"code>)."
+"<code>ctx</code>: Copy of the current context "
+"(<code>dict(env.context)</code>)."
 msgstr ""
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid ""
-"<code>current_id</code>: Integer id of the record being edited, or "
-"<code>False</code> if the form\n"
+"<code>current_id</code>: Integer id of the record being edited, or <code>False</code> if the form\n"
 "                                    is creating a new record."
 msgstr ""
 
@@ -53,14 +49,10 @@ msgstr ""
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid ""
-"<code>draft</code>: The persisted field values of the ORM record (before "
-"applying the current\n"
-"                                    form's unsaved changes) + the current "
-"unsaved changes on trigger fields.\n"
-"                                    Should be used instead of <code>record</"
-"code> when your rule is triggered dynamically by an\n"
-"                                    update to a trigger field. It doesn't "
-"include any values from complex fields\n"
+"<code>draft</code>: The persisted field values of the ORM record (before applying the current\n"
+"                                    form's unsaved changes) + the current unsaved changes on trigger fields.\n"
+"                                    Should be used instead of <code>record</code> when your rule is triggered dynamically by an\n"
+"                                    update to a trigger field. It doesn't include any values from complex fields\n"
 "                                    (one2many/reference, etc)."
 msgstr ""
 
@@ -72,15 +64,16 @@ msgstr ""
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid ""
-"<code>float_compare</code>, <code>float_is_zero</code>, <code>float_round</"
-"code>: Odoo float utils for precision-safe comparisons/rounding."
+"<code>float_compare</code>, <code>float_is_zero</code>, "
+"<code>float_round</code>: Odoo float utils for precision-safe "
+"comparisons/rounding."
 msgstr ""
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid ""
-"<code>model</code>: Shortcut to the current model (<code>env[record._name]</"
-"code>)."
+"<code>model</code>: Shortcut to the current model "
+"(<code>env[record._name]</code>)."
 msgstr ""
 
 #. module: web_form_banner
@@ -113,18 +106,18 @@ msgstr ""
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__active
 msgid "Active"
-msgstr "有効"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields.selection,name:web_form_banner.selection__web_form_banner_rule__position__after
 msgid "After target"
-msgstr "ターゲットの後"
+msgstr ""
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_search
 msgid "Archived"
-msgstr "アーカイブ済"
+msgstr ""
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
@@ -134,70 +127,70 @@ msgstr ""
 #. module: web_form_banner
 #: model:ir.model,name:web_form_banner.model_base
 msgid "Base"
-msgstr "ベース"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields.selection,name:web_form_banner.selection__web_form_banner_rule__position__before
 msgid "Before target"
-msgstr "ターゲットの前"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__create_uid
 msgid "Created by"
-msgstr "作成者"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__create_date
 msgid "Created on"
-msgstr "作成日"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields.selection,name:web_form_banner.selection__web_form_banner_rule__severity__danger
 msgid "Danger"
-msgstr "危険"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__severity
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_search
 msgid "Default Severity"
-msgstr "デフォルト重要度"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__severity
 msgid "Default severity level, can be overridden per-record."
-msgstr "デフォルト重要度。レコード毎に上書き可"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__display_name
 msgid "Display Name"
-msgstr "表示名"
+msgstr ""
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "Example of Message Value Code (model: <code>sale.order</code>)"
-msgstr "メッセージ値コードの例 (モデル: <code>sale.order</code>)"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model,name:web_form_banner.model_web_form_banner_rule
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "Form Banner Rule"
-msgstr "フォームバナー規則"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.actions.act_window,name:web_form_banner.action_web_form_banner_rule
 #: model:ir.ui.menu,name:web_form_banner.menu_web_form_banner_rules
 msgid "Form Banner Rules"
-msgstr "フォームバナー規則"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__view_ids
 msgid "Form view where the banner should be injected."
-msgstr "バナーを表示するフォームビュー"
+msgstr ""
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_search
 msgid "Group By"
-msgstr "グループ化"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__message_is_html
@@ -207,12 +200,12 @@ msgstr ""
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "Help"
-msgstr "ヘルプ"
+msgstr ""
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "Help for Message Valude Code"
-msgstr "メッセージ値コードのヘルプ"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__id
@@ -234,7 +227,7 @@ msgstr ""
 #. module: web_form_banner
 #: model:ir.model.fields.selection,name:web_form_banner.selection__web_form_banner_rule__severity__info
 msgid "Info"
-msgstr "情報"
+msgstr ""
 
 #. module: web_form_banner
 #. odoo-python
@@ -243,58 +236,54 @@ msgid ""
 "Invalid XPath:\n"
 "%s"
 msgstr ""
-"無効なXPath:\n"
-"%s"
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__write_uid
 msgid "Last Updated by"
-msgstr "最終更新者"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__write_date
 msgid "Last Updated on"
-msgstr "最終更新日"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__message
 msgid "Message"
-msgstr "メッセージ"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__message_value_code
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "Message Value Code"
-msgstr "メッセージ値コード"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__model_id
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_search
 msgid "Model"
-msgstr "モデル"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__model_name
-#, fuzzy
 msgid "Model Name"
-msgstr "モデル"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__name
 msgid "Name"
-msgstr "名称"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__position
 msgid "Position"
-msgstr "位置"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__message_value_code
 msgid ""
 "Python expression evaluated server-side. Must return a dict.\n"
-"Keys: visible(bool, default True), severity(str), values(dict for ${...} "
-"in \n"
+"Keys: visible(bool, default True), severity(str), values(dict for ${...} in \n"
 "message), and/or html(str) to override template rendering."
 msgstr ""
 
@@ -306,7 +295,7 @@ msgstr ""
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__sequence
 msgid "Sequence"
-msgstr "付番"
+msgstr ""
 
 #. module: web_form_banner
 #: model:web.form.banner.rule,message:web_form_banner.demo_rule_partner_tag_missing
@@ -316,18 +305,17 @@ msgstr ""
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__target_xpath
 msgid "Target XPath"
-msgstr "ターゲットXPath"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__message
 msgid "Template with ${placeholders}. If not HTML, it will be escaped."
 msgstr ""
-"${placeholders} が使えるテンプレート。HTMLでない場合はエスケープされます。"
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "This is a ${severity} message."
-msgstr "これは ${severity} メッセージです。"
+msgstr ""
 
 #. module: web_form_banner
 #: model:web.form.banner.rule,message:web_form_banner.demo_rule_partner_email_missing
@@ -337,27 +325,27 @@ msgstr ""
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__trigger_field_ids
 msgid "Trigger Fields"
-msgstr "トリガ項目"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__view_ids
 msgid "Views"
-msgstr "ビュー"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields.selection,name:web_form_banner.selection__web_form_banner_rule__severity__warning
 msgid "Warning"
-msgstr "警告"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__position
 msgid "Where to insert the placeholder relative to the first matched node."
-msgstr "マッチした1つ目のノードへのプレイスホルダーの相対挿入位置"
+msgstr ""
 
 #. module: web_form_banner
 #: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__target_xpath
 msgid "XPath of the node to insert the banner."
-msgstr "バナー挿入対象ノードのXPath"
+msgstr ""
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
@@ -367,8 +355,7 @@ msgid ""
 "    domain += [(\"id\", \"&lt;\", record_id)]\n"
 "last = model.search(domain, order=\"date_order desc, id desc\", limit=1)\n"
 "if last:\n"
-"    html = \"&lt;strong&gt;Previous order:&lt;/strong&gt; &lt;a href='%s'&gt;"
-"%s&lt;/a&gt;\" % (url_for(last), last.name)\n"
+"    html = \"&lt;strong&gt;Previous order:&lt;/strong&gt; &lt;a href='%s'&gt;%s&lt;/a&gt;\" % (url_for(last), last.name)\n"
 "    result = {\"visible\": True, \"html\": html}\n"
 "else:\n"
 "    result = {\"visible\": False}"
@@ -377,12 +364,9 @@ msgstr ""
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "e.g. Warning on dangerous customers"
-msgstr "例: 危険な顧客の警告"
+msgstr ""
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_tree
 msgid "return {'visible': True, 'values': {'title': '...'}}"
 msgstr ""
-
-#~ msgid "Last Modified on"
-#~ msgstr "最終更新日"
