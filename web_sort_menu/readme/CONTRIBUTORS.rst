@@ -1,1 +1,0 @@
-* Anusri Veerappan Prakasam, Odoo Community Association (OCA)
