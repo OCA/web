@@ -1,7 +1,7 @@
 {
     "name": "Web Sort Menu",
     "summary": "Sort Apps in DropDown/NavBar Menu alphabetically",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Web",
     "author": "Anusri Veerappan Prakasam, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
