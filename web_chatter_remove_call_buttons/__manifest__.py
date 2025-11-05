@@ -16,9 +16,11 @@
     ],
     "assets": {
         "mail.assets_messaging": [
+            "/web_chatter_remove_call_buttons/static/src/js/remove_call_buttons.esm.js",
             "/web_chatter_remove_call_buttons/static/src/xml/discuss_sidebar.xml",
         ],
         "web.assets_backend": [
+            "/web_chatter_remove_call_buttons/static/src/js/remove_call_buttons.esm.js",
             "/web_chatter_remove_call_buttons/static/src/xml/discuss_sidebar.xml",
         ],
     },
