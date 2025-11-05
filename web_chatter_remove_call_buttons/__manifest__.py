@@ -12,6 +12,14 @@
     "maintainers": ["fcayre", "Honeyxilia"],
     "license": "AGPL-3",
     "depends": [
-        "base",
+        "mail",
     ],
+    "assets": {
+        "mail.assets_messaging": [
+            "/web_chatter_remove_call_buttons/static/src/xml/discuss_sidebar.xml",
+        ],
+        "web.assets_backend": [
+            "/web_chatter_remove_call_buttons/static/src/xml/discuss_sidebar.xml",
+        ],
+    },
 }
