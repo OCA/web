@@ -9,17 +9,18 @@
             <form>
                 <sheet>
                     <group>
-                        <!-- Many2one -->
+                        <!-- Many2one w/o options -->
                         <field name="title" />
-                        <!-- Many2many -->
-                        <field name="category_id" options="{'create': False}" />
-                        <!-- One2many -->
-                        <field name="user_ids">
-                            <tree>
-                                <!-- Many2one within tree -->
-                                <field name="company_id" options="{'create': False}" />
-                            </tree>
-                        </field>
+                        <!-- Many2one w/ options -->
+                        <field
+                            name="parent_id"
+                            options="{'create': False, 'create_edit': False}"
+                        />
+                        <!-- Many2many w/ options -->
+                        <field
+                            name="category_id"
+                            options="{'create': False, 'create_edit': False}"
+                        />
                     </group>
                 </sheet>
             </form>

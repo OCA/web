@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="m2x_create_edit_option_search" model="ir.ui.view">
+        <field name="name">m2x.create.edit.option search view</field>
+        <field name="model">m2x.create.edit.option</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="field_id" />
+                <field name="model_id" />
+                <field name="comodel_id" />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="groupby_model_id"
+                        string="Model"
+                        domain="[]"
+                        context="{'group_by': 'model_id'}"
+                    />
+                    <filter
+                        name="groupby_comodel_id"
+                        string="Comodel"
+                        domain="[]"
+                        context="{'group_by': 'comodel_id'}"
+                    />
+                    <filter
+                        name="groupby_option_create"
+                        string="Create Option"
+                        domain="[]"
+                        context="{'group_by': 'option_create'}"
+                    />
+                    <filter
+                        name="groupby_option_create_edit"
+                        string="Create &amp; Edit Option"
+                        domain="[]"
+                        context="{'group_by': 'option_create_edit'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="m2x_create_edit_option_form" model="ir.ui.view">
+        <field name="name">m2x.create.edit.option form view</field>
+        <field name="model">m2x.create.edit.option</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field
+                                name="field_id"
+                                context="{'search_by_technical_name': True, 'display_technical_name': True}"
+                                options="{'create': False, 'create_edit': False}"
+                            />
+                            <field name="model_id" />
+                            <field name="comodel_id" />
+                        </group>
+                        <group>
+                            <field name="option_create" />
+                            <field name="option_create_edit" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="m2x_create_edit_option_tree_base" model="ir.ui.view">
+        <field name="name">m2x.create.edit.option tree view - base</field>
+        <field name="model">m2x.create.edit.option</field>
+        <field name="arch" type="xml">
+            <tree default_order="model_name asc, field_name asc">
+                <field name="model_id" optional="show" />
+                <field name="model_name" optional="hide" />
+                <field name="field_id" optional="show" />
+                <field name="field_name" optional="hide" />
+                <field name="comodel_id" optional="show" />
+                <field name="comodel_name" optional="hide" />
+                <field name="option_create" />
+                <field name="option_create_edit" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="m2x_create_edit_option_tree_editable" model="ir.ui.view">
+        <field name="name">m2x.create.edit.option tree view - editable</field>
+        <field name="model">m2x.create.edit.option</field>
+        <field name="mode">primary</field>
+        <field
+            name="inherit_id"
+            ref="web_m2x_options_manager.m2x_create_edit_option_tree_base"
+        />
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="editable">bottom</attribute>
+            </tree>
+            <field name="field_id" position="attributes">
+                <attribute
+                    name="context"
+                >{'search_by_technical_name': True, 'display_technical_name': True}</attribute>
+                <attribute
+                    name="options"
+                >{'create': False, 'create_edit': False}</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="m2x_create_edit_option_tree_o2m_filter_by_model" model="ir.ui.view">
+        <field name="name">m2x.create.edit.option tree view - filter by model</field>
+        <field name="model">m2x.create.edit.option</field>
+        <field name="mode">primary</field>
+        <field
+            name="inherit_id"
+            ref="web_m2x_options_manager.m2x_create_edit_option_tree_editable"
+        />
+        <field name="arch" type="xml">
+            <field name="field_id" position="attributes">
+                <attribute name="context" operation="update">{
+                    'o2m_list_view_m2x_domain': [('model_id', '=', parent.id)],
+                }</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="m2x_create_edit_option_tree_o2m_filter_by_comodel" model="ir.ui.view">
+        <field name="name">m2x.create.edit.option tree view - filter by comodel</field>
+        <field name="model">m2x.create.edit.option</field>
+        <field name="mode">primary</field>
+        <field
+            name="inherit_id"
+            ref="web_m2x_options_manager.m2x_create_edit_option_tree_editable"
+        />
+        <field name="arch" type="xml">
+            <field name="field_id" position="attributes">
+                <attribute name="context" operation="update">{
+                    'o2m_list_view_m2x_domain': [('comodel_id', '=', parent.id)],
+                }</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="m2x_create_edit_option_action" model="ir.actions.act_window">
+        <field name="name">Fields' Create &amp; Edit Options</field>
+        <field name="res_model">m2x.create.edit.option</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="m2x_create_edit_option_menu" model="ir.ui.menu">
+        <field name="name">Fields' Create &amp; Edit Options</field>
+        <field name="parent_id" ref="base.next_id_9" />
+        <field
+            name="action"
+            ref="web_m2x_options_manager.m2x_create_edit_option_action"
+        />
+    </record>
+
+</odoo>
