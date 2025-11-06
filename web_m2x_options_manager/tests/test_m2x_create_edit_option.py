@@ -1,133 +1,95 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from lxml import etree
-
 from odoo.exceptions import ValidationError
-from odoo.tests.common import SavepointCase
-from odoo.tools.safe_eval import safe_eval
+
+from .common import Common
 
 
-class TestM2xCreateEditOption(SavepointCase):
-    def setUp(self):
-        super().setUp()
-        ref = self.env.ref
-        # View to be used
-        self.view = ref("web_m2x_options_manager.res_partner_demo_form_view")
-        # res.partner model and fields
-        self.res_partner_model = ref("base.model_res_partner")
-        self.categ_field = ref("base.field_res_partner__category_id")
-        self.title_field = ref("base.field_res_partner__title")
-        self.users_field = ref("base.field_res_partner__user_ids")
-        # res.users model and fields
-        self.res_users_model = ref("base.model_res_users")
-        self.company_field = ref("base.field_res_users__company_id")
-        # Options setup
-        self.title_opt = self.env["m2x.create.edit.option"].create(
-            {
-                "field_id": self.title_field.id,
-                "model_id": self.res_partner_model.id,
-                "option_create": "set_true",
-                "option_create_edit": "set_true",
-                "option_create_edit_wizard": True,
-            }
-        )
-        self.categories_opt = self.env["m2x.create.edit.option"].create(
-            {
-                "field_id": self.categ_field.id,
-                "model_id": self.res_partner_model.id,
-                "option_create": "set_true",
-                "option_create_edit": "set_true",
-                "option_create_edit_wizard": True,
-            }
-        )
-        self.company_opt = self.env["m2x.create.edit.option"].create(
-            {
-                "field_id": self.company_field.id,
-                "model_id": self.res_users_model.id,
-                "option_create": "force_true",
-                "option_create_edit": "set_true",
-                "option_create_edit_wizard": False,
-            }
-        )
-
+class TestM2xCreateEditOption(Common):
     def test_errors(self):
         with self.assertRaises(ValidationError):
-            # Fails ``_check_field_in_model``: model is res.partner, field is
-            # res.users's company_id
-            self.env["m2x.create.edit.option"].create(
-                {
-                    "field_id": self.company_field.id,
-                    "model_id": self.res_partner_model.id,
-                    "option_create": "set_true",
-                    "option_create_edit": "set_true",
-                }
-            )
-        with self.assertRaises(ValidationError):
             # Fails ``_check_field_type``: users_field is a One2many
-            self.env["m2x.create.edit.option"].create(
-                {
-                    "field_id": self.users_field.id,
-                    "model_id": self.res_partner_model.id,
-                    "option_create": "set_true",
-                    "option_create_edit": "set_true",
-                }
-            )
+            self._create_opt("res.partner", "user_ids")
 
     def test_apply_options(self):
-        res = self.env["res.partner"].fields_view_get(self.view.id)
-
-        # Check fields on res.partner form view
-        form_arch = res["arch"]
-        form_doc = etree.XML(form_arch)
-        title_node = form_doc.xpath("//field[@name='title']")[0]
+        # Check fields on res.partner form view before applying options
+        form_doc = self._get_test_view_parsed()
         self.assertEqual(
-            safe_eval(title_node.attrib.get("options"), nocopy=True),
+            self._eval_node_options(form_doc.xpath("//field[@name='title']")[0]), {}
+        )
+        self.assertEqual(
+            self._eval_node_options(form_doc.xpath("//field[@name='parent_id']")[0]),
+            {"create": False, "create_edit": False},
+        )
+        self.assertEqual(
+            self._eval_node_options(form_doc.xpath("//field[@name='category_id']")[0]),
+            {"create": False, "create_edit": False},
+        )
+
+        # Create options, check view has been updated
+        self._create_opt(
+            "res.partner",
+            "title",
+            {
+                "option_create": "set_true",
+                "option_create_edit": "set_true",
+            },
+        )
+        self._create_opt(
+            "res.partner",
+            "parent_id",
+            {
+                "option_create": "set_true",
+                "option_create_edit": "set_true",
+            },
+        )
+        self._create_opt(
+            "res.partner",
+            "category_id",
+            {
+                "option_create": "force_true",
+                "option_create_edit": "force_true",
+            },
+        )
+        form_doc = self._get_test_view_parsed()
+        self.assertEqual(
+            self._eval_node_options(form_doc.xpath("//field[@name='title']")[0]),
             {"create": True, "create_edit": True},
         )
         self.assertEqual(
-            (
-                title_node.attrib.get("can_create"),
-                title_node.attrib.get("can_write"),
-            ),
-            ("true", "true"),
-        )
-        categ_node = form_doc.xpath("//field[@name='category_id']")[0]
-        self.assertEqual(
-            safe_eval(categ_node.attrib.get("options"), nocopy=True),
-            {"create": False, "create_edit": True},
+            self._eval_node_options(form_doc.xpath("//field[@name='parent_id']")[0]),
+            # These remain the same because the options are defined w/ 'set_true':
+            # but the node already contains them, so no override is applied
+            {"create": False, "create_edit": False},
         )
         self.assertEqual(
-            (
-                categ_node.attrib.get("can_create"),
-                categ_node.attrib.get("can_write"),
-            ),
-            ("true", "true"),
-        )
-
-        # Check fields on res.users tree view (contained in ``user_ids`` field)
-        tree_arch = res["fields"]["user_ids"]["views"]["tree"]["arch"]
-        tree_doc = etree.XML(tree_arch)
-        company_node = tree_doc.xpath("//field[@name='company_id']")[0]
-        self.assertEqual(
-            safe_eval(company_node.attrib.get("options"), nocopy=True),
+            self._eval_node_options(form_doc.xpath("//field[@name='category_id']")[0]),
+            # These change values because the options are defined w/ 'force_true':
+            # options' values are overridden even if the node already contains them
             {"create": True, "create_edit": True},
         )
+
+        # Update options on ``res.partner.parent_id``, check its node has been updated
+        opt = self.env["m2x.create.edit.option"].get("res.partner", "parent_id")
+        opt.option_create = "force_true"
+        opt.option_create_edit = "force_true"
+        form_doc = self._get_test_view_parsed()
         self.assertEqual(
-            (
-                company_node.attrib.get("can_create"),
-                company_node.attrib.get("can_write"),
-            ),
-            ("false", "true"),
+            self._eval_node_options(form_doc.xpath("//field[@name='parent_id']")[0]),
+            {"create": True, "create_edit": True},
         )
 
-        # Update options, check that node has been updated too
-        self.title_opt.option_create_edit = "force_false"
-        res = self.env["res.partner"].fields_view_get(self.view.id)
-        form_arch = res["arch"]
-        form_doc = etree.XML(form_arch)
-        title_node = form_doc.xpath("//field[@name='title']")[0]
-        self.assertEqual(
-            safe_eval(title_node.attrib.get("options"), nocopy=True),
-            {"create": True, "create_edit": False},
+    def test_m2x_option_name(self):
+        # Mostly to make Codecov happy...
+        opt = self._create_opt(
+            "res.partner",
+            "title",
+            {
+                "option_create": "set_true",
+                "option_create_edit": "set_true",
+            },
         )
+        self.assertEqual(opt.name, "res.partner.title")
+        opt = opt.new({"field_id": self._get_field("res.partner", "parent_id").id})
+        self.assertEqual(opt.name, "res.partner.parent_id")
