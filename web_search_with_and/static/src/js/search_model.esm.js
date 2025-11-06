@@ -1,6 +1,29 @@
+import {SearchModel} from "@web/search/search_model";
 import {patch} from "@web/core/utils/patch";
 import {rankInterval} from "@web/search/utils/dates";
-import {SearchModel} from "@web/search/search_model";
+
+function processActiveItem(activeItem, queryElem) {
+    if ("generatorId" in queryElem) {
+        activeItem.generatorIds.push(queryElem.generatorId);
+    } else if ("intervalId" in queryElem) {
+        activeItem.intervalIds.push(queryElem.intervalId);
+    } else if ("autocompleteValue" in queryElem) {
+        activeItem.autocompleteValues.push(queryElem.autocompleteValue);
+    }
+}
+
+function createActiveItem(searchItemId, queryElem) {
+    if ("generatorId" in queryElem) {
+        return {searchItemId, generatorIds: [queryElem.generatorId]};
+    }
+    if ("intervalId" in queryElem) {
+        return {searchItemId, intervalIds: [queryElem.intervalId]};
+    }
+    if ("autocompleteValue" in queryElem) {
+        return {searchItemId, autocompleteValues: [queryElem.autocompleteValue]};
+    }
+    return {searchItemId};
+}
 
 patch(SearchModel.prototype, {
     _getGroups() {
@@ -28,28 +51,12 @@ patch(SearchModel.prototype, {
             for (const queryElem of queryElements) {
                 const {searchItemId} = queryElem;
                 let activeItem = activeItems.find(
-                    ({searchItemId: id}) => id === searchItemId
+                    ({searchItemId: existingId}) => existingId === searchItemId
                 );
-                if ("generatorId" in queryElem) {
-                    if (!activeItem) {
-                        activeItem = {searchItemId, generatorIds: []};
-                        activeItems.push(activeItem);
-                    }
-                    activeItem.generatorIds.push(queryElem.generatorId);
-                } else if ("intervalId" in queryElem) {
-                    if (!activeItem) {
-                        activeItem = {searchItemId, intervalIds: []};
-                        activeItems.push(activeItem);
-                    }
-                    activeItem.intervalIds.push(queryElem.intervalId);
-                } else if ("autocompleteValue" in queryElem) {
-                    if (!activeItem) {
-                        activeItem = {searchItemId, autocompletValues: []};
-                        activeItems.push(activeItem);
-                    }
-                    activeItem.autocompletValues.push(queryElem.autocompleteValue);
-                } else if (!activeItem) {
-                    activeItem = {searchItemId};
+                if (activeItem) {
+                    processActiveItem(activeItem, queryElem);
+                } else {
+                    activeItem = createActiveItem(searchItemId, queryElem);
                     activeItems.push(activeItem);
                 }
             }
@@ -76,7 +83,11 @@ patch(SearchModel.prototype, {
                 this.setDomainParts({[partName]: null});
             }
         }
-        this._checkComparisonStatus();
+        if (this._checkOrderByCountStatus) {
+            this._checkOrderByCountStatus();
+        } else if (this._checkComparisonStatus) {
+            this._checkComparisonStatus();
+        }
         this._notify();
     },
 });
