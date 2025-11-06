@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-16 15:06+0000\n"
+"PO-Revision-Date: 2024-11-14 18:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -17,10 +17,11 @@ msgstr ""
 "X-Generator: Weblate 5.6.2\n"
 
 #. module: web_m2x_options_manager
+#. odoo-python
 #: code:addons/web_m2x_options_manager/models/m2x_create_edit_option.py:0
 #, python-format
-msgid "'%s' is not a valid field for model '%s'!"
-msgstr "'%s' non è un campo valido per il modello '%s'!"
+msgid "'%(field_name)s' is not a valid field for model '%(model_name)s'!"
+msgstr "'%(field_name)s' non è un campo valido per il modello '%(model_name)s'!"
 
 #. module: web_m2x_options_manager
 #: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create__set_true
@@ -32,11 +33,6 @@ msgstr "Aggiungi"
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit
 msgid "Create & Edit Option"
 msgstr "Opzione crea & modifica"
-
-#. module: web_m2x_options_manager
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit_wizard
-msgid "Create & Edit Wizard"
-msgstr "Procedura guidata crea & modifica"
 
 #. module: web_m2x_options_manager
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create
@@ -59,24 +55,12 @@ msgid "Created on"
 msgstr "Creato il"
 
 #. module: web_m2x_options_manager
-#: model:ir.model.fields,help:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit_wizard
-msgid ""
-"Defines behaviour for 'Create & Edit' Wizard\n"
-"Set to False to prevent 'Create & Edit' Wizard to pop up"
-msgstr ""
-"Definisce il comportamento per la procedura guidata 'crea & modifica'\n"
-"Imposta a Falso per impedire il pop up della procedura guidata 'crea & "
-"modifica'"
-
-#. module: web_m2x_options_manager
 #: model:ir.model.fields,help:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit
 msgid ""
 "Defines behaviour for 'Create & Edit' option:\n"
 "* Do nothing: nothing is done\n"
-"* Add/Remove: option 'Create & Edit' is set to True/False only if not "
-"already present in view definition\n"
-"* Force Add/Remove: option 'Create & Edit' is always set to True/False, "
-"overriding any pre-existing option"
+"* Add/Remove: option 'Create & Edit' is set to True/False only if not already present in view definition\n"
+"* Force Add/Remove: option 'Create & Edit' is always set to True/False, overriding any pre-existing option"
 msgstr ""
 "Definisce il comportamento per l'opzione 'Crea e modifica':\n"
 "* Non fare nulla: non viene fatto nulla\n"
@@ -90,10 +74,8 @@ msgstr ""
 msgid ""
 "Defines behaviour for 'Create' option:\n"
 "* Do nothing: nothing is done\n"
-"* Add/Remove: option 'Create' is set to True/False only if not already "
-"present in view definition\n"
-"* Force Add/Remove: option 'Create' is always set to True/False, overriding "
-"any pre-existing option"
+"* Add/Remove: option 'Create' is set to True/False only if not already present in view definition\n"
+"* Force Add/Remove: option 'Create' is always set to True/False, overriding any pre-existing option"
 msgstr ""
 "Definisce il comportamento per l'opzione 'Crea':\n"
 "* Non fare nulla: non viene fatto nulla\n"
@@ -103,9 +85,6 @@ msgstr ""
 "sovrascrivendo qualsiasi opzione preesistente"
 
 #. module: web_m2x_options_manager
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__display_name
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model_fields__display_name
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_ui_view__display_name
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
@@ -154,17 +133,11 @@ msgid "Force Remove"
 msgstr "Forza rimuovi"
 
 #. module: web_m2x_options_manager
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__id
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model_fields__id
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_ui_view__id
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__id
 msgid "ID"
 msgstr "ID"
 
 #. module: web_m2x_options_manager
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model____last_update
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model_fields____last_update
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_ui_view____last_update
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
@@ -180,7 +153,7 @@ msgid "Last Updated on"
 msgstr "Ultimo aggiornamento il"
 
 #. module: web_m2x_options_manager
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__m2x_create_edit_option_ids
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__m2x_option_ids
 msgid "M2X Create Edit Option"
 msgstr "Crea opzione modifica M2X"
 
@@ -205,6 +178,7 @@ msgid "Models"
 msgstr "Modelli"
 
 #. module: web_m2x_options_manager
+#. odoo-python
 #: code:addons/web_m2x_options_manager/models/m2x_create_edit_option.py:0
 #, python-format
 msgid "Only Many2many and Many2one fields can be chosen!"
@@ -225,6 +199,3 @@ msgstr "Rimuovi"
 #: model:ir.model,name:web_m2x_options_manager.model_ir_ui_view
 msgid "View"
 msgstr "Vista"
-
-#~ msgid "Fields Description"
-#~ msgstr "Descrizione campi"
