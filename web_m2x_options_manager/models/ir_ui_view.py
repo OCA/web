@@ -7,14 +7,12 @@ from odoo import models
 class IrUiView(models.Model):
     _inherit = "ir.ui.view"
 
-    def postprocess(self, node, current_node_path, editable, name_manager):
-        res = super().postprocess(node, current_node_path, editable, name_manager)
-        if node.tag == "field":
-            mname = name_manager.Model._name
-            fname = node.attrib["name"]
-            field = self.env[mname]._fields.get(fname)
-            if field and field.type in ("many2many", "many2one"):
-                rec = self.env["m2x.create.edit.option"].get(mname, field.name)
-                if rec:
-                    rec._apply_options(node)
+    def _postprocess_tag_field(self, node, name_manager, node_info):
+        # OVERRIDE: check ``m2x.create.edit.option`` config when processing a ``field``
+        # node in views
+        res = super()._postprocess_tag_field(node, name_manager, node_info=node_info)
+        optget = self.env["m2x.create.edit.option"].get
+        model_name = name_manager.model._name
+        if (field_name := node.get("name")) and (opt := optget(model_name, field_name)):
+            opt._apply_options(node)
         return res

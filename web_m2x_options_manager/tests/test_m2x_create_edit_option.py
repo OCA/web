@@ -4,57 +4,58 @@
 from lxml import etree
 
 from odoo.exceptions import ValidationError
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 from odoo.tools.safe_eval import safe_eval
 
 
-class TestM2xCreateEditOption(SavepointCase):
-    def setUp(self):
-        super().setUp()
-        ref = self.env.ref
+class TestM2xCreateEditOption(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        ref = cls.env.ref
         # View to be used
-        self.view = ref("web_m2x_options_manager.res_partner_demo_form_view")
+        cls.view = ref("web_m2x_options_manager.res_partner_demo_form_view")
         # res.partner model and fields
-        self.res_partner_model = ref("base.model_res_partner")
-        self.categ_field = ref("base.field_res_partner__category_id")
-        self.title_field = ref("base.field_res_partner__title")
-        self.users_field = ref("base.field_res_partner__user_ids")
+        cls.res_partner_model = ref("base.model_res_partner")
+        cls.categ_field = ref("base.field_res_partner__category_id")
+        cls.title_field = ref("base.field_res_partner__title")
+        cls.users_field = ref("base.field_res_partner__user_ids")
         # res.users model and fields
-        self.res_users_model = ref("base.model_res_users")
-        self.company_field = ref("base.field_res_users__company_id")
+        cls.res_users_model = ref("base.model_res_users")
+        cls.company_field = ref("base.field_res_users__company_id")
         # Options setup
-        self.title_opt = self.env["m2x.create.edit.option"].create(
+        cls.title_opt = cls.env["m2x.create.edit.option"].create(
             {
-                "field_id": self.title_field.id,
-                "model_id": self.res_partner_model.id,
+                "field_id": cls.title_field.id,
+                "model_id": cls.res_partner_model.id,
                 "option_create": "set_true",
                 "option_create_edit": "set_true",
-                "option_create_edit_wizard": True,
             }
         )
-        self.categories_opt = self.env["m2x.create.edit.option"].create(
+        cls.category_opt = cls.env["m2x.create.edit.option"].create(
             {
-                "field_id": self.categ_field.id,
-                "model_id": self.res_partner_model.id,
+                "field_id": cls.categ_field.id,
+                "model_id": cls.res_partner_model.id,
                 "option_create": "set_true",
                 "option_create_edit": "set_true",
-                "option_create_edit_wizard": True,
             }
         )
-        self.company_opt = self.env["m2x.create.edit.option"].create(
+        cls.company_opt = cls.env["m2x.create.edit.option"].create(
             {
-                "field_id": self.company_field.id,
-                "model_id": self.res_users_model.id,
+                "field_id": cls.company_field.id,
+                "model_id": cls.res_users_model.id,
                 "option_create": "force_true",
                 "option_create_edit": "set_true",
-                "option_create_edit_wizard": False,
             }
         )
 
     def test_errors(self):
-        with self.assertRaises(ValidationError):
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"'company_id' is not a valid field for model 'res.partner'!",
+        ):
             # Fails ``_check_field_in_model``: model is res.partner, field is
-            # res.users's company_id
+            # ``res.users.company_id``
             self.env["m2x.create.edit.option"].create(
                 {
                     "field_id": self.company_field.id,
@@ -63,8 +64,15 @@ class TestM2xCreateEditOption(SavepointCase):
                     "option_create_edit": "set_true",
                 }
             )
-        with self.assertRaises(ValidationError):
-            # Fails ``_check_field_type``: users_field is a One2many
+        with self.assertRaisesRegex(
+            ValidationError, r"Invalid model name: 'does.not.exists'"
+        ):
+            # Fails ``_inverse_model_name``
+            self.category_opt.model_name = "does.not.exists"
+        with self.assertRaisesRegex(
+            ValidationError, r"Only Many2many and Many2one fields can be chosen!"
+        ):
+            # Fails ``_check_field_type``: ``res.partner.user_ids`` is a One2many
             self.env["m2x.create.edit.option"].create(
                 {
                     "field_id": self.users_field.id,
@@ -75,58 +83,31 @@ class TestM2xCreateEditOption(SavepointCase):
             )
 
     def test_apply_options(self):
-        res = self.env["res.partner"].fields_view_get(self.view.id)
-
-        # Check fields on res.partner form view
-        form_arch = res["arch"]
-        form_doc = etree.XML(form_arch)
-        title_node = form_doc.xpath("//field[@name='title']")[0]
+        # Check fields on ``res.partner`` form view
+        partner_form = etree.XML(self.env["res.partner"].get_view(self.view.id)["arch"])
+        title_node = partner_form.xpath("//field[@name='title']")[0]
         self.assertEqual(
             safe_eval(title_node.attrib.get("options"), nocopy=True),
             {"create": True, "create_edit": True},
         )
-        self.assertEqual(
-            (
-                title_node.attrib.get("can_create"),
-                title_node.attrib.get("can_write"),
-            ),
-            ("true", "true"),
-        )
-        categ_node = form_doc.xpath("//field[@name='category_id']")[0]
+        categ_node = partner_form.xpath("//field[@name='category_id']")[0]
         self.assertEqual(
             safe_eval(categ_node.attrib.get("options"), nocopy=True),
             {"create": False, "create_edit": True},
         )
-        self.assertEqual(
-            (
-                categ_node.attrib.get("can_create"),
-                categ_node.attrib.get("can_write"),
-            ),
-            ("true", "true"),
-        )
 
         # Check fields on res.users tree view (contained in ``user_ids`` field)
-        tree_arch = res["fields"]["user_ids"]["views"]["tree"]["arch"]
-        tree_doc = etree.XML(tree_arch)
-        company_node = tree_doc.xpath("//field[@name='company_id']")[0]
+        users_tree_view = partner_form.xpath("//field[@name='user_ids']/tree")[0]
+        company_node = users_tree_view.xpath("//field[@name='company_id']")[0]
         self.assertEqual(
             safe_eval(company_node.attrib.get("options"), nocopy=True),
             {"create": True, "create_edit": True},
         )
-        self.assertEqual(
-            (
-                company_node.attrib.get("can_create"),
-                company_node.attrib.get("can_write"),
-            ),
-            ("false", "true"),
-        )
 
         # Update options, check that node has been updated too
         self.title_opt.option_create_edit = "force_false"
-        res = self.env["res.partner"].fields_view_get(self.view.id)
-        form_arch = res["arch"]
-        form_doc = etree.XML(form_arch)
-        title_node = form_doc.xpath("//field[@name='title']")[0]
+        partner_form = etree.XML(self.env["res.partner"].get_view(self.view.id)["arch"])
+        title_node = partner_form.xpath("//field[@name='title']")[0]
         self.assertEqual(
             safe_eval(title_node.attrib.get("options"), nocopy=True),
             {"create": True, "create_edit": False},

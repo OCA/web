@@ -18,7 +18,7 @@
                         context="{'default_model_name': model}"
                     >
                         <tree editable="bottom">
-                            <field name="model_name" invisible="1" />
+                            <field name="model_name" invisible="1" optional="hide" />
                             <field
                                 name="field_id"
                                 context="{'search_by_technical_name': True, 'display_technical_name': True}"
@@ -27,7 +27,6 @@
                             />
                             <field name="option_create" />
                             <field name="option_create_edit" />
-                            <field name="option_create_edit_wizard" />
                         </tree>
                     </field>
                 </page>
