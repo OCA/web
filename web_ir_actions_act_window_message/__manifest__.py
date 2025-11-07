@@ -12,6 +12,9 @@
     "data": [
         "security/ir.model.access.csv",
     ],
+    "demo": [
+        "demo/ir_actions_server.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "web_ir_actions_act_window_message/static/src/**/*",
