@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =========================
 Client side message boxes
 =========================
@@ -17,7 +13,7 @@ Client side message boxes
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -95,8 +91,8 @@ migrators to verify correct function.
 Known issues / Roadmap
 ======================
 
-- add message_type to differenciate between warnings, errors, etc.
-- have one message_type to show a nonmodal warning on top right
+-  add message_type to differenciate between warnings, errors, etc.
+-  have one message_type to show a nonmodal warning on top right
 
 Bug Tracker
 ===========
@@ -129,8 +125,8 @@ Contributors
 - Sergio Martínez (Studio73) <sergio.martinez@studio73.es>
 - `DynApps NV <https://www.dynapps.be>`__:
 
-  - Koen Loodts
-  - Raf Ven
+   -  Koen Loodts
+   -  Raf Ven
 
 Maintainers
 -----------
@@ -144,6 +140,14 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-hbrunn| image:: https://github.com/hbrunn.png?size=40px
+    :target: https://github.com/hbrunn
+    :alt: hbrunn
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-hbrunn| 
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/18.0/web_ir_actions_act_window_message>`_ project on GitHub.
 
