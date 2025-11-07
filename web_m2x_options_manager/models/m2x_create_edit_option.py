@@ -148,10 +148,8 @@ class M2xCreateEditOption(models.Model):
             mode, val = opt.split("_")
             if mode == "force" or k not in options:
                 options[k] = val == "true"
+        options["m2o_dialog"] = self.option_create_edit_wizard
         node.set("options", str(options))
-        if not self.option_create_edit_wizard:
-            node.set("can_create", "false")
-            node.set("can_write", "true")
 
     @api.model
     def get(self, model_name, field_name):

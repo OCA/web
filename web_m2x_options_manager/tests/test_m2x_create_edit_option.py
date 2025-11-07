@@ -83,26 +83,12 @@ class TestM2xCreateEditOption(SavepointCase):
         title_node = form_doc.xpath("//field[@name='title']")[0]
         self.assertEqual(
             safe_eval(title_node.attrib.get("options"), nocopy=True),
-            {"create": True, "create_edit": True},
-        )
-        self.assertEqual(
-            (
-                title_node.attrib.get("can_create"),
-                title_node.attrib.get("can_write"),
-            ),
-            ("true", "true"),
+            {"create": True, "create_edit": True, "m2o_dialog": True},
         )
         categ_node = form_doc.xpath("//field[@name='category_id']")[0]
         self.assertEqual(
             safe_eval(categ_node.attrib.get("options"), nocopy=True),
-            {"create": False, "create_edit": True},
-        )
-        self.assertEqual(
-            (
-                categ_node.attrib.get("can_create"),
-                categ_node.attrib.get("can_write"),
-            ),
-            ("true", "true"),
+            {"create": False, "create_edit": True, "m2o_dialog": True},
         )
 
         # Check fields on res.users tree view (contained in ``user_ids`` field)
@@ -111,14 +97,7 @@ class TestM2xCreateEditOption(SavepointCase):
         company_node = tree_doc.xpath("//field[@name='company_id']")[0]
         self.assertEqual(
             safe_eval(company_node.attrib.get("options"), nocopy=True),
-            {"create": True, "create_edit": True},
-        )
-        self.assertEqual(
-            (
-                company_node.attrib.get("can_create"),
-                company_node.attrib.get("can_write"),
-            ),
-            ("false", "true"),
+            {"create": True, "create_edit": True, "m2o_dialog": False},
         )
 
         # Update options, check that node has been updated too
@@ -129,5 +108,5 @@ class TestM2xCreateEditOption(SavepointCase):
         title_node = form_doc.xpath("//field[@name='title']")[0]
         self.assertEqual(
             safe_eval(title_node.attrib.get("options"), nocopy=True),
-            {"create": True, "create_edit": False},
+            {"create": True, "create_edit": False, "m2o_dialog": True},
         )
