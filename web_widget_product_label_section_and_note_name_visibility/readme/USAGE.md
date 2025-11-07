@@ -1,0 +1,3 @@
+- Go to the **Invoicing \> Customers \> Invoices** and add a new line.
+- The product label must be displayed just after the product name.
+- An eye-style icon is displayed; click it to toggle the product name.

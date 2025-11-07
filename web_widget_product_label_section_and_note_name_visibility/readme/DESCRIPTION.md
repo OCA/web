@@ -1,0 +1,1 @@
+This module extends the Odoo feature introduced in V18 to allow the user to decide whether to show or hide the product name in the description.
