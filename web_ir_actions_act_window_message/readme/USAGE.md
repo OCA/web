@@ -42,3 +42,5 @@ Depend on this module and return
 ```
 
 You are responsible for translating the messages.
+
+Demo data contains server actions on the module model that demo the features of this addon, those are also convenient for reviewers and migrators to verify correct function.
