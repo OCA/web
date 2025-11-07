@@ -53,8 +53,6 @@ Depend on this module and return
        'message': _('My message'),
        # optional title of the close button, if not set, will be _('Close')
        # if set False, no close button will be shown
-       # you can create your own close button with an action of type
-       # ir.actions.act_window_close
        'close_button_title': 'Make this window go away',
        # Use HTML instead of text
        'is_html_message': True,
