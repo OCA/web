@@ -8,6 +8,7 @@
     "license": "AGPL-3",
     "category": "Hidden/Dependency",
     "summary": "Show a message box to users",
+    "maintainers": ["hbrunn"],
     "depends": ["web"],
     "data": [
         "security/ir.model.access.csv",
