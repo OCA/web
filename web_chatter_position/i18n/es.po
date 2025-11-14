@@ -17,6 +17,11 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: web_chatter_position
+#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
+msgid "Automatic"
+msgstr ""
+
+#. module: web_chatter_position
 #: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__bottom
 msgid "Bottom"
 msgstr "Abajo"
@@ -27,11 +32,6 @@ msgid "Chatter Position"
 msgstr "Posición del historial de comunicación"
 
 #. module: web_chatter_position
-#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
-msgid "Responsive"
-msgstr "Adaptativo"
-
-#. module: web_chatter_position
 #: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__sided
 msgid "Sided"
 msgstr "Lateral"
@@ -40,3 +40,6 @@ msgstr "Lateral"
 #: model:ir.model,name:web_chatter_position.model_res_users
 msgid "User"
 msgstr "Usuario"
+
+#~ msgid "Responsive"
+#~ msgstr "Adaptativo"
