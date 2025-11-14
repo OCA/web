@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_chatter_position
+#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
+msgid "Automatic"
+msgstr ""
+
+#. module: web_chatter_position
 #: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__bottom
 msgid "Bottom"
 msgstr ""
@@ -21,11 +26,6 @@ msgstr ""
 #. module: web_chatter_position
 #: model:ir.model.fields,field_description:web_chatter_position.field_res_users__chatter_position
 msgid "Chatter Position"
-msgstr ""
-
-#. module: web_chatter_position
-#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
-msgid "Responsive"
 msgstr ""
 
 #. module: web_chatter_position
