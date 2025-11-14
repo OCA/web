@@ -18,6 +18,11 @@ msgstr ""
 "X-Generator: Weblate 4.14.1\n"
 
 #. module: web_chatter_position
+#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
+msgid "Automatic"
+msgstr ""
+
+#. module: web_chatter_position
 #: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__bottom
 msgid "Bottom"
 msgstr "Na dnu"
@@ -28,11 +33,6 @@ msgid "Chatter Position"
 msgstr "Pozicija razgovora"
 
 #. module: web_chatter_position
-#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
-msgid "Responsive"
-msgstr "Responzivno"
-
-#. module: web_chatter_position
 #: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__sided
 msgid "Sided"
 msgstr "Sa strane"
@@ -41,3 +41,6 @@ msgstr "Sa strane"
 #: model:ir.model,name:web_chatter_position.model_res_users
 msgid "User"
 msgstr "Korisnik"
+
+#~ msgid "Responsive"
+#~ msgstr "Responzivno"
