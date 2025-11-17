@@ -17,13 +17,13 @@ Web Touchscreen
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/16.0/web_touchscreen
+    :target: https://github.com/OCA/web/tree/18.0/web_touchscreen
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_touchscreen
+    :target: https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_touchscreen
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -64,9 +64,9 @@ It will be useful for you if you usually use a tablet.
 
 If you need this module for those reasons, these might interest you too:
 
--  ``web_widget_numeric_step``
--  OCA's ``web_responsive``, or the Odoo EE alternative
-   ``web_enterprise`` (closed source).
+- ``web_widget_numeric_step``
+- OCA's ``web_responsive``, or the Odoo EE alternative
+  ``web_enterprise`` (closed source).
 
 Usage
 =====
@@ -80,9 +80,9 @@ To use this module, you need to:
 Known issues / Roadmap
 ======================
 
--  Enable more mobile UI enhancements for tablets as they seem relevant.
--  Allow setting per user or per session, with sane defaults. Just in
-   case you happen to use a tablet with a mouse.
+- Enable more mobile UI enhancements for tablets as they seem relevant.
+- Allow setting per user or per session, with sane defaults. Just in
+  case you happen to use a tablet with a mouse.
 
 Bug Tracker
 ===========
@@ -90,7 +90,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_touchscreen%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_touchscreen%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -105,14 +105,8 @@ Authors
 Contributors
 ------------
 
--  Jairo Llopis (`Moduon <https://www.moduon.team/>`__)
-
-Other credits
--------------
-
-The development of this module has been financially supported by:
-
--  Moduon Team S.L.
+- Jairo Llopis (`Moduon <https://www.moduon.team/>`__)
+- David Vidal (`Moduon <https://www.moduon.team/>`__)
 
 Maintainers
 -----------
@@ -138,6 +132,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-yajo| |maintainer-rafaelbn| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/16.0/web_touchscreen>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/18.0/web_touchscreen>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

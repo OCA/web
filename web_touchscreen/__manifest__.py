@@ -4,15 +4,13 @@
 {
     "name": "Web Touchscreen",
     "summary": "UX improvements for touch screens",
-    "version": "16.0.1.0.1",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Extra Tools",
     "website": "https://github.com/OCA/web",
     "author": "Moduon, Odoo Community Association (OCA)",
     "maintainers": ["yajo", "rafaelbn"],
     "license": "LGPL-3",
-    "application": False,
-    "installable": True,
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
