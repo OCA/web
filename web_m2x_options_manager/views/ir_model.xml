@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_model_form_inherit" model="ir.ui.view">
+        <field name="name">view.model.form.inherit</field>
+        <field name="model">ir.model</field>
+        <field name="inherit_id" ref="base.view_model_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='fields']" position="after">
+                <page string="Create/Edit Options" name="create_edit_options">
+                    <field name="id" invisible="1" />
+                    <div class="alert alert-info" role="alert">
+                        Here are displayed options for this model's fields<hr />
+                        <div>
+                            <button
+                                name="button_fill_m2x_options"
+                                type="object"
+                                string="Fill"
+                            />
+                            <button
+                                name="button_empty_m2x_options"
+                                type="object"
+                                string="Empty"
+                            />
+                        </div>
+                    </div>
+                    <field
+                        name="m2x_option_ids"
+                        context="{'tree_view_ref': 'web_m2x_options_manager.m2x_create_edit_option_tree_o2m_filter_by_model'}"
+                        nolabel="1"
+                    />
+                    <div class="alert alert-info" role="alert">
+                        Here are displayed options for other models' fields related to this model<hr
+                        />
+                        <div>
+                            <button
+                                name="button_fill_m2x_comodels_options"
+                                type="object"
+                                string="Fill"
+                            />
+                            <button
+                                name="button_empty_m2x_comodels_options"
+                                type="object"
+                                string="Empty"
+                            />
+                        </div>
+                    </div>
+                    <field
+                        name="m2x_comodels_option_ids"
+                        context="{'tree_view_ref': 'web_m2x_options_manager.m2x_create_edit_option_tree_o2m_filter_by_comodel'}"
+                        nolabel="1"
+                    />
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
