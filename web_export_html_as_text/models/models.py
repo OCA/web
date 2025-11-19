@@ -1,7 +1,7 @@
 # Copyright 2025 Quartile (https://www.quartile.co)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, models
+from odoo import models
 from odoo.models import fix_import_export_id_paths
 from odoo.tools import html2plaintext
 
@@ -27,7 +27,6 @@ def _is_html_path(model, path):
 class BaseExportHtmlAsText(models.AbstractModel):
     _inherit = "base"
 
-    @api.model
     def export_data(self, fields_to_export):
         res = super().export_data(fields_to_export)
         if not self.env.context.get("export_html_as_text"):

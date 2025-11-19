@@ -6,6 +6,7 @@ from odoo import fields, models
 
 class TestExportHtmlText(models.Model):
     _name = "test.export.html.text"
+    _description = "Test Export Html As Text Model"
 
     name = fields.Char()
     narration = fields.Html()

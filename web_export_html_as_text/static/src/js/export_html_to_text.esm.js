@@ -2,7 +2,7 @@
 import {patch} from "@web/core/utils/patch";
 import {ListController} from "@web/views/list/list_controller";
 
-patch(ListController.prototype, "export_html_as_text.controller_flag", {
+patch(ListController.prototype, {
     async downloadExport(fields, import_compat, format) {
         const dialog =
             document.querySelector(".o_export_data_dialog") ||
@@ -12,7 +12,7 @@ patch(ListController.prototype, "export_html_as_text.controller_flag", {
         const prev = this.props.context;
         this.props.context = {...(prev || {}), export_html_as_text: checked};
         try {
-            return await this._super(fields, import_compat, format);
+            return await super.downloadExport(fields, import_compat, format);
         } finally {
             this.props.context = prev;
         }
