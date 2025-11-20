@@ -64,11 +64,11 @@
         </field>
     </record>
 
-    <record id="m2x_create_edit_option_tree_base" model="ir.ui.view">
-        <field name="name">m2x.create.edit.option tree view - base</field>
+    <record id="m2x_create_edit_option_list_base" model="ir.ui.view">
+        <field name="name">m2x.create.edit.option list view - base</field>
         <field name="model">m2x.create.edit.option</field>
         <field name="arch" type="xml">
-            <tree default_order="model_name asc, field_name asc">
+            <list default_order="model_name asc, field_name asc">
                 <field name="model_id" optional="show" />
                 <field name="model_name" optional="hide" />
                 <field name="field_id" optional="show" />
@@ -77,22 +77,22 @@
                 <field name="comodel_name" optional="hide" />
                 <field name="option_create" />
                 <field name="option_create_edit" />
-            </tree>
+            </list>
         </field>
     </record>
 
-    <record id="m2x_create_edit_option_tree_editable" model="ir.ui.view">
-        <field name="name">m2x.create.edit.option tree view - editable</field>
+    <record id="m2x_create_edit_option_list_editable" model="ir.ui.view">
+        <field name="name">m2x.create.edit.option list view - editable</field>
         <field name="model">m2x.create.edit.option</field>
         <field name="mode">primary</field>
         <field
             name="inherit_id"
-            ref="web_m2x_options_manager.m2x_create_edit_option_tree_base"
+            ref="web_m2x_options_manager.m2x_create_edit_option_list_base"
         />
         <field name="arch" type="xml">
-            <tree position="attributes">
+            <list position="attributes">
                 <attribute name="editable">bottom</attribute>
-            </tree>
+            </list>
             <field name="field_id" position="attributes">
                 <attribute
                     name="context"
@@ -104,13 +104,13 @@
         </field>
     </record>
 
-    <record id="m2x_create_edit_option_tree_o2m_filter_by_model" model="ir.ui.view">
-        <field name="name">m2x.create.edit.option tree view - filter by model</field>
+    <record id="m2x_create_edit_option_list_o2m_filter_by_model" model="ir.ui.view">
+        <field name="name">m2x.create.edit.option list view - filter by model</field>
         <field name="model">m2x.create.edit.option</field>
         <field name="mode">primary</field>
         <field
             name="inherit_id"
-            ref="web_m2x_options_manager.m2x_create_edit_option_tree_editable"
+            ref="web_m2x_options_manager.m2x_create_edit_option_list_editable"
         />
         <field name="arch" type="xml">
             <field name="field_id" position="attributes">
@@ -121,13 +121,13 @@
         </field>
     </record>
 
-    <record id="m2x_create_edit_option_tree_o2m_filter_by_comodel" model="ir.ui.view">
-        <field name="name">m2x.create.edit.option tree view - filter by comodel</field>
+    <record id="m2x_create_edit_option_list_o2m_filter_by_comodel" model="ir.ui.view">
+        <field name="name">m2x.create.edit.option list view - filter by comodel</field>
         <field name="model">m2x.create.edit.option</field>
         <field name="mode">primary</field>
         <field
             name="inherit_id"
-            ref="web_m2x_options_manager.m2x_create_edit_option_tree_editable"
+            ref="web_m2x_options_manager.m2x_create_edit_option_list_editable"
         />
         <field name="arch" type="xml">
             <field name="field_id" position="attributes">
@@ -141,7 +141,8 @@
     <record id="m2x_create_edit_option_action" model="ir.actions.act_window">
         <field name="name">Fields' Create &amp; Edit Options</field>
         <field name="res_model">m2x.create.edit.option</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
+        <field name="path">m2x-create-edit-option</field>
     </record>
 
     <record id="m2x_create_edit_option_menu" model="ir.ui.menu">
