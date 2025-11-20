@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_model_form_inherit" model="ir.ui.view">
         <field name="name">view.model.form.inherit</field>
         <field name="model">ir.model</field>
@@ -12,17 +11,17 @@
                     <div class="alert alert-info" role="alert">
                         Here are displayed options for this model's fields<hr />
                         <div>
-                            <button
-                                name="button_fill_m2x_options"
-                                type="object"
-                                string="Fill"
-                            />
-                            <button
-                                name="button_empty_m2x_options"
-                                type="object"
-                                string="Empty"
-                            />
-                        </div>
+                        <button
+                            name="button_fill_m2x_options"
+                            type="object"
+                            string="Fill"
+                        />
+                        <button
+                            name="button_empty_m2x_options"
+                            type="object"
+                            string="Empty"
+                        />
+                    </div>
                     </div>
                     <field
                         name="m2x_option_ids"
@@ -31,19 +30,19 @@
                     />
                     <div class="alert alert-info" role="alert">
                         Here are displayed options for other models' fields related to this model<hr
-                        />
+                    />
                         <div>
-                            <button
-                                name="button_fill_m2x_comodels_options"
-                                type="object"
-                                string="Fill"
-                            />
-                            <button
-                                name="button_empty_m2x_comodels_options"
-                                type="object"
-                                string="Empty"
-                            />
-                        </div>
+                        <button
+                            name="button_fill_m2x_comodels_options"
+                            type="object"
+                            string="Fill"
+                        />
+                        <button
+                            name="button_empty_m2x_comodels_options"
+                            type="object"
+                            string="Empty"
+                        />
+                    </div>
                     </div>
                     <field
                         name="m2x_comodels_option_ids"
@@ -54,5 +53,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>
