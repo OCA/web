@@ -6,8 +6,15 @@ from lxml import etree
 from odoo.tests.common import TransactionCase
 from odoo.tools.safe_eval import safe_eval
 
+from odoo.addons.base.tests.common import BaseCommon
+
 
 class Common(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env["base"].with_context(**BaseCommon.default_env_context()).env
+
     @classmethod
     def _create_opt(cls, model_name, field_name, vals=None):
         field = cls._get_field(model_name, field_name)

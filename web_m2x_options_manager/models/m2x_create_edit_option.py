@@ -1,7 +1,7 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.cache import ormcache
 from odoo.tools.safe_eval import safe_eval
@@ -143,7 +143,7 @@ class M2xCreateEditOption(models.Model):
         for opt in self:
             if opt.field_id and not opt.field_id.can_have_options:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Field %(field)s cannot have M2X options",
                         field=opt.field_id.display_name,
                     )
