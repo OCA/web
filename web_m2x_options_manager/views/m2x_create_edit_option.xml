@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <record id="m2x_create_edit_option_search" model="ir.ui.view">
         <field name="name">m2x.create.edit.option search view</field>
         <field name="model">m2x.create.edit.option</field>
@@ -153,5 +152,4 @@
             ref="web_m2x_options_manager.m2x_create_edit_option_action"
         />
     </record>
-
 </odoo>
