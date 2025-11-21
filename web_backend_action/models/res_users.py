@@ -39,6 +39,6 @@ class ResUsers(models.Model):
             "view_types": view_types or [],
         }
         for user in self:
-            user._bus_send("web.backend_action", message)
+            self.env["bus.bus"]._sendone(user.partner_id, "web.backend_action", message)
 
         return True

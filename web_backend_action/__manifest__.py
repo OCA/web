@@ -5,7 +5,7 @@
     "name": "Web Backend Action",
     "summary": "Send actions from the backend to the UI via the bus "
     "and execute them immediately",
-    "version": "18.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Extra Tools",
     "license": "LGPL-3",
     "author": "Odoo Community Association (OCA), Dinar Gabbasov",
