@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -110,7 +110,6 @@ msgstr ""
 #. module: web_m2x_options_manager
 #. odoo-python
 #: code:addons/web_m2x_options_manager/models/m2x_create_edit_option.py:0
-#, python-format
 msgid "Field %(field)s cannot have M2X options"
 msgstr ""
 
