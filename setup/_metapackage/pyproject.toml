@@ -1,6 +1,6 @@
 [project]
 name = "odoo-addons-oca-web"
-version = "18.0.20251117.0"
+version = "18.0.20251121.0"
 dependencies = [
     "odoo-addon-web_calendar_slot_duration==18.0.*",
     "odoo-addon-web_chatter_position==18.0.*",
@@ -20,6 +20,7 @@ dependencies = [
     "odoo-addon-web_ir_actions_act_multi==18.0.*",
     "odoo-addon-web_ir_actions_act_window_message==18.0.*",
     "odoo-addon-web_m2x_options==18.0.*",
+    "odoo-addon-web_m2x_options_manager==18.0.*",
     "odoo-addon-web_no_bubble==18.0.*",
     "odoo-addon-web_notify==18.0.*",
     "odoo-addon-web_notify_channel_message==18.0.*",
