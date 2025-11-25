@@ -21,7 +21,15 @@ export class ActWindowMessageDialog extends Component {
     _refreshWidget() {
         const controller = this.action.currentController;
         const state = router.current;
+        if (!controller || !controller.props || !state || !state.resId) {
+            console.warn("ActWindowMessageDialog: unable to refresh view");
+            return;
+        }
         const props = controller.props;
+        if (!props.type) {
+            console.warn("Controller props.type is missing, cannot switch view");
+            return;
+        }
         this.action
             .switchView(props.type, {
                 resId: state.resId,
