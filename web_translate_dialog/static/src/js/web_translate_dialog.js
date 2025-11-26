@@ -71,7 +71,7 @@ var TranslateDialog = Dialog.extend({
         var record_id = this.record_id;
         _.each(parent.renderer.allModifiersData, function(modifier){
             var evaluatedmodifier = modifier.evaluatedModifiers[record_id];
-            if (modifier.node.tag == 'field' && evaluatedmodifier && evaluatedmodifier.hasOwnProperty("invisible") && evaluatedmodifier.invisible == true){
+            if (modifier.node.tag == 'field' && evaluatedmodifier?.invisible){
                 field_list.push(modifier.node.attrs.name);
             }
         });
