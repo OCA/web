@@ -10,7 +10,7 @@
     "category": "Web",
     "version": "18.0.1.0.0",
     "license": "LGPL-3",
-    "author": "Modoolar, " "CorporateHub, " "Odoo Community Association (OCA)",
+    "author": "Modoolar, CorporateHub, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": ["security/ir.model.access.csv"],
