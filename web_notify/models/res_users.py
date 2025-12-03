@@ -150,3 +150,8 @@ class ResUsers(models.Model):
                 "web_notify",
                 bus_message,
             )
+
+    def action_test_html_notify(self):
+        self.notify_info(
+            message="<b>Bold text</b><br/>New line", html=False, sticky=True
+        )
