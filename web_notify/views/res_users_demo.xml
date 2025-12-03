@@ -55,6 +55,16 @@
                             />
                         </group>
                     </group>
+                    <group>
+                        <group>
+                            <button
+                                name="action_test_html_notify"
+                                type="object"
+                                string="Test default HTML notification"
+                                class="oe_highlight"
+                            />
+                        </group>
+                    </group>
                 </page>
             </xpath>
         </field>
