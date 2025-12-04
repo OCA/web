@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Web Widget Text Markdown",
-    "version": "14.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Alexandre Díaz, "
     "Komit, "
     "Sudokeys, "
@@ -15,8 +15,16 @@
     "website": "https://github.com/OCA/web",
     "summary": "Widget to text fields that adds markdown support",
     "depends": ["web"],
+    "assets": {
+        "web.assets_backend": [
+            "web_widget_text_markdown/static/src/js/web_widget_text_markdown.js",
+        ],
+        "web.qunit_suite_tests": [
+            "web_widget_text_markdown/static/tests/js/web_widget_text_markdown.js",
+        ],
+    },
     "demo": ["demo/bootstrap_markdown.xml"],
-    "data": ["views/assets.xml"],
+    "data": [],
     "qweb": ["static/src/xml/bootstrap_markdown.xml"],
     "installable": True,
     "auto_install": False,
