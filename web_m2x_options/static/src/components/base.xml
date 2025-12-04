@@ -8,7 +8,7 @@
         t-inherit="web.AutoComplete"
         t-inherit-mode="extension"
     >
-        <xpath expr="//t[@t-foreach='source.options']/li/a" position="attributes">
+        <xpath expr="//t[@t-foreach='source.options']/li/t" position="attributes">
             <attribute name="t-attf-style">{{ option.style }}</attribute>
         </xpath>
     </t>
@@ -23,16 +23,6 @@
             <attribute name="fieldColor">props.fieldColor</attribute>
             <attribute name="fieldColorOptions">props.fieldColorOptions</attribute>
         </xpath>
-    </t>
-
-    <t
-        t-name="web_m2x_options.Many2ManyTagsAvatarFieldPopover"
-        t-inherit="web.Many2ManyTagsAvatarField"
-        t-inherit-mode="extension"
-    >
-        <Many2XAutocomplete position="attributes">
-            <attribute name="noSearchMore">props.noSearchMore</attribute>
-        </Many2XAutocomplete>
     </t>
 
 </templates>

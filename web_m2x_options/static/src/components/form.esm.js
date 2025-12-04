@@ -1,10 +1,9 @@
-import {
-    AvatarMany2XAutocomplete,
-    Many2XAutocomplete,
-} from "@web/views/fields/relational_utils";
-import {Many2OneField, many2OneField} from "@web/views/fields/many2one/many2one_field";
-import {Many2OneReferenceField} from "@web/views/fields/many2one_reference/many2one_reference_field";
+import * as many2OneField from "@web/views/fields/many2one/many2one_field";
+import * as many2one from "@web/views/fields/many2one/many2one";
 import {FormController} from "@web/views/form/form_controller";
+import {KanbanMany2One, Many2One} from "@web/views/fields/many2one/many2one";
+import {Many2OneReferenceField} from "@web/views/fields/many2one_reference/many2one_reference_field";
+import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {evaluateBooleanExpr} from "@web/core/py_js/py";
 import {fieldColorProps} from "../views/fields/standard_field_props.esm";
 import {isX2Many} from "@web/views/utils";
@@ -13,109 +12,111 @@ import {patch} from "@web/core/utils/patch";
 import {registry} from "@web/core/registry";
 import {session} from "@web/session";
 
-AvatarMany2XAutocomplete.props = {
-    ...AvatarMany2XAutocomplete.props,
-    ...fieldColorProps,
-};
 Many2XAutocomplete.props = {
     ...Many2XAutocomplete.props,
     ...fieldColorProps,
+};
+
+Many2One.props = {
+    ...Many2One.props,
+    searchLimit: {type: Number, optional: true},
 };
 
 function evaluateSystemParameterDefaultTrue(option) {
     const isOptionSet = session.web_m2x_options[`web_m2x_options.${option}`];
     return isOptionSet ? evaluateBooleanExpr(isOptionSet) : true;
 }
+function evaluateSystemParameterNumber(option) {
+    const isOptionSet = session.web_m2x_options[`web_m2x_options.${option}`];
+    return isOptionSet ? Number(isOptionSet) : false;
+}
 
-patch(many2OneField, {
-    m2o_options_props_create(props, attrs, options) {
-        const canQuickCreate = evaluateSystemParameterDefaultTrue("create");
-        if (options.no_quick_create) {
-            props.canQuickCreate = false;
-        } else if ("no_quick_create" in options) {
-            props.canQuickCreate = attrs.can_create
-                ? evaluateBooleanExpr(attrs.can_create)
-                : true;
-        } else if (!canQuickCreate && props.canQuickCreate) {
-            props.canQuickCreate = false;
-        } else if (canQuickCreate && !props.canQuickCreate) {
-            props.canQuickCreate = attrs.can_create
-                ? evaluateBooleanExpr(attrs.can_create)
-                : true;
-        }
-        return props;
-    },
+export function m2o_options_props_create(props, attrs, options) {
+    const canQuickCreate = evaluateSystemParameterDefaultTrue("create");
+    if (options.no_create || options.no_quick_create) {
+        props.canQuickCreate = false;
+    } else if ("no_quick_create" in options) {
+        props.canQuickCreate = attrs.can_create
+            ? evaluateBooleanExpr(attrs.can_create)
+            : true;
+    } else if (!canQuickCreate && props.canQuickCreate) {
+        props.canQuickCreate = false;
+    } else if (canQuickCreate && !props.canQuickCreate) {
+        props.canQuickCreate = attrs.can_create
+            ? evaluateBooleanExpr(attrs.can_create)
+            : true;
+    }
+    return props;
+}
 
-    m2o_options_props_create_edit(props, attrs, options) {
-        const canCreateEdit = evaluateSystemParameterDefaultTrue("create_edit");
-        if (options.no_create_edit) {
-            props.canCreateEdit = false;
-        } else if ("no_create_edit" in options) {
-            // Same condition set in web/views/fields/many2one/many2one_field
-            props.canCreateEdit = attrs.can_create
-                ? evaluateBooleanExpr(attrs.can_create)
-                : true;
-        } else if (!canCreateEdit && props.canCreateEdit) {
-            props.canCreateEdit = false;
-        } else if (canCreateEdit && !props.canCreateEdit) {
-            // Same condition set in web/views/fields/many2one/many2one_field
-            props.canCreateEdit = attrs.can_create
-                ? evaluateBooleanExpr(attrs.can_create)
-                : true;
-        }
-        return props;
-    },
+export function m2o_options_props_create_edit(props, attrs, options) {
+    const canCreateEdit = evaluateSystemParameterDefaultTrue("create_edit");
+    if (options.no_create || options.no_create_edit) {
+        props.canCreateEdit = false;
+    } else if ("no_create_edit" in options) {
+        // Same condition set in web/views/fields/many2one/many2one_field
+        props.canCreateEdit = attrs.can_create
+            ? evaluateBooleanExpr(attrs.can_create)
+            : true;
+    } else if (!canCreateEdit && props.canCreateEdit) {
+        props.canCreateEdit = false;
+    } else if (canCreateEdit && !props.canCreateEdit) {
+        // Same condition set in web/views/fields/many2one/many2one_field
+        props.canCreateEdit = attrs.can_create
+            ? evaluateBooleanExpr(attrs.can_create)
+            : true;
+    }
+    return props;
+}
 
-    m2o_options_props_limit(props, attrs, options) {
-        const ir_options = session.web_m2x_options;
-        if (Number(options.limit)) {
-            props.searchLimit = Number(options.limit);
-        } else if (Number(ir_options["web_m2x_options.limit"])) {
-            props.searchLimit = Number(ir_options["web_m2x_options.limit"]);
-        }
-        return props;
-    },
+export function m2o_options_props_limit(props, attrs, options) {
+    const ir_options = session.web_m2x_options;
+    if (Number(options.limit)) {
+        props.searchLimit = Number(options.limit);
+    } else if (Number(ir_options["web_m2x_options.limit"])) {
+        props.searchLimit = Number(ir_options["web_m2x_options.limit"]);
+    }
+    return props;
+}
 
-    m2o_options_props_search_more(props, attrs, options) {
-        const noSearchMore = !evaluateSystemParameterDefaultTrue("search_more");
-        if (options.search_more) {
-            props.noSearchMore = false;
-        } else if ("search_more" in options) {
-            props.noSearchMore = true;
-        } else if (!noSearchMore && props.noSearchMore) {
-            props.noSearchMore = false;
-        } else if (noSearchMore) {
-            props.noSearchMore = true;
-        }
-        return props;
-    },
+export function m2o_options_props_open(props, attrs, options) {
+    if (!("no_open" in options)) {
+        props.canOpen = evaluateSystemParameterDefaultTrue("open");
+    }
+    return props;
+}
 
-    m2o_options_props_open(props, attrs, options) {
-        if (!("no_open" in options)) {
-            props.canOpen = evaluateSystemParameterDefaultTrue("open");
-        }
-        return props;
-    },
+export function m2o_options_props(props, attrs, options) {
+    let newProps = props;
+    newProps = m2o_options_props_create(newProps, attrs, options);
+    newProps = m2o_options_props_create_edit(newProps, attrs, options);
+    newProps = m2o_options_props_limit(newProps, attrs, options);
+    newProps = m2o_options_props_open(newProps, attrs, options);
+    newProps.fieldColor = options.field_color;
+    newProps.fieldColorOptions = options.colors;
+    return newProps;
+}
 
-    m2o_options_props(props, attrs, options) {
-        let newProps = props;
-        newProps = this.m2o_options_props_create(newProps, attrs, options);
-        newProps = this.m2o_options_props_create_edit(newProps, attrs, options);
-        newProps = this.m2o_options_props_limit(newProps, attrs, options);
-        newProps = this.m2o_options_props_search_more(newProps, attrs, options);
-        newProps = this.m2o_options_props_open(newProps, attrs, options);
-        newProps.fieldColor = options.field_color;
-        newProps.fieldColorOptions = options.colors;
-        return newProps;
-    },
-    extractProps({attrs, context, decorations, options, string}, dynamicInfo) {
-        const props = super.extractProps(
-            {attrs, context, decorations, options, string},
-            dynamicInfo
-        );
-        return this.m2o_options_props(props, attrs, options);
-    },
-});
+const oldBuildM2OFieldDescription = many2OneField.buildM2OFieldDescription;
+many2OneField.buildM2OFieldDescription = (component) => {
+    const _super = oldBuildM2OFieldDescription(component);
+    return {
+        ..._super,
+        extractProps(staticInfo, dynamicInfo) {
+            const props = many2OneField.extractM2OFieldProps(staticInfo, dynamicInfo);
+            return m2o_options_props(props, staticInfo.attrs, staticInfo.options);
+        },
+    };
+};
+
+const oldcomputeM2OProps = many2one.computeM2OProps;
+many2one.computeM2OProps = (fieldProps) => {
+    const _super = oldcomputeM2OProps(fieldProps);
+    return {
+        ..._super,
+        searchLimit: fieldProps.searchLimit,
+    };
+};
 
 // FIXME: Many2OneReferenceField does not support m2o_options_props.
 // This no-op prevents crashes, but proper option support is still missing.
@@ -127,19 +128,37 @@ patch(Many2OneReferenceField, {
     },
 });
 
-patch(Many2OneField.prototype, {
-    get Many2XAutocompleteProps() {
-        const search_limit = this.props.searchLimit;
-        const no_search_more = this.props.noSearchMore;
+// FIXME: KanbanMany2One does not support m2o_options_props (e.g. searchLimit).
+// Accepting these props prevents "unknown key" validation errors when the
+// field description is built with m2o_options_props (e.g. kanban many2one avatar).
+KanbanMany2One.props = {
+    ...KanbanMany2One.props,
+    ...fieldColorProps,
+    searchLimit: {type: Number, optional: true},
+};
+
+patch(many2OneField.Many2OneField.prototype, {
+    get m2oProps() {
+        const props = super.m2oProps;
+        props.searchLimit = this.props.searchLimit;
+        return props;
+    },
+});
+
+patch(Many2One.prototype, {
+    get many2XAutocompleteProps() {
+        let search_limit = 0;
+        if (this.props.searchLimit) {
+            search_limit = this.props.searchLimit;
+        } else {
+            search_limit = evaluateSystemParameterNumber("limit");
+        }
         const field_color = this.props.fieldColor;
         const field_color_options = this.props.fieldColorOptions;
-        const props = super.Many2XAutocompleteProps;
+        const props = super.many2XAutocompleteProps;
         const ret_props = {...props};
         if (Number(search_limit) && Number(search_limit) > 1) {
             ret_props.searchLimit = search_limit - 1;
-        }
-        if (no_search_more) {
-            ret_props.noSearchMore = no_search_more;
         }
         if (field_color && field_color_options) {
             ret_props.fieldColor = field_color;
@@ -198,26 +217,11 @@ patch(many2ManyTagsField, {
         return props;
     },
 
-    m2m_options_props_search_more(props, attrs, options) {
-        const noSearchMore = !evaluateSystemParameterDefaultTrue("search_more");
-        if (options.search_more) {
-            props.noSearchMore = false;
-        } else if ("search_more" in options) {
-            props.noSearchMore = true;
-        } else if (!noSearchMore && props.noSearchMore) {
-            props.noSearchMore = false;
-        } else if (noSearchMore) {
-            props.noSearchMore = true;
-        }
-        return props;
-    },
-
     m2m_options_props(props, attrs, options) {
         let newProps = props;
         newProps = this.m2m_options_props_create(newProps, attrs, options);
         newProps = this.m2m_options_props_create_edit(newProps, attrs, options);
         newProps = this.m2m_options_props_limit(newProps, attrs, options);
-        newProps = this.m2m_options_props_search_more(newProps, attrs, options);
         newProps.fieldColor = options.field_color;
         newProps.fieldColorOptions = options.colors;
         return newProps;
@@ -317,12 +321,22 @@ patch(registry.category("fields").validationSchema, {
     m2o_options_props_create: {type: Function, optional: true},
     m2o_options_props_create_edit: {type: Function, optional: true},
     m2o_options_props_limit: {type: Function, optional: true},
-    m2o_options_props_search_more: {type: Function, optional: true},
     m2o_options_props_open: {type: Function, optional: true},
     m2o_options_props: {type: Function, optional: true},
     m2m_options_props_create: {type: Function, optional: true},
     m2m_options_props_create_edit: {type: Function, optional: true},
     m2m_options_props_limit: {type: Function, optional: true},
-    m2m_options_props_search_more: {type: Function, optional: true},
     m2m_options_props: {type: Function, optional: true},
 });
+
+registry.category("fields").add(
+    "many2one",
+    {
+        ...many2OneField.buildM2OFieldDescription(many2OneField.Many2OneField),
+        extractProps(staticInfo, dynamicInfo) {
+            const props = many2OneField.extractM2OFieldProps(staticInfo, dynamicInfo);
+            return m2o_options_props(props, staticInfo.attrs, staticInfo.options);
+        },
+    },
+    {force: true}
+);
