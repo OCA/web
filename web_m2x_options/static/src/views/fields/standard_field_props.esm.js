@@ -8,6 +8,5 @@ export const fieldColorProps = {
 
 patch(standardFieldProps, {
     ...fieldColorProps,
-    noSearchMore: {type: Boolean, optional: true},
     searchLimit: {type: Number, optional: true},
 });

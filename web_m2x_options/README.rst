@@ -21,13 +21,13 @@ web_m2x_options
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/18.0/web_m2x_options
+    :target: https://github.com/OCA/web/tree/19.0/web_m2x_options
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_m2x_options
+    :target: https://translation.odoo-community.org/projects/web-19-0/web-19-0-web_m2x_options
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=18.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -57,10 +57,6 @@ in the field's options dict
 ``limit`` *int* (Default: odoo default value is ``8``)
 
    Number of displayed record in drop-down panel
-
-``search_more`` *boolean*
-
-   Used to force disable/enable search more button.
 
 ``field_color`` *string*
 
@@ -97,11 +93,6 @@ create rights)
    Number of displayed record in drop-down panel for all fields in the
    odoo instance
 
-``web_m2x_options.search_more`` *boolean* (Default: default value is
-``False``)
-
-   Whether the field should always show "Search more..." entry or not.
-
 ``web_m2x_options.field_limit_entries`` *int*
 
    Number of displayed lines on all One2many fields
@@ -112,7 +103,6 @@ To add these parameters go to Configuration -> Technical -> Parameters
 - web_m2x_options.create: False
 - web_m2x_options.create_edit: False
 - web_m2x_options.limit: 10
-- web_m2x_options.search_more: True
 - web_m2x_options.field_limit_entries: 5
 
 Example
@@ -123,7 +113,7 @@ Your XML form view definition could contain:
 .. code:: xml
 
    ...
-   <field name="partner_id" options="{'limit': 10, 'search_more': true, 'field_color':'type', 'colors':{'contact':'green', 'invoice': 'red', 'delivery': 'blue'}}"/>
+   <field name="partner_id" options="{'limit': 10, 'field_color':'type', 'colors':{'contact':'green', 'invoice': 'red', 'delivery': 'blue'}}"/>
    ...
 
 Known issues / Roadmap
@@ -146,7 +136,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_m2x_options%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_m2x_options%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -220,6 +210,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/18.0/web_m2x_options>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/19.0/web_m2x_options>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

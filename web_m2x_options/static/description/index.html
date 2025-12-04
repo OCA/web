@@ -374,7 +374,7 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:881a75e6602b8037ae91fff6ff77e99caff9cba4b1ccda3dff174f64f4e42824
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/18.0/web_m2x_options"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_m2x_options"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/19.0/web_m2x_options"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-19-0/web-19-0-web_m2x_options"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=19.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This modules modifies “many2one” and “many2manytags” form widgets so as
 to add some new display control options.</p>
 <p>Options provided includes possibility to remove “Create…” and/or
@@ -410,9 +410,6 @@ related object.</p>
 <p><tt class="docutils literal">limit</tt> <em>int</em> (Default: odoo default value is <tt class="docutils literal">8</tt>)</p>
 <blockquote>
 Number of displayed record in drop-down panel</blockquote>
-<p><tt class="docutils literal">search_more</tt> <em>boolean</em></p>
-<blockquote>
-Used to force disable/enable search more button.</blockquote>
 <p><tt class="docutils literal">field_color</tt> <em>string</em></p>
 <blockquote>
 A string to define the field used to define color. This option has to
@@ -442,10 +439,6 @@ all fields in the odoo instance.</blockquote>
 <blockquote>
 Number of displayed record in drop-down panel for all fields in the
 odoo instance</blockquote>
-<p><tt class="docutils literal">web_m2x_options.search_more</tt> <em>boolean</em> (Default: default value is
-<tt class="docutils literal">False</tt>)</p>
-<blockquote>
-Whether the field should always show “Search more…” entry or not.</blockquote>
 <p><tt class="docutils literal">web_m2x_options.field_limit_entries</tt> <em>int</em></p>
 <blockquote>
 Number of displayed lines on all One2many fields</blockquote>
@@ -455,7 +448,6 @@ Number of displayed lines on all One2many fields</blockquote>
 <li>web_m2x_options.create: False</li>
 <li>web_m2x_options.create_edit: False</li>
 <li>web_m2x_options.limit: 10</li>
-<li>web_m2x_options.search_more: True</li>
 <li>web_m2x_options.field_limit_entries: 5</li>
 </ul>
 </div>
@@ -464,7 +456,7 @@ Number of displayed lines on all One2many fields</blockquote>
 <p>Your XML form view definition could contain:</p>
 <pre class="code xml literal-block">
 ...<span class="w">
-</span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;partner_id&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">&quot;{'limit': 10, 'search_more': true, 'field_color':'type', 'colors':{'contact':'green', 'invoice': 'red', 'delivery': 'blue'}}&quot;</span><span class="nt">/&gt;</span><span class="w">
+</span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;partner_id&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">&quot;{'limit': 10, 'field_color':'type', 'colors':{'contact':'green', 'invoice': 'red', 'delivery': 'blue'}}&quot;</span><span class="nt">/&gt;</span><span class="w">
 </span>...
 </pre>
 </div>
@@ -488,7 +480,7 @@ behaviour/aspect with other clickable elements (many2one…).</li>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_m2x_options%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_m2x_options%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -549,7 +541,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/18.0/web_m2x_options">OCA/web</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/19.0/web_m2x_options">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>

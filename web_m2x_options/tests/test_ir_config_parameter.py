@@ -11,16 +11,13 @@ class TestIrConfigParameter(TransactionCase):
         cls.env["ir.config_parameter"].set_param("web_m2x_options.limit", 10)
         cls.env["ir.config_parameter"].set_param("web_m2x_options.create_edit", "True")
         cls.env["ir.config_parameter"].set_param("web_m2x_options.create", "True")
-        cls.env["ir.config_parameter"].set_param("web_m2x_options.search_more", "False")
 
     def test_web_m2x_options_key(self):
         web_m2x_options = self.env["ir.config_parameter"].get_web_m2x_options()
         self.assertIn("web_m2x_options.limit", web_m2x_options)
-        self.assertNotIn("web_m2x_options.search_more_test", web_m2x_options)
 
     def test_web_m2x_options_value(self):
         web_m2x_options = self.env["ir.config_parameter"].get_web_m2x_options()
         self.assertEqual(web_m2x_options["web_m2x_options.limit"], "10")
         self.assertTrue(bool(web_m2x_options["web_m2x_options.create_edit"]))
         self.assertTrue(bool(web_m2x_options["web_m2x_options.create"]))
-        self.assertEqual(web_m2x_options["web_m2x_options.search_more"], "False")

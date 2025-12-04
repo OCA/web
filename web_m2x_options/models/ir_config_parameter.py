@@ -10,7 +10,6 @@ class IrConfigParameter(models.Model):
             "web_m2x_options.create",
             "web_m2x_options.create_edit",
             "web_m2x_options.limit",
-            "web_m2x_options.search_more",
             "web_m2x_options.field_limit_entries",
             "web_m2x_options.open",
         ]
