@@ -1,4 +1,4 @@
-Your XML form view definition should contain::
+Your XML form view definition should contain:
 
     ...
     <field name="field_name" widget="bootstrap_markdown"/>

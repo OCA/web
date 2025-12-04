@@ -126,7 +126,7 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function (require) {
                                     name: "cmdTranslate",
                                     title: _t("Translate"),
                                     icon: {fa: "fa fa-flag"},
-                                    // eslint-disable-next-line max-len
+
                                     callback: this._markdownTranslate.bind(self),
                                 },
                             ],
