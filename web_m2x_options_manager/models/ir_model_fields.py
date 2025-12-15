@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
-from odoo.osv.expression import AND
+from odoo.fields import Domain
 
 
 class IrModelFields(models.Model):
@@ -35,7 +35,7 @@ class IrModelFields(models.Model):
         result = super().name_search(name, args, operator, limit)
         if not (name and self.env.context.get("search_by_technical_name")):
             return result
-        domain = AND([args or [], [("name", operator, name)]])
+        domain = Domain.AND([args or [], [("name", operator, name)]])
         new_fields = self.search_read(domain, fields=["display_name"], limit=limit)
         new_result = {f["id"]: f["display_name"] for f in new_fields}
         while result and not (limit and 0 < limit <= len(new_result)):
@@ -49,5 +49,7 @@ class IrModelFields(models.Model):
         # OVERRIDE: allow defining filtering custom domain on model/comodel when
         # searching fields for O2M list views on ``m2x.create.edit.option``
         if self.env.context.get("o2m_list_view_m2x_domain"):
-            args = AND([list(args or []), self.env.context["o2m_list_view_m2x_domain"]])
+            args = Domain.AND(
+                [list(args or []), self.env.context["o2m_list_view_m2x_domain"]]
+            )
         return super()._search(args, **kwargs)

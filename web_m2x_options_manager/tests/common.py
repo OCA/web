@@ -14,6 +14,31 @@ class Common(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env["base"].with_context(**BaseCommon.default_env_context()).env
+        arch = """
+            <form>
+                <sheet>
+                    <group>
+                        <!-- Many2one w/ options -->
+                        <field name="parent_id"
+                            options="{'no_create': True, 'no_create_edit': True}"
+                        />
+                        <!-- Many2many w/ options -->
+                        <field name="category_id"
+                            options=" {'no_create': True, 'no_create_edit': True}"
+                        />
+                    </group>
+                </sheet>
+            </form>
+        """
+        cls.test_view = cls.env["ir.ui.view"].create(
+            {
+                "name": "res.partner.test.form.view",
+                "model": "res.partner",
+                "priority": 1000,
+                "arch": arch,
+                "type": "form",
+            }
+        )
 
     @classmethod
     def _create_opt(cls, model_name, field_name, vals=None):
@@ -33,12 +58,12 @@ class Common(TransactionCase):
     def _eval_node_options(node):
         opt = node.attrib.get("options")
         if opt:
-            return safe_eval(opt, nocopy=True)
+            return safe_eval(opt)
         return {}
 
     @classmethod
     def _get_test_view(cls):
-        return cls.env.ref("web_m2x_options_manager.res_partner_demo_form_view")
+        return cls.test_view
 
     @classmethod
     def _get_test_view_fields_view_get(cls):

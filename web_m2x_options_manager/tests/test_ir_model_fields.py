@@ -1,10 +1,6 @@
 # Copyright 2025 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo_test_helper import FakeModelLoader
-
-from odoo import fields, models
-
 from .common import Common
 
 
@@ -39,23 +35,35 @@ class TestIrModelFields(Common):
         self.assertFalse(self._get_field("res.partner", "id").comodel_id)
 
     def test_field_search(self):
-        loader = FakeModelLoader(self.env, self.__module__)
-        loader.backup_registry()
+        IrModelFields = self.env["ir.model.fields"]
+        users_model = self.env["ir.model"]._get("res.users")
+        groups_model = self.env["ir.model"]._get("res.groups")
 
-        class ResUsers(models.Model):
-            _inherit = "res.users"
+        # Crear campo test_field en res.users
+        test_field = IrModelFields.create(
+            {
+                "name": "x_test_field",
+                "model_id": users_model.id,
+                "model": "res.users",
+                "field_description": "Abc",
+                "ttype": "many2one",
+                "relation": "res.groups",
+            }
+        )
 
-            test_field = fields.Many2one("res.groups", string="Abc")
+        test_field_abc = IrModelFields.create(
+            {
+                "name": "x_test_field_abc",
+                "model_id": groups_model.id,
+                "model": "res.groups",
+                "field_description": "Abc",
+                "ttype": "many2one",
+                "relation": "res.users",
+            }
+        )
 
-        class ResGroups(models.Model):
-            _inherit = "res.groups"
-
-            test_field_abc = fields.Many2one("res.users", string="Abc")
-
-        loader.update_registry((ResUsers, ResGroups))
-
-        test_field = self._get_field("res.users", "test_field")
-        test_field_abc = self._get_field("res.groups", "test_field_abc")
+        self.env["ir.model.fields"].flush_model()
+        self.env["ir.model.fields"].invalidate_model()
 
         ir_model_fields = self.env["ir.model.fields"]
         name = "ABC"
@@ -77,10 +85,8 @@ class TestIrModelFields(Common):
             [test_field_abc.id, test_field.id],
         )
 
-        ir_model_fields.with_context(search_by_technical_name=False)
-
         # Search again by mimicking the ``ir.model`` Form view for m2x options
-        users_model = self._get_model("res.users")
+        users_model = self.env["ir.model"]._get("res.users")
         ir_model_fields = ir_model_fields.with_context(
             o2m_list_view_m2x_domain=[("model_id", "=", users_model.id)]
         )
@@ -95,5 +101,3 @@ class TestIrModelFields(Common):
             [r[0] for r in ir_model_fields.name_search(name, domain, limit=None)],
             [test_field_abc.id],
         )
-
-        loader.restore_registry()

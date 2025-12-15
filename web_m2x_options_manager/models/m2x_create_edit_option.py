@@ -87,13 +87,7 @@ class M2xCreateEditOption(models.Model):
         string="Create & Edit Option",
     )
 
-    _sql_constraints = [
-        (
-            "field_uniqueness",
-            "unique(field_id)",
-            "Options must be unique for each field!",
-        ),
-    ]
+    models.Constraint("unique(field_id)", "Options must be unique for each field!")
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -159,7 +153,7 @@ class M2xCreateEditOption(models.Model):
         node_options = self._read_node_options(node)
         for key, (mode, value) in self._read_own_options().items():
             if mode == "force" or key not in node_options:
-                node_options[key] = value
+                node_options[key] = not value
         node.set("options", str(node_options))
 
     def _read_node_options(self, node):
@@ -196,7 +190,7 @@ class M2xCreateEditOption(models.Model):
         for fname, fvalue in self.read(self._get_option_fields())[0].items():
             if fname != "id" and fvalue != "none":
                 mode, value = tuple(fvalue.split("_"))
-                res[fname.replace("option_", "")] = (mode, value == "true")
+                res[fname.replace("option_", "no_")] = (mode, value == "true")
         return res
 
     def _get_option_fields(self):
