@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =================
 Web Theme Classic
 =================
@@ -17,7 +13,7 @@ Web Theme Classic
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -32,15 +28,15 @@ Web Theme Classic
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module extend the Odoo Community Edition ``web`` module to improve
-visibility of form view.
+This module extends the Odoo Community Edition ``web`` module to improve
+the visibility of input fields.
 
 **Rational:** Since Odoo V17, the design is very pure. That's great, but
 it generates some problem for users :
 
-- Fields are not identifiable. (we can not know exactly where there are
+- Fields are not identifiable. (we can not know exactly where they are
   until you hover over them with the cursor)
-- there is no indication for the required fields until trying to save
+- There is no indication for the required fields until trying to save
   (or exit the screen)
 
 In a way, this module restores the form display of version 15, but
@@ -61,6 +57,24 @@ preserving the "save on the fly" new feature.
 
 .. contents::
    :local:
+
+Configuration
+=============
+
+This module allows each user to choose whether they would like input
+fields to be displayed the "classic" way or the new, standard way (as if
+this module were not installed)
+
+To do this you can either:
+
+- Check "Classic Theme Persistent" in user preferences. This will enable
+  the classic theme for that user across all devices.
+- Check the "Classic Theme" toggle in the popover menu triggered bu
+  clicking on the user icon in the navbar. This toggle is only visible
+  when "Classic Theme Persistent" is disabled.
+
+Please note that when disabling "Classic Theme Persistent" the style
+will not change until the page is reloaded.
 
 Bug Tracker
 ===========
