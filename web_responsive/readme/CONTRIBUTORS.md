@@ -26,3 +26,5 @@
 
 - [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
   - Bhavesh Heliconia
+- [IKU Solutions](https://www.iku.solutions)
+  - Yan Chirino \<<yan.chirino@iku.solutions>\>
