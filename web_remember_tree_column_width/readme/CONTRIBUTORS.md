@@ -1,0 +1,8 @@
+- Francisco Javier Luna Vázquez \<<fluna@vauxoo.com>\>
+- Tomás Álvarez \<<tomas@vauxoo.com>\>
+- [Komit](https://komit-consulting.com/):
+  - Cuong Nguyen Mtm \<<cuong.nmtm@komit-consulting.com>\>
+- Jasmin Solanki \<<jasmin.solanki@forgeflow.com>\>
+- Stefan Rijnhart \<<stefan@opener.amsterdam>\>
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
