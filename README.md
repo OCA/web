@@ -70,7 +70,7 @@ addon | version | maintainers | summary
 [web_widget_mpld3_chart](web_widget_mpld3_chart/) | 15.0.1.0.0 | <a href='https://github.com/JordiBForgeFlow'><img src='https://github.com/JordiBForgeFlow.png' width='32' height='32' style='border-radius:50%;' alt='JordiBForgeFlow'/></a> <a href='https://github.com/ChrisOForgeFlow'><img src='https://github.com/ChrisOForgeFlow.png' width='32' height='32' style='border-radius:50%;' alt='ChrisOForgeFlow'/></a> | This widget allows to display charts using MPLD3 library.
 [web_widget_numeric_step](web_widget_numeric_step/) | 15.0.1.1.0 |  | Web Widget Numeric Step
 [web_widget_one2many_tree_line_duplicate](web_widget_one2many_tree_line_duplicate/) | 15.0.1.0.0 |  | Web Widget One2many Tree Line Duplicate
-[web_widget_open_tab](web_widget_open_tab/) | 15.0.1.1.0 |  | Allow to open record from trees on new tab from tree views
+[web_widget_open_tab](web_widget_open_tab/) | 15.0.1.1.1 |  | Allow to open record from trees on new tab from tree views
 [web_widget_text_markdown](web_widget_text_markdown/) | 15.0.1.0.0 |  | Widget to text fields that adds markdown support
 [web_widget_url_advanced](web_widget_url_advanced/) | 15.0.1.0.0 |  | This module extends URL widget for displaying anchors with custom labels.
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 15.0.1.0.3 | <a href='https://github.com/ChrisOForgeFlow'><img src='https://github.com/ChrisOForgeFlow.png' width='32' height='32' style='border-radius:50%;' alt='ChrisOForgeFlow'/></a> | Show list fields as a matrix
