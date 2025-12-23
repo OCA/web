@@ -27,41 +27,51 @@ function evaluateSystemParameterDefaultTrue(option) {
     return isOptionSet ? evaluateBooleanExpr(isOptionSet) : true;
 }
 
+function evaluateHasCreatePermission(attrs) {
+    return attrs.can_create ? evaluateBooleanExpr(attrs.can_create) : true;
+}
+
+function evaluateFieldBooleanOption(option) {
+    return typeof option === "boolean" ? option : evaluateBooleanExpr(option);
+}
+
 patch(many2OneField, {
     m2o_options_props_create(props, attrs, options) {
         const canQuickCreate = evaluateSystemParameterDefaultTrue("create");
+        const hasCreatePermission = evaluateHasCreatePermission(attrs);
         if (options.no_quick_create) {
             props.canQuickCreate = false;
         } else if ("no_quick_create" in options) {
-            props.canQuickCreate = attrs.can_create
-                ? evaluateBooleanExpr(attrs.can_create)
-                : true;
+            props.canQuickCreate = hasCreatePermission;
+        } else if ("create" in options) {
+            // Field option set, but must respect can_create security attribute
+            props.canQuickCreate =
+                hasCreatePermission && evaluateFieldBooleanOption(options.create);
         } else if (!canQuickCreate && props.canQuickCreate) {
             props.canQuickCreate = false;
         } else if (canQuickCreate && !props.canQuickCreate) {
-            props.canQuickCreate = attrs.can_create
-                ? evaluateBooleanExpr(attrs.can_create)
-                : true;
+            props.canQuickCreate = hasCreatePermission;
         }
         return props;
     },
 
     m2o_options_props_create_edit(props, attrs, options) {
         const canCreateEdit = evaluateSystemParameterDefaultTrue("create_edit");
+        const hasCreatePermission = evaluateHasCreatePermission(attrs);
         if (options.no_create_edit) {
             props.canCreateEdit = false;
         } else if ("no_create_edit" in options) {
             // Same condition set in web/views/fields/many2one/many2one_field
-            props.canCreateEdit = attrs.can_create
-                ? evaluateBooleanExpr(attrs.can_create)
-                : true;
+            props.canCreateEdit = hasCreatePermission;
+        } else if ("create_edit" in options) {
+            // Field option set, but must respect can_create security attribute
+            props.canCreateEdit =
+                hasCreatePermission && evaluateFieldBooleanOption(options.create_edit);
         } else if (!canCreateEdit && props.canCreateEdit) {
             props.canCreateEdit = false;
         } else if (canCreateEdit && !props.canCreateEdit) {
             // Same condition set in web/views/fields/many2one/many2one_field
-            props.canCreateEdit = attrs.can_create
-                ? evaluateBooleanExpr(attrs.can_create)
-                : true;
+            props.canCreateEdit = hasCreatePermission;
         }
         return props;
     },
@@ -152,14 +162,17 @@ patch(Many2OneField.prototype, {
 patch(many2ManyTagsField, {
     m2m_options_props_create(props, attrs, options) {
         const canQuickCreate = evaluateSystemParameterDefaultTrue("create");
+        const hasCreatePermission = evaluateHasCreatePermission(attrs);
         // Create option already available for m2m fields
         if (!options.no_quick_create) {
-            if (!canQuickCreate && props.canQuickCreate) {
+            if ("create" in options) {
+                // Field option set, but must respect can_create security attribute
+                props.canQuickCreate =
+                    hasCreatePermission && evaluateFieldBooleanOption(options.create);
+            } else if (!canQuickCreate && props.canQuickCreate) {
                 props.canQuickCreate = false;
             } else if (canQuickCreate && !props.canQuickCreate) {
-                props.canQuickCreate = attrs.can_create
-                    ? evaluateBooleanExpr(attrs.can_create)
-                    : true;
+                props.canQuickCreate = hasCreatePermission;
             }
         }
         return props;
@@ -167,20 +180,20 @@ patch(many2ManyTagsField, {
 
     m2m_options_props_create_edit(props, attrs, options) {
         const canCreateEdit = evaluateSystemParameterDefaultTrue("create_edit");
+        const hasCreatePermission = evaluateHasCreatePermission(attrs);
         if (options.no_create_edit) {
             props.canCreateEdit = false;
         } else if ("no_create_edit" in options) {
             // Same condition set in web/views/fields/many2one/many2one_field
-            props.canCreateEdit = attrs.can_create
-                ? evaluateBooleanExpr(attrs.can_create)
-                : true;
+            props.canCreateEdit = hasCreatePermission;
+        } else if ("create_edit" in options) {
+            props.canCreateEdit =
+                hasCreatePermission && evaluateFieldBooleanOption(options.create_edit);
         } else if (!canCreateEdit && props.canCreateEdit) {
             props.canCreateEdit = false;
         } else if (canCreateEdit && !props.canCreateEdit) {
             // Same condition set in web/views/fields/many2one/many2one_field
-            props.canCreateEdit = attrs.can_create
-                ? evaluateBooleanExpr(attrs.can_create)
-                : true;
+            props.canCreateEdit = hasCreatePermission;
         }
         return props;
     },
