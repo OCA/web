@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+   <t t-name="web_sort_menu.sortMenu" t-inherit="web.NavBar" t-inherit-mode="extension">
+        <xpath expr="//header[hasclass('o_navbar')]//t[@t-set='apps']" position="after">
+            <t t-set="apps" t-value="sortApps(apps)" />
+        </xpath>
+    </t>
+</templates>
