@@ -8,6 +8,13 @@ from odoo.http import request
 class IrHttp(models.AbstractModel):
     _inherit = "ir.http"
 
+    def color_scheme(self):
+        scheme = request.httprequest.cookies.get("color_scheme")
+        if scheme:
+            return scheme
+        else:
+            return "light"
+
     @classmethod
     def _set_color_scheme(cls, response):
         scheme = request.httprequest.cookies.get("color_scheme")
