@@ -4,7 +4,7 @@
 {
     "name": "Web Widget Remaining Days Exact Date",
     "summary": "Allows displaying the exact date alongside the remaining days",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "website": "https://github.com/OCA/web",
     "author": "Tecnativa, Odoo Community Association (OCA)",
@@ -13,8 +13,7 @@
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
-            "web_widget_remaining_days_exact_date/static/src/remaining_days"
-            "/remaining_days.esm.js",
+            "web_widget_remaining_days_exact_date/static/src/**/*",
         ],
     },
 }
