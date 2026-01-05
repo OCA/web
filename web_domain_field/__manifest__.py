@@ -11,6 +11,8 @@
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
-    "data": ["views/web_domain_field.xml"],
+    "data": [
+        "views/web_domain_field.xml",
+    ],
     "installable": True,
 }
