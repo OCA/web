@@ -1,5 +1,7 @@
+// Note that first color will be used as color_0 in various places, but most noticably
+// for private tasks in calendar view.
 $o-colors:
-    #a2a2a2, #ee2d2d, #dc8534, #e8bb1d, #5794dd, #9f628f, #db8865, #41a9a2, #304be0,
+    #899db1, #ee2d2d, #dc8534, #e8bb1d, #5794dd, #9f628f, #db8865, #41a9a2, #304be0,
     #ee2f8a, #61c36e, #9872e6 !default;
 
 // An epically lazy solution to colors that do not do well on the dark background: just delete them.
