@@ -1,6 +1,18 @@
 // This overrides the overrides in web/static/src/scss/bootstrap_overridden.scss
 // and also some additional overrides to web/static/lib/bootstrap/scss/_variables.scss
 
+// web/static/lib/bootstrap/scss/_variables.scss sets these colors with tint-color() and shade-color()
+// but we inversed those functions in web_dark_mode/static/src/scss/bs_functions_overrides.dark.scss
+// so we have to adjust a bit. Most noticable in purchase dashboard (19.0) and banners in html editor
+$info-text-emphasis: shade-color($o-info, 75%) !default;
+$info-bg-subtle: tint-color($o-info, 65%) !default;
+$success-text-emphasis: shade-color($o-success, 75%) !default;
+$success-bg-subtle: tint-color($o-success, 65%) !default;
+$warning-text-emphasis: shade-color($o-warning, 75%) !default;
+$warning-bg-subtle: tint-color($o-warning, 65%) !default;
+$danger-text-emphasis: shade-color($o-danger, 75%) !default;
+$danger-bg-subtle: tint-color($o-danger, 65%) !default;
+
 // Shadows
 $box-shadow: 0 0.5rem 1rem rgba($o-white, 0.4) !default;
 $box-shadow-sm: 0 0.125rem 0.25rem rgba($o-white, 0.2) !default;
