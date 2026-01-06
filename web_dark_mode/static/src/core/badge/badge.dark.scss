@@ -1,0 +1,17 @@
+// Use the same formula from web_dark_mode/static/src/core/tags_list/tags_list.dark.scss
+.badge {
+    @for $size from 1 through length($o-colors) {
+        &.o_badge_color_#{$size - 1} {
+            background-color: mix(
+                nth($o-colors, $size),
+                $o-view-background-color,
+                25%
+            ) !important;
+            color: scale-color(
+                nth($o-colors, $size),
+                $lightness: 70%,
+                $saturation: 100%
+            ) !important;
+        }
+    }
+}
