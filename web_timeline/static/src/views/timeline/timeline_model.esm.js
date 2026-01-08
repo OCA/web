@@ -65,9 +65,9 @@ export class TimelineModel extends Model {
         // In the module sale_timesheet_timeline, it is used
         // with default_group_by = task_user_ids
         let field_to_order = this.params.default_group_by;
-        if (this.fields[field_to_order].type === "many2many") {
-            field_to_order = undefined;
-        }
+        // if (this.fields[field_to_order].type === "many2many") {
+        //     field_to_order = undefined;
+        // }
         this.data = await this.keepLast.add(
             this.orm.call(this.model_name, "search_read", [], {
                 fields: fields,
@@ -86,40 +86,56 @@ export class TimelineModel extends Model {
      * @returns {Object}
      */
     _event_data_transform(record) {
+
+        console.log("Transforming event data:", record);
         const [date_start, date_stop] = this._get_event_dates(record);
         let group = record[this.last_group_bys[0]];
-        if (group && Array.isArray(group) && group.length > 0) {
-            group = group[0];
-        } else {
-            group = -1;
+        let groups = [];
+        if (group && Array.isArray(group) && group.length === 2) {
+            // Issue is right here for many to many. Need to return multiple timeline items.
+            groups.push(group[0]);
         }
-        let colorToApply = false;
-        for (const color of this.colors) {
-            if (evaluate(color.ast, record)) {
-                colorToApply = color.color;
+        else{
+            groups = group || -1;
+        }
+        if (groups.length === 0) {
+            groups = [-1];
+        }
+        
+        let all_timeline_items = [];
+        console.log("Determined groups for record:", groups);
+        for (const this_group of groups) {  
+            console.log("Processing group for record:", this_group);
+            let colorToApply = false;
+            for (const color of this.colors) {
+                if (evaluate(color.ast, record)) {
+                    colorToApply = color.color;
+                }
             }
-        }
 
-        let content = record.display_name;
-        if (this.recordTemplate) {
-            content = this._render_timeline_item(record);
-        }
+            let content = record.display_name;
+            if (this.recordTemplate) {
+                content = this._render_timeline_item(record);
+            }
 
-        const timeline_item = {
-            start: date_start.toJSDate(),
-            content: content,
-            id: record.id,
-            order: record.order,
-            group: group,
-            evt: record,
-            style: `background-color: ${colorToApply};`,
-        };
-        // Only specify range end when there actually is one.
-        // ➔ Instantaneous events / those with inverted dates are displayed as points.
-        if (date_stop && DateTime.fromISO(date_start) < DateTime.fromISO(date_stop)) {
-            timeline_item.end = date_stop.toJSDate();
+            const timeline_item = {
+                start: date_start.toJSDate(),
+                content: content,
+                id: record.id + (this_group ? `_${this_group}` : ''),
+                order: record.order,
+                group: this_group,
+                evt: record,
+                style: `background-color: ${colorToApply};`,
+            };
+            // Only specify range end when there actually is one.
+            // ➔ Instantaneous events / those with inverted dates are displayed as points.
+            if (date_stop && DateTime.fromISO(date_start) < DateTime.fromISO(date_stop)) {
+                timeline_item.end = date_stop.toJSDate();
+            }
+            all_timeline_items.push(timeline_item);
         }
-        return timeline_item;
+        console.log("Generated timeline items for record:", all_timeline_items);
+        return all_timeline_items;
     }
     /**
      * Get dates from given event
