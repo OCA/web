@@ -33,18 +33,18 @@ export class TimelineModel extends Model {
         onWillStart(async () => {
             this.write_right = await this.orm.call(
                 this.model_name,
-                "check_access_rights",
-                ["write", false]
+                "check_access",
+                ["", 'write']
             );
             this.unlink_right = await this.orm.call(
                 this.model_name,
-                "check_access_rights",
-                ["unlink", false]
+                "check_access",
+                ["", 'unlink']
             );
             this.create_right = await this.orm.call(
                 this.model_name,
-                "check_access_rights",
-                ["create", false]
+                "check_access",
+                ["", 'create']
             );
         });
     }
