@@ -16,6 +16,7 @@ $x2many_2d_matrix_max_height: 450px;
             position: sticky;
             top: 0;
             z-index: 1;
+            background-color: $o-gray-100;
 
             &.total {
                 right: 0;
@@ -40,7 +41,9 @@ $x2many_2d_matrix_max_height: 450px;
                         border-right-width: 1px;
                         border-right-color: $gray-300;
                         border-right-style: solid;
+                        background-color: $o-view-background-color;
                     }
+
                     &.row-total {
                         padding: 0.5rem 0.75rem;
                         font-weight: bold;
@@ -49,6 +52,7 @@ $x2many_2d_matrix_max_height: 450px;
                         border-left-width: 1px;
                         border-left-color: $gray-300;
                         border-left-style: solid;
+                        background-color: $o-view-background-color;
                     }
                 }
             }
@@ -58,6 +62,7 @@ $x2many_2d_matrix_max_height: 450px;
             text-align: right;
             position: sticky;
             bottom: 0;
+            background-color: $o-gray-100;
 
             &.col-total {
                 padding: 0.75rem;
