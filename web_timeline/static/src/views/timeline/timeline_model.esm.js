@@ -210,8 +210,16 @@ export class TimelineModel extends Model {
      * @returns {jQuery.Deferred}
      */
     async remove_completed(event) {
-        await this.orm.call(this.model_name, "unlink", [[event.evt.id]]);
-        const unlink_index = this.data.findIndex((item) => item.id === event.evt.id);
+
+        if (typeof event.evt.id === 'string' && event.evt.id.indexOf('_') !== -1) {
+            const item_id = event.evt.id.split('_')[0]
+        }
+        else {
+            const item_id = Number(event.evt.id) || event.evt.id;
+        }
+
+        await this.orm.call(this.model_name, "unlink", [[item_id]]);
+        const unlink_index = this.data.findIndex((item) => item.id === item_id);
         if (unlink_index !== -1) {
             this.data.splice(unlink_index, 1);
         }

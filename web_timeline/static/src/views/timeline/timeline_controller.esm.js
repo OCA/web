@@ -80,6 +80,16 @@ export class TimelineController extends Component {
      * @returns {jQuery.Deferred}
      */
     _onItemDoubleClick(event) {
+        // Resume thought here tommorrow... Do we need to parse the id here?
+        console.log("Double click event", event);   
+
+        const item_id = typeof event.item === 'string' && event.item.indexOf('_') !== -1
+            ? Number(event.item.split('_')[0]) || event.item.split('_')[0]
+            : Number(event.item) || event.item;
+        
+        event.item = item_id;  // Update event item to be just the ID
+        console.log("Parsed item_id:", event);
+
         return this.openItem(event.item, false);
     }
 
@@ -92,7 +102,13 @@ export class TimelineController extends Component {
      * @returns {Object}
      */
     _onUpdate(item) {
-        const item_id = Number(item.evt.id) || item.evt.id;
+
+        if (typeof item.evt.id === 'string' && item.evt.id.indexOf('_') !== -1) {
+            const item_id = item.evt.id.split('_')[0]
+        }
+        else {
+            const item_id = Number(item.evt.id) || item.evt.id;
+        }
         return this.openItem(item_id, true);
     }
 
