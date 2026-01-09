@@ -64,7 +64,7 @@ export class TimelineModel extends Model {
         // because it is not supported by Odoo
         // In the module sale_timesheet_timeline, it is used
         // with default_group_by = task_user_ids
-        let field_to_order = this.params.default_group_by;
+        const field_to_order = this.params.default_group_by;
         // if (this.fields[field_to_order].type === "many2many") {
         //     field_to_order = undefined;
         // }
@@ -88,12 +88,13 @@ export class TimelineModel extends Model {
     _event_data_transform(record) {
 
         const [date_start, date_stop] = this._get_event_dates(record);
-        let group = record[this.last_group_bys[0]];
+        const group = record[this.last_group_bys[0]];
         let groups = [];
-        if (group && Array.isArray(group) && group.length === 2) {
+        if (group && Array.isArray(group) && group.length === 2 && typeof group[1] === 'string') {
+            // TODO: this breaks if m2m and only 2 items
+            //  I guess detect if its a number/id or array of ids
             groups.push(group[0]);
-        }
-        else{
+        } else{
             groups = group || -1;
         }
         if (groups.length === 0) {
@@ -118,7 +119,7 @@ export class TimelineModel extends Model {
             const timeline_item = {
                 start: date_start.toJSDate(),
                 content: content,
-                id: record.id + (this_group ? `_${this_group}` : ''),
+                id: record.id + (this_group ? `_${this_group}` : ""),
                 order: record.order,
                 group: this_group,
                 evt: record,
@@ -126,7 +127,10 @@ export class TimelineModel extends Model {
             };
             // Only specify range end when there actually is one.
             // ➔ Instantaneous events / those with inverted dates are displayed as points.
-            if (date_stop && DateTime.fromISO(date_start) < DateTime.fromISO(date_stop)) {
+            if (
+                date_stop && 
+                DateTime.fromISO(date_start) < DateTime.fromISO(date_stop)
+            ) {
                 timeline_item.end = date_stop.toJSDate();
             }
             all_timeline_items.push(timeline_item);
@@ -207,9 +211,10 @@ export class TimelineModel extends Model {
      */
     async remove_completed(event) {
 
-        const item_id = typeof event.evt.id === 'string' && event.evt.id.indexOf('_') !== -1
-            ? Number(event.evt.id.split('_')[0]) || event.evt.id.split('_')[0]
-            : Number(event.evt.id) || event.evt.id;
+        const item_id = 
+            typeof event.evt.id === 'string' && event.evt.id.indexOf('_') !== -1
+                ? Number(event.evt.id.split('_')[0]) || event.evt.id.split('_')[0]
+                : Number(event.evt.id) || event.evt.id;
 
         await this.orm.call(this.model_name, "unlink", [[item_id]]);
         const unlink_index = this.data.findIndex((item) => item.id === item_id);
