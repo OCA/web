@@ -90,10 +90,11 @@ export class TimelineModel extends Model {
         const [date_start, date_stop] = this._get_event_dates(record);
         const group = record[this.last_group_bys[0]];
         let groups = [];
-        if (group &&
+        if (
+            group &&
             Array.isArray(group) &&
             group.length === 2 &&
-            typeof group[1] === 'string'
+            typeof group[1] === "string"
         ) {
             // TODO: this breaks if m2m and only 2 items
             //  I guess detect if its a number/id or array of ids
@@ -105,10 +106,10 @@ export class TimelineModel extends Model {
             groups = [-1];
         }
         
-        // eslint-disable-next-line prefer-const
+        // eslint-disable-next-line prefer-constd
         let all_timeline_items = [];
 
-        for (const this_group of groups) {  
+        for (const this_group of groups) {
             let colorToApply = false;
             for (const color of this.colors) {
                 if (evaluate(color.ast, record)) {
@@ -217,8 +218,8 @@ export class TimelineModel extends Model {
     async remove_completed(event) {
 
         const item_id =
-            typeof event.evt.id === 'string' && event.evt.id.indexOf('_') !== -1
-                ? Number(event.evt.id.split('_')[0]) || event.evt.id.split('_')[0]
+            typeof event.evt.id === "string" && event.evt.id.indexOf("_") !== -1
+                ? Number(event.evt.id.split("_")[0]) || event.evt.id.split("_")[0]
                 : Number(event.evt.id) || event.evt.id;
 
         await this.orm.call(this.model_name, "unlink", [[item_id]]);

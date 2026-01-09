@@ -81,8 +81,8 @@ export class TimelineController extends Component {
      */
     _onItemDoubleClick(event) {
         const item_id =
-            typeof event.item === 'string' && event.item.indexOf('_') !== -1
-                ? Number(event.item.split('_')[0]) || event.item.split('_')[0]
+            typeof event.item === "string" && event.item.indexOf("_") !== -1
+                ? Number(event.item.split("_")[0]) || event.item.split("_")[0]
                 : Number(event.item) || event.item;
 
         // Update event item to be just the ID
@@ -102,8 +102,8 @@ export class TimelineController extends Component {
     _onUpdate(item) {
 
         const item_id =
-            typeof item.evt.id === 'string' && item.evt.id.indexOf('_') !== -1
-                ? Number(item.evt.id.split('_')[0]) || item.evt.id.split('_')[0]
+            typeof item.evt.id === "string" && item.evt.id.indexOf("_") !== -1
+                ? Number(item.evt.id.split("_")[0]) || item.evt.id.split("_")[0]
                 : Number(item.evt.id) || item.evt.id;
         return this.openItem(item_id, true);
     }
