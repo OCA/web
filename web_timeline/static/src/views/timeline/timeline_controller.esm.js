@@ -261,8 +261,7 @@ export class TimelineController extends Component {
         if (item.group > 0) {
             if (this.model.fields[this.model.last_group_bys[0]].type !== "many2many") {
                 context[`default_${this.model.last_group_bys[0]}`] = item.group;
-            }
-            else {
+            } else {
                 context[`default_${this.model.last_group_bys[0]}`] = [item.group];
             }
         }
