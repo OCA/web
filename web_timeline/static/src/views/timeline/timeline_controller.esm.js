@@ -83,8 +83,9 @@ export class TimelineController extends Component {
         const item_id = typeof event.item === 'string' && event.item.indexOf('_') !== -1
             ? Number(event.item.split('_')[0]) || event.item.split('_')[0]
             : Number(event.item) || event.item;
-        
-        event.item = item_id;  // Update event item to be just the ID
+
+        // Update event item to be just the ID
+        event.item = item_id;  
 
         return this.openItem(event.item, false);
     }
@@ -99,12 +100,9 @@ export class TimelineController extends Component {
      */
     _onUpdate(item) {
 
-        if (typeof item.evt.id === 'string' && item.evt.id.indexOf('_') !== -1) {
-            const item_id = item.evt.id.split('_')[0]
-        }
-        else {
-            const item_id = Number(item.evt.id) || item.evt.id;
-        }
+        const item_id = typeof item.evt.id === 'string' && item.evt.id.indexOf('_') !== -1
+            ? Number(item.evt.id.split('_')[0]) || item.evt.id.split('_')[0]
+            : Number(item.evt.id) || item.evt.id;
         return this.openItem(item_id, true);
     }
 
