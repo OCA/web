@@ -87,12 +87,10 @@ export class TimelineModel extends Model {
      */
     _event_data_transform(record) {
 
-        console.log("Transforming event data:", record);
         const [date_start, date_stop] = this._get_event_dates(record);
         let group = record[this.last_group_bys[0]];
         let groups = [];
         if (group && Array.isArray(group) && group.length === 2) {
-            // Issue is right here for many to many. Need to return multiple timeline items.
             groups.push(group[0]);
         }
         else{
@@ -103,9 +101,8 @@ export class TimelineModel extends Model {
         }
         
         let all_timeline_items = [];
-        console.log("Determined groups for record:", groups);
+
         for (const this_group of groups) {  
-            console.log("Processing group for record:", this_group);
             let colorToApply = false;
             for (const color of this.colors) {
                 if (evaluate(color.ast, record)) {
@@ -134,7 +131,6 @@ export class TimelineModel extends Model {
             }
             all_timeline_items.push(timeline_item);
         }
-        console.log("Generated timeline items for record:", all_timeline_items);
         return all_timeline_items;
     }
     /**

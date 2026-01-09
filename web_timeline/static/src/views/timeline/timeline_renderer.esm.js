@@ -336,7 +336,7 @@ export class TimelineRenderer extends Component {
             }
         }
 
-        const groups = await this.split_groups(records); // I don't like this functionality
+        const groups = await this.split_groups(records); 
         this.timeline.setGroups(groups);
         this.timeline.setItems(data);
         const mode = !this.mode.data || this.mode.data === "fit";
