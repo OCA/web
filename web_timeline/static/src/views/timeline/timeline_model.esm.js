@@ -86,7 +86,6 @@ export class TimelineModel extends Model {
      * @returns {Object}
      */
     _event_data_transform(record) {
-
         const [date_start, date_stop] = this._get_event_dates(record);
         const group = record[this.last_group_bys[0]];
         let groups = [];
@@ -105,7 +104,7 @@ export class TimelineModel extends Model {
         if (groups.length === 0) {
             groups = [-1];
         }
-        
+
         // eslint-disable-next-line prefer-const
         let all_timeline_items = [];
 
@@ -216,7 +215,6 @@ export class TimelineModel extends Model {
      * @returns {jQuery.Deferred}
      */
     async remove_completed(event) {
-
         const item_id =
             typeof event.evt.id === "string" && event.evt.id.indexOf("_") !== -1
                 ? Number(event.evt.id.split("_")[0]) || event.evt.id.split("_")[0]

@@ -100,7 +100,6 @@ export class TimelineController extends Component {
      * @returns {Object}
      */
     _onUpdate(item) {
-
         const item_id =
             typeof item.evt.id === "string" && item.evt.id.indexOf("_") !== -1
                 ? Number(item.evt.id.split("_")[0]) || item.evt.id.split("_")[0]
