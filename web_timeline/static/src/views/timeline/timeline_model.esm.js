@@ -106,7 +106,7 @@ export class TimelineModel extends Model {
             groups = [-1];
         }
         
-        // eslint-disable-next-line prefer-constd
+        // eslint-disable-next-line prefer-const
         let all_timeline_items = [];
 
         for (const this_group of groups) {
