@@ -1,2 +1,1 @@
-- Add compatibility with sale_product_configurator module
 - Add compatibility with purchase_product_matrix module

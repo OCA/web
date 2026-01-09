@@ -11,7 +11,6 @@ function openDialog({env, action}) {
         action: action,
         is_html_message: action.is_html_message,
         size: "md",
-        env: env,
     });
 }
 

@@ -5,7 +5,7 @@
 {
     "name": "Web Theme Classic",
     "summary": "Contrasted style on fields to improve the UI.",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "author": "GRAP, Odoo Community Association (OCA)",
     "maintainers": ["legalsylvain"],
     "website": "https://github.com/OCA/web",
@@ -17,6 +17,13 @@
     "assets": {
         "web.assets_backend": [
             "/web_theme_classic/static/src/scss/web_theme_classic.scss",
+        ],
+        "web.assets_web_dark": [
+            (
+                "before",
+                "/web_theme_classic/static/src/scss/web_theme_classic.scss",
+                "/web_theme_classic/static/src/scss/web_theme_classic.dark.scss",
+            ),
         ],
     },
     "installable": True,

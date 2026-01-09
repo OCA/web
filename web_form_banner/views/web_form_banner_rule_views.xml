@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_web_form_banner_rule_tree" model="ir.ui.view">
+        <field name="name">web.form.banner.rule.tree</field>
+        <field name="model">web.form.banner.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="model_id" />
+                <field
+                    name="trigger_field_ids"
+                    widget="many2many_tags"
+                    optional="show"
+                />
+                <field name="view_ids" widget="many2many_tags" optional="show" />
+                <field name="severity" optional="show" />
+                <field name="target_xpath" optional="show" />
+                <field name="position" optional="show" />
+                <field name="message" optional="show" />
+                <field name="message_is_html" optional="show" />
+                <field
+                    name="message_value_code"
+                    placeholder="return {'visible': True, 'values': {'title': '...'}}"
+                    optional="show"
+                />
+            </list>
+        </field>
+    </record>
+    <record id="view_web_form_banner_rule_form" model="ir.ui.view">
+        <field name="name">web.form.banner.rule.form</field>
+        <field name="model">web.form.banner.rule</field>
+        <field name="arch" type="xml">
+            <form string="Form Banner Rule">
+                <sheet>
+                    <field name="active" invisible="1" />
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        invisible="active == True"
+                    />
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" />
+                        <h1>
+                            <field
+                                name="name"
+                                placeholder="e.g. Warning on dangerous customers"
+                            />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="model_id" options="{'no_create':True}" />
+                            <field name="model_name" invisible="1" />
+                            <field
+                                name="trigger_field_ids"
+                                widget="many2many_tags"
+                                context="{'active_test': False}"
+                                options="{'no_create': True}"
+                                placeholder="Recompute on change (new forms)"
+                            />
+                            <field name="severity" />
+                        </group>
+                        <group>
+                            <field
+                                name="view_ids"
+                                options="{'no_create':True}"
+                                widget="many2many_tags"
+                            />
+                            <field name="target_xpath" placeholder="//sheet" />
+                            <field name="position" />
+                        </group>
+                    </group>
+                    <group>
+                        <field
+                            name="message"
+                            placeholder="This is a ${severity} message."
+                        />
+                        <field name="message_is_html" invisible="message == False" />
+                    </group>
+                    <notebook>
+                        <page
+                            string="Message Value Code"
+                            name="message_value_code"
+                            autofocus="autofocus"
+                        >
+                            <field
+                                name="message_value_code"
+                                widget="ace"
+                                options="{'mode': 'python'}"
+                            />
+                        </page>
+                        <page string="Help">
+                            <h3>Help for Message Valude Code</h3>
+                            <p
+                            >Available evaluation context variables are as follows:</p>
+                            <ul>
+                                <li><code
+                                >env</code>: Odoo environment for ORM access.</li>
+                                <li><code>user</code>: Current user (<code
+                                >env.user</code>).</li>
+                                <li><code>ctx</code>: Copy of the current context (<code
+                                >dict(env.context)</code>).</li>
+                                <li><code
+                                >record</code>: Current record (the form's record).</li>
+                                <li><code
+                                >draft</code>: The persisted field values of the ORM record (before applying the current
+                                    form's unsaved changes) + the current unsaved changes on trigger fields.
+                                    Should be used instead of <code
+                                >record</code> when your rule is triggered dynamically by an
+                                    update to a trigger field. It doesn't include any values from complex fields
+                                    (one2many/reference, etc).
+                                </li>
+                                <li><code
+                                >current_id</code>: Integer id of the record being edited, or <code
+                                >False</code> if the form
+                                    is creating a new record.
+                                </li>
+                                <li><code
+                                >model</code>: Shortcut to the current model (<code
+                                >env[record._name]</code>).</li>
+                                <li><code
+                                >url_for(obj)</code>: Helper that returns a backend form URL for <code
+                                >obj</code>.</li>
+                                <li><code
+                                >context_today(ts=None)</code>: User-timezone “today” (date) for reliable date comparisons.</li>
+                                <li><code
+                                >time, datetime</code>: Standard Python time/datetime modules.</li>
+                                <li><code>dateutil</code>: <code
+                                >{ "parser": dateutil.parser, "relativedelta": dateutil.relativedelta }</code></li>
+                                <li><code>timezone</code>: <code
+                                >pytz.timezone</code> for TZ handling.</li>
+                                <li><code>float_compare</code>, <code
+                                >float_is_zero</code>, <code
+                                >float_round</code>: Odoo float utils for precision-safe comparisons/rounding.</li>
+                            </ul>
+                            <p>Example of Message Value Code (model: <code
+                            >sale.order</code>)</p>
+                            <pre
+                                style="white-space: pre-wrap"
+                            >domain = [("partner_id", "=", draft.partner_id.id)]
+if record_id:
+    domain += [("id", "&lt;", record_id)]
+last = model.search(domain, order="date_order desc, id desc", limit=1)
+if last:
+    html = "&lt;strong&gt;Previous order:&lt;/strong&gt; &lt;a href='%s'&gt;%s&lt;/a&gt;" % (url_for(last), last.name)
+    result = {"visible": True, "html": html}
+else:
+    result = {"visible": False}
+</pre>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_web_form_banner_rule_search" model="ir.ui.view">
+        <field name="name">web.form.banner.rule.search</field>
+        <field name="model">web.form.banner.rule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="model_id" />
+                <field
+                    name="trigger_field_ids"
+                    filter_domain="['|',('trigger_field_ids.name','ilike',self),('trigger_field_ids.field_description','ilike',self)]"
+                />
+                <field name="severity" />
+                <field name="message" />
+                <field name="message_value_code" />
+                <separator />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active','=',False)]"
+                />
+                <group expand="1" string="Group By">
+                    <filter
+                        string="Model"
+                        name="model"
+                        context="{'group_by':'model_id'}"
+                    />
+                    <filter
+                        string="Default Severity"
+                        name="severity"
+                        context="{'group_by':'severity'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_web_form_banner_rule" model="ir.actions.act_window">
+        <field name="name">Form Banner Rules</field>
+        <field name="res_model">web.form.banner.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem
+        action="action_web_form_banner_rule"
+        id="menu_web_form_banner_rules"
+        parent="base.next_id_2"
+        sequence="10"
+    />
+</odoo>

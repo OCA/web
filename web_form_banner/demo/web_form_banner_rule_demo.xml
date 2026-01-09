@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="demo_rule_partner_name_length" model="web.form.banner.rule">
+        <field name="name">Partner name length notice</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="severity">warning</field>
+        <field name="target_xpath">//sheet</field>
+        <field name="position">before</field>
+        <field
+            name="message_value_code"
+        ><![CDATA[
+name = (record.name or "").strip()
+n = len(name)
+if n > 20:
+    result = {
+        "visible": True,
+        "severity": "danger",
+        "html": "<strong>This partner's name is very long!</strong> (length: %d)" % n,
+    }
+elif n > 10:
+    result = {
+        "visible": True,
+        "severity": "warning",
+        "html": "This partner's name is a bit long. (length: %d)" % n,
+    }
+else:
+    result = {"visible": False}
+     ]]></field>
+    </record>
+    <record id="demo_rule_partner_email_missing" model="web.form.banner.rule">
+        <field name="name">Partner email missing notice (dynamic)</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field
+            name="trigger_field_ids"
+            eval="[(6, 0, [ref('base.field_res_partner__email')])]"
+        />
+        <field name="severity">warning</field>
+        <field name="target_xpath">//sheet</field>
+        <field name="position">before</field>
+        <field name="message">This partner is missing email!</field>
+        <field
+            name="message_value_code"
+        ><![CDATA[
+{"visible": not bool(draft.email)}
+     ]]></field>
+    </record>
+    <record id="demo_rule_partner_tag_missing" model="web.form.banner.rule">
+        <field name="name">Partner tag missing notice (dynamic)</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field
+            name="trigger_field_ids"
+            eval="[(6, 0, [ref('base.field_res_partner__category_id')])]"
+        />
+        <field name="severity">danger</field>
+        <field name="target_xpath">//field[@name='category_id']</field>
+        <field name="position">before</field>
+        <field name="message">Tag is missing!</field>
+        <field
+            name="message_value_code"
+        ><![CDATA[
+{"visible": not bool(draft.category_id)}
+     ]]></field>
+    </record>
+</odoo>

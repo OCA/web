@@ -6,6 +6,7 @@ import {stepUtils} from "@web_tour/tour_service/tour_utils";
 
 registry.category("web_tour.tours").add("web_systray_button_init_action_not_set_tour", {
     url: "/web",
+    test: true,
     steps: () => [
         {
             trigger: ":not(:has(button[name='init_action']))",
@@ -14,6 +15,7 @@ registry.category("web_tour.tours").add("web_systray_button_init_action_not_set_
 });
 registry.category("web_tour.tours").add("web_systray_button_init_action_set_tour", {
     url: "/web",
+    test: true,
     steps: () => [
         {
             trigger: ".init_action_div:has(button[name='init_action'])",

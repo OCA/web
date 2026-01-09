@@ -1,0 +1,13 @@
+@for $size from 2 through length($o-colors) {
+    .o_colorlist_item_color_#{$size - 1} {
+        --background-color: #{mix(
+                nth($o-colors, $size),
+                $o-view-background-color,
+                95%
+            )};
+        // As far as I can tell this is never used to display text. The only use i found for
+        // It was around the border of the colorlist color square when clicked. I'm just
+        // setting it to contrast just in case it ever gets used for text.
+        --color: #{color-contrast(nth($o-colors, $size))};
+    }
+}
