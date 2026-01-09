@@ -1,3 +1,7 @@
+.. image:: https://odoo-community.org/readme-banner-image
+   :target: https://odoo-community.org/get-involved?utm_source=readme
+   :alt: Odoo Community Association
+
 ============
 Web timeline
 ============
@@ -13,17 +17,17 @@ Web timeline
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/18.0/web_timeline
+    :target: https://github.com/OCA/web/tree/19.0/web_timeline
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_timeline
+    :target: https://translation.odoo-community.org/projects/web-19-0/web-19-0-web_timeline
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=18.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -32,7 +36,7 @@ Define a new view displaying events in an interactive visualization
 chart.
 
 The widget is based on the external library
-https://visjs.github.io/vis-timeline/examples/timeline
+`https://visjs.github.io/vis-timeline/examples/timeline <https://visjs.github.io/vis-timeline/examples/timeline>`__
 
 **Table of contents**
 
@@ -133,12 +137,12 @@ render the timeline items. You have to name the template
 'timeline-item'. These are the variables available in template
 rendering:
 
-- ``record``: to access the fields values selected in the timeline
-  definition.
-- ``formatters``: used to format values (see available functions in
-  ``@web/views/fields/formatters``).
-- ``parsers``: used to parse values (see available functions in
-  ``@web/views/fields/parsers``).
+-  ``record``: to access the fields values selected in the timeline
+   definition.
+-  ``formatters``: used to format values (see available functions in
+   ``@web/views/fields/formatters``).
+-  ``parsers``: used to parse values (see available functions in
+   ``@web/views/fields/parsers``).
 
 You also need to declare the view in an action window of the involved
 model.
@@ -243,20 +247,20 @@ create a new record with the dragged start and end date.
 Known issues / Roadmap
 ======================
 
-- Implement a more efficient way of refreshing timeline after a record
-  update;
-- Make ``attrs`` attribute work;
-- When grouping by m2m and more than one record is set, the timeline
-  item appears only on one group. Allow showing in both groups.
-- When grouping by m2m and dragging for changing the time or the group,
-  the changes on the group will not be set, because it could make
-  disappear the records not related with the changes that we want to
-  make. When the item is showed in all groups change the value according
-  the group of the dragged item.
-- When an item label does not fit in its date-range box: ✅ the label
-  correctly overflows the box; ✅ clicking anywhere on the label allows
-  moving the box; ❌ double-clicking the label outside of the box does
-  not open that item.
+-  Implement a more efficient way of refreshing timeline after a record
+   update;
+-  Make ``attrs`` attribute work;
+-  When grouping by m2m and more than one record is set, the timeline
+   item appears only on one group. Allow showing in both groups.
+-  When grouping by m2m and dragging for changing the time or the group,
+   the changes on the group will not be set, because it could make
+   disappear the records not related with the changes that we want to
+   make. When the item is showed in all groups change the value
+   according the group of the dragged item.
+-  When an item label does not fit in its date-range box: ✅ the label
+   correctly overflows the box; ✅ clicking anywhere on the label allows
+   moving the box; ❌ double-clicking the label outside of the box does
+   not open that item.
 
 Bug Tracker
 ===========
@@ -264,7 +268,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_timeline%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_timeline%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -283,28 +287,28 @@ Authors
 Contributors
 ------------
 
-- Laurent Mignon <laurent.mignon@acsone.eu>
-- Adrien Peiffer <adrien.peiffer@acsone.eu>
-- Leonardo Donelli <donelli@webmonks.it>
-- Adrien Didenot <adrien.didenot@horanet.com>
-- Thong Nguyen Van <thongnv@trobz.com>
-- Murtaza Mithaiwala <mmithaiwala@opensourceintegrators.com>
-- Ammar Officewala <aofficewala@opensourceintegrators.com>
-- `Tecnativa <https://www.tecnativa.com>`__:
+-  Laurent Mignon <laurent.mignon@acsone.eu>
+-  Adrien Peiffer <adrien.peiffer@acsone.eu>
+-  Leonardo Donelli <donelli@webmonks.it>
+-  Adrien Didenot <adrien.didenot@horanet.com>
+-  Thong Nguyen Van <thongnv@trobz.com>
+-  Murtaza Mithaiwala <mmithaiwala@opensourceintegrators.com>
+-  Ammar Officewala <aofficewala@opensourceintegrators.com>
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  - Pedro M. Baeza
-  - Alexandre Díaz
-  - César A. Sánchez
-  - Carlos López
+   -  Pedro M. Baeza
+   -  Alexandre Díaz
+   -  César A. Sánchez
+   -  Carlos López
 
-- `Onestein <https://www.onestein.nl>`__:
+-  `Onestein <https://www.onestein.nl>`__:
 
-  - Dennis Sluijk <d.sluijk@onestein.nl>
-  - Anjeel Haria
+   -  Dennis Sluijk <d.sluijk@onestein.nl>
+   -  Anjeel Haria
 
-- `XCG Consulting <https://xcg-consulting.fr>`__:
+-  `XCG Consulting <https://xcg-consulting.fr>`__:
 
-  - Houzéfa Abbasbhay
+   -  Houzéfa Abbasbhay
 
 Maintainers
 -----------
@@ -327,6 +331,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-tarteo| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/18.0/web_timeline>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/19.0/web_timeline>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

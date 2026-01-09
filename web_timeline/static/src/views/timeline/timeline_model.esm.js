@@ -65,7 +65,8 @@ export class TimelineModel extends Model {
         // In the module sale_timesheet_timeline, it is used
         // with default_group_by = task_user_ids
         let field_to_order = this.params.default_group_by;
-        if (this.fields[field_to_order].type === "many2many") {
+        const field = this.fields[field_to_order];
+        if (!field || field.type === "many2many" || field.type === "many2one") {
             field_to_order = undefined;
         }
         this.data = await this.keepLast.add(

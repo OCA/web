@@ -17,7 +17,7 @@ class TestWebTimeline(HttpCase):
 
     def test_timeline_view(self):
         self.browser_js(
-            "/web/tests/legacy?mod=web&filter=TimelineView - View",
+            "/web/tests/legacy?mod=web&filter=TimelineView",
             "",
             login="admin",
             timeout=1800,
