@@ -87,7 +87,6 @@ export class TimelineController extends Component {
 
         // Update event item to be just the ID
         event.item = item_id;
-
         return this.openItem(event.item, false);
     }
 
@@ -112,6 +111,12 @@ export class TimelineController extends Component {
      * @param {Boolean} is_editable
      */
     openItem(item_id, is_editable) {
+        const _id =
+            typeof item_id === "string" && item_id.indexOf("_") !== -1
+                ? Number(item_id.split("_")[0]) || item_id.split("_")[0]
+                : Number(item_id) || item_id;
+        item_id = _id;
+
         if (this.open_popup_action) {
             const options = {
                 resModel: this.model.model_name,
@@ -254,7 +259,12 @@ export class TimelineController extends Component {
             context[`default_${this.date_delay}`] = diff.hours;
         }
         if (item.group > 0) {
-            context[`default_${this.model.last_group_bys[0]}`] = item.group;
+            if (this.model.fields[this.model.last_group_bys[0]].type !== "many2many") {
+                context[`default_${this.model.last_group_bys[0]}`] = item.group;
+            }
+            else {
+                context[`default_${this.model.last_group_bys[0]}`] = [item.group];
+            }
         }
         // Show popup
         this.dialogService.add(

@@ -429,6 +429,8 @@ export class TimelineRenderer extends Component {
      * @private
      */
     on_timeline_double_click(e) {
+        // Fun Fact: this function never gets called.
+        // On_timeline_click fires twice but this never does.
         if (e.what === "item" && e.item !== -1) {
             this.props.onItemDoubleClick(e);
         }
