@@ -56,7 +56,7 @@ addon | version | maintainers | summary
 [web_m2x_options_manager](web_m2x_options_manager/) | 14.0.1.4.0 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
 [web_no_bubble](web_no_bubble/) | 14.0.1.1.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 14.0.1.1.0 |  | Send notification messages to user
-[web_notify_channel_message](web_notify_channel_message/) | 14.0.1.0.0 |  | Send an instant notification to channel users when a new message is posted
+[web_notify_channel_message](web_notify_channel_message/) | 14.0.1.1.0 |  | Send an instant notification to channel users when a new message is posted
 [web_notify_upgrade](web_notify_upgrade/) | 14.0.1.0.1 |  | Notify active users when a module is installed or updated
 [web_pivot_hide_total](web_pivot_hide_total/) | 14.0.1.0.1 |  | This addon adds a new inherited version of pivot view. It intends to hide the last total column when required.
 [web_pwa_oca](web_pwa_oca/) | 14.0.1.1.0 | <a href='https://github.com/eLBati'><img src='https://github.com/eLBati.png' width='32' height='32' style='border-radius:50%;' alt='eLBati'/></a> | Make Odoo a PWA
