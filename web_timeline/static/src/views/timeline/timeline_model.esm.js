@@ -99,12 +99,13 @@ export class TimelineModel extends Model {
             //  I guess detect if its a number/id or array of ids
             groups.push(group[0]);
         } else {
-            groups = group || -1;
+            groups = group || [];
         }
         if (groups.length === 0) {
             groups = [-1];
         }
 
+        console.log("groups", groups);
         // eslint-disable-next-line prefer-const
         let all_timeline_items = [];
 
