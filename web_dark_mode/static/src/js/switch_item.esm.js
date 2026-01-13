@@ -23,13 +23,23 @@ export const colorSchemeService = {
     dependencies: ["orm", "ui"],
 
     async start(env, {orm, ui}) {
-        registry.category("user_menuitems").add("darkmode", darkModeSwitchItem);
-
-        if (!cookie.get("color_scheme")) {
-            const match_media = window.matchMedia("(prefers-color-scheme: dark)");
-            const dark_mode = match_media.matches;
-            cookie.set("color_scheme", dark_mode ? "dark" : "light");
-            if (dark_mode) browser.location.reload();
+        // This is only for browsers like Firefox and Safari that do not support
+        // Sec-CH-Prefers-Color-Scheme. Browsers that do support it will have already
+        // set the correct cookie value on first request due to server side handling
+        // in ir.http.
+        if (user.settings.dark_mode_device_dependent === true) {
+            const device_preference = window.matchMedia("(prefers-color-scheme: dark)")
+                .matches
+                ? "dark"
+                : "light";
+            if (cookie.get("color_scheme") !== device_preference) {
+                cookie.set("color_scheme", device_preference);
+                // This will cause a bit of flicker as odoo loads the wrong assets
+                // before it can determine the browser system color scheme.
+                browser.location.reload();
+            }
+        } else {
+            registry.category("user_menuitems").add("darkmode", darkModeSwitchItem);
         }
 
         return {
