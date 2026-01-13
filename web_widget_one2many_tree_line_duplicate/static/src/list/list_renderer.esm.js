@@ -3,19 +3,47 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 import {ListRenderer} from "@web/views/list/list_renderer";
+import {onWillRender} from "@odoo/owl";
 import {patch} from "@web/core/utils/patch";
 import {serializeDate, serializeDateTime} from "@web/core/l10n/dates";
+import {exprToBoolean} from "@web/core/utils/strings";
+import {browser} from "@web/core/browser/browser";
 
 patch(ListRenderer.prototype, {
     setup() {
         super.setup(...arguments);
         const parent = this.__owl__.parent.parent;
-        this.displayDuplicateLine =
+        const key = this.createViewKey();
+        this.keyDuplicateLineColumn = `duplicate_line_column,${key}`;
+        this.duplicateLineAllowed =
             parent &&
             parent.props &&
             parent.props.fieldInfo &&
             parent.props.fieldInfo.options &&
             parent.props.fieldInfo.options.allow_clone;
+        this.displayDuplicateLine =
+            this.duplicateLineAllowed && this.duplicateLineColumn;
+        onWillRender(() => {
+            this.duplicateLineColumn = exprToBoolean(
+                browser.localStorage.getItem(this.keyDuplicateLineColumn),
+                false
+            );
+            this.displayDuplicateLine =
+                this.duplicateLineAllowed && this.duplicateLineColumn;
+        });
+    },
+    toggleDuplicateLineColumn() {
+        this.duplicateLineColumn = !this.duplicateLineColumn;
+        browser.localStorage.setItem(
+            this.keyDuplicateLineColumn,
+            this.duplicateLineColumn
+        );
+        this.displayDuplicateLine =
+            this.duplicateLineAllowed && this.duplicateLineColumn;
+        this.render();
+    },
+    get hasActionsColumn() {
+        return super.hasActionsColumn || Boolean(this.duplicateLineAllowed);
     },
     async onCloneIconClick(record) {
         const toSkip = this.getFieldsToSkip();
