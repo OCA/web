@@ -16,5 +16,11 @@ msgstr ""
 #. module: web_widget_one2many_tree_line_duplicate
 #. odoo-javascript
 #: code:addons/web_widget_one2many_tree_line_duplicate/static/src/list/list_renderer.xml:0
+msgid "Duplicate Line Button"
+msgstr ""
+
+#. module: web_widget_one2many_tree_line_duplicate
+#. odoo-javascript
+#: code:addons/web_widget_one2many_tree_line_duplicate/static/src/list/list_renderer.xml:0
 msgid "Duplicate row"
 msgstr ""
