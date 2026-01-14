@@ -40,7 +40,12 @@ patch(ListRenderer.prototype, {
             for (const color_def of definition.split(";")) {
                 const color_to_expression = this.pairColorParse(color_def);
                 if (color_to_expression !== undefined) {
-                    const [color, expression] = color_to_expression;
+                    var [color, expression] = color_to_expression;
+                    // Check if color is a named field in record
+                    // and if so, get its value
+                    if (color in record.data) {
+                        color = record.data[color];
+                    }
                     if (
                         evaluateBooleanExpr(
                             expression,
