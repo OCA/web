@@ -1,19 +1,16 @@
-import {Component, onWillUpdateProps} from "@odoo/owl";
 import {evaluateBooleanExpr, evaluateExpr} from "@web/core/py_js/py";
+import {Component, onWillRender} from "@odoo/owl";
 import {Domain} from "@web/core/domain";
 import {Record} from "@web/model/relational_model/record";
 import {getFieldContext} from "@web/model/relational_model/utils";
 
 export class X2Many2DMatrixRenderer extends Component {
     setup() {
-        this.columns = this._getColumns();
-        this.rows = this._getRows();
-        this.matrix = this._getMatrix();
-
-        onWillUpdateProps((newProps) => {
-            this.columns = this._getColumns(newProps.list.records);
-            this.rows = this._getRows(newProps.list.records);
-            this.matrix = this._getMatrix(newProps.list.records);
+        onWillRender(() => {
+            const records = this.list.records;
+            this.columns = this._getColumns(records);
+            this.rows = this._getRows(records);
+            this.matrix = this._getMatrix(records);
         });
     }
 
