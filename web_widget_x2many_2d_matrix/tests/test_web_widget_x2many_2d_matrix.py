@@ -5,7 +5,7 @@ from odoo.tests import HttpCase, tagged
 class TestWebWidgetX2Many2DMatrix(HttpCase):
     def test_js(self):
         self.browser_js(
-            "/web/tests?headless&loglevel=2&preset=desktop&timeout=15000&id=b42fa5f8",
+            "/web/tests?headless&loglevel=2&preset=desktop&timeout=15000&filter=X2Many2DMatrixRenderer",
             "",
             "",
             login="admin",
