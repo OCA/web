@@ -2,12 +2,13 @@
 
 import {markup} from "@odoo/owl";
 import {browser} from "@web/core/browser/browser";
+import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 
 export const webNotificationService = {
     dependencies: ["bus_service", "notification", "action"],
 
-    start(env, {bus_service, notification, action}) {
+    start(_env, {bus_service, notification, action}) {
         let webNotifTimeouts = {};
         /**
          * Displays the web notification on user's screen
@@ -26,7 +27,7 @@ export const webNotificationService = {
                             (notif.action.context && notif.action.context.params) || {};
                         buttons = [
                             {
-                                name: params.button_name || env._t("Open"),
+                                name: params.button_name || _t("Open"),
                                 primary: true,
                                 onClick: async () => {
                                     await action.doAction(notif.action);
