@@ -16,6 +16,33 @@
                 style="width: 32px; min-width: 32px"
             />
         </xpath>
+        <xpath
+            expr="//div[contains(@class, 'o_optional_columns_dropdown')]//t[@t-set-slot='content']"
+            position="inside"
+        >
+            <t t-set="hasX2ManyAction" t-value="isX2Many and activeActions.create" />
+            <t t-if="hasX2ManyAction and duplicateLineAllowed">
+                <div
+                    t-if="!hasOptionalOpenFormViewColumn"
+                    role="separator"
+                    class="dropdown-divider"
+                />
+                <DropdownItem
+                    closingMode="'none'"
+                    onSelected="() => this.toggleDuplicateLineColumn()"
+                >
+                    <CheckBox
+                        onChange="() => this.toggleDuplicateLineColumn()"
+                        value="this.duplicateLineColumn"
+                        name="'Duplicate Line'"
+                    >
+                        <span class="d-flex align-items-center">
+                            <span class="text-truncate">Duplicate Line Button</span>
+                        </span>
+                    </CheckBox>
+                </DropdownItem>
+            </t>
+        </xpath>
     </t>
     <t
         t-name="web_widget_one2many_tree_line_duplicate.ListRenderer.RecordRow"
@@ -39,5 +66,4 @@
             </td>
         </xpath>
     </t>
-
 </templates>
