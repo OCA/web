@@ -36,14 +36,16 @@ quotations, sales orders, and other printed documents.
 
 The module offers the following font size options (in points):
 
-=========== ==== =========================
-Option      Size Description
-=========== ==== =========================
-Small       9pt  For maximum compactness
-Standard    10pt Odoo's default size
-Large       12pt Better readability
-Extra Large 14pt For high visibility needs
-=========== ==== =========================
+============ ==== =========================
+Option       Size Description
+============ ==== =========================
+Extra Small  9pt  For maximum compactness
+Standard     10pt Odoo's default size
+Small        11pt Just a little larger
+Large        12pt Better readability
+Extra Large  13pt Really Large
+2Extra Large 14pt For high visibility needs
+============ ==== =========================
 
 **Table of contents**
 

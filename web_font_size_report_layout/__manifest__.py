@@ -1,6 +1,6 @@
 {
     "name": "Report Font Size in Document Layout",
-    "version": "16.0.1.1.0",
+    "version": "17.0.1.1.0",
     "summary": "Adds a font size selector (pt) to the Document Layout wizard",
     "author": "Binhex," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
