@@ -6,44 +6,46 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-01-22 03:26+0000\n"
+"Last-Translator: \"Toshikimi Shigenobu (Quartile)\" <nobu@quartile.co>\n"
 "Language-Team: none\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: web_widget_open_tab
 #: model:ir.model.fields,field_description:web_widget_open_tab.field_ir_model__add_open_tab_field
 msgid "Add Open Tab Field"
-msgstr ""
+msgstr "別タブ表示ボタン追加"
 
 #. module: web_widget_open_tab
 #: model:ir.model.fields,help:web_widget_open_tab.field_ir_model__add_open_tab_field
 msgid "Adds open-tab field in list views."
-msgstr ""
+msgstr "リストビューに別タブ表示ボタンを追加."
 
 #. module: web_widget_open_tab
 #: model:ir.model,name:web_widget_open_tab.model_base
 msgid "Base"
-msgstr ""
+msgstr "ベース"
 
 #. module: web_widget_open_tab
 #. openerp-web
 #: code:addons/web_widget_open_tab/static/src/js/widget.js:0
 #, python-format
 msgid "Click in order to open on new tab"
-msgstr ""
+msgstr "クリックして別タブを開く"
 
 #. module: web_widget_open_tab
 #: model:ir.model,name:web_widget_open_tab.model_ir_model
 msgid "Models"
-msgstr ""
+msgstr "モデル"
 
 #. module: web_widget_open_tab
 #. openerp-web
 #: code:addons/web_widget_open_tab/static/src/js/widget.js:0
 #, python-format
 msgid "Widget"
-msgstr ""
+msgstr "別タブを開く"
