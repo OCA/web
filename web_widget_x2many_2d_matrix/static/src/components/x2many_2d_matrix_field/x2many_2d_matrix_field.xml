@@ -11,6 +11,8 @@
                 readonly="props.readonly"
                 isXClickable="props.isXClickable"
                 isYClickable="props.isYClickable"
+                sortX="props.sortX"
+                sortY="props.sortY"
             />
         </div>
     </t>

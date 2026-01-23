@@ -14,51 +14,63 @@ export class X2Many2DMatrixRenderer extends Component {
         });
     }
 
+    _getFieldInfo(record, fieldName) {
+        const value = record.data[fieldName];
+        const field = record.fields[fieldName];
+        const info = {
+            value: value,
+            text: (value || "").toString(),
+            rawValue: value,
+        };
+        if (field.type === "many2one") {
+            if (Array.isArray(value)) {
+                info.text = value[1];
+                info.value = value[0];
+            } else if (typeof value === "object" && value !== null) {
+                info.text = value.display_name || value.name || "";
+                info.value = value.id;
+            }
+        }
+        return info;
+    }
+
     _getColumns(records = this.list.records) {
         const columns = [];
         records.forEach((record) => {
-            const column = {
-                value: record.data[this.matrixFields.x],
-                text: record.data[this.matrixFields.x],
-                rawValue: record.data[this.matrixFields.x],
-            };
-            if (record.fields[this.matrixFields.x].type === "many2one") {
-                column.text = column.value[1];
-                column.value = column.value[0];
-            }
+            const column = this._getFieldInfo(record, this.matrixFields.x);
             if (columns.findIndex((c) => c.value === column.value) !== -1) return;
             columns.push(column);
         });
+        if (this.props.sortX) {
+            columns.sort((a, b) => {
+                const textA = (a.text || "").toString().toLowerCase();
+                const textB = (b.text || "").toString().toLowerCase();
+                return textA.localeCompare(textB);
+            });
+        }
         return columns;
     }
 
     _getRows(records = this.list.records) {
         const rows = [];
         records.forEach((record) => {
-            const row = {
-                value: record.data[this.matrixFields.y],
-                text: record.data[this.matrixFields.y],
-                rawValue: record.data[this.matrixFields.y],
-            };
-            if (record.fields[this.matrixFields.y].type === "many2one") {
-                row.text = row.value[1];
-                row.value = row.value[0];
-            }
+            const row = this._getFieldInfo(record, this.matrixFields.y);
             if (rows.findIndex((r) => r.value === row.value) !== -1) return;
             rows.push(row);
         });
+        if (this.props.sortY) {
+            rows.sort((a, b) => {
+                const textA = (a.text || "").toString().toLowerCase();
+                const textB = (b.text || "").toString().toLowerCase();
+                return textA.localeCompare(textB);
+            });
+        }
         return rows;
     }
 
     _getPointOfRecord(record) {
-        let xValue = record.data[this.matrixFields.x];
-        if (record.fields[this.matrixFields.x].type === "many2one") {
-            xValue = xValue[0];
-        }
-        let yValue = record.data[this.matrixFields.y];
-        if (record.fields[this.matrixFields.y].type === "many2one") {
-            yValue = yValue[0];
-        }
+        const xValue = this._getFieldInfo(record, this.matrixFields.x).value;
+        const yValue = this._getFieldInfo(record, this.matrixFields.y).value;
 
         const x = this.columns.findIndex((c) => c.value === xValue);
         const y = this.rows.findIndex((r) => r.value === yValue);
@@ -215,4 +227,6 @@ X2Many2DMatrixRenderer.props = {
     showColumnTotals: {type: Boolean, optional: true},
     isXClickable: {type: Boolean, optional: true},
     isYClickable: {type: Boolean, optional: true},
+    sortX: {type: Boolean, optional: true},
+    sortY: {type: Boolean, optional: true},
 };

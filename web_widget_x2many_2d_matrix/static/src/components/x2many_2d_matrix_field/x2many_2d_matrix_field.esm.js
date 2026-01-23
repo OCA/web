@@ -35,6 +35,8 @@ X2Many2DMatrixField.props = {
     isYClickable: {type: Boolean, optional: true},
     showRowTotals: {type: Boolean, optional: true},
     showColumnTotals: {type: Boolean, optional: true},
+    sortX: {type: Boolean, optional: true},
+    sortY: {type: Boolean, optional: true},
 };
 
 X2Many2DMatrixField.components = {X2Many2DMatrixRenderer};
@@ -58,6 +60,8 @@ export const x2Many2DMatrixField = {
                 "show_column_totals" in attrs
                     ? exprToBoolean(attrs.show_column_totals)
                     : true,
+            sortX: exprToBoolean(attrs.sort_x),
+            sortY: exprToBoolean(attrs.sort_y),
         };
     },
 };

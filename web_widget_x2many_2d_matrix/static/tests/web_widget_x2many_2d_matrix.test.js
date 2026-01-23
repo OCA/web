@@ -16,6 +16,7 @@ class Main extends models.Model {
         relation: "line",
         relation_field: "main_id",
     });
+    name = fields.Char({});
 
     _records = [{id: 1, line_ids: [1, 2, 3, 4]}];
 }
@@ -228,5 +229,77 @@ describe("X2Many2DMatrixRenderer", () => {
         await contains(inputs[0]).edit("10");
         // State: [10, 200, 50, 0] -> Total 260
         expect(".col-total").toHaveText("260.00");
+    });
+
+    test("rows are sorted alphabetically when sort_y is True with unsorted labels", async () => {
+        Line._records = [
+            {id: 1, main_id: 1, x: 0, y: 1, value_float: 1, value_char: "Zebra"},
+            {id: 2, main_id: 1, x: 0, y: 2, value_float: 2, value_char: "Apple"},
+            {id: 3, main_id: 1, x: 0, y: 3, value_float: 3, value_char: "Monkey"},
+        ];
+        Main._records = [{id: 1, line_ids: [1, 2, 3]}];
+
+        await mountView({
+            type: "form",
+            resModel: "main",
+            resId: 1,
+            arch: `
+            <form>
+                <field name="line_ids" widget="x2many_2d_matrix" field_x_axis="x" field_y_axis="value_char" field_value="value_float" sort_y="True">
+                    <list>
+                        <field name="x" />
+                        <field name="value_char" />
+                        <field name="value_float" />
+                    </list>
+                </field>
+            </form>`,
+        });
+
+        const labels = queryAll("tbody tr td:first-child")
+            .map((el) => el.innerText.trim())
+            .filter((l) => l !== "");
+        expect(labels).toEqual(["Apple", "Monkey", "Zebra"]);
+    });
+
+    test("rows are sorted alphabetically when sort_y is True with many2one labels", async () => {
+        // Prepare unsorted many2one data
+        // Each record in Main will act as a target for Many2one
+        Main._records = [
+            {
+                id: 1,
+                name: "Admin Company",
+                display_name: "Admin Company",
+                line_ids: [4, 5, 6],
+            },
+            {id: 2, name: "Zebra Corp", display_name: "Zebra Corp"},
+            {id: 3, name: "Apple Inc", display_name: "Apple Inc"},
+            {id: 4, name: "Monkey LLC", display_name: "Monkey LLC"},
+        ];
+        Line._records = [
+            {id: 4, main_id: 1, x: 0, y: 1, value_float: 1, value_many2one: 2},
+            {id: 5, main_id: 1, x: 0, y: 2, value_float: 2, value_many2one: 3},
+            {id: 6, main_id: 1, x: 0, y: 3, value_float: 3, value_many2one: 4},
+        ];
+
+        await mountView({
+            type: "form",
+            resModel: "main",
+            resId: 1,
+            arch: `
+            <form>
+                <field name="line_ids" widget="x2many_2d_matrix" field_x_axis="x" field_y_axis="value_many2one" field_value="value_float" sort_y="True">
+                    <list>
+                        <field name="x" />
+                        <field name="value_many2one" />
+                        <field name="value_float" />
+                    </list>
+                </field>
+            </form>`,
+        });
+
+        const labels = queryAll("tbody tr td:first-child")
+            .map((el) => el.innerText.trim())
+            .filter((l) => l !== "");
+        expect(labels).toEqual(["Apple Inc", "Monkey LLC", "Zebra Corp"]);
     });
 });
