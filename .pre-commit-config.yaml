@@ -39,11 +39,11 @@ repos:
         language: fail
         files: '[a-zA-Z0-9_]*/i18n/en\.po$'
   - repo: https://github.com/sbidoul/whool
-    rev: v1.2
+    rev: v1.3
     hooks:
       - id: whool-init
   - repo: https://github.com/oca/maintainer-tools
-    rev: bf9ecb9938b6a5deca0ff3d870fbd3f33341fded
+    rev: b89f767503be6ab2b11e4f50a7557cb20066e667
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
