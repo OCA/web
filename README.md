@@ -1,4 +1,6 @@
+[![Support the OCA](https://odoo-community.org/readme-banner-image)](https://odoo-community.org/get-involved?utm_source=repo-readme)
 
+# web
 [![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=18.0)
 [![Pre-commit Status](https://github.com/OCA/web/actions/workflows/pre-commit.yml/badge.svg?branch=18.0)](https://github.com/OCA/web/actions/workflows/pre-commit.yml?query=branch%3A18.0)
 [![Build Status](https://github.com/OCA/web/actions/workflows/test.yml/badge.svg?branch=18.0)](https://github.com/OCA/web/actions/workflows/test.yml?query=branch%3A18.0)
@@ -6,8 +8,6 @@
 [![Translation Status](https://translation.odoo-community.org/widgets/web-18-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/web-18-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
-
-# web
 
 web
 
