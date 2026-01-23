@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -9,10 +8,11 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
 
 See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
@@ -275,7 +275,7 @@ pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
   margin-right: 2em }
 
-pre.code .ln { color: grey; } /* line numbers */
+pre.code .ln { color: gray; } /* line numbers */
 pre.code, code { background-color: #eeeeee }
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
@@ -301,7 +301,7 @@ span.option {
 span.pre {
   white-space: pre }
 
-span.problematic {
+span.problematic, pre.problematic {
   color: red }
 
 span.section-subtitle {
@@ -369,14 +369,16 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:136879c1f5cb11ecd5f2466b0b12748e10fa17e1a95bd0bc9296316444760a86
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/15.0/web_widget_mermaid"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-15-0/web-15-0-web_widget_mermaid"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=15.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This module adds a basic widget for rendering text fields as flowcharts using
-<a class="reference external" href="https://mermaidjs.github.io">mermaid</a>.</p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/18.0/web_widget_mermaid"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_widget_mermaid"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>This module adds a basic widget for rendering text fields as flowcharts
+using <a class="reference external" href="https://mermaidjs.github.io">mermaid</a>.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a><ul>
 <li><a class="reference internal" href="#demonstration" id="toc-entry-2">Demonstration</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
 <li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a><ul>
 <li><a class="reference internal" href="#authors" id="toc-entry-5">Authors</a></li>
@@ -394,14 +396,15 @@ declaration:</p>
 &lt;field name=&quot;flowchart&quot; widget=&quot;mermaid&quot;/&gt;
 </pre>
 <p>Optionally, use an <tt class="docutils literal">options</tt> attribute to pass a JSON object with
-<a class="reference external" href="https://mermaidjs.github.io/#/mermaidAPI?id=configuration">mermaid configuration</a>:</p>
+<a class="reference external" href="https://mermaidjs.github.io/#/mermaidAPI?id=configuration">mermaid
+configuration</a>:</p>
 <pre class="literal-block">
 &lt;field name=&quot;flowchart&quot;
        widget=&quot;mermaid&quot;
        options='{&quot;theme&quot;: &quot;forest&quot;, &quot;gantt&quot;: {&quot;fontSize&quot;: 14}}'/&gt;
 </pre>
-<p>The syntax for creating diagrams is described in
-<a class="reference external" href="https://mermaidjs.github.io/#/flowchart">mermaid’s documentation</a>.</p>
+<p>The syntax for creating diagrams is described in <a class="reference external" href="https://mermaidjs.github.io/#/flowchart">mermaid’s
+documentation</a>.</p>
 <p>As an example, this text:</p>
 <pre class="literal-block">
 graph LR
@@ -410,18 +413,19 @@ graph LR
     12.0 -.-&gt; 13.0
 </pre>
 <p>Produces this flowchart:</p>
-<img alt="Flowchart" src="https://raw.githubusercontent.com/OCA/web/15.0/web_widget_mermaid/static/description/flowchart_example.png" />
-</div>
+<p><img alt="Flowchart" src="https://raw.githubusercontent.com/OCA/web/18.0/web_widget_mermaid/static/description/flowchart_example.png" /></p>
 <div class="section" id="demonstration">
-<h1><a class="toc-backref" href="#toc-entry-2">Demonstration</a></h1>
-<p>In demo mode, the addon adds a flowchart field to users so you can try it. This shows up in Runbot instances.</p>
+<h2><a class="toc-backref" href="#toc-entry-2">Demonstration</a></h2>
+<p>In demo mode, the addon adds a flowchart field to users so you can try
+it. This shows up in Runbot instances.</p>
+</div>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_widget_mermaid%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_widget_mermaid%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -442,11 +446,13 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <div class="section" id="maintainers">
 <h2><a class="toc-backref" href="#toc-entry-7">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
-<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/15.0/web_widget_mermaid">OCA/web</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/18.0/web_widget_mermaid">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
