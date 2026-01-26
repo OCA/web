@@ -42,22 +42,30 @@ Usage
 Put a ``widget="mermaid"`` attribute in relevant field tags in the view
 declaration:
 
-::
+.. code:: xml
 
-   <field name="flowchart" widget="mermaid"/>
+   <field name="flowchart" widget="mermaid" />
 
 Optionally, use an ``options`` attribute to pass a JSON object with
 `mermaid
-configuration <https://mermaidjs.github.io/#/mermaidAPI?id=configuration>`__:
+configuration <https://mermaid.js.org/config/schema-docs/config.html>`__:
 
-::
+.. code:: xml
 
-   <field name="flowchart"
-          widget="mermaid"
-          options='{"theme": "forest", "gantt": {"fontSize": 14}}'/>
+   <field
+     name="flowchart"
+     widget="mermaid"
+     options="{'theme': 'forest', 'gantt': {'fontSize': 14}}"
+   />
+
+A specific ``options`` keyword has been added to enable Odoo theming
+
+.. code:: xml
+
+   <field name="flowchart" widget="mermaid" options="{'odoo_theme': true}" />
 
 The syntax for creating diagrams is described in `mermaid's
-documentation <https://mermaidjs.github.io/#/flowchart>`__.
+documentation <https://mermaid.js.org/syntax/flowchart.html>`__.
 
 As an example, this text:
 
@@ -103,6 +111,7 @@ Contributors
 
 - Jan Verbeek <jverbeek@therp.nl>
 - RoboHeart <heart4robots@gmail.com>
+- Yann Papouin <ypa@decgroupe.com>
 
 Maintainers
 -----------

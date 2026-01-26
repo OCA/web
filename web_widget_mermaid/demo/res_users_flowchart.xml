@@ -1,24 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record id="res_users_flowchart" model="ir.model.fields">
-        <field name="name">x_flowchart</field>
+    <record model="ir.model.fields" id="res_users_flowchart1">
+        <field name="name">x_flowchart1</field>
         <field name="model_id" ref="base.model_res_users" />
-        <field name="field_description">Demo mermaid flowchart</field>
+        <field name="field_description">Demo mermaid flowchart #1</field>
         <field name="ttype">char</field>
     </record>
-    <record id="view_users_form_flowchart" model="ir.ui.view">
+    <record model="ir.model.fields" id="res_users_flowchart2">
+        <field name="name">x_flowchart2</field>
+        <field name="model_id" ref="base.model_res_users" />
+        <field name="field_description">Demo mermaid flowchart #2</field>
+        <field name="ttype">char</field>
+    </record>
+    <record model="ir.model.fields" id="res_users_flowchart3">
+        <field name="name">x_flowchart3</field>
+        <field name="model_id" ref="base.model_res_users" />
+        <field name="field_description">Demo mermaid flowchart #3</field>
+        <field name="ttype">char</field>
+    </record>
+    <record model="ir.ui.view" id="view_users_form_flowchart">
+        <field name="name">res.users.form.flowchart@web_widget_mermaid</field>
         <field name="inherit_id" ref="base.view_users_form" />
         <field name="model">res.users</field>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page name="mermaid_page" string="Mermaid flowchart">
-                    <field name="x_flowchart" widget="mermaid" />
+                    <p>Default widget</p>
+                    <field name="x_flowchart1" widget="mermaid" />
+                    <p>Widget with Odoo theme</p>
+                    <field
+                        name="x_flowchart2"
+                        widget="mermaid"
+                        options="{'odoo_theme': true}"
+                    />
+                    <p>Widget with custom theme</p>
+                    <field
+                        name="x_flowchart3"
+                        widget="mermaid"
+                        options="{
+                            'themeVariables': {
+                                'primaryColor': '#FF0000',
+                                'textColor': '#0000FF'
+                            }
+                        }"
+                    />
                 </page>
             </xpath>
         </field>
     </record>
-    <record id="base.user_demo" model="res.users">
-        <field name="x_flowchart">graph TD
+    <record model="res.users" id="base.user_demo">
+        <field name="x_flowchart1">graph TD
+A[This is an example flowchart] --> B{{Edit it}}
+B -. save it .-> C(See what happens)</field>
+        <field name="x_flowchart2">graph TD
+A[This is an example flowchart] --> B{{Edit it}}
+B -. save it .-> C(See what happens)</field>
+        <field name="x_flowchart3">graph TD
 A[This is an example flowchart] --> B{{Edit it}}
 B -. save it .-> C(See what happens)</field>
     </record>
