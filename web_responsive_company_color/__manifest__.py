@@ -5,7 +5,7 @@
     "author": "Anusri Veerappan Prakasam, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "category": "Web",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "depends": [
         "web_company_color",
         "web_responsive",

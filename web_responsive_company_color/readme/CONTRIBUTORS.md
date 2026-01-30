@@ -1,3 +1,4 @@
-- PyTech SRL  
+- [PyTech](https://www.pytech.it):
   - Alessandro Uffreduzzi \<alessandro.uffreduzzi@pytech.it\>
   - Anusri Veerappan Prakasam \<aprakhasam@nps100.com\>
+  - Simone Rubino \<simone.rubino@pytech.it\>

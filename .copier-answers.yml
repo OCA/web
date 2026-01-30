@@ -17,7 +17,7 @@ odoo_version: 18.0
 org_name: Odoo Community Association (OCA)
 org_slug: OCA
 rebel_module_groups:
-- web_responsive
+- web_responsive,web_responsive_company_color
 repo_description: web
 repo_name: web
 repo_slug: web

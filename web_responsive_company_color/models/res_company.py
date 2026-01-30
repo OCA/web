@@ -13,14 +13,14 @@ class ResCompany(models.Model):
             return (
                 super()._get_scss_template()
                 + """
-            .o_navbar_apps_menu .dropdown-menu-custom {
-                background: url('/web_responsive/static/src/img/home-menu-bg-overlay.svg'),
-                    linear-gradient(
-                        to bottom,
-                        %(color_navbar_bg)s,
-                        desaturate(lighten(%(color_navbar_bg)s, 20%%), 15)
-                    );
-            }
+.app-menu-container {
+    background: url('/web_responsive/static/src/img/home-menu-bg-overlay.svg'),
+        linear-gradient(
+            to bottom,
+            %(color_navbar_bg)s,
+            desaturate(lighten(%(color_navbar_bg)s, 20%%), 15)
+        );
+}
         """
             )
         return super()._get_scss_template()

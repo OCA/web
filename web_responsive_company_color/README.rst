@@ -44,11 +44,6 @@ Usage
 Simply install the app. See web_company_color for instructions on how to
 customize colors.
 
-Known issues / Roadmap
-======================
-
-
-
 Bug Tracker
 ===========
 
@@ -70,10 +65,11 @@ Authors
 Contributors
 ------------
 
-- PyTech SRL
+- `PyTech <https://www.pytech.it>`__:
 
   - Alessandro Uffreduzzi <alessandro.uffreduzzi@pytech.it>
   - Anusri Veerappan Prakasam <aprakhasam@nps100.com>
+  - Simone Rubino <simone.rubino@pytech.it>
 
 Maintainers
 -----------
