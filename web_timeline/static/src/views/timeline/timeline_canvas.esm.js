@@ -10,20 +10,14 @@ export class TimelineCanvas {
     constructor(canvas_ref) {
         this.canvas_ref = canvas_ref;
     }
+
     /**
      * Clears all drawings (svg elements) from the canvas.
      */
     clear() {
-        if (this.canvas_ref) {
-            const tempElement = document.createElement("div");
-            tempElement.innerHTML = this.canvas_ref;
-            Array.from(tempElement.children).forEach((child) => {
-                if (child.tagName.toLowerCase() !== "defs") {
-                    child.remove();
-                }
-            });
-            this.canvas_ref = tempElement.innerHTML;
-        }
+        Array.from(this.canvas_ref.children)
+            .filter((el) => el.tagName.toLowerCase() !== "defs")
+            .forEach((el) => el.remove());
     }
 
     /**
@@ -158,9 +152,7 @@ export class TimelineCanvas {
         if (markerStart) {
             line.setAttribute("marker-start", `url(${markerStart})`);
         }
-        if (this.canvas_ref instanceof HTMLElement) {
-            this.canvas_ref.appendChild(line);
-        }
+        this.canvas_ref.appendChild(line);
         return line;
     }
 }

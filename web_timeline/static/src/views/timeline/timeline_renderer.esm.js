@@ -34,7 +34,10 @@ export class TimelineRenderer extends Component {
         this.fields = this.params.fields;
         this.timeline = false;
         this.initial_data_loaded = false;
-        this.canvas_ref = renderToString("TimelineView.Canvas", {});
+        const canvas_str = renderToString("TimelineView.Canvas", {});
+        const parser = new DOMParser();
+        const svgDoc = parser.parseFromString(canvas_str, "image/svg+xml");
+        this.canvas_ref = svgDoc.documentElement;
         onWillUpdateProps(async (props) => {
             this.on_data_loaded(props.model.data);
         });
@@ -220,8 +223,8 @@ export class TimelineRenderer extends Component {
         }
         this.$centerContainer = this.timeline.dom.centerContainer;
         this.canvas = new TimelineCanvas(this.canvas_ref);
-        if (this.$centerContainer.el) {
-            this.$centerContainer.el.appendChild(this.canvas_ref);
+        if (this.$centerContainer) {
+            this.$centerContainer.appendChild(this.canvas_ref);
         }
         this.timeline.on("changed", () => {
             this.draw_canvas();
