@@ -34,7 +34,7 @@ patch(ListRenderer.prototype, {
      * @returns {String | undefined} color
      */
     getDynamicColor(column, record, color_target) {
-        if (color_target in column.options) {
+        if (column.options && color_target in column.options) {
             const definition = column.options[color_target];
             let result = "";
             for (const color_def of definition.split(";")) {
