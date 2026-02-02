@@ -5,6 +5,8 @@ from colorsys import hls_to_rgb, rgb_to_hls
 
 from odoo import api, fields, models
 
+from odoo.addons.base.models.assetsbundle import ScssStylesheetAsset
+
 from ..utils import convert_to_image, image_to_rgb, n_rgb_to_hex
 
 URL_BASE = "/web_company_color/static/src/scss/"
@@ -240,8 +242,12 @@ class ResCompany(models.Model):
     def scss_create_or_update_attachment(self):
         IrAttachmentObj = self.env["ir.attachment"]
         for record in self:
-            datas = base64.b64encode(record._scss_generate_content().encode("utf-8"))
             custom_url = record.scss_get_url()
+            SCSS_asset = ScssStylesheetAsset(
+                "web_company_color.company_color_assets", url=custom_url
+            )
+            compiled_CSS = SCSS_asset.compile(record._scss_generate_content())
+            datas = base64.b64encode(compiled_CSS.encode("utf-8"))
             custom_attachment = IrAttachmentObj.sudo().search(
                 [("url", "=", custom_url), ("company_id", "=", record.id)]
             )
