@@ -1,5 +1,8 @@
 # Copyright 2019 Alexandre Díaz <dev@redneboa.es>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+import base64
+
 from odoo.tests import common
 
 from ..models.res_company import URL_BASE
@@ -75,3 +78,23 @@ class TestResCompany(common.TransactionCase):
             company_id.company_colors,
             "Invalid Navbar Background Color",
         )
+
+    def test_compiled_scss(self):
+        """The SCSS is compiled before being sent to the client."""
+        # Arrange
+        company = self.env.company
+        color = "#d2e1dd"
+        desaturated_color = "#dadada"
+        company.color_navbar_bg = "desaturate(#d2e1dd, 30%)"
+
+        # Act
+        company.scss_create_or_update_attachment()
+
+        # Assert
+        attachment = self.env["ir.attachment"].search(
+            [("url", "=", company.scss_get_url())]
+        )
+        css = base64.b64decode(attachment.datas).decode()
+        self.assertNotIn("desaturate", css)
+        self.assertNotIn(color, css)
+        self.assertIn(desaturated_color, css)
