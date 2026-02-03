@@ -6,58 +6,60 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-02-03 12:10+0000\n"
+"Last-Translator: Betül Öğmen <betulo@eska.biz>\n"
 "Language-Team: none\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__help
 msgid "Action Description"
-msgstr ""
+msgstr "Eylem Tanımı"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__type
 msgid "Action Type"
-msgstr ""
+msgstr "Eylem Tipi"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__binding_model_id
 msgid "Binding Model"
-msgstr ""
+msgstr "Bağlayıcı Model"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__binding_type
 msgid "Binding Type"
-msgstr ""
+msgstr "Bağlama Tipi"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__binding_view_types
 msgid "Binding View Types"
-msgstr ""
+msgstr "Bağlayıcı Görünüm Türleri"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Oluşturan"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Oluşturuldu"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Görünüm Adı"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__xml_id
 msgid "External ID"
-msgstr ""
+msgstr "Harici ID"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__id
@@ -67,22 +69,22 @@ msgstr ""
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Son Değişiklik"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Güncelleyen"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Güncelleme"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,field_description:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__name
 msgid "Name"
-msgstr ""
+msgstr "İsim"
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,help:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__help
@@ -90,6 +92,8 @@ msgid ""
 "Optional help text for the users with a description of the target view, such"
 " as its usage and purpose."
 msgstr ""
+"Kullanıcılar için, kullanımı ve amacı gibi hedef görünümün açıklamasını "
+"içeren isteğe bağlı yardım metni."
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model.fields,help:web_ir_actions_act_view_reload.field_ir_actions_act_view_reload__binding_model_id
@@ -97,8 +101,10 @@ msgid ""
 "Setting a value makes this action available in the sidebar for the given "
 "model."
 msgstr ""
+"Bir değer ayarlamak, bu eylemi verilen model için kenar çubuğunda "
+"kullanılabilir hale getirir."
 
 #. module: web_ir_actions_act_view_reload
 #: model:ir.model,name:web_ir_actions_act_view_reload.model_ir_actions_act_view_reload
 msgid "View Reload"
-msgstr ""
+msgstr "Görünümü Yeniden Yükle"
