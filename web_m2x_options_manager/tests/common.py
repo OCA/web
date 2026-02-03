@@ -22,12 +22,18 @@ class Common(TransactionCase):
     def _get_model(cls, model_name):
         return cls.env["ir.model"]._get(model_name)
 
-    @staticmethod
-    def _eval_node_options(node):
-        opt = node.attrib.get("options")
-        if opt:
-            return safe_eval(opt, nocopy=True)
+    @classmethod
+    def _eval_node_options(cls, node):
+        opt = node.attrib.get("options") or {}
+        if isinstance(opt, str):
+            return safe_eval(opt, cls._get_node_options_eval_context(), nocopy=True)
         return {}
+
+    @classmethod
+    def _get_node_options_eval_context(cls):
+        eval_ctx = dict(cls.env.context or [])
+        eval_ctx.update({"context": dict(eval_ctx), "true": True, "false": False})
+        return eval_ctx
 
     @classmethod
     def _get_test_view(cls):

@@ -14,12 +14,12 @@
                         <!-- Many2one w/ options -->
                         <field
                             name="parent_id"
-                            options="{'create': False, 'create_edit': False}"
+                            options="{'create': false, 'create_edit': false}"
                         />
                         <!-- Many2many w/ options -->
                         <field
                             name="category_id"
-                            options="{'create': False, 'create_edit': False}"
+                            options="{'create': false, 'create_edit': false}"
                         />
                     </group>
                 </sheet>
