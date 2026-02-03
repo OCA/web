@@ -23,18 +23,26 @@ msgstr "Canale discussione"
 
 #. module: web_notify_channel_message
 #: model:ir.model.fields,field_description:web_notify_channel_message.field_mail_channel__display_name
+#: model:ir.model.fields,field_description:web_notify_channel_message.field_res_users__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
 #. module: web_notify_channel_message
 #: model:ir.model.fields,field_description:web_notify_channel_message.field_mail_channel__id
+#: model:ir.model.fields,field_description:web_notify_channel_message.field_res_users__id
 msgid "ID"
 msgstr "ID"
 
 #. module: web_notify_channel_message
 #: model:ir.model.fields,field_description:web_notify_channel_message.field_mail_channel____last_update
+#: model:ir.model.fields,field_description:web_notify_channel_message.field_res_users____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
+
+#. module: web_notify_channel_message
+#: model:ir.model,name:web_notify_channel_message.model_res_users
+msgid "Users"
+msgstr ""
 
 #. module: web_notify_channel_message
 #: code:addons/web_notify_channel_message/models/mail_channel.py:0
