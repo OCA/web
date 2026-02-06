@@ -8,3 +8,5 @@
   - Jairo Llopis
   - Alexandre Díaz
   - Carlos Roca
+- [PyTech](https://www.pytech.it):
+  - Simone Rubino \<<simone.rubino@pytech.it>\>
