@@ -6,6 +6,11 @@ $x2many_2d_matrix_max_height: 450px;
         overflow-y: auto;
     }
 
+    /* Prevent having double border for monetary fields (for instance if you use web_theme_classic) */
+    span.o_input:has(span.o_monetary_ghost_value) + input.o_input {
+        border-color: transparent;
+    }
+
     .o_input {
         padding: 1px 0px;
     }
