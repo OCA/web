@@ -5,30 +5,21 @@
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 export function getWebIconData(menu) {
-    const result = "/web_responsive/static/img/default_icon_app.png";
-    const webIcon = menu.webIcon;
-    if (webIcon && webIcon.split(",").length === 2) {
-        const path = webIcon.replace(",", "/");
-        return path.startsWith("/") ? path : "/" + path;
+    // Delegate to Odoo's built-in webIconData if available
+    // This properly handles base64 images, file paths, and all icon formats
+    if (menu.webIconData) {
+        return menu.webIconData;
     }
-    const iconData = menu.webIconData;
-    if (!menu.webIcon) {
-        return result;
-    }
-    const prefix = iconData.startsWith("P")
-        ? "data:image/svg+xml;base64,"
-        : "data:image/png;base64,";
-    if (iconData.startsWith("data:image")) {
-        return iconData;
-    }
-    return prefix + iconData.replace(/\s/g, "");
+    // Fallback to default icon if no icon data is provided
+    return "/web_responsive/static/img/default_icon_app.png";
 }
 
 /**
  * @param {Object} menu
  */
 export function updateMenuWebIconData(menu) {
-    menu.webIconData = menu.webIconData ? getWebIconData(menu) : "";
+    // Use getWebIconData which now delegates to Odoo's built-in handling
+    menu.webIconData = getWebIconData(menu);
 }
 
 export function updateMenuDisplayName(menu) {
