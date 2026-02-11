@@ -15,10 +15,13 @@ export function getWebIconData(menu) {
 }
 
 /**
- * @param {Object} menu
+ * Ensures menu has webIconData property set
+ * @param {Object} menu - Menu object to update (typically a shallow copy)
  */
 export function updateMenuWebIconData(menu) {
-    // Use getWebIconData which now delegates to Odoo's built-in handling
+    // GetWebIconData returns menu.webIconData if it exists (from Odoo),
+    // otherwise returns the default icon. This ensures the menu copy
+    // always has a valid icon reference.
     menu.webIconData = getWebIconData(menu);
 }
 
