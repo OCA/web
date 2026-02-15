@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "2D matrix for x2many fields",
-    "version": "18.0.2.0.4",
+    "version": "18.0.2.1.0",
     "maintainers": ["JasminSForgeFlow", "DavidJForgeFlow", "hbrunn"],
     "development_status": "Production/Stable",
     "author": (
