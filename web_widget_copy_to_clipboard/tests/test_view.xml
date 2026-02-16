@@ -5,11 +5,9 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form" />
         <field name="arch" type="xml">
-            <!-- Test per Char Widget -->
             <xpath expr="//field[@name='function']" position="attributes">
                 <attribute name="widget">copy_to_clipboard</attribute>
             </xpath>
-            <!-- Test per Text Widget -->
             <xpath
         expr="//page[@name='internal_notes']//field[@name='comment']"
         position="attributes"

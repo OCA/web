@@ -4,13 +4,10 @@
   min-width: 0;
 
   .o_input {
-    // Rimuove l'outline blu predefinito del browser
     &:focus {
       outline: none !important;
-      box-shadow: none !important; // Odoo usa spesso box-shadow per il focus, lo annulliamo se vogliamo l'effetto "flat"
-      border-color: var(
-        --primary
-      ) !important; // Usa il colore primario di Odoo per il bordo al focus
+      box-shadow: none !important;
+      border-color: var(--primary) !important;
     }
   }
 }
@@ -42,10 +39,9 @@
   }
 }
 
-// Stile specifico per l'input in Job Position e titoli (Char)
 .o_field_copy_to_clipboard input.o_input {
   border: none;
-  border-bottom: 1px solid #ccc; // Stile standard Odoo per campi in edit non raggruppati
+  border-bottom: 1px solid #ccc;
   background: transparent;
   border-radius: 0;
   padding: 2px 0;
@@ -55,7 +51,6 @@
   }
 }
 
-// Stile per la textarea nelle Internal Notes
 .o_field_copy_to_clipboard_text textarea.o_input {
   border: 1px solid #ccc;
   padding: 8px;
