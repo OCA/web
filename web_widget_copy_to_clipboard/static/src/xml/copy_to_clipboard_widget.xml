@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_widget_copy_to_clipboard.CharCopyToClipboard" owl="1">
+        <div
+      class="o_field_copy_to_clipboard d-grid w-100 align-items-center"
+      style="grid-template-columns: 1fr auto; gap: 8px;"
+    >
+            <input
+        t-if="!props.readonly"
+        class="o_input"
+        t-att-id="props.id"
+        t-att-type="props.type"
+        t-att-placeholder="props.placeholder"
+        t-on-change="onInputChange"
+        t-att-value="props.record.data[props.name] or ''"
+      />
+            <span t-else="" class="text-truncate">
+                <t t-esc="props.record.data[props.name] or ''" />
+            </span>
+            <button
+        t-if="props.record.data[props.name]"
+        class="btn btn-link p-0 o_copy_button"
+        t-on-click="onCopyClick"
+        title="Copy to clipboard"
+      >
+                <i class="fa fa-copy" />
+            </button>
+        </div>
+    </t>
+
+    <t t-name="web_widget_copy_to_clipboard.TextCopyToClipboard" owl="1">
+         <div
+      class="o_field_copy_to_clipboard_text d-grid w-100 h-100"
+      style="grid-template-columns: 1fr auto; gap: 8px;"
+    >
+            <textarea
+        t-if="!props.readonly"
+        class="o_input h-100"
+        t-att-id="props.id"
+        t-att-placeholder="props.placeholder"
+        t-on-change="onInputChange"
+        t-esc="props.record.data[props.name] or ''"
+        style="resize: vertical; min-height: 100px;"
+      />
+            <div t-else="" class="text-break" style="white-space: pre-wrap;">
+                <t t-esc="props.record.data[props.name] or ''" />
+            </div>
+            <button
+        t-if="props.record.data[props.name]"
+        class="btn btn-link p-0 o_copy_button align-self-start"
+        style="margin-top: 8px;"
+        t-on-click="onCopyClick"
+        title="Copy to clipboard"
+      >
+                <i class="fa fa-copy" />
+            </button>
+        </div>
+    </t>
+</templates>

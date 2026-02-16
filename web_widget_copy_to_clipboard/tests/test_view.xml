@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_partner_form_inherit_copy_widget" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.copy.widget</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <!-- Test per Char Widget -->
+            <xpath expr="//field[@name='function']" position="attributes">
+                <attribute name="widget">copy_to_clipboard</attribute>
+            </xpath>
+            <!-- Test per Text Widget -->
+            <xpath
+        expr="//page[@name='internal_notes']//field[@name='comment']"
+        position="attributes"
+      >
+                <attribute name="widget">copy_to_clipboard_text</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
