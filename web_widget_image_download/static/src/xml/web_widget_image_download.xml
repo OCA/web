@@ -9,9 +9,9 @@
     >
         <xpath expr="//FileUploader/../.." position="after">
             <div
-                t-attf-class="position-absolute top-0 opacity-0 opacity-100-hover {{isMobile ? 'o_mobile_controls' : ''}}"
+                t-attf-class="position-absolute top-0 {{ui.isSmall ? 'o_mobile_controls' : 'opacity-0 opacity-100-hover'}}"
                 aria-atomic="true"
-                t-att-style="sizeStyle"
+                t-att-style="(ui.isSmall ? 'opacity: 1 !important; ' : '') + sizeStyle"
             >
                 <button
                     t-if="props.record.data[props.name] and state.isValid"
