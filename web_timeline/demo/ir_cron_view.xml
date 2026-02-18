@@ -13,7 +13,15 @@
         <value eval="[ref('base.ir_cron_act')]" />
         <value
             model="ir.actions.act_window"
-            eval="{'view_mode': obj().env.ref('base.ir_cron_act').view_mode + ',timeline'}"
+            eval="{
+                'view_mode': obj().env.ref('base.ir_cron_act').view_mode + ',timeline',
+                'view_ids': [
+                    Command.create({
+                        'view_mode': 'timeline',
+                        'view_id': ref('ir_cron_timeline'),
+                    }),
+                ],
+            }"
         />
     </function>
 </odoo>
