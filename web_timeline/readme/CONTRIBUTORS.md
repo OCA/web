@@ -15,3 +15,5 @@
   - Anjeel Haria
 - [XCG Consulting](https://xcg-consulting.fr):
   - Houzéfa Abbasbhay
+- [PyTech](https://www.pytech.it):
+  - Simone Rubino \<<simone.rubino@pytech.it>\>
