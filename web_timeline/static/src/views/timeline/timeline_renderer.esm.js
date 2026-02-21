@@ -21,6 +21,9 @@ const {DateTime} = luxon;
 
 export class TimelineRenderer extends Component {
     setup() {
+        super.setup?.();
+        this.timelineRef = useRef("timelineRoot");
+  
         this.orm = useService("orm");
         this.rootRef = useRef("root");
         this.canvasRef = useRef("canvas");
@@ -52,6 +55,7 @@ export class TimelineRenderer extends Component {
             this.on_attach_callback();
         });
     }
+
 
     /**
      * Triggered when the timeline is attached to the DOM.
@@ -143,6 +147,39 @@ export class TimelineRenderer extends Component {
             this.timeline.setWindow(start.toJSDate(), end.toJSDate());
         }
     }
+
+  exportSVG() {
+    const root = this.rootRef.el;
+    if (!root) return;
+
+    const timelineEl = root.querySelector(".vis-timeline");
+    if (!timelineEl) return;
+
+    const rect = timelineEl.getBoundingClientRect();
+
+
+    const cloned = timelineEl.cloneNode(true);
+
+  
+    inlineAllStyles(timelineEl, cloned);
+
+    const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${Math.ceil(rect.width)}" height="${Math.ceil(rect.height)}">
+  <foreignObject width="100%" height="100%">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      ${cloned.outerHTML}
+    </div>
+  </foreignObject>
+</svg>`;
+
+    const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "timeline.svg";
+    a.click();
+    URL.revokeObjectURL(url);
+}
 
     /**
      * Computes the initial visible window.
@@ -487,3 +524,29 @@ TimelineRenderer.props = {
     onRemove: Function,
     onUpdate: Function,
 };
+
+function inlineAllStyles(srcRoot, dstRoot) {
+    const srcEls = [srcRoot, ...srcRoot.querySelectorAll("*")];
+    const dstEls = [dstRoot, ...dstRoot.querySelectorAll("*")];
+
+    for (let i = 0; i < srcEls.length; i++) {
+        const src = srcEls[i];
+        const dst = dstEls[i];
+        if (!dst) continue;
+
+        const cs = window.getComputedStyle(src);
+
+        const props = [
+            "display","position","top","left","right","bottom",
+            "width","height","margin","padding",
+            "border","border-radius",
+            "background","background-color",
+            "color","font","font-size","font-family","font-weight",
+            "line-height","text-align","white-space",
+            "transform",
+            "box-sizing",
+        ];
+        const style = props.map(p => `${p}:${cs.getPropertyValue(p)};`).join("");
+        dst.setAttribute("style", style);
+    }
+}
