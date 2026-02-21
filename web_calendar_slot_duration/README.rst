@@ -72,8 +72,7 @@ have slots of 10 minutes as feature demonstration.
 Known issues / Roadmap
 ======================
 
--  Drop module if/when https://github.com/odoo/odoo/pull/66739 is
-   merged.
+- Drop module if/when https://github.com/odoo/odoo/pull/66739 is merged.
 
 Bug Tracker
 ===========
@@ -96,10 +95,10 @@ Authors
 Contributors
 ------------
 
--  `Tecnativa <https://www.tecnativa.com>`__:
+- `Tecnativa <https://www.tecnativa.com>`__:
 
-   -  Jairo Llopis
-   -  Stefan Ungureanu
+  - Jairo Llopis
+  - Stefan Ungureanu
 
 Maintainers
 -----------
