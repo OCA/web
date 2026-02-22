@@ -32,6 +32,13 @@
                         type="object"
                         string="Compute colors from logo"
                     />
+                    <button
+                        class="btn-secondary ms-2"
+                        name="button_reset_colors"
+                        type="object"
+                        string="Reset colors"
+                        confirm="Are you sure you want to reset all colors to Odoo defaults?"
+                    />
                     <div
                         class="alert alert-info info_icon mt-2 d-flex align-items-center"
                         role="alert"
