@@ -1,0 +1,87 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_time_range_menu_custom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-11-20 13:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: web_time_range_menu_custom
+#. odoo-javascript
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
+#, python-format
+msgid "Add"
+msgstr "Aggiungi"
+
+#. module: web_time_range_menu_custom
+#. odoo-javascript
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
+#, python-format
+msgid "Custom period"
+msgstr "Periodo predefinito"
+
+#. module: web_time_range_menu_custom
+#. odoo-javascript
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
+#, python-format
+msgid "Day"
+msgstr "Giorno"
+
+#. module: web_time_range_menu_custom
+#. odoo-javascript
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
+#, python-format
+msgid "Month"
+msgstr "Mese"
+
+#. module: web_time_range_menu_custom
+#. odoo-javascript
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
+#, python-format
+msgid "Week"
+msgstr "Settimana"
+
+#. module: web_time_range_menu_custom
+#. odoo-javascript
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
+#, python-format
+msgid "Year"
+msgstr "Anno"
+
+#. module: web_time_range_menu_custom
+#. odoo-javascript
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
+#, python-format
+msgid "day"
+msgstr "giorno"
+
+#. module: web_time_range_menu_custom
+#. odoo-javascript
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
+#, python-format
+msgid "month"
+msgstr "mese"
+
+#. module: web_time_range_menu_custom
+#. odoo-javascript
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
+#, python-format
+msgid "week"
+msgstr "settimana"
+
+#. module: web_time_range_menu_custom
+#. odoo-javascript
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
+#, python-format
+msgid "year"
+msgstr "anno"
