@@ -1,8 +1,10 @@
+/** @odoo-module **/
+
 import {SearchArchParser} from "@web/search/search_arch_parser";
 import {patch} from "@web/core/utils/patch";
 import {makeContext} from "@web/core/context";
 
-patch(SearchArchParser.prototype, {
+patch(SearchArchParser.prototype, "web_filter_header_button.search_arch_parser", {
     /**
      * Allow groupBy filters to show up as buttons
      * @override
@@ -15,7 +17,7 @@ patch(SearchArchParser.prototype, {
                 context_to_keep = context;
             }
         }
-        super.visitFilter(...arguments);
+        this._super(...arguments);
         if (context_to_keep) {
             this.currentGroup.at(-1).context = context_to_keep;
         }

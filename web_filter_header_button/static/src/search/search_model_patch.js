@@ -1,11 +1,13 @@
+/** @odoo-module **/
+
 import {makeContext} from "@web/core/context";
 import {patch} from "@web/core/utils/patch";
 import {SearchModel} from "@web/search/search_model";
 import {useEffect} from "@odoo/owl";
 
-patch(SearchModel.prototype, {
+patch(SearchModel.prototype, "web_filter_header_button.search_model", {
     setup() {
-        super.setup(...arguments);
+        this._super(...arguments);
         // Filter flagged filters to be shown in the control panel.
         useEffect(
             () => {
@@ -15,7 +17,7 @@ patch(SearchModel.prototype, {
         );
     },
     async load() {
-        await super.load(...arguments);
+        await this._super(...arguments);
         this.headerButtonFilters = this.getHeaderButtonFilters();
     },
     /**
@@ -24,20 +26,18 @@ patch(SearchModel.prototype, {
      * @returns {Array}
      */
     getHeaderButtonFilters() {
-        return Object.values(this.getSearchItems())
-            .filter((f) => {
-                // Field-type filters are used to filter based on a search, so it
-                // doesn't make sense for them to be set as clickable buttons
-                // at the header level.
-                return (
-                    f.type !== "field" &&
-                    f.context &&
-                    makeContext([f.context]).shown_in_panel
-                );
-            })
-            .map((f) => {
-                return {...f, context: makeContext([f.context])};
-            });
+        // Odoo 16 SearchModel.getSearchItems can be called with a predicate.
+        // This avoids relying on the internal shape of the returned collection.
+        const items = this.getSearchItems((it) => {
+            if (!it || it.type === "field") {
+                return false;
+            }
+            const ctx = makeContext([it.context || {}]);
+            return Boolean(ctx.shown_in_panel);
+        });
+        return (items || []).map((it) => {
+            return {...it, context: makeContext([it.context || {}])};
+        });
     },
     /**
      * Clear the `show_in_panel` context to prevent it being saved with this context
@@ -45,7 +45,7 @@ patch(SearchModel.prototype, {
      * @returns {Object}
      */
     _getIrFilterDescription() {
-        const {preFavorite, irFilter} = super._getIrFilterDescription(...arguments);
+        const {preFavorite, irFilter} = this._super(...arguments);
         if (preFavorite?.context) {
             delete preFavorite.context.shown_in_panel;
         }
@@ -56,7 +56,7 @@ patch(SearchModel.prototype, {
      * @override
      */
     async _reloadSections() {
-        await super._reloadSections();
+        await this._super(...arguments);
         this.headerButtonFilters = this.getHeaderButtonFilters();
     },
 });
