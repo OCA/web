@@ -35,3 +35,8 @@ class TestUIPivot(common.HttpCase):
             login="admin",
             step_delay=100,
         )
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.loader.restore_registry()
+        return super().tearDownClass()
