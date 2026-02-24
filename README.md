@@ -45,7 +45,7 @@ addon | version | maintainers | summary
 [web_m2x_options_manager](web_m2x_options_manager/) | 15.0.1.0.0 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
 [web_no_bubble](web_no_bubble/) | 15.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 15.0.2.1.1 |  | Send notification messages to user
-[web_pivot_computed_measure](web_pivot_computed_measure/) | 15.0.1.0.5 |  | Web Pivot Computed Measure
+[web_pivot_computed_measure](web_pivot_computed_measure/) | 15.0.1.0.6 |  | Web Pivot Computed Measure
 [web_pwa_oca](web_pwa_oca/) | 15.0.1.0.0 | <a href='https://github.com/eLBati'><img src='https://github.com/eLBati.png' width='32' height='32' style='border-radius:50%;' alt='eLBati'/></a> | Make Odoo a PWA
 [web_refresher](web_refresher/) | 15.0.2.0.1 |  | Web Refresher
 [web_remember_tree_column_width](web_remember_tree_column_width/) | 15.0.1.0.1 | <a href='https://github.com/frahikLV'><img src='https://github.com/frahikLV.png' width='32' height='32' style='border-radius:50%;' alt='frahikLV'/></a> <a href='https://github.com/luisg123v'><img src='https://github.com/luisg123v.png' width='32' height='32' style='border-radius:50%;' alt='luisg123v'/></a> | Remember the tree columns' widths across sessions.
