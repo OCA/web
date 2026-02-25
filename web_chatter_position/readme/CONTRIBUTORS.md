@@ -6,3 +6,5 @@
   - Jay Patel \<<jay@alitec.sg>\>
 - Trobz
   - Tris Doan \<<tridm@trobz.com>\>
+- [ForgeFlow](https://www.forgeflow.com)
+  - Joan Sisquella \<<joan.sisquella@forgeflow.com>\>
