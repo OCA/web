@@ -19,7 +19,6 @@
     "depends": ["web"],
     "data": [],
     "demo": ["demo/ir_cron_view.xml"],
-    "maintainers": ["tarteo"],
     "application": False,
     "installable": True,
     "assets": {
