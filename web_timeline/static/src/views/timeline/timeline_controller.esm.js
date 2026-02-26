@@ -61,10 +61,9 @@ export class TimelineController extends Component {
      * @param {EventObject} item
      */
     _onGroupClick(item) {
-        const groupField = this.model.last_group_bys[0];
         this.actionService.doAction({
             type: "ir.actions.act_window",
-            res_model: this.model.fields[groupField].relation,
+            res_model: this.model.fields[item.groupField].relation,
             res_id: item.group,
             views: [[false, "form"]],
             view_mode: "form",
