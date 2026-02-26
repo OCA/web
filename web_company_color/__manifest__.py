@@ -5,7 +5,7 @@
 {
     "name": "Web Company Color",
     "category": "web",
-    "version": "17.0.1.2.1",
+    "version": "17.0.1.2.2",
     "author": "Alexandre Díaz, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "depends": ["web", "base_sparse_field"],
