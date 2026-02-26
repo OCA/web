@@ -123,9 +123,9 @@ class ResCompany(models.Model):
                 background-color: %(color_navbar_bg_hover)s !important;
             }
         }
-        .dropdown-item{
-            color: %(color_submenu_text)s !important;
-        }
+        .o_main_navbar .dropdown-menu .dropdown-item:not(.o_menu_brand, .o_nav_entry) {
+    color: %(color_submenu_text)s !important;
+}
     """
 
     company_colors = fields.Serialized()
