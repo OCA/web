@@ -20,4 +20,24 @@
             </t>
         </xpath>
     </t>
+    <t t-inherit="account.ListView.Buttons" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
+            <t t-if="model.root.isGrouped">
+                <button
+                    type="button"
+                    class="btn btn-secondary fa fa-expand oe_group_by_expand"
+                    data-tooltip="Expand"
+                    aria-label="Expand"
+                    t-on-click="expandAllGroups"
+                />
+                <button
+                    type="button"
+                    class="btn btn-secondary fa fa-compress oe_group_by_collapse"
+                    data-tooltip="Compress"
+                    aria-label="Compress"
+                    t-on-click="collapseAllGroups"
+                />
+            </t>
+        </xpath>
+    </t>
 </templates>
