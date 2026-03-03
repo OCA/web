@@ -23,9 +23,9 @@ patch(ListRenderer.prototype, {
         return this.actionService.doAction({
             type: "ir.actions.act_window",
             res_model: field.relation,
-            res_id: value[0],
+            res_id: value && value.id,
             views: [[false, "form"]],
-            target: "target",
+            target: "current",
             additionalContext: column.context || {},
         });
     },
