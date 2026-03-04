@@ -1,4 +1,6 @@
+/* eslint-disable jsdoc/check-tag-names */
 /** @odoo-module **/
+/* eslint-enable jsdoc/check-tag-names */
 
 import {patch} from "@web/core/utils/patch";
 import {_t} from "web.core";
@@ -21,8 +23,7 @@ patch(DomainSelector.prototype, "web.DomainSelector", {
         const rawDomain = e.currentTarget.value;
         try {
             Domain.prototype.stringToArray(rawDomain);
-        } catch (err) {
-            // If there is a syntax error, just ignore the change
+        } catch {
             this.displayNotification({
                 title: _t("Syntax error"),
                 message: _t("Domain not properly formed"),
