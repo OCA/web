@@ -6,7 +6,7 @@ import sys
 
 from PIL import Image
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 from odoo.tools.mimetypes import guess_mimetype
 
 
@@ -97,7 +97,7 @@ class ResConfigSettings(models.TransientModel):
         # Fail if icon provided is larger than 2mb
         if sys.getsizeof(self.pwa_icon) > 2196608:
             raise exceptions.UserError(
-                _("You can't upload a file with more than 2 MB.")
+                self.env._("You can't upload a file with more than 2 MB.")
             )
         # Confirm if the pwa_icon binary content is an SVG or PNG
         # and process accordingly
@@ -109,8 +109,10 @@ class ResConfigSettings(models.TransientModel):
             "image/svg"
         ) and not pwa_icon_mimetype.startswith("image/png"):
             raise exceptions.UserError(
-                _("You can only upload SVG or PNG files. Found: %s.")
-                % pwa_icon_mimetype
+                self.env._(
+                    "You can only upload SVG or PNG files. Found: %s.",
+                    pwa_icon_mimetype,
+                )
             )
         # Delete all previous records if we are writting new ones
         if pwa_icon_ir_attachments:
@@ -121,7 +123,7 @@ class ResConfigSettings(models.TransientModel):
             # Fail if provided PNG is smaller than 512x512
             if self._unpack_icon(self.pwa_icon).size < (512, 512):
                 raise exceptions.UserError(
-                    _("You can only upload PNG files bigger than 512x512")
+                    self.env._("You can only upload PNG files bigger than 512x512")
                 )
             for size in [
                 (128, 128),
