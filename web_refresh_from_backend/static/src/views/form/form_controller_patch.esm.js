@@ -30,9 +30,8 @@ patch(FormController.prototype, {
     },
 
     /**
-     * Handle bus notification for view refresh.
-     * Listens for notifications with type "web.refresh_view" and delegates
-     * processing to _handleViewRefresh.
+     * Handle bus notification batch for view refresh.
+     * Coalesces the batch: if any notification matches, refreshes once.
      *
      * @param {Event} event - Bus notification event
      */
@@ -40,53 +39,52 @@ patch(FormController.prototype, {
         if (!this.model || !this.model.root) {
             return;
         }
-
-        for (const {payload, type} of notifications) {
-            if (type === "web.refresh_view") {
-                await this._handleViewRefresh(payload);
-            }
+        const shouldRefresh = notifications.some(
+            ({type, payload}) =>
+                type === "web.refresh_view" && this._shouldRefreshView(payload)
+        );
+        if (shouldRefresh) {
+            await this.refreshForm();
         }
     },
 
     /**
-     * Handle view refresh notification.
+     * Check whether a refresh notification is relevant to this form.
      *
-     * Only refreshes when:
+     * Returns true when all of the following hold:
      *  - model matches current form model
-     *  - requested view types include "form" (if specified)
-     *  - record id matches current record (if specified)
+     *  - requested view types include "form" (or none specified)
+     *  - record id matches current record (or none specified)
+     *  - form is not inside a dialog / wizard
      *
-     * @param {Object} notification - Notification payload
+     * @param {Object} payload - Notification payload
+     * @returns {Boolean}
      */
-    async _handleViewRefresh(notification) {
-        const {model, view_types = [], rec_ids = []} = notification;
+    _shouldRefreshView(payload) {
+        const {model, view_types = [], rec_ids = []} = payload;
 
         if (this.props.resModel !== model) {
-            return;
+            return false;
         }
-
         if (view_types.length > 0 && !view_types.includes("form")) {
-            return;
+            return false;
         }
-
         const currentResId = this.model && this.model.root && this.model.root.resId;
         if (rec_ids.length > 0 && (!currentResId || !rec_ids.includes(currentResId))) {
-            return;
+            return false;
         }
-
         // Skip refresh when form is in a dialog or when a wizard is on top
         // of the stack. Refreshing in that context can leave wizard/confirmation
         // dialogs stuck open (e.g. confirm="..." in wizard view).
         if (this.env.inDialog) {
-            return;
+            return false;
         }
         const currentController = this.actionService.currentController;
         const currentAction = currentController && currentController.action;
         if (currentAction && currentAction.target === "new") {
-            return;
+            return false;
         }
-
-        await this.refreshForm();
+        return true;
     },
 
     /**

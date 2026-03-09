@@ -4,19 +4,21 @@
 from unittest.mock import patch
 
 from odoo.tests import tagged
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
 @tagged("post_install", "-at_install")
-class TestReloadViews(TransactionCase):
+class TestReloadViews(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.user_admin = cls.env.ref("base.user_admin")
-        cls.user_demo = cls.env.ref("base.user_demo")
-        cls.partner = cls.env["res.partner"].create(
+        cls.user_demo = cls.env["res.users"].create(
             {
-                "name": "Test Partner",
+                "name": "Test User",
+                "login": "test_refresh_user",
+                "email": "test_refresh@example.com",
             }
         )
 

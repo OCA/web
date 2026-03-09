@@ -26,7 +26,8 @@ patch(KanbanController.prototype, {
     },
 
     /**
-     * Handle bus notification for view refresh.
+     * Handle bus notification batch for view refresh.
+     * Coalesces the batch: if any notification matches, refreshes once.
      *
      * @param {Event} event - Bus notification event
      */
@@ -34,40 +35,42 @@ patch(KanbanController.prototype, {
         if (!this.model || !this.model.root) {
             return;
         }
-
-        for (const {payload, type} of notifications) {
-            if (type === "web.refresh_view") {
-                await this._handleViewRefresh(payload);
-            }
+        const shouldRefresh = notifications.some(
+            ({type, payload}) =>
+                type === "web.refresh_view" && this._shouldRefreshView(payload)
+        );
+        if (shouldRefresh) {
+            await this.refreshList();
         }
     },
 
     /**
-     * Handle view refresh notification.
+     * Check whether a refresh notification is relevant to this kanban.
      *
-     * @param {Object} notification - Notification payload
+     * Returns true when all of the following hold:
+     *  - model matches current kanban model
+     *  - requested view types include "kanban" (or none specified)
+     *  - at least one loaded record id is in rec_ids (or none specified)
+     *
+     * @param {Object} payload - Notification payload
+     * @returns {Boolean}
      */
-    async _handleViewRefresh(notification) {
-        const {model, view_types = [], rec_ids = []} = notification;
+    _shouldRefreshView(payload) {
+        const {model, view_types = [], rec_ids = []} = payload;
 
         if (this.props.resModel !== model) {
-            return;
+            return false;
         }
-
         if (view_types.length > 0 && !view_types.includes("kanban")) {
-            return;
+            return false;
         }
-
         if (rec_ids.length > 0) {
             const loadedIds = this.getLoadedRecordIds();
-            const shouldReload = loadedIds.some((id) => rec_ids.includes(id));
-
-            if (!shouldReload) {
-                return;
+            if (!loadedIds.some((id) => rec_ids.includes(id))) {
+                return false;
             }
         }
-
-        await this.refreshList();
+        return true;
     },
 
     /**
