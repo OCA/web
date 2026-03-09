@@ -29,6 +29,7 @@ addon | version | maintainers | summary
 [web_environment_ribbon](web_environment_ribbon/) | 17.0.1.0.3 |  | Web Environment Ribbon
 [web_favicon](web_favicon/) | 17.0.1.0.2 |  | Allows to set a custom shortcut icon (aka favicon)
 [web_field_tooltip](web_field_tooltip/) | 17.0.1.0.0 |  | Displays customizable tooltips for fields
+[web_font_size_report_layout](web_font_size_report_layout/) | 17.0.1.1.0 |  | Adds a font size selector (pt) to the Document Layout wizard
 [web_group_expand](web_group_expand/) | 17.0.1.0.0 |  | Group Expand Buttons
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 17.0.1.0.0 |  | Enables triggering of more than one action on ActionManager
 [web_m2x_options](web_m2x_options/) | 17.0.1.0.7 |  | web_m2x_options
