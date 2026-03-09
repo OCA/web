@@ -4,7 +4,7 @@
 {
     "name": "Web Refresh From Backend",
     "summary": "Refresh views from backend",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Web",
     "license": "LGPL-3",
     "author": "Cetmix, Odoo Community Association (OCA)",

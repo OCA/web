@@ -22,7 +22,8 @@ class ResUsers(models.Model):
                        with id from the list is present in the view.
 
         Example usage:
-            # Reload the kanban and form views for all salespeople when an opportunity is won
+            # Reload the kanban and form views for all salespeople when an opportunity
+            # is won.
             # Will reload views only if the current opportunity is being displayed
             group_id = self.env.ref("sales_team.group_sale_salesman").id
             users_to_reload = self.env["res.users"].search(
