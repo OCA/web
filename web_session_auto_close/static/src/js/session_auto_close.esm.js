@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 /* Copyright 2025 ACSONE SA/NV
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
@@ -7,80 +5,137 @@ import {rpc} from "@web/core/network/rpc";
 import {session} from "@web/session";
 
 // Default session timeout in ms (will be updated from server settings)
-let SESSION_TIMEOUT = 600000;
+const SESSION_TIMEOUT = 600000;
 
-/**
- * Get the last recorded user activity timestamp from localStorage
- * if no record is found, returns the current timestamp
- */
-function getLastActivityTime() {
-    return (
-        parseInt(globalThis.window.localStorage.getItem("lastActivityTime"), 10) ||
-        Date.now()
-    );
-}
+export class SessionAutoCloseService {
+    constructor() {
+        this.sessionTimeout = SESSION_TIMEOUT;
+        this._checkIntervalId = null;
+        this._boundCheckInactivity = () => this.checkInactivity();
+        this._boundHandleUserActivity = () => this.handleUserActivity();
+    }
 
-/**
- * Set the last activity timestamp in localStorage
- * this is called whenever user interaction is detected
- */
-function updateActivityTime() {
-    const now = Date.now();
-    globalThis.window.localStorage.setItem("lastActivityTime", now);
-}
+    /**
+     * Storage key for last activity timestamp in localStorage.
+     * @returns {String}
+     */
+    getActivityStorageKey() {
+        return "lastActivityTime";
+    }
 
-/**
- * Destroy the session
- * removes the last activity record and reloads the page
- */
-function closeSession() {
-    rpc("/web/session/destroy", {}).then(() => {
-        globalThis.window.localStorage.removeItem("lastActivityTime");
+    /**
+     * Get the last recorded user activity timestamp from localStorage
+     * if no record is found, returns the current timestamp
+     */
+    getLastActivityTime() {
+        const key = this.getActivityStorageKey();
+        const value = globalThis.window.localStorage.getItem(key);
+        return parseInt(value, 10) || Date.now();
+    }
+
+    /**
+     * Set the last activity timestamp in localStorage
+     * this is called whenever user interaction is detected
+     */
+    updateActivityTime() {
+        const key = this.getActivityStorageKey();
+        globalThis.window.localStorage.setItem(key, String(Date.now()));
+    }
+
+    /**
+     * Destroy the session
+     * removes the last activity record and reloads the page
+     */
+    async closeSession() {
+        await rpc("/web/session/destroy", {});
+        const key = this.getActivityStorageKey();
+        globalThis.window.localStorage.removeItem(key);
         globalThis.window.location.reload();
-    });
-}
+    }
 
-/**
- * Checks for user inactivity and closes the session if the timeout is exceeded
- */
-function checkInactivity() {
-    const now = Date.now();
-    const lastActivityTime = getLastActivityTime();
-    if (now - lastActivityTime >= SESSION_TIMEOUT) {
-        closeSession();
+    /**
+     * Handler for activity events; by default just updates the activity time.
+     */
+    handleUserActivity() {
+        this.updateActivityTime();
+    }
+
+    /**
+     * Checks for user inactivity and closes the session if the timeout is exceeded
+     */
+    checkInactivity() {
+        const now = Date.now();
+        const lastActivityTime = this.getLastActivityTime();
+        if (now - lastActivityTime >= this.sessionTimeout) {
+            this.closeSession();
+        }
+    }
+
+    /**
+     * Whether the service should start (e.g. only when session exists).
+     * @returns {Boolean}
+     */
+    shouldStart() {
+        return Boolean(session);
+    }
+
+    /**
+     * Fetch timeout from server.
+     * @returns {Promise<number>} Timeout in ms
+     */
+    async getTimeout() {
+        const timeout = await rpc("/web/session/get_timeout", {});
+        return parseInt(timeout, 10) || SESSION_TIMEOUT;
+    }
+
+    /**
+     * Event bindings for activity detection.
+     * @returns {{ target: EventTarget, events: string[] }}
+     */
+    getActivityEvents() {
+        return {
+            target: globalThis.window,
+            events: ["mousemove", "keydown"],
+        };
+    }
+
+    /**
+     * Attach activity listeners and start the periodic inactivity check.
+     */
+    _startMonitoring() {
+        const key = this.getActivityStorageKey();
+        if (globalThis.window.localStorage.getItem(key)) {
+            this.checkInactivity();
+        }
+
+        const {target, events} = this.getActivityEvents();
+        for (const eventName of events) {
+            target.addEventListener(eventName, this._boundHandleUserActivity);
+        }
+
+        this.updateActivityTime();
+        const intervalMs = this.sessionTimeout / 2;
+        this._checkIntervalId = globalThis.setInterval(
+            this._boundCheckInactivity,
+            intervalMs
+        );
+    }
+
+    /**
+     * Start the service: load timeout, then start monitoring if shouldStart().
+     * Call once after construction.
+     */
+    async start() {
+        this.sessionTimeout = await this.getTimeout();
+        if (!this.shouldStart()) {
+            return;
+        }
+        this._startMonitoring();
     }
 }
 
 /**
- * Init the session auto-close mechanism
- * attaches event listeners to detect user activity and sets periodic
-   inactivity checks
+ * Default service instance, started on load.
  */
-function startSessionAutoClose() {
-    if (!session) {
-        return;
-    }
-
-    // Immediately check inactivity if a last activity timestamp exists
-    if (globalThis.window.localStorage.getItem("lastActivityTime")) {
-        checkInactivity();
-    }
-
-    function handleUserActivity() {
-        updateActivityTime();
-    }
-
-    // Listen for user interactions to reset the activity timer
-    globalThis.window.addEventListener("mousemove", handleUserActivity);
-    globalThis.window.addEventListener("keydown", handleUserActivity);
-
-    // Set the initial activity time and start the periodic inactivity check
-    updateActivityTime();
-    globalThis.setInterval(checkInactivity, SESSION_TIMEOUT / 2);
-}
-
-// Fetch the session timeout value from Odoo settings and then start the session monitoring
-rpc("/web/session/get_timeout", {}).then((timeout) => {
-    SESSION_TIMEOUT = parseInt(timeout, 10) || SESSION_TIMEOUT;
-    startSessionAutoClose();
-});
+const service = new SessionAutoCloseService();
+service.start();
