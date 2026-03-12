@@ -4,12 +4,18 @@
 
 import {PivotRenderer} from "@web/views/pivot/pivot_renderer";
 import {patch} from "@web/core/utils/patch";
+import {DropdownItemCustomMeasure} from "../dropdown_item_custom_measure/dropdown_item_custom_measure.esm";
 
-patch(PivotRenderer.prototype, "web_pivot_computed_measure.PivotRenderer", {
+patch(PivotRenderer.prototype, {
     getFormattedValue(cell) {
         if (cell.value === Infinity) {
             return "-";
         }
-        return this._super(...arguments);
+        return super.getFormattedValue(cell);
     },
 });
+
+PivotRenderer.components = {
+    ...PivotRenderer.components,
+    DropdownItemCustomMeasure,
+};
