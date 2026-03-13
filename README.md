@@ -32,7 +32,7 @@ addon | version | maintainers | summary
 [web_font_size_report_layout](web_font_size_report_layout/) | 17.0.1.1.0 |  | Adds a font size selector (pt) to the Document Layout wizard
 [web_group_expand](web_group_expand/) | 17.0.1.0.0 |  | Group Expand Buttons
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 17.0.1.0.0 |  | Enables triggering of more than one action on ActionManager
-[web_m2x_options](web_m2x_options/) | 17.0.1.0.7 |  | web_m2x_options
+[web_m2x_options](web_m2x_options/) | 17.0.1.0.8 |  | web_m2x_options
 [web_m2x_options_manager](web_m2x_options_manager/) | 17.0.1.0.1 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
 [web_no_bubble](web_no_bubble/) | 17.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 17.0.1.1.0 |  | Send notification messages to user
