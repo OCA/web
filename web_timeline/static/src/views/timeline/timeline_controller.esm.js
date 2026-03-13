@@ -304,11 +304,20 @@ export class TimelineController extends Component {
                 const groupPathSegments = JSON.parse(item.group);
                 if (Array.isArray(groupPathSegments)) {
                     groupPathSegments.forEach((segment) => {
-                        // Do not set m2m fields as default context
+                        // Set m2m fields using command format [(6, 0, [id])]
                         if (
                             this.model.fields[segment.field] &&
                             this.model.fields[segment.field].type === "many2many"
                         ) {
+                            if (
+                                segment.value !== false &&
+                                segment.value !== null &&
+                                segment.value !== undefined
+                            ) {
+                                context[`default_${segment.field}`] = [
+                                    [6, 0, [segment.value]],
+                                ];
+                            }
                             return;
                         }
                         if (

@@ -404,8 +404,11 @@ export class TimelineRenderer extends Component {
             if (m2mNameCache[cacheKey]) {
                 return m2mNameCache[cacheKey];
             }
-            const names = await this.orm.call(model, "name_get", [ids]);
-            const result = names.map((name) => ({id: name[0], content: name[1]}));
+            const names = await this.orm.read(model, ids, ["display_name"]);
+            const result = names.map((name) => ({
+                id: name.id,
+                content: name.display_name,
+            }));
             m2mNameCache[cacheKey] = result;
             return result;
         };
