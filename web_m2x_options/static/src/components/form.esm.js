@@ -382,6 +382,9 @@ patch(FormController.prototype, {
             viewType = viewType.replace("tree", "list");
             if (viewType.includes(",")) {
                 viewType = isSmall ? "kanban" : "list";
+                if (field.widget && field.widget === "section_one2many") {
+                    viewType = "list";
+                }
             }
             field.viewMode = viewType;
             if (field.views && field.views[viewType] && limit) {
