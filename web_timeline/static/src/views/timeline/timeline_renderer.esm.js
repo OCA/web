@@ -303,6 +303,9 @@ export class TimelineRenderer extends Component {
         if (!from.displayed || !to.displayed) {
             return;
         }
+        if (!from.dom || !from.dom.box || !to.dom || !to.dom.box) {
+            return;
+        }
         const defaults = Object.assign({line_color: "black", line_width: 1}, options);
         this.canvas.draw_arrow(
             from.dom.box,
@@ -331,13 +334,9 @@ export class TimelineRenderer extends Component {
      */
     async on_data_loaded(records, adjust_window) {
         const data = [];
-        this.fieldsGet = await this.get_fields_get(this.model.last_group_bys);
         for (const record of records) {
             if (record[this.date_start]) {
-                const transformed = this.model._event_data_transform(
-                    record,
-                    this.fieldsGet
-                );
+                const transformed = this.model._event_data_transform(record);
                 if (Array.isArray(transformed)) {
                     data.push(...transformed);
                 } else {
@@ -347,24 +346,27 @@ export class TimelineRenderer extends Component {
         }
         const groups = await this.split_groups(records);
         this.groups = groups;
+        // Ensure relevant groups are visible
         for (const d of data) {
-            // Check if the group should be visible
-            // If d.group is 'partner_id-35/category_id-4/city_id-false'
-            // it means there are 3 groups to check
-            // partner_id-35, partner_id-35/category_id-4, partner_id-35/category_id-4/city_id-false
-            const groupParts = d.group.split("/");
-            let groupPath = "";
-            const groupsToCheck = groupParts.map((part, index) => {
-                groupPath = index === 0 ? part : `${groupPath}/${part}`;
-                return groupPath;
-            });
-            for (const gtc of groupsToCheck) {
-                if (gtc.endsWith("-false")) {
-                    const group = groups.find((g) => g.id === gtc);
-                    if (group) {
+            const itemGroupPathJson = d.group;
+            try {
+                const itemPathSegments = JSON.parse(itemGroupPathJson);
+                for (let i = 0; i < itemPathSegments.length; i++) {
+                    const subPathJson = JSON.stringify(
+                        itemPathSegments.slice(0, i + 1)
+                    );
+                    const group = groups.find((g) => g.id === subPathJson);
+                    if (group && !group.visible) {
                         group.visible = true;
                     }
                 }
+            } catch (e) {
+                console.error(
+                    "Error processing group visibility for item. Group JSON string was:",
+                    itemGroupPathJson,
+                    "Error:",
+                    e
+                );
             }
         }
         this.timeline.setGroups(groups);
@@ -385,7 +387,7 @@ export class TimelineRenderer extends Component {
      */
     async split_groups(records) {
         if (this.model.last_group_bys.length === 0) {
-            return records;
+            return [];
         }
         const groups = [];
         let seq = 1;
@@ -395,39 +397,68 @@ export class TimelineRenderer extends Component {
             return acc;
         }, {});
 
-        const createGroup = (id, name, parents, lvl) => {
-            const parentGroups = parents.length ? parents : [null];
+        // Memoization for M2M name_get calls
+        const m2mNameCache = {};
+        const getM2MNames = async (model, ids) => {
+            const cacheKey = `${model}-${ids.sort().join(",")}`;
+            if (m2mNameCache[cacheKey]) {
+                return m2mNameCache[cacheKey];
+            }
+            const names = await this.orm.call(model, "name_get", [ids]);
+            const result = names.map((name) => ({id: name[0], content: name[1]}));
+            m2mNameCache[cacheKey] = result;
+            return result;
+        };
+
+        const createGroup = (segmentObject, displayName, parentGroupsInput, lvl) => {
+            const parentGroups =
+                parentGroupsInput && parentGroupsInput.length
+                    ? parentGroupsInput
+                    : [null];
             const createdGroups = [];
+
             for (const parent of parentGroups) {
-                const subGroupId = parent ? `${parent.id}/${id}` : id;
-                let group = groups.find((g) => g.id === subGroupId);
+                let newPathSegments = [];
+                if (parent && parent.id) {
+                    try {
+                        const parentPathSegments = JSON.parse(parent.id);
+                        newPathSegments = [...parentPathSegments, segmentObject];
+                    } catch (e) {
+                        console.error("Error parsing parent group ID:", parent.id, e);
+                        newPathSegments = [segmentObject];
+                    }
+                } else {
+                    newPathSegments = [segmentObject];
+                }
+                const subGroupId = JSON.stringify(newPathSegments);
+
+                let group = groups && groups.find((g) => g.id === subGroupId);
                 if (!group) {
                     const group_record_values = {};
-                    const group_parts = subGroupId.split("/");
-                    for (let i = 0; i < group_parts.length; i++) {
-                        const [groupKey, groupValue] = group_parts[i].split("-");
-                        // Skip updating m2m field as it is complicated to handle drag and drop
-                        if (this.fieldsGet[groupKey].type === "many2many") {
-                            continue;
+                    newPathSegments.forEach((segment) => {
+                        // Do not set m2m fields for group_record_values
+                        if (
+                            this.fields[segment.field] &&
+                            this.fields[segment.field].type === "many2many"
+                        ) {
+                            return;
                         }
-                        group_record_values[groupKey] =
-                            groupValue === "false"
-                                ? false
-                                : Number(groupValue) || groupValue;
-                    }
+                        group_record_values[segment.field] = segment.value;
+                    });
+
                     group = {
                         id: subGroupId,
-                        content: name || "UNASSIGNED",
+                        content: displayName || "UNASSIGNED",
                         group_record_values,
-                        order: name === "UNASSIGNED" ? -1 : seq,
+                        order: displayName === "UNASSIGNED" ? seq++ : seq++,
                         treeLevel: lvl,
-                        visible: name !== "UNASSIGNED",
+                        visible: displayName !== "UNASSIGNED",
                     };
-                    seq += 1;
                     groups.push(group);
                 }
                 createdGroups.push(group);
-                if (parent) {
+
+                if (parent && parent.id) {
                     if (!parent.nestedGroups) {
                         parent.nestedGroups = [];
                     }
@@ -439,47 +470,160 @@ export class TimelineRenderer extends Component {
             return createdGroups;
         };
 
+        /* eslint-disable complexity */
         const processGroup = async (
-            grouped_field,
+            grouped_field_spec,
             groupValue,
-            groupKey,
             groupLvl,
             parentGroups
         ) => {
-            if (groupValue && Array.isArray(groupValue)) {
-                if (this.fieldsGet[grouped_field].type === "many2many") {
-                    const groupModel = this.fieldsGet[grouped_field].relation;
-                    const listValues = await this.get_m2m_grouping_datas(
-                        groupModel,
-                        groupValue
+            const base_grouped_field = grouped_field_spec.includes(":")
+                ? grouped_field_spec.split(":")[0]
+                : grouped_field_spec;
+            const fieldInfo = this.fields[base_grouped_field];
+
+            if (fieldInfo.type === "many2many") {
+                const m2mIds = Array.isArray(groupValue)
+                    ? groupValue
+                    : groupValue
+                    ? [groupValue]
+                    : [];
+                if (m2mIds.length === 0) {
+                    return createGroup(
+                        {
+                            field: base_grouped_field,
+                            value: false,
+                            spec: grouped_field_spec,
+                        },
+                        "UNASSIGNED",
+                        parentGroups,
+                        groupLvl
                     );
-                    const createdM2mGroups = [];
-                    for (const vals of listValues) {
-                        if (groupValue.includes(vals.id) || vals.id === false) {
-                            const newM2mGroups = createGroup(
-                                `${groupKey}-${vals.id}`,
-                                vals.content,
-                                parentGroups,
-                                groupLvl
-                            );
-                            createdM2mGroups.push(...newM2mGroups);
-                        }
-                    }
-                    return createdM2mGroups;
                 }
-                const groupId = `${groupKey}-${groupValue[0]}`;
-                const groupName = groupValue[1];
-                return createGroup(groupId, groupName, parentGroups, groupLvl);
-            } else if (groupValue && ["string", "number"].includes(typeof groupValue)) {
+                const listValues = await getM2MNames(fieldInfo.relation, m2mIds);
+                const createdM2mGroups = [];
+                for (const vals of listValues) {
+                    if (m2mIds.includes(vals.id)) {
+                        const newM2mGroups = createGroup(
+                            {
+                                field: base_grouped_field,
+                                value: vals.id,
+                                spec: grouped_field_spec,
+                            },
+                            vals.content,
+                            parentGroups,
+                            groupLvl
+                        );
+                        createdM2mGroups.push(...newM2mGroups);
+                    }
+                }
+                if (createdM2mGroups.length === 0 && m2mIds.length > 0) {
+                    for (const id of m2mIds) {
+                        const newM2mGroups = createGroup(
+                            {
+                                field: base_grouped_field,
+                                value: id,
+                                spec: grouped_field_spec,
+                            },
+                            `ID: ${id}`,
+                            parentGroups,
+                            groupLvl
+                        );
+                        createdM2mGroups.push(...newM2mGroups);
+                    }
+                } else if (m2mIds.length === 0) {
+                    return createGroup(
+                        {
+                            field: base_grouped_field,
+                            value: false,
+                            spec: grouped_field_spec,
+                        },
+                        "UNASSIGNED",
+                        parentGroups,
+                        groupLvl
+                    );
+                }
+                return createdM2mGroups;
+            } else if (
+                grouped_field_spec.includes(":") &&
+                (fieldInfo.type === "date" || fieldInfo.type === "datetime")
+            ) {
+                const displayName = groupValue ? String(groupValue) : "UNASSIGNED";
                 return createGroup(
-                    `${groupKey}-${groupValue}`,
-                    groupValue,
+                    {
+                        field: base_grouped_field,
+                        value: groupValue,
+                        spec: grouped_field_spec,
+                    },
+                    displayName,
+                    parentGroups,
+                    groupLvl
+                );
+            } else if (Array.isArray(groupValue)) {
+                // Standard [id, name] for m2o, etc.
+                const id = groupValue[0];
+                const name = groupValue[1];
+                return createGroup(
+                    {
+                        field: base_grouped_field,
+                        value: id,
+                        spec: grouped_field_spec,
+                    },
+                    name,
+                    parentGroups,
+                    groupLvl
+                );
+            } else if (
+                groupValue !== undefined &&
+                groupValue !== null &&
+                groupValue !== false
+            ) {
+                // Simple type (string, number, boolean true)
+                if (fieldInfo.relation && typeof groupValue === "number") {
+                    const names = await getM2MNames(fieldInfo.relation, [groupValue]);
+                    const displayName =
+                        names.length > 0 ? names[0].content : `ID: ${groupValue}`;
+                    return createGroup(
+                        {
+                            field: base_grouped_field,
+                            value: groupValue,
+                            spec: grouped_field_spec,
+                        },
+                        displayName,
+                        parentGroups,
+                        groupLvl
+                    );
+                }
+                // For selection fields, look up the human-readable label
+                if (fieldInfo.type === "selection" && fieldInfo.selection) {
+                    const selEntry = fieldInfo.selection.find(
+                        ([val]) => val === groupValue
+                    );
+                    const displayName = selEntry ? selEntry[1] : String(groupValue);
+                    return createGroup(
+                        {
+                            field: base_grouped_field,
+                            value: groupValue,
+                            spec: grouped_field_spec,
+                        },
+                        displayName,
+                        parentGroups,
+                        groupLvl
+                    );
+                }
+                return createGroup(
+                    {
+                        field: base_grouped_field,
+                        value: groupValue,
+                        spec: grouped_field_spec,
+                    },
+                    String(groupValue),
                     parentGroups,
                     groupLvl
                 );
             }
             return createGroup(
-                `${groupKey}-false`,
+                {field: base_grouped_field, value: false, spec: grouped_field_spec},
                 "UNASSIGNED",
                 parentGroups,
                 groupLvl
@@ -487,37 +631,34 @@ export class TimelineRenderer extends Component {
         };
 
         for (const evt of records) {
-            let parentGroups = [null];
-            for (const grouped_field of this.model.last_group_bys) {
-                const groupValue = evt[grouped_field];
-                const groupKey = grouped_field;
-                const groupLvl = groupLevel[grouped_field];
-                parentGroups = await processGroup(
-                    grouped_field,
+            let currentParentGroups = [null];
+            for (const grouped_field_spec of this.model.last_group_bys) {
+                const groupValue = evt[grouped_field_spec];
+                const groupLvl = groupLevel[grouped_field_spec];
+                currentParentGroups = await processGroup(
+                    grouped_field_spec,
                     groupValue,
-                    groupKey,
                     groupLvl,
-                    parentGroups
+                    currentParentGroups
                 );
+                if (!currentParentGroups || currentParentGroups.length === 0) {
+                    break;
+                }
             }
         }
+        // Ensure unique group ordering
+        groups.sort((a, b) => {
+            if (a.treeLevel !== b.treeLevel) {
+                return a.treeLevel - b.treeLevel;
+            }
+            if (a.content === "UNASSIGNED" && b.content !== "UNASSIGNED") return 1;
+            if (a.content !== "UNASSIGNED" && b.content === "UNASSIGNED") return -1;
+            if (a.content < b.content) return -1;
+            if (a.content > b.content) return 1;
+            return a.order - b.order;
+        });
+        groups.forEach((g, index) => (g.order = index + 1));
         return groups;
-    }
-
-    async get_m2m_grouping_datas(groupModel, groupValue) {
-        const groups = [{id: false, content: "UNASSIGNED"}];
-        for (const gr of groupValue) {
-            const record_info = await this.orm.call(groupModel, "read", [
-                gr,
-                ["display_name"],
-            ]);
-            groups.push({id: record_info[0].id, content: record_info[0].display_name});
-        }
-        return groups;
-    }
-
-    async get_fields_get(group_bys) {
-        return await this.orm.call(this.model.model_name, "fields_get", [group_bys]);
     }
 
     /**

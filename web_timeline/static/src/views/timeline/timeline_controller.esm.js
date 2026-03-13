@@ -61,21 +61,36 @@ export class TimelineController extends Component {
      * @param {EventObject} item
      */
     _onGroupClick(item) {
-        const groups = item.group.split("/");
-        const [group_key, group_value] = groups[groups.length - 1].split("-");
-        if (!group_value || group_value === "false") return;
-        // We need to get the fields metadata from the renderer
-        // since it's not available in the controller
-        const group_model = this.model.fields[group_key].relation;
-        if (!group_model) return;
-        this.actionService.doAction({
-            type: "ir.actions.act_window",
-            res_model: group_model,
-            res_id: parseInt(group_value, 10),
-            views: [[false, "form"]],
-            view_mode: "form",
-            target: "new",
-        });
+        try {
+            const groupPathSegments = JSON.parse(item.group);
+            if (!Array.isArray(groupPathSegments) || groupPathSegments.length === 0)
+                return;
+
+            const lastSegment = groupPathSegments[groupPathSegments.length - 1];
+            const group_key = lastSegment.field;
+            const group_value = lastSegment.value;
+
+            if (
+                group_value === false ||
+                group_value === null ||
+                group_value === undefined
+            )
+                return;
+
+            const fieldInfo = this.model.fields[group_key];
+            if (!fieldInfo || !fieldInfo.relation) return;
+
+            this.actionService.doAction({
+                type: "ir.actions.act_window",
+                res_model: fieldInfo.relation,
+                res_id: parseInt(group_value, 10),
+                views: [[false, "form"]],
+                view_mode: "form",
+                target: "new",
+            });
+        } catch (e) {
+            console.error("Error parsing group JSON for click event:", item.group, e);
+        }
     }
 
     /**
@@ -161,21 +176,44 @@ export class TimelineController extends Component {
             data[this.date_delay] = diff.hours;
         }
 
-        // Parse the group string to extract field values for all group levels
+        // Parse the group JSON to extract field values for all group levels
         if (item.group) {
-            const group_parts = item.group.split("/");
-            for (const part of group_parts) {
-                const [groupKey, groupValue] = part.split("-");
-                // Skip m2m fields as they are complicated to handle
-                if (
-                    this.model.fields[groupKey] &&
-                    this.model.fields[groupKey].type !== "many2many"
-                ) {
-                    data[groupKey] =
-                        groupValue === "false"
-                            ? false
-                            : Number(groupValue) || groupValue;
+            try {
+                const groupPathSegments = JSON.parse(item.group);
+                if (Array.isArray(groupPathSegments)) {
+                    for (const segment of groupPathSegments) {
+                        // Skip m2m fields as they are complicated to handle
+                        if (
+                            this.model.fields[segment.field] &&
+                            this.model.fields[segment.field].type === "many2many"
+                        ) {
+                            continue;
+                        }
+                        // Skip date and datetime fields
+                        if (
+                            this.model.fields[segment.field] &&
+                            (this.model.fields[segment.field].type === "date" ||
+                                this.model.fields[segment.field].type === "datetime")
+                        ) {
+                            continue;
+                        }
+                        if (
+                            segment.value !== false &&
+                            segment.value !== null &&
+                            segment.value !== undefined
+                        ) {
+                            data[segment.field] = segment.value;
+                        } else {
+                            data[segment.field] = false;
+                        }
+                    }
                 }
+            } catch (e) {
+                console.error(
+                    "Error parsing group JSON for move event:",
+                    item.group,
+                    e
+                );
             }
         }
 
@@ -262,10 +300,32 @@ export class TimelineController extends Component {
             context[`default_${this.date_delay}`] = diff.hours;
         }
         if (item.group) {
-            const groups = item.group.split("/");
-            for (let i = 0; i < groups.length; i++) {
-                const [group_key, group_value] = groups[i].split("-");
-                context[`default_${group_key}`] = Number(group_value) || group_value;
+            try {
+                const groupPathSegments = JSON.parse(item.group);
+                if (Array.isArray(groupPathSegments)) {
+                    groupPathSegments.forEach((segment) => {
+                        // Do not set m2m fields as default context
+                        if (
+                            this.model.fields[segment.field] &&
+                            this.model.fields[segment.field].type === "many2many"
+                        ) {
+                            return;
+                        }
+                        if (
+                            segment.value !== false &&
+                            segment.value !== null &&
+                            segment.value !== undefined
+                        ) {
+                            context[`default_${segment.field}`] = Number.isInteger(
+                                segment.value
+                            )
+                                ? segment.value
+                                : segment.value;
+                        }
+                    });
+                }
+            } catch (e) {
+                console.error("Error parsing group JSON for add event:", item.group, e);
             }
         }
         // Show popup
