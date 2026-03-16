@@ -5,12 +5,12 @@ import {registry} from "@web/core/registry";
 
 export async function loadBokehLibraries() {
     const scripts = [
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.6.3.min.js",
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.6.3.min.js",
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.6.3.min.js",
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.6.3.min.js",
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.6.3.min.js",
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.6.3.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.9.0.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.9.0.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.9.0.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.9.0.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.9.0.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.9.0.min.js",
     ];
 
     for (const script of scripts) {
