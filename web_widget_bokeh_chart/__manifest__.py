@@ -5,7 +5,7 @@
     "name": "Web Widget Bokeh Chart",
     "category": "Hidden",
     "summary": "This widget allows to display charts using Bokeh library.",
-    "author": "ForgeFlow, " "Odoo Community Association (OCA), " "Creu Blanca",
+    "author": "ForgeFlow, Odoo Community Association (OCA), Creu Blanca",
     "version": "18.0.1.0.1",
     "maintainers": ["LoisRForgeFlow", "JasminSForgeFlow"],
     "development_status": "Production/Stable",
