@@ -1,0 +1,32 @@
+.o-concurrent_edit_tooltip {
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .btn {
+            color: $o-white;
+            &:hover {
+                background-color: rgba($o-white, 0.2);
+            }
+        }
+
+        .o_popover_header {
+            color: $o-white;
+            margin: 0;
+            background: none;
+            border: none;
+        }
+    }
+    &.warning {
+        box-shadow: 0 0 10px rgba($o-warning, 0.25);
+        header {
+            background-color: $o-warning;
+        }
+    }
+    &.danger {
+        box-shadow: 0 0 10px rgba($o-danger, 0.25);
+        header {
+            background-color: $o-danger;
+        }
+    }
+}
