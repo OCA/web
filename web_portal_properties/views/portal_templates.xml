@@ -8,7 +8,8 @@
         <div class="row" t-if="properties">
             <t t-foreach="properties" t-as="property">
                 <div class="col-6" t-if="property.get('view_in_portal')">
-                    <strong t-esc="property['string']" /><t>: </t>
+                    <strong t-esc="property['string']" />
+                    <t>: </t>
                     <t t-if="property['value']">
                         <span
                             t-esc="property['value'][1]"

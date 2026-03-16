@@ -1,8 +1,7 @@
-/** @odoo-module **/
 import {PortalPropertyDefinition} from "./portal_properties_definition.esm";
 import {PropertiesField} from "@web/views/fields/properties/properties_field";
 import {_t} from "@web/core/l10n/translation";
-import {archParseBoolean} from "@web/views/utils";
+import {exprToBoolean} from "@web/core/utils/strings";
 import {registry} from "@web/core/registry";
 import {usePopover} from "@web/core/popover/popover_hook";
 
@@ -30,11 +29,12 @@ export const portalPropertiesField = {
     component: PortalPropertiesField,
     displayName: _t("Properties"),
     supportedTypes: ["properties"],
+    additionalClasses: ["o_field_properties"],
     extractProps({attrs}, dynamicInfo) {
         return {
             context: dynamicInfo.context,
             columns: parseInt(attrs.columns || "1", 10),
-            showAddButton: archParseBoolean(attrs.showAddButton),
+            showAddButton: exprToBoolean(attrs.showAddButton),
         };
     },
 };
