@@ -98,3 +98,26 @@ class TestResCompany(common.TransactionCase):
         self.assertNotIn("desaturate", css)
         self.assertNotIn(color, css)
         self.assertIn(desaturated_color, css)
+
+    def test_ignore_company_color(self):
+        """
+        Test that we can turn off regenerating css attachment via context key
+        """
+        company = self.env.company
+        attachment = self.env["ir.attachment"].search(
+            [("url", "=", company.scss_get_url())]
+        )
+        attachment.unlink()
+
+        company.company_colors = {}
+        attachment = self.env["ir.attachment"].search(
+            [("url", "=", company.scss_get_url())]
+        )
+        self.assertTrue(attachment, "attachment should have been regenerated")
+
+        attachment.unlink()
+        company.with_context(ignore_company_color=True).company_colors = {}
+        attachment = self.env["ir.attachment"].search(
+            [("url", "=", company.scss_get_url())]
+        )
+        self.assertFalse(attachment, "attachment should not have been regenerated")
