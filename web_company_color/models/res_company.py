@@ -165,22 +165,15 @@ class ResCompany(models.Model):
         return super().unlink()
 
     def write(self, values):
-        if not self.env.context.get("ignore_company_color", False):
-            fields_to_check = (
-                "color_navbar_bg",
-                "color_navbar_bg_hover",
-                "color_navbar_text",
-                "color_button_bg",
-                "color_button_bg_hover",
-                "color_button_text",
-                "color_link_text",
-                "color_link_text_hover",
-            )
-            result = super().write(values)
-            if any([field in values for field in fields_to_check]):
+        result = super().write(values)
+        if not self.env.context.get("ignore_company_color"):
+            fields_to_check = ["company_colors"] + [
+                field_name
+                for field_name, field in self._fields.items()
+                if field.sparse == "company_colors"
+            ]
+            if any(field in values for field in fields_to_check):
                 self.scss_create_or_update_attachment()
-        else:
-            result = super().write(values)
         return result
 
     def button_compute_color(self):
