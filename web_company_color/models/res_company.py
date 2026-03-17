@@ -21,6 +21,7 @@ class ResCompany(models.Model):
         .o_main_navbar {
           background: %(color_navbar_bg)s !important;
           background-color: %(color_navbar_bg)s !important;
+          border-bottom: 1px solid %(color_navbar_border_bottom)s !important;
           color: %(color_navbar_text)s !important;
 
           .show {
@@ -109,6 +110,7 @@ class ResCompany(models.Model):
           &:hover, &:focus, &:active, &:focus:active {
             background-color: %(color_navbar_bg_hover)s !important;
           }
+          border-bottom: 1px solid %(color_navbar_border_bottom)s !important;
         }
         .o_menu_sections .dropdown-toggle {
           background: %(color_navbar_bg)s !important;
@@ -117,6 +119,7 @@ class ResCompany(models.Model):
           &:hover, &:focus, &:active, &:focus:active {
             background-color: %(color_navbar_bg_hover)s !important;
           }
+          border-bottom: 1px solid %(color_navbar_border_bottom)s !important;
         }
         .o_menu_systray button,
         .o_navbar_breadcrumbs,
@@ -136,6 +139,9 @@ class ResCompany(models.Model):
     color_navbar_bg = fields.Char("Navbar Background Color", sparse="company_colors")
     color_navbar_bg_hover = fields.Char(
         "Navbar Background Color Hover", sparse="company_colors"
+    )
+    color_navbar_border_bottom = fields.Char(
+        "Navbar Bottom Border Color", sparse="company_colors"
     )
     color_navbar_text = fields.Char("Navbar Text Color", sparse="company_colors")
     color_button_text = fields.Char("Button Text Color", sparse="company_colors")
@@ -194,10 +200,11 @@ class ResCompany(models.Model):
                 {
                     "color_navbar_bg": n_rgb_to_hex(_r, _g, _b),
                     "color_navbar_bg_hover": n_rgb_to_hex(_rd, _gd, _bd),
+                    "color_navbar_border_bottom": n_rgb_to_hex(_rd, _gd, _bd),
                     "color_navbar_text": "#000" if _a < 0.5 else "#fff",
                 }
             )
-        self.write(values)
+        self.update(values)
 
     def _scss_get_sanitized_values(self):
         self.ensure_one()
@@ -209,6 +216,8 @@ class ResCompany(models.Model):
             {
                 "color_navbar_bg": (values.get("color_navbar_bg") or "$o-brand-odoo"),
                 "color_navbar_bg_hover": (values.get("color_navbar_bg_hover")),
+                "color_navbar_border_bottom": values.get("color_navbar_border_bottom")
+                or f"darken({values.get('color_navbar_bg') or '$o-brand-odoo'}, 10%)",
                 "color_navbar_text": (values.get("color_navbar_text") or "#FFF"),
                 "color_button_bg": values.get("color_button_bg") or "#71639e",
                 "color_button_bg_hover": values.get("color_button_bg_hover")
