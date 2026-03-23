@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Camptocamp SA
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+    <record id="base_res_lang_form_inherit" model="ir.ui.view">
+        <field name="model">res.lang</field>
+        <field name="inherit_id" ref="base.res_lang_form" />
+        <field name="arch" type="xml">
+            <field name="time_format" position="after">
+                <field name="use_date_format_numeric" widget="boolean_toggle" />
+            </field>
+        </field>
+    </record>
+</odoo>
