@@ -3,27 +3,28 @@
  * Copyright 2024 Tecnativa - Carlos Lopez
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-import {
-    onMounted,
-    onPatched,
-    onWillUnmount,
-    useEffect,
-    useRef,
-    useState,
-} from "@odoo/owl";
+import {Component, useEffect, useRef, useState} from "@odoo/owl";
 import {AutoComplete} from "@web/core/autocomplete/autocomplete";
-import {Many2OneField} from "@web/views/fields/many2one/many2one_field";
+import {Many2OneField, many2OneField} from "@web/views/fields/many2one/many2one_field";
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {
     SectionAndNoteListRenderer,
     sectionAndNoteFieldOne2Many,
 } from "@account/components/section_and_note_fields_backend/section_and_note_fields_backend";
 import {X2ManyField, x2ManyField} from "@web/views/fields/x2many/x2many_field";
-import {_t} from "@web/core/l10n/translation";
 import {useRecordObserver} from "@web/model/relational_model/utils";
 import {getActiveHotkey} from "@web/core/hotkeys/hotkey_service";
 import {registry} from "@web/core/registry";
+import {useAutofocus} from "@web/core/utils/hooks";
 import {useProductAndLabelAutoresize} from "../../core/utils/product_and_label_autoresize.esm";
+
+export function useIsNote(record) {
+    return record.data.display_type === "line_note";
+}
+
+export function useIsSection(record) {
+    return record.data.display_type === "line_section";
+}
 
 export class ProductLabelSectionAndNoteListRender extends SectionAndNoteListRenderer {
     setup() {
@@ -118,26 +119,59 @@ export class ProductLabelSectionAndNoteFieldAutocomplete extends Many2XAutocompl
         ...Many2XAutocomplete.components,
         AutoComplete: ProductLabelSectionAndNoteAutocomplete,
     };
+}
+
+export class ProductLabel extends Component {
     static props = {
-        ...Many2XAutocomplete.props,
-        isNote: {type: Boolean},
-        isSection: {type: Boolean},
-        onFocusout: {type: Function, optional: true},
-        updateLabel: {type: Function, optional: true},
+        field_name: {type: String},
+        record: {type: Object},
+        label: {type: Function},
+        updateLabel: {type: Function},
+        readonly: {type: Boolean, optional: true},
     };
-    static template =
-        "web_widget_product_label_section_and_note.ProductLabelSectionAndNoteFieldAutocomplete";
+    static template = "web_widget_product_label_section_and_note.ProductLabel";
     setup() {
         super.setup();
-        this.input = useRef("section_and_note_input");
+        this.labelNode = useAutofocus({refName: "labelNodeRef"});
+        useProductAndLabelAutoresize(this.labelNode, {
+            targetParentName: this.props.field_name,
+        });
     }
-
-    get isSectionOrNote() {
-        return this.props.isSection || this.props.isNote;
+    get sectionAndNoteClasses() {
+        if (useIsSection(this.props.record)) {
+            return "fw-bold";
+        } else if (useIsNote(this.props.record)) {
+            return "fst-italic";
+        }
+        return "";
     }
+    get label() {
+        return this.props.label();
+    }
+    updateLabel(value) {
+        if (this.props.updateLabel) {
+            this.props.updateLabel(value);
+        }
+    }
+}
 
-    get isSection() {
-        return this.props.isSection;
+export class ProductLabelVisibilityButton extends Component {
+    static props = {
+        label: {type: Function},
+        switchLabelVisibility: {type: Function},
+        switchProductVisibility: {type: Function},
+        isProductVisible: {type: Boolean, optional: true},
+    };
+    static template =
+        "web_widget_product_label_section_and_note.ProductLabelVisibilityButton";
+    get label() {
+        return this.props.label();
+    }
+    switchLabelVisibility() {
+        this.props.switchLabelVisibility();
+    }
+    switchProductVisibility() {
+        this.props.switchProductVisibility();
     }
 }
 
@@ -145,26 +179,18 @@ export class ProductLabelSectionAndNoteField extends Many2OneField {
     static components = {
         ...Many2OneField.components,
         Many2XAutocomplete: ProductLabelSectionAndNoteFieldAutocomplete,
+        ProductLabel: ProductLabel,
+        ProductLabelVisibilityButton: ProductLabelVisibilityButton,
     };
     static template =
         "web_widget_product_label_section_and_note.ProductLabelSectionAndNoteField";
     setup() {
         super.setup();
-        this.isPrintMode = useState({value: false});
         this.labelVisibility = useState({value: false});
         this.isProductVisible = useState({value: false});
-        this.switchToLabel = false;
         this.changeProductVisibility = true;
         this.columnIsProductAndLabel = useState({
             value: this.props.record.columnIsProductAndLabel,
-        });
-        this.labelNode = useRef("labelNodeRef");
-        useProductAndLabelAutoresize(this.labelNode, {
-            targetParentName: this.props.name,
-        });
-        this.productNode = useRef("productNodeRef");
-        useProductAndLabelAutoresize(this.productNode, {
-            targetParentName: this.props.name,
         });
 
         useEffect(
@@ -175,34 +201,6 @@ export class ProductLabelSectionAndNoteField extends Many2OneField {
             () => [this.props.record.columnIsProductAndLabel]
         );
 
-        onPatched(() => {
-            if (this.labelNode.el && this.switchToLabel) {
-                this.switchToLabel = false;
-                this.labelNode.el.focus();
-            }
-        });
-
-        this.onBeforePrint = () => {
-            this.isPrintMode.value = true;
-        };
-
-        this.onAfterPrint = () => {
-            this.isPrintMode.value = false;
-        };
-
-        // The following hooks are used to make a div visible only in the print view. This div is necessary in the
-        // print view in order not to have scroll bars but can't be displayed in the normal view because it adds
-        // an empty line. This is done by switching an attribute to true only during the print view life cycle and
-        // including the said div in a t-if depending on that attribute.
-        onMounted(() => {
-            window.addEventListener("beforeprint", this.onBeforePrint);
-            window.addEventListener("afterprint", this.onAfterPrint);
-        });
-
-        onWillUnmount(() => {
-            window.removeEventListener("beforeprint", this.onBeforePrint);
-            window.removeEventListener("afterprint", this.onAfterPrint);
-        });
         useRecordObserver(async (record) => {
             if (this.changeProductVisibility) {
                 const label = record.data.name || "";
@@ -226,45 +224,12 @@ export class ProductLabelSectionAndNoteField extends Many2OneField {
         return label;
     }
 
-    get Many2XAutocompleteProps() {
-        const props = super.Many2XAutocompleteProps;
-        props.isSection = this.isSection(this.props.record);
-        props.isNote = this.isNote(this.props.record);
-        props.placeholder = _t("Search a product");
-        props.updateLabel = this.updateLabel.bind(this);
-        return props;
-    }
-
-    get isProductClickable() {
-        return this.props.record.evalContext.parent.state !== "draft";
-    }
-
     get isSectionOrNote() {
-        return this.isSection(this.props.record) || this.isNote(this.props.record);
-    }
-
-    get sectionAndNoteClasses() {
-        if (this.isSection()) {
-            return "fw-bold";
-        } else if (this.isNote()) {
-            return "fst-italic";
-        }
-        return "";
-    }
-
-    isSection(record = null) {
-        record = record || this.props.record;
-        return record.data.display_type === "line_section";
-    }
-
-    isNote(record = null) {
-        record = record || this.props.record;
-        return record.data.display_type === "line_note";
+        return useIsSection(this.props.record) || useIsNote(this.props.record);
     }
 
     switchLabelVisibility() {
         this.labelVisibility.value = !this.labelVisibility.value;
-        this.switchToLabel = true;
     }
 
     switchProductVisibility() {
@@ -292,7 +257,7 @@ export class ProductLabelSectionAndNoteField extends Many2OneField {
 }
 
 export const productLabelSectionAndNoteField = {
-    ...Many2OneField,
+    ...many2OneField,
     component: ProductLabelSectionAndNoteField,
 };
 registry

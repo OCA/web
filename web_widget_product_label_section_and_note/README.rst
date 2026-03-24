@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =========================================
 Web widget product label section and note
 =========================================
@@ -17,7 +13,7 @@ Web widget product label section and note
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -52,6 +48,11 @@ the widget for these fields:
   widget="product_label_section_and_note_field".
 - name field with widget="section_and_note_text".
 
+If in your Odoo instance you have installed the module
+``sale_product_configurator``, you need to install the module
+`sale_product_configurator_widget_product_label <https://github.com/OCA/sale-workflow/tree/17.0/sale_product_configurator_widget_product_label>`__
+for it to work properly.
+
 Usage
 =====
 
@@ -63,7 +64,6 @@ Usage
 Known issues / Roadmap
 ======================
 
-- Add compatibility with sale_product_configurator module
 - Add compatibility with purchase_product_matrix module
 - When this module is installed, the PDF report will always display the
   column name as a combination of the product code, product name, and
