@@ -89,6 +89,11 @@ msgid "Navbar Background Color Hover"
 msgstr "Colore Hover Sfondo Barra Navigazione"
 
 #. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_border_bottom
+msgid "Navbar Bottom Border Color"
+msgstr ""
+
+#. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_text
 msgid "Navbar Text Color"
 msgstr "Colori Testo Barra Navigazione"
