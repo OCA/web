@@ -18,6 +18,7 @@
                     <group string="Colors" name="navbar_colors">
                         <field name="color_navbar_bg" widget="color" />
                         <field name="color_navbar_bg_hover" widget="color" />
+                        <field name="color_navbar_border_bottom" widget="color" />
                         <field name="color_navbar_text" widget="color" />
                         <field name="color_button_bg" widget="color" />
                         <field name="color_button_bg_hover" widget="color" />
