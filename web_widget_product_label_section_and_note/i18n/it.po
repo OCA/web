@@ -34,34 +34,18 @@ msgstr ""
 #. module: web_widget_product_label_section_and_note
 #. odoo-javascript
 #: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
 #, python-format
 msgid "Enter a description"
 msgstr "Inserire una descrizione"
 
-#. module: web_widget_product_label_section_and_note
-#. odoo-javascript
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
 #, python-format
-msgid "Internal link"
-msgstr "Link interno"
+#~ msgid "Internal link"
+#~ msgstr "Link interno"
 
-#. module: web_widget_product_label_section_and_note
-#. odoo-javascript
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
 #, python-format
-msgid "Scan barcode"
-msgstr "Leggi codice a barre"
+#~ msgid "Scan barcode"
+#~ msgstr "Leggi codice a barre"
 
-#. module: web_widget_product_label_section_and_note
-#. odoo-javascript
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.esm.js:0
-#: code:addons/web_widget_product_label_section_and_note/static/src/components/product_label_section_and_note_field/product_label_section_and_note_field.xml:0
 #, python-format
-msgid "Search a product"
-msgstr "Cerca un prodotto"
+#~ msgid "Search a product"
+#~ msgstr "Cerca un prodotto"
