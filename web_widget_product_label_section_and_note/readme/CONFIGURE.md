@@ -6,3 +6,6 @@ the widget for these fields:
 - product_id or producttmpl_id field with
   widget="product_label_section_and_note_field".
 - name field with widget="section_and_note_text".
+
+If in your Odoo instance you have installed the module `sale_product_configurator`, you need to install the module 
+[sale_product_configurator_widget_product_label](https://github.com/OCA/sale-workflow/tree/17.0/sale_product_configurator_widget_product_label) for it to work properly.
