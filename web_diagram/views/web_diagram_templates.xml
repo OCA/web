@@ -14,8 +14,8 @@
             </xpath>
         </template>
 
-        <template id="qunit_suite" name="web_diagram tests" inherit_id="web.qunit_suite">
-            <xpath expr="//script[contains(@src, '/web/static/tests/views/kanban_tests.js')]" position="after">
+        <template id="qunit_suite" name="web_diagram tests" inherit_id="web.qunit_suite_tests">
+            <xpath expr="." position="inside">
                 <script type="text/javascript" src="/web_diagram/static/tests/diagram_tests.js"></script>
             </xpath>
         </template>
