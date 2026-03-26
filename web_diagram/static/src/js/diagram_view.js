@@ -60,14 +60,16 @@ var DiagramView = BasicView.extend({
             if (child.attrs.invisible === '1')
                 invisible_nodes.push(child.attrs.name);
             else {
-                var fieldString = self.fields[child.attrs.name].string || toTitleCase(child.attrs.name);
+                var field = self.fields[child.attrs.name];
+                var fieldString = (field && field.string) || toTitleCase(child.attrs.name);
                 visible_nodes.push(child.attrs.name);
                 node_fields_string.push(fieldString);
             }
         });
 
         var connector_fields_string = _.map(connectors.children, function (conn) {
-            return self.fields[conn.attrs.name].string || toTitleCase(conn.attrs.name);
+            var field = self.fields[conn.attrs.name];
+            return (field && field.string) || toTitleCase(conn.attrs.name);
         });
 
         this.loadParams = _.extend({}, this.loadParams, {
@@ -94,6 +96,21 @@ var DiagramView = BasicView.extend({
     //--------------------------------------------------------------------------
     // Public
     //--------------------------------------------------------------------------
+
+    /**
+     * Stop BasicView from traversing into <node> and <arrow> elements.
+     * Their <field> children belong to the node/connector object models,
+     * not to the main diagram model, so looking them up in fv.viewFields
+     * would yield undefined and crash _getFieldWidgetClass.
+     *
+     * @override
+     */
+    _processNode: function (node, fv) {
+        if (node.tag === 'node' || node.tag === 'arrow') {
+            return false;
+        }
+        return this._super.apply(this, arguments);
+    },
 
     /**
      * This override is quite tricky: the graph renderer uses Raphael.js to
