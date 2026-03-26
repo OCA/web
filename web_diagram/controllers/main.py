@@ -108,7 +108,7 @@ class DiagramView(http.Controller):
             for i, fld in enumerate(visible_node_fields):
                 n['options'][node_fields_string[i]] = act[fld]
 
-        _id, name = http.request.env[model].browse([id]).name_get()[0]
+        name = http.request.env[model].browse(id).display_name
         return dict(nodes=nodes,
                     conn=connectors,
                     display_name=name,
