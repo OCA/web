@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, tools
-from odoo.addons.base.models.ir_ui_view import NameManager
 from ..tools.graph import graph
 from odoo.tools.safe_eval import safe_eval
 
@@ -15,34 +14,42 @@ class IrUIView(models.Model):
 
     def _postprocess_tag_node(self, node, name_manager, node_info):
         """Process <node> children against the node's object model, not the
-        parent diagram model."""
+        parent diagram model.
+
+        In Odoo 15, NameManager takes only the model (no validate flag) and
+        postprocess() is gone — _postprocess_view() drives the stack loop.
+        We move children into a temporary wrapper, run _postprocess_view on
+        it against the node's own model, then move them back.
+        """
         node_model = node.get('object')
         if node_model and node_model in self.env:
-            sub_nm = NameManager(name_manager.validate, self.env[node_model])
-            for child in node:
-                self.postprocess(child, [], False, sub_nm)
-            if name_manager.validate:
-                sub_nm.check_view_fields(self)
-        # Prevent postprocess() from re-iterating children with parent manager
+            from lxml import etree
+            wrapper = etree.Element('_node_wrapper')
+            for child in list(node):
+                wrapper.append(child)  # lxml auto-detaches from node
+            self._postprocess_view(wrapper, node_model, editable=False)
+            for child in list(wrapper):
+                node.append(child)  # lxml auto-detaches from wrapper
+        # Prevent parent stack from re-processing children with diagram model
         node_info['children'] = []
         node_info['editable'] = False
 
     def _postprocess_tag_arrow(self, node, name_manager, node_info):
         """Process <arrow> children against the arrow's object model, not the
-        parent diagram model."""
+        parent diagram model.
+
+        Same Odoo 15 adaptation as _postprocess_tag_node above.
+        """
         arrow_model = node.get('object')
         if arrow_model and arrow_model in self.env:
-            sub_nm = NameManager(name_manager.validate, self.env[arrow_model])
-            # source/destination attrs are field names on the arrow model
-            if node.get('source'):
-                sub_nm.has_field(node.get('source'), {})
-            if node.get('destination'):
-                sub_nm.has_field(node.get('destination'), {})
-            for child in node:
-                self.postprocess(child, [], False, sub_nm)
-            if name_manager.validate:
-                sub_nm.check_view_fields(self)
-        # Prevent postprocess() from re-iterating children with parent manager
+            from lxml import etree
+            wrapper = etree.Element('_arrow_wrapper')
+            for child in list(node):
+                wrapper.append(child)
+            self._postprocess_view(wrapper, arrow_model, editable=False)
+            for child in list(wrapper):
+                node.append(child)
+        # Prevent parent stack from re-processing children with diagram model
         node_info['children'] = []
         node_info['editable'] = False
 
