@@ -2,7 +2,7 @@
 
 from odoo import api, fields, models, tools
 from odoo.addons.base.models.ir_ui_view import NameManager
-from odoo.tools import graph
+from ..tools.graph import graph
 from odoo.tools.safe_eval import safe_eval
 
 DIAGRAM_VIEW = ("diagram", "Diagram")
