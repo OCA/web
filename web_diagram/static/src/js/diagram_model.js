@@ -34,7 +34,7 @@ var DiagramModel = AbstractModel.extend({
      */
     load: function (params) {
         this.modelName = params.modelName;
-        this.res_id = params.res_id;
+        this.res_id = params.res_ids[0];
         this.node_model = params.node_model;
         this.connector_model = params.connector_model;
         this.connectors = params.connectors;
