@@ -1,52 +1,37 @@
-odoo.define('web_diagram.DiagramRenderer', function (require) {
-"use strict";
+/** @odoo-module */
 
-var AbstractRenderer = require('web.AbstractRenderer');
+/* global Raphael, CuteGraph, CuteNode, CuteEdge */
+
+import { Component, onMounted, onPatched, useRef } from "@odoo/owl";
 
 /**
- * Diagram Renderer
- *
- * The diagram renderer responsability is to render a diagram view, that is, a
- * set of (labelled) nodes and edges.  To do that, it uses the Raphael.js
- * library.
+ * DiagramRenderer — OWL component.
+ * Renders the diagram using Raphael.js (global) and the CuteGraph
+ * helpers from graph.js (also globals set by legacy scripts).
  */
-var DiagramRenderer = AbstractRenderer.extend({
-    template: 'DiagramView',
-    /**
-     * @override
-     * @returns {Promise}
-     */
-    start: function () {
-        var $header = this.$el.filter('.o_diagram_header');
-        _.each(this.state.labels, function (label) {
-            $header.append($('<span>').html(label));
-        });
-        this.$diagram_container = this.$el.filter('.o_diagram');
+export class DiagramRenderer extends Component {
+    setup() {
+        this.containerRef = useRef("diagram");
+        onMounted(() => this._render());
+        onPatched(() => this._render());
+    }
 
-        return this._super.apply(this, arguments);
-    },
+    _render() {
+        const container = this.containerRef.el;
+        if (!container) {
+            return;
+        }
 
-    //--------------------------------------------------------------------------
-    // Private
-    //--------------------------------------------------------------------------
+        const { nodes, edges, onEditNode, onRemoveNode, onEditEdge, onAddEdge, onRemoveEdge } =
+            this.props;
 
-    /**
-     * @override
-     * @returns {Promise}
-     */
-    _render: function () {
-        var self = this;
-        var nodes  = this.state.nodes;
-        var edges  = this.state.edges;
-        var id_to_node = {};
-        var style = {
+        const style = {
             edge_color: "#A0A0A0",
             edge_label_color: "#555",
             edge_label_font_size: 10,
             edge_width: 2,
             edge_spacing: 100,
             edge_loop_radius: 100,
-
             node_label_color: "#333",
             node_label_font_size: 12,
             node_outline_color: "#333",
@@ -57,87 +42,85 @@ var DiagramRenderer = AbstractRenderer.extend({
             node_size_y: 80,
             connector_active_color: "#FFF",
             connector_radius: 4,
-
             close_button_radius: 8,
             close_button_color: "#333",
             close_button_x_color: "#FFF",
-
             gray: "#DCDCDC",
             white: "#FFF",
-
-            viewport_margin: 50
+            viewport_margin: 50,
         };
 
-        // remove previous diagram
-        this.$diagram_container.empty();
+        // Clear previous diagram
+        container.innerHTML = "";
 
-        // for the node and edge's label to be correctly positioned, the diagram
-        // must be rendered directly in the DOM, so we render it in a fake
-        // element appended in the body, and then move it to this widget's $el
-        var $div = $('<div>')
-                        .css({position: 'absolute', top: -10000, right: -10000})
-                        .appendTo($('body'));
-        var r  = new Raphael($div[0], '100%','100%');
-        var graph  = new CuteGraph(r, style, this.$diagram_container[0]);
-        _.each(nodes, function (node) {
-            var n = new CuteNode(
+        // Render in a temporary off-screen div so Raphael positions labels
+        // correctly, then move the result into the real container.
+        const div = document.createElement("div");
+        div.style.cssText = "position:absolute;top:-10000px;right:-10000px;";
+        document.body.appendChild(div);
+
+        const r = new Raphael(div, "100%", "100%");
+        const graph = new CuteGraph(r, style, container);
+        const idToNode = {};
+
+        Object.values(nodes).forEach((node) => {
+            const n = new CuteNode(
                 graph,
-                node.x + 50,  // FIXME the +50 should be in the layout algorithm
+                node.x + 50, // FIXME: +50 offset should live in the layout algorithm
                 node.y + 50,
                 CuteGraph.wordwrap(node.name, 14),
-                node.shape === 'rectangle' ? 'rect' : 'circle',
-                node.color === 'white' ? style.white : style.gray);
-
+                node.shape === "rectangle" ? "rect" : "circle",
+                node.color === "white" ? style.white : style.gray
+            );
             n.id = node.id;
-            id_to_node[node.id] = n;
+            idToNode[node.id] = n;
         });
-        _.each(edges, function (edge) {
-            var e =  new CuteEdge(
+
+        Object.values(edges).forEach((edge) => {
+            const e = new CuteEdge(
                 graph,
                 CuteGraph.wordwrap(edge.signal, 32),
-                id_to_node[edge.s_id],
-                id_to_node[edge.d_id] || id_to_node[edge.s_id]);  // WORKAROUND
+                idToNode[edge.s_id],
+                idToNode[edge.d_id] || idToNode[edge.s_id] // WORKAROUND for missing dest
+            );
             e.id = edge.id;
         });
 
-        // move the renderered diagram to the widget's $el
-        $div.contents().appendTo(this.$diagram_container);
-        $div.remove();
+        // Move rendered SVG into real container
+        while (div.firstChild) {
+            container.appendChild(div.firstChild);
+        }
+        div.remove();
 
-        CuteNode.double_click_callback = function (cutenode) {
-            self.trigger_up('edit_node', {id: cutenode.id});
-        };
-        CuteNode.destruction_callback = function (cutenode) {
-            self.trigger_up('remove_node', {id: cutenode.id});
-            // return a rejected promise to prevent the library from removing
-            // the node directly,as the diagram will be redrawn once the node is
-            // deleted
+        // Wire up interaction callbacks (static on the CuteGraph classes)
+        CuteNode.double_click_callback = (cutenode) => onEditNode(cutenode.id);
+        CuteNode.destruction_callback = (cutenode) => {
+            onRemoveNode(cutenode.id);
+            // Reject to prevent the library from immediately removing the node;
+            // the diagram is redrawn after the server confirms deletion.
             return Promise.reject();
         };
-        CuteEdge.double_click_callback = function (cuteedge) {
-            self.trigger_up('edit_edge', {id: cuteedge.id});
-        };
 
-        CuteEdge.creation_callback = function (node_start, node_end) {
-            return {label: ''};
+        CuteEdge.double_click_callback = (cuteedge) => onEditEdge(cuteedge.id);
+        CuteEdge.creation_callback = () => ({ label: "" });
+        CuteEdge.new_edge_callback = (cuteedge) => {
+            onAddEdge(cuteedge.get_start().id, cuteedge.get_end().id);
         };
-        CuteEdge.new_edge_callback = function (cuteedge) {
-            self.trigger_up('add_edge', {
-                source_id: cuteedge.get_start().id,
-                dest_id: cuteedge.get_end().id,
-            });
-        };
-        CuteEdge.destruction_callback = function (cuteedge) {
-            self.trigger_up('remove_edge', {id: cuteedge.id});
-            // return a rejected promise to prevent the library from removing
-            // the edge directly, as the diagram will be redrawn once the edge
-            // is deleted
+        CuteEdge.destruction_callback = (cuteedge) => {
+            onRemoveEdge(cuteedge.id);
             return Promise.reject();
         };
-        return this._super.apply(this, arguments);
-    },
-});
+    }
+}
 
-return DiagramRenderer;
-
-});
+DiagramRenderer.template = "web_diagram.DiagramView";
+DiagramRenderer.props = {
+    nodes: { type: Object },
+    edges: { type: Object },
+    labels: { type: Array },
+    onEditNode: { type: Function },
+    onRemoveNode: { type: Function },
+    onEditEdge: { type: Function },
+    onAddEdge: { type: Function },
+    onRemoveEdge: { type: Function },
+};

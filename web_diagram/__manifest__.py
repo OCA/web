@@ -8,10 +8,12 @@ Openerp Web Diagram view.
 =========================
 
 """,
-    'version': "15.0.1.0.0",
+    'version': "16.0.1.0.0",
     'depends': ['web'],
     'assets': {
         'web.assets_backend': [
+            'web_diagram/static/lib/js/jquery.mousewheel.js',
+            'web_diagram/static/lib/js/raphael.js',
             'web_diagram/static/src/scss/diagram_view.scss',
             'web_diagram/static/src/js/vec2.js',
             'web_diagram/static/src/js/graph.js',
@@ -19,9 +21,6 @@ Openerp Web Diagram view.
             'web_diagram/static/src/js/diagram_controller.js',
             'web_diagram/static/src/js/diagram_renderer.js',
             'web_diagram/static/src/js/diagram_view.js',
-            'web_diagram/static/src/js/view_registry.js',
-        ],
-        'web.assets_qweb': [
             'web_diagram/static/src/xml/base_diagram.xml',
         ],
         'web.qunit_suite_tests': [
