@@ -1,209 +1,208 @@
-odoo.define('web_diagram.DiagramController', function (require) {
-"use strict";
+/** @odoo-module */
 
-var AbstractController = require('web.AbstractController');
-var core = require('web.core');
-var Dialog = require('web.Dialog');
-var view_dialogs = require('web.view_dialogs');
-
-var _t = core._t;
-var QWeb = core.qweb;
-var FormViewDialog = view_dialogs.FormViewDialog;
+import { Component, onWillStart, useState } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
+import { _t } from "@web/core/l10n/translation";
+import { DiagramModel } from "./diagram_model";
+import { DiagramRenderer } from "./diagram_renderer";
 
 /**
- * Diagram Controller
+ * DiagramController — OWL component, entry point for the diagram view.
+ * Parses the arch, owns the DiagramModel, and manages view state.
  */
-var DiagramController = AbstractController.extend({
-    className: 'o_diagram_view',
-    custom_events: {
-        add_edge: '_onAddEdge',
-        edit_edge: '_onEditEdge',
-        edit_node: '_onEditNode',
-        remove_edge: '_onRemoveEdge',
-        remove_node: '_onRemoveNode',
-    },
-    /**
-     * @override
-     * @param {Widget} parent
-     * @param {DiagramModel} model
-     * @param {DiagramRenderer} renderer
-     * @param {Object} params
-     */
-    init: function (parent, model, renderer, params) {
-        this._super.apply(this, arguments);
-        this.domain = params.domain || [];
-        this.context = params.context;
-        this.ids = params.ids;
-        this.currentId = params.currentId;
-    },
+export class DiagramController extends Component {
+    setup() {
+        this.rpc = useService("rpc");
+        this.dialog = useService("dialog");
+        this.orm = useService("orm");
 
-    //--------------------------------------------------------------------------
-    // Public
-    //--------------------------------------------------------------------------
+        const archInfo = this._parseArch(this.props.arch, this.props.fields || {});
+        this.archInfo = archInfo;
 
-    /**
-     * Render the buttons according to the DiagramView.buttons template and add
-     * listeners on it. Set this.$buttons with the produced jQuery element
-     *
-     * @param {jQuery} [$node] a jQuery node where the rendered buttons should
-     *   be inserted $node may be undefined, in which case they are inserted
-     *   into this.options.$buttons
-     */
-    renderButtons: function ($node) {
-        this.$buttons = $(QWeb.render("DiagramView.buttons", {widget: this}));
-        this.$buttons.on('click', '.o_diagram_new_button', this._addNode.bind(this));
-        this.$buttons.appendTo($node);
-    },
-
-    //--------------------------------------------------------------------------
-    // Private
-    //--------------------------------------------------------------------------
-
-    /**
-     * Creates a popup to add a node to the diagram
-     *
-     * @private
-     */
-    _addNode: function () {
-        var state = this.model.get();
-        var pop = new FormViewDialog(this, {
-            res_model: state.node_model,
-            domain: this.domain,
-            context: this.context,
-            title: _.str.sprintf("%s %s", _t("Create:"), _t('Activity')),
-            disable_multiple_selection: true,
-            on_saved: this.reload.bind(this, {}),
-        }).open();
-
-        // manually trigger a 'field_changed' on the dialog's form_view to set
-        // the default value of the parent_id field
-        pop.opened().then(function () {
-            var changes = {};
-            changes[state.parent_field] = {
-                id: state.res_id
-            };
-            pop.form_view.trigger_up('field_changed', {
-                dataPointID: pop.form_view.handle,
-                changes: changes,
-            });
+        this.model = new DiagramModel(this.rpc);
+        this.state = useState({
+            nodes: {},
+            edges: {},
+            labels: archInfo.labels,
+            nodeModel: archInfo.nodeModel,
+            connectorModel: archInfo.connectorModel,
+            connectorAttrs: archInfo.connectorAttrs,
+            parentField: false,
         });
-    },
 
-    //--------------------------------------------------------------------------
-    // Handlers
-    //--------------------------------------------------------------------------
-
-    /**
-     * Custom event handler that opens a popup to add an edge from given source
-     * and dest nodes.
-     *
-     * @private
-     * @param {OdooEvent} event
-     */
-    _onAddEdge: function (event) {
-        var self = this;
-        var state = this.model.get();
-        var pop = new FormViewDialog(self, {
-            res_model: state.connector_model,
-            domain: this.domain,
-            context: this.context,
-            title: _.str.sprintf("%s %s", _t("Create:"), _t('Transition')),
-            disable_multiple_selection: true,
-        }).open();
-
-        // manually trigger a 'field_changed' on the dialog's form_view to set
-        // the default source and destination values
-        pop.opened().then(function () {
-            var changes = {};
-            changes[state.connectors.attrs.source] = {
-                id: event.data.source_id
-            };
-            changes[state.connectors.attrs.destination] = {
-                id: event.data.dest_id
-            };
-            pop.form_view.trigger_up('field_changed', {
-                dataPointID: pop.form_view.handle,
-                changes: changes,
+        onWillStart(async () => {
+            await this.model.load({
+                resId: this.props.resId,
+                resModel: this.props.resModel,
+                nodeModel: archInfo.nodeModel,
+                connectorModel: archInfo.connectorModel,
+                connectorAttrs: archInfo.connectorAttrs,
+                nodeAttrs: archInfo.nodeAttrs,
+                visibleNodes: archInfo.visibleNodes,
+                invisibleNodes: archInfo.invisibleNodes,
+                nodeFieldsString: archInfo.nodeFieldsString,
+                connectorFieldsString: archInfo.connectorFieldsString,
+                labels: archInfo.labels,
             });
+            this._updateState();
         });
-        pop.on('closed', this, this.reload.bind(this, {}));
-    },
+    }
+
     /**
-     * Custom event handler that opens a popup to edit an edge given its id
-     *
-     * @private
-     * @param {OdooEvent} event
+     * Parse the view arch XML element and extract diagram configuration.
+     * Accepts either a DOM Element or an XML string.
      */
-    _onEditEdge: function (event) {
-        var state = this.model.get();
-        new FormViewDialog(this, {
-            res_model: state.connector_model,
-            res_id: parseInt(event.data.id, 10),
-            context: this.context,
-            title: _.str.sprintf("%s %s", _t("Open:"), _t('Transition')),
-            on_saved: this.reload.bind(this, {}),
-        }).open();
-    },
-    /**
-     * Custom event handler that opens a popup to edit the content of a node
-     * given its id
-     *
-     * @private
-     * @param {OdooEvent} event
-     */
-    _onEditNode: function (event) {
-        var state = this.model.get();
-        new FormViewDialog(this, {
-            res_model: state.node_model,
-            res_id: event.data.id,
-            context: this.context,
-            title: _.str.sprintf("%s %s", _t("Open:"), _t('Activity')),
-            on_saved: this.reload.bind(this, {}),
-        }).open();
-    },
-    /**
-     * Custom event handler that removes an edge given its id
-     *
-     * @private
-     * @param {OdooEvent} event
-     */
-    _onRemoveEdge: function (event) {
-        var self = this;
-        Dialog.confirm(this, (_t("Are you sure you want to remove this transition?")), {
-            confirm_callback: function () {
-                var state = self.model.get();
-                self._rpc({
-                        model: state.connector_model,
-                        method: 'unlink',
-                        args: [event.data.id],
-                    })
-                    .then(self.reload.bind(self, {}));
+    _parseArch(arch, fields) {
+        let archEl = arch;
+        if (typeof arch === "string") {
+            archEl = new DOMParser().parseFromString(arch, "text/xml").documentElement;
+        }
+
+        const toTitleCase = (str) =>
+            str.replace(/\w\S*/g, (txt) =>
+                txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+            );
+
+        const nodeEl = [...archEl.children].find((el) => el.tagName === "node");
+        const arrowEl = [...archEl.children].find((el) => el.tagName === "arrow");
+
+        const labels = [...archEl.children]
+            .filter((el) => el.tagName === "label")
+            .map((el) => el.getAttribute("string"));
+
+        const invisibleNodes = [];
+        const visibleNodes = [];
+        const nodeFieldsString = [];
+
+        [...nodeEl.children].forEach((child) => {
+            const name = child.getAttribute("name");
+            if (child.getAttribute("invisible") === "1") {
+                invisibleNodes.push(name);
+            } else {
+                const field = fields[name] || {};
+                visibleNodes.push(name);
+                nodeFieldsString.push(field.string || toTitleCase(name));
+            }
+        });
+
+        const connectorFieldsString = [...arrowEl.children].map((conn) => {
+            const name = conn.getAttribute("name");
+            const field = fields[name] || {};
+            return field.string || toTitleCase(name);
+        });
+
+        return {
+            nodeModel: nodeEl.getAttribute("object"),
+            connectorModel: arrowEl.getAttribute("object"),
+            labels,
+            visibleNodes,
+            invisibleNodes,
+            nodeFieldsString,
+            connectorFieldsString,
+            nodeAttrs: {
+                bgcolor: nodeEl.getAttribute("bgcolor"),
+                shape: nodeEl.getAttribute("shape"),
+            },
+            connectorAttrs: {
+                source: arrowEl.getAttribute("source"),
+                destination: arrowEl.getAttribute("destination"),
+                label: arrowEl.getAttribute("label"),
+            },
+        };
+    }
+
+    _updateState() {
+        const data = this.model.get();
+        this.state.nodes = data.nodes;
+        this.state.edges = data.edges;
+        this.state.parentField = data.parentField;
+    }
+
+    async reload() {
+        await this.model.reload();
+        this._updateState();
+    }
+
+    // -------------------------------------------------------------------------
+    // Node actions
+    // -------------------------------------------------------------------------
+
+    addNode() {
+        this.dialog.add(FormViewDialog, {
+            resModel: this.state.nodeModel,
+            context: {
+                ...(this.props.context || {}),
+                [`default_${this.state.parentField}`]: this.props.resId,
+            },
+            title: _t("Create: Activity"),
+            onRecordSaved: () => this.reload(),
+        });
+    }
+
+    editNode(id) {
+        this.dialog.add(FormViewDialog, {
+            resModel: this.state.nodeModel,
+            resId: id,
+            context: this.props.context || {},
+            title: _t("Open: Activity"),
+            onRecordSaved: () => this.reload(),
+        });
+    }
+
+    removeNode(id) {
+        this.dialog.add(ConfirmationDialog, {
+            body: _t(
+                "Are you sure you want to remove this node? " +
+                "This will remove its connected transitions as well."
+            ),
+            confirm: async () => {
+                await this.orm.unlink(this.state.nodeModel, [id]);
+                await this.reload();
             },
         });
-    },
-    /**
-     * Custom event handler that removes a node given its id
-     *
-     * @private
-     * @param {OdooEvent} event
-     */
-    _onRemoveNode: function (event) {
-        var self = this;
-        var msg = _t("Are you sure you want to remove this node ? This will remove its connected transitions as well.");
-        Dialog.confirm(this, (msg), {
-            confirm_callback: function () {
-                var state = self.model.get();
-                self._rpc({
-                        model: state.node_model,
-                        method: 'unlink',
-                        args: [event.data.id],
-                    })
-                    .then(self.reload.bind(self, {}));
+    }
+
+    // -------------------------------------------------------------------------
+    // Edge actions
+    // -------------------------------------------------------------------------
+
+    addEdge(sourceId, destId) {
+        this.dialog.add(FormViewDialog, {
+            resModel: this.state.connectorModel,
+            context: {
+                ...(this.props.context || {}),
+                [`default_${this.state.connectorAttrs.source}`]: sourceId,
+                [`default_${this.state.connectorAttrs.destination}`]: destId,
+            },
+            title: _t("Create: Transition"),
+            onRecordSaved: () => this.reload(),
+        });
+    }
+
+    editEdge(id) {
+        this.dialog.add(FormViewDialog, {
+            resModel: this.state.connectorModel,
+            resId: parseInt(id, 10),
+            context: this.props.context || {},
+            title: _t("Open: Transition"),
+            onRecordSaved: () => this.reload(),
+        });
+    }
+
+    removeEdge(id) {
+        this.dialog.add(ConfirmationDialog, {
+            body: _t("Are you sure you want to remove this transition?"),
+            confirm: async () => {
+                await this.orm.unlink(this.state.connectorModel, [id]);
+                await this.reload();
             },
         });
-    },
-});
+    }
+}
 
-return DiagramController;
-
-});
+DiagramController.template = "web_diagram.DiagramController";
+DiagramController.components = { DiagramRenderer };
+// Use wildcard to avoid prop-validation failures during migration; tighten later.
+DiagramController.props = ["*"];
