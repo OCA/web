@@ -10,7 +10,7 @@
                 New Node
             </button>
         </t>
-        <div class="o_diagram_view h-100 d-flex flex-column">
+        <div class="o_diagram_view o_view_controller">
             <DiagramRenderer
                 nodes="state.nodes"
                 edges="state.edges"

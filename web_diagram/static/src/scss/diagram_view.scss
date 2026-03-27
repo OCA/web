@@ -1,5 +1,8 @@
-.o_diagram_view, .o_diagram {
-	height: 100%;
+// .o_view_controller (on .o_diagram_view) gets position:absolute + inset:0
+// + height:100% from webclient_layout.scss — no extra height rules needed here.
+.o_diagram_view {
+	display: flex;
+	flex-direction: column;
 	background-color: white;
 
 	.o_diagram_header {
@@ -9,4 +12,9 @@
 			text-align: justify;
 		}
 	}
+}
+
+.o_diagram {
+	flex: 1 1 auto;
+	background-color: white;
 }
