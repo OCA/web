@@ -204,5 +204,11 @@ export class DiagramController extends Component {
 
 DiagramController.template = "web_diagram.DiagramController";
 DiagramController.components = { DiagramRenderer };
-// Use wildcard to avoid prop-validation failures during migration; tighten later.
-DiagramController.props = ["*"];
+DiagramController.props = {
+    arch: { type: [String, Object] },
+    fields: { type: Object, optional: true },
+    resId: { type: [Number, Boolean], optional: true },
+    resModel: { type: String },
+    context: { type: Object, optional: true },
+    display: { type: Object, optional: true },
+};
