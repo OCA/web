@@ -55,11 +55,17 @@ export class DiagramRenderer extends Component {
 
         // Render in a temporary off-screen div so Raphael positions labels
         // correctly, then move the result into the real container.
+        // Use explicit pixel dimensions: passing "100%" to an off-screen div
+        // resolves to 0px, and Raphael sets overflow:hidden on the SVG, so
+        // all content drawn outside a 0px viewport is clipped (invisible).
+        const width = container.offsetWidth || 800;
+        const height = container.offsetHeight || 600;
+
         const div = document.createElement("div");
         div.style.cssText = "position:absolute;top:-10000px;right:-10000px;";
         document.body.appendChild(div);
 
-        const r = new Raphael(div, "100%", "100%");
+        const r = new Raphael(div, width, height);
         const graph = new CuteGraph(r, style, container);
         const idToNode = {};
 
