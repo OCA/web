@@ -53,19 +53,12 @@ export class DiagramRenderer extends Component {
         // Clear previous diagram
         container.innerHTML = "";
 
-        // Render in a temporary off-screen div so Raphael positions labels
-        // correctly, then move the result into the real container.
-        // Use explicit pixel dimensions: passing "100%" to an off-screen div
-        // resolves to 0px, and Raphael sets overflow:hidden on the SVG, so
-        // all content drawn outside a 0px viewport is clipped (invisible).
-        const width = container.offsetWidth || 800;
-        const height = container.offsetHeight || 600;
-
-        const div = document.createElement("div");
-        div.style.cssText = "position:absolute;top:-10000px;right:-10000px;";
-        document.body.appendChild(div);
-
-        const r = new Raphael(div, width, height);
+        // Render directly in the container so Raphael's SVG inherits the
+        // container's CSS dimensions.  The container (.o_diagram) has an
+        // explicit pixel height from position:absolute + inset:0 inside
+        // .o_diagram_canvas, so height="100%" on the SVG resolves correctly
+        // and overflow:hidden clips at the right boundary.
+        const r = new Raphael(container, "100%", "100%");
         const graph = new CuteGraph(r, style, container);
         const idToNode = {};
 
@@ -91,12 +84,6 @@ export class DiagramRenderer extends Component {
             );
             e.id = edge.id;
         });
-
-        // Move rendered SVG into real container
-        while (div.firstChild) {
-            container.appendChild(div.firstChild);
-        }
-        div.remove();
 
         // Wire up interaction callbacks (static on the CuteGraph classes)
         CuteNode.double_click_callback = (cutenode) => onEditNode(cutenode.id);
