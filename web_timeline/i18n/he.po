@@ -18,13 +18,6 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: web_timeline
-#. odoo-javascript
-#: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.esm.js:0
-#, python-format
-msgid "<b>UNASSIGNED</b>"
-msgstr "<b>לא הוקצה</b>"
-
-#. module: web_timeline
 #: model:ir.model,name:web_timeline.model_ir_actions_act_window_view
 msgid "Action Window View"
 msgstr ""
@@ -125,6 +118,10 @@ msgstr "שבוע"
 #, python-format
 msgid "Year"
 msgstr "שנה"
+
+#, python-format
+#~ msgid "<b>UNASSIGNED</b>"
+#~ msgstr "<b>לא הוקצה</b>"
 
 #, python-format
 #~ msgid "Template \"timeline-item\" not present in timeline view definition."

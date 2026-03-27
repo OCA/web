@@ -11,21 +11,14 @@ msgstr ""
 "POT-Creation-Date: 2018-01-03 03:50+0000\n"
 "PO-Revision-Date: 2020-12-10 13:36+0000\n"
 "Last-Translator: Dennis Sluijk <d.sluijk@onestein.nl>\n"
-"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/"
-"teams/23907/nl_NL/)\n"
+"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/"
+"23907/nl_NL/)\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.10\n"
-
-#. module: web_timeline
-#. odoo-javascript
-#: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.esm.js:0
-#, python-format
-msgid "<b>UNASSIGNED</b>"
-msgstr "<b>NIET TOEGEWEZEN</b>"
 
 #. module: web_timeline
 #: model:ir.model,name:web_timeline.model_ir_actions_act_window_view
@@ -128,6 +121,10 @@ msgstr "Week"
 #, python-format
 msgid "Year"
 msgstr "Jaar"
+
+#, python-format
+#~ msgid "<b>UNASSIGNED</b>"
+#~ msgstr "<b>NIET TOEGEWEZEN</b>"
 
 #~ msgid "ir.ui.view"
 #~ msgstr "ir.ui.view"
