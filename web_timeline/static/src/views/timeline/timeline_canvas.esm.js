@@ -109,17 +109,20 @@ export class TimelineCanvas {
      */
     draw_line(from, to, color, width, markerStart, widthMarker, breakLineAt) {
         const $from = $(from);
+        const $to = $(to);
         const childPosFrom = $from.offset();
         const parentPosFrom = $from.closest(".vis-center").offset();
+        const childPosTo = $to.offset();
+        const parentPosTo = $to.closest(".vis-center").offset();
+        if (!childPosFrom || !parentPosFrom || !childPosTo || !parentPosTo) {
+            return null;
+        }
         const rectFrom = {
             x: childPosFrom.left - parentPosFrom.left,
             y: childPosFrom.top - parentPosFrom.top,
             w: $from.width(),
             h: $from.height(),
         };
-        const $to = $(to);
-        const childPosTo = $to.offset();
-        const parentPosTo = $to.closest(".vis-center").offset();
         const rectTo = {
             x: childPosTo.left - parentPosTo.left,
             y: childPosTo.top - parentPosTo.top,

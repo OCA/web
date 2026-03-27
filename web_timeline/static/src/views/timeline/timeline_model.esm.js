@@ -59,16 +59,45 @@ export class TimelineModel extends Model {
         } else {
             this.last_group_bys = this.params.default_group_by.split(",");
         }
+        // For fields to read, use base field names (strip :operator specifiers)
+        const base_group_by_names = this.last_group_bys.map((spec) =>
+            spec.includes(":") ? spec.split(":")[0] : spec
+        );
         let fields = this.params.fieldNames;
-        fields = [...new Set(fields.concat(this.last_group_bys))];
+        fields = [...new Set(fields.concat(base_group_by_names))];
+        // Identify date group-by specifiers that need transformation
+        const group_bys_date_fields = this.last_group_bys.filter(
+            (spec) =>
+                spec.includes(":") &&
+                (spec.includes(":year") ||
+                    spec.includes(":quarter") ||
+                    spec.includes(":month") ||
+                    spec.includes(":week") ||
+                    spec.includes(":day"))
+        );
+        // For order, use base field names
+        const order = this.params.default_group_by
+            .split(",")
+            .map((g) => (g.includes(":") ? g.split(":")[0] : g).trim())
+            .join(",");
         this.data = await this.keepLast.add(
             this.orm.call(this.model_name, "search_read", [], {
                 fields: fields,
                 domain: searchParams.domain,
-                order: this.params.default_group_by,
+                order: order,
                 context: searchParams.context,
             })
         );
+        // Transform date fields for grouping
+        for (const d of this.data) {
+            for (const date_group of group_bys_date_fields) {
+                const base_field = date_group.split(":")[0];
+                const date_value = d[base_field];
+                if (date_value) {
+                    d[date_group] = this._getGroupedDate(date_group, date_value);
+                }
+            }
+        }
         this.notify();
     }
     /**
@@ -76,20 +105,95 @@ export class TimelineModel extends Model {
      *
      * @param {Object} record
      * @private
-     * @returns {Object}
+     * @returns {Object|Array} Single timeline item or array of items for m2m groups
      */
+    /* eslint-disable complexity */
     _event_data_transform(record) {
         const [date_start, date_stop] = this._get_event_dates(record);
-        let group = record[this.last_group_bys[0]];
-        if (group && Array.isArray(group) && group.length > 0) {
-            group = group[0];
-        } else {
-            group = -1;
+        let currentPaths = [[]];
+
+        for (const grouped_field_spec of this.last_group_bys) {
+            const fieldValue = record[grouped_field_spec];
+            const base_grouped_field = grouped_field_spec.includes(":")
+                ? grouped_field_spec.split(":")[0]
+                : grouped_field_spec;
+            const fieldInfo = this.fields[base_grouped_field];
+            const fieldSegments = [];
+
+            if (fieldInfo.type === "many2many") {
+                const m2mIds = Array.isArray(fieldValue)
+                    ? fieldValue.filter((id) => id !== false && id !== null)
+                    : [];
+                if (m2mIds.length === 0) {
+                    fieldSegments.push({
+                        field: base_grouped_field,
+                        value: false,
+                        spec: grouped_field_spec,
+                    });
+                } else {
+                    m2mIds.forEach((valId) => {
+                        fieldSegments.push({
+                            field: base_grouped_field,
+                            value: valId,
+                            spec: grouped_field_spec,
+                        });
+                    });
+                }
+            } else if (
+                grouped_field_spec.includes(":") &&
+                (fieldInfo.type === "date" || fieldInfo.type === "datetime")
+            ) {
+                fieldSegments.push({
+                    field: base_grouped_field,
+                    value: fieldValue,
+                    spec: grouped_field_spec,
+                });
+            } else if (Array.isArray(fieldValue)) {
+                fieldSegments.push({
+                    field: base_grouped_field,
+                    value: fieldValue[0],
+                    spec: grouped_field_spec,
+                });
+            } else if (
+                fieldValue !== undefined &&
+                fieldValue !== null &&
+                fieldValue !== ""
+            ) {
+                if (fieldValue === false && typeof fieldValue === "boolean") {
+                    fieldSegments.push({
+                        field: base_grouped_field,
+                        value: false,
+                        spec: grouped_field_spec,
+                    });
+                } else {
+                    fieldSegments.push({
+                        field: base_grouped_field,
+                        value: fieldValue,
+                        spec: grouped_field_spec,
+                    });
+                }
+            } else {
+                fieldSegments.push({
+                    field: base_grouped_field,
+                    value: false,
+                    spec: grouped_field_spec,
+                });
+            }
+            currentPaths = currentPaths.flatMap((path) =>
+                fieldSegments.map((segment) => [...path, segment])
+            );
         }
+
+        const groupJSONStrings = currentPaths.map((path) => JSON.stringify(path));
+
         let colorToApply = false;
         for (const color of this.colors) {
-            if (evaluate(color.ast, record)) {
-                colorToApply = color.color;
+            try {
+                if (evaluate(color.ast, record)) {
+                    colorToApply = color.color;
+                }
+            } catch (e) {
+                console.warn("Error evaluating color expression:", e);
             }
         }
 
@@ -98,21 +202,30 @@ export class TimelineModel extends Model {
             content = this._render_timeline_item(record);
         }
 
-        const timeline_item = {
-            start: date_start.toJSDate(),
-            content: content,
-            id: record.id,
-            order: record.order,
-            group: group,
-            evt: record,
-            style: `background-color: ${colorToApply};`,
-        };
-        // Only specify range end when there actually is one.
-        // ➔ Instantaneous events / those with inverted dates are displayed as points.
-        if (date_stop && DateTime.fromISO(date_start) < DateTime.fromISO(date_stop)) {
-            timeline_item.end = date_stop.toJSDate();
+        const r_list = [];
+        for (const jsonPathString of groupJSONStrings) {
+            const r = {
+                start: date_start.toJSDate(),
+                content: content,
+                // Unique ID for vis.js item
+                id: record.id + "_" + jsonPathString,
+                record_id: record.id,
+                order: record.order,
+                // The group this specific vis.js item belongs to
+                group: jsonPathString,
+                evt: record,
+                style: colorToApply ? `background-color: ${colorToApply};` : "",
+            };
+            if (
+                date_stop &&
+                DateTime.fromISO(date_start) < DateTime.fromISO(date_stop)
+            ) {
+                r.end = date_stop.toJSDate();
+            }
+            r_list.push(r);
         }
-        return timeline_item;
+        // Reset color for next event
+        return r_list.length === 1 ? r_list[0] : r_list;
     }
     /**
      * Get dates from given event
@@ -168,6 +281,30 @@ export class TimelineModel extends Model {
     }
 
     /**
+     * Get the grouped date value for a given date, based on the group type.
+     * @param {String} date_group The date group specifier (e.g., 'date_start:month').
+     * @param {String} date_value The date value to be grouped.
+     * @returns {String|Number} The grouped date value.
+     */
+    _getGroupedDate(date_group, date_value) {
+        const field = this.fields[date_group.split(":")[0]];
+        const dt = this.parseDate(field, date_value);
+        const group_type = date_group.split(":")[1];
+        if (group_type === "year") {
+            return dt.year;
+        } else if (group_type === "quarter") {
+            return `Q${dt.quarter} ${dt.year}`;
+        } else if (group_type === "month") {
+            return dt.toFormat("MMMM yyyy");
+        } else if (group_type === "week") {
+            return `W${dt.weekNumber} ${dt.year}`;
+        } else if (group_type === "day") {
+            return dt.toFormat("dd MMM yyyy");
+        }
+        return date_value;
+    }
+
+    /**
      * Render timeline item template.
      *
      * @param {Object} record Record
@@ -205,7 +342,18 @@ export class TimelineModel extends Model {
             [id],
             this.params.fieldNames,
         ]);
-        return this._event_data_transform(records[0]);
+        const record = records[0];
+        // Transform date fields for grouping (same as in load)
+        for (const spec of this.last_group_bys) {
+            if (spec.includes(":")) {
+                const base_field = spec.split(":")[0];
+                const date_value = record[base_field];
+                if (date_value) {
+                    record[spec] = this._getGroupedDate(spec, date_value);
+                }
+            }
+        }
+        return this._event_data_transform(record);
     }
     /**
      * Triggered upon completion of writing a record.

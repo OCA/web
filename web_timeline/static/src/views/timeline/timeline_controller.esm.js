@@ -63,15 +63,36 @@ export class TimelineController extends Component {
      * @param {EventObject} item
      */
     _onGroupClick(item) {
-        const groupField = this.model.last_group_bys[0];
-        this.actionService.doAction({
-            type: "ir.actions.act_window",
-            res_model: this.model.fields[groupField].relation,
-            res_id: item.group,
-            views: [[false, "form"]],
-            view_mode: "form",
-            target: "new",
-        });
+        try {
+            const groupPathSegments = JSON.parse(item.group);
+            if (!Array.isArray(groupPathSegments) || groupPathSegments.length === 0)
+                return;
+
+            const lastSegment = groupPathSegments[groupPathSegments.length - 1];
+            const group_key = lastSegment.field;
+            const group_value = lastSegment.value;
+
+            if (
+                group_value === false ||
+                group_value === null ||
+                group_value === undefined
+            )
+                return;
+
+            const fieldInfo = this.model.fields[group_key];
+            if (!fieldInfo || !fieldInfo.relation) return;
+
+            this.actionService.doAction({
+                type: "ir.actions.act_window",
+                res_model: fieldInfo.relation,
+                res_id: parseInt(group_value, 10),
+                views: [[false, "form"]],
+                view_mode: "form",
+                target: "new",
+            });
+        } catch (e) {
+            console.error("Error parsing group JSON for click event:", item.group, e);
+        }
     }
 
     /**
@@ -82,7 +103,8 @@ export class TimelineController extends Component {
      * @returns {jQuery.Deferred}
      */
     _onItemDoubleClick(event) {
-        return this.openItem(event.item, false);
+        const item_id = event.item.split("_")[0];
+        return this.openItem(Number(item_id) || item_id, false);
     }
 
     /**
@@ -136,10 +158,6 @@ export class TimelineController extends Component {
     _onMove(item, callback) {
         const event_start = DateTime.fromJSDate(item.start);
         const event_end = item.end ? DateTime.fromJSDate(item.end) : false;
-        let group = false;
-        if (item.group !== -1) {
-            group = item.group;
-        }
         const data = {};
         // In case of a move event, the date_delay stay the same,
         // only date_start and stop must be updated
@@ -159,12 +177,50 @@ export class TimelineController extends Component {
             const diff = event_end.diff(event_start, "hours");
             data[this.date_delay] = diff.hours;
         }
-        const grouped_field = this.model.last_group_bys[0];
-        if (this.model.fields[grouped_field].type !== "many2many") {
-            data[grouped_field] = group;
+
+        // Parse the group JSON to extract field values for all group levels
+        if (item.group) {
+            try {
+                const groupPathSegments = JSON.parse(item.group);
+                if (Array.isArray(groupPathSegments)) {
+                    for (const segment of groupPathSegments) {
+                        // Skip m2m fields as they are complicated to handle
+                        if (
+                            this.model.fields[segment.field] &&
+                            this.model.fields[segment.field].type === "many2many"
+                        ) {
+                            continue;
+                        }
+                        // Skip date and datetime fields
+                        if (
+                            this.model.fields[segment.field] &&
+                            (this.model.fields[segment.field].type === "date" ||
+                                this.model.fields[segment.field].type === "datetime")
+                        ) {
+                            continue;
+                        }
+                        if (
+                            segment.value !== false &&
+                            segment.value !== null &&
+                            segment.value !== undefined
+                        ) {
+                            data[segment.field] = segment.value;
+                        } else {
+                            data[segment.field] = false;
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error(
+                    "Error parsing group JSON for move event:",
+                    item.group,
+                    e
+                );
+            }
         }
+
         this.moveQueue.push({
-            id: item.id,
+            id: item.record_id,
             data,
             item,
             callback,
@@ -204,7 +260,8 @@ export class TimelineController extends Component {
             confirmLabel: _t("Confirm"),
             cancelLabel: _t("Discard"),
             confirm: async () => {
-                await this.model.remove_completed(item);
+                // Use record_id for deletion, not the composite id
+                await this.model.remove_completed({...item, id: item.record_id});
                 callback(item);
             },
             cancel: () => {
@@ -244,8 +301,43 @@ export class TimelineController extends Component {
             const diff = item_end.diff(item_start, "hours");
             context[`default_${this.date_delay}`] = diff.hours;
         }
-        if (item.group > 0) {
-            context[`default_${this.model.last_group_bys[0]}`] = item.group;
+        if (item.group) {
+            try {
+                const groupPathSegments = JSON.parse(item.group);
+                if (Array.isArray(groupPathSegments)) {
+                    groupPathSegments.forEach((segment) => {
+                        // Set m2m fields using command format [(6, 0, [id])]
+                        if (
+                            this.model.fields[segment.field] &&
+                            this.model.fields[segment.field].type === "many2many"
+                        ) {
+                            if (
+                                segment.value !== false &&
+                                segment.value !== null &&
+                                segment.value !== undefined
+                            ) {
+                                context[`default_${segment.field}`] = [
+                                    [6, 0, [segment.value]],
+                                ];
+                            }
+                            return;
+                        }
+                        if (
+                            segment.value !== false &&
+                            segment.value !== null &&
+                            segment.value !== undefined
+                        ) {
+                            context[`default_${segment.field}`] = Number.isInteger(
+                                segment.value
+                            )
+                                ? segment.value
+                                : segment.value;
+                        }
+                    });
+                }
+            } catch (e) {
+                console.error("Error parsing group JSON for add event:", item.group, e);
+            }
         }
         // Show popup
         this.dialogService.add(
