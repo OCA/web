@@ -1,11 +1,12 @@
 // .o_view_controller (on .o_diagram_view) gets position:absolute + inset:0
-// + height:100% from webclient_layout.scss — no extra height rules needed here.
+// + height:100% from webclient_layout.scss.
 .o_diagram_view {
 	display: flex;
 	flex-direction: column;
 	background-color: white;
 
 	.o_diagram_header {
+		flex: 0 0 auto;
 		@include o-webclient-padding($top: 16px, $bottom: 16px);
 		> span {
 			display: block;
@@ -14,23 +15,20 @@
 	}
 }
 
-// SVG elements default to 150px tall when height is a percentage with no
-// explicit parent height.  Make .o_diagram a positioning context so the SVG
-// child can use position:absolute to fill it regardless of how flex resolves
-// the parent height.
-.o_diagram {
+// .o_diagram_canvas fills remaining vertical space and acts as a positioning
+// context so that .o_diagram (position:absolute inset:0) gets a definite
+// pixel height.  This lets the Raphael SVG's height="100%" attribute resolve
+// correctly without touching the SVG element itself (which breaks Raphael's
+// internal coordinate system).
+.o_diagram_canvas {
 	flex: 1 1 auto;
 	min-height: 0;
 	position: relative;
-	background-color: white;
+}
 
-	> svg {
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-	}
+.o_diagram {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	background-color: white;
 }
