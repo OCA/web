@@ -39,7 +39,9 @@
             <span t-esc="label"/>
         </t>
     </div>
-    <div class="o_diagram" t-ref="diagram"/>
+    <div class="o_diagram_canvas">
+        <div class="o_diagram" t-ref="diagram"/>
+    </div>
 </t>
 
 </templates>
