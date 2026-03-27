@@ -15,6 +15,14 @@ class IrUIView(models.Model):
 
     type = fields.Selection(selection_add=[DIAGRAM_VIEW])
 
+    def _get_view_info(self):
+        result = super()._get_view_info()
+        result["diagram"] = {
+            "icon": "fa fa-code-fork",
+            "multi_record": False,
+        }
+        return result
+
     def _postprocess_tag_node(self, node, name_manager, node_info):
         """Process <node> children against the node's object model.
 
