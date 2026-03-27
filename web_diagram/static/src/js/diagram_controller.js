@@ -2,6 +2,7 @@
 
 import { Component, onWillStart, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
+// rpc is no longer a service in Odoo 18; DiagramModel imports it directly
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { _t } from "@web/core/l10n/translation";
@@ -14,14 +15,13 @@ import { DiagramRenderer } from "./diagram_renderer";
  */
 export class DiagramController extends Component {
     setup() {
-        this.rpc = useService("rpc");
         this.dialog = useService("dialog");
         this.orm = useService("orm");
 
         const archInfo = this._parseArch(this.props.arch, this.props.fields || {});
         this.archInfo = archInfo;
 
-        this.model = new DiagramModel(this.rpc);
+        this.model = new DiagramModel();
         this.state = useState({
             nodes: {},
             edges: {},

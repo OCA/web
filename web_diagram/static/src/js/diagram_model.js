@@ -1,11 +1,13 @@
 /** @odoo-module */
 
+import { rpc } from "@web/core/network/rpc";
+
 /**
  * DiagramModel — plain ES6 class (no OWL, no legacy framework).
- * Instantiated by DiagramController and receives the rpc service.
+ * Uses the rpc function from @web/core/network/rpc (Odoo 18+).
  */
 export class DiagramModel {
-    constructor(rpc) {
+    constructor() {
         this.rpc = rpc;
     }
 
