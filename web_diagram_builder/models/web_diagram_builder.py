@@ -66,12 +66,12 @@ class WebDiagramBuilder(models.Model):
     )
     node_count = fields.Integer(
         compute="_compute_counts",
-        string="Nodes",
+        string="Node Count",
         store=True,
     )
     link_count = fields.Integer(
         compute="_compute_counts",
-        string="Links",
+        string="Link Count",
         store=True,
     )
     last_computed = fields.Datetime(

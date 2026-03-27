@@ -10,8 +10,8 @@
                 <field name="name"/>
                 <field name="model_id"/>
                 <field name="recursive_field_id"/>
-                <field name="node_count"/>
-                <field name="link_count"/>
+                <field name="node_count" string="# Nodes"/>
+                <field name="link_count" string="# Links"/>
                 <field name="last_computed"/>
             </list>
         </field>
