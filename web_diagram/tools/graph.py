@@ -296,7 +296,7 @@ class graph(object):
         """Initialize orders of the nodes in each rank with
         depth-first search.
         """
-        if not self.result[node]["y"]:
+        if self.result[node]["y"] is None:
             self.result[node]["y"] = self.order[level]
             self.order[level] += 1
 
@@ -564,7 +564,8 @@ class graph(object):
                 rem_nodes.append(node)
         while True:
             if len(rem_nodes) == 1:
-                self.start_nodes.append(rem_nodes[0])
+                if rem_nodes[0] not in self.start_nodes:
+                    self.start_nodes.append(rem_nodes[0])
                 break
             else:
                 count = 0
@@ -583,7 +584,8 @@ class graph(object):
                         new_start = rem_nodes[0]
                         rem_nodes.remove(new_start)
 
-                self.start_nodes.append(new_start)
+                if new_start not in self.start_nodes:
+                    self.start_nodes.append(new_start)
 
                 for edge in largest_tree:
                     if edge[0] in rem_nodes:
@@ -659,7 +661,14 @@ class graph(object):
 
         if self.nodes:
             if self.start_nodes:
-                tree = self.make_acyclic(None, self.start_nodes[0], 0, [])
+                # Traverse ALL provided start nodes so that partial_order
+                # covers every start node's subtree before find_starts runs.
+                # Without this, only start_nodes[0] was covered, causing
+                # find_starts to re-add the other flow_start nodes as new
+                # starts, resulting in duplicate processing and scrambled
+                # y-coordinates for multi-root forests.
+                for sn in self.start_nodes:
+                    self.make_acyclic(None, sn, 0, [])
 
                 for node in self.no_ancester:
                     for sec_node in self.transitions.get(node, []):
@@ -668,7 +677,8 @@ class graph(object):
                             break
 
                 self.partial_order = {}
-                tree = self.make_acyclic(None, self.start_nodes[0], 0, [])
+                for sn in self.start_nodes:
+                    self.make_acyclic(None, sn, 0, [])
 
             if len(self.nodes) > len(self.partial_order):
                 self.find_starts()
