@@ -87,15 +87,11 @@
         <field name="type">diagram</field>
         <field name="arch" type="xml">
             <diagram string="Dependency Diagram">
-                <node object="web.diagram.builder.node" shape="" bgcolor="">
-                    <field name="name"/>
-                </node>
+                <node object="web.diagram.builder.node" shape="" bgcolor=""/>
                 <arrow object="web.diagram.builder.link"
                        source="source_node_id"
                        destination="dest_node_id"
-                       label="['signal']">
-                    <field name="signal"/>
-                </arrow>
+                       label="['signal']"/>
             </diagram>
         </field>
     </record>
