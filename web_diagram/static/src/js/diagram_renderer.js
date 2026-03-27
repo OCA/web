@@ -115,12 +115,12 @@ export class DiagramRenderer extends Component {
 
 DiagramRenderer.template = "web_diagram.DiagramView";
 DiagramRenderer.props = {
-    nodes: { type: Object },
-    edges: { type: Object },
-    labels: { type: Array },
-    onEditNode: { type: Function },
-    onRemoveNode: { type: Function },
-    onEditEdge: { type: Function },
-    onAddEdge: { type: Function },
-    onRemoveEdge: { type: Function },
+    nodes: Object,
+    edges: Object,
+    labels: Array,
+    onEditNode: Function,
+    onRemoveNode: Function,
+    onEditEdge: Function,
+    onAddEdge: Function,
+    onRemoveEdge: Function,
 };
