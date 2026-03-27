@@ -1,6 +1,6 @@
 /** @odoo-module */
 
-import { Component, onWillStart, useState } from "@odoo/owl";
+import { Component, onWillStart, onWillUpdateProps, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { router } from "@web/core/browser/router";
 // rpc is no longer a service in Odoo 18; DiagramModel imports it directly
@@ -54,6 +54,13 @@ export class DiagramController extends Component {
         onWillStart(async () => {
             await this._loadDiagram(this._currentResId);
             await this._initPager();
+        });
+
+        // When Odoo reuses this controller instance (e.g. switching back from
+        // form view within the same action), onWillStart does not re-run.
+        // onWillUpdateProps fires instead — reload so data stays fresh.
+        onWillUpdateProps(async () => {
+            await this._loadDiagram(this._currentResId);
         });
     }
 
@@ -181,6 +188,13 @@ export class DiagramController extends Component {
     async reload() {
         await this.model.reload();
         this._updateState();
+    }
+
+    /** Called by Pager's updateTotal prop — refreshes data and returns new total. */
+    async onPagerUpdateTotal() {
+        await this._initPager();
+        await this._loadDiagram(this._currentResId);
+        return this.state.pager.total;
     }
 
     // -------------------------------------------------------------------------
