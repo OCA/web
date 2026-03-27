@@ -37,6 +37,23 @@ patch(actionService, {
         const origSwitchView = mgr.switchView;
 
         mgr.switchView = async (viewType, props = {}) => {
+            // When switching to a non-multiRecord view, carry the current resId
+            // forward so the URL retains the record ID.  Without this, the
+            // action service falls back to action.res_id which is often false
+            // for list-opened actions, dropping the ID from the URL.
+            if (!props.resId) {
+                const viewDef = registry.category("views").get(viewType, null);
+                if (viewDef && !viewDef.multiRecord) {
+                    const ctrlResId = mgr.currentController?.props?.resId;
+                    const routerResId = router.current.resId;
+                    const resId =
+                        ctrlResId ||
+                        (typeof routerResId === "number" ? routerResId : false);
+                    if (resId) {
+                        props = { ...props, resId };
+                    }
+                }
+            }
             try {
                 return await origSwitchView(viewType, props);
             } catch (e) {
@@ -53,14 +70,9 @@ patch(actionService, {
                 if (!actionId) {
                     throw e;
                 }
-                const ctrlResId = ctrl?.props?.resId;
-                const routerResId = router.current.resId;
-                const resId =
-                    ctrlResId ||
-                    (typeof routerResId === "number" ? routerResId : false);
                 return mgr.doAction(actionId, {
                     viewType,
-                    props: resId ? { resId } : {},
+                    props: props.resId ? { resId: props.resId } : {},
                     stackPosition: "replaceCurrentAction",
                 });
             }

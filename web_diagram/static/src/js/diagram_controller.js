@@ -8,6 +8,7 @@ import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_d
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { Layout } from "@web/search/layout";
+import { Pager } from "@web/core/pager/pager";
 import { DiagramModel } from "./diagram_model";
 import { DiagramRenderer } from "./diagram_renderer";
 
@@ -32,6 +33,11 @@ export class DiagramController extends Component {
             this.props.resId ||
             (typeof routerResId === "number" ? routerResId : false);
 
+        // _currentResId is the authoritative resId for the current diagram
+        // record; it can change during pager navigation.
+        this._currentResId = resId;
+        this._ids = []; // ordered list of IDs for pager navigation
+
         this.display = { ...this.props.display, controlPanel: {} };
         this.model = new DiagramModel();
         this.state = useState({
@@ -42,23 +48,12 @@ export class DiagramController extends Component {
             connectorModel: archInfo.connectorModel,
             connectorAttrs: archInfo.connectorAttrs,
             parentField: false,
+            pager: { offset: 0, total: 0 },
         });
 
         onWillStart(async () => {
-            await this.model.load({
-                resId,
-                resModel: this.props.resModel,
-                nodeModel: archInfo.nodeModel,
-                connectorModel: archInfo.connectorModel,
-                connectorAttrs: archInfo.connectorAttrs,
-                nodeAttrs: archInfo.nodeAttrs,
-                visibleNodes: archInfo.visibleNodes,
-                invisibleNodes: archInfo.invisibleNodes,
-                nodeFieldsString: archInfo.nodeFieldsString,
-                connectorFieldsString: archInfo.connectorFieldsString,
-                labels: archInfo.labels,
-            });
-            this._updateState();
+            await this._loadDiagram(this._currentResId);
+            await this._initPager();
         });
     }
 
@@ -132,6 +127,57 @@ export class DiagramController extends Component {
         this.state.parentField = data.parentField;
     }
 
+    /** Load (or reload) the diagram for a specific record ID. */
+    async _loadDiagram(resId) {
+        await this.model.load({
+            resId,
+            resModel: this.props.resModel,
+            nodeModel: this.archInfo.nodeModel,
+            connectorModel: this.archInfo.connectorModel,
+            connectorAttrs: this.archInfo.connectorAttrs,
+            nodeAttrs: this.archInfo.nodeAttrs,
+            visibleNodes: this.archInfo.visibleNodes,
+            invisibleNodes: this.archInfo.invisibleNodes,
+            nodeFieldsString: this.archInfo.nodeFieldsString,
+            connectorFieldsString: this.archInfo.connectorFieldsString,
+            labels: this.archInfo.labels,
+        });
+        this._updateState();
+    }
+
+    /** Fetch the ordered ID list and compute the current pager position. */
+    async _initPager() {
+        if (!this._currentResId || !this.props.resModel) {
+            return;
+        }
+        try {
+            this._ids = await this.orm.search(
+                this.props.resModel,
+                this.props.domain || [],
+                { context: this.props.context }
+            );
+        } catch (_e) {
+            this._ids = [this._currentResId];
+        }
+        const idx = this._ids.indexOf(this._currentResId);
+        this.state.pager = {
+            offset: idx >= 0 ? idx : 0,
+            total: this._ids.length,
+        };
+    }
+
+    /** Called by the Pager component when the user clicks next/previous. */
+    async onPagerUpdate({ offset }) {
+        const newResId = this._ids[offset];
+        if (!newResId || newResId === this._currentResId) {
+            return;
+        }
+        this._currentResId = newResId;
+        this.state.pager.offset = offset;
+        await this._loadDiagram(newResId);
+        router.pushState({ resId: newResId });
+    }
+
     async reload() {
         await this.model.reload();
         this._updateState();
@@ -146,7 +192,7 @@ export class DiagramController extends Component {
             resModel: this.state.nodeModel,
             context: {
                 ...(this.props.context || {}),
-                [`default_${this.state.parentField}`]: this.props.resId,
+                [`default_${this.state.parentField}`]: this._currentResId,
             },
             title: _t("Create: Activity"),
             onRecordSaved: () => this.reload(),
@@ -215,7 +261,7 @@ export class DiagramController extends Component {
 }
 
 DiagramController.template = "web_diagram.DiagramController";
-DiagramController.components = { Layout, DiagramRenderer };
+DiagramController.components = { Layout, DiagramRenderer, Pager };
 // OWL 3 (Odoo 18) changed prop definition syntax; use wildcard until
 // the correct OWL 3 syntax is confirmed for all prop types used here.
 DiagramController.props = ["*"];
