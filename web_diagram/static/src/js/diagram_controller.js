@@ -2,6 +2,7 @@
 
 import { Component, onWillStart, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
+import { router } from "@web/core/browser/router";
 // rpc is no longer a service in Odoo 18; DiagramModel imports it directly
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
@@ -21,6 +22,15 @@ export class DiagramController extends Component {
         const archInfo = this._parseArch(this.props.arch, this.props.fields || {});
         this.archInfo = archInfo;
 
+        // When switching via the control panel switcher, Odoo's switchView
+        // passes no resId prop (it relies on action.res_id which is stale for
+        // actions opened from a list). The router state still holds the form
+        // view's resId at setup() time because pushState() is debounced.
+        const routerResId = router.current.resId;
+        const resId =
+            this.props.resId ||
+            (typeof routerResId === "number" ? routerResId : false);
+
         this.model = new DiagramModel();
         this.state = useState({
             nodes: {},
@@ -34,7 +44,7 @@ export class DiagramController extends Component {
 
         onWillStart(async () => {
             await this.model.load({
-                resId: this.props.resId,
+                resId,
                 resModel: this.props.resModel,
                 nodeModel: archInfo.nodeModel,
                 connectorModel: archInfo.connectorModel,
