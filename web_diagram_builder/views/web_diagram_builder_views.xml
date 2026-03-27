@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── List view ── -->
+    <record id="view_web_diagram_builder_list" model="ir.ui.view">
+        <field name="name">web.diagram.builder.list</field>
+        <field name="model">web.diagram.builder</field>
+        <field name="arch" type="xml">
+            <list string="Diagram Builders">
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="recursive_field_id"/>
+                <field name="node_count"/>
+                <field name="link_count"/>
+                <field name="last_computed"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── Form view ── -->
+    <record id="view_web_diagram_builder_form" model="ir.ui.view">
+        <field name="name">web.diagram.builder.form</field>
+        <field name="model">web.diagram.builder</field>
+        <field name="arch" type="xml">
+            <form string="Diagram Builder">
+                <header>
+                    <button name="action_compute"
+                            string="Compute Nodes &amp; Links"
+                            type="object"
+                            class="btn-primary"/>
+                    <field name="last_computed" widget="datetime" readonly="1"
+                           string="Last computed:" invisible="not last_computed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Name"/>
+                        <h1>
+                            <field name="name" placeholder="Diagram name…"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Data Source">
+                            <field name="template_id"
+                                   options="{'no_create': True}"
+                                   placeholder="Select a template to auto-fill…"/>
+                            <field name="model_id"/>
+                            <field name="model_name" invisible="1"/>
+                            <field name="recursive_field_id"/>
+                        </group>
+                        <group string="Options">
+                            <field name="filter_domain"
+                                   widget="domain"
+                                   options="{'model': 'model_name'}"
+                                   invisible="not model_id"/>
+                            <field name="max_nodes"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Nodes" name="nodes">
+                            <field name="node_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="record_id"/>
+                                    <field name="flow_start"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Links" name="links">
+                            <field name="link_ids" readonly="1">
+                                <list>
+                                    <field name="source_node_id"/>
+                                    <field name="dest_node_id"/>
+                                    <field name="signal"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── Diagram view ── -->
+    <record id="view_web_diagram_builder_diagram" model="ir.ui.view">
+        <field name="name">web.diagram.builder.diagram</field>
+        <field name="model">web.diagram.builder</field>
+        <field name="type">diagram</field>
+        <field name="arch" type="xml">
+            <diagram string="Dependency Diagram">
+                <node object="web.diagram.builder.node" shape="" bgcolor="">
+                    <field name="name"/>
+                </node>
+                <arrow object="web.diagram.builder.link"
+                       source="source_node_id"
+                       destination="dest_node_id"
+                       label="['signal']">
+                    <field name="signal"/>
+                </arrow>
+            </diagram>
+        </field>
+    </record>
+
+    <!-- ── Action ── -->
+    <record id="action_web_diagram_builder" model="ir.actions.act_window">
+        <field name="name">Diagram Builders</field>
+        <field name="res_model">web.diagram.builder</field>
+        <field name="view_mode">list,form,diagram</field>
+    </record>
+
+</odoo>

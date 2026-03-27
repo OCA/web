@@ -1,0 +1,22 @@
+# Copyright 2024 TechnoLibre
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+{
+    "name": "Web Diagram Builder",
+    "version": "18.0.1.0.0",
+    "category": "Tools",
+    "summary": "Build recursive dependency diagrams from any many2one field",
+    "author": "TechnoLibre",
+    "website": "https://technolibre.ca",
+    "license": "AGPL-3",
+    "depends": ["web_diagram"],
+    "data": [
+        "security/ir.model.access.csv",
+        "data/web_diagram_builder_template_data.xml",
+        "data/ir_cron_data.xml",
+        "views/web_diagram_builder_template_views.xml",
+        "views/web_diagram_builder_views.xml",
+        "views/menu.xml",
+    ],
+    "installable": True,
+    "application": True,
+}
