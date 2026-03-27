@@ -204,11 +204,6 @@ export class DiagramController extends Component {
 
 DiagramController.template = "web_diagram.DiagramController";
 DiagramController.components = { DiagramRenderer };
-DiagramController.props = {
-    arch: { type: [String, Object] },
-    fields: { type: Object, optional: true },
-    resId: { type: [Number, Boolean], optional: true },
-    resModel: { type: String },
-    context: { type: Object, optional: true },
-    display: { type: Object, optional: true },
-};
+// OWL 3 (Odoo 18) changed prop definition syntax; use wildcard until
+// the correct OWL 3 syntax is confirmed for all prop types used here.
+DiagramController.props = ["*"];
