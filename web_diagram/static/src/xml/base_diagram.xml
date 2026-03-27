@@ -4,7 +4,7 @@
 <!-- DiagramController template. -->
 <t t-name="web_diagram.DiagramController" owl="1">
     <Layout display="display">
-        <t t-set-slot="control-panel-top-left">
+        <t t-set-slot="control-panel-create-button">
             <button type="button" class="btn btn-primary o_diagram_new_button"
                     t-on-click="addNode">
                 New Node
