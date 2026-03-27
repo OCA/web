@@ -10,6 +10,13 @@
                 New Node
             </button>
         </t>
+        <t t-set-slot="control-panel-navigation-additional">
+            <Pager t-if="state.pager.total > 1"
+                   offset="state.pager.offset"
+                   limit="1"
+                   total="state.pager.total"
+                   onUpdate.bind="onPagerUpdate"/>
+        </t>
         <div class="o_diagram_view o_view_controller">
             <DiagramRenderer
                 nodes="state.nodes"
