@@ -26,26 +26,32 @@ export class DiagramRenderer extends Component {
             this.props;
 
         const style = {
-            edge_color: "#A0A0A0",
-            edge_label_color: "#555",
-            edge_label_font_size: 10,
+            // Edges — soft blue-gray, Bootstrap-inspired
+            edge_color: "#8C96A5",
+            edge_label_color: "#6C757D",
+            edge_label_font_size: 11,
             edge_width: 2,
             edge_spacing: 100,
             edge_loop_radius: 100,
-            node_label_color: "#333",
+            // Nodes — clean card look (rounded, light border, dark text)
+            node_label_color: "#1C2438",
             node_label_font_size: 12,
-            node_outline_color: "#333",
-            node_outline_width: 1,
-            node_selected_color: "#0097BE",
-            node_selected_width: 2,
-            node_size_x: 110,
+            node_outline_color: "#CED4DA",   // Bootstrap light border
+            node_outline_width: 1.5,
+            node_selected_color: "#0D6EFD", // Bootstrap primary blue
+            node_selected_width: 2.5,
+            node_size_x: 120,
             node_size_y: 80,
-            connector_active_color: "#FFF",
-            connector_radius: 4,
-            close_button_radius: 8,
-            close_button_color: "#333",
+            node_border_radius: 8,           // rounded corners
+            font_family: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+            // Connectors / close button
+            connector_active_color: "#0D6EFD",
+            connector_radius: 5,
+            close_button_radius: 9,
+            close_button_color: "#6C757D",
             close_button_x_color: "#FFF",
-            gray: "#DCDCDC",
+            // Node fill colours
+            gray: "#EEF0F4",                 // light blue-gray (default)
             white: "#FFF",
             viewport_margin: 50,
         };
