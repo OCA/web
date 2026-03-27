@@ -23,7 +23,7 @@ Openerp Web Diagram view.
             'web_diagram/static/src/js/diagram_view.js',
             'web_diagram/static/src/xml/base_diagram.xml',
         ],
-        'web.qunit_suite_tests': [
+        'web.assets_unit_tests': [
             'web_diagram/static/tests/diagram_tests.js',
         ],
     },

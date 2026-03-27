@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, tools
+from odoo import api, fields, models
 from ..tools.graph import graph
 from odoo.tools.safe_eval import safe_eval
 
@@ -116,12 +116,10 @@ class IrUIView(models.Model):
                 label_string = ""
                 if label:
                     for lbl in safe_eval(label):
-                        if tools.ustr(lbl) in t and \
-                                tools.ustr(t[lbl]) == 'False':
+                        if str(lbl) in t and str(t[lbl]) == 'False':
                             label_string += ' '
                         else:
-                            label_string = (label_string + " " +
-                                            tools.ustr(t[lbl]))
+                            label_string = label_string + " " + str(t[lbl])
                 labels[str(t['id'])] = (line.id, label_string)
 
         g = graph(nodes, transitions, no_ancester)
