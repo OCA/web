@@ -562,7 +562,6 @@ class graph(object):
         for node in self.nodes:
             if not self.partial_order.get(node):
                 rem_nodes.append(node)
-        cnt = 0
         while True:
             if len(rem_nodes) == 1:
                 self.start_nodes.append(rem_nodes[0])
