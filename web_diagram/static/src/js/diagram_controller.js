@@ -7,6 +7,7 @@ import { router } from "@web/core/browser/router";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { _t } from "@web/core/l10n/translation";
+import { Layout } from "@web/search/layout";
 import { DiagramModel } from "./diagram_model";
 import { DiagramRenderer } from "./diagram_renderer";
 
@@ -31,6 +32,7 @@ export class DiagramController extends Component {
             this.props.resId ||
             (typeof routerResId === "number" ? routerResId : false);
 
+        this.display = { ...this.props.display, controlPanel: {} };
         this.model = new DiagramModel();
         this.state = useState({
             nodes: {},
@@ -213,7 +215,7 @@ export class DiagramController extends Component {
 }
 
 DiagramController.template = "web_diagram.DiagramController";
-DiagramController.components = { DiagramRenderer };
+DiagramController.components = { Layout, DiagramRenderer };
 // OWL 3 (Odoo 18) changed prop definition syntax; use wildcard until
 // the correct OWL 3 syntax is confirmed for all prop types used here.
 DiagramController.props = ["*"];
