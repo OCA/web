@@ -526,7 +526,7 @@ class graph(object):
                 for node in self.levels[level]:
                     self.result[node]["y"] += min_order
 
-            if roots:
+            if roots and self.tree_list[self.start]:
                 roots.append(self.start)
                 one_level_el = self.tree_list[self.start][0][1]
                 base = self.result[one_level_el]["y"]
