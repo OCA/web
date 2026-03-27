@@ -15,7 +15,8 @@
                    offset="state.pager.offset"
                    limit="1"
                    total="state.pager.total"
-                   onUpdate.bind="onPagerUpdate"/>
+                   onUpdate.bind="onPagerUpdate"
+                   updateTotal.bind="onPagerUpdateTotal"/>
         </t>
         <div class="o_diagram_view o_view_controller">
             <DiagramRenderer
