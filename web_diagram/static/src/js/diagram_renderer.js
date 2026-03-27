@@ -53,12 +53,14 @@ export class DiagramRenderer extends Component {
         // Clear previous diagram
         container.innerHTML = "";
 
-        // Render directly in the container so Raphael's SVG inherits the
-        // container's CSS dimensions.  The container (.o_diagram) has an
-        // explicit pixel height from position:absolute + inset:0 inside
-        // .o_diagram_canvas, so height="100%" on the SVG resolves correctly
-        // and overflow:hidden clips at the right boundary.
-        const r = new Raphael(container, "100%", "100%");
+        // Compute explicit pixel height: distance from the container's top
+        // edge to the bottom of the viewport.  Raphael requires a pixel value
+        // — height="100%" does not resolve when no CSS ancestor has an explicit
+        // height, which is the case inside Odoo 18's Layout component.
+        const rect = container.getBoundingClientRect();
+        const height = Math.max(400, Math.round(window.innerHeight - rect.top - 10));
+
+        const r = new Raphael(container, "100%", height);
         const graph = new CuteGraph(r, style, container);
         const idToNode = {};
 
