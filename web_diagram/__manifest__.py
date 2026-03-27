@@ -12,7 +12,6 @@ Openerp Web Diagram view.
     'depends': ['web'],
     'assets': {
         'web.assets_backend': [
-            'web_diagram/static/lib/js/jquery.mousewheel.js',
             'web_diagram/static/lib/js/raphael.js',
             'web_diagram/static/src/scss/diagram_view.scss',
             'web_diagram/static/src/js/vec2.js',

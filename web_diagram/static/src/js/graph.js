@@ -300,14 +300,16 @@
 
             return true;
         }
-        //Adds a mousewheel event callback to raph_element that scrolls the viewport
+        //Adds a wheel event callback to raph_element that scrolls the viewport
         this.set_scrolling = function(raph_element){
-            $(raph_element.node).bind('mousewheel',function(event,delta){
+            raph_element.node.addEventListener('wheel', function(event){
+                event.preventDefault();
+                var delta = event.deltaY < 0 ? 1 : -1;
                 var dy = delta * 20;
                 if( translation_respects_viewport(0,dy, style.viewport_margin) ){
                     translate_all(0,dy);
                 }
-            });
+            }, {passive: false});
         };
 
         var px, py;
