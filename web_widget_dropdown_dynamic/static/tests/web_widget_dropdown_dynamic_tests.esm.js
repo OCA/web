@@ -146,6 +146,48 @@ QUnit.module("web_widget_dropdown_dynamic", (hooks) => {
         assert.containsOnce(field_target, 'option[value="\\"10\\""]');
     });
 
+    QUnit.test("displays label for selected value in readonly mode", async (assert) => {
+        // Bug: FieldDynamicDropdown extended Component directly instead of SelectionField,
+        // so it never inherited get string(). The web.SelectionField template uses `this.string`
+        // in its readonly branch (<span t-esc="string">). Without the getter, this.string is
+        // undefined and the span renders empty — the selected value visually "disappears"
+        // whenever the field switches to readonly display (e.g. row loses focus in a list).
+        serverData.models["sale.order"].records[0].content_string = "value a";
+
+        await makeView({
+            type: "form",
+            resModel: "sale.order",
+            serverData,
+            arch: `
+                <form>
+                    <field
+                        name="content_string"
+                        widget="dynamic_dropdown"
+                        options="{'values': 'method_name'}"
+                        context="{'depending_on': id}"
+                        readonly="1"
+                    />
+                </form>`,
+            resId: 1,
+            mockRPC(route, args) {
+                if (args.method === "method_name") {
+                    return [["value a", "Value A"]];
+                }
+            },
+        });
+
+        const fieldEl = target.querySelector(".o_field_widget[name='content_string']");
+        assert.ok(
+            fieldEl.querySelector("span"),
+            "field renders a <span> element in readonly mode"
+        );
+        assert.strictEqual(
+            fieldEl.querySelector("span").textContent.trim(),
+            "Value A",
+            "the option label is shown in readonly mode, not blank"
+        );
+    });
+
     QUnit.test("values are fetched w/o context (selection)", async (assert) => {
         assert.expect(6);
         await makeView({

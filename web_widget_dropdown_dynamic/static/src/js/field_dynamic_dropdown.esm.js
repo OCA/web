@@ -36,6 +36,19 @@ export class FieldDynamicDropdown extends Component {
         }
         return specialDataCaches[key];
     }
+    get string() {
+        const value = this.props.record.data[this.props.name];
+        if (value === false || value === null || value === undefined) {
+            return "";
+        }
+        if (!this.specialData) {
+            return "";
+        }
+        const option = this.specialData.find(
+            (o) => o[0] === value || String(o[0]) === String(value)
+        );
+        return option ? String(option[1]) : String(value);
+    }
     get options() {
         const fieldType = this.type || "";
         if (["char", "integer", "selection"].includes(fieldType)) {
