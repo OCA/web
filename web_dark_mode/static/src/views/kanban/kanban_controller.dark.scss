@@ -1,0 +1,14 @@
+.o_kanban_renderer {
+    --KanbanColumn__highlight-background: #{mix($o-action, $o-gray-100, 10%)};
+    --KanbanColumn__highlight-border: #{rgba($o-action, 0.5)};
+    // Mirror the color of selected row in list view using the same logic as applied there:
+    // https://github.com/odoo/odoo/blob/19.0/addons/web/static/lib/bootstrap/scss/_variables.scss#L775
+    --KanbanColumn__highlight-selected: #{shift-color($info, $table-bg-scale)};
+
+    // For some reason attachment images do not get the o_field_image class
+    .o_kanban_record:not(.o_legacy_kanban_record) {
+        .o_attachment_image > img {
+            background-color: #ffffff;
+        }
+    }
+}

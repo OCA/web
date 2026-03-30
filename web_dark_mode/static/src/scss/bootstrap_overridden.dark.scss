@@ -1,0 +1,49 @@
+// This overrides the overrides in web/static/src/scss/bootstrap_overridden.scss
+// and also some additional overrides to web/static/lib/bootstrap/scss/_variables.scss
+
+// web/static/lib/bootstrap/scss/_variables.scss sets these colors with tint-color() and shade-color()
+// but we inversed those functions in web_dark_mode/static/src/scss/bs_functions_overrides.dark.scss
+// so we have to adjust a bit. Most noticable in purchase dashboard (19.0) and banners in html editor
+$info-text-emphasis: shade-color($o-info, 75%) !default;
+$info-bg-subtle: tint-color($o-info, 65%) !default;
+$success-text-emphasis: shade-color($o-success, 75%) !default;
+$success-bg-subtle: tint-color($o-success, 65%) !default;
+$warning-text-emphasis: shade-color($o-warning, 75%) !default;
+$warning-bg-subtle: tint-color($o-warning, 65%) !default;
+$danger-text-emphasis: shade-color($o-danger, 75%) !default;
+$danger-bg-subtle: tint-color($o-danger, 65%) !default;
+
+// Shadows
+$box-shadow: 0 0.5rem 1rem rgba($o-white, 0.4) !default;
+$box-shadow-sm: 0 0.125rem 0.25rem rgba($o-white, 0.2) !default;
+$box-shadow-lg: 0 1rem 3rem rgba($o-white, 0.4) !default;
+$box-shadow-inset: inset 0 1px 2px rgba($o-white, 0.2) !default;
+
+// Dropdowns
+$dropdown-bg: $o-white !default;
+
+// Navs
+$nav-tabs-link-active-bg: transparent !default;
+$nav-link-color: $o-main-text-color !default;
+
+// Tooltips
+$tooltip-bg: $o-white !default;
+$tooltip-color: $o-main-text-color !default;
+
+// Modals
+$modal-backdrop-bg: $o-white !default;
+
+// User input typically entered via keyboard
+$kbd-color: $o-gray-100 !default;
+$kbd-bg: $o-gray-900 !default;
+$kbd-box-shadow:
+    0px 1px 1px rgba($o-gray-100, 0.2),
+    inset 0px -1px 1px 1px rgba($o-gray-700, 0.8),
+    inset 0px 2px 0px 0px rgba($o-black, 0.8) !default;
+
+// Input
+$input-focus-box-shadow: 0 !default;
+$input-focus-border-color: $o-enterprise-action-color !default;
+$form-check-input-checked-color: $o-white !default;
+$form-check-input-checked-border-color: $o-enterprise-action-color !default;
+$form-check-input-checked-bg-color: $o-enterprise-action-color !default;

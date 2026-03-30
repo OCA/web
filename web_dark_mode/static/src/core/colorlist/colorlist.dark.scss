@@ -1,0 +1,12 @@
+.o_colorlist > button {
+    @for $size from 2 through length($o-colors) {
+        &.o_colorlist_item_color_#{$size - 1} {
+            --background-color: #{mix(
+                    nth($o-colors, $size),
+                    $o-view-background-color,
+                    95%
+                )};
+            --color: #{color-contrast(nth($o-colors, $size))};
+        }
+    }
+}
