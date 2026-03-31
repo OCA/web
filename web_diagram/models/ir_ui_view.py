@@ -58,6 +58,38 @@ class IrUIView(models.Model):
         node_info["children"] = []
         node_info["editable"] = False
 
+    def _validate_tag_node(self, node, name_manager, node_info):
+        """Validate <node> children against the node's object model.
+
+        Odoo 18 has a separate _validate_view pass that iterates all children
+        unconditionally. Without this handler, <field> children inside <node>
+        would be validated against the diagram model instead of node_model.
+        """
+        node_model = node.get("object")
+        if node_model and node_model in self.env:
+            for child in list(node):
+                node.remove(child)
+                self._validate_view(
+                    child, node_model, view_type=child.tag, editable=False,
+                    node_info=node_info,
+                )
+
+    def _validate_tag_arrow(self, node, name_manager, node_info):
+        """Validate <arrow> children against the arrow's object model.
+
+        Odoo 18 has a separate _validate_view pass that iterates all children
+        unconditionally. Without this handler, <field> children inside <arrow>
+        would be validated against the diagram model instead of arrow_model.
+        """
+        arrow_model = node.get("object")
+        if arrow_model and arrow_model in self.env:
+            for child in list(node):
+                node.remove(child)
+                self._validate_view(
+                    child, arrow_model, view_type=child.tag, editable=False,
+                    node_info=node_info,
+                )
+
     @api.model
     def graph_get(
         self, rec_id, model, node_obj, conn_obj, src_node, des_node, label, scale
