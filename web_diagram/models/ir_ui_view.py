@@ -90,6 +90,13 @@ class IrUIView(models.Model):
                     node_info=node_info,
                 )
 
+    def _validate_tag_label(self, node, name_manager, node_info):
+        """In a diagram view, <label> is a legend element, not a form label.
+        Skip the 'for' requirement that applies to form labels."""
+        if node_info.get("view_type") == "diagram":
+            return
+        return super()._validate_tag_label(node, name_manager, node_info)
+
     @api.model
     def graph_get(
         self, rec_id, model, node_obj, conn_obj, src_node, des_node, label, scale
