@@ -6,5 +6,9 @@
                 name="t-att-content"
             >request.env['ir.config_parameter'].sudo().get_param('pwa.manifest.theme_color', '#71639e')</attribute>
         </xpath>
+        <xpath expr="//link[@rel='apple-touch-icon']" position="attributes">
+            <t t-set="pwa_icon_attachment" t-value="request.env['ir.attachment'].sudo().search([('url', 'like', '/web_pwa_customize/icon.')], limit=1)"/>
+            <attribute name="t-att-href">pwa_icon_attachment.url if pwa_icon_attachment else '/web/static/img/odoo-icon-ios.png'</attribute>
+        </xpath>
     </template>
 </odoo>
