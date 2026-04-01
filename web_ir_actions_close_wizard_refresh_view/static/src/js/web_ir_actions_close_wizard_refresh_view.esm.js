@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {registry} from "@web/core/registry";
 
 async function executeCloseAndRefreshView({env, action}) {
