@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="webclient_bootstrap_pwa" inherit_id="web.webclient_bootstrap">
+        <xpath expr="//meta[@name='theme-color']" position="attributes">
+            <attribute
+                name="t-att-content"
+            >request.env['ir.config_parameter'].sudo().get_param('pwa.manifest.theme_color', '#71639e')</attribute>
+        </xpath>
+    </template>
+</odoo>
