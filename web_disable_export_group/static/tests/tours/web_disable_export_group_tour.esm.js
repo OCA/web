@@ -25,13 +25,12 @@ registry.category("web_tour.tours").add("export_tour_xlsx_button_ko", {
     url: "/web#model=ir.ui.view&view_type=list&cids=&action=base.action_ui_view",
     steps: () => [
         {
-            content: "Open cog menu",
-            trigger: ".o_cp_action_menus button.dropdown-toggle",
-            run: "click",
+            content: "Wait for list view to load",
+            trigger: ".o_list_view",
         },
         {
-            content: "Check if 'Export all' button exists",
-            trigger: ".dropdown-menu:not(:has(.o_export_all_menu))",
+            content: "Check if 'Export all' button is not accessible",
+            trigger: ".o_control_panel:not(:has(.o_export_all_menu))",
         },
     ],
 });
