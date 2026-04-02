@@ -9,6 +9,11 @@ from odoo.tests import new_test_user
 class TestTour(odoo.tests.HttpCase):
     def setUp(self):
         super().setUp()
+        group_id = self.env.ref("web_disable_export_group.group_export_xlsx_data")
+        admin_user = self.env.ref("base.user_admin")
+        field_name = "group_ids" if "group_ids" in admin_user._fields else "groups_id"
+        admin_user.write({field_name: [(4, group_id.id)]})
+
         new_test_user(
             self.env,
             login="user_not_export",

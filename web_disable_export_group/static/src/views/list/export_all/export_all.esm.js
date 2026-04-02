@@ -6,16 +6,16 @@
 import {exportAllItem} from "@web/views/list/export_all/export_all";
 import {exprToBoolean} from "@web/core/utils/strings";
 import {registry} from "@web/core/registry";
-import {session} from "@web/session";
+import {user} from "@web/core/user";
 
 const cogMenuRegistry = registry.category("cogMenu");
 
 const customExportAllItem = {
     ...exportAllItem,
     isDisplayed: async (env) =>
-        env.config.viewType === "list" &&
+        ["kanban", "list"].includes(env.config.viewType) &&
         !env.model.root.selection.length &&
-        session.group_xlsx_export_data &&
+        (await user.hasGroup("web_disable_export_group.group_export_xlsx_data")) &&
         exprToBoolean(env.config.viewArch.getAttribute("export_xlsx"), true),
 };
 // Add the customExportAllItem to the cog menu registry
