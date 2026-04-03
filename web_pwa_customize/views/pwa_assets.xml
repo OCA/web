@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="webclient_bootstrap_pwa" inherit_id="web.webclient_bootstrap">
+    <template
+        id="webclient_bootstrap_pwa"
+        inherit_id="web.webclient_bootstrap"
+        priority="99"
+    >
         <xpath expr="//meta[@name='theme-color']" position="attributes">
             <attribute
                 name="t-att-content"
