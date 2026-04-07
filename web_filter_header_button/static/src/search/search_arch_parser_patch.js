@@ -1,8 +1,8 @@
 /** @odoo-module **/
 
-import {SearchArchParser} from "@web/search/search_arch_parser";
-import {patch} from "@web/core/utils/patch";
 import {makeContext} from "@web/core/context";
+import {patch} from "@web/core/utils/patch";
+import {SearchArchParser} from "@web/search/search_arch_parser";
 
 patch(SearchArchParser.prototype, "web_filter_header_button.search_arch_parser", {
     /**
