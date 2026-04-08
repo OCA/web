@@ -111,7 +111,6 @@ msgstr ""
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__model_id
-#: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__model_name
 msgid "Model"
 msgstr ""
 
@@ -119,6 +118,11 @@ msgstr ""
 #: code:addons/web_button_visibility/models/hide_button_rule.py:0
 #, python-format
 msgid "Model %s has no method %s."
+msgstr ""
+
+#. module: web_button_visibility
+#: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__model_name
+msgid "Model Name"
 msgstr ""
 
 #. module: web_button_visibility
