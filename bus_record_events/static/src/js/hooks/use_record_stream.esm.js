@@ -1,6 +1,6 @@
 /** @odoo-module */
 
-import {onWillStart, onWillUnmount} from "@odoo/owl";
+import {onMounted, onWillStart, onWillUnmount} from "@odoo/owl";
 import {useService} from "@web/core/utils/hooks";
 
 /**
@@ -79,7 +79,9 @@ export function useRecordStream(
     onWillStart(() => {
         const channel = id ? `record_events:${model}:${id}` : `record_events:${model}`;
         service.addChannel(channel);
+    });
 
+    onMounted(() => {
         unsubscribe = service.subscribe(handleNotification);
     });
 
