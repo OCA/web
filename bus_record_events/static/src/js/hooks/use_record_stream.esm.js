@@ -1,6 +1,6 @@
 /** @odoo-module */
 
-import {onMounted, onWillStart, onWillUnmount} from "@odoo/owl";
+import {onMounted, onWillStart, onWillUnmount, status, useComponent} from "@odoo/owl";
 import {useService} from "@web/core/utils/hooks";
 
 /**
@@ -18,6 +18,7 @@ export function useRecordStream(
     model,
     {id, filter, onUpdate, isDirty, onReload, onRecordDeleted} = {}
 ) {
+    const component = useComponent();
     const service = useService("bus_record_event_service");
     let unsubscribe = null;
 
@@ -47,6 +48,9 @@ export function useRecordStream(
     };
 
     const handleNotification = async (payload) => {
+        if (status(component) === "destroyed") {
+            return;
+        }
         if (payload.model !== model) {
             return;
         }
