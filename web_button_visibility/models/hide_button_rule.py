@@ -17,7 +17,7 @@ class ModelButtonRule(models.Model):
         ondelete="cascade",
         index=True,
     )
-    model_name = fields.Char(related="model_id.model")
+    model_name = fields.Char(related="model_id.model", string="Model Name")
     condition_domain = fields.Char()
     group_ids = fields.Many2many("res.groups", required=True)
     # generated technical fields used in form attrs:
