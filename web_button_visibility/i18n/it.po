@@ -114,7 +114,6 @@ msgstr "Ultimo aggiornamento il"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__model_id
-#: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__model_name
 msgid "Model"
 msgstr "Modello"
 
@@ -123,6 +122,11 @@ msgstr "Modello"
 #, python-format
 msgid "Model %s has no method %s."
 msgstr "Il modello %s non ha il metodo %s."
+
+#. module: web_button_visibility
+#: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__model_name
+msgid "Model Name"
+msgstr ""
 
 #. module: web_button_visibility
 #: model:ir.model,name:web_button_visibility.model_ir_model
