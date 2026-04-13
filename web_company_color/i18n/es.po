@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-02 15:55+0000\n"
-"PO-Revision-Date: 2025-02-06 18:06+0000\n"
-"Last-Translator: \"Leonardo J. Caballero G.\" <leonardocaballero@gmail.com>\n"
+"PO-Revision-Date: 2026-04-13 08:14+0000\n"
+"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
@@ -92,7 +92,7 @@ msgstr "Desplazamiento del color de fondo de la barra de navegación"
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_border_bottom
 msgid "Navbar Bottom Border Color"
-msgstr ""
+msgstr "Color del borde inferior de la barra de navegación"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_text
