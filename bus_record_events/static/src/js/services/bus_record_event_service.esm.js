@@ -16,22 +16,31 @@ export const busRecordEventService = {
             });
         };
 
-        const processNotification = (notif) => {
-            const {payload, type} = notif;
-            if (type !== "bus.record/event") {
-                return;
+        // eslint-disable-next-line valid-jsdoc
+        /**
+         * Build a deduplication key for a bus.record/event payload.
+         * - create events: one per model (list views just need one reload)
+         * - write/unlink events: one per model+record (form views need per-record granularity)
+         */
+        const getDeduplicationKey = (payload) => {
+            if (payload.type === "create") {
+                return `${payload.model}::create`;
             }
-
-            const notify = () => {
-                subscribers.forEach((callback) => callback(payload));
-            };
-
-            notify();
+            const recordId = payload.id || (payload.data && payload.data.id) || null;
+            return `${payload.model}:${recordId}:${payload.type}`;
         };
 
         const onNotification = ({detail: notifications}) => {
+            const deduped = new Map();
             for (const notif of notifications) {
-                processNotification(notif);
+                const {payload, type} = notif;
+                if (type !== "bus.record/event") {
+                    continue;
+                }
+                deduped.set(getDeduplicationKey(payload), payload);
+            }
+            for (const payload of deduped.values()) {
+                subscribers.forEach((callback) => callback(payload));
             }
         };
 
