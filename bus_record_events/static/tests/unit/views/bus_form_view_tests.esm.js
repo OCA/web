@@ -5,6 +5,7 @@ import "@bus_record_events/js/views/form/bus_form_controller.esm";
 import {makeView, setupViewRegistries} from "@web/../tests/views/helpers";
 import {getFixture} from "@web/../tests/helpers/utils";
 import {registry} from "@web/core/registry";
+import {waitForDebounce} from "@bus_record_events/../tests/helpers/test_utils.esm";
 
 let serverData = null;
 let target = null;
@@ -61,8 +62,9 @@ QUnit.module("Views", (hooks) => {
 
         assert.verifySteps(["web_read"]);
 
-        // Simulate notification (clean state)
+        // Simulate notification (clean state, debounced)
         await busCallback({model: "partner", type: "write", data: {id: 1}});
+        await waitForDebounce();
         assert.verifySteps(["web_read"]);
     });
 
@@ -82,8 +84,9 @@ QUnit.module("Views", (hooks) => {
         input.dispatchEvent(new Event("input", {bubbles: true}));
         input.dispatchEvent(new Event("change", {bubbles: true}));
 
-        // Simulate notification
+        // Simulate notification (debounced)
         await busCallback({model: "partner", type: "write", data: {id: 1}});
+        await waitForDebounce();
         assert.verifySteps([
             "notify:Records updated elsewhere, but you have unsaved changes.",
         ]);
