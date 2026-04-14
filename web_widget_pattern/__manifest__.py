@@ -4,7 +4,7 @@
 {
     "name": "Input patterns",
     "summary": "Allows to define a regex for validating input on the backend",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Technical",
     "website": "https://github.com/OCA/web",
@@ -22,6 +22,9 @@
         "web.assets_backend": [
             "web_widget_pattern/static/src/*.xml",
             "web_widget_pattern/static/src/*.esm.js",
+        ],
+        "web.assets_unit_tests": [
+            "web_widget_pattern/static/tests/*",
         ],
     },
 }

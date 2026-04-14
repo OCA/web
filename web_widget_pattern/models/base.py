@@ -19,7 +19,7 @@ class Base(models.AbstractModel):
     @api.model
     def fields_get(self, allfields=None, attributes=None):
         result = super().fields_get(allfields=allfields, attributes=attributes)
-        if attributes is None or "pattern" in attributes:
+        if not attributes or "pattern" in attributes:
             for field_name, description in result.items():
                 field = self._fields.get(field_name)
                 pattern = getattr(field, "pattern", None)
