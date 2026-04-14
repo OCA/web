@@ -1,7 +1,10 @@
 /** @odoo-module */
 
 import {onMounted, onWillStart, onWillUnmount, status, useComponent} from "@odoo/owl";
+import {browser} from "@web/core/browser/browser";
 import {useService} from "@web/core/utils/hooks";
+
+const DEBOUNCE_MS = 200;
 
 /**
  * Hook to subscribe to record events.
@@ -21,6 +24,24 @@ export function useRecordStream(
     const component = useComponent();
     const service = useService("bus_record_event_service");
     let unsubscribe = null;
+    let debounceTimer = null;
+
+    const clearDebounce = () => {
+        if (debounceTimer !== null) {
+            browser.clearTimeout(debounceTimer);
+            debounceTimer = null;
+        }
+    };
+
+    const scheduleDebounced = (action) => {
+        clearDebounce();
+        debounceTimer = browser.setTimeout(async () => {
+            debounceTimer = null;
+            if (status(component) !== "destroyed") {
+                await action();
+            }
+        }, DEBOUNCE_MS);
+    };
 
     const handleUnlink = async (dirty) => {
         if (dirty) {
@@ -67,17 +88,29 @@ export function useRecordStream(
             return;
         }
 
+        // Custom onUpdate: debounce all events (list views just need one reload)
         if (onUpdate) {
-            await onUpdate(payload);
+            scheduleDebounced(() => onUpdate(payload));
             return;
         }
 
-        const dirty = isDirty ? await isDirty() : false;
-        if (payload.type === "unlink") {
+        // Unlink on a specific record: handle immediately (user must be redirected)
+        if (payload.type === "unlink" && id) {
+            clearDebounce();
+            const dirty = isDirty ? await isDirty() : false;
             await handleUnlink(dirty);
-        } else {
-            await handleUpdate(dirty);
+            return;
         }
+
+        // All other events: debounce to collapse rapid-fire notifications
+        scheduleDebounced(async () => {
+            const dirty = isDirty ? await isDirty() : false;
+            if (payload.type === "unlink") {
+                await handleUnlink(dirty);
+            } else {
+                await handleUpdate(dirty);
+            }
+        });
     };
 
     onWillStart(() => {
@@ -90,6 +123,7 @@ export function useRecordStream(
     });
 
     onWillUnmount(() => {
+        clearDebounce();
         if (unsubscribe) {
             unsubscribe();
         }
