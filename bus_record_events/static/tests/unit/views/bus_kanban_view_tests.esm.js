@@ -5,6 +5,7 @@ import "@bus_record_events/js/views/kanban/bus_kanban_controller.esm";
 import {makeView, setupViewRegistries} from "@web/../tests/views/helpers";
 import {getFixture} from "@web/../tests/helpers/utils";
 import {registry} from "@web/core/registry";
+import {waitForDebounce} from "@bus_record_events/../tests/helpers/test_utils.esm";
 
 let serverData = null;
 let busCallback = null;
@@ -58,8 +59,9 @@ QUnit.module("Views", (hooks) => {
 
         assert.verifySteps(["web_search_read"]);
 
-        // Simulate notification
+        // Simulate notification (debounced)
         await busCallback({model: "partner", type: "write", data: {id: 1}});
+        await waitForDebounce();
         assert.verifySteps(["web_search_read"]);
     });
 });
