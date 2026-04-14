@@ -29,6 +29,7 @@
             "web/static/src/legacy/js/**/*",
             ("remove", "web/static/src/legacy/js/libs/**/*"),
             ("remove", "web/static/src/legacy/js/public/**/*"),
+            "bus_record_events/static/tests/helpers/*.js",
             "bus_record_events/static/tests/unit/hooks/*.js",
             "bus_record_events/static/tests/unit/services/*.js",
             "bus_record_events/static/tests/unit/views/*.js",
