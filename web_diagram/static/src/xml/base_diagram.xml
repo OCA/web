@@ -5,9 +5,14 @@
 <t t-name="web_diagram.DiagramController" owl="1">
     <Layout display="display">
         <t t-set-slot="control-panel-create-button">
-            <button type="button" class="btn btn-primary o_diagram_new_button"
+            <button t-if="archInfo.canCreate" type="button"
+                    class="btn btn-primary o_diagram_new_button"
                     t-on-click="addNode">
                 New Node
+            </button>
+            <button type="button" class="btn btn-secondary ms-1"
+                    t-on-click="exportSVG">
+                Export SVG
             </button>
         </t>
         <t t-set-slot="control-panel-navigation-additional">

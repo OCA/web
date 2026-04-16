@@ -99,6 +99,7 @@ export class DiagramController extends Component {
         return {
             nodeModel: nodeEl.getAttribute("object"),
             connectorModel: arrowEl.getAttribute("object"),
+            canCreate: nodeEl.getAttribute("create") !== "False",
             labels,
             visibleNodes,
             invisibleNodes,
@@ -249,6 +250,22 @@ export class DiagramController extends Component {
             this.state.connectorModel,
             parseInt(id, 10),
         );
+    }
+
+    exportSVG() {
+        const svgEl = document.querySelector(".o_diagram svg");
+        if (!svgEl) {
+            return;
+        }
+        const serializer = new XMLSerializer();
+        const svgStr = serializer.serializeToString(svgEl);
+        const blob = new Blob([svgStr], { type: "image/svg+xml" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "diagram.svg";
+        a.click();
+        URL.revokeObjectURL(url);
     }
 }
 

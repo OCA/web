@@ -914,45 +914,67 @@ msgid "Export CSV"
 msgstr "Exporter CSV"
 
 #. module: web_diagram_builder
-#: model_terms:ir.ui.view,arch_db:web_diagram_builder.view_web_diagram_builder_diagram
-msgid "Can't see the diagram? Use the scroll wheel to zoom in. Click 'Help' for navigation tips."
-msgstr "Vous ne voyez pas le diagramme ? Utilisez la molette pour zoomer. Cliquez sur « Aide » pour les conseils de navigation."
-
+#: model:ir.model,name:web_diagram_builder.model_web_diagram_builder_path
+#: model_terms:ir.ui.view,arch_db:web_diagram_builder.view_web_diagram_builder_form
 msgid "Find Path Between Two Nodes"
 msgstr "Trouver le chemin entre deux nœuds"
 
+#. module: web_diagram_builder
+#: model_terms:ir.ui.view,arch_db:web_diagram_builder.view_web_diagram_builder_path_form
 msgid "Find Path Between Nodes"
 msgstr "Trouver le chemin entre deux nœuds"
 
+#. module: web_diagram_builder
+#: model:ir.model.fields,field_description:web_diagram_builder.field_web_diagram_builder_path__node_a_id
 msgid "From Node"
 msgstr "Nœud de départ"
 
+#. module: web_diagram_builder
+#: model:ir.model.fields,field_description:web_diagram_builder.field_web_diagram_builder_path__node_b_id
 msgid "To Node"
 msgstr "Nœud d'arrivée"
 
+#. module: web_diagram_builder
+#: model_terms:ir.ui.view,arch_db:web_diagram_builder.view_web_diagram_builder_path_form
 msgid "Find Path"
 msgstr "Trouver le chemin"
 
-msgid "Find Path Between Two Nodes"
-msgstr "Trouver le chemin entre deux nœuds"
-
+#. module: web_diagram_builder
+#: model:ir.model.fields,field_description:web_diagram_builder.field_web_diagram_builder_path__path_html
 msgid "Path"
 msgstr "Chemin"
 
+#. module: web_diagram_builder
+#: code:addons/web_diagram_builder/models/web_diagram_builder_path.py:0
 msgid "No path found between these two nodes."
 msgstr "Aucun chemin trouvé entre ces deux nœuds."
 
+#. module: web_diagram_builder
+#: code:addons/web_diagram_builder/models/web_diagram_builder_path.py:0
 msgid "Path (%d step)"
 msgstr "Chemin (%d étape)"
 
+#. module: web_diagram_builder
+#: code:addons/web_diagram_builder/models/web_diagram_builder_path.py:0
 msgid "Path (%d steps)"
 msgstr "Chemin (%d étapes)"
 
+#. module: web_diagram_builder
+#: code:addons/web_diagram_builder/models/web_diagram_builder_path.py:0
 msgid "Start/End"
 msgstr "Départ/Arrivée"
 
+#. module: web_diagram_builder
+#: code:addons/web_diagram_builder/models/web_diagram_builder_path.py:0
 msgid "Common ancestor"
 msgstr "Ancêtre commun"
 
+#. module: web_diagram_builder
+#: code:addons/web_diagram_builder/models/web_diagram_builder_path.py:0
 msgid "Intermediate node"
 msgstr "Nœud intermédiaire"
+
+#. module: web_diagram_builder
+#: model_terms:ir.ui.view,arch_db:web_diagram_builder.view_web_diagram_builder_diagram
+msgid "Can't see the diagram? Use the scroll wheel to zoom in. Click 'Help' for navigation tips."
+msgstr "Vous ne voyez pas le diagramme ? Utilisez la molette pour zoomer. Cliquez sur « Aide » pour les conseils de navigation."
