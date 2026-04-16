@@ -78,7 +78,7 @@ export class DiagramRenderer extends Component {
         Object.values(nodes).forEach((node) => {
             const n = new CuteNode(
                 graph,
-                node.x + 50, // FIXME: +50 offset should live in the layout algorithm
+                node.x + 50, // shift to avoid clipping at x=0 in Raphael's coordinate space
                 node.y + 50,
                 CuteGraph.wordwrap(node.name, 14),
                 node.shape === "rectangle" ? "rect" : "circle",
@@ -93,7 +93,7 @@ export class DiagramRenderer extends Component {
                 graph,
                 CuteGraph.wordwrap(edge.signal, 32),
                 idToNode[edge.s_id],
-                idToNode[edge.d_id] || idToNode[edge.s_id] // WORKAROUND for missing dest
+                idToNode[edge.d_id] || idToNode[edge.s_id] // fallback: loop to source if dest not in current view
             );
             e.id = edge.id;
         });
@@ -102,9 +102,9 @@ export class DiagramRenderer extends Component {
         CuteNode.double_click_callback = (cutenode) => onEditNode(cutenode.id);
         CuteNode.destruction_callback = (cutenode) => {
             onRemoveNode(cutenode.id);
-            // Reject to prevent the library from immediately removing the node;
-            // the diagram is redrawn after the server confirms deletion.
-            return Promise.reject();
+            // Return a never-resolving promise so the library never calls
+            // entity.remove() — the diagram is redrawn after server confirms.
+            return new Promise(() => {});
         };
 
         CuteEdge.double_click_callback = (cuteedge) => onEditEdge(cuteedge.id);
@@ -114,7 +114,7 @@ export class DiagramRenderer extends Component {
         };
         CuteEdge.destruction_callback = (cuteedge) => {
             onRemoveEdge(cuteedge.id);
-            return Promise.reject();
+            return new Promise(() => {});
         };
     }
 }

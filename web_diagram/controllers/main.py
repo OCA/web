@@ -5,6 +5,18 @@ import odoo.http as http
 from odoo.tools.safe_eval import safe_eval
 
 
+def _parse_key_value_spec(spec_str):
+    """Parse a semicolon-separated list of 'key:value' pairs into a dict.
+    Malformed pairs (missing colon) are silently skipped.
+    """
+    result = {}
+    for item in (spec_str or '').split(';'):
+        if ':' in item:
+            key, value = item.split(':', 1)
+            result[key] = value
+    return result
+
+
 class DiagramView(http.Controller):
 
     @http.route('/web_diagram/diagram/get_diagram_info', type='json', auth='user')
@@ -17,44 +29,25 @@ class DiagramView(http.Controller):
         connector_fields = kw.get('connector_fields', [])
         connector_fields_string = kw.get('connector_fields_string', [])
 
-        bgcolors = {}
-        shapes = {}
-        bgcolor = kw.get('bgcolor', '')
-        shape = kw.get('shape', '')
-
-        if bgcolor:
-            for color_spec in bgcolor.split(';'):
-                if color_spec:
-                    colour, color_state = color_spec.split(':')
-                    bgcolors[colour] = color_state
-
-        if shape:
-            for shape_spec in shape.split(';'):
-                if shape_spec:
-                    shape_colour, shape_color_state = shape_spec.split(':')
-                    shapes[shape_colour] = shape_color_state
+        bgcolors = _parse_key_value_spec(kw.get('bgcolor', ''))
+        shapes = _parse_key_value_spec(kw.get('shape', ''))
 
         ir_view = http.request.env['ir.ui.view']
         graphs = ir_view.graph_get(int(id), model, node, connector, src_node,
                                    des_node, label, (140, 180))
         nodes = graphs['nodes']
         transitions = graphs['transitions']
-        isolate_nodes = {}
-        for blnk_node in graphs['blank_nodes']:
-            isolate_nodes[blnk_node['id']] = blnk_node
-        y = [
-            t['y']
-            for t in nodes.values()
-            if t['x'] == 20
-            if t['y']
-        ]
+        isolate_nodes = {
+            blnk_node['id']: blnk_node
+            for blnk_node in graphs['blank_nodes']
+        }
+        y = [t['y'] for t in nodes.values() if t['x'] == 20 and t['y']]
         y_max = (y and max(y)) or 120
 
         connectors = {}
-        list_tr = []
+        list_tr = list(transitions.keys())
 
         for tr in transitions:
-            list_tr.append(tr)
             connectors.setdefault(tr, {
                 'id': int(tr),
                 's_id': transitions[tr][0],
@@ -66,7 +59,7 @@ class DiagramView(http.Controller):
 
         for tr in data_connectors:
             transition_id = str(tr['id'])
-            _sourceid, label = graphs['label'][transition_id]
+            label = graphs['label'][transition_id][1]
             t = connectors[transition_id]
             t.update(
                 source=tr[src_node][1],
@@ -79,24 +72,25 @@ class DiagramView(http.Controller):
                 t['options'][connector_fields_string[i]] = tr[fld]
 
         fields = http.request.env['ir.model.fields']
-        field = fields.search([('model', '=', model), ('relation', '=', node)])
+        field = fields.search([('model', '=', model), ('relation', '=', node)], limit=1)
         node_act = http.request.env[node]
-        search_acts = node_act.search([(field.relation_field, '=', id)])
+        if field and field.relation_field:
+            search_acts = node_act.search([(field.relation_field, '=', id)])
+        else:
+            search_acts = node_act.browse()
         data_acts = search_acts.read(invisible_node_fields + visible_node_fields)
 
         for act in data_acts:
-            n = nodes.get(str(act['id']))
+            act_id_str = str(act['id'])
+            n = nodes.get(act_id_str)
             if not n:
                 n = isolate_nodes.get(act['id'], {})
                 y_max += 140
                 n.update(x=20, y=y_max)
-                nodes[act['id']] = n
+                nodes[act_id_str] = n
 
-            n.update(
-                id=act['id'],
-                color='white',
-                options={}
-            )
+            n.update(id=act['id'], color='white', options={})
+
             for color, expr in bgcolors.items():
                 if safe_eval(expr, act):
                     n['color'] = color

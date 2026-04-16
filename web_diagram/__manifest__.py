@@ -28,4 +28,5 @@ Openerp Web Diagram view.
     },
     'auto_install': True,
     'license': 'LGPL-3',
+    'test': ['tests/test_ir_ui_view.py'],
 }

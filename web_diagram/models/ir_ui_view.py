@@ -23,72 +23,41 @@ class IrUIView(models.Model):
         }
         return result
 
-    def _postprocess_tag_node(self, node, name_manager, node_info):
-        """Process <node> children against the node's object model.
-
-        Children are moved into a temporary wrapper, postprocessed
-        against the node's own model, then moved back.  This prevents
-        the parent stack from re-processing them with the diagram model.
-        """
-        node_model = node.get("object")
-        if node_model and node_model in self.env:
-            wrapper = etree.Element("_node_wrapper")
-            for child in list(node):
-                wrapper.append(child)  # lxml auto-detaches from node
-            self._postprocess_view(wrapper, node_model, editable=False)
-            for child in list(wrapper):
-                node.append(child)  # lxml auto-detaches from wrapper
-        node_info["children"] = []
-        node_info["editable"] = False
-
-    def _postprocess_tag_arrow(self, node, name_manager, node_info):
-        """Process <arrow> children against the arrow's object model.
-
-        Same approach as _postprocess_tag_node: temporary wrapper to
-        avoid re-processing children with the diagram model.
-        """
-        arrow_model = node.get("object")
-        if arrow_model and arrow_model in self.env:
-            wrapper = etree.Element("_arrow_wrapper")
+    def _postprocess_tag_diagram_element(self, node, name_manager, node_info, wrapper_tag):
+        """Postprocess <node> or <arrow> children against their own model."""
+        element_model = node.get("object")
+        if element_model and element_model in self.env:
+            wrapper = etree.Element(wrapper_tag)
             for child in list(node):
                 wrapper.append(child)
-            self._postprocess_view(wrapper, arrow_model, editable=False)
+            self._postprocess_view(wrapper, element_model, editable=False)
             for child in list(wrapper):
                 node.append(child)
         node_info["children"] = []
         node_info["editable"] = False
 
-    def _validate_tag_node(self, node, name_manager, node_info):
-        """Validate <node> children against the node's object model.
+    def _postprocess_tag_node(self, node, name_manager, node_info):
+        self._postprocess_tag_diagram_element(node, name_manager, node_info, "_node_wrapper")
 
-        Odoo 18 has a separate _validate_view pass that iterates all children
-        unconditionally. Without this handler, <field> children inside <node>
-        would be validated against the diagram model instead of node_model.
-        """
-        node_model = node.get("object")
-        if node_model and node_model in self.env:
+    def _postprocess_tag_arrow(self, node, name_manager, node_info):
+        self._postprocess_tag_diagram_element(node, name_manager, node_info, "_arrow_wrapper")
+
+    def _validate_tag_diagram_element(self, node, name_manager, node_info):
+        """Validate <node> or <arrow> children against their own model."""
+        element_model = node.get("object")
+        if element_model and element_model in self.env:
             for child in list(node):
                 node.remove(child)
                 self._validate_view(
-                    child, node_model, view_type=child.tag, editable=False,
+                    child, element_model, view_type=child.tag, editable=False,
                     node_info=node_info,
                 )
+
+    def _validate_tag_node(self, node, name_manager, node_info):
+        self._validate_tag_diagram_element(node, name_manager, node_info)
 
     def _validate_tag_arrow(self, node, name_manager, node_info):
-        """Validate <arrow> children against the arrow's object model.
-
-        Odoo 18 has a separate _validate_view pass that iterates all children
-        unconditionally. Without this handler, <field> children inside <arrow>
-        would be validated against the diagram model instead of arrow_model.
-        """
-        arrow_model = node.get("object")
-        if arrow_model and arrow_model in self.env:
-            for child in list(node):
-                node.remove(child)
-                self._validate_view(
-                    child, arrow_model, view_type=child.tag, editable=False,
-                    node_info=node_info,
-                )
+        self._validate_tag_diagram_element(node, name_manager, node_info)
 
     def _validate_tag_label(self, node, name_manager, node_info):
         """In a diagram view, <label> is a legend element, not a form label.
@@ -122,7 +91,7 @@ class IrUIView(models.Model):
         start = []
         tres = {}
         labels = {}
-        no_ancester = []
+        no_ancestor = []
         blank_nodes = []
 
         model_env = self.env[model]
@@ -158,7 +127,7 @@ class IrUIView(models.Model):
             if "flow_start" in line and line.flow_start:
                 start.append(line.id)
             elif not line[source_field]:
-                no_ancester.append(line.id)
+                no_ancestor.append(line.id)
 
             for t in line[dest_field]:
                 transitions.append((line.id, t[des_node].id))
@@ -172,7 +141,7 @@ class IrUIView(models.Model):
                             label_string = label_string + " " + str(t[lbl])
                 labels[str(t["id"])] = (line.id, label_string)
 
-        g = graph(nodes, transitions, no_ancester)
+        g = graph(nodes, transitions, no_ancestor)
         g.process(start)
         g.scale(*scale)
         result = g.result_get()
