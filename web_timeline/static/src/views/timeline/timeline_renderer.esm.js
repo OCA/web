@@ -184,6 +184,19 @@ export class TimelineRenderer extends Component {
      */
     init_timeline() {
         this._computeMode();
+        const self = this;
+        if (this.model.params.show_only_active_groups) {
+            // Visibility should also be updated when toggling group visibility,
+            // so we monkey-patch the method responsible for that in the timeline library
+            // for lack of a better way to hook into that functionality.
+            const {ItemSet} = vis.timeline.components;
+            const toggleGroupShowNested = ItemSet.prototype.toggleGroupShowNested;
+            ItemSet.prototype.toggleGroupShowNested = function () {
+                const rv = toggleGroupShowNested.apply(this, arguments);
+                self._adjust_group_visibility();
+                return rv;
+            };
+        }
         this.options.editable = {};
         if (this.model.canEdit) {
             this.options.onMove = this.on_move.bind(this);
@@ -229,6 +242,7 @@ export class TimelineRenderer extends Component {
             this.draw_canvas();
             this.load_initial_data();
         });
+        this.timeline.on("rangechanged", this.on_range_changed.bind(this));
     }
     /**
      * Returns the XSS whitelist for the timeline library.
@@ -346,38 +360,105 @@ export class TimelineRenderer extends Component {
         }
         const groups = await this.split_groups(records);
         this.groups = groups;
-        // Ensure relevant groups are visible
-        for (const d of data) {
-            const itemGroupPathJson = d.group;
-            try {
-                const itemPathSegments = JSON.parse(itemGroupPathJson);
-                for (let i = 0; i < itemPathSegments.length; i++) {
-                    const subPathJson = JSON.stringify(
-                        itemPathSegments.slice(0, i + 1)
-                    );
-                    const group = groups.find((g) => g.id === subPathJson);
-                    if (group && !group.visible) {
-                        group.visible = true;
-                    }
-                }
-            } catch (e) {
-                console.error(
-                    "Error processing group visibility for item. Group JSON string was:",
-                    itemGroupPathJson,
-                    "Error:",
-                    e
-                );
-            }
-        }
         this.timeline.setGroups(groups);
         this.timeline.setItems(data);
+        this._adjust_group_visibility();
         const mode = !this.mode.data || this.mode.data === "fit";
         const adjust = typeof adjust_window === "undefined" || adjust_window;
         if (mode && adjust) {
             this.timeline.fit();
         }
     }
+    /**
+     * Extract the group hierarchy for a given item.
+     *
+     * @param {Object} item
+     * @returns {Array} An array of group IDs representing the group hierarchy
+     *                  for the item.
+     * @private
+     */
+    _extract_item_group_hierarchy(item) {
+        const groupHierarchy = [];
+        try {
+            const itemGroupPathJson = item.group;
+            const itemPathSegments = JSON.parse(itemGroupPathJson);
+            for (let i = 0; i < itemPathSegments.length; i++) {
+                const subPathJson = JSON.stringify(itemPathSegments.slice(0, i + 1));
+                groupHierarchy.push(subPathJson);
+            }
+        } catch (e) {
+            console.error(
+                "Error extracting group hierarchy for item. Group JSON string was:",
+                item.group,
+                "Error:",
+                e
+            );
+        }
+        return groupHierarchy;
+    }
 
+    /**
+     * Get the currently displayed items.
+     *
+     * @private
+     * @returns {vis.DataSet} The items currently in the timeline's visible window.
+     */
+    _items_in_range() {
+        const range = this.timeline.getWindow();
+        return this.timeline.itemsData.get({
+            filter: (item) =>
+                item.start < range.end && (item.end || item.start) > range.start,
+        });
+    }
+
+    /**
+     * Adjust group visibility based on currently visible items.
+     *
+     * @private
+     */
+    _adjust_group_visibility() {
+        const items = this.model.params.show_only_active_groups
+            ? this._items_in_range()
+            : this.timeline.itemsData.get();
+        const groupsInRange = items.reduce((groupSet, item) => {
+            const itemGroups = this._extract_item_group_hierarchy(item);
+            itemGroups.forEach((g) => groupSet.add(g));
+            return groupSet;
+        }, new Set());
+        const groups = this.timeline.groupsData.getDataSet();
+        const hiddenNestedGroups = new Set();
+        groups.forEach((group) => {
+            if (group.showNested !== false || !group.nestedGroups) {
+                return;
+            }
+            // Recursively get all nested groups and add them to the hiddenNestedGroups set
+            const getNestedGroups = (nestingGroup) => {
+                if (nestingGroup.nestedGroups) {
+                    nestingGroup.nestedGroups.forEach((nestedGroupId) => {
+                        const nestedGroup = groups.get(nestedGroupId);
+                        if (nestedGroup) {
+                            hiddenNestedGroups.add(nestedGroup);
+                            getNestedGroups(nestedGroup);
+                        }
+                    });
+                }
+            };
+            getNestedGroups(group);
+        });
+
+        groups.forEach((group) => {
+            if (hiddenNestedGroups.has(group)) {
+                return;
+            }
+            const groupInRange = groupsInRange.has(group.id);
+            if (Boolean(group.visible) !== groupInRange) {
+                groups.update({
+                    id: group.id,
+                    visible: groupInRange,
+                });
+            }
+        });
+    }
     /**
      * Get the groups.
      *
@@ -662,6 +743,18 @@ export class TimelineRenderer extends Component {
         });
         groups.forEach((g, index) => (g.order = index + 1));
         return groups;
+    }
+
+    /**
+     * Handle a change in the timeline range.
+     *
+     * @param {RangeEvent} e
+     * @private
+     */
+    on_range_changed() {
+        if (this.params.show_only_active_groups) {
+            this._adjust_group_visibility();
+        }
     }
 
     /**

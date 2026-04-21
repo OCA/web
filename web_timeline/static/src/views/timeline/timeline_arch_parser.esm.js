@@ -100,6 +100,11 @@ export class TimelineArchParser {
                             node.getAttribute("event_open_popup")
                         );
                     }
+                    if (node.hasAttribute("show_only_active_groups")) {
+                        archInfo.show_only_active_groups = exprToBoolean(
+                            node.getAttribute("show_only_active_groups")
+                        );
+                    }
                     if (node.hasAttribute("create")) {
                         archInfo.canCreate = exprToBoolean(
                             node.getAttribute("create"),
