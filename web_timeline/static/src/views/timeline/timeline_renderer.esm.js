@@ -489,8 +489,8 @@ export class TimelineRenderer extends Component {
                 const m2mIds = Array.isArray(groupValue)
                     ? groupValue
                     : groupValue
-                    ? [groupValue]
-                    : [];
+                      ? [groupValue]
+                      : [];
                 if (m2mIds.length === 0) {
                     return createGroup(
                         {
