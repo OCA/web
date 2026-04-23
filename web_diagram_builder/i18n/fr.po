@@ -917,3 +917,42 @@ msgstr "Exporter CSV"
 #: model_terms:ir.ui.view,arch_db:web_diagram_builder.view_web_diagram_builder_diagram
 msgid "Can't see the diagram? Use the scroll wheel to zoom in. Click 'Help' for navigation tips."
 msgstr "Vous ne voyez pas le diagramme ? Utilisez la molette pour zoomer. Cliquez sur « Aide » pour les conseils de navigation."
+
+msgid "Find Path Between Two Nodes"
+msgstr "Trouver le chemin entre deux nœuds"
+
+msgid "Find Path Between Nodes"
+msgstr "Trouver le chemin entre deux nœuds"
+
+msgid "From Node"
+msgstr "Nœud de départ"
+
+msgid "To Node"
+msgstr "Nœud d'arrivée"
+
+msgid "Find Path"
+msgstr "Trouver le chemin"
+
+msgid "Find Path Between Two Nodes"
+msgstr "Trouver le chemin entre deux nœuds"
+
+msgid "Path"
+msgstr "Chemin"
+
+msgid "No path found between these two nodes."
+msgstr "Aucun chemin trouvé entre ces deux nœuds."
+
+msgid "Path (%d step)"
+msgstr "Chemin (%d étape)"
+
+msgid "Path (%d steps)"
+msgstr "Chemin (%d étapes)"
+
+msgid "Start/End"
+msgstr "Départ/Arrivée"
+
+msgid "Common ancestor"
+msgstr "Ancêtre commun"
+
+msgid "Intermediate node"
+msgstr "Nœud intermédiaire"

@@ -8,3 +8,4 @@ access_web_diagram_builder_import_result,web.diagram.builder.import.result,model
 access_web_diagram_builder_import_result_line,web.diagram.builder.import.result.line,model_web_diagram_builder_import_result_line,base.group_user,1,1,1,1
 access_web_diagram_builder_import_report,web.diagram.builder.import.report,model_web_diagram_builder_import_report,base.group_user,1,1,1,1
 access_web_diagram_builder_help,web.diagram.builder.help,model_web_diagram_builder_help,base.group_user,1,1,1,1
+access_web_diagram_builder_path,web.diagram.builder.path,model_web_diagram_builder_path,base.group_user,1,1,1,1

@@ -7,3 +7,4 @@ from . import web_diagram_builder_link
 from . import web_diagram_builder_import
 from . import web_diagram_builder_import_result
 from . import web_diagram_builder_import_report
+from . import web_diagram_builder_path

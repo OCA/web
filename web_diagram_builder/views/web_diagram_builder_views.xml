@@ -83,6 +83,11 @@
                     </group>
                     <notebook>
                         <page string="Nodes" name="nodes">
+                            <button name="action_find_path"
+                                    string="Find Path Between Two Nodes"
+                                    type="object"
+                                    class="btn-secondary mb-2"
+                                    invisible="node_count == 0"/>
                             <field name="node_ids" readonly="1">
                                 <list>
                                     <field name="name"/>

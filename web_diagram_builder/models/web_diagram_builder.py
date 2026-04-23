@@ -249,6 +249,20 @@ class WebDiagramBuilder(models.Model):
         action["display_name"] = self.name
         return action
 
+    def action_find_path(self):
+        self.ensure_one()
+        wizard = self.env["web.diagram.builder.path"].create({
+            "builder_id": self.id,
+        })
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "web.diagram.builder.path",
+            "res_id": wizard.id,
+            "view_mode": "form",
+            "target": "new",
+            "views": [(False, "form")],
+        }
+
     def action_compute_all(self):
         """Recompute diagrams that have auto-refresh enabled. Called by the scheduled task."""
         for rec in self.search([("auto_refresh", "=", True)]):

@@ -23,6 +23,7 @@
         "views/web_diagram_builder_import_views.xml",
         "views/web_diagram_builder_import_result_views.xml",
         "views/web_diagram_builder_import_report_views.xml",
+        "views/web_diagram_builder_path_views.xml",
         "views/menu.xml",
     ],
     "assets": {
