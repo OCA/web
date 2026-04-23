@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_web_diagram_builder_node_form" model="ir.ui.view">
+        <field name="name">web.diagram.builder.node.form</field>
+        <field name="model">web.diagram.builder.node</field>
+        <field name="arch" type="xml">
+            <form string="Node">
+                <header>
+                    <button name="action_open_record"
+                            string="Open Record"
+                            type="object"
+                            class="btn-primary"
+                            invisible="not record_id"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="builder_id" readonly="1"/>
+                        <field name="flow_start" readonly="1" string="Root Node"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

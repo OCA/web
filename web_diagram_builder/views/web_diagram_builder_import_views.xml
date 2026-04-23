@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_web_diagram_builder_import_form" model="ir.ui.view">
+        <field name="name">web.diagram.builder.import.form</field>
+        <field name="model">web.diagram.builder.import</field>
+        <field name="arch" type="xml">
+            <form string="Import Diagram Builder">
+                <sheet>
+                    <p class="text-muted">Upload one or more CSV files exported from Diagram Builder. Each diagram will be recreated and recomputed automatically. If a file fails, the others will still be imported.</p>
+                    <group>
+                        <field name="file_ids" widget="many2many_binary" string="CSV Files"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_import" string="Import" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_web_diagram_builder_import" model="ir.actions.act_window">
+        <field name="name">Import Diagram Builder</field>
+        <field name="res_model">web.diagram.builder.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
