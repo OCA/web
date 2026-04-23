@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Web Diagram Builder",
-    "version": "18.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Tools",
     "summary": "Build recursive dependency diagrams from any many2one field",
     "author": "TechnoLibre",
@@ -25,6 +25,12 @@
         "views/web_diagram_builder_import_report_views.xml",
         "views/menu.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "web_diagram_builder/static/src/xml/diagram_help_widget.xml",
+            "web_diagram_builder/static/src/js/diagram_help_widget.js",
+        ],
+    },
     "installable": True,
     "application": True,
     "test": ["tests/test_web_diagram_builder.py"],

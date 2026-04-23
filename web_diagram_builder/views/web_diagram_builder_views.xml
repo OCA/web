@@ -44,22 +44,15 @@
                     <div class="text-warning fw-semibold" invisible="not last_computed or node_count > 0">No nodes found — check your model, parent field, and filter domain.</div>
                 </header>
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="action_open_help"
-                                type="object"
-                                class="oe_stat_button"
-                                icon="fa-question-circle"
-                                invisible="not id">
-                            <div class="o_field_widget o_stat_info">
-                                <span class="o_stat_text">How does it work?</span>
-                            </div>
-                        </button>
-                    </div>
-                    <div class="oe_title">
-                        <label for="name"/>
-                        <h1>
-                            <field name="name" placeholder="Diagram name…"/>
-                        </h1>
+                    <div class="oe_button_box" name="button_box"/>
+                    <div class="d-flex align-items-start justify-content-between">
+                        <div class="oe_title flex-grow-1">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Diagram name…"/>
+                            </h1>
+                        </div>
+                        <widget name="diagram_help_button"/>
                     </div>
                     <div>
                         <label for="description"/>

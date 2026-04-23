@@ -30,6 +30,7 @@ msgstr "Comment fonctionne le constructeur de diagramme ?"
 
 #. module: web_diagram_builder
 #: model_terms:ir.ui.view,arch_db:web_diagram_builder.view_web_diagram_builder_form
+#: web_diagram_builder/static/src/js/diagram_help_widget.js:0
 msgid "How does it work?"
 msgstr "Comment ça marche ?"
 

@@ -207,6 +207,23 @@ class WebDiagramBuilder(models.Model):
             },
         }
 
+    @api.model
+    def get_help_action(self):
+        lang = (self.env.lang or self.env.user.lang or "en_US").lower()
+        is_fr = lang.startswith("fr")
+        HelpModel = self.env["web.diagram.builder.help"]
+        content = HelpModel._get_help_html(is_fr)
+        rec = HelpModel.create({"content_html": content})
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Comment ça marche ?" if is_fr else "How does the Diagram Builder work?",
+            "res_model": "web.diagram.builder.help",
+            "res_id": rec.id,
+            "view_mode": "form",
+            "target": "new",
+            "views": [(False, "form")],
+        }
+
     def action_open_help(self):
         lang = (self.env.lang or self.env.user.lang or "en_US").lower()
         is_fr = lang.startswith("fr")
