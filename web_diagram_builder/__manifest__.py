@@ -9,6 +9,7 @@
     "website": "https://technolibre.ca",
     "license": "AGPL-3",
     "depends": ["web_diagram"],
+    "post_init_hook": "post_init_hook",
     "data": [
         "security/ir.model.access.csv",
         "data/web_diagram_builder_template_data.xml",

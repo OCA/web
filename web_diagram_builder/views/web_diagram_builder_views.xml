@@ -40,8 +40,8 @@
                             invisible="not last_computed"/>
                     <field name="last_computed" widget="datetime" readonly="1"
                            string="Last computed:" invisible="not last_computed"/>
-                    <span class="text-muted" invisible="last_computed">Click "Generate Diagram" to build the diagram.</span>
-                    <span class="text-warning fw-semibold" invisible="not last_computed or node_count > 0">No nodes found — check your model, parent field, and filter domain.</span>
+                    <div class="text-muted" invisible="last_computed">Click "Generate Diagram" to build the diagram.</div>
+                    <div class="text-warning fw-semibold" invisible="not last_computed or node_count > 0">No nodes found — check your model, parent field, and filter domain.</div>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -148,22 +148,10 @@
         <field name="res_model">web.diagram.builder</field>
         <field name="view_mode">list,form,diagram</field>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Create your first diagram!
-            </p>
-            <p>
-                The Diagram Builder lets you visualize hierarchical data from your
-                account as an interactive diagram — bubbles connected by arrows.
-            </p>
-            <p>
-                For example: your contacts and their sub-contacts, your product
-                categories and sub-categories, your departments and teams…
-            </p>
-            <p>
-                <strong>How to get started:</strong> click <strong>New</strong> to create
-                your first diagram, or open
-                <strong>Configuration → Quick Guide</strong> for a full step-by-step guide.
-            </p>
+            <p class="o_view_nocontent_smiling_face">Create your first diagram!</p>
+            <p>The Diagram Builder lets you visualize hierarchical data from your account as an interactive diagram — bubbles connected by arrows.</p>
+            <p>For example: your contacts and their sub-contacts, your product categories and sub-categories, your departments and teams…</p>
+            <p>How to get started: click <strong>New</strong> to create your first diagram, or open <strong>Configuration → Quick Guide</strong> for a full step-by-step guide.</p>
         </field>
     </record>
 
