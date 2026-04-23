@@ -1,7 +1,7 @@
 # Copyright 2024 TechnoLibre
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class WebDiagramBuilderLink(models.Model):
@@ -12,10 +12,16 @@ class WebDiagramBuilderLink(models.Model):
     builder_id = fields.Many2one(
         "web.diagram.builder",
         string="Builder",
-        required=True,
+        compute="_compute_builder_id",
+        store=True,
         ondelete="cascade",
         index=True,
     )
+
+    @api.depends("source_node_id")
+    def _compute_builder_id(self):
+        for rec in self:
+            rec.builder_id = rec.source_node_id.builder_id
     source_node_id = fields.Many2one(
         "web.diagram.builder.node",
         string="Source",

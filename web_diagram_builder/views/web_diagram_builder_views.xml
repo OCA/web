@@ -10,8 +10,8 @@
                 <field name="name"/>
                 <field name="model_id"/>
                 <field name="recursive_field_id"/>
-                <field name="node_count" string="# Nodes"/>
-                <field name="link_count" string="# Links"/>
+                <field name="node_count"/>
+                <field name="link_count"/>
                 <field name="last_computed"/>
             </list>
         </field>
@@ -25,19 +25,49 @@
             <form string="Diagram Builder">
                 <header>
                     <button name="action_compute"
-                            string="Compute Nodes &amp; Links"
+                            string="Generate Diagram"
                             type="object"
                             class="btn-primary"/>
+                    <button name="action_open_diagram"
+                            string="View Diagram"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="not last_computed"/>
+                    <button name="action_export_csv"
+                            string="Export CSV"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="not last_computed"/>
                     <field name="last_computed" widget="datetime" readonly="1"
                            string="Last computed:" invisible="not last_computed"/>
+                    <span class="text-muted" invisible="last_computed">Click "Generate Diagram" to build the diagram.</span>
+                    <span class="text-warning fw-semibold" invisible="not last_computed or node_count > 0">No nodes found — check your model, parent field, and filter domain.</span>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_help"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-question-circle"
+                                invisible="not id">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">How does it work?</span>
+                            </div>
+                        </button>
+                    </div>
                     <div class="oe_title">
-                        <label for="name" string="Name"/>
+                        <label for="name"/>
                         <h1>
                             <field name="name" placeholder="Diagram name…"/>
                         </h1>
                     </div>
+                    <div>
+                        <label for="description"/>
+                        <field name="description" placeholder="Describe what this diagram represents…" nolabel="1"/>
+                    </div>
+                    <p class="text-muted" style="font-size:0.9em;">
+                        How to use: Select a model and a parent field, then click Generate Diagram. The diagram will display the hierarchy between records linked by that field (e.g. model Contact, parent field parent_id).
+                    </p>
                     <group>
                         <group string="Data Source">
                             <field name="template_id"
@@ -45,14 +75,17 @@
                                    placeholder="Select a template to auto-fill…"/>
                             <field name="model_id"/>
                             <field name="model_name" invisible="1"/>
-                            <field name="recursive_field_id"/>
+                            <field name="recursive_field_id"
+                                   readonly="not model_id"
+                                   placeholder="Select a model first…"/>
                         </group>
-                        <group string="Options">
+                        <group string="Options (optional)">
                             <field name="filter_domain"
                                    widget="domain"
                                    options="{'model': 'model_name'}"
                                    invisible="not model_id"/>
                             <field name="max_nodes"/>
+                            <field name="auto_refresh"/>
                         </group>
                     </group>
                     <notebook>
@@ -87,13 +120,26 @@
         <field name="type">diagram</field>
         <field name="arch" type="xml">
             <diagram string="Dependency Diagram">
-                <node object="web.diagram.builder.node" shape="" bgcolor=""/>
+                <node object="web.diagram.builder.node" shape="" bgcolor=""
+                      create="False"/>
                 <arrow object="web.diagram.builder.link"
                        source="source_node_id"
                        destination="dest_node_id"
-                       label="['signal']"/>
+                       label="['signal']"
+                       create="False"/>
+                <label string="Note: changes made directly in this diagram will be overwritten the next time Generate Diagram is run."/>
             </diagram>
         </field>
+    </record>
+
+    <!-- ── Server action for multi-export (appears in Action menu on list) ── -->
+    <record id="action_export_csv_multi" model="ir.actions.server">
+        <field name="name">Export CSV</field>
+        <field name="model_id" ref="model_web_diagram_builder"/>
+        <field name="binding_model_id" ref="model_web_diagram_builder"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_export_csv_multi()</field>
     </record>
 
     <!-- ── Action ── -->
@@ -101,6 +147,24 @@
         <field name="name">Diagram Builders</field>
         <field name="res_model">web.diagram.builder</field>
         <field name="view_mode">list,form,diagram</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first diagram!
+            </p>
+            <p>
+                The Diagram Builder lets you visualize hierarchical data from your
+                account as an interactive diagram — bubbles connected by arrows.
+            </p>
+            <p>
+                For example: your contacts and their sub-contacts, your product
+                categories and sub-categories, your departments and teams…
+            </p>
+            <p>
+                <strong>How to get started:</strong> click <strong>New</strong> to create
+                your first diagram, or open
+                <strong>Configuration → Quick Guide</strong> for a full step-by-step guide.
+            </p>
+        </field>
     </record>
 
 </odoo>

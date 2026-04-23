@@ -3,3 +3,8 @@ access_web_diagram_builder,web.diagram.builder,model_web_diagram_builder,base.gr
 access_web_diagram_builder_template,web.diagram.builder.template,model_web_diagram_builder_template,base.group_user,1,1,1,1
 access_web_diagram_builder_node,web.diagram.builder.node,model_web_diagram_builder_node,base.group_user,1,1,1,1
 access_web_diagram_builder_link,web.diagram.builder.link,model_web_diagram_builder_link,base.group_user,1,1,1,1
+access_web_diagram_builder_import,web.diagram.builder.import,model_web_diagram_builder_import,base.group_user,1,1,1,1
+access_web_diagram_builder_import_result,web.diagram.builder.import.result,model_web_diagram_builder_import_result,base.group_user,1,1,1,1
+access_web_diagram_builder_import_result_line,web.diagram.builder.import.result.line,model_web_diagram_builder_import_result_line,base.group_user,1,1,1,1
+access_web_diagram_builder_import_report,web.diagram.builder.import.report,model_web_diagram_builder_import_report,base.group_user,1,1,1,1
+access_web_diagram_builder_help,web.diagram.builder.help,model_web_diagram_builder_help,base.group_user,1,1,1,1

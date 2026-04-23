@@ -1,7 +1,7 @@
 # Copyright 2024 TechnoLibre
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class WebDiagramBuilderNode(models.Model):
@@ -18,14 +18,23 @@ class WebDiagramBuilderNode(models.Model):
     )
     name = fields.Char(required=True)
     record_id = fields.Integer(
-        string="Record ID",
+        string="Record",
         help="ID of the real record this node represents.",
     )
     flow_start = fields.Boolean(
-        string="Flow Start",
-        help="Marks this as a root/starting node. "
-             "The layout algorithm places flow_start nodes as sources.",
+        string="Root Node",
+        help="Root nodes have no parent and appear as starting points in the diagram.",
     )
+    def action_open_record(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": self.builder_id.model_id.model,
+            "res_id": self.record_id,
+            "views": [(False, "form")],
+            "target": "current",
+        }
+
     # ── One2many fields required by web_diagram's graph_get algorithm ──
     # dest_field  = outgoing links (this node is the source/parent)
     outgoing_link_ids = fields.One2many(
