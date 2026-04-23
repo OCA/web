@@ -5,6 +5,7 @@
 
 import {Component, useEffect, useRef, useState} from "@odoo/owl";
 import {AutoComplete} from "@web/core/autocomplete/autocomplete";
+import {useInputField} from "@web/views/fields/input_field_hook";
 import {Many2OneField, many2OneField} from "@web/views/fields/many2one/many2one_field";
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {
@@ -135,6 +136,11 @@ export class ProductLabel extends Component {
         this.labelNode = useAutofocus({refName: "labelNodeRef"});
         useProductAndLabelAutoresize(this.labelNode, {
             targetParentName: this.props.field_name,
+        });
+        useInputField({
+            getValue: () => this.label,
+            refName: "labelNodeRef",
+            fieldName: "name",
         });
     }
     get sectionAndNoteClasses() {
