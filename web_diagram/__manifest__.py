@@ -10,12 +10,16 @@ Openerp Web Diagram view.
 """,
     'version': "18.0.1.0.0",
     'depends': ['web'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/diagram_nav_help_views.xml',
+    ],
     'assets': {
         'web.assets_backend': [
-            'web_diagram/static/lib/js/raphael.js',
+            'web_diagram/static/lib/js/cytoscape.min.js',
+            'web_diagram/static/lib/js/dagre.min.js',
+            'web_diagram/static/lib/js/cytoscape-dagre.min.js',
             'web_diagram/static/src/scss/diagram_view.scss',
-            'web_diagram/static/src/js/vec2.js',
-            'web_diagram/static/src/js/graph.js',
             'web_diagram/static/src/js/diagram_model.js',
             'web_diagram/static/src/js/diagram_controller.js',
             'web_diagram/static/src/js/diagram_renderer.js',

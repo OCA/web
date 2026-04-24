@@ -253,19 +253,24 @@ export class DiagramController extends Component {
     }
 
     exportSVG() {
-        const svgEl = document.querySelector(".o_diagram svg");
-        if (!svgEl) {
-            return;
+        const container = document.querySelector(".o_diagram");
+        const cy = container && container._cy;
+        if (!cy) return;
+        // Try progressively lower scales to stay within browser canvas limits
+        for (const scale of [1.5, 1, 0.5]) {
+            try {
+                const dataUrl = cy.png({ full: true, scale, bg: "#ffffff" });
+                if (dataUrl && dataUrl !== "data:,") {
+                    const a = document.createElement("a");
+                    a.href = dataUrl;
+                    a.download = "diagram.png";
+                    a.click();
+                    return;
+                }
+            } catch (_e) {
+                // canvas too large at this scale, try smaller
+            }
         }
-        const serializer = new XMLSerializer();
-        const svgStr = serializer.serializeToString(svgEl);
-        const blob = new Blob([svgStr], { type: "image/svg+xml" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "diagram.svg";
-        a.click();
-        URL.revokeObjectURL(url);
     }
 }
 

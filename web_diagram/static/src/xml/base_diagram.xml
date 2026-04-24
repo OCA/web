@@ -12,7 +12,7 @@
             </button>
             <button type="button" class="btn btn-secondary ms-1"
                     t-on-click="exportSVG">
-                Export SVG
+                Export PNG
             </button>
         </t>
         <t t-set-slot="control-panel-navigation-additional">
