@@ -1,6 +1,6 @@
 {
     "name": "Web widget product label section and note",
-    "version": "19.0.1.0.0",
+    "version": "19.0.2.0.0",
     "summary": "Alternate the visibility of the product and description.",
     "author": "Tecnativa, Odoo Community Association (OCA), Odoo S.A.",
     "website": "https://github.com/OCA/web",
