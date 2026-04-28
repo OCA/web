@@ -1,0 +1,23 @@
+.o_external_button#ProductVisibilityButtonId {
+    opacity: 0;
+    transition:
+        opacity 0.15s,
+        color 0.15s;
+}
+
+tr.o_selected_row .o_external_button#ProductVisibilityButtonId,
+tr.o_row_draggable
+    .o_field_product_label_section_and_note_field:hover
+    .o_external_button#ProductVisibilityButtonId {
+    opacity: 1;
+}
+
+.o_field_product_label_section_and_note_field
+    .o_external_button#ProductVisibilityButtonId:hover {
+    color: rgba(var(--link-color-rgb), var(--link-opacity, 1));
+}
+
+.o_field_product_label_section_and_note_field
+    .o_external_button#ProductVisibilityButtonId:active {
+    color: rgba(var(--link-hover-color-rgb), var(--link-opacity, 1));
+}

@@ -11,13 +11,23 @@ patch(ProductLabelSectionAndNoteField.prototype, {
     setup() {
         super.setup(...arguments);
         this.isProductVisible = useState({value: false});
-        this.changeProductVisibility = true;
-        useRecordObserver(async (record) => {
-            if (this.changeProductVisibility) {
-                const label = record.data.name || "";
-                this.isProductVisible.value = label.includes(this.productName);
+        useRecordObserver((record) => {
+            const rawName = record.data.name || "";
+            const productName = record.data[this.props.name]?.display_name || "";
+            const expectedVisible = productName
+                ? rawName.startsWith(productName)
+                : false;
+            if (this.isProductVisible.value !== expectedVisible) {
+                this.isProductVisible.value = expectedVisible;
             }
         });
+    },
+    get label() {
+        let label = this.props.record.data[this.descriptionColumn] || "";
+        if (this.productName && label.startsWith(this.productName)) {
+            label = label.slice(this.productName.length + 1);
+        }
+        return label.trim();
     },
     switchProductVisibility() {
         let new_name = "";
@@ -30,7 +40,6 @@ patch(ProductLabelSectionAndNoteField.prototype, {
         this.isProductVisible.value = !this.isProductVisible.value;
     },
     updateLabel(value) {
-        this.changeProductVisibility = false;
         this.props.record.update({
             name:
                 this.productName &&

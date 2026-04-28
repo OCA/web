@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-inherit="account.ProductLabelSectionAndNoteField" t-inherit-mode="extension">
-        <xpath expr="//button[@id='labelVisibilityButtonId']" position="after">
-            <button
-                t-if="columnIsProductAndLabel.value and label"
-                t-att-class="'btn text-start o_external_button px-1 fa ' + ( this.isProductVisible.value ? 'fa-eye' : 'fa-eye-slash')"
-                data-tooltip="Click to remove/add the product name from the description."
-                id="ProductVisibilityButtonId"
-                type="button"
-                t-on-click="switchProductVisibility"
-            />
+        <xpath expr="//t[@t-if='showLabelVisibilityToggler']" position="replace">
+            <t>
+                <t t-if="showLabelVisibilityToggler">
+                    <button
+                        class="btn fa fa-bars text-start o_external_button px-1"
+                        type="button"
+                        id="labelVisibilityButtonId"
+                        data-tooltip="Click or press enter to add a description"
+                        t-on-click="() => this.switchLabelVisibility()"
+                    />
+                </t>
+                <t t-else="">
+                    <button
+                        t-if="columnIsProductAndLabel.value and (label or isProductVisible.value)"
+                        t-att-class="'btn text-start o_external_button px-1 fa ' + ( this.isProductVisible.value ? 'fa-eye' : 'fa-eye-slash')"
+                        data-tooltip="Click to remove/add the product name from the description."
+                        id="ProductVisibilityButtonId"
+                        type="button"
+                        t-on-click="switchProductVisibility"
+                    />
+                </t>
+            </t>
         </xpath>
     </t>
 </templates>
