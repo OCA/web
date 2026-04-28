@@ -6,7 +6,7 @@
 {
     "name": "Web Theme Classic",
     "summary": "Contrasted style on fields to improve the UI.",
-    "version": "18.0.1.1.0",
+    "version": "18.0.1.2.0",
     "author": "GRAP, Odoo Community Association (OCA)",
     "maintainers": ["legalsylvain"],
     "website": "https://github.com/OCA/web",
