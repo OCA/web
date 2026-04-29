@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -87,6 +87,9 @@ msgid ""
 msgstr ""
 
 #. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__display_name
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model_fields__display_name
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_ui_view__display_name
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__display_name
 msgid "Display Name"
 msgstr ""
@@ -157,11 +160,6 @@ msgid "Force Remove"
 msgstr ""
 
 #. module: web_m2x_options_manager
-#: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.m2x_create_edit_option_search
-msgid "Group By"
-msgstr ""
-
-#. module: web_m2x_options_manager
 #: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
 msgid ""
 "Here are displayed options for other models' fields related to this model"
@@ -173,6 +171,9 @@ msgid "Here are displayed options for this model's fields"
 msgstr ""
 
 #. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__id
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model_fields__id
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_ui_view__id
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__id
 msgid "ID"
 msgstr ""
@@ -216,11 +217,6 @@ msgstr ""
 #. module: web_m2x_options_manager
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__name
 msgid "Name"
-msgstr ""
-
-#. module: web_m2x_options_manager
-#: model:ir.model.constraint,message:web_m2x_options_manager.constraint_m2x_create_edit_option_field_uniqueness
-msgid "Options must be unique for each field!"
 msgstr ""
 
 #. module: web_m2x_options_manager
