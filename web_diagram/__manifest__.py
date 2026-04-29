@@ -10,6 +10,7 @@ Openerp Web Diagram view.
 """,
     'version': "18.0.1.0.0",
     'depends': ['web'],
+    'post_init_hook': 'post_init_hook',
     'data': [
         'security/ir.model.access.csv',
         'views/diagram_nav_help_views.xml',

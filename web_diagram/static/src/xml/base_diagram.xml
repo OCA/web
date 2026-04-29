@@ -14,6 +14,12 @@
                     t-on-click="exportSVG">
                 Export PNG
             </button>
+            <button type="button" class="btn btn-secondary ms-1 o_stat_button"
+                    t-on-click="showNavHelp"
+                    title="Navigation Help">
+                <i class="fa fa-question-circle me-1"/>
+                <span>Help</span>
+            </button>
         </t>
         <t t-set-slot="control-panel-navigation-additional">
             <Pager t-if="state.pager.total > 1"

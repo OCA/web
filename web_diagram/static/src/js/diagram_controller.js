@@ -15,6 +15,7 @@ export class DiagramController extends Component {
     setup() {
         this.dialog = useService("dialog");
         this.orm = useService("orm");
+        this.action = useService("action");
 
         const archInfo = this._parseArch(this.props.arch, this.props.fields || {});
         this.archInfo = archInfo;
@@ -250,6 +251,15 @@ export class DiagramController extends Component {
             this.state.connectorModel,
             parseInt(id, 10),
         );
+    }
+
+    async showNavHelp() {
+        const action = await this.orm.call(
+            "web.diagram.nav.help",
+            "create_nav_help_action",
+            [],
+        );
+        this.action.doAction(action);
     }
 
     exportSVG() {

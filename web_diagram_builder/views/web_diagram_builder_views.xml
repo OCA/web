@@ -126,7 +126,7 @@
                        label="['signal']"
                        create="False"/>
                 <label string="Note: changes made directly in this diagram will be overwritten the next time Generate Diagram is run."/>
-                <label string="Tip: use the scroll wheel to zoom in/out and drag to pan. Nodes with no links are grouped at the bottom, separated from the rest."/>
+                <label string="Can't see the diagram? Use the scroll wheel to zoom in. Click 'Help' for navigation tips."/>
             </diagram>
         </field>
     </record>

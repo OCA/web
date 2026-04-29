@@ -84,3 +84,8 @@ msgstr "Ouvrir :"
 #, python-format
 msgid "Transition"
 msgstr "Transition"
+
+#. module: web_diagram
+#: model_terms:ir.ui.view,arch_db:web_diagram.view_web_diagram_nav_help_form
+msgid "Got it!"
+msgstr "Compris !"
