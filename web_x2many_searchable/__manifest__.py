@@ -10,6 +10,7 @@
     "assets": {
         "web.assets_backend": [
             "web_x2many_searchable/static/src/js/**/*.js",
+            "web_x2many_searchable/static/src/scss/**/*.scss",
             "web_x2many_searchable/static/src/xml/**/*.xml",
         ],
         "web.qunit_suite_tests": [

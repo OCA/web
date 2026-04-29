@@ -4,15 +4,15 @@
         <xpath expr="//div[hasclass('o_x2m_control_panel')]" position="after">
             <t t-if="props.viewMode === 'list' and isX2ManySearchable">
                 <div
-                    class="o_x2m_search_panel mb-2 pb-2 d-flex justify-content-end"
+                    class="o_x2m_search_panel mb-0 mb-md-2 pb-0 pb-md-2 d-flex justify-content-end"
                     role="search"
                 >
                     <div
                         class="o_cp_searchview d-flex input-group"
-                        style="max-width: 520px;"
+                        style="max-width: 520px; padding-bottom: 10px;"
                     >
                         <div
-                            class="o_searchview form-control form-control-sm d-flex align-items-center py-1 border-end-0"
+                            class="o_searchview form-control form-control-sm d-flex align-items-center py-0 py-md-1 border-end-0"
                             role="search"
                             aria-autocomplete="list"
                         >
@@ -33,7 +33,7 @@
                                 />
                             </button>
                             <div
-                                class="o_searchview_input_container d-flex flex-grow-1 flex-wrap gap-1 mw-100"
+                                class="o_searchview_input_container d-flex flex-grow-1 flex-wrap gap-0 gap-md-1 mw-100"
                             >
                                 <t t-foreach="x2mFacets" t-as="facet" t-key="facet.key">
                                     <div
