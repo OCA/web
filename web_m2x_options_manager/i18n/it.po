@@ -1,0 +1,201 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_m2x_options_manager
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-11-14 18:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: web_m2x_options_manager
+#. odoo-python
+#: code:addons/web_m2x_options_manager/models/m2x_create_edit_option.py:0
+#, python-format
+msgid "'%(field_name)s' is not a valid field for model '%(model_name)s'!"
+msgstr "'%(field_name)s' non è un campo valido per il modello '%(model_name)s'!"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create__set_true
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create_edit__set_true
+msgid "Add"
+msgstr "Aggiungi"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit
+msgid "Create & Edit Option"
+msgstr "Opzione crea & modifica"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create
+msgid "Create Option"
+msgstr "Opzione crea"
+
+#. module: web_m2x_options_manager
+#: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
+msgid "Create/Edit Options"
+msgstr "Opzioni crea/modifica"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,help:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit
+msgid ""
+"Defines behaviour for 'Create & Edit' option:\n"
+"* Do nothing: nothing is done\n"
+"* Add/Remove: option 'Create & Edit' is set to True/False only if not already present in view definition\n"
+"* Force Add/Remove: option 'Create & Edit' is always set to True/False, overriding any pre-existing option"
+msgstr ""
+"Definisce il comportamento per l'opzione 'Crea e modifica':\n"
+"* Non fare nulla: non viene fatto nulla\n"
+"* Aggiungi/Rimuovi: l'opzione 'Crea e modifica' è impostata su Vero/Falso "
+"solo se non è già presente nella definizione della vista\n"
+"* Forza Aggiungi/Rimuovi: l'opzione 'Crea e modifica' è sempre impostata su "
+"Vero/Falso, sovrascrivendo qualsiasi opzione preesistente"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,help:web_m2x_options_manager.field_m2x_create_edit_option__option_create
+msgid ""
+"Defines behaviour for 'Create' option:\n"
+"* Do nothing: nothing is done\n"
+"* Add/Remove: option 'Create' is set to True/False only if not already present in view definition\n"
+"* Force Add/Remove: option 'Create' is always set to True/False, overriding any pre-existing option"
+msgstr ""
+"Definisce il comportamento per l'opzione 'Crea':\n"
+"* Non fare nulla: non viene fatto nulla\n"
+"* Aggiungi/Rimuovi: l'opzione 'Crea' è impostata su Vero/Falso solo se non è "
+"già presente nella definizione della vista\n"
+"* Forza Aggiungi/Rimuovi: l'opzione 'Crea' è sempre impostata su Vero/Falso, "
+"sovrascrivendo qualsiasi opzione preesistente"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create__none
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create_edit__none
+msgid "Do nothing"
+msgstr "Non fare nulla"
+
+#. module: web_m2x_options_manager
+#: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
+msgid "Empty"
+msgstr "Vuoto"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__field_id
+msgid "Field"
+msgstr "Campo"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__field_name
+msgid "Field Name"
+msgstr "Nome campo"
+
+#. module: web_m2x_options_manager
+#: model:ir.model,name:web_m2x_options_manager.model_ir_model_fields
+msgid "Fields"
+msgstr "Campi"
+
+#. module: web_m2x_options_manager
+#: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
+msgid "Fill"
+msgstr "Popola"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create__force_true
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create_edit__force_true
+msgid "Force Add"
+msgstr "Forza aggiungi"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create__force_false
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create_edit__force_false
+msgid "Force Remove"
+msgstr "Forza rimuovi"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__m2x_option_ids
+msgid "M2X Create Edit Option"
+msgstr "Crea opzione modifica M2X"
+
+#. module: web_m2x_options_manager
+#: model:ir.model,name:web_m2x_options_manager.model_m2x_create_edit_option
+msgid "Manage Options 'Create/Edit' For Fields"
+msgstr "Gestione opzioni 'Crea/Modifica' per i campi"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__model_id
+msgid "Model"
+msgstr "Modello"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__model_name
+msgid "Model Name"
+msgstr "Nome modello"
+
+#. module: web_m2x_options_manager
+#: model:ir.model,name:web_m2x_options_manager.model_ir_model
+msgid "Models"
+msgstr "Modelli"
+
+#. module: web_m2x_options_manager
+#. odoo-python
+#: code:addons/web_m2x_options_manager/models/m2x_create_edit_option.py:0
+#, python-format
+msgid "Only Many2many and Many2one fields can be chosen!"
+msgstr "Si possono scegliere solo campi Many2many e Many2one!"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.constraint,message:web_m2x_options_manager.constraint_m2x_create_edit_option_model_field_uniqueness
+msgid "Options must be unique for each model/field couple!"
+msgstr "Le opzioni devono essere univoche per ogni coppia modello/campo!"
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create__set_false
+#: model:ir.model.fields.selection,name:web_m2x_options_manager.selection__m2x_create_edit_option__option_create_edit__set_false
+msgid "Remove"
+msgstr "Rimuovi"
+
+#. module: web_m2x_options_manager
+#: model:ir.model,name:web_m2x_options_manager.model_ir_ui_view
+msgid "View"
+msgstr "Vista"
