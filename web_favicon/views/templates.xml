@@ -6,7 +6,7 @@
         <xpath expr="//head/link[@rel='shortcut icon']" position="attributes">
             <attribute
                 name="t-att-href"
-            >env['res.company'].sudo()._get_favicon() or '/web/static/img/favicon.ico'</attribute>
+            >getattr(env['res.company'].sudo(), '_get_favicon', lambda: False)() or '/web/static/img/favicon.ico'</attribute>
         </xpath>
     </template>
 </odoo>
