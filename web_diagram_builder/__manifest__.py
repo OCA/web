@@ -26,6 +26,14 @@
         "views/web_diagram_builder_path_views.xml",
         "views/menu.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "web_diagram_builder/static/src/js/diagram_help_widget.js",
+        ],
+        "web.assets_qweb": [
+            "web_diagram_builder/static/src/xml/diagram_help_widget.xml",
+        ],
+    },
     "installable": True,
     "application": True,
     "test": ["tests/test_web_diagram_builder.py"],

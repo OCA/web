@@ -57,7 +57,7 @@
                                 <field name="name" placeholder="Diagram name…"/>
                             </h1>
                         </div>
-                        
+                        <widget name="diagram_help_button"/>
                     </div>
                     <div>
                         <label for="description"/>

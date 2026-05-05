@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-name="web_diagram_builder.DiagramHelpWidget">
+        <button type="button" class="btn btn-light border ml-3 mt-1 flex-shrink-0">
+            <i class="fa fa-question-circle mr-1"/>How does it work?
+        </button>
+    </t>
+</template>
