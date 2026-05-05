@@ -67,7 +67,7 @@ msgstr "Diagramme"
 #: code:addons/web_diagram/static/src/xml/base_diagram.xml:5
 #, python-format
 msgid "New Node"
-msgstr "Nouvelle activité"
+msgstr "Nouveau nœud"
 
 #. module: web_diagram
 #. openerp-web
@@ -84,3 +84,40 @@ msgstr "Ouvrir :"
 #, python-format
 msgid "Transition"
 msgstr "Transition"
+
+#. module: web_diagram
+#: model_terms:ir.ui.view,arch_db:web_diagram.view_web_diagram_nav_help_form
+msgid "Got it!"
+msgstr "Compris !"
+
+#. module: web_diagram
+msgid "Export PNG"
+msgstr "Exporter PNG"
+
+#. module: web_diagram
+msgid "Navigation Help"
+msgstr "Aide à la navigation"
+
+#. module: web_diagram
+msgid "Help"
+msgstr "Aide"
+
+#. module: web_diagram
+msgid "New node"
+msgstr "Nouveau nœud"
+
+#. module: web_diagram
+msgid "Edit node"
+msgstr "Modifier le nœud"
+
+#. module: web_diagram
+msgid "Are you sure you want to remove this node? This will remove its connected transitions as well."
+msgstr "Voulez-vous vraiment supprimer ce nœud ? Ses transitions associées seront également supprimées."
+
+#. module: web_diagram
+msgid "New transition"
+msgstr "Nouvelle transition"
+
+#. module: web_diagram
+msgid "Edit transition"
+msgstr "Modifier la transition"
