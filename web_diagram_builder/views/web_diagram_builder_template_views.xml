@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_web_diagram_builder_template_form" model="ir.ui.view">
+        <field name="name">web.diagram.builder.template.form</field>
+        <field name="model">web.diagram.builder.template</field>
+        <field name="arch" type="xml">
+            <form string="Diagram Template">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        <strong>What is a template?</strong>
+                        A template saves a model + parent field combination so you can reuse it quickly.
+                        When creating a diagram, select a template in the <em>Apply Template</em> field
+                        to auto-fill the model and parent field — then just click <em>Compute Nodes &amp; Links</em>.
+                    </div>
+                    <group>
+                        <field name="name"
+                               help="Short name shown in the template selector on the diagram form."/>
+                        <field name="model_id"
+                               help="The model whose records will be displayed as nodes (e.g. Contact, Employee)."/>
+                        <field name="model_name" invisible="1"/>
+                        <field name="recursive_field_id"
+                               readonly="not model_id"
+                               placeholder="Select a model first…"/>
+                    </group>
+                    <group>
+                        <field name="description"
+                               placeholder="Describe what this template is used for…"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_web_diagram_builder_template_list" model="ir.ui.view">
+        <field name="name">web.diagram.builder.template.list</field>
+        <field name="model">web.diagram.builder.template</field>
+        <field name="arch" type="xml">
+            <tree string="Diagram Templates">
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="recursive_field_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_web_diagram_builder_template" model="ir.actions.act_window">
+        <field name="name">Diagram Templates</field>
+        <field name="res_model">web.diagram.builder.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
