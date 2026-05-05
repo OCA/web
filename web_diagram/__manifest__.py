@@ -10,13 +10,17 @@ Openerp Web Diagram view.
 """,
     'version': "16.0.1.0.0",
     'depends': ['web'],
+    'post_init_hook': 'post_init_hook',
+    'data': [
+        'security/ir.model.access.csv',
+        'views/diagram_nav_help_views.xml',
+    ],
     'assets': {
         'web.assets_backend': [
-            'web_diagram/static/lib/js/jquery.mousewheel.js',
-            'web_diagram/static/lib/js/raphael.js',
+            'web_diagram/static/lib/js/cytoscape.min.js',
+            'web_diagram/static/lib/js/dagre.min.js',
+            'web_diagram/static/lib/js/cytoscape-dagre.min.js',
             'web_diagram/static/src/scss/diagram_view.scss',
-            'web_diagram/static/src/js/vec2.js',
-            'web_diagram/static/src/js/graph.js',
             'web_diagram/static/src/js/diagram_model.js',
             'web_diagram/static/src/js/diagram_controller.js',
             'web_diagram/static/src/js/diagram_renderer.js',
@@ -29,4 +33,5 @@ Openerp Web Diagram view.
     },
     'auto_install': True,
     'license': 'LGPL-3',
+    'test': ['tests/test_ir_ui_view.py'],
 }

@@ -25,10 +25,9 @@ The module is structured as follows:
   globals via ``window``.
 - ``static/lib/js/raphael.js`` — Raphael.js vector graphics library.
 
-**Odoo 16 migration notes**
+**Migration history**
 
-The module was migrated from Odoo 15 to Odoo 16 as part of branch
-``16.0_mig_web_diagram``. The main changes are:
+*Odoo 16*
 
 1. **OWL 2 rewrite** — All JS files were rewritten from the legacy
    ``odoo.define`` / ``AbstractView.extend()`` pattern to native OWL 2
@@ -41,7 +40,26 @@ The module was migrated from Odoo 15 to Odoo 16 as part of branch
 3. **``name_get()`` deprecation** — Replaced by ``.display_name``
    in the controller (``controllers/main.py``).
 
-4. **Version bump** — ``16.0.1.0.0``.
+*Odoo 17*
+
+4. **``tools.ustr()`` removed** — All calls to ``tools.ustr()`` in
+   ``models/ir_ui_view.py`` replaced by the standard Python ``str()``.
+
+5. **``tools`` import removed** — The ``tools`` import in
+   ``models/ir_ui_view.py`` was removed as it is no longer used.
+
+*Odoo 18*
+
+6. **Test bundle renamed** — ``web.qunit_suite_tests`` renamed to
+   ``web.assets_unit_tests`` in ``__manifest__.py``.
+
+7. **Tests rewritten** — ``static/tests/diagram_tests.js`` was
+   rewritten using ``@odoo/hoot`` (``describe`` / ``test`` / ``expect``),
+   replacing the legacy ``odoo.define`` + ``testUtils.createView``
+   pattern that was removed in Odoo 17.
+
+8. **``graph.py`` style** — Operator spacing, comment formatting and
+   long line wrapping updated to comply with OCA/ruff style rules.
 
 **View switcher limitation in Odoo 16**
 

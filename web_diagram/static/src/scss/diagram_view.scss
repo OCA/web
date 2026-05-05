@@ -1,5 +1,4 @@
-.o_diagram_view, .o_diagram {
-	height: 100%;
+.o_diagram_view {
 	background-color: white;
 
 	.o_diagram_header {
@@ -9,4 +8,9 @@
 			text-align: justify;
 		}
 	}
+}
+
+.o_diagram {
+	overflow: auto;
+	background-color: white;
 }

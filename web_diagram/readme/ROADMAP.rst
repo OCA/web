@@ -1,6 +1,6 @@
 **Known issues / limitations**
 
-* The view type switcher does not display the diagram view in Odoo 16.
+* The view type switcher does not display the diagram view in Odoo 16+.
   Access must be provided via a dedicated button or action (see
   ``USAGE.rst``).
 

@@ -300,14 +300,16 @@
 
             return true;
         }
-        //Adds a mousewheel event callback to raph_element that scrolls the viewport
+        //Adds a wheel event callback to raph_element that scrolls the viewport
         this.set_scrolling = function(raph_element){
-            $(raph_element.node).bind('mousewheel',function(event,delta){
+            raph_element.node.addEventListener('wheel', function(event){
+                event.preventDefault();
+                var delta = event.deltaY < 0 ? 1 : -1;
                 var dy = delta * 20;
                 if( translation_respects_viewport(0,dy, style.viewport_margin) ){
                     translate_all(0,dy);
                 }
-            });
+            }, {passive: false});
         };
 
         var px, py;
@@ -510,16 +512,18 @@
         }else{
             node_fig = r.rect(pos_x-sx/2,pos_y-sy/2,sx,sy);
         }
-        node_fig.attr({ 'fill':         color, 
+        node_fig.attr({ 'fill':         color,
                         'stroke':       graph.style.node_outline_color,
                         'stroke-width': graph.style.node_outline_width,
-                        'cursor':'pointer'  });
+                        'r':            graph.style.node_border_radius || 0,
+                        'cursor':       'pointer'  });
         node_fig.transform(graph.get_transform());
         graph.set_scrolling(node_fig);
 
         var node_label = r.text(pos_x,pos_y,label);
         node_label.attr({   'fill':         graph.style.node_label_color,
                             'font-size':    graph.style.node_label_font_size,
+                            'font-family':  graph.style.font_family || 'Arial',
                             'cursor':       'pointer'   });
         node_label.transform(graph.get_transform());
         graph.set_scrolling(node_label);
@@ -830,15 +834,17 @@
         }
         
         update_curve();
-        var edge = r.path(edge_path).attr({ 'stroke':       graph.style.edge_color, 
-                                            'stroke-width': graph.style.edge_width, 
-                                            'arrow-end':    'block-wide-long', 
-                                            'cursor':'pointer'  }).insertBefore(graph.get_node_list()[0].get_fig());       
+        var edge = r.path(edge_path).attr({ 'stroke':       graph.style.edge_color,
+                                            'stroke-width': graph.style.edge_width,
+                                            'fill':         'none',
+                                            'arrow-end':    'block-wide-long',
+                                            'cursor':       'pointer'  }).insertBefore(graph.get_node_list()[0].get_fig());
         var labelpos = get_label_pos(edge);
         var edge_label = r.text(labelpos.x, labelpos.y - elfs, label).attr({
-            'fill':         graph.style.edge_label_color, 
-            'cursor':       'pointer', 
-            'font-size':    elfs    });
+            'fill':         graph.style.edge_label_color,
+            'cursor':       'pointer',
+            'font-size':    elfs,
+            'font-family':  graph.style.font_family || 'Arial'  });
 
         edge.transform(graph.get_transform());
         graph.set_scrolling(edge);

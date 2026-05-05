@@ -1,9 +1,5 @@
 /** @odoo-module */
 
-/**
- * DiagramModel — plain ES6 class (no OWL, no legacy framework).
- * Instantiated by DiagramController and receives the rpc service.
- */
 export class DiagramModel {
     constructor(rpc) {
         this.rpc = rpc;
