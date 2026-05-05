@@ -31,7 +31,6 @@ patch(
         setup() {
             this.dirtyRemotes = useState([]);
             this.remoteSaved = useState({value: false});
-            this.recordSaved = false;
             this.broadcastChannel = useWebsocketBroadcastChannel(
                 (message) => this._handleChannelMessage(message),
                 () =>
@@ -87,28 +86,26 @@ patch(
                 ]
             );
 
-            // Auto open popover when concurrent edit detected
             useEffect(
                 () => {
+                    // Auto open popover when concurrent edit detected
                     if (this.showConcurrentEditWarning) {
                         this.openConcurrentEditWarningPopover();
                     } else {
                         this.closeConcurrentEditWarningPopover();
+                        // Auto open popover when remote save detected
+                        if (this.showConcurrentSaveWarning) {
+                            this.openConcurrentSaveWarningPopover();
+                        } else {
+                            this.closeConcurrentSaveWarningPopover();
+                        }
                     }
                 },
-                () => [this.showConcurrentEditWarning, this.dirtyRemotes.length]
-            );
-
-            // Auto open popover when remote save detected
-            useEffect(
-                () => {
-                    if (this.saved && this.dirty) {
-                        this.openConcurrentSaveWarningPopover();
-                    } else {
-                        this.closeConcurrentSaveWarningPopover();
-                    }
-                },
-                () => [this.saved, this.dirty]
+                () => [
+                    this.showConcurrentEditWarning,
+                    this.showConcurrentSaveWarning,
+                    this.dirtyRemotes.length,
+                ]
             );
 
             const unregisterBeforeUnload = () => {
@@ -146,13 +143,17 @@ patch(
                 }
                 // Sync request: reply with current dirty state
             } else if (message.type === "sync") {
-                if (resModel === message.resModel && resId === message.resId) {
+                if (resId && resModel === message.resModel && resId === message.resId) {
                     this._notifyConcurrentEditChange(resModel, resId, this.dirty);
                 }
             }
         },
 
         _notifyConcurrentEditChange(resModel, resId, dirty) {
+            if (!resId) {
+                // Don't notify if record doesn't exist yet
+                return;
+            }
             this.broadcastChannel.postMessage({
                 type: "change",
                 resModel,
@@ -274,16 +275,15 @@ patch(
             return this.props.model.root.isDirty || this.props.fieldIsDirty;
         },
 
-        get saved() {
-            return this.remoteSaved.value;
-        },
-
         get remoteDirty() {
             return this.dirtyRemotes.length > 0;
         },
 
         get showConcurrentEditWarning() {
             return this.remoteDirty && this.dirty;
+        },
+        get showConcurrentSaveWarning() {
+            return this.remoteSaved.value && this.dirty;
         },
     }
 );
