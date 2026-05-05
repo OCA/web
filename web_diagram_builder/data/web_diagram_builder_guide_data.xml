@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_web_diagram_builder_guide" model="ir.actions.server">
+        <field name="name">Quick Guide</field>
+        <field name="model_id" ref="model_web_diagram_builder_help"/>
+        <field name="state">code</field>
+        <field name="code">
+lang = (env.lang or env.user.lang or "en_US").lower()
+is_fr = lang.startswith("fr")
+HelpModel = env["web.diagram.builder.help"]
+content = HelpModel._get_help_html(is_fr)
+rec = HelpModel.create({"content_html": content})
+action = {
+    "type": "ir.actions.act_window",
+    "name": "Comment ça marche ?" if is_fr else "How does the Diagram Builder work?",
+    "res_model": "web.diagram.builder.help",
+    "res_id": rec.id,
+    "view_mode": "form",
+    "target": "new",
+    "views": [(False, "form")],
+}
+        </field>
+    </record>
+
+</odoo>
