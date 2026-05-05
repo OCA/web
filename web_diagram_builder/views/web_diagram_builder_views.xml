@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── List view ── -->
+    <record id="view_web_diagram_builder_list" model="ir.ui.view">
+        <field name="name">web.diagram.builder.list</field>
+        <field name="model">web.diagram.builder</field>
+        <field name="arch" type="xml">
+            <tree string="Diagram Builders">
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="recursive_field_id"/>
+                <field name="node_count"/>
+                <field name="link_count"/>
+                <field name="last_computed"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ── Form view ── -->
+    <record id="view_web_diagram_builder_form" model="ir.ui.view">
+        <field name="name">web.diagram.builder.form</field>
+        <field name="model">web.diagram.builder</field>
+        <field name="arch" type="xml">
+            <form string="Diagram Builder">
+                <header>
+                    <button name="action_compute"
+                            string="Generate Diagram"
+                            type="object"
+                            class="btn-primary"/>
+                    <button name="action_open_diagram"
+                            string="View Diagram"
+                            type="object"
+                            class="btn-secondary"
+                            attrs="{'invisible': [('last_computed', '=', False)]}"/>
+                    <button name="action_export_csv"
+                            string="Export CSV"
+                            type="object"
+                            class="btn-secondary"
+                            attrs="{'invisible': [('last_computed', '=', False)]}"/>
+                    <field name="last_computed" widget="datetime" readonly="1"
+                           string="Last computed:"
+                           attrs="{'invisible': [('last_computed', '=', False)]}"/>
+                    <div class="text-muted"
+                         attrs="{'invisible': [('last_computed', '!=', False)]}">Click "Generate Diagram" to build the diagram.</div>
+                    <div class="text-warning fw-semibold"
+                         attrs="{'invisible': ['|', ('last_computed', '=', False), ('node_count', '>', 0)]}">No nodes found — check your model, parent field, and filter domain.</div>
+                </header>
+                <sheet>
+                    <field name="node_count" invisible="1"/>
+                    <field name="link_count" invisible="1"/>
+                    <div class="oe_button_box" name="button_box"/>
+                    <div class="d-flex align-items-start justify-content-between">
+                        <div class="oe_title flex-grow-1">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Diagram name…"/>
+                            </h1>
+                        </div>
+                        
+                    </div>
+                    <div>
+                        <label for="description"/>
+                        <field name="description" placeholder="Describe what this diagram represents…" nolabel="1"/>
+                    </div>
+                    <p class="text-muted" style="font-size:0.9em;">
+                        How to use: Select a model and a parent field, then click Generate Diagram. The diagram will display the hierarchy between records linked by that field (e.g. model Contact, parent field parent_id).
+                    </p>
+                    <group>
+                        <group string="Data Source">
+                            <field name="template_id"
+                                   options="{'no_create': True}"
+                                   placeholder="Select a template to auto-fill…"/>
+                            <field name="model_id"/>
+                            <field name="model_name" invisible="1"/>
+                            <field name="recursive_field_id"
+                                   attrs="{'readonly': [('model_id', '=', False)]}"
+                                   placeholder="Select a model first…"/>
+                        </group>
+                        <group string="Options (optional)">
+                            <field name="filter_domain"
+                                   widget="domain"
+                                   options="{'model': 'model_name'}"
+                                   attrs="{'invisible': [('model_id', '=', False)]}"/>
+                            <field name="max_nodes"/>
+                            <field name="auto_refresh"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Nodes" name="nodes">
+                            <button name="action_find_path"
+                                    string="Find Path Between Two Nodes"
+                                    type="object"
+                                    class="btn-secondary mb-2"
+                                    attrs="{'invisible': [('node_count', '=', 0)]}"/>
+                            <field name="node_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="record_id"/>
+                                    <field name="flow_start"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Links" name="links">
+                            <field name="link_ids" readonly="1">
+                                <tree>
+                                    <field name="source_node_id"/>
+                                    <field name="dest_node_id"/>
+                                    <field name="signal"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── Diagram view ── -->
+    <record id="view_web_diagram_builder_diagram" model="ir.ui.view">
+        <field name="name">web.diagram.builder.diagram</field>
+        <field name="model">web.diagram.builder</field>
+        <field name="type">diagram</field>
+        <field name="arch" type="xml">
+            <diagram string="Dependency Diagram">
+                <node object="web.diagram.builder.node" shape="" bgcolor=""
+                      create="False"/>
+                <arrow object="web.diagram.builder.link"
+                       source="source_node_id"
+                       destination="dest_node_id"
+                       label="['signal']"
+                       create="False"/>
+                <label string="&lt;strong&gt;Note:&lt;/strong&gt; changes made directly in this diagram will be overwritten the next time Generate Diagram is run."/>
+                <label string="&lt;strong&gt;Can't see the diagram?&lt;/strong&gt; Use the scroll wheel to zoom in. Click 'Help' for navigation tips."/>
+            </diagram>
+        </field>
+    </record>
+
+    <!-- ── Server action for multi-export (appears in Action menu on list) ── -->
+    <record id="action_export_csv_multi" model="ir.actions.server">
+        <field name="name">Export CSV</field>
+        <field name="model_id" ref="model_web_diagram_builder"/>
+        <field name="binding_model_id" ref="model_web_diagram_builder"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_export_csv_multi()</field>
+    </record>
+
+    <!-- ── Action ── -->
+    <record id="action_web_diagram_builder" model="ir.actions.act_window">
+        <field name="name">Diagram Builders</field>
+        <field name="res_model">web.diagram.builder</field>
+        <field name="view_mode">list,form,diagram</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first diagram!</p>
+            <p>The Diagram Builder lets you visualize hierarchical data from your account as an interactive diagram — bubbles connected by arrows.</p>
+            <p>For example: your contacts and their sub-contacts, your product categories and sub-categories, your departments and teams…</p>
+            <p>How to get started: click <strong>New</strong> to create your first diagram, or open <strong>Configuration → Quick Guide</strong> for a full step-by-step guide.</p>
+        </field>
+    </record>
+
+</odoo>
