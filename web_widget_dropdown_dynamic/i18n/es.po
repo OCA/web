@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-04-13 08:14+0000\n"
+"PO-Revision-Date: 2026-05-07 17:46+0000\n"
 "Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -25,7 +25,7 @@ msgstr "Entero desplegable"
 #. odoo-javascript
 #: code:addons/web_widget_dropdown_dynamic/static/src/js/field_dynamic_dropdown.esm.js:0
 msgid "Dynamic Dropdown"
-msgstr "Menú desplegable dinámico"
+msgstr "Menú desplegable Dinámico"
 
 #. module: web_widget_dropdown_dynamic
 #: model:ir.model,name:web_widget_dropdown_dynamic.model_ir_filters
