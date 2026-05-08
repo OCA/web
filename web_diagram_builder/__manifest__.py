@@ -1,13 +1,15 @@
-# Copyright 2024 TechnoLibre
+# Copyright 2024 TechnoLibre - Manel Guechetouli
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Web Diagram Builder",
     "version": "15.0.1.0.0",
     "category": "Tools",
     "summary": "Build recursive dependency diagrams from any many2one field",
-    "author": "TechnoLibre",
-    "website": "https://technolibre.ca",
+    "author": "TechnoLibre, Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
+    "development_status": "Beta",
+    "maintainers": ["mmaanneell"],
     "depends": ["web_diagram"],
     "post_init_hook": "post_init_hook",
     "data": [
@@ -36,5 +38,4 @@
     },
     "installable": True,
     "application": True,
-    "test": ["tests/test_web_diagram_builder.py"],
 }

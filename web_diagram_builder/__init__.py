@@ -1,3 +1,5 @@
+# Copyright 2024 TechnoLibre - Manel Guechetouli
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from odoo import api, SUPERUSER_ID
 from . import models
 
