@@ -50,6 +50,10 @@ var DiagramModel = AbstractModel.extend({
     reload: function () {
         return this._fetchDiagramInfo();
     },
+    reloadWithId: function (newId) {
+        this.res_id = newId;
+        return this._fetchDiagramInfo();
+    },
 
     //--------------------------------------------------------------------------
     // Private

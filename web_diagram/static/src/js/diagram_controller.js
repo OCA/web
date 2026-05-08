@@ -21,6 +21,7 @@ var DiagramController = AbstractController.extend({
         edit_node: '_onEditNode',
         remove_edge: '_onRemoveEdge',
         remove_node: '_onRemoveNode',
+        pager_changed: '_onPagerChanged',
     },
     /**
      * @override
@@ -120,9 +121,33 @@ var DiagramController = AbstractController.extend({
         });
     },
 
+    _getPagingInfo: function () {
+        var ids = this.ids || [];
+        var size = ids.length;
+        if (size <= 1) { return null; }
+        var currentIndex = ids.indexOf(this.currentId);
+        return {
+            currentMinimum: currentIndex >= 0 ? currentIndex + 1 : 1,
+            limit: 1,
+            size: size,
+        };
+    },
+
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------
+
+    _onPagerChanged: function (event) {
+        var self = this;
+        var newIndex = event.data.currentMinimum - 1;
+        var newId = (this.ids || [])[newIndex];
+        if (!newId || newId === this.currentId) { return; }
+        this.currentId = newId;
+        this.model.reloadWithId(newId).then(function () {
+            self.renderer.updateState(self.model.get(), {});
+            self.updateControlPanel({ pager: self._getPagingInfo() });
+        });
+    },
 
     /**
      * Custom event handler that opens a popup to add an edge from given source
