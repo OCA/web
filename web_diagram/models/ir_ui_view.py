@@ -53,6 +53,17 @@ class IrUIView(models.Model):
         node_info['children'] = []
         node_info['editable'] = False
 
+    def _validate_tag_label(self, node, name_manager, node_info):
+        """In a diagram view, <label> is a legend element, not a form label.
+        Skip the 'for' requirement that only applies to form labels.
+        """
+        parent = node.getparent()
+        while parent is not None:
+            if parent.tag == "diagram":
+                return
+            parent = parent.getparent()
+        return super()._validate_tag_label(node, name_manager, node_info)
+
     @api.model
     def graph_get(self, id, model, node_obj, conn_obj, src_node, des_node,
                   label, scale):

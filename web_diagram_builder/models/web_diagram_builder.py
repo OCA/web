@@ -188,7 +188,7 @@ class WebDiagramBuilder(models.Model):
     def action_compute(self):
         self.ensure_one()
         self._compute_diagram()
-        self.invalidate_recordset()
+        self.invalidate_cache()
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",

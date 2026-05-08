@@ -512,8 +512,11 @@ class graph(object):
 
             if roots:
                 roots.append(self.start)
-                one_level_el = self.tree_list[self.start][0][1]
-                base = self.result[one_level_el]['y']
+                if self.tree_list[self.start]:
+                    one_level_el = self.tree_list[self.start][0][1]
+                    base = self.result[one_level_el]['y']
+                else:
+                    base = self.result[self.start]['y']
 
                 no = len(roots)
                 first_half = roots[:no // 2]
