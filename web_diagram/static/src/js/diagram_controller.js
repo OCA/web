@@ -52,6 +52,7 @@ var DiagramController = AbstractController.extend({
     renderButtons: function ($node) {
         this.$buttons = $(QWeb.render("DiagramView.buttons", {widget: this}));
         this.$buttons.on('click', '.o_diagram_new_button', this._addNode.bind(this));
+        this.$buttons.on('click', '.o_diagram_export_svg_button', this._exportSVG.bind(this));
         this.$buttons.on('click', '.o_diagram_help_button', this._showNavHelp.bind(this));
         this.$buttons.appendTo($node);
     },
@@ -88,6 +89,24 @@ var DiagramController = AbstractController.extend({
                 changes: changes,
             });
         });
+    },
+
+    _exportSVG: function () {
+        var container = document.querySelector('.o_diagram');
+        var cy = container && container._cy;
+        if (!cy) { return; }
+        for (var i = 0, scales = [1.5, 1, 0.5]; i < scales.length; i++) {
+            try {
+                var dataUrl = cy.png({ full: true, scale: scales[i], bg: '#ffffff' });
+                if (dataUrl && dataUrl !== 'data:,') {
+                    var a = document.createElement('a');
+                    a.href = dataUrl;
+                    a.download = 'diagram.png';
+                    a.click();
+                    return;
+                }
+            } catch (_e) { /* canvas too large, try smaller scale */ }
+        }
     },
 
     _showNavHelp: function () {
