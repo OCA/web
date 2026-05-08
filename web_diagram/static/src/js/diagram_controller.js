@@ -52,6 +52,7 @@ var DiagramController = AbstractController.extend({
     renderButtons: function ($node) {
         this.$buttons = $(QWeb.render("DiagramView.buttons", {widget: this}));
         this.$buttons.on('click', '.o_diagram_new_button', this._addNode.bind(this));
+        this.$buttons.on('click', '.o_diagram_help_button', this._showNavHelp.bind(this));
         this.$buttons.appendTo($node);
     },
 
@@ -86,6 +87,17 @@ var DiagramController = AbstractController.extend({
                 dataPointID: pop.form_view.handle,
                 changes: changes,
             });
+        });
+    },
+
+    _showNavHelp: function () {
+        var self = this;
+        this._rpc({
+            model: 'web.diagram.nav.help',
+            method: 'create_nav_help_action',
+            args: [],
+        }).then(function (action) {
+            self.do_action(action);
         });
     },
 

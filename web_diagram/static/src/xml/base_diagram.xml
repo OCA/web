@@ -1,9 +1,13 @@
 <template>
 
 <t t-name="DiagramView.buttons">
-	<div t-if="widget.is_action_enabled('create')">
-        <button type="button" class="btn btn-primary o_diagram_new_button">
+    <div class="d-inline-flex align-items-center">
+        <button t-if="widget.is_action_enabled('create')"
+                type="button" class="btn btn-primary o_diagram_new_button">
             New Node
+        </button>
+        <button type="button" class="btn btn-secondary ml-1 o_diagram_help_button">
+            <i class="fa fa-question-circle mr-1"/>Help
         </button>
     </div>
 </t>

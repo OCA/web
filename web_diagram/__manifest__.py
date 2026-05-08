@@ -10,6 +10,10 @@ Openerp Web Diagram view.
 """,
     'version': "15.0.1.0.0",
     'depends': ['web'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/diagram_nav_help_views.xml',
+    ],
     'assets': {
         'web.assets_backend': [
             'web_diagram/static/src/scss/diagram_view.scss',
