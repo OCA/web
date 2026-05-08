@@ -18,10 +18,6 @@ var DiagramView = BasicView.extend({
     multi_record: false,
     withSearchBar: false,
     searchMenuTypes: [],
-    jsLibs: [[
-        '/web_diagram/static/lib/js/jquery.mousewheel.js',
-        '/web_diagram/static/lib/js/raphael.js',
-    ]],
     config: _.extend({}, BasicView.prototype.config, {
         Model: DiagramModel,
         Renderer: DiagramRenderer,
@@ -112,28 +108,8 @@ var DiagramView = BasicView.extend({
         return this._super.apply(this, arguments);
     },
 
-    /**
-     * This override is quite tricky: the graph renderer uses Raphael.js to
-     * render itself, so it needs it to be loaded in the window before rendering
-     * However, the raphael.js library is built in such a way that if it detects
-     * that a module system is present, it will try to use it.  So, in that
-     * case, it is not available on window.Raphael.  This means that the diagram
-     * view is then broken.
-     *
-     * As a workaround, we simply remove and restore the define function, if
-     * present, while we are loading Raphael.
-     *
-     * @override
-     */
-    getController: function () {
-        var oldDefine = window.define;
-        delete window.define;
-        return this._super.apply(this, arguments).then(function (view) {
-            window.define = oldDefine;
-            return view;
-        });
-    },
 });
+
 
 return DiagramView;
 

@@ -13,8 +13,10 @@ Openerp Web Diagram view.
     'assets': {
         'web.assets_backend': [
             'web_diagram/static/src/scss/diagram_view.scss',
-            'web_diagram/static/src/js/vec2.js',
-            'web_diagram/static/src/js/graph.js',
+            # Cytoscape + dagre must load in this order (global scripts)
+            'web_diagram/static/lib/js/dagre.min.js',
+            'web_diagram/static/lib/js/cytoscape.min.js',
+            'web_diagram/static/lib/js/cytoscape-dagre.min.js',
             'web_diagram/static/src/js/diagram_model.js',
             'web_diagram/static/src/js/diagram_controller.js',
             'web_diagram/static/src/js/diagram_renderer.js',
