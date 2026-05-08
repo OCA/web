@@ -8,7 +8,7 @@ patch(ProductLabelSectionAndNoteField.prototype, {
     get label() {
         return this.props.record.data.name;
     },
-    updateLabel(value) {
-        this.props.record.update({name: (!value && this.productName) || value});
+    parseLabel(value) {
+        return (!value && this.productName) || value;
     },
 });

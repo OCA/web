@@ -4,7 +4,7 @@
 {
     "name": "Web Widget Product Label Section And Note Full Label",
     "summary": "Display the full label in the product_label_section_and_note widget.",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
@@ -13,6 +13,9 @@
         "web.assets_backend": [
             "web_widget_product_label_section_and_note_full_label/static/src/**/*.js",
             "web_widget_product_label_section_and_note_full_label/static/src/**/*.xml",
+        ],
+        "web.qunit_suite_tests": [
+            "web_widget_product_label_section_and_note_full_label/static/tests/**/*.js",
         ],
     },
     "application": False,

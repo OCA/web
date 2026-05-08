@@ -2,19 +2,13 @@
 <templates>
     <t t-inherit="account.ProductLabelSectionAndNoteField" t-inherit-mode="extension">
         <xpath
-            expr="//t[@t-if='columnIsProductAndLabel.value and label']/textarea"
+            expr="//div[@t-if='props.readonly' and @t-out='label']"
             position="attributes"
         >
             <attribute name="class" add="text-muted" separator=" " />
         </xpath>
         <xpath
-            expr="//textarea[@t-if='(columnIsProductAndLabel.value and label) or (!columnIsProductAndLabel.value and !productName and label)']"
-            position="attributes"
-        >
-            <attribute name="class" add="text-muted" separator=" " />
-        </xpath>
-        <xpath
-            expr="//t[@t-if='columnIsProductAndLabel.value and (label or labelVisibility.value)']/textarea"
+            expr="//textarea[@t-else='' and @t-ref='labelNodeRef']"
             position="attributes"
         >
             <attribute name="class" add="text-muted" separator=" " />
