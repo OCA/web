@@ -13,6 +13,19 @@ class TestResCompany(common.TransactionCase):
         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUl"
         + "EQVR42mNk+M/wHwAEBgIApD5fRAAAAABJRU5ErkJggg=="
     )
+    IMG_GREEN_WEBP = (
+        "UklGRj4AAABXRUJQVlA4IDIAAADQAQCdASoBAAEAAUAmJaACdLoB"
+        + "+AADsAD+6SIf+8+fufP3Pn/Rn/+U/fI4/kcf/KBAAA=="
+    )
+
+    def test_compute_color_webp_logo(self):
+        """WebP images should not raise UnidentifiedImageError"""
+        company_id = self.env["res.company"].search([], limit=1)
+        company_id.sudo().write({"logo": self.IMG_GREEN_WEBP})
+        company_id.button_compute_color()
+        self.assertEqual(
+            company_id.color_navbar_bg, "#00ff00", "Invalid Navbar Background Color"
+        )
 
     def _test_scss_attachment(self):
         num_scss = self.env["ir.attachment"].search_count(

@@ -12,8 +12,12 @@ def n_rgb_to_hex(_r, _g, _b):
 
 
 def convert_to_image(field_binary):
-    return Image.open(BytesIO(base64.b64decode(field_binary)))
-
+    buffer = BytesIO(base64.b64decode(field_binary))
+    image = Image.open(buffer)
+    image.load()
+    if image.format == "WEBP" or image.mode not in ("RGB", "RGBA"):
+        image = image.convert("RGBA")
+    return image
 
 def image_to_rgb(img):
     def normalize_vec3(vec3):
