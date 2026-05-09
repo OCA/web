@@ -12,10 +12,21 @@ def n_rgb_to_hex(_r, _g, _b):
 
 
 def convert_to_image(field_binary):
+    from odoo.exceptions import UserError
+
     buffer = BytesIO(base64.b64decode(field_binary))
-    image = Image.open(buffer)
-    image.load()
-    if image.format == "WEBP" or image.mode not in ("RGB", "RGBA"):
+    try:
+        image = Image.open(buffer)
+        image.load()
+    except Exception:
+        raw = base64.b64decode(field_binary)
+        if raw[:4] == b"RIFF" and raw[8:12] == b"WEBP":
+            raise UserError(
+                "WebP images are not supported for color computation. "
+                "Please convert your logo to PNG or JPEG."
+            )
+        raise
+    if image.mode not in ("RGB", "RGBA"):
         image = image.convert("RGBA")
     return image
 
