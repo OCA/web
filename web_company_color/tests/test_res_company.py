@@ -28,7 +28,6 @@ class TestResCompany(common.TransactionCase):
         with self.assertRaises(UserError):
             company_id.button_compute_color()
 
-
     def _test_scss_attachment(self):
         num_scss = self.env["ir.attachment"].search_count(
             [("url", "ilike", f"{URL_BASE}%")]
@@ -59,7 +58,7 @@ class TestResCompany(common.TransactionCase):
         self.assertEqual(
             company_id.color_navbar_bg, "#00ff00", "Invalid Navbar Background Color"
         )
-        
+
     def test_scss_sanitized_values(self):
         company_id = self.env["res.company"].search([], limit=1)
         company_id.sudo().write({"color_navbar_bg": False})
