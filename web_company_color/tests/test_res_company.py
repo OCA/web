@@ -18,7 +18,6 @@ class TestResCompany(common.TransactionCase):
         + "+AADsAD+6SIf+8+fufP3Pn/Rn/+U/fI4/kcf/KBAAA=="
     )
 
-    
     def test_compute_color_webp_logo(self):
         """WebP images should raise UserError with clear message"""
         from odoo.exceptions import UserError
