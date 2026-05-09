@@ -19,6 +19,7 @@ def convert_to_image(field_binary):
         image = image.convert("RGBA")
     return image
 
+
 def image_to_rgb(img):
     def normalize_vec3(vec3):
         _l = 1.0 / math.sqrt(vec3[0] * vec3[0] + vec3[1] * vec3[1] + vec3[2] * vec3[2])
