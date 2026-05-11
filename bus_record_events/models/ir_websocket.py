@@ -24,6 +24,8 @@ class IrWebsocket(models.AbstractModel):
             return False
 
         if len(parts) == 2:  # record_events:model
+            if not self.env.user._is_internal():
+                return False
             # Check model read access
             try:
                 self.env[model_name].check_access_rights("read")
