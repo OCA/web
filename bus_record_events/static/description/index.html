@@ -386,32 +386,40 @@ Record Rules).</li>
 <ul class="simple">
 <li><a class="reference internal" href="#use-cases-context" id="toc-entry-1">Use Cases / Context</a></li>
 <li><a class="reference internal" href="#installation" id="toc-entry-2">Installation</a></li>
-<li><a class="reference internal" href="#configuration" id="toc-entry-3">Configuration</a></li>
-<li><a class="reference internal" href="#usage" id="toc-entry-4">Usage</a><ul>
-<li><a class="reference internal" href="#for-developers" id="toc-entry-5">For Developers</a><ul>
-<li><a class="reference internal" href="#subscription-channels" id="toc-entry-6">Subscription Channels</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#reactive-views" id="toc-entry-7">Reactive Views</a><ul>
-<li><a class="reference internal" href="#available-views" id="toc-entry-8">Available Views</a></li>
-<li><a class="reference internal" href="#usage-example-xml" id="toc-entry-9">Usage Example (XML)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#javascript-api" id="toc-entry-10">JavaScript API</a><ul>
-<li><a class="reference internal" href="#service-bus-record-event-service" id="toc-entry-11">Service: <tt class="docutils literal">bus_record_event_service</tt></a></li>
-<li><a class="reference internal" href="#hook-userecordstream" id="toc-entry-12">Hook: <tt class="docutils literal">useRecordStream</tt></a></li>
+<li><a class="reference internal" href="#configuration" id="toc-entry-3">Configuration</a><ul>
+<li><a class="reference internal" href="#performance-unlogged-bus-bus-table" id="toc-entry-4">Performance: UNLOGGED bus.bus table</a><ul>
+<li><a class="reference internal" href="#tradeoffs" id="toc-entry-5">Tradeoffs</a></li>
+<li><a class="reference internal" href="#sql-script" id="toc-entry-6">SQL script</a></li>
+<li><a class="reference internal" href="#recommendation" id="toc-entry-7">Recommendation</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-13">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#changelog" id="toc-entry-14">Changelog</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-15">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-16">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-17">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-18">Contributors</a></li>
-<li><a class="reference internal" href="#other-credits" id="toc-entry-19">Other credits</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-20">Maintainers</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-8">Usage</a><ul>
+<li><a class="reference internal" href="#for-developers" id="toc-entry-9">For Developers</a><ul>
+<li><a class="reference internal" href="#subscription-channels" id="toc-entry-10">Subscription Channels</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reactive-views" id="toc-entry-11">Reactive Views</a><ul>
+<li><a class="reference internal" href="#available-views" id="toc-entry-12">Available Views</a></li>
+<li><a class="reference internal" href="#usage-example-xml" id="toc-entry-13">Usage Example (XML)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#javascript-api" id="toc-entry-14">JavaScript API</a><ul>
+<li><a class="reference internal" href="#service-bus-record-event-service" id="toc-entry-15">Service: <tt class="docutils literal">bus_record_event_service</tt></a></li>
+<li><a class="reference internal" href="#hook-userecordstream" id="toc-entry-16">Hook: <tt class="docutils literal">useRecordStream</tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-17">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#changelog" id="toc-entry-18">Changelog</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-19">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-20">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-21">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-22">Contributors</a></li>
+<li><a class="reference internal" href="#other-credits" id="toc-entry-23">Other credits</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-24">Maintainers</a></li>
 </ul>
 </li>
 </ul>
@@ -428,11 +436,116 @@ without heavy polling.</p>
 <div class="section" id="configuration">
 <h1><a class="toc-backref" href="#toc-entry-3">Configuration</a></h1>
 <p>No specific configuration is required.</p>
+<div class="section" id="performance-unlogged-bus-bus-table">
+<h2><a class="toc-backref" href="#toc-entry-4">Performance: UNLOGGED bus.bus table</a></h2>
+<p>In high-volume environments (many concurrent users, frequent CRUD
+operations), the <tt class="docutils literal">bus.bus</tt> table can generate significant WAL
+(Write-Ahead Logging) traffic. Since <tt class="docutils literal">bus.bus</tt> is <strong>ephemeral by
+design</strong> — rows are auto-vacuumed after ~100 seconds (<tt class="docutils literal">TIMEOUT * 2</tt>) —
+the WAL overhead provides no real benefit: after a crash or failover,
+stale notifications are irrelevant because clients reconnect and re-poll
+from scratch.</p>
+<p>Converting <tt class="docutils literal">bus.bus</tt> to <tt class="docutils literal">UNLOGGED</tt> skips WAL writes entirely, which:</p>
+<ul class="simple">
+<li><strong>Reduces disk I/O</strong> on the WAL volume.</li>
+<li><strong>Speeds up INSERTs</strong> (the most frequent operation on this table).</li>
+<li><strong>Reduces replication lag</strong> in streaming-replica setups (unlogged
+tables are not replicated — replicas won’t see bus notifications, but
+they don’t need to since each Odoo worker polls its own database).</li>
+</ul>
+<div class="section" id="tradeoffs">
+<h3><a class="toc-backref" href="#toc-entry-5">Tradeoffs</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Aspect</th>
+<th class="head">Impact</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Crash recovery</td>
+<td>Table is <strong>truncated</strong> automatically. Clients
+reconnect and miss nothing meaningful.</td>
+</tr>
+<tr><td>Streaming replicas</td>
+<td>Table is <strong>empty</strong> on replicas. Only relevant
+if replicas serve websocket workers (unusual).</td>
+</tr>
+<tr><td><tt class="docutils literal">pg_basebackup</tt></td>
+<td>Table structure is included but data is not.
+No impact on backup/restore workflows.</td>
+</tr>
+<tr><td>Logical replication</td>
+<td>Unlogged tables are excluded. No impact unless
+bus data is replicated intentionally.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sql-script">
+<h3><a class="toc-backref" href="#toc-entry-6">SQL script</a></h3>
+<p>Run this during a <strong>maintenance window</strong> (no active Odoo workers):</p>
+<pre class="code sql literal-block">
+<span class="c1">-- 1. Verify current state
+</span><span class="k">SELECT</span><span class="w"> </span><span class="n">relpersistence</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_class</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">relname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'bus_bus'</span><span class="p">;</span><span class="w">
+</span><span class="c1">-- 'p' = permanent (WAL), 'u' = unlogged
+</span><span class="w">
+</span><span class="c1">-- 2. Convert to UNLOGGED
+</span><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">bus_bus</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">UNLOGGED</span><span class="p">;</span><span class="w">
+
+</span><span class="c1">-- 3. Confirm
+</span><span class="k">SELECT</span><span class="w"> </span><span class="n">relpersistence</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pg_class</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">relname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'bus_bus'</span><span class="p">;</span><span class="w">
+</span><span class="c1">-- Should return 'u'</span>
+</pre>
+<p>To <strong>revert</strong> back to a permanent (WAL-logged) table:</p>
+<pre class="code sql literal-block">
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">bus_bus</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">LOGGED</span><span class="p">;</span>
+</pre>
+</div>
+<div class="section" id="recommendation">
+<h3><a class="toc-backref" href="#toc-entry-7">Recommendation</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Scenario</th>
+<th class="head">Recommendation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Single-server or active-passive
+HA</td>
+<td><strong>Use UNLOGGED</strong>. Safe and
+measurable I/O reduction.</td>
+</tr>
+<tr><td>Active-active with shared
+websockets on replica</td>
+<td>Keep LOGGED (rare setup).</td>
+</tr>
+<tr><td>Development / staging</td>
+<td>Optional — low traffic makes the
+difference negligible.</td>
+</tr>
+</tbody>
+</table>
+<!--  -->
+<blockquote>
+<strong>Note</strong>: This optimization applies to the core <tt class="docutils literal">bus.bus</tt> table
+from the <tt class="docutils literal">bus</tt> module. <tt class="docutils literal">bus_record_events</tt> increases the
+notification volume by broadcasting CRUD events, which makes the
+UNLOGGED optimization more impactful when this module is installed.</blockquote>
+</div>
+</div>
 </div>
 <div class="section" id="usage">
-<h1><a class="toc-backref" href="#toc-entry-4">Usage</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-8">Usage</a></h1>
 <div class="section" id="for-developers">
-<h2><a class="toc-backref" href="#toc-entry-5">For Developers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-9">For Developers</a></h2>
 <p>To enable notifications on a model, simply inherit from the
 <tt class="docutils literal">bus.record.event.mixin</tt> mixin:</p>
 <pre class="code python literal-block">
@@ -441,7 +554,7 @@ without heavy polling.</p>
 </span>    <span class="n">_inherit</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'my.model'</span><span class="p">,</span> <span class="s1">'bus.record.event.mixin'</span><span class="p">]</span>
 </pre>
 <div class="section" id="subscription-channels">
-<h3><a class="toc-backref" href="#toc-entry-6">Subscription Channels</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-10">Subscription Channels</a></h3>
 <p>The module manages two types of channels for client-side subscriptions
 (OWL/JS):</p>
 <ol class="arabic simple">
@@ -462,13 +575,13 @@ applied).</li>
 </div>
 </div>
 <div class="section" id="reactive-views">
-<h2><a class="toc-backref" href="#toc-entry-7">Reactive Views</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-11">Reactive Views</a></h2>
 <p>The module includes extended view controllers that automatically listen
 for these events and update the interface or notify the user.</p>
 <p>To use these reactive views, you must specify the <tt class="docutils literal">js_class</tt> attribute
 in the XML view definition.</p>
 <div class="section" id="available-views">
-<h3><a class="toc-backref" href="#toc-entry-8">Available Views</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-12">Available Views</a></h3>
 <table border="1" class="docutils">
 <colgroup>
 <col width="19%" />
@@ -527,7 +640,7 @@ model.</td>
 </table>
 </div>
 <div class="section" id="usage-example-xml">
-<h3><a class="toc-backref" href="#toc-entry-9">Usage Example (XML)</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-13">Usage Example (XML)</a></h3>
 <pre class="code xml literal-block">
 <span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;view_my_model_form&quot;</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.ui.view&quot;</span><span class="nt">&gt;</span><span class="w">
     </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>my.model.form<span class="nt">&lt;/field&gt;</span><span class="w">
@@ -552,9 +665,9 @@ model.</td>
 </div>
 </div>
 <div class="section" id="javascript-api">
-<h2><a class="toc-backref" href="#toc-entry-10">JavaScript API</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-14">JavaScript API</a></h2>
 <div class="section" id="service-bus-record-event-service">
-<h3><a class="toc-backref" href="#toc-entry-11">Service: <tt class="docutils literal">bus_record_event_service</tt></a></h3>
+<h3><a class="toc-backref" href="#toc-entry-15">Service: <tt class="docutils literal">bus_record_event_service</tt></a></h3>
 <p>The module provides a service to manage subscriptions to record events.</p>
 <pre class="code javascript literal-block">
 <span class="kd">const</span><span class="w"> </span><span class="nx">busRecordEventService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useService</span><span class="p">(</span><span class="s2">&quot;bus_record_event_service&quot;</span><span class="p">);</span><span class="w">
@@ -572,7 +685,7 @@ model.</td>
 </pre>
 </div>
 <div class="section" id="hook-userecordstream">
-<h3><a class="toc-backref" href="#toc-entry-12">Hook: <tt class="docutils literal">useRecordStream</tt></a></h3>
+<h3><a class="toc-backref" href="#toc-entry-16">Hook: <tt class="docutils literal">useRecordStream</tt></a></h3>
 <p>For OWL components, it is recommended to use the <tt class="docutils literal">useRecordStream</tt>
 hook. It handles the lifecycle of the subscription (adding channels on
 start, unsubscribing on unmount).</p>
@@ -600,7 +713,7 @@ start, unsubscribing on unmount).</p>
 </div>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#toc-entry-13">Known issues / Roadmap</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-17">Known issues / Roadmap</a></h1>
 <ul class="simple">
 <li>No known issues.</li>
 <li><strong>Data Optimization</strong>: Notification payloads compressed using <tt class="docutils literal">zlib</tt>
@@ -615,14 +728,14 @@ channel when their permissions change.</li>
 </ul>
 </div>
 <div class="section" id="changelog">
-<h1><a class="toc-backref" href="#toc-entry-14">Changelog</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-18">Changelog</a></h1>
 <p>17.0.1.0.0 (2023-12-16)</p>
 <pre class="literal-block">
 *   Initial release.
 </pre>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-15">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-19">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -630,15 +743,15 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-16">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-20">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-17">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-21">Authors</a></h2>
 <ul class="simple">
 <li>Heligrafics Fotogrametria S.L.</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-18">Contributors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-22">Contributors</a></h2>
 <ul class="simple">
 <li>Heligrafics Fotogrametria S.L. &lt;<a class="reference external" href="http://www.heligrafics.net/">http://www.heligrafics.net/</a>&gt;:<ul>
 <li>Jose Zambudio &lt;<a class="reference external" href="mailto:jzambudio&#64;heligrafics.net">jzambudio&#64;heligrafics.net</a>&gt;</li>
@@ -647,14 +760,14 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="other-credits">
-<h2><a class="toc-backref" href="#toc-entry-19">Other credits</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-23">Other credits</a></h2>
 <p>The development of this module has been financially supported by:</p>
 <ul class="simple">
 <li>Heligrafics Fotogrametria S.L.</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-20">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-24">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org">
 <img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
