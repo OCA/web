@@ -36,6 +36,17 @@ class TestBusRecordEvents(TestBusRecordEventsCase, TransactionCase):
                 "perm_unlink": 1,
             }
         )
+        cls.env["ir.model.access"].create(
+            {
+                "name": "access_bus_record_event_fake_public_read",
+                "model_id": cls.env["ir.model"]._get("bus.record.event.fake").id,
+                "group_id": cls.env.ref("base.group_public").id,
+                "perm_read": 1,
+                "perm_write": 0,
+                "perm_create": 0,
+                "perm_unlink": 0,
+            }
+        )
 
     def _get_relevant_notification(self, notifications, channel_name):
         return next(
@@ -165,3 +176,20 @@ class TestBusRecordEvents(TestBusRecordEventsCase, TransactionCase):
         # Verify User 1 cannot read User 2's record
         with self.assertRaises(AccessError):
             record_u2.with_user(self.user_1).check_access_rule("read")
+
+    def test_permission_check_model_channel_internal_only(self):
+        public_user = self.env.ref("base.public_user")
+        channel = "record_events:bus.record.event.fake"
+        websocket_model = self.env["ir.websocket"]
+
+        self.assertTrue(
+            websocket_model.with_user(self.user_1)._check_record_event_permission(
+                channel
+            )
+        )
+        self.assertFalse(public_user._is_internal())
+        self.assertFalse(
+            websocket_model.with_user(public_user)._check_record_event_permission(
+                channel
+            )
+        )
