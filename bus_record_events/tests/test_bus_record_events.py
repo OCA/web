@@ -82,7 +82,7 @@ class TestBusRecordEvents(TestBusRecordEventsCase, TransactionCase):
         self.assertEqual(payload["model"], "bus.record.event.fake")
 
         data = payload["data"]
-        self.assertEqual(data["id"], record.id)
+        self.assertIn(record.id, data["ids"])
 
     def test_write_notification(self):
         """Test that writing to a record sends a notification."""

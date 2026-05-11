@@ -111,7 +111,7 @@ QUnit.module("Views", (hooks) => {
                     payload: {
                         model: "res.partner",
                         type: "create",
-                        data: {id: 100 + i},
+                        data: {ids: [100 + i]},
                     },
                 });
             }
