@@ -45,7 +45,7 @@ QUnit.module("Services", {}, function () {
         const payload = {
             model: "test.model",
             type: "create",
-            data: {id: 1},
+            data: {ids: [1]},
         };
         busService.trigger("notification", [{type: "bus.record/event", payload}]);
 
