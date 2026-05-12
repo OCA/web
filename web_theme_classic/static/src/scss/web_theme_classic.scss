@@ -86,6 +86,11 @@ body.classic-theme {
         border-radius: 3px;
     }
 
+    // Prevent double borders in o_domain_selector, which uses an extra o_input for dropdowns
+    .o_input.o_multi_record_selector .o_input {
+        border: $input-border-width solid transparent !important;
+    }
+
     .o_form_view {
         /* Odoo sets borders to transparent unless hovered or focused. We override this.
      * https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/views/form/form_controller.scss#L202C1-L204C6 */
