@@ -1,0 +1,11 @@
+.o_kanban_renderer {
+    --KanbanColumn__highlight-background: #{mix($o-action, $o-gray-100, 10%)};
+    --KanbanColumn__highlight-border: #{rgba($o-action, 0.5)};
+
+    // For some reason attachment images do not get the o_field_image class
+    .o_kanban_record:not(.o_legacy_kanban_record) {
+        .o_attachment_image > img {
+            background-color: #ffffff;
+        }
+    }
+}
