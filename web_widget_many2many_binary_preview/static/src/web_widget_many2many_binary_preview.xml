@@ -1,0 +1,18 @@
+<templates>
+    <t
+        t-name="FieldBinaryFileUploader.attachment_preview"
+        t-inherit="web.FieldBinaryFileUploader.attachment_preview"
+    >
+        <xpath expr="//div[hasclass('o_image_box')]/a/span" position="attributes">
+            <attribute name="t-if">!widget.show_preview(file)</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('o_image_box')]/a/span" position="after">
+            <img
+                t-if="widget.show_preview(file)"
+                t-att-src="widget.getImageUrl(file)"
+                aria-label="Download"
+                download=""
+            />
+        </xpath>
+    </t>
+</templates>
