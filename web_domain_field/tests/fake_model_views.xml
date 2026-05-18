@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    ~ Copyright 2025 Simone Rubino - PyTech
+    ~ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="fake_model_form_view" model="ir.ui.view">
+        <field name="name">Form view for fake model</field>
+        <field name="model">web_domain_field.fake.model</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="partner_id_false_domain" invisible="True" />
+                        <field name="partner_id" domain="partner_id_false_domain" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="fake_model_action" model="ir.actions.act_window">
+        <field name="name">Fake Model action</field>
+        <field name="res_model">web_domain_field.fake.model</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="fake_model_menu" action="fake_model_action" />
+</odoo>
