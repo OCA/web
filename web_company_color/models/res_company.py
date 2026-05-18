@@ -182,20 +182,18 @@ class ResCompany(models.Model):
         values = dict(self.company_colors or {})
         values.update(
             {
-                "color_navbar_bg": (values.get("color_navbar_bg") or "$o-brand-odoo"),
+                "color_navbar_bg": (values.get("color_navbar_bg") or "#7C7BAD"),
                 "color_navbar_bg_hover": (
-                    values.get("color_navbar_bg_hover")
-                    or "$o-navbar-inverse-link-hover-bg"
+                    values.get("color_navbar_bg_hover") or "#5F5E97"
                 ),
                 "color_navbar_text": (values.get("color_navbar_text") or "#FFF"),
-                "color_button_bg": values.get("color_button_bg") or "$primary",
+                "color_button_bg": values.get("color_button_bg") or "#7C7BAD",
                 "color_button_bg_hover": values.get("color_button_bg_hover")
-                or 'darken(theme-color("primary"), 10%)',
+                or "#65639E",
                 "color_button_text": values.get("color_button_text") or "#FFF",
-                "color_link_text": values.get("color_link_text")
-                or 'theme-color("primary")',
+                "color_link_text": values.get("color_link_text") or "#7c7bad",
                 "color_link_text_hover": values.get("color_link_text_hover")
-                or 'darken(theme-color("primary"), 10%)',
+                or "#555487",
             }
         )
         return values
