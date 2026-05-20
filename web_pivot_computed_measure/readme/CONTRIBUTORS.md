@@ -1,0 +1,7 @@
+- [Tecnativa](https://www.tecnativa.com/):
+  - Alexandre D. Díaz
+  - Pedro M. Baeza
+  - Ernesto Tejeda
+  - Carlos Roca
+- [TradeSolutions.Digital GmbH](https://www.tradesolutions.digital/):
+  - Mitul Shah
