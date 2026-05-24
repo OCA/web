@@ -14,6 +14,9 @@
         "web.assets_qweb": [
             "/web_pivot_computed_measure/static/src/**/*.xml",
         ],
+        "web.assets_backend_legacy_lazy": [
+            "/web_pivot_computed_measure/static/src/legacy/*",
+        ],
         "web.assets_backend": [
             "/web_pivot_computed_measure/static/src/**/*.esm.js",
             "/web_pivot_computed_measure/static/src/**/*.scss",
