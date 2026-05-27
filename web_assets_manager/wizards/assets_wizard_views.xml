@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_assets_wizard_form" model="ir.ui.view">
+        <field name="model">web.assets.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="alert alert-info mb-0" role="alert">
+                        Every file in the uploaded file list will be included
+                    </div>
+                    <group>
+                        <field name="asset_id" invisible="1" />
+                        <field name="filename" invisible="1" />
+                        <field name="file" filename="filename" nolabel="1" />
+                    </group>
+                </sheet>
+                <footer>
+                    <button
+                        type="object"
+                        name="action_upload"
+                        string="Synchronize"
+                        class="oe_highlight"
+                    />
+                    or
+                    <button type="special" string="Close" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
