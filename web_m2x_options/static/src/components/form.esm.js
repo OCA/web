@@ -146,6 +146,25 @@ patch(many2OneField.Many2OneField.prototype, {
 });
 
 patch(Many2One.prototype, {
+    // Enforce the create/create_edit/open system parameters here, on the shared
+    // Many2One component, rather than only in the many2one field's extractProps.
+    // Specialized widgets (e.g. sol_product_many2one on sale/purchase order lines)
+    // define their own extractProps and never call m2o_options_props, so a
+    // field-level override does not reach them. They all render this component,
+    // so gating it here covers every many2one.
+    get activeActions() {
+        const actions = super.activeActions;
+        if (!evaluateSystemParameterDefaultTrue("create_edit")) {
+            actions.createEdit = false;
+        }
+        return actions;
+    },
+    get hasLinkButton() {
+        if (!evaluateSystemParameterDefaultTrue("open")) {
+            return false;
+        }
+        return super.hasLinkButton;
+    },
     get many2XAutocompleteProps() {
         let search_limit = 0;
         if (this.props.searchLimit) {
@@ -163,6 +182,9 @@ patch(Many2One.prototype, {
         if (field_color && field_color_options) {
             ret_props.fieldColor = field_color;
             ret_props.fieldColorOptions = field_color_options;
+        }
+        if (!evaluateSystemParameterDefaultTrue("create")) {
+            ret_props.quickCreate = null;
         }
         return ret_props;
     },
