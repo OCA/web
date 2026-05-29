@@ -1,0 +1,116 @@
+odoo.define('web_diagram.DiagramView', function (require) {
+"use strict";
+
+var BasicView = require('web.BasicView');
+var core = require('web.core');
+var DiagramModel = require('web_diagram.DiagramModel');
+var DiagramRenderer = require('web_diagram.DiagramRenderer');
+var DiagramController = require('web_diagram.DiagramController');
+
+var _lt = core._lt;
+
+/**
+ * Diagram View
+ */
+var DiagramView = BasicView.extend({
+    display_name: _lt('Diagram'),
+    icon: 'fa-code-fork',
+    multi_record: false,
+    withSearchBar: false,
+    searchMenuTypes: [],
+    config: _.extend({}, BasicView.prototype.config, {
+        Model: DiagramModel,
+        Renderer: DiagramRenderer,
+        Controller: DiagramController,
+    }),
+    viewType: 'diagram',
+
+    /**
+     * @override
+     * @param {Object} viewInfo
+     * @param {Object} params
+     */
+    init: function (viewInfo, params) {
+        this._super.apply(this, arguments);
+        var self = this;
+        var arch = this.arch;
+        // Compute additional data for diagram model
+        function toTitleCase(str) {
+            return str.replace(/\w\S*/g, function (txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+        }
+
+        var nodes = arch.children[0];
+        var connectors = arch.children[1];
+        var node_model = nodes.attrs.object;
+        var connector_model = connectors.attrs.object;
+        var labels = _.map(_.where(arch.children, {tag: 'label'}), function (label) {
+            return label.attrs.string;
+        });
+
+        var invisible_nodes = [];
+        var visible_nodes = [];
+        var node_fields_string = [];
+        _.each(nodes.children, function (child) {
+            if (child.attrs.invisible === '1')
+                invisible_nodes.push(child.attrs.name);
+            else {
+                var field = self.fields[child.attrs.name];
+                var fieldString = (field && field.string) || toTitleCase(child.attrs.name);
+                visible_nodes.push(child.attrs.name);
+                node_fields_string.push(fieldString);
+            }
+        });
+
+        var connector_fields_string = _.map(connectors.children, function (conn) {
+            var field = self.fields[conn.attrs.name];
+            return (field && field.string) || toTitleCase(conn.attrs.name);
+        });
+
+        this.loadParams = _.extend({}, this.loadParams, {
+            currentId: params.currentId,
+            nodes: nodes,
+            labels: labels,
+            invisible_nodes: invisible_nodes,
+            visible_nodes: visible_nodes,
+            node_fields_string: node_fields_string,
+            node_model: node_model,
+            connectors: connectors,
+            connector_model: connector_model,
+            connector_fields_string: connector_fields_string,
+        });
+
+        this.controllerParams = _.extend({}, this.controllerParams, {
+            domain: params.domain,
+            context: params.context,
+            ids: params.ids,
+            currentId: params.currentId,
+        });
+    },
+
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * Stop BasicView from traversing into <node> and <arrow> elements.
+     * Their <field> children belong to the node/connector object models,
+     * not to the main diagram model, so looking them up in fv.viewFields
+     * would yield undefined and crash _getFieldWidgetClass.
+     *
+     * @override
+     */
+    _processNode: function (node, fv) {
+        if (node.tag === 'node' || node.tag === 'arrow') {
+            return false;
+        }
+        return this._super.apply(this, arguments);
+    },
+
+});
+
+
+return DiagramView;
+
+});

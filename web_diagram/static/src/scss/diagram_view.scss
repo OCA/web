@@ -1,0 +1,16 @@
+.o_diagram_view {
+	background-color: white;
+
+	.o_diagram_header {
+		@include o-webclient-padding($top: 16px, $bottom: 16px);
+		> span {
+			display: block;
+			text-align: justify;
+		}
+	}
+}
+
+.o_diagram {
+	overflow: hidden;
+	background-color: white;
+}
