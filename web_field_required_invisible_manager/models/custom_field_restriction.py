@@ -45,6 +45,18 @@ class CustomFieldRestriction(models.Model):
         index=True,
     )
     condition_domain = fields.Char()
+
+    restriction_method = fields.Selection(
+        selection=[
+            ("exclude", "Restrict these groups (Blacklist)"),
+            ("include", "Restrict everyone EXCEPT these groups (Whitelist)"),
+        ],
+        string="Restriction Method",
+        default="exclude",
+        required=True,
+        help="Select 'Blacklist' to restrict the field for the selected groups. "
+        "Select 'Whitelist' to restrict the field for everyone EXCEPT the selected groups.",
+    )
     group_ids = fields.Many2many("res.groups", required=True)
     default_required = fields.Boolean(
         related="field_id.required", string="Required by Default"
