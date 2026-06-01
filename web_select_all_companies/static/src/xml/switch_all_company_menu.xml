@@ -4,7 +4,7 @@
         t-name="web_select_all_companies.SwitchAllCompanyMenu"
         t-inherit="web.SwitchCompanyMenu"
         t-inherit-mode="extension"
-        >
+    >
         <xpath expr="//t[@t-key='company.id']" position="before">
             <DropdownItem class="'p-0 bg-white'">
                 <div class="d-flex">
