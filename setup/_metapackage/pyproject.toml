@@ -1,6 +1,6 @@
 [project]
 name = "odoo-addons-oca-web"
-version = "19.0.20260518.0"
+version = "19.0.20260601.0"
 dependencies = [
     "odoo-addon-web_calendar_slot_duration==19.0.*",
     "odoo-addon-web_dark_mode==19.0.*",
@@ -22,6 +22,7 @@ dependencies = [
     "odoo-addon-web_timeline==19.0.*",
     "odoo-addon-web_tree_many2one_clickable==19.0.*",
     "odoo-addon-web_widget_bokeh_chart==19.0.*",
+    "odoo-addon-web_widget_product_label_section_and_note_full_label==19.0.*",
 ]
 classifiers=[
     "Programming Language :: Python",
