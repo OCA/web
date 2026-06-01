@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-inherit="account.ProductLabelSectionAndNoteField" t-inherit-mode="extension">
+        <xpath
+            expr="//div[@t-if='props.readonly' and @t-out='label']"
+            position="attributes"
+        >
+            <attribute name="class" add="text-muted" separator=" " />
+        </xpath>
+        <xpath
+            expr="//textarea[@t-else='' and @t-ref='labelNodeRef']"
+            position="attributes"
+        >
+            <attribute name="class" add="text-muted" separator=" " />
+        </xpath>
+    </t>
+</templates>

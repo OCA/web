@@ -1,0 +1,2 @@
+- Laura Cazorla <laura.cazorla@forgeflow.com>
+- David Vidal ([Moduon](https://www.moduon.team/))
