@@ -65,7 +65,7 @@ addon | version | maintainers | summary
 [web_pwa_oca](web_pwa_oca/) | 16.0.1.0.0 | <a href='https://github.com/eLBati'><img src='https://github.com/eLBati.png' width='32' height='32' style='border-radius:50%;' alt='eLBati'/></a> | Make Odoo a PWA
 [web_quick_start_screen](web_quick_start_screen/) | 16.0.1.0.0 |  | Configurable start screen for quick actions
 [web_refresh_from_backend](web_refresh_from_backend/) | 16.0.1.0.0 |  | Refresh views from backend
-[web_refresher](web_refresher/) | 16.0.3.1.4 |  | Web Refresher
+[web_refresher](web_refresher/) | 16.0.3.1.5 |  | Web Refresher
 [web_remember_tree_column_width](web_remember_tree_column_width/) | 16.0.1.0.2 | <a href='https://github.com/frahikLV'><img src='https://github.com/frahikLV.png' width='32' height='32' style='border-radius:50%;' alt='frahikLV'/></a> <a href='https://github.com/luisg123v'><img src='https://github.com/luisg123v.png' width='32' height='32' style='border-radius:50%;' alt='luisg123v'/></a> <a href='https://github.com/cuongnmtm'><img src='https://github.com/cuongnmtm.png' width='32' height='32' style='border-radius:50%;' alt='cuongnmtm'/></a> | Remember the tree columns' widths across sessions.
 [web_responsive](web_responsive/) | 16.0.1.4.0 | <a href='https://github.com/Tardo'><img src='https://github.com/Tardo.png' width='32' height='32' style='border-radius:50%;' alt='Tardo'/></a> <a href='https://github.com/SplashS'><img src='https://github.com/SplashS.png' width='32' height='32' style='border-radius:50%;' alt='SplashS'/></a> | Responsive web client, community-supported
 [web_responsive_company](web_responsive_company/) | 16.0.1.0.0 |  | Improve the diplay of the list of the companies
