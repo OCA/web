@@ -1,49 +1,43 @@
 /** @odoo-module **/
 /* Copyright 2023 Camptocamp - Telmo Santos
- * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 import {SwitchCompanyMenu} from "@web/webclient/switch_company_menu/switch_company_menu";
-import {browser} from "@web/core/browser/browser";
 import {patch} from "@web/core/utils/patch";
 
-patch(SwitchCompanyMenu.prototype, "SwitchAllCompanyMenu", {
+patch(SwitchCompanyMenu.prototype, {
     setup() {
-        this._super(...arguments);
-        this.allCompanyIds = Object.values(this.companyService.availableCompanies).map(
-            (x) => x.id
-        );
-        this.isAllCompaniesSelected = this.allCompanyIds.every((elem) =>
-            this.selectedCompanies.includes(elem)
+        super.setup();
+        // Get all company IDs from allowed companies (includes ancestors/children)
+        this.allCompanyIds = Object.keys(
+            this.companyService.allowedCompaniesWithAncestors
+        ).map(Number);
+        // Check if all companies are currently selected
+        this.isAllCompaniesSelected = this.allCompanyIds.every((id) =>
+            this.companySelector.selectedCompaniesIds.includes(id)
         );
     },
 
     toggleSelectAllCompanies() {
         if (this.isAllCompaniesSelected) {
-            // Deselect all
-            this.state.companiesToToggle = this.allCompanyIds;
-            this.toggleCompany(this.currentCompany.id);
+            // Deselect all: clear selection and keep only the current company
+            this.companySelector.selectedCompaniesIds.splice(
+                0,
+                this.companySelector.selectedCompaniesIds.length
+            );
+            this.companySelector.selectedCompaniesIds.push(
+                this.companyService.currentCompany.id
+            );
             this.isAllCompaniesSelected = false;
-            browser.clearTimeout(this.toggleTimer);
-            this.toggleTimer = browser.setTimeout(() => {
-                this.companyService.setCompanies(
-                    "toggle",
-                    ...this.state.companiesToToggle
-                );
-            }, this.constructor.toggleDelay);
         } else {
-            // Select all
-            this.state.companiesToToggle = [
-                this.allCompanyIds.filter(
-                    (x) => !this.companyService.allowedCompanyIds.includes(x)
-                ),
-            ];
+            // Select all: add every allowed company to the selection
+            for (const id of this.allCompanyIds) {
+                if (!this.companySelector.selectedCompaniesIds.includes(id)) {
+                    this.companySelector.selectedCompaniesIds.push(id);
+                }
+            }
             this.isAllCompaniesSelected = true;
-            browser.clearTimeout(this.toggleTimer);
-            this.toggleTimer = browser.setTimeout(() => {
-                this.companyService.setCompanies(
-                    "loginto",
-                    ...this.state.companiesToToggle
-                );
-            }, this.constructor.toggleDelay);
         }
+        // Apply changes immediately via the CompanySelector
+        this.companySelector._apply();
     },
 });
