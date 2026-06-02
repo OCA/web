@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-05 16:42+0000\n"
+"PO-Revision-Date: 2026-05-11 17:45+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
@@ -33,21 +33,11 @@ msgstr ""
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid ""
-"<code>ctx</code>: Copy of the current context "
-"(<code>dict(env.context)</code>)."
+"<code>ctx</code>: Copy of the current context (<code>dict(env.context)</"
+"code>)."
 msgstr ""
-"<code>ctx</code>: Copia del contesto attuale "
-"(<code>dict(env.context)</code>)."
-
-#. module: web_form_banner
-#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
-msgid ""
-"<code>current_id</code>: Integer id of the record being edited, or <code>False</code> if the form\n"
-"                                    is creating a new record."
-msgstr ""
-"<code>current_id</code>: ID intero del record in modifica o <code>False</"
-"code> se il modulo\n"
-"                                            sta creando un nuovo rerord."
+"<code>ctx</code>: Copia del contesto attuale (<code>dict(env.context)</"
+"code>)."
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
@@ -55,16 +45,20 @@ msgid ""
 "<code>dateutil</code>: <code>{ \"parser\": dateutil.parser, "
 "\"relativedelta\": dateutil.relativedelta }</code>"
 msgstr ""
-"<code>dateutil</code>: <code>{ \"parser\": dateutil.parser, \"relativedelta\""
-": dateutil.relativedelta }</code>"
+"<code>dateutil</code>: <code>{ \"parser\": dateutil.parser, "
+"\"relativedelta\": dateutil.relativedelta }</code>"
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid ""
-"<code>draft</code>: The persisted field values of the ORM record (before applying the current\n"
-"                                    form's unsaved changes) + the current unsaved changes on trigger fields.\n"
-"                                    Should be used instead of <code>record</code> when your rule is triggered dynamically by an\n"
-"                                    update to a trigger field. It doesn't include any values from complex fields\n"
+"<code>draft</code>: The persisted field values of the ORM record (before "
+"applying the current\n"
+"                                    form's unsaved changes) + the current "
+"unsaved changes on trigger fields.\n"
+"                                    Should be used instead of <code>record</"
+"code> when your rule is triggered dynamically by an\n"
+"                                    update to a trigger field. It doesn't "
+"include any values from complex fields\n"
 "                                    (one2many/reference, etc)."
 msgstr ""
 "<code>bozza</code>: i valori dei campi persistenti del record ORM (prima "
@@ -85,22 +79,20 @@ msgstr "<code>env</code>: ambiente Odoo per accesso ORM."
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid ""
-"<code>float_compare</code>, <code>float_is_zero</code>, "
-"<code>float_round</code>: Odoo float utils for precision-safe "
-"comparisons/rounding."
+"<code>float_compare</code>, <code>float_is_zero</code>, <code>float_round</"
+"code>: Odoo float utils for precision-safe comparisons/rounding."
 msgstr ""
-"<code>float_compare</code>, <code>float_is_zero</code>, "
-"<code>float_round</code>: utilità decimali Odoo per comparazione sicura / "
-"arrotondamento."
+"<code>float_compare</code>, <code>float_is_zero</code>, <code>float_round</"
+"code>: utilità decimali Odoo per comparazione sicura / arrotondamento."
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid ""
-"<code>model</code>: Shortcut to the current model "
-"(<code>env[record._name]</code>)."
+"<code>model</code>: Shortcut to the current model (<code>env[record._name]</"
+"code>)."
 msgstr ""
-"<code>model</code>: scorciatoia al modello attuale (<code>env[record._name]"
-"</code>)."
+"<code>model</code>: scorciatoia al modello attuale (<code>env[record._name]</"
+"code>)."
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
@@ -109,8 +101,20 @@ msgstr "<code>record</code>: record attuale (il record della maschera)."
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid ""
+"<code>record_id</code>: Integer id of the record being edited, or "
+"<code>False</code> if the form\n"
+"                                    is creating a new record."
+msgstr ""
+"<code>record_id</code>: ID intero del record in fase di modifica, oppure "
+"<code>False</code> se la maschera\n"
+"                                    sta creando un nuovo record."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "<code>time, datetime</code>: Standard Python time/datetime modules."
-msgstr "<code>time, datetime</code>: moduli orario/dataoraraio Python standard."
+msgstr ""
+"<code>time, datetime</code>: moduli orario/dataoraraio Python standard."
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
@@ -150,7 +154,8 @@ msgstr "In archivio"
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "Available evaluation context variables are as follows:"
-msgstr "Le valutazioni delle variabili di contesto disponibili sono come segue:"
+msgstr ""
+"Le valutazioni delle variabili di contesto disponibili sono come segue:"
 
 #. module: web_form_banner
 #: model:ir.model,name:web_form_banner.model_base
@@ -316,12 +321,13 @@ msgstr "Posizione"
 #: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__message_value_code
 msgid ""
 "Python expression evaluated server-side. Must return a dict.\n"
-"Keys: visible(bool, default True), severity(str), values(dict for ${...} in \n"
+"Keys: visible(bool, default True), severity(str), values(dict for ${...} "
+"in \n"
 "message), and/or html(str) to override template rendering."
 msgstr ""
 "Espressione Python valutata lato server. Deve restituire un dizionario.\n"
-"Chiavi: visible(bool, predefinito True), severity(str), values(dict per "
-"${...} in\n"
+"Chiavi: visible(bool, predefinito True), severity(str), values(dict per $"
+"{...} in\n"
 "message) e/o html(str) per sovrascrivere il rendering del template."
 
 #. module: web_form_banner
@@ -392,7 +398,8 @@ msgid ""
 "    domain += [(\"id\", \"&lt;\", record_id)]\n"
 "last = model.search(domain, order=\"date_order desc, id desc\", limit=1)\n"
 "if last:\n"
-"    html = \"&lt;strong&gt;Previous order:&lt;/strong&gt; &lt;a href='%s'&gt;%s&lt;/a&gt;\" % (url_for(last), last.name)\n"
+"    html = \"&lt;strong&gt;Previous order:&lt;/strong&gt; &lt;a href='%s'&gt;"
+"%s&lt;/a&gt;\" % (url_for(last), last.name)\n"
 "    result = {\"visible\": True, \"html\": html}\n"
 "else:\n"
 "    result = {\"visible\": False}"
@@ -417,3 +424,12 @@ msgstr "es. Attenzione su clienti pericolosi"
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_tree
 msgid "return {'visible': True, 'values': {'title': '...'}}"
 msgstr "return {'visible': True, 'values': {'title': '...'}}"
+
+#~ msgid ""
+#~ "<code>current_id</code>: Integer id of the record being edited, or "
+#~ "<code>False</code> if the form\n"
+#~ "                                    is creating a new record."
+#~ msgstr ""
+#~ "<code>current_id</code>: ID intero del record in modifica o <code>False</"
+#~ "code> se il modulo\n"
+#~ "                                            sta creando un nuovo rerord."

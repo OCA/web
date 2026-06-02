@@ -5,7 +5,7 @@
 {
     "name": "Web timeline",
     "summary": "Interactive visualization chart to show events in time",
-    "version": "18.0.1.0.1",
+    "version": "18.0.1.0.3",
     "development_status": "Production/Stable",
     "author": "ACSONE SA/NV, "
     "Tecnativa, "
@@ -19,7 +19,6 @@
     "depends": ["web"],
     "data": [],
     "demo": ["demo/ir_cron_view.xml"],
-    "maintainers": ["tarteo"],
     "application": False,
     "installable": True,
     "assets": {

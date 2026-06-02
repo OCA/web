@@ -38,7 +38,7 @@ class TestWebFavicon(TransactionCase):
         self.assertEqual(image.size, (1920, 1080))
         self.assertEqual(image.getpixel((0, 0)), bg_color)
         with MockRequest(self.env) as mock_request:
-            mock_request.httprequest.cookies = {"cids": str(company.id)}
+            mock_request.cookies = {"cids": str(company.id)}
             self.assertTrue(Company._get_favicon())
 
     def test_02_default_favicon_creation(self):
@@ -83,10 +83,13 @@ class TestWebFavicon(TransactionCase):
         company_2 = Company.create(
             {"name": "Company 2", "favicon": Company._get_default_favicon()}
         )
+        company_3 = Company.create(
+            {"name": "Company 3", "favicon": Company._get_default_favicon()}
+        )
 
         with MockRequest(self.env) as mock_request:
-            mock_request.httprequest.cookies = {
-                "cids": f"{company_1.id}-{company_2.id}"
+            mock_request.cookies = {
+                "cids": f"{company_1.id}-{company_2.id}-{company_3.id}"
             }
             favicon_url = Company._get_favicon()
 

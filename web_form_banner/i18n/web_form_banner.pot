@@ -35,13 +35,6 @@ msgstr ""
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid ""
-"<code>current_id</code>: Integer id of the record being edited, or <code>False</code> if the form\n"
-"                                    is creating a new record."
-msgstr ""
-
-#. module: web_form_banner
-#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
-msgid ""
 "<code>dateutil</code>: <code>{ \"parser\": dateutil.parser, "
 "\"relativedelta\": dateutil.relativedelta }</code>"
 msgstr ""
@@ -79,6 +72,13 @@ msgstr ""
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
 msgid "<code>record</code>: Current record (the form's record)."
+msgstr ""
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid ""
+"<code>record_id</code>: Integer id of the record being edited, or <code>False</code> if the form\n"
+"                                    is creating a new record."
 msgstr ""
 
 #. module: web_form_banner

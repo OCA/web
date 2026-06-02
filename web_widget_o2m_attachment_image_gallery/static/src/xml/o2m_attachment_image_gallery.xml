@@ -1,0 +1,12 @@
+<t t-name="web_widget_o2m_attachment_image_gallery.o2mAttachmentImageGalleryField">
+    <div class="o_image_gallery_widget">
+        <t t-if="state.attachments.length">
+            <div class="o_gallery_main" t-on-click.stop="() => openGallery(0)">
+                <img
+                    t-att-src="'/web/image/ir.attachment/' + state.attachments[0].id + '/datas'"
+                    style="width:100%; max-height:180px; object-fit:cover; cursor:pointer;"
+                />
+            </div>
+        </t>
+    </div>
+</t>

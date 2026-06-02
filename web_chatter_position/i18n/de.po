@@ -37,6 +37,12 @@ msgid "Sided"
 msgstr "Seitlich"
 
 #. module: web_chatter_position
+#. odoo-javascript
+#: code:addons/web_chatter_position/static/src/views/form/form_controller.xml:0
+msgid "Toggle chatter position"
+msgstr ""
+
+#. module: web_chatter_position
 #: model:ir.model,name:web_chatter_position.model_res_users
 msgid "User"
 msgstr "Benutzer"

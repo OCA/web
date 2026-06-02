@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="web_portal_properties.portal_properties" name="Portal Properties">
+        <t
+            t-set="properties"
+            t-value="properties_record._fields[properties_field].convert_to_read(properties_record[properties_field], properties_record)"
+        />
+        <div class="row" t-if="properties">
+            <t t-foreach="properties" t-as="property">
+                <div class="col-6" t-if="property.get('view_in_portal')">
+                    <strong t-esc="property['string']" />
+                    <t>: </t>
+                    <t t-if="property['value']">
+                        <span
+                            t-esc="property['value'][1]"
+                            t-if="property['type'] == 'many2one'"
+                        />
+                        <t t-elif="property['type'] == 'selection'">
+                            <t
+                                t-foreach="property['selection']"
+                                t-as="option"
+                                t-key="option[0]"
+                            >
+                                <t t-if="option[0] == property['value']">
+                                    <span t-esc="option[1]" />
+                                </t>
+                            </t>
+                        </t>
+                        <t t-elif="property['type'] == 'tags'">
+                            <t
+                                t-foreach="property['tags']"
+                                t-as="option"
+                                t-key="option[0]"
+                            >
+                                <t t-if="option[0] in property['value']">
+                                    <span
+                                        t-esc="option[1]"
+                                        t-attf-class="o_tag o_tag_color_{{option[2]}} badge rounded-pill"
+                                    />
+                                </t>
+                            </t>
+                        </t>
+                        <span t-elif="property['type'] == 'many2many'">
+                            <t
+                                t-foreach="property['value']"
+                                t-as="value"
+                                t-key="value[0]"
+                            >
+                                <span
+                                    t-esc="value[1]"
+                                    class="o_tag o_tag_color_0 badge rounded-pill"
+                                />
+                            </t>
+                        </span>
+                        <span t-elif="property['type'] == 'boolean'">
+                            <i
+                                class="fa fa-check text-success"
+                                t-if="property['value']"
+                            />
+                            <i class="fa fa-times text-danger" t-else="" />
+                        </span>
+                        <span
+                            t-esc="property['value']"
+                            t-elif="property['type'] == 'datetime'"
+                            t-options="{'widget': 'datetime'}"
+                        />
+                        <span
+                            t-esc="property['value']"
+                            t-elif="property['type'] == 'date'"
+                            t-options="{'widget': 'date'}"
+                        />
+                        <span
+                            t-esc="property['value']"
+                            t-elif="property['type'] == 'float'"
+                            t-options="{'widget': 'float', 'precision': 2}"
+                        />
+                        <span t-esc="property['value']" t-else="" />
+                    </t>
+                </div>
+            </t>
+        </div>
+    </template>
+</odoo>

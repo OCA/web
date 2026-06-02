@@ -113,7 +113,7 @@
                                     (one2many/reference, etc).
                                 </li>
                                 <li><code
-                                >current_id</code>: Integer id of the record being edited, or <code
+                                >record_id</code>: Integer id of the record being edited, or <code
                                 >False</code> if the form
                                     is creating a new record.
                                 </li>

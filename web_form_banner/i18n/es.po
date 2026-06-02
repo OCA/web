@@ -1,0 +1,422 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_form_banner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-05-07 20:45+0000\n"
+"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "//sheet"
+msgstr "//hoja"
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid ""
+"<code>context_today(ts=None)</code>: User-timezone “today” (date) for "
+"reliable date comparisons."
+msgstr ""
+"<code>context_today(ts=None)</code>: Fecha \"hoy\" en la zona horaria del "
+"usuario (date) para comparaciones de fechas fiables."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid ""
+"<code>ctx</code>: Copy of the current context "
+"(<code>dict(env.context)</code>)."
+msgstr ""
+"<code>ctx</code>: Copia del contexto actual (<code>dict(env.context)</code>)."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid ""
+"<code>dateutil</code>: <code>{ \"parser\": dateutil.parser, "
+"\"relativedelta\": dateutil.relativedelta }</code>"
+msgstr ""
+"<code>dateutil</code>: <code>{ \"parser\": dateutil.parser, "
+"\"relativedelta\": dateutil.relativedelta }</code>"
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid ""
+"<code>draft</code>: The persisted field values of the ORM record (before applying the current\n"
+"                                    form's unsaved changes) + the current unsaved changes on trigger fields.\n"
+"                                    Should be used instead of <code>record</code> when your rule is triggered dynamically by an\n"
+"                                    update to a trigger field. It doesn't include any values from complex fields\n"
+"                                    (one2many/reference, etc)."
+msgstr ""
+"<code>draft</code>: Los valores persistidos de los campos del registro ORM "
+"(antes de aplicar los\n"
+"cambios no guardados del formulario actual) + los cambios no guardados "
+"actuales en los campos desencadenadores.\n"
+"Debe usarse en lugar de <code>record</code> cuando su regla se activa "
+"dinámicamente por una\n"
+"actualización de un campo desencadenador. No incluye valores de campos "
+"complejos\n"
+"(one2many/referencia, etc)."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "<code>env</code>: Odoo environment for ORM access."
+msgstr "<code>env</code>: Entorno de Odoo para el acceso ORM."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid ""
+"<code>float_compare</code>, <code>float_is_zero</code>, "
+"<code>float_round</code>: Odoo float utils for precision-safe "
+"comparisons/rounding."
+msgstr ""
+"<code>float_compare</code>, <code>float_is_zero</code>, <code>float_round</"
+"code>: Utilidades de Odoo para operaciones con decimales con comparaciones/"
+"redondeo de precisión segura."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid ""
+"<code>model</code>: Shortcut to the current model "
+"(<code>env[record._name]</code>)."
+msgstr ""
+"<code>model</code>: Atajo al modelo actual (<code>env[record._name]</code>)."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "<code>record</code>: Current record (the form's record)."
+msgstr "<code>record</code>: Registro actual (el registro del formulario)."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid ""
+"<code>record_id</code>: Integer id of the record being edited, or <code>False</code> if the form\n"
+"                                    is creating a new record."
+msgstr ""
+"<code>record_id</code>: ID entero del registro que se está editando, o <code>"
+"False</code> si el formulario\n"
+"está creando un nuevo registro."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "<code>time, datetime</code>: Standard Python time/datetime modules."
+msgstr "<code>time, datetime</code>: Módulos estándar de Python time/datetime."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "<code>timezone</code>: <code>pytz.timezone</code> for TZ handling."
+msgstr ""
+"<code>timezone</code>: <code>pytz.timezone</code> para el manejo de zonas "
+"horarias."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid ""
+"<code>url_for(obj)</code>: Helper that returns a backend form URL for "
+"<code>obj</code>."
+msgstr ""
+"<code>url_for(obj)</code>: Auxiliar que devuelve una URL de formulario "
+"backend para <code>obj</code>."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "<code>user</code>: Current user (<code>env.user</code>)."
+msgstr "<code>user</code>: Usuario actual (<code>env.user</code>)."
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: web_form_banner
+#: model:ir.model.fields.selection,name:web_form_banner.selection__web_form_banner_rule__position__after
+msgid "After target"
+msgstr "Después del destino"
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_search
+msgid "Archived"
+msgstr "archivado"
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "Available evaluation context variables are as follows:"
+msgstr "Las variables de contexto de evaluación disponibles son las siguientes:"
+
+#. module: web_form_banner
+#: model:ir.model,name:web_form_banner.model_base
+msgid "Base"
+msgstr "Base"
+
+#. module: web_form_banner
+#: model:ir.model.fields.selection,name:web_form_banner.selection__web_form_banner_rule__position__before
+msgid "Before target"
+msgstr "Antes del destino"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__create_date
+msgid "Created on"
+msgstr "Creación en"
+
+#. module: web_form_banner
+#: model:ir.model.fields.selection,name:web_form_banner.selection__web_form_banner_rule__severity__danger
+msgid "Danger"
+msgstr "Peligro"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__severity
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_search
+msgid "Default Severity"
+msgstr "Gravedad predeterminada"
+
+#. module: web_form_banner
+#: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__severity
+msgid "Default severity level, can be overridden per-record."
+msgstr "Nivel de gravedad predeterminado, puede modificarse por registro."
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__display_name
+msgid "Display Name"
+msgstr "Hitos Requeridos"
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "Example of Message Value Code (model: <code>sale.order</code>)"
+msgstr "Ejemplo de código de valor de mensaje (modelo: <code>sale.order</code>)"
+
+#. module: web_form_banner
+#: model:ir.model,name:web_form_banner.model_web_form_banner_rule
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "Form Banner Rule"
+msgstr "Regla de Banner de Formulario"
+
+#. module: web_form_banner
+#: model:ir.actions.act_window,name:web_form_banner.action_web_form_banner_rule
+#: model:ir.ui.menu,name:web_form_banner.menu_web_form_banner_rules
+msgid "Form Banner Rules"
+msgstr "Reglas de Banner de Formulario"
+
+#. module: web_form_banner
+#: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__view_ids
+msgid "Form view where the banner should be injected."
+msgstr "Vista de formulario donde se debe inyectar el banner."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_search
+msgid "Group By"
+msgstr "agrupado por"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__message_is_html
+msgid "HTML"
+msgstr "HTML"
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "Help"
+msgstr "Ayuda"
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "Help for Message Valude Code"
+msgstr "Ayuda para el código de valor del mensaje"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__id
+msgid "ID"
+msgstr "ID (identificación)"
+
+#. module: web_form_banner
+#: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__message_is_html
+msgid ""
+"If checked, 'message' is treated as raw HTML (no escaping). If not checked, "
+"the rendered text is escaped and newlines become <br/>."
+msgstr ""
+"Si está marcado, el 'mensaje' se trata como HTML puro (sin escape). Si no "
+"está marcado, el texto renderizado se escapa y los saltos de línea se "
+"convierten en <br/>."
+
+#. module: web_form_banner
+#: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__trigger_field_ids
+msgid "If set, the banner recomputes live when any of these fields change."
+msgstr ""
+"Si se establece, el banner se recalcula en tiempo real cuando cambia alguno "
+"de estos campos."
+
+#. module: web_form_banner
+#: model:ir.model.fields.selection,name:web_form_banner.selection__web_form_banner_rule__severity__info
+msgid "Info"
+msgstr "Info"
+
+#. module: web_form_banner
+#. odoo-python
+#: code:addons/web_form_banner/models/web_form_banner_rule.py:0
+msgid ""
+"Invalid XPath:\n"
+"%s"
+msgstr ""
+"XPath no válido:\n"
+"%s"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__write_uid
+msgid "Last Updated by"
+msgstr "Modificado por última vez por"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__write_date
+msgid "Last Updated on"
+msgstr "??ltima Actualizaci??n el"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__message
+msgid "Message"
+msgstr "Mensajes"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__message_value_code
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "Message Value Code"
+msgstr "Código de valor del mensaje"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__model_id
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_search
+msgid "Model"
+msgstr "Modelo"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__model_name
+msgid "Model Name"
+msgstr "Nombre de modelo"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__name
+msgid "Name"
+msgstr "Nombrr"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__position
+msgid "Position"
+msgstr "Posició"
+
+#. module: web_form_banner
+#: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__message_value_code
+msgid ""
+"Python expression evaluated server-side. Must return a dict.\n"
+"Keys: visible(bool, default True), severity(str), values(dict for ${...} in \n"
+"message), and/or html(str) to override template rendering."
+msgstr ""
+"Expresión Python evaluada en el servidor. Debe devolver un dict.\n"
+"Claves: visible(bool, por defecto True), severity(str), values(dict para $"
+"{...} en\n"
+"mensaje), y/o html(str) para reemplazar el renderizado de la plantilla."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "Recompute on change (new forms)"
+msgstr "Recalcular al cambiar (formularios nuevos)"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: web_form_banner
+#: model:web.form.banner.rule,message:web_form_banner.demo_rule_partner_tag_missing
+msgid "Tag is missing!"
+msgstr "¡Etiqueta faltante!"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__target_xpath
+msgid "Target XPath"
+msgstr "XPath destino"
+
+#. module: web_form_banner
+#: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__message
+msgid "Template with ${placeholders}. If not HTML, it will be escaped."
+msgstr "Plantilla con ${marcadores}. Si no es HTML, se escapará."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "This is a ${severity} message."
+msgstr "Este es un mensaje de tipo ${severity}."
+
+#. module: web_form_banner
+#: model:web.form.banner.rule,message:web_form_banner.demo_rule_partner_email_missing
+msgid "This partner is missing email!"
+msgstr "¡A este cliente le falta el correo electrónico!"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__trigger_field_ids
+msgid "Trigger Fields"
+msgstr "Campos desencadenadores"
+
+#. module: web_form_banner
+#: model:ir.model.fields,field_description:web_form_banner.field_web_form_banner_rule__view_ids
+msgid "Views"
+msgstr "Vistas"
+
+#. module: web_form_banner
+#: model:ir.model.fields.selection,name:web_form_banner.selection__web_form_banner_rule__severity__warning
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: web_form_banner
+#: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__position
+msgid "Where to insert the placeholder relative to the first matched node."
+msgstr ""
+"Dónde insertar el marcador de posición relativo al primer nodo coincidente."
+
+#. module: web_form_banner
+#: model:ir.model.fields,help:web_form_banner.field_web_form_banner_rule__target_xpath
+msgid "XPath of the node to insert the banner."
+msgstr "XPath del nodo donde insertar el banner."
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid ""
+"domain = [(\"partner_id\", \"=\", draft.partner_id.id)]\n"
+"if record_id:\n"
+"    domain += [(\"id\", \"&lt;\", record_id)]\n"
+"last = model.search(domain, order=\"date_order desc, id desc\", limit=1)\n"
+"if last:\n"
+"    html = \"&lt;strong&gt;Previous order:&lt;/strong&gt; &lt;a href='%s'&gt;%s&lt;/a&gt;\" % (url_for(last), last.name)\n"
+"    result = {\"visible\": True, \"html\": html}\n"
+"else:\n"
+"    result = {\"visible\": False}"
+msgstr ""
+"domain = [(\"partner_id\", \"=\", draft.partner_id.id)]\n"
+"if record_id:\n"
+"    domain += [(\"id\", \"<\", record_id)]\n"
+"last = model.search(domain, order=\"date_order desc, id desc\", limit=1)\n"
+"if last:\n"
+"    html = \"<strong>Previous order:</strong> <a href='%s'>%s</a>\" % "
+"(url_for(last), last.name)\n"
+"    result = {\"visible\": True, \"html\": html}\n"
+"else:\n"
+"    result = {\"visible\": False}"
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
+msgid "e.g. Warning on dangerous customers"
+msgstr "ej. Advertencia en clientes peligrosos"
+
+#. module: web_form_banner
+#: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_tree
+msgid "return {'visible': True, 'values': {'title': '...'}}"
+msgstr "return {'visible': True, 'values': {'title': '...'}}"
