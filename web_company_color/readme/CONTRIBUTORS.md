@@ -8,3 +8,4 @@
   - Jairo Llopis
   - Alexandre Díaz
   - Carlos Roca
+- Marwan Behillil \<<marwan.behillil@gmail.com>>
