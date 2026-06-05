@@ -4,7 +4,10 @@ import base64
 import math
 from io import BytesIO
 
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
+
+from odoo import _
+from odoo.exceptions import UserError
 
 
 def n_rgb_to_hex(_r, _g, _b):
@@ -12,7 +15,15 @@ def n_rgb_to_hex(_r, _g, _b):
 
 
 def convert_to_image(field_binary):
-    return Image.open(BytesIO(base64.b64decode(field_binary)))
+    try:
+        return Image.open(BytesIO(base64.b64decode(field_binary)))
+    except UnidentifiedImageError as err:
+        raise UserError(
+            _(
+                "Cannot process the company logo. "
+                "Try converting it to PNG or JPEG format first."
+            )
+        ) from err
 
 
 def image_to_rgb(img):
@@ -31,7 +42,7 @@ def image_to_rgb(img):
     # Mix. image colors using addition method
     RGBA_WHITE = (255, 255, 255, 255)
     for i in range(0, height * width):
-        rgba = img.getpixel((i % width, i / width))
+        rgba = img.getpixel((i % width, i // width))
         if rgba[3] > 128 and rgba != RGBA_WHITE:
             rgb_sum[0] += rgba[0]
             rgb_sum[1] += rgba[1]
