@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-06-06 12:11+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,63 +15,64 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/user_trip.esm.js:0
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/change_password_trip.esm.js:0
 msgid "Change the password here, make sure it's secure."
-msgstr ""
+msgstr "Tukaj spremenite geslo ter poskrbite, da je varno."
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/change_password_trip.esm.js:0
 msgid "Click here to confirm it."
-msgstr ""
+msgstr "Kliknite tukaj, da potrdite."
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/trip.esm.js:0
 msgid "Close"
-msgstr ""
+msgstr "Zaključi"
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/trip.esm.js:0
 msgid "Finish"
-msgstr ""
+msgstr "Dokončaj"
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/trip.esm.js:0
 msgid "Got it"
-msgstr ""
+msgstr "Razumem"
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/user_trip.esm.js:0
 msgid "Next"
-msgstr ""
+msgstr "Naprej"
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/user_trip.esm.js:0
 msgid "To create a new user click here."
-msgstr ""
+msgstr "Če želite ustvariti novega uporabnika, kliknite tukaj."
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/user_trip.esm.js:0
 msgid "Use the searchbar to find specific users."
-msgstr ""
+msgstr "Uporabite iskalno vrstico za iskanje posameznih uporabnikov."
 
 #. module: web_help
 #. odoo-javascript
 #: code:addons/web_help/static/src/user_trip.esm.js:0
 msgid "You can switch to different views here."
-msgstr ""
+msgstr "Tu lahko preklopite med različnimi prikazi."
