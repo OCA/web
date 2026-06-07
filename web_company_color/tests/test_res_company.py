@@ -3,6 +3,7 @@
 
 import base64
 
+from odoo.exceptions import UserError
 from odoo.tests import common
 
 from ..models.res_company import URL_BASE
@@ -121,3 +122,10 @@ class TestResCompany(common.TransactionCase):
             [("url", "=", company.scss_get_url())]
         )
         self.assertFalse(attachment, "attachment should not have been regenerated")
+
+    def test_convert_to_image_invalid(self):
+        """convert_to_image raises UserError on invalid image data"""
+        from ..utils import convert_to_image
+
+        with self.assertRaises(UserError):
+            convert_to_image(base64.b64encode(b"not an image").decode())
