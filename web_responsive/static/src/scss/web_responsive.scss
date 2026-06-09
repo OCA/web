@@ -17,37 +17,6 @@ $chatter_zone_width: 35% !important;
     }
 }
 
-@include media-breakpoint-down(sm) {
-    .ui-menu-item-wrapper {
-        display: inline-flex !important;
-        align-items: center;
-        height: 35px;
-    }
-    .o_calendar_view .o_calendar_widget {
-        .fc-timeGridDay-view .fc-axis,
-        .fc-timeGridWeek-view .fc-axis {
-            padding-left: 0px;
-        }
-        .fc-dayGridYear-view {
-            padding-left: 0px;
-            > .fc-month-container {
-                width: 95%;
-            }
-        }
-        .fc-timeGridDay-view {
-            .fc-day-header {
-                vertical-align: middle;
-            }
-        }
-    }
-    .o_kanban_view .o_cp_pager .btn-group {
-        top: -1px;
-    }
-    .o_kanban_renderer {
-        width: 100%;
-    }
-}
-
 // Normal views
 .o_content,
 .modal-content {
@@ -156,18 +125,8 @@ $chatter_zone_width: 35% !important;
     }
 }
 
-body:not(.o_statusbar_buttons) {
-    .oe-toolbar {
-        z-index: 0 !important;
-    }
-}
-
 .o_inner_group > .mb-sm-0 {
     margin-bottom: 0 !important;
-}
-
-.o_searchview_autocomplete {
-    z-index: 999;
 }
 
 // Color clue to tell the difference between a note and a public message
@@ -183,39 +142,6 @@ body:not(.o_statusbar_buttons) {
     @include media-breakpoint-up(sm) {
         .o-mail-Composer {
             padding-top: 0.5rem !important;
-        }
-    }
-}
-
-@include media-breakpoint-up(md) {
-    .app_settings_block > h2,
-    .app_settings_block > div > h2 {
-        @include o-position-sticky(0);
-        z-index: 10;
-    }
-}
-
-.o_list_table {
-    .o_handle_cell,
-    .o_list_record_remove {
-        vertical-align: middle;
-    }
-}
-
-.o_action_manager {
-    .dropdown-menu {
-        max-height: 70vh;
-        max-height: 70dvh;
-    }
-
-    .o_searchview_input {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-    .o_control_panel_main {
-        .btn {
-            white-space: nowrap;
         }
     }
 }
