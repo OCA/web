@@ -2,7 +2,6 @@
 <!-- Copyright 2023 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record id="group_tooltip_manager" model="res.groups">
         <field name="name">Tooltip Manager</field>
         <field name="category_id" ref="base.module_category_hidden" />
@@ -12,5 +11,4 @@
             eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
         />
     </record>
-
 </odoo>

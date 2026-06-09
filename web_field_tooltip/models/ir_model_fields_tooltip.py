@@ -71,6 +71,6 @@ class IrModelFieldsTooltip(models.Model):
     @api.depends("model_id", "field_id")
     def _compute_name(self):
         for tooltip in self:
-            tooltip.name = "Tooltip for {} on {}".format(
-                tooltip.field_id.name, tooltip.model_id.name
+            tooltip.name = (
+                f"Tooltip for {tooltip.field_id.name} on {tooltip.model_id.name}"
             )
