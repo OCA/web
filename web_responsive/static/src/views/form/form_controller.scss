@@ -2,9 +2,55 @@
  * Copyright 2023 Taras Shabaranskyi
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-// Many2one li items with wrap
-.o_field_many2one_selection {
-    .o-autocomplete--dropdown-menu .ui-menu-item-wrapper {
-        white-space: initial;
+.o_content,
+.modal-content {
+    max-width: 100%;
+}
+
+.o_xxs_form_view.o_form_view
+    .o_form_view_container
+    .o_content
+    .o_form_editable
+    .o_field_widget:not(.o_form_statusbar *) {
+    /* Can increase or decrease spacing between fields */
+    // --fieldWidget-margin-bottom: 2px;
+
+    /* Bigger tap targets */
+    .o_input,
+    .o_tag {
+        padding-block: 8px;
+    }
+
+    /* Need to make the tags the same height as the o_input next to them */
+    .o_tag {
+        height: 100%;
+    }
+
+    .o_external_button {
+        margin-left: 5px;
+    }
+
+    .o_dropdown_button {
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
+    }
+}
+
+/* Scrollbar tweeks for xxl form view */
+.o_form_view.o_xxl_form_view {
+    .o_form_sheet {
+        overflow: auto;
+        scrollbar-gutter: stable;
+
+        &::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $o-brand-odoo;
+            border-radius: 6px;
+        }
     }
 }
