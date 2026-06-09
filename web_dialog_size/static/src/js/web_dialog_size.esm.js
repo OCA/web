@@ -8,7 +8,7 @@ import {useService} from "@web/core/utils/hooks";
 export class ExpandButton extends Component {
     setup() {
         this.orm = useService("orm");
-        this.last_size = this.props.getsize();
+        this.last_size = this.props.size;
         this.config = this.orm.call(
             "ir.config_parameter",
             "get_web_dialog_size_config"
@@ -65,6 +65,11 @@ patch(SelectCreateDialog.prototype, {
         super.setup();
         this.setSize = this.setSize.bind(this);
         this.getSize = this.getSize.bind(this);
+        onMounted(() => {
+            if (this.props.context?.dialog_full_screen) {
+                this.setSize("dialog_full_screen");
+            }
+        });
     },
 
     setSize(size) {
@@ -74,6 +79,18 @@ patch(SelectCreateDialog.prototype, {
 
     getSize() {
         return this.props.size;
+    },
+});
+
+patch(ActionDialog.prototype, {
+    setup() {
+        super.setup();
+        onMounted(() => {
+            const ctx = this.props.actionProps?.context || {};
+            if (ctx.dialog_full_screen) {
+                this.setSize("dialog_full_screen");
+            }
+        });
     },
 });
 
