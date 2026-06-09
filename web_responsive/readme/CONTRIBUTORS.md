@@ -28,3 +28,6 @@
   - Bhavesh Heliconia
 - [IKU Solutions](https://www.iku.solutions)
   - Yan Chirino \<<yan.chirino@iku.solutions>\>
+
+- [Pyxiris](https://github.com/Pyxiris)
+  - [Liam Noonan](https://github.com/ljmnoonan)

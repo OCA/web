@@ -101,18 +101,18 @@ comfortably
 
   |image11|
 
-.. |image| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/redirecthome.gif
-.. |image1| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/appmenu.gif
-.. |image2| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/appsearch.gif
-.. |image3| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/listview.gif
-.. |image4| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/formview.gif
-.. |image5| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/listview.gif
-.. |image6| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/form_buttons.gif
-.. |image7| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/chatter.png
-.. |image8| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/shortcuts.gif
-.. |image9| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/appsearch.gif
-.. |image10| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/document_viewer.gif
-.. |image11| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/img/chatter-colors.png
+.. |image| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/redirecthome.gif
+.. |image1| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/appmenu.gif
+.. |image2| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/appsearch.gif
+.. |image3| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/listview.gif
+.. |image4| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/formview.gif
+.. |image5| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/listview.gif
+.. |image6| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/form_buttons.gif
+.. |image7| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/chatter.png
+.. |image8| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/shortcuts.gif
+.. |image9| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/appsearch.gif
+.. |image10| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/document_viewer.gif
+.. |image11| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/chatter-colors.png
 
 **Table of contents**
 
@@ -192,6 +192,10 @@ Contributors
 - `IKU Solutions <https://www.iku.solutions>`__
 
   - Yan Chirino <yan.chirino@iku.solutions>
+
+- `Pyxiris <https://github.com/Pyxiris>`__
+
+  - `Liam Noonan <https://github.com/ljmnoonan>`__
 
 Maintainers
 -----------
