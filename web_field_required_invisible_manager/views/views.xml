@@ -1,0 +1,335 @@
+<odoo>
+    <!-- Inherited Views -->
+    <record id="view_model_form_inherit" model="ir.ui.view">
+        <field name="name">view.model.form.inherit</field>
+        <field name="model">ir.model</field>
+        <field name="inherit_id" ref="base.view_model_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='fields']" position="after">
+                <page
+                    string="Custom Required Fields"
+                    name="custom_required_restriction"
+                >
+                    <field
+                        name="custom_required_restriction_ids"
+                        nolabel="1"
+                        context="{'default_required_model_id': model, 'show_required_form': True}"
+                    >
+                        <tree>
+                            <field name="required_model_id" invisible="1" />
+                            <field name="invisible_model_id" invisible="1" />
+                            <field name="model_name" invisible="1" />
+                            <field
+                                name="field_id"
+                                context="{'search_by_technical_name': True, 'display_technical_name': True}"
+                                domain="[('model_id.model', '=', model_name)]"
+                                options="{'create': False, 'create_edit': False}"
+                            />
+                            <field name="default_required" invisible="1" />
+                            <field
+                                name="required"
+                                attrs="{'readonly':[('default_required', '=', True)]}"
+                            />
+                            <field name="condition_domain" />
+                            <field name="group_ids" widget="many2many_tags" />
+                            <field name="required_field_id" optional="hide" />
+                        </tree>
+                    </field>
+                </page>
+                <page
+                    string="Custom Invisible Fields"
+                    name="custom_invisible_restriction"
+                >
+                    <field
+                        name="custom_invisible_restriction_ids"
+                        nolabel="1"
+                        context="{'default_invisible_model_id': model, 'show_invisible_form': True}"
+                    >
+                        <tree>
+                            <field name="required_model_id" invisible="1" />
+                            <field name="invisible_model_id" invisible="1" />
+                            <field name="model_name" invisible="1" />
+                            <field
+                                name="field_id"
+                                context="{'search_by_technical_name': True, 'display_technical_name': True}"
+                                domain="[('model_id.model', '=', model_name)]"
+                                options="{'create': False, 'create_edit': False}"
+                            />
+                            <field name="default_required" invisible="1" />
+                            <field name="field_invisible" />
+                            <field name="condition_domain" />
+                            <field name="group_ids" widget="many2many_tags" />
+                            <field name="visibility_field_id" optional="hide" />
+                        </tree>
+                    </field>
+                </page>
+                <page
+                    string="Custom Readonly Fields"
+                    name="custom_readonly_restriction"
+                >
+                    <field
+                        name="custom_readonly_restriction_ids"
+                        nolabel="1"
+                        context="{'default_readonly_model_id': model, 'show_readonly_form': True}"
+                    >
+                        <tree>
+                            <field name="required_model_id" invisible="1" />
+                            <field name="invisible_model_id" invisible="1" />
+                            <field name="readonly_model_id" invisible="1" />
+                            <field name="model_name" invisible="1" />
+                            <field
+                                name="field_id"
+                                context="{'search_by_technical_name': True, 'display_technical_name': True}"
+                                domain="[('model_id.model', '=', model_name)]"
+                                options="{'create': False, 'create_edit': False}"
+                            />
+                            <field name="default_required" invisible="1" />
+                            <field name="field_readonly" />
+                            <field name="condition_domain" />
+                            <field name="group_ids" widget="many2many_tags" />
+                            <field name="readonly_field_id" optional="hide" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- New Views -->
+    <record id="cfr_all_view_form" model="ir.ui.view">
+        <field name="name">custom.field.restriction.all.view.form</field>
+        <field name="model">custom.field.restriction</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div invisible="context.get('hide_title', False)">
+                        <h2 invisible="not context.get('show_required_form', False)">
+                            Required Field Rule</h2>
+                        <h2 invisible="not context.get('show_invisible_form', False)">
+                            Invisible Field Rule</h2>
+                        <h2 invisible="not context.get('show_readonly_form', False)">
+                            Readonly Field Rule</h2>
+                    </div>
+                    <group>
+                        <group
+                            attrs="{'invisible': ['|', ('required_model_id', '!=', False), ('readonly_model_id', '!=', False)]}"
+                            invisible="not context.get('show_invisible_form', False)"
+                        >
+                            <field
+                                name="invisible_model_id"
+                                required="context.get('show_invisible_form', False)"
+                            />
+                            <field name="field_invisible" />
+                            <field name="visibility_field_id" readonly="1" />
+                        </group>
+                        <group
+                            attrs="{'invisible': ['|', ('invisible_model_id', '!=', False), ('readonly_model_id', '!=', False)]}"
+                            invisible="not context.get('show_required_form', False)"
+                        >
+                            <field
+                                name="required_model_id"
+                                required="context.get('show_required_form', False)"
+                            />
+                            <field name="default_required" readonly="1" />
+                            <field
+                                name="required"
+                                attrs="{'readonly':[('default_required', '=', True)]}"
+                            />
+                            <field name="required_field_id" readonly="1" />
+                        </group>
+                        <group
+                            attrs="{'invisible': ['|', ('required_model_id', '!=', False), ('invisible_model_id', '!=', False)]}"
+                            invisible="not context.get('show_readonly_form', False)"
+                        >
+                            <field
+                                name="readonly_model_id"
+                                required="context.get('show_readonly_form', False)"
+                            />
+                            <field name="field_readonly" />
+                            <field name="readonly_field_id" readonly="1" />
+                        </group>
+                        <group>
+                            <field
+                                name="field_id"
+                                context="{'search_by_technical_name': True, 'display_technical_name': True}"
+                                domain="[('model_id.model', '=', model_name)]"
+                                options="{'create': False, 'create_edit': False}"
+                            />
+                            <field name="field_name" />
+                            <field name="model_name" />
+                            <field name="group_ids" widget="many2many_tags" />
+                            <field
+                                name="condition_domain"
+                                widget="domain"
+                                options="{'model': 'model_name', 'in_dialog': True}"
+                            />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="cfr_required_view_tree" model="ir.ui.view">
+        <field name="name">custom.field.restriction.required.view.tree</field>
+        <field name="model">custom.field.restriction</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="field_id" />
+                <field name="field_name" />
+                <field name="required_model_id" />
+                <field name="model_name" />
+                <field name="group_ids" widget="many2many_tags" />
+                <field name="condition_domain" />
+                <field name="default_required" />
+                <field name="required" />
+                <field name="required_field_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cfr_invisible_view_tree" model="ir.ui.view">
+        <field name="name">custom.field.restriction.invisible.view.tree</field>
+        <field name="model">custom.field.restriction</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="field_id" />
+                <field name="field_name" />
+                <field name="invisible_model_id" />
+                <field name="model_name" />
+                <field name="condition_domain" />
+                <field name="group_ids" widget="many2many_tags" />
+                <field name="field_invisible" />
+                <field name="visibility_field_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cfr_readonly_view_tree" model="ir.ui.view">
+        <field name="name">custom.field.restriction.readonly.view.tree</field>
+        <field name="model">custom.field.restriction</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="field_id" />
+                <field name="field_name" />
+                <field name="readonly_model_id" />
+                <field name="model_name" />
+                <field name="condition_domain" />
+                <field name="group_ids" widget="many2many_tags" />
+                <field name="field_readonly" />
+                <field name="readonly_field_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="cfr_all_view_tree" model="ir.ui.view">
+        <field name="name">custom.field.restriction.all.view.tree</field>
+        <field name="model">custom.field.restriction</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="field_id" />
+                <field name="field_name" />
+                <field name="invisible_model_id" />
+                <field name="required_model_id" />
+                <field name="readonly_model_id" />
+                <field name="model_name" />
+                <field name="condition_domain" />
+                <field name="group_ids" widget="many2many_tags" />
+                <field name="default_required" />
+                <field name="required" />
+                <field name="required_field_id" />
+                <field name="field_readonly" />
+                <field name="readonly_field_id" />
+                <field name="field_invisible" />
+                <field name="visibility_field_id" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_field_manager_required_view_tree" model="ir.actions.act_window">
+        <field name="name">Required Fields</field>
+        <field name="res_model">custom.field.restriction</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('required', '=', True)]</field>
+        <field name="context">{'show_required_form': True}</field>
+        <field
+            name="view_id"
+            ref="web_field_required_invisible_manager.cfr_required_view_tree"
+        />
+    </record>
+
+    <record id="action_cfr_invisible_view_tree" model="ir.actions.act_window">
+        <field name="name">Invisible Fields</field>
+        <field name="res_model">custom.field.restriction</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('field_invisible', '=', True)]</field>
+        <field name="context">{'show_invisible_form': True}</field>
+        <field
+            name="view_id"
+            ref="web_field_required_invisible_manager.cfr_invisible_view_tree"
+        />
+    </record>
+
+    <record id="action_cfr_readonly_view_tree" model="ir.actions.act_window">
+        <field name="name">Readonly Fields</field>
+        <field name="res_model">custom.field.restriction</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('field_readonly', '=', True)]</field>
+        <field name="context">{'show_readonly_form': True}</field>
+        <field
+            name="view_id"
+            ref="web_field_required_invisible_manager.cfr_readonly_view_tree"
+        />
+    </record>
+
+    <record id="action_cfr_all_view_tree" model="ir.actions.act_window">
+        <field name="name">All Fields Restrictions</field>
+        <field name="res_model">custom.field.restriction</field>
+        <field name="view_mode">tree,form</field>
+        <field
+            name="context"
+        >{'show_readonly_form': True, 'show_invisible_form': True, 'show_required_form': True, 'hide_title': True}</field>
+        <field
+            name="view_id"
+            ref="web_field_required_invisible_manager.cfr_all_view_tree"
+        />
+    </record>
+
+    <!-- Menus -->
+    <menuitem
+        id="menu_field_manager_config"
+        parent="base.next_id_9"
+        sequence="3"
+        name="Fields Restrictions"
+    />
+
+    <menuitem
+        id="menu_field_manager_required"
+        parent="menu_field_manager_config"
+        sequence="20"
+        action="action_field_manager_required_view_tree"
+    />
+
+    <menuitem
+        id="menu_field_manager_invisible"
+        parent="menu_field_manager_config"
+        sequence="21"
+        action="action_cfr_invisible_view_tree"
+    />
+
+    <menuitem
+        id="menu_field_manager_readonly"
+        parent="menu_field_manager_config"
+        sequence="22"
+        action="action_cfr_readonly_view_tree"
+    />
+
+    <menuitem
+        id="menu_field_manager_all"
+        parent="menu_field_manager_config"
+        sequence="23"
+        action="action_cfr_all_view_tree"
+    />
+
+</odoo>
