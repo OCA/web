@@ -24,6 +24,10 @@ class ResCompany(models.Model):
           border-bottom: 1px solid %(color_navbar_border_bottom)s !important;
           color: %(color_navbar_text)s !important;
 
+          a {
+            color: inherit !important;
+          }
+
           .show {
             .dropdown-toggle {
               background-color: %(color_navbar_bg_hover)s !important;
@@ -54,16 +58,10 @@ class ResCompany(models.Model):
           .btn-link,
           .o_external_button {
             color: %(color_link_text)s;
-            .o_main_navbar {
-            color: none;
-            }
           }
         a:hover,
         .btn-link:hover {
           color: %(color_link_text_hover)s;
-          .o_main_navbar {
-            color: none;
-          }
         }
         .btn-primary:not(.disabled),
         .ui-autocomplete .ui-menu-item > a.ui-state-active {
