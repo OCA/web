@@ -16,11 +16,11 @@
                 </sheet>
                 <footer>
                     <button
-                        type="object"
-                        name="action_upload"
-                        string="Synchronize"
-                        class="oe_highlight"
-                    />
+                    type="object"
+                    name="action_upload"
+                    string="Synchronize"
+                    class="oe_highlight"
+                />
                     or
                     <button type="special" string="Close" special="cancel" />
                 </footer>

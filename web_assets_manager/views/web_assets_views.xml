@@ -51,19 +51,19 @@
     <record id="view_web_assets_tree" model="ir.ui.view">
         <field name="model">web.assets</field>
         <field name="arch" type="xml">
-            <tree decoration-muted="not active">
+            <list decoration-muted="not active">
                 <field name="active" />
                 <field name="name" />
                 <field name="bundle" />
                 <field name="path_regex" />
-            </tree>
+            </list>
         </field>
     </record>
 
     <record id="view_web_assets_file_tree" model="ir.ui.view">
         <field name="model">web.assets.file</field>
         <field name="arch" type="xml">
-            <tree decoration-muted="not include" editable="bottom">
+            <list decoration-muted="not include" editable="bottom">
                 <field name="asset_id" invisible="1" />
                 <field name="include" />
                 <field name="name" />
@@ -71,7 +71,7 @@
                 <field name="module" />
                 <field name="size_included" />
                 <field name="size" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -130,7 +130,7 @@
         <field name="name">Web Assets</field>
         <field name="res_model">web.assets</field>
         <field name="context">{'active_test': False}</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem

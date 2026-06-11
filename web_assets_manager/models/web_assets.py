@@ -54,8 +54,8 @@ class WebAssets(models.Model):
         return {
             "name": _("Assets Files"),
             "type": "ir.actions.act_window",
-            "view_mode": "tree",
-            "views": [[view.id, "tree"]],
+            "view_mode": "list",
+            "views": [[view.id, "list"]],
             "res_model": "web.assets.file",
             "domain": [("asset_id", "in", self.ids)],
             "target": "current",

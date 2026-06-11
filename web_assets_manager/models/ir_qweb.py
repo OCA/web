@@ -1,16 +1,19 @@
 # © 2024 initOS GmbH
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
+import mimetypes
 import os
 import re
 
 from odoo import models
-from odoo.http import ALLOWED_DEBUG_MODES
+
+from odoo.addons.web.models.ir_http import ALLOWED_DEBUG_MODES
 
 _logger = logging.getLogger(__name__)
 
 # Failsafe because it has the potential to lock everyone out of the UI
-ALLOWED_DEBUG_MODES.append("unfiltered")
+if "unfiltered" not in ALLOWED_DEBUG_MODES:
+    ALLOWED_DEBUG_MODES.append("unfiltered")
 
 
 def filesize(filename):
@@ -31,92 +34,12 @@ def filesize(filename):
 class IrQweb(models.AbstractModel):
     _inherit = "ir.qweb"
 
-    def _generate_asset_nodes(
-        self,
-        bundle,
-        css=True,
-        js=True,
-        debug=False,
-        async_load=False,
-        defer_load=False,
-        lazy_load=False,
-        media=None,
-    ):
-
-        if "|" in bundle:
-            bundle = bundle.rsplit("|", 1)[0]
-
-        return super()._generate_asset_nodes(
-            bundle,
-            css=css,
-            js=js,
-            debug=debug,
-            async_load=async_load,
-            defer_load=defer_load,
-            lazy_load=lazy_load,
-            media=media,
-        )
-
-    def get_asset_bundle(self, bundle_name, files, env=None, css=True, js=True):
-        if "|" in bundle_name:
-            bundle_name = bundle_name.rsplit("|", 1)[0]
-
-        hashsum = self.env.context.get("bundle_hashsum")
-        skip = self.env.context.get("bundle_skip_filtering")
-        if not hashsum or skip:
-            return super().get_asset_bundle(bundle_name, files, env=env, css=css, js=js)
-
-        urls = {a["url"]: a for a in files}
-
-        # Synchronize assets files
-        assets = self.env["web.assets"].sudo().search([("bundle", "=", bundle_name)])
-        assets.mapped("file_ids").filtered_domain(
-            [("name", "not in", list(urls))]
-        ).unlink()
-
-        asset_files = assets.mapped("file_ids")
-        for url, data in urls.items():
-            asset_files.filtered_domain([("name", "=", url)]).write(
-                {"size": filesize(data.get("filename", ""))}
-            )
-
-        for asset in assets:
-            for file in set(urls) - set(asset.mapped("file_ids.name")):
-                data = urls[file]
-
-                asset.file_ids.create(
-                    {
-                        "asset_id": asset.id,
-                        "name": file,
-                        "mimetype": data["atype"],
-                        "include": True,
-                        "size": filesize(data.get("filename", "")),
-                    }
-                )
-
-        # Filter the assets files
-        domain = [
-            ("bundle", "=", bundle_name),
-            ("hashsum", "=", hashsum),
-            ("active", "=", True),
-        ]
-        assets = assets.search(domain, limit=1)
-        names = set(assets.mapped("file_ids").filtered("include").mapped("name"))
-        return super().get_asset_bundle(
-            bundle_name,
-            [file for file in files if file["url"] in names],
-            env=env,
-            css=css,
-            js=js,
-        )
-
     def _get_asset_nodes(
         self,
         bundle,
         css=True,
         js=True,
         debug=False,
-        async_load=False,
         defer_load=False,
         lazy_load=False,
         media=None,
@@ -142,22 +65,73 @@ class IrQweb(models.AbstractModel):
                     assets = rec
                     break
 
-        if assets:
+        skip_filtering = bool(debug and "unfiltered" in debug)
+        if assets and not skip_filtering:
             bundle += f"|{assets.hashsum}"
 
         return super(
             IrQweb,
             self.with_context(
-                bundle_hashsum=assets.hashsum,
-                bundle_skip_filtering=debug and "unfiltered" in debug,
+                bundle_skip_filtering=skip_filtering,
             ),
         )._get_asset_nodes(
             bundle,
             css=css,
             js=js,
             debug=debug,
-            async_load=async_load,
             defer_load=defer_load,
             lazy_load=lazy_load,
             media=media,
         )
+
+    def _get_asset_content(self, bundle, assets_params=None):
+        # Extract and strip the hashsum suffix appended by _get_asset_nodes
+        hashsum = None
+        if "|" in bundle:
+            bundle, hashsum = bundle.rsplit("|", 1)
+
+        files, external_assets = super()._get_asset_content(
+            bundle, assets_params=assets_params
+        )
+
+        skip = self.env.context.get("bundle_skip_filtering")
+        if not hashsum or skip:
+            return files, external_assets
+
+        urls = {f["url"]: f for f in files}
+
+        # Synchronize web.assets.file records with the actual bundle file list
+        assets = self.env["web.assets"].sudo().search([("bundle", "=", bundle)])
+        assets.mapped("file_ids").filtered_domain(
+            [("name", "not in", list(urls))]
+        ).unlink()
+
+        asset_files = assets.mapped("file_ids")
+        for url, data in urls.items():
+            asset_files.filtered_domain([("name", "=", url)]).write(
+                {"size": filesize(data.get("filename", ""))}
+            )
+
+        for asset in assets:
+            for file_url in set(urls) - set(asset.mapped("file_ids.name")):
+                data = urls[file_url]
+                mimetype = mimetypes.guess_type(file_url)[0] or ""
+                asset.file_ids.create(
+                    {
+                        "asset_id": asset.id,
+                        "name": file_url,
+                        "mimetype": mimetype,
+                        "include": True,
+                        "size": filesize(data.get("filename", "")),
+                    }
+                )
+
+        # Filter the file list to only the files enabled in the matching config
+        domain = [
+            ("bundle", "=", bundle),
+            ("hashsum", "=", hashsum),
+            ("active", "=", True),
+        ]
+        assets = assets.search(domain, limit=1)
+        names = set(assets.mapped("file_ids").filtered("include").mapped("name"))
+        return [f for f in files if f["url"] in names], external_assets
