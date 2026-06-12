@@ -3,34 +3,40 @@
  * Copyright 2023 Taras Shabaranskyi
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-import {Component} from "@odoo/owl";
+import {Component, onMounted, onWillUnmount} from "@odoo/owl";
 import {useDebounced} from "@web/core/utils/timing";
 import {useService} from "@web/core/utils/hooks";
 
 export function useRefreshAnimation(timeout) {
     const refreshClass = "o_content__refresh";
     let timeoutId = null;
-
-    /**
-     * @returns {DOMTokenList|null}
-     */
-    function contentClassList() {
-        const content = document.querySelector(".o_content");
-        return content ? content.classList : null;
-    }
+    let cachedElement = null;
 
     function clearAnimationTimeout() {
         if (timeoutId) {
             clearTimeout(timeoutId);
         }
         timeoutId = null;
+        cachedElement = null;
     }
 
     function animate() {
         clearAnimationTimeout();
-        contentClassList().add(refreshClass);
+
+        // Cache the element reference before modifying it
+        const content = document.querySelector(".o_content");
+        if (!content) {
+            return;
+        }
+
+        cachedElement = content;
+        cachedElement.classList.add(refreshClass);
+
         timeoutId = setTimeout(() => {
-            contentClassList().remove(refreshClass);
+            // Only remove class from the same cached element
+            if (cachedElement && cachedElement.classList.contains(refreshClass)) {
+                cachedElement.classList.remove(refreshClass);
+            }
             clearAnimationTimeout();
         }, timeout);
     }
@@ -39,13 +45,59 @@ export function useRefreshAnimation(timeout) {
 }
 
 export class Refresher extends Component {
+    autoRefreshIntervalKey = "oca.web_refresher.auto_refresh";
+    refreshDefaultSettingsKey = "default";
     setup() {
         super.setup();
         this.action = useService("action");
         this.refreshAnimation = useRefreshAnimation(1000);
         this.onClickRefresh = useDebounced(this.onClickRefresh, 200);
+        this.onChangeAutoRefreshInterval = this.onChangeAutoRefreshInterval.bind(this);
+        this.runningRefresherId = null;
+        onMounted(() => {
+            const intervalValue = this._getLocalStorageValue(window.location.pathname);
+            this.onChangeAutoRefreshInterval({
+                value: intervalValue.refreshInterval,
+                textContent: intervalValue.intervalText,
+            });
+        });
+        onWillUnmount(() => {
+            if (this.runningRefresherId) {
+                clearTimeout(this.runningRefresherId);
+            }
+        });
     }
 
+    _getLocalStorageValue(lookupKey) {
+        const jsonValue = localStorage.getItem(this.autoRefreshIntervalKey);
+        const refreshSettings = jsonValue ? JSON.parse(jsonValue) : {};
+        if (!lookupKey) {
+            return refreshSettings;
+        }
+        let returnInterval = -1;
+        let returnText = "Off";
+        if (Object.hasOwn(refreshSettings, lookupKey)) {
+            const {refreshInterval = -1, intervalText = "Off"} =
+                refreshSettings[lookupKey];
+            returnInterval = parseInt(refreshInterval ?? -1);
+            returnText = intervalText;
+        } else if (Object.hasOwn(refreshSettings, this.refreshDefaultSettingsKey)) {
+            const {refreshInterval = -1, intervalText = "Off"} =
+                refreshSettings[this.refreshDefaultSettingsKey];
+            returnInterval = parseInt(refreshInterval ?? -1);
+            returnText = intervalText;
+        }
+        return {refreshInterval: returnInterval, intervalText: returnText};
+    }
+
+    _setLocalStorageValue(settingsKey, {refreshInterval, intervalText}) {
+        // Get current settings
+        const jsonValue = localStorage.getItem(this.autoRefreshIntervalKey);
+        const refreshSettings = jsonValue ? JSON.parse(jsonValue) : {};
+        refreshSettings[settingsKey] = {refreshInterval, intervalText};
+        const value = JSON.stringify(refreshSettings);
+        localStorage.setItem(this.autoRefreshIntervalKey, value);
+    }
     /**
      * @returns {Boolean}
      * @private
@@ -81,6 +133,16 @@ export class Refresher extends Component {
         if (!updated) {
             updated = this._searchModelRefresh();
         }
+        // Check the refreshInterval is greater than 0 and start a timer for the next refresh
+        if (this.refreshInterval > 0) {
+            // Always attempt to clear a running timeout in case the refresh was done manually
+            if (typeof this.runningRefresherId === "number") {
+                clearTimeout(this.runningRefresherId);
+            }
+            this.runningRefresherId = setTimeout(() => {
+                this.refresh();
+            }, this.refreshInterval);
+        }
         return updated;
     }
 
@@ -101,6 +163,23 @@ export class Refresher extends Component {
         this.action.doAction(viewAction, options);
     }
 
+    _isRefreshIntervalDefault() {
+        const localStoredIntervals = this._getLocalStorageValue();
+
+        if (
+            Object.hasOwn(localStoredIntervals, this.refreshDefaultSettingsKey) &&
+            Object.hasOwn(
+                localStoredIntervals[this.refreshDefaultSettingsKey],
+                "refreshInterval"
+            ) &&
+            this.refreshInterval ===
+                localStoredIntervals[this.refreshDefaultSettingsKey].refreshInterval
+        ) {
+            return true;
+        }
+        return false;
+    }
+
     async onClickRefresh() {
         const {searchModel, pagerProps} = this.props;
         if (!searchModel && !pagerProps) {
@@ -109,6 +188,63 @@ export class Refresher extends Component {
         const updated = await this.refresh();
         if (updated) {
             this.refreshAnimation();
+        }
+    }
+
+    setRefreshAsDefault() {
+        this._setLocalStorageValue(this.refreshDefaultSettingsKey, {
+            refreshInterval: this.refreshInterval,
+            intervalText: document.getElementById("auto-refresh-interval-text")
+                .textContent,
+        });
+        this._setIntervalUi(
+            document.getElementById("auto-refresh-interval-text").textContent
+        );
+    }
+
+    onChangeAutoRefreshInterval(clickedOption) {
+        const newInterval =
+            parseInt(clickedOption.value ?? clickedOption.target.value) ?? -1;
+        const newIntervalText =
+            clickedOption.textContent ?? clickedOption.target.textContent ?? "Off";
+        this.refreshInterval = newInterval;
+        this._setIntervalUi(newIntervalText);
+        if (this.runningRefresherId) {
+            clearTimeout(this.runningRefresherId);
+        }
+        this.refresh();
+
+        this._setLocalStorageValue(window.location.pathname, {
+            refreshInterval: newInterval,
+            intervalText: newIntervalText,
+        });
+    }
+
+    _setIntervalUi(intervalText) {
+        // Check if the refresh is active and spin the refresh button if active
+        const manualRefreshIcon = document.getElementById("manual-refresh-icon");
+        if (manualRefreshIcon) {
+            if (!this.refreshInterval || this.refreshInterval <= 0) {
+                manualRefreshIcon.classList.remove("fa-spin");
+            } else {
+                manualRefreshIcon.classList.add("fa-spin");
+            }
+        }
+        // Set the interval dropdown text to the selected interval
+        const refreshText = document.getElementById("auto-refresh-interval-text");
+        if (refreshText) {
+            refreshText.textContent = intervalText;
+        }
+        // Check if the current interval is the default and set the star icon accordingly
+        const setAsDefaultIcon = document.getElementById("set-as-default-icon");
+        if (setAsDefaultIcon) {
+            if (this._isRefreshIntervalDefault()) {
+                setAsDefaultIcon.classList.remove("fa-star-o");
+                setAsDefaultIcon.classList.add("fa-star");
+            } else {
+                setAsDefaultIcon.classList.remove("fa-star");
+                setAsDefaultIcon.classList.add("fa-star-o");
+            }
         }
     }
 }
