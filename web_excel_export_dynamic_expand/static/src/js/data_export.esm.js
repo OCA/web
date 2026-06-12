@@ -1,38 +1,32 @@
 import {patch} from "@web/core/utils/patch";
 import {ListController} from "@web/views/list/list_controller";
-import {useBus} from "@web/core/utils/hooks";
-
-function computeCollapseGroups(root) {
-    const groups = root.groups; // Undefined/empty for ungrouped lists
-    return (
-        Array.isArray(groups) && groups.length > 0 && groups.every((g) => g.isFolded)
-    );
-}
 
 patch(ListController.prototype, {
-    setup() {
-        const searchModel = this.env.searchModel;
-        if (searchModel) {
-            useBus(searchModel, "direct-export-data", () => {
-                if (this.model && this.model.root) {
-                    this.model.root.config.context = {
-                        ...this.model.root.config.context,
-                        collapse_groups: computeCollapseGroups(this.model.root),
-                    };
-                }
-            });
+    async downloadExport() {
+        const root = this.model.root;
+        if (root.isGrouped && root.groups && root.groups.length > 0) {
+            const expandDepth = this._getExpandDepth(root);
+            this.props.context = {
+                ...this.props.context,
+                expand_depth: expandDepth,
+            };
         }
-        super.setup(...arguments);
+        await super.downloadExport(...arguments);
+    },
 
-        const originalExportRecords = this.exportRecords;
-        this.exportRecords = async (...args) => {
-            if (this.model && this.model.root) {
-                this.model.root.config.context = {
-                    ...this.model.root.config.context,
-                    collapse_groups: computeCollapseGroups(this.model.root),
-                };
+    _getExpandDepth(list, depth = 0) {
+        if (!list.isGrouped) {
+            return depth;
+        }
+        let maxDepth = depth;
+        for (const group of list.groups) {
+            if (!group.isFolded && group.list) {
+                const childDepth = this._getExpandDepth(group.list, depth + 1);
+                if (childDepth > maxDepth) {
+                    maxDepth = childDepth;
+                }
             }
-            return originalExportRecords.call(this, ...args);
-        };
+        }
+        return maxDepth;
     },
 });

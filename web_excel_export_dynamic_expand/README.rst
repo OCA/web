@@ -32,9 +32,16 @@ Web Excel Export Dynamic Expand
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-When exporting a tree view to an Excel file, you can decide if you want
-to export only the main groups or the full tree, depending on if all
-groups are collapsed, or there is one open.
+When exporting a list view to an Excel file, the export mirrors the
+current group expansion state. The number of group levels visible in the
+UI determines how many levels are included in the export:
+
+- All groups collapsed → only top-level group summary rows.
+- N levels of groups expanded → N levels of group summary rows, each
+  with its aggregated values but no further detail.
+- All levels expanded → full export including individual records.
+
+This works with any number of Group By filters applied simultaneously.
 
 **Table of contents**
 
@@ -63,6 +70,10 @@ Contributors
 ------------
 
 - Arnau Cruz <arnau.cruz@forgeflow.com>
+- Lois Rilo <lois.rilo@forgeflow.com>
+- `CIT-Services <https://cit-services.eu>`__:
+
+  - Prayag prayag.k@cit-services.eu
 
 Maintainers
 -----------
