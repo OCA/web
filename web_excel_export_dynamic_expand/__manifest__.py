@@ -1,4 +1,4 @@
-# Copyright (C) 2024 - ForgeFlow S.L.
+# Copyright 2024-26 ForgeFlow S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
