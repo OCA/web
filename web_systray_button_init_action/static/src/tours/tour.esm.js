@@ -2,10 +2,10 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
 import {registry} from "@web/core/registry";
-import {stepUtils} from "@web_tour/tour_service/tour_utils";
+import {stepUtils} from "@web_tour/tour_utils";
 
 registry.category("web_tour.tours").add("web_systray_button_init_action_not_set_tour", {
-    url: "/web",
+    url: "/odoo",
     test: true,
     steps: () => [
         {
@@ -14,7 +14,7 @@ registry.category("web_tour.tours").add("web_systray_button_init_action_not_set_
     ],
 });
 registry.category("web_tour.tours").add("web_systray_button_init_action_set_tour", {
-    url: "/web",
+    url: "/odoo",
     test: true,
     steps: () => [
         {
@@ -28,6 +28,9 @@ registry.category("web_tour.tours").add("web_systray_button_init_action_set_tour
         {
             trigger: "button[name='init_action']",
             run: "click",
+            // Clicking navigates via window.location.href (full page reload);
+            // 19.0 tours must declare the unload explicitly.
+            expectUnloadPage: true,
         },
         {
             trigger: ".o_last_breadcrumb_item:has(span:contains('Apps'))",
