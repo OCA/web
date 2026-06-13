@@ -16,5 +16,8 @@
         "web.assets_backend": [
             "web_save_discard_button/static/src/xml/template.xml",
         ],
+        "web.assets_unit_tests": [
+            "web_save_discard_button/static/tests/**/*",
+        ],
     },
 }
