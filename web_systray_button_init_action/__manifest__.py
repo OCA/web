@@ -10,6 +10,9 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "depends": ["web"],
+    "data": [
+        "views/res_users_views.xml",
+    ],
     "assets": {
         "web.assets_backend": ["web_systray_button_init_action/static/src/button/*"],
         "web.assets_tests": [
