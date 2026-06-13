@@ -16,5 +16,8 @@
             "web_tree_dynamic_colored_field/static/src/xml/list.xml",
             "web_tree_dynamic_colored_field/static/src/js/list_renderer.esm.js",
         ],
+        "web.assets_unit_tests": [
+            "web_tree_dynamic_colored_field/static/tests/*",
+        ],
     },
 }
