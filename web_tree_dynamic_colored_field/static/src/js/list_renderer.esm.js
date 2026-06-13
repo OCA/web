@@ -18,7 +18,6 @@ patch(ListRenderer.prototype, {
 
         color = this.getDynamicColor(column, record, "fg_color");
         if (color !== undefined) {
-            // $td.css('color', color);
             style += `color: ${color};`;
         }
 
@@ -41,12 +40,25 @@ patch(ListRenderer.prototype, {
                 const color_to_expression = this.pairColorParse(color_def);
                 if (color_to_expression !== undefined) {
                     const [color, expression] = color_to_expression;
-                    if (
-                        evaluateBooleanExpr(
+                    let matches = false;
+                    try {
+                        matches = evaluateBooleanExpr(
                             expression,
                             record.evalContextWithVirtualIds
-                        )
-                    ) {
+                        );
+                    } catch (error) {
+                        // The expression may reference a field that is not
+                        // loaded in the view. Skip this condition instead of
+                        // letting the error bubble up and crash the whole
+                        // list render (OwlError). Logged at debug level: this
+                        // fires per row per render, so warn would flood the
+                        // console (and trip strict CI log checks).
+                        console.debug(
+                            `web_tree_dynamic_colored_field: ignoring ${color_target} expression "${expression}": ${error.message || error}`
+                        );
+                        continue;
+                    }
+                    if (matches) {
                         // We don't return first match,
                         // as it can be default color (with "True" expression),
                         // and later more precise condition may be found.
