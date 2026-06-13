@@ -14,5 +14,8 @@
             "web_sort_menu/static/src/js/*.js",
             "web_sort_menu/static/src/xml/*.xml",
         ],
+        "web.assets_unit_tests": [
+            "web_sort_menu/static/tests/**/*",
+        ],
     },
 }
