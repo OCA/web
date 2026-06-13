@@ -17,15 +17,21 @@ export class HelpButton extends Component {
             TripClass: null,
         });
         onWillStart(async () => {
-            const actionId = this.props.actionId;
-            const context =
-                (this.env.searchModel && this.env.searchModel.context) || {};
-            const action = actionId
-                ? await this.actionService.loadAction(actionId, context)
-                : {};
-            if ("res_model" in action) {
-                const foundTrip = await findTrip(action.res_model, this.props.viewType);
-                this.state.TripClass = foundTrip;
+            // In a dialog (e.g. the change-password wizard) the model is passed
+            // directly via the resModel prop; in the control panel only the
+            // actionId is known and the model has to be resolved from it.
+            let resModel = this.props.resModel;
+            if (!resModel && this.props.actionId) {
+                const context =
+                    (this.env.searchModel && this.env.searchModel.context) || {};
+                const action = await this.actionService.loadAction(
+                    this.props.actionId,
+                    context
+                );
+                resModel = action.res_model;
+            }
+            if (resModel) {
+                this.state.TripClass = await findTrip(resModel, this.props.viewType);
             }
         });
     }

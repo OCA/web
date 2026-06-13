@@ -21,6 +21,9 @@
             "web_help/static/src/components/help_button/help_button.esm.js",
             "web_help/static/src/components/help_button/help_button.xml",
             "web_help/static/src/trip.xml",
-        ]
+        ],
+        "web.assets_unit_tests": [
+            "web_help/static/tests/**/*",
+        ],
     },
 }
