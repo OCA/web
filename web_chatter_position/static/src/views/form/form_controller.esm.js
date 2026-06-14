@@ -25,7 +25,8 @@ patch(FormController.prototype, {
                 const formSheetBg = this.rootRef?.el?.querySelector(".o_form_sheet_bg");
                 if (formSheetBg) {
                     this._moveChatter(formSheetBg);
-                    this.rootRef.el.style.overflow = "auto";
+                    this.rootRef.el.style.overflowX = "hidden";
+                    this.rootRef.el.style.overflowY = "auto";
                 }
             }
         });
@@ -91,20 +92,32 @@ patch(FormController.prototype, {
 
         if (this.chatterPositionState.currentPosition === "bottom") {
             currentChatter.classList.remove("o-aside", "w-print-100");
-            currentChatter.classList.add("o-isInFormSheetBg", "mt-4", "mt-md-0");
+            currentChatter.classList.add(
+                "o-isInFormSheetBg",
+                "mt-4",
+                "mt-md-0",
+                "w-auto"
+            );
             const formSheetBg = this.rootRef.el.querySelector(".o_form_sheet_bg");
             if (formSheetBg) {
                 formSheetBg.classList.add("o_fullwidth");
             }
-            this.rootRef.el.style.overflow = "auto";
+            this.rootRef.el.style.overflowX = "hidden";
+            this.rootRef.el.style.overflowY = "auto";
         } else {
-            currentChatter.classList.remove("o-isInFormSheetBg", "mt-4", "mt-md-0");
+            currentChatter.classList.remove(
+                "o-isInFormSheetBg",
+                "mt-4",
+                "mt-md-0",
+                "w-auto"
+            );
             currentChatter.classList.add("o-aside", "w-print-100");
             const formSheetBg = this.rootRef.el.querySelector(".o_form_sheet_bg");
             if (formSheetBg) {
                 formSheetBg.classList.remove("o_fullwidth");
             }
-            this.rootRef.el.style.overflow = "";
+            this.rootRef.el.style.overflowX = "";
+            this.rootRef.el.style.overflowY = "";
         }
     },
 });
