@@ -1,0 +1,19 @@
+/* Copyright 2026 Liam Noonan
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+$wr-app-menu-background:
+    url("../../img/home-menu-bg-overlay.svg"),
+    linear-gradient(to bottom, $o-navbar-background, lighten($o-navbar-background, 5%)) !default;
+
+$wr-app-menu-icon-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.1),
+    0 2px 2px rgba(0, 0, 0, 0.01),
+    0 4px 4px rgba(0, 0, 0, 0.01),
+    0 8px 8px rgba(0, 0, 0, 0.01),
+    0 16px 16px rgba(0, 0, 0, 0.01) !default;
+
+$wr-app-menu-item-shadow:
+    0 2px 2px rgba(0, 0, 0, 0.02),
+    0 4px 4px rgba(0, 0, 0, 0.02),
+    0 8px 8px rgba(0, 0, 0, 0.02),
+    0 16px 16px rgba(0, 0, 0, 0.02) !default;

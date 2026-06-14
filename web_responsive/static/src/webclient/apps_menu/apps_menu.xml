@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2018 Tecnativa - Jairo Llopis
+     Copyright 2021 ITerra - Sergey Shebanin
+     Copyright 2023 Onestein - Anjeel Haria
+     Copyright 2023 Taras Shabaranskyi
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<templates>
+    <t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='this.ui.isSmall']" position="before">
+            <div t-if="!isScopedApp" class="o_navbar_apps_menu">
+                <a
+                    href="/odoo"
+                    class="wr_apps_menu_toggle dropdown-toggle o-dropdown"
+                    title="Home Menu"
+                    data-hotkey="h"
+                    t-att-aria-expanded="state.isAllAppsMenuOpened ? 'true' : 'false'"
+                    t-on-click.prevent.stop="onAppsMenuToggle"
+                >
+                    <i class="oi oi-apps fs-4" />
+                </a>
+                <div
+                    t-if="state.isAllAppsMenuOpened"
+                    class="wr_apps_menu_container"
+                    t-ref="appsMenuOverlay"
+                    t-on-pointerdown="onAppsMenuOverlayPointerDown"
+                    t-on-keydown="onAppsMenuKeydown"
+                >
+                    <button
+                        type="button"
+                        class="o-navigable search-icon-button wr_apps_menu_item fa fa-search fs-5"
+                        title="Search menus..."
+                        t-on-click="onAppsMenuSearchClick"
+                    />
+                    <div class="wr_apps_menu_list">
+                        <a
+                            t-foreach="apps"
+                            t-as="app"
+                            t-key="app.id"
+                            class="o-navigable wr_apps_menu_item o_app"
+                            t-att-class="{active: currentApp === app}"
+                            t-att-data-menu-xmlid="app.xmlid"
+                            t-att-href="getMenuItemHref(app)"
+                            t-on-click.prevent="() => { this.onNavBarDropdownItemSelection(app); this._closeAppMenuSidebar(); }"
+                            draggable="false"
+                        >
+                            <div class="position-relative">
+                                <img
+                                    t-if="app.webIconData"
+                                    class="wr_apps_menu_item__icon rounded-3"
+                                    draggable="false"
+                                    t-attf-src="{{app.webIconData}}"
+                                />
+                                <i
+                                    t-if="currentApp === app"
+                                    class="fa fa-check-circle wr_apps_menu_item__active"
+                                    aria-hidden="true"
+                                />
+                            </div>
+                            <span
+                                class="wr_apps_menu_item__name"
+                                t-att-title="app.name"
+                            >
+                                <t t-esc="app.name" />
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Mobile: keep hamburger; drop /odoo + Alt+H (owned by the desktop apps overlay). -->
+        <xpath
+            expr="//t[@t-if='this.ui.isSmall']/a[hasclass('o_menu_toggle')]"
+            position="attributes"
+        >
+            <attribute name="href">#</attribute>
+            <attribute name="accesskey" />
+        </xpath>
+
+        <!-- Desktop: remove stock Dropdown -->
+        <xpath
+            expr="//t[@t-else='']/div[hasclass('o_navbar_apps_menu')]"
+            position="replace"
+        />
+        <xpath expr="//t[@t-else='']/div[@t-else='']" position="attributes">
+            <attribute name="t-else" />
+            <attribute name="t-if">isScopedApp</attribute>
+        </xpath>
+    </t>
+</templates>

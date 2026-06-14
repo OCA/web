@@ -36,42 +36,36 @@ This module adds responsiveness to web backend.
 
 **Features for all devices**:
 
-- Redirect to the dashboard after logging in. Users will only be
-  redirected to the home page after login if they have enabled the
-  'Redirect to Home' option in their profile settings.
+- New navigation with the fullscreen app menu
 
   |image|
 
-- New navigation with the fullscreen app menu
+- Quick menu search inside the app menu
 
   |image1|
 
-- Quick menu search inside the app menu
+- Sticky header & footer in list view
 
   |image2|
 
-- Sticky header & footer in list view
+- Sticky statusbar in form view
 
   |image3|
 
-- Sticky statusbar in form view
-
-  |image4|
-
 - Bigger checkboxes in list view
 
-  |image5|
+  |image4|
 
 **Features for mobile**: \* View type picker dropdown displays
 comfortably
 
 - Control panel buttons use icons to save space.
 
-  |image6|
+  |image5|
 
 - Followers and send button is displayed on mobile. Avatar is hidden.
 
-  |image7|
+  |image6|
 
 - Big inputs on form in edit mode
 
@@ -83,36 +77,35 @@ comfortably
   be more intuitive or accessible by fingers of one hand. F.x. Alt + S
   for Save
 
-  |image8|
+  |image7|
 
 - Autofocus on search menu box when opening the app menu
 
-  |image9|
+  |image8|
 
 - When the chatter is on the side part, the document viewer fills that
   part for side-by-side reading instead of full screen. You can still
   put it on full width preview clicking on the new maximize button.
 
-  |image10|
+  |image9|
 
 - When the user chooses to send a public message the color of the
   composer is different from the one when the message is an internal
   log.
 
-  |image11|
+  |image10|
 
-.. |image| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/redirecthome.gif
-.. |image1| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/appmenu.gif
-.. |image2| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/appsearch.gif
-.. |image3| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/listview.gif
-.. |image4| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/formview.gif
-.. |image5| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/listview.gif
-.. |image6| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/form_buttons.gif
-.. |image7| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/chatter.png
-.. |image8| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/shortcuts.gif
-.. |image9| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/appsearch.gif
-.. |image10| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/document_viewer.gif
-.. |image11| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/chatter-colors.png
+.. |image| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/appmenu.gif
+.. |image1| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/appsearch.gif
+.. |image2| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/listview.gif
+.. |image3| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/formview.gif
+.. |image4| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/listview.gif
+.. |image5| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/form_buttons.gif
+.. |image6| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/chatter.png
+.. |image7| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/shortcuts.gif
+.. |image8| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/appsearch.gif
+.. |image9| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/document_viewer.gif
+.. |image10| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_responsive/static/description/chatter-colors.png
 
 **Table of contents**
 

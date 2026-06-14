@@ -1,0 +1,126 @@
+/* Copyright 2018 Tecnativa - Jairo Llopis
+ * Copyright 2021 ITerra - Sergey Shebanin
+ * Copyright 2023 Taras Shabaranskyi
+ * Copyright 2026 Liam Noonan
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+body:has(.wr_apps_menu_container) {
+    background-image: $wr-app-menu-background;
+
+    .o_action_manager {
+        visibility: hidden;
+    }
+
+    & .o_main_navbar {
+        background: transparent !important;
+        .o_menu_brand,
+        .o_menu_sections {
+            display: none !important;
+        }
+    }
+}
+
+.wr_apps_menu_container {
+    position: fixed;
+    margin: 0;
+    left: 0;
+    width: 100vw;
+    height: calc(100dvh - #{$o-navbar-height});
+    overflow: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 1rem;
+
+    .wr_apps_menu_item.search-icon-button {
+        padding: 1rem;
+        color: $wr-app-menu-text-color;
+        width: max-content;
+        min-width: max-content;
+        height: max-content;
+        min-height: max-content;
+    }
+
+    .wr_apps_menu_list {
+        --wr-app-menu-item-icon-size: #{$wr-app-menu-item-icon-size};
+        --wr-app-menu-item-size: calc(var(--wr-app-menu-item-icon-size) * 1.7);
+
+        @include media-breakpoint-down(md) {
+            --wr-app-menu-item-size: calc(var(--wr-app-menu-item-icon-size) * 1.5);
+        }
+        @include media-breakpoint-down(sm) {
+            --wr-app-menu-item-size: calc(var(--wr-app-menu-item-icon-size) * 1.3);
+        }
+
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(var(--wr-app-menu-item-size), 1fr)
+        );
+        justify-items: center;
+        width: 100%;
+        max-width: $wr-app-menu-list-max-width;
+        gap: 4px;
+    }
+
+    .wr_apps_menu_item {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: var(--wr-app-menu-item-size);
+        min-height: var(--wr-app-menu-item-size);
+        padding: calc(var(--wr-app-menu-item-size) / 12) 0;
+        gap: 0.25rem;
+        justify-content: flex-start;
+        align-items: center;
+        border-radius: 6px;
+        transition:
+            ease box-shadow,
+            transform,
+            0.3s;
+        background: unset;
+        white-space: normal;
+        user-select: none;
+        outline: unset;
+        border: unset;
+
+        &__icon {
+            height: auto;
+            width: var(--wr-app-menu-item-icon-size);
+            aspect-ratio: 1;
+            padding: calc(var(--wr-app-menu-item-icon-size) / 7);
+            background-color: $wr-app-menu-icon-background;
+            box-shadow: $wr-app-menu-icon-shadow;
+        }
+
+        &__name {
+            display: -webkit-box;
+            line-clamp: 3;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-size: 1em;
+            text-shadow: $wr-app-menu-text-shadow;
+            color: $wr-app-menu-text-color;
+            text-align: center;
+        }
+
+        &__active {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            text-shadow: $wr-app-menu-text-shadow;
+            color: $wr-app-menu-text-color;
+        }
+
+        &:focus,
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: $wr-app-menu-item-shadow;
+            background-color: $wr-app-menu-icon-background-focus !important;
+            backdrop-filter: blur(2px);
+        }
+    }
+}
