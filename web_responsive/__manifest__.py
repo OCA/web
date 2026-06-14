@@ -50,7 +50,6 @@
             "/web_responsive/static/src/chatter/**/*",
             "/web_responsive/static/src/components/control_panel/*",
             "/web_responsive/static/src/components/command_palette/*",
-            "/web_responsive/static/src/views/form/*",
             # Don't include dark mode files in light mode
             ("remove", "web_responsive/static/src/**/*.dark.scss"),
         ],
