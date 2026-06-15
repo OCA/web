@@ -6,22 +6,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-06-15 09:46+0000\n"
+"Last-Translator: Yann Papouin <ypa@decgroupe.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: web_widget_domain_editor_dialog
 #. odoo-javascript
 #: code:addons/web_widget_domain_editor_dialog/static/src/js/domain_field.esm.js:0
 msgid "Select records..."
-msgstr ""
+msgstr "Sélectionner des enregistrements..."
 
 #. module: web_widget_domain_editor_dialog
 #. odoo-javascript
 #: code:addons/web_widget_domain_editor_dialog/static/src/js/domain_field.esm.js:0
 msgid "Selected domain"
-msgstr ""
+msgstr "Domaine sélectionné"
