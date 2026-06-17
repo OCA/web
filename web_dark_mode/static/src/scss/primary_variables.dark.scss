@@ -13,16 +13,16 @@ $o-white: #000000 !default;
 $o-black: #ffffff !default;
 
 // Blue-dark palette: canvas #1b1d26, secondary surface #262a36
-// Escala azul-oscura derivada de #070916 (color principal), saltos pequeños
-$o-gray-100: #070916 !default; // canvas / barras (principal, lo más oscuro)
-$o-gray-200: #0d1020 !default; // superficies: vistas, cards, navbar
+// Blue-dark scale from #070916 (base), small steps between surfaces
+$o-gray-100: #070916 !default; // canvas / chrome (darkest)
+$o-gray-200: #0d1020 !default; // surfaces: views, cards, navbar
 $o-gray-300: #151a2b !default; // raised: inputs, hover, dropdowns
-$o-gray-400: #232a42 !default; // bordes y divisores
+$o-gray-400: #232a42 !default; // borders and dividers
 $o-gray-500: #3d4569 !default; // L: ~30%
 $o-gray-600: #6b7298 !default; // L: ~50%
 $o-gray-700: #9aa1c2 !default; // L: ~68%
 $o-gray-800: #c6cae0 !default; // L: ~78%
-$o-gray-900: #e7eaf5 !default; // texto principal
+$o-gray-900: #e7eaf5 !default; // primary text
 
 $o-community-color: $o-gray-200 !default;
 $o-enterprise-color: #71639e !default;
