@@ -8,7 +8,7 @@
     "version": "19.0.1.0.0",
     "website": "https://github.com/OCA/web",
     "author": "initOS GmbH, Odoo Community Association (OCA)",
-    "depends": ["web"],
+    "depends": ["web", "web_responsive"],
     "excludes": ["web_enterprise"],
     "installable": True,
     "assets": {

@@ -1,0 +1,98 @@
+// Copyright 2026 Domatix
+// License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+// Dark overrides for the web_responsive apps menu.
+// Use :root prefix to match web_responsive specificity and win by load order.
+
+$app-menu-overlay: url("/web_responsive/static/src/img/home-menu-bg-overlay.svg");
+
+// Teal glow (#122e3a), radial focus from bottom-center
+// to soften the transition with the navbar above.
+$app-menu-glow: radial-gradient(
+    120% 95% at 50% 108%,
+    rgba(28, 74, 95, 0.6),
+    rgba(28, 74, 95, 0) 64%
+);
+
+:root .o_grid_apps_menu[data-theme="milk"] {
+    --app-menu-background:
+        #{$app-menu-glow}, #{$app-menu-overlay},
+        linear-gradient(to bottom, #{$o-gray-200}, #{$o-gray-300});
+    --app-menu-text-color: #{$o-gray-900};
+    --app-menu-text-shadow: none;
+    --app-menu-hover-background: #{rgba($o-black, 0.08)};
+    --apps-menu-scrollbar-background: #{$o-gray-500};
+    --apps-menu-empty-search-color: #{$o-gray-900};
+}
+
+:root .o_grid_apps_menu[data-theme="community"] {
+    --app-menu-background:
+        #{$app-menu-glow}, #{$app-menu-overlay},
+        linear-gradient(
+            to bottom,
+            #{darken($o-brand-primary, 28%)},
+            #{$o-brand-primary}
+        );
+    --app-menu-text-color: #{$o-gray-900};
+    --app-menu-text-shadow: none;
+    --app-menu-hover-background: #{rgba($o-black, 0.1)};
+    --apps-menu-scrollbar-background: #{$o-gray-500};
+    --apps-menu-empty-search-color: #{$o-gray-900};
+}
+
+.o_grid_apps_menu {
+    .search-container {
+        .search-input {
+            background-color: $o-gray-300;
+
+            // web_responsive pins text to $app-menu-text-color (dark) without
+            // a dark-mode override. Force readable light text.
+            .form-control,
+            .search-icon {
+                color: $o-gray-900;
+            }
+
+            .form-control::placeholder {
+                color: $o-gray-900;
+                opacity: 0.5;
+            }
+        }
+
+        .search-item {
+            background-color: $o-gray-300;
+
+            &.highlight,
+            &:hover {
+                background-color: $o-gray-400;
+            }
+
+            // Result text lives in __name with its own dark color.
+            &__name {
+                color: $o-gray-900;
+                text-shadow: none;
+            }
+        }
+
+        .search-item-divider hr {
+            background-color: $o-gray-500;
+        }
+    }
+
+    .o-app-menu-item {
+        &__icon {
+            background-color: $o-gray-400 !important;
+        }
+
+        &__active {
+            color: $o-gray-900 !important;
+            text-shadow: 0 0 2px rgba($o-black, 0.4) !important;
+        }
+    }
+}
+
+// When the apps menu opens over Discuss, the navbar keeps Discuss dark colors
+// because Discuss stays mounted underneath. Force the standard navbar color
+// only while the grid is open.
+.o_apps_menu_opened .o_main_navbar.o_main_navbar {
+    background: $o-navbar-background !important;
+}
