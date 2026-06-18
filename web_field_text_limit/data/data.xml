@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+    <record model="text.limit" id="text_limit_test">
+            <field name="name">Journal Limit</field>
+            <field name="value">40</field>
+    </record>
+</odoo>
