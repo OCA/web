@@ -202,7 +202,7 @@ class TileTile(models.Model):
             tile.primary_error = False
             tile.secondary_error = False
             if not tile.model_id or not tile.active:
-                return
+                continue
 
             model = self.env[tile.model_id.model]
             eval_context = self._get_eval_context()
@@ -214,7 +214,7 @@ class TileTile(models.Model):
                     "Domain Error"
                 )
                 tile.domain_error = str(e)
-                return
+                continue
             fields = [
                 f.name for f in [tile.primary_field_id, tile.secondary_field_id] if f
             ]
