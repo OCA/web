@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-06 11:59+0000\n"
+"PO-Revision-Date: 2026-06-25 09:28+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
@@ -33,6 +33,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Are you sure you want to reset all colors to Odoo defaults?"
 msgstr ""
+"Ste prepričani, da želite ponastaviti vse barve na privzete Odoo vrednosti?"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg
@@ -112,7 +113,7 @@ msgstr "QWeb"
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Reset colors"
-msgstr ""
+msgstr "Ponastavi barve"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__scss_modif_timestamp
