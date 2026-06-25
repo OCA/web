@@ -16,11 +16,15 @@ export class ExpandButton extends Component {
 
         onMounted(() => {
             var self = this;
-            this.config.then(function (r) {
-                if (r.default_maximize) {
-                    self.dialog_button_extend();
-                }
-            });
+            this.config
+                .then(function (r) {
+                    if (r.default_maximize) {
+                        self.dialog_button_extend();
+                    }
+                })
+                .catch(() => {
+                    // Session likely expired → ignore
+                });
         });
     }
 
