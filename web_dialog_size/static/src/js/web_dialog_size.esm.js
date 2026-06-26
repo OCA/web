@@ -8,6 +8,10 @@ import {patch} from "@web/core/utils/patch";
 import {useService} from "@web/core/utils/hooks";
 
 export class ExpandButton extends Component {
+    static props = {
+        getsize: Function,
+        setsize: Function,
+    };
     setup() {
         this.orm = useService("orm");
         this.last_size = this.props.getsize();
