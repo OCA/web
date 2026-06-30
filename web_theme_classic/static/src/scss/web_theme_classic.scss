@@ -100,6 +100,10 @@ body.classic-theme {
             /* Prevent having double border for monetary fields */
             span.o_input:has(~ input.o_input) {
                 border: $input-border-width solid transparent !important;
+                /* The overlay sits on top of the real input; keep it
+                   transparent so the required-field background is not applied
+                   twice (which renders as a darker band over the value). */
+                background-color: transparent !important;
             }
 
             /* Keep the monetary symbol away from the border when it is outside the border */
@@ -174,6 +178,7 @@ body.classic-theme {
                 // Handle monetary fields in list
                 &.o_field_monetary span.o_input:has(~ input.o_input) {
                     border: $input-border-width solid transparent !important;
+                    background-color: transparent !important;
                 }
             }
         }

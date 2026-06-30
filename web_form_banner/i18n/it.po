@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-05 16:42+0000\n"
+"PO-Revision-Date: 2026-05-11 17:45+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form
@@ -106,6 +106,9 @@ msgid ""
 "<code>False</code> if the form\n"
 "                                    is creating a new record."
 msgstr ""
+"<code>record_id</code>: ID intero del record in fase di modifica, oppure "
+"<code>False</code> se la maschera\n"
+"                                    sta creando un nuovo record."
 
 #. module: web_form_banner
 #: model_terms:ir.ui.view,arch_db:web_form_banner.view_web_form_banner_rule_form

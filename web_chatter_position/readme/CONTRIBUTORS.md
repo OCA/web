@@ -8,3 +8,5 @@
   - Tris Doan \<<tridm@trobz.com>\>
 - [ForgeFlow](https://www.forgeflow.com)
   - Joan Sisquella \<<joan.sisquella@forgeflow.com>\>
+- [Tecnativa](https://www.tecnativa.com/):
+  - Sergio Teruel

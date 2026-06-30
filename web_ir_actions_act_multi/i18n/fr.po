@@ -1,0 +1,125 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_ir_actions_act_multi
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-06-15 09:28+0000\n"
+"Last-Translator: Yann Papouin <ypa@decgroupe.com>\n"
+"Language-Team: none\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__help
+msgid "Action Description"
+msgstr "Description de l'action"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model,name:web_ir_actions_act_multi.model_ir_actions_act_multi
+msgid "Action Mulit"
+msgstr "Action Multi"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__name
+msgid "Action Name"
+msgstr "Nom de l'action"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__type
+msgid "Action Type"
+msgstr "Type d'action"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__binding_model_id
+msgid "Binding Model"
+msgstr "Modèle de liaison"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__binding_type
+msgid "Binding Type"
+msgstr "Type de liaison"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__binding_view_types
+msgid "Binding View Types"
+msgstr "Types de vues de liaison"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__display_name
+msgid "Display Name"
+msgstr "Intitulé"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__xml_id
+msgid "External ID"
+msgstr "ID externe"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model,name:web_ir_actions_act_multi.model_ir_model_fields
+msgid "Fields"
+msgstr "Champs"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__write_uid
+msgid "Last Updated by"
+msgstr "Mis à jour par"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__write_date
+msgid "Last Updated on"
+msgstr "Mis à jour le"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model,name:web_ir_actions_act_multi.model_ir_model_data
+msgid "Model Data"
+msgstr "Données du modèle"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model,name:web_ir_actions_act_multi.model_ir_model
+msgid "Models"
+msgstr "Modèles"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,help:web_ir_actions_act_multi.field_ir_actions_act_multi__help
+msgid ""
+"Optional help text for the users with a description of the target view, such"
+" as its usage and purpose."
+msgstr ""
+"Texte d'aide optionnel pour les utilisateurs décrivant la vue cible, son "
+"utilisation et sa finalité."
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__path
+msgid "Path to show in the URL"
+msgstr "Chemin d'accès à afficher dans l'URL"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,help:web_ir_actions_act_multi.field_ir_actions_act_multi__binding_model_id
+msgid ""
+"Setting a value makes this action available in the sidebar for the given "
+"model."
+msgstr ""
+"La définition d'une valeur rend cette action disponible dans la barre "
+"latérale pour le modèle concerné."

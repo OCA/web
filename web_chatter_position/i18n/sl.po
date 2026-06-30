@@ -1,0 +1,49 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_chatter_position
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-06-06 11:55+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
+"Language-Team: none\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: web_chatter_position
+#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
+msgid "Automatic"
+msgstr "Samodejno"
+
+#. module: web_chatter_position
+#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__bottom
+msgid "Bottom"
+msgstr "Na dnu"
+
+#. module: web_chatter_position
+#: model:ir.model.fields,field_description:web_chatter_position.field_res_users__chatter_position
+msgid "Chatter Position"
+msgstr "Položaj klepeta"
+
+#. module: web_chatter_position
+#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__sided
+msgid "Sided"
+msgstr "Ob strani"
+
+#. module: web_chatter_position
+#. odoo-javascript
+#: code:addons/web_chatter_position/static/src/views/form/form_controller.xml:0
+msgid "Toggle chatter position"
+msgstr "Preklopi položaj klepeta"
+
+#. module: web_chatter_position
+#: model:ir.model,name:web_chatter_position.model_res_users
+msgid "User"
+msgstr "Uporabnik"

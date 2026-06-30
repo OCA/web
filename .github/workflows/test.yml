@@ -36,18 +36,18 @@ jobs:
       matrix:
         include:
           - container: ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest
+            include: "web_responsive"
+            name: test with Odoo
+          - container: ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest
+            include: "web_responsive"
+            name: test with OCB
+            makepot: "true"
+          - container: ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest
             exclude: "web_responsive"
             name: test with Odoo
           - container: ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest
             exclude: "web_responsive"
             name: test with OCB
-            makepot: "true"
-          - container: ghcr.io/oca/oca-ci/py3.10-odoo18.0:latest
-            include: "web_responsive"
-            name: test with Odoo (rebel modules)
-          - container: ghcr.io/oca/oca-ci/py3.10-ocb18.0:latest
-            include: "web_responsive"
-            name: test with OCB (rebel modules)
             makepot: "true"
     services:
       postgres:

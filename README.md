@@ -1,3 +1,4 @@
+
 [![Support the OCA](https://odoo-community.org/readme-banner-image)](https://odoo-community.org/get-involved?utm_source=repo-readme)
 
 # web
@@ -22,12 +23,12 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 18.0.1.0.0 | <a href='https://github.com/Yajo'><img src='https://github.com/Yajo.png' width='32' height='32' style='border-radius:50%;' alt='Yajo'/></a> | Customizable calendar slot durations
-[web_chatter_position](web_chatter_position/) | 18.0.1.1.0 | <a href='https://github.com/trisdoan'><img src='https://github.com/trisdoan.png' width='32' height='32' style='border-radius:50%;' alt='trisdoan'/></a> | Add an option to change the chatter position
-[web_company_color](web_company_color/) | 18.0.1.0.7 |  | Web Company Color
+[web_chatter_position](web_chatter_position/) | 18.0.1.1.1 | <a href='https://github.com/trisdoan'><img src='https://github.com/trisdoan.png' width='32' height='32' style='border-radius:50%;' alt='trisdoan'/></a> | Add an option to change the chatter position
+[web_company_color](web_company_color/) | 18.0.1.1.0 |  | Web Company Color
 [web_copy_confirm](web_copy_confirm/) | 18.0.1.0.0 |  | Show confirmation dialogue before copying records
 [web_dark_mode](web_dark_mode/) | 18.0.1.0.0 |  | Enabled Dark Mode for the Odoo Backend
 [web_datetime_picker_default_time](web_datetime_picker_default_time/) | 18.0.1.0.0 | <a href='https://github.com/grindtildeath'><img src='https://github.com/grindtildeath.png' width='32' height='32' style='border-radius:50%;' alt='grindtildeath'/></a> | Allows to define a default time on datetime picker
-[web_dialog_size](web_dialog_size/) | 18.0.1.0.1 |  | A module that lets the user expand a dialog box to the full screen width.
+[web_dialog_size](web_dialog_size/) | 18.0.1.0.2 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_disable_export_group](web_disable_export_group/) | 18.0.1.0.0 |  | Web Disable Export Group
 [web_editor_class_selector](web_editor_class_selector/) | 18.0.1.0.0 | <a href='https://github.com/carlos-lopez-tecnativa'><img src='https://github.com/carlos-lopez-tecnativa.png' width='32' height='32' style='border-radius:50%;' alt='carlos-lopez-tecnativa'/></a> | Web editor class selector
 [web_editor_disable_chatgpt](web_editor_disable_chatgpt/) | 18.0.1.0.0 |  | Web Disable ChatGPT
@@ -37,6 +38,7 @@ addon | version | maintainers | summary
 [web_filter_header_button](web_filter_header_button/) | 18.0.1.0.0 |  | Show selected filters as buttons in the control panel
 [web_form_banner](web_form_banner/) | 18.0.1.1.0 |  | Web Form Banner
 [web_group_expand](web_group_expand/) | 18.0.1.0.1 |  | Group Expand Buttons
+[web_help](web_help/) | 18.0.1.0.0 |  | Help Framework
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 18.0.1.0.0 |  | Enables triggering of more than one action on ActionManager
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 18.0.1.0.1 |  | Show a message box to users
 [web_m2x_options](web_m2x_options/) | 18.0.1.0.3 |  | web_m2x_options
@@ -49,7 +51,7 @@ addon | version | maintainers | summary
 [web_portal_properties](web_portal_properties/) | 18.0.1.0.0 |  | Add a new field on properties to show them on portal
 [web_pwa_customize](web_pwa_customize/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Web Pwa Customize
 [web_quick_start_screen](web_quick_start_screen/) | 18.0.1.0.0 |  | Configurable start screen for quick actions
-[web_refresher](web_refresher/) | 18.0.1.0.0 |  | Web Refresher
+[web_refresher](web_refresher/) | 18.0.1.0.1 |  | Web Refresher
 [web_remember_tree_column_width](web_remember_tree_column_width/) | 18.0.1.0.2 | <a href='https://github.com/frahikLV'><img src='https://github.com/frahikLV.png' width='32' height='32' style='border-radius:50%;' alt='frahikLV'/></a> <a href='https://github.com/luisg123v'><img src='https://github.com/luisg123v.png' width='32' height='32' style='border-radius:50%;' alt='luisg123v'/></a> <a href='https://github.com/cuongnmtm'><img src='https://github.com/cuongnmtm.png' width='32' height='32' style='border-radius:50%;' alt='cuongnmtm'/></a> | Remember the tree columns' widths across sessions.
 [web_responsive](web_responsive/) | 18.0.1.0.6 | <a href='https://github.com/Tardo'><img src='https://github.com/Tardo.png' width='32' height='32' style='border-radius:50%;' alt='Tardo'/></a> <a href='https://github.com/SplashS'><img src='https://github.com/SplashS.png' width='32' height='32' style='border-radius:50%;' alt='SplashS'/></a> | Responsive web client, community-supported
 [web_save_discard_button](web_save_discard_button/) | 18.0.1.0.1 | <a href='https://github.com/synconics'><img src='https://github.com/synconics.png' width='32' height='32' style='border-radius:50%;' alt='synconics'/></a> | Save & Discard Buttons
@@ -58,7 +60,7 @@ addon | version | maintainers | summary
 [web_session_auto_close](web_session_auto_close/) | 18.0.1.0.1 |  | Automatically logs out inactive users based on a configurable timeout.
 [web_sort_menu](web_sort_menu/) | 18.0.1.0.0 |  | Sort Apps in DropDown/NavBar Menu alphabetically
 [web_systray_button_init_action](web_systray_button_init_action/) | 18.0.1.0.2 |  | Add a button to go to the user init action.
-[web_theme_classic](web_theme_classic/) | 18.0.1.2.0 | <a href='https://github.com/legalsylvain'><img src='https://github.com/legalsylvain.png' width='32' height='32' style='border-radius:50%;' alt='legalsylvain'/></a> | Contrasted style on fields to improve the UI.
+[web_theme_classic](web_theme_classic/) | 18.0.1.2.1 | <a href='https://github.com/legalsylvain'><img src='https://github.com/legalsylvain.png' width='32' height='32' style='border-radius:50%;' alt='legalsylvain'/></a> | Contrasted style on fields to improve the UI.
 [web_time_range_menu_custom](web_time_range_menu_custom/) | 18.0.1.0.0 |  | Web Time Range Menu Custom
 [web_timeline](web_timeline/) | 18.0.1.0.3 |  | Interactive visualization chart to show events in time
 [web_toggle_chatter](web_toggle_chatter/) | 18.0.1.0.0 |  | Toggle chatter in backend form views
@@ -74,6 +76,7 @@ addon | version | maintainers | summary
 [web_widget_o2m_attachment_image_gallery](web_widget_o2m_attachment_image_gallery/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Widget o2m Attachment Image Gallery Widget
 [web_widget_one2many_tree_line_duplicate](web_widget_one2many_tree_line_duplicate/) | 18.0.1.0.1 |  | Web Widget One2many Tree Line Duplicate
 [web_widget_open_tab](web_widget_open_tab/) | 18.0.1.0.0 |  | Allow to open record from trees on new tab from tree views
+[web_widget_pattern](web_widget_pattern/) | 18.0.1.0.0 | <a href='https://github.com/hbrunn'><img src='https://github.com/hbrunn.png' width='32' height='32' style='border-radius:50%;' alt='hbrunn'/></a> | Allows to define a regex for validating input on the backend
 [web_widget_popover](web_widget_popover/) | 18.0.1.0.0 | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Render an icon that displays the field content in a popover
 [web_widget_product_label_section_and_note_full_label](web_widget_product_label_section_and_note_full_label/) | 18.0.1.0.0 |  | Display the full label in the product_label_section_and_note widget.
 [web_widget_product_label_section_and_note_name_visibility](web_widget_product_label_section_and_note_name_visibility/) | 18.0.1.0.1 | <a href='https://github.com/carlos-lopez-tecnativa'><img src='https://github.com/carlos-lopez-tecnativa.png' width='32' height='32' style='border-radius:50%;' alt='carlos-lopez-tecnativa'/></a> | Alternate the visibility of the product and description.

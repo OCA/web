@@ -4,7 +4,10 @@ import base64
 import math
 from io import BytesIO
 
-from PIL import Image
+from PIL import (
+    Image,
+    WebPImagePlugin,  # noqa: F401 - force WebP opener registration
+)
 
 
 def n_rgb_to_hex(_r, _g, _b):

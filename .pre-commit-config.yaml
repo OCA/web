@@ -21,7 +21,7 @@ exclude: |
   # You don't usually want a bot to modify your legal texts
   (LICENSE.*|COPYING.*)
 default_language_version:
-  python: python3
+  python: python3.12
   node: "22.9.0"
 repos:
   - repo: local
@@ -38,6 +38,11 @@ repos:
         entry: found a en.po file
         language: fail
         files: '[a-zA-Z0-9_]*/i18n/en\.po$'
+      - id: obsolete dotfiles
+        name: obsolete dotfiles
+        entry: found obsolete files; remove them
+        files: '^(\.travis\.yml|\.t2d\.yml|CONTRIBUTING\.md|\.prettierrc\.yml|\.eslintrc\.yml)$'
+        language: fail
   - repo: https://github.com/sbidoul/whool
     rev: v1.3
     hooks:

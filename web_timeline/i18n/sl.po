@@ -1,0 +1,114 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_timeline
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-06-07 07:00+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
+"Language-Team: none\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.esm.js:0
+msgid "<b>UNASSIGNED</b>"
+msgstr "<b>NEDODELJENO</b>"
+
+#. module: web_timeline
+#: model:ir.model,name:web_timeline.model_ir_actions_act_window_view
+msgid "Action Window View"
+msgstr "Prikaz okna za ukrepe"
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_controller.esm.js:0
+msgid "Are you sure you want to delete this record?"
+msgstr "Ali ste prepričani, da želite ta zapis izbrisati?"
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_controller.esm.js:0
+msgid "Confirm"
+msgstr "Potrdi"
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.xml:0
+msgid "Day"
+msgstr "Dan"
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_controller.esm.js:0
+msgid "Discard"
+msgstr "Zavrzi"
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.xml:0
+msgid "Month"
+msgstr "Mesec"
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_view.esm.js:0
+#: model:ir.model.fields.selection,name:web_timeline.selection__ir_actions_act_window_view__view_mode__timeline
+#: model:ir.model.fields.selection,name:web_timeline.selection__ir_ui_view__type__timeline
+msgid "Timeline"
+msgstr "Časovnica"
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_arch_parser.esm.js:0
+msgid "Timeline view has not defined 'date_start' attribute."
+msgstr "V prikazu časovnice ni definiran atribut 'date_start'."
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_arch_parser.esm.js:0
+msgid "Timeline view has not defined 'default_group_by' attribute."
+msgstr "V prikazu časovnice ni definiran atribut 'default_group_by'."
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.xml:0
+msgid "Today"
+msgstr "Danes"
+
+#. module: web_timeline
+#: model:ir.model,name:web_timeline.model_ir_ui_view
+msgid "View"
+msgstr "Prikaz"
+
+#. module: web_timeline
+#: model:ir.model.fields,field_description:web_timeline.field_ir_actions_act_window_view__view_mode
+#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__type
+msgid "View Type"
+msgstr "Tip prikaza"
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_controller.esm.js:0
+msgid "Warning"
+msgstr "Opozorilo"
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.xml:0
+msgid "Week"
+msgstr "Teden"
+
+#. module: web_timeline
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.xml:0
+msgid "Year"
+msgstr "Leto"

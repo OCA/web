@@ -1,13 +1,46 @@
 /*
     Copyright 2024 Alitec Pte Ltd (https://www.alitec.sg).
+    Copyright 2026 Tecnativa - Sergio Teruel.
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 */
 // Set sheet to full width when chatter is forced to bottom
 .o_form_view_container {
+    .o_form_renderer:has(> .o_form_sheet_bg.o_fullwidth) {
+        max-width: 100% !important;
+        min-width: 0;
+        overflow-x: hidden;
+        width: 100%;
+    }
+
     .o_form_sheet_bg.o_fullwidth,
     .o_form_sheet_bg.o_fullwidth .o_form_sheet {
-        max-width: none !important;
-        width: auto !important;
+        max-width: 100% !important;
+        min-width: 0;
+        width: 100% !important;
+    }
+
+    .o_form_sheet_bg.o_fullwidth {
+        overflow-x: hidden;
+    }
+
+    .o_form_sheet_bg.o_fullwidth .o_form_sheet {
+        overflow-x: auto;
+    }
+
+    .o_form_sheet_bg.o_fullwidth
+        > .o-mail-Form-chatter.o-isInFormSheetBg:not(.o-aside) {
+        background-color: $o-webclient-background-color !important;
+        flex: 0 0 auto !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        max-width: 100% !important;
+        min-width: 0;
+        width: 100% !important;
+
+        .o-mail-Chatter {
+            max-width: none !important;
+            width: 100%;
+        }
     }
 }
 

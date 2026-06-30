@@ -67,7 +67,10 @@ patch(FormCompiler.prototype, {
             } else {
                 const sheetBgChatterContainerHookXml =
                     chatterContainerHookXml.cloneNode(true);
-                sheetBgChatterContainerHookXml.classList.add("o-isInFormSheetBg");
+                sheetBgChatterContainerHookXml.classList.add(
+                    "o-isInFormSheetBg",
+                    "w-auto"
+                );
                 setAttributes(sheetBgChatterContainerHookXml, {
                     "t-if": "true",
                     "t-attf-class": `{{ (__comp__.uiService.size >= ${SIZES.XXL} && ${

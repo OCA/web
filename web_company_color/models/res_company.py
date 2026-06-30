@@ -182,6 +182,9 @@ class ResCompany(models.Model):
                 self.scss_create_or_update_attachment()
         return result
 
+    def button_reset_colors(self):
+        self.write({"company_colors": {}})
+
     def button_compute_color(self):
         self.ensure_one()
         values = self.default_get(

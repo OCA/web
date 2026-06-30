@@ -1,0 +1,126 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_ir_actions_act_multi
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-06-07 07:43+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
+"Language-Team: none\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__help
+msgid "Action Description"
+msgstr "Opis ukrepa"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model,name:web_ir_actions_act_multi.model_ir_actions_act_multi
+msgid "Action Mulit"
+msgstr "Množični ukrep"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__name
+msgid "Action Name"
+msgstr "Naziv ukrepa"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__type
+msgid "Action Type"
+msgstr "Tip ukrepa"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__binding_model_id
+msgid "Binding Model"
+msgstr "Model vezave"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__binding_type
+msgid "Binding Type"
+msgstr "Tip vezave"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__binding_view_types
+msgid "Binding View Types"
+msgstr "Tipi prikaza vezave"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__create_uid
+msgid "Created by"
+msgstr "Ustvaril"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__create_date
+msgid "Created on"
+msgstr "Ustvarjeno"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__display_name
+msgid "Display Name"
+msgstr "Prikazani naziv"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__xml_id
+msgid "External ID"
+msgstr "Zunanji ID"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model,name:web_ir_actions_act_multi.model_ir_model_fields
+msgid "Fields"
+msgstr "Polja"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__write_uid
+msgid "Last Updated by"
+msgstr "Zadnji posodobil"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__write_date
+msgid "Last Updated on"
+msgstr "Zadnjič posodobljeno"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model,name:web_ir_actions_act_multi.model_ir_model_data
+msgid "Model Data"
+msgstr "Podatki modela"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model,name:web_ir_actions_act_multi.model_ir_model
+msgid "Models"
+msgstr "Modeli"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,help:web_ir_actions_act_multi.field_ir_actions_act_multi__help
+msgid ""
+"Optional help text for the users with a description of the target view, such"
+" as its usage and purpose."
+msgstr ""
+"Izbirno besedilo s pomočjo za uporabnike, ki vsebuje opis ciljnega prikaza, "
+"na primer njegovo uporabo in namen."
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__path
+msgid "Path to show in the URL"
+msgstr "Pot prikazana v URL-ju"
+
+#. module: web_ir_actions_act_multi
+#: model:ir.model.fields,help:web_ir_actions_act_multi.field_ir_actions_act_multi__binding_model_id
+msgid ""
+"Setting a value makes this action available in the sidebar for the given "
+"model."
+msgstr ""
+"Nastavitev vrednosti omogoči, da je ta ukrep na voljo v stranskem meniju za "
+"dani model."
