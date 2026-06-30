@@ -68,6 +68,13 @@ export class HtmlTranslationDialog extends Component {
             content: markup(term.value),
             Plugins: [...MAIN_PLUGINS, ...NO_EMBEDDED_COMPONENTS_FALLBACK_PLUGINS],
             baseContainers: ["DIV", "P"],
+            // Several editor plugins (media, link, ...) expect this callback to
+            // exist; without it the editor crashes on destroy.
+            getRecordInfo: () => ({
+                resModel: this.props.resModel,
+                resId: this.props.resId,
+                field: this.props.fieldName,
+            }),
         };
     }
 
