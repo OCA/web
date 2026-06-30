@@ -27,7 +27,9 @@ class TestHtmlFieldTranslation(TransactionCase):
                 "field_description": "Body",
                 "model_id": model.id,
                 "ttype": "html",
-                "translate": True,
+                # In Odoo 19 ir.model.fields.translate is a Selection;
+                # "html_translate" yields a term-translated HTML field.
+                "translate": "html_translate",
             }
         )
         cls.view = cls.env["ir.ui.view"].create(
