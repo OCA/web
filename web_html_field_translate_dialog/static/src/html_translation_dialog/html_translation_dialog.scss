@@ -1,0 +1,15 @@
+.o_html_translation_dialog {
+    .o_html_translation_editor {
+        // Give every language editor a comfortable, scrollable working area.
+        max-height: 18rem;
+        overflow-y: auto;
+
+        .o-wysiwyg {
+            min-height: 6rem;
+        }
+    }
+
+    .o_html_translation_lang.o_language_current > .o_form_label {
+        color: var(--primary);
+    }
+}

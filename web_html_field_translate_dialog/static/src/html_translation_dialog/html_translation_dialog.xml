@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_html_field_translate_dialog.HtmlTranslationDialog">
+        <Dialog title="title" size="'lg'">
+            <div class="o_html_translation_dialog">
+                <t t-foreach="translations" t-as="term" t-key="term.lang">
+                    <div
+                        class="o_html_translation_lang mb-3"
+                        t-att-class="{o_language_current: isCurrentLang(term.lang)}"
+                    >
+                        <label
+                            class="o_form_label fw-bold mb-1"
+                            t-esc="term.langName"
+                        />
+                        <div class="o_html_translation_editor border rounded">
+                            <Wysiwyg
+                                config="getConfig(term)"
+                                onLoad="(editor) => this.onEditorLoad(term.lang, editor)"
+                            />
+                        </div>
+                    </div>
+                </t>
+            </div>
+            <t t-set-slot="footer">
+                <button
+                    class="btn btn-primary"
+                    t-on-click="() => this.onSave()"
+                >Save</button>
+                <button
+                    class="btn btn-secondary"
+                    t-on-click="() => this.props.close()"
+                >Discard</button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>
