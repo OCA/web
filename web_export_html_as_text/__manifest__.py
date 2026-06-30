@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Web Export Html As Text",
+    "summary": "Export HTML fields as plain text",
     "version": "18.0.1.0.0",
     "website": "https://github.com/OCA/web",
     "author": "Quartile, Odoo Community Association (OCA)",
