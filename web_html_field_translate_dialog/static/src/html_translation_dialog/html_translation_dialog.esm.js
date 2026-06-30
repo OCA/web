@@ -1,7 +1,7 @@
 /* Copyright 2025 ForgeFlow S.L.
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
-import {Component, onWillStart} from "@odoo/owl";
+import {Component, markup, onWillStart} from "@odoo/owl";
 import {Dialog} from "@web/core/dialog/dialog";
 import {
     MAIN_PLUGINS,
@@ -63,7 +63,9 @@ export class HtmlTranslationDialog extends Component {
 
     getConfig(term) {
         return {
-            content: term.value,
+            // Flag the value as safe HTML (like HtmlField does) so the editor
+            // renders it instead of displaying the escaped markup.
+            content: markup(term.value),
             Plugins: [...MAIN_PLUGINS, ...NO_EMBEDDED_COMPONENTS_FALLBACK_PLUGINS],
             baseContainers: ["DIV", "P"],
         };

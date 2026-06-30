@@ -67,6 +67,14 @@ test("html translatable field opens a per-language rich-text dialog", async () =
     expect(".o_html_translation_editor").toHaveCount(2, {
         message: "there should be one full editor per installed language",
     });
+    // The HTML must be rendered, not displayed as escaped markup.
+    const editors = queryAll(".o_html_translation_editor [contenteditable=true]");
+    expect(editors[0]).toHaveText("Hello", {
+        message: "the editor should render the HTML, not show the raw tags",
+    });
+    expect(editors[0].querySelector("p")).not.toBe(null, {
+        message: "the value should be parsed as HTML (a <p> element is present)",
+    });
 });
 
 test("the per-language dialog saves the full value of every language", async () => {
