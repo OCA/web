@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Web Form Banner",
+    "summary": "Show configurable, rule-based alert banners on backend form views",
     "version": "15.0.1.0.0",
     "category": "Web",
     "author": "Quartile, Odoo Community Association (OCA)",
@@ -19,5 +20,6 @@
         ],
     },
     "demo": ["demo/web_form_banner_rule_demo.xml"],
+    "maintainers": ["yostashiro", "aungkokolin1997"],
     "installable": True,
 }
