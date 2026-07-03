@@ -8,6 +8,20 @@
                 <field name="name" />
                 <field name="category_id" />
                 <field name="model_id" />
+                <group>
+                    <filter
+                        string="Category"
+                        name="group_by_category_id"
+                        domain="[]"
+                        context="{'group_by':'category_id'}"
+                    />
+                    <filter
+                        string="Model"
+                        name="group_by_model_id"
+                        domain="[]"
+                        context="{'group_by':'model_id'}"
+                    />
+                </group>
             </search>
         </field>
     </record>
@@ -19,13 +33,13 @@
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="category_id" />
-                <field name="model_id" />
-                <field name="primary_function" />
-                <field name="primary_field_id" />
-                <field name="secondary_function" />
-                <field name="secondary_field_id" />
-                <field name="user_id" />
-                <field name="group_ids" />
+                <field name="model_id" optional="hide" />
+                <field name="primary_function" optional="show" />
+                <field name="primary_field_id" optional="show" />
+                <field name="secondary_function" optional="hide" />
+                <field name="secondary_field_id" optional="hide" />
+                <field name="user_id" optional="hide" />
+                <field name="group_ids" widget="many2many_tags" optional="hide" />
                 <field name="background_color" widget="color" />
             </tree>
         </field>

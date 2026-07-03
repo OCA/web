@@ -112,7 +112,7 @@ class TileTile(models.Model):
     action_id = fields.Many2one(
         comodel_name="ir.actions.act_window",
         string="Action",
-        help="Let empty to use the default action related to" " the selected model.",
+        help="Let empty to use the default action related to the selected model.",
         domain="[('res_model', '=', model_name)]",
     )
 
@@ -122,7 +122,7 @@ class TileTile(models.Model):
 
     hide_if_null = fields.Boolean(
         string="Hide if null",
-        help="If checked, the item will be hidden" " if the primary value is null.",
+        help="If checked, the item will be hidden if the primary value is null.",
     )
 
     hidden = fields.Boolean(compute="_compute_data", search="_search_hidden")
