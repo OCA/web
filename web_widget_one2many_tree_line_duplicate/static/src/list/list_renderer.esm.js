@@ -1,11 +1,8 @@
-/** @odoo-module **/
 /* Copyright 2024 Tecnativa - Carlos Roca
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 import {ListRenderer} from "@web/views/list/list_renderer";
-import {onWillRender} from "@odoo/owl";
 import {patch} from "@web/core/utils/patch";
-import {serializeDate, serializeDateTime} from "@web/core/l10n/dates";
 import {exprToBoolean} from "@web/core/utils/strings";
 import {browser} from "@web/core/browser/browser";
 
@@ -15,22 +12,25 @@ patch(ListRenderer.prototype, {
         const parent = this.__owl__.parent.parent;
         const key = this.createViewKey();
         this.keyDuplicateLineColumn = `duplicate_line_column,${key}`;
-        this.duplicateLineAllowed =
+        this.duplicateLineAllowed = Boolean(
             parent &&
-            parent.props &&
-            parent.props.fieldInfo &&
-            parent.props.fieldInfo.options &&
-            parent.props.fieldInfo.options.allow_clone;
-        this.displayDuplicateLine =
-            this.duplicateLineAllowed && this.duplicateLineColumn;
-        onWillRender(() => {
-            this.duplicateLineColumn = exprToBoolean(
-                browser.localStorage.getItem(this.keyDuplicateLineColumn),
-                false
-            );
-            this.displayDuplicateLine =
-                this.duplicateLineAllowed && this.duplicateLineColumn;
-        });
+                parent.props &&
+                parent.props.fieldInfo &&
+                parent.props.fieldInfo.options &&
+                parent.props.fieldInfo.options.allow_clone
+        );
+        this.duplicateLineColumn = exprToBoolean(
+            browser.localStorage.getItem(this.keyDuplicateLineColumn),
+            true
+        );
+    },
+    get hasDuplicateLineColumn() {
+        return this.duplicateLineAllowed && this.duplicateLineColumn;
+    },
+    isDuplicableLine(record) {
+        return !["line_section", "line_subsection", "line_note"].includes(
+            record.data.display_type
+        );
     },
     toggleDuplicateLineColumn() {
         this.duplicateLineColumn = !this.duplicateLineColumn;
@@ -38,58 +38,70 @@ patch(ListRenderer.prototype, {
             this.keyDuplicateLineColumn,
             this.duplicateLineColumn
         );
-        this.displayDuplicateLine =
-            this.duplicateLineAllowed && this.duplicateLineColumn;
         this.render();
     },
-    get hasActionsColumn() {
-        return super.hasActionsColumn || Boolean(this.duplicateLineAllowed);
+    get nbCols() {
+        let nbCols = super.nbCols;
+        if (this.hasDuplicateLineColumn) {
+            nbCols++;
+        }
+        return nbCols;
     },
     async onCloneIconClick(record) {
-        const toSkip = this.getFieldsToSkip();
-        const vals = {};
-
+        const list = this.props.list;
+        const left = await list.leaveEditMode();
+        if (!left) {
+            return;
+        }
+        // Snapshot of the source's scalar values, including the readonly computed
+        // ones (subtotals...), so the copy is exact. duplicateRecords creates the
+        // line running its onchanges, which recompute editable fields (e.g.
+        // price_unit from the product) and discard the manual values. We re-apply
+        // this snapshot with withoutOnchange so those values are kept.
+        const scalarTypes = [
+            "integer",
+            "float",
+            "monetary",
+            "char",
+            "text",
+            "boolean",
+            "selection",
+            "date",
+            "datetime",
+        ];
+        const snapshot = {};
         for (const [name, value] of Object.entries(record.data)) {
-            const fieldDef = this.props.list.fields[name];
-            if (toSkip.has(name) || !fieldDef) {
-                continue;
-            }
-            if (fieldDef.type === "many2one" && Array.isArray(value)) {
-                vals[name] = value[0];
-            } else if (fieldDef.type === "many2many" || fieldDef.type === "one2many") {
-                const m2mRecords = Array.isArray(value) ? value : value?.records || [];
-                const ids = m2mRecords
-                    .map((r) => {
-                        if (typeof r.id === "number") return r.id;
-                        if (Array.isArray(r._config?.resIds)) return r._config.resIds;
-                        return null;
-                    })
-                    .flat()
-                    .filter((id) => typeof id === "number");
-
-                vals[name] = [[6, 0, ids]];
-            } else if (fieldDef.type === "datetime" && value) {
-                vals[name] = serializeDateTime(value);
-            } else if (fieldDef.type === "date" && value) {
-                vals[name] = serializeDate(value);
-            } else {
-                vals[name] = value;
+            const field = record.fields[name];
+            if (
+                field &&
+                name !== "display_name" &&
+                name !== list.handleField &&
+                scalarTypes.includes(field.type)
+            ) {
+                snapshot[name] = value;
             }
         }
-        await record.model.orm.call(
-            record._config.resModel,
-            "copy",
-            [[record._config.resId], vals],
-            {context: record._config.context}
-        );
-        await record.model.load();
-    },
-    getFieldsToSkip() {
-        return new Set([
-            "id",
-            "display_name",
-            "__last_update",
-            this.props.list.handleField,
-        ]);
+        // Run everything in a single model transaction and notify only once, at
+        // the end, so the intermediate (onchange-recomputed) values are never
+        // rendered: the line appears directly with the original values, without
+        // the flicker of a second render.
+        await list.model.mutex.exec(async () => {
+            const sourceIndex = list.records.indexOf(record);
+            await list._duplicateRecords([record], {});
+            // The duplicate is inserted right after the source line; identify it
+            // by position (references aren't stable across the re-wrapping).
+            const newRecord = list.records[sourceIndex + 1];
+            if (
+                newRecord &&
+                newRecord.id !== record.id &&
+                Object.keys(snapshot).length
+            ) {
+                await newRecord._update(snapshot, {
+                    withoutOnchange: true,
+                    withoutParentUpdate: true,
+                });
+            }
+            await list._onUpdate();
+        });
     },
 });

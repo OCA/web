@@ -4,20 +4,9 @@
         t-name="web_widget_one2many_tree_line_duplicate.ListRenderer"
         t-inherit="web.ListRenderer"
         t-inherit-mode="extension"
-        owl="1"
     >
         <xpath
-            expr="//th[hasclass('o_list_controller') and hasclass('o_list_actions_header')]"
-            position="before"
-        >
-            <th
-                t-if="displayDuplicateLine"
-                class="o_list_controller o_list_actions_header position-static"
-                style="width: 32px; min-width: 32px"
-            />
-        </xpath>
-        <xpath
-            expr="//div[contains(@class, 'o_optional_columns_dropdown')]//t[@t-set-slot='content']"
+            expr="//div[hasclass('o_optional_columns_dropdown')]//t[@t-set-slot='content']"
             position="inside"
         >
             <t t-set="hasX2ManyAction" t-value="isX2Many and activeActions.create" />
@@ -43,27 +32,48 @@
                 </DropdownItem>
             </t>
         </xpath>
+        <!-- Header cell for the dedicated clone column. Rendered like the core
+             delete actions column (outside the getColumns loop), so it is never
+             counted in `columns` and can't shift aggregates or section totals. -->
+        <xpath expr="//thead//th[@t-if='hasActionsColumn']" position="before">
+            <th
+                t-if="hasDuplicateLineColumn"
+                t-on-keydown="(ev) => this.onCellKeydown(ev)"
+                class="o_list_duplicate_line w-print-0 p-print-0"
+            />
+        </xpath>
+        <xpath
+            expr="//tfoot//td[@t-if='displayOptionalFields or activeActions.onDelete']"
+            position="before"
+        >
+            <td t-if="hasDuplicateLineColumn" class="w-print-0 p-print-0" />
+        </xpath>
     </t>
     <t
         t-name="web_widget_one2many_tree_line_duplicate.ListRenderer.RecordRow"
         t-inherit="web.ListRenderer.RecordRow"
         t-inherit-mode="extension"
-        owl="1"
     >
-        <xpath expr="//td[hasclass('o_list_record_remove')]" position="before">
-            <td
-                class="o_list_record_remove text-center"
-                t-if="displayDuplicateLine"
-                t-on-click.stop="() => this.onCloneIconClick(record)"
-                tabindex="-1"
-            >
-                <button
-                    class="fa fa-clone"
-                    name="duplicate"
-                    aria-label="Duplicate row"
+        <xpath
+            expr="//t[@t-if='displayOptionalFields or props.list.isGrouped or hasX2ManyAction']"
+            position="before"
+        >
+            <t t-if="hasDuplicateLineColumn">
+                <td
+                    t-if="isDuplicableLine(record)"
+                    class="o_list_duplicate_line text-center"
+                    t-on-click.stop="() => this.onCloneIconClick(record)"
                     tabindex="-1"
-                />
-            </td>
+                >
+                    <button
+                        class="fa fa-clone"
+                        name="duplicate"
+                        aria-label="Duplicate row"
+                        tabindex="-1"
+                    />
+                </td>
+                <td t-else="" class="o_list_duplicate_line text-center" tabindex="-1" />
+            </t>
         </xpath>
     </t>
 </templates>
