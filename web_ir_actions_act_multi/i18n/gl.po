@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-23 18:47+0000\n"
-"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
+"PO-Revision-Date: 2026-07-05 19:35+0000\n"
+"Last-Translator: Cándido Martínez <candido@supermercadoscooperativos.com>\n"
 "Language-Team: none\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
@@ -74,7 +74,7 @@ msgstr "ID Externa"
 #. module: web_ir_actions_act_multi
 #: model:ir.model,name:web_ir_actions_act_multi.model_ir_model_fields
 msgid "Fields"
-msgstr ""
+msgstr "Campos"
 
 #. module: web_ir_actions_act_multi
 #: model:ir.model.fields,field_description:web_ir_actions_act_multi.field_ir_actions_act_multi__id
@@ -99,12 +99,12 @@ msgstr "Última Actualización o"
 #. module: web_ir_actions_act_multi
 #: model:ir.model,name:web_ir_actions_act_multi.model_ir_model_data
 msgid "Model Data"
-msgstr ""
+msgstr "Modelo de datos"
 
 #. module: web_ir_actions_act_multi
 #: model:ir.model,name:web_ir_actions_act_multi.model_ir_model
 msgid "Models"
-msgstr ""
+msgstr "Modelos"
 
 #. module: web_ir_actions_act_multi
 #: model:ir.model.fields,help:web_ir_actions_act_multi.field_ir_actions_act_multi__help
