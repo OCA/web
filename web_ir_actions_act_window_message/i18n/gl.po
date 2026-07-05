@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-23 18:47+0000\n"
-"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
+"PO-Revision-Date: 2026-07-05 19:35+0000\n"
+"Last-Translator: Cándido Martínez <candido@supermercadoscooperativos.com>\n"
 "Language-Team: none\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
@@ -19,37 +19,37 @@ msgstr ""
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__help
 msgid "Action Description"
-msgstr ""
+msgstr "Descrición da acción"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__name
 msgid "Action Name"
-msgstr ""
+msgstr "Nome da acción"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__type
 msgid "Action Type"
-msgstr ""
+msgstr "Tipo de acción"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model,name:web_ir_actions_act_window_message.model_ir_actions_act_window_message
 msgid "Action Window Message"
-msgstr ""
+msgstr "Mensaxe da acción"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__binding_model_id
 msgid "Binding Model"
-msgstr ""
+msgstr "Modelo de relación"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__binding_type
 msgid "Binding Type"
-msgstr ""
+msgstr "Tipo de relación"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__binding_view_types
 msgid "Binding View Types"
-msgstr ""
+msgstr "Tipos de vista de relación"
 
 #. module: web_ir_actions_act_window_message
 #. odoo-javascript
@@ -61,42 +61,42 @@ msgstr "Pechar"
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado en"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome mostrado"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__xml_id
 msgid "External ID"
-msgstr ""
+msgstr "ID Externa"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modificación o"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,field_description:web_ir_actions_act_window_message.field_ir_actions_act_window_message__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualización por"
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,help:web_ir_actions_act_window_message.field_ir_actions_act_window_message__help
@@ -104,6 +104,8 @@ msgid ""
 "Optional help text for the users with a description of the target view, such"
 " as its usage and purpose."
 msgstr ""
+"Texto de axuda opcional para os usuarios cunha descrición na vista de "
+"obxectivo, así como o seu uso e propósito."
 
 #. module: web_ir_actions_act_window_message
 #: model:ir.model.fields,help:web_ir_actions_act_window_message.field_ir_actions_act_window_message__binding_model_id
@@ -111,3 +113,5 @@ msgid ""
 "Setting a value makes this action available in the sidebar for the given "
 "model."
 msgstr ""
+"Configurando un valor fai dispoñible esta acción na barra lateral dun modelo "
+"dado."
