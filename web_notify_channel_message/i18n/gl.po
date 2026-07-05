@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-23 18:47+0000\n"
-"Last-Translator: Pablo Castelo <pablocv@gmx.es>\n"
+"PO-Revision-Date: 2026-07-05 19:35+0000\n"
+"Last-Translator: Cándido Martínez <candido@supermercadoscooperativos.com>\n"
 "Language-Team: none\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "Canle de Discusión"
 #. module: web_notify_channel_message
 #: model:ir.model,name:web_notify_channel_message.model_res_users
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #. module: web_notify_channel_message
 #. odoo-python
