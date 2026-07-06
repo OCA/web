@@ -107,7 +107,7 @@ class TileTile(models.Model):
 
     domain = fields.Text(default="[]", required=True)
 
-    domain_error = fields.Char(compute="_compute_data")
+    domain_error = fields.Char(compute="_compute_data", compute_sudo=True)
 
     action_id = fields.Many2one(
         comodel_name="ir.actions.act_window",
@@ -125,7 +125,9 @@ class TileTile(models.Model):
         help="If checked, the item will be hidden if the primary value is null.",
     )
 
-    hidden = fields.Boolean(compute="_compute_data", search="_search_hidden")
+    hidden = fields.Boolean(
+        compute="_compute_data", compute_sudo=True, search="_search_hidden"
+    )
 
     # Primary Value
     primary_function = fields.Selection(
@@ -146,13 +148,13 @@ class TileTile(models.Model):
         "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000.",
     )
 
-    primary_value = fields.Float(compute="_compute_data")
+    primary_value = fields.Float(compute="_compute_data", compute_sudo=True)
 
-    primary_formated_value = fields.Char(compute="_compute_data")
+    primary_formated_value = fields.Char(compute="_compute_data", compute_sudo=True)
 
     primary_helper = fields.Char(compute="_compute_helper", store=True)
 
-    primary_error = fields.Char(compute="_compute_data")
+    primary_error = fields.Char(compute="_compute_data", compute_sudo=True)
 
     # Secondary Value
     secondary_function = fields.Selection(
@@ -171,13 +173,13 @@ class TileTile(models.Model):
         "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000.",
     )
 
-    secondary_value = fields.Float(compute="_compute_data")
+    secondary_value = fields.Float(compute="_compute_data", compute_sudo=True)
 
-    secondary_formated_value = fields.Char(compute="_compute_data")
+    secondary_formated_value = fields.Char(compute="_compute_data", compute_sudo=True)
 
     secondary_helper = fields.Char(compute="_compute_helper", store=True)
 
-    secondary_error = fields.Char(compute="_compute_data")
+    secondary_error = fields.Char(compute="_compute_data", compute_sudo=True)
 
     # Compute Section
     @api.depends(
