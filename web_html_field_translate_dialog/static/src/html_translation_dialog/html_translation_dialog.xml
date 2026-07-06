@@ -9,15 +9,36 @@
                         class="o_html_translation_lang mb-3"
                         t-att-class="{o_language_current: isCurrentLang(term.lang)}"
                     >
-                        <label
-                            class="o_form_label fw-bold mb-1"
-                            t-esc="term.langName"
-                        />
+                        <div
+                            class="d-flex align-items-center justify-content-between mb-1"
+                        >
+                            <label class="o_form_label fw-bold" t-esc="term.langName" />
+                            <button
+                                class="o_html_translation_codeview_btn btn btn-sm btn-link p-0"
+                                type="button"
+                                t-att-title="state.codeView[term.lang] ? 'Rich text view' : 'HTML source view'"
+                                t-on-click="() => this.toggleCodeView(term.lang)"
+                            >
+                                <i
+                                    class="fa"
+                                    t-att-class="state.codeView[term.lang] ? 'fa-eye' : 'fa-code'"
+                                />
+                            </button>
+                        </div>
                         <div class="o_html_translation_editor border rounded">
-                            <Wysiwyg
-                                config="getConfig(term)"
-                                onLoad="(editor) => this.onEditorLoad(term.lang, editor)"
-                            />
+                            <t t-if="state.codeView[term.lang]">
+                                <textarea
+                                    class="o_codeview w-100 border-0 font-monospace"
+                                    t-att-value="state.source[term.lang]"
+                                    t-on-input="(ev) => this.onCodeInput(term.lang, ev)"
+                                />
+                            </t>
+                            <t t-else="">
+                                <Wysiwyg
+                                    config="getConfig(term)"
+                                    onLoad="(editor) => this.onEditorLoad(term.lang, editor)"
+                                />
+                            </t>
                         </div>
                     </div>
                 </t>

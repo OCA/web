@@ -10,7 +10,7 @@ class TestHtmlTranslationDialogUI(HttpCase):
         """Run the dialog's web unit (hoot) tests through a headless browser."""
         self.browser_js(
             "/web/tests?headless&loglevel=2&preset=desktop"
-            "&timeout=15000&filter=per-language",
+            "&timeout=15000&filter=web_html_field_translate_dialog",
             "",
             "",
             login="admin",
