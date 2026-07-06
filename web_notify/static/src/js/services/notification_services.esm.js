@@ -1,35 +1,34 @@
 import {markup} from "@odoo/owl";
+import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 
 export const webNotificationService = {
-    dependencies: ["bus_service", "notification", "action"],
+    dependencies: ["bus_service", "action", "notification_sound"],
 
-    start(env, {bus_service, notification: notificationService, action}) {
-        function displayWebNotification(notification) {
+    start(env, {bus_service, action, notification_sound: notificationService}) {
+        function displayWebNotification(notification_sound) {
             let buttons = [];
-            if (notification.action) {
-                const params = notification.action.context?.params || {};
+            if (notification_sound.action) {
+                const params = notification_sound.action.context?.params || {};
 
                 buttons = [
                     {
-                        name: params.button_name || env._t("Open"),
+                        name: params.button_name || _t("Open"),
                         primary: true,
                         onClick: async () => {
-                            await action.doAction(notification.action);
+                            await action.doAction(notification_sound.action);
                         },
                         ...(params.button_icon && {icon: params.button_icon}),
                     },
                 ];
             }
-
             const notificationRemove = notificationService.add(
-                markup(notification.message),
+                markup(notification_sound.message),
                 {
-                    title: notification.title,
-                    type: notification.type,
-                    sticky: notification.sticky,
-                    className: notification.className,
-                    messageIsHtml: notification.html,
+                    title: notification_sound.title,
+                    type: notification_sound.type,
+                    sticky: notification_sound.sticky,
+                    className: notification_sound.className,
                     buttons: buttons.map((button) => {
                         const onClick = button.onClick;
                         button.onClick = async () => {
@@ -38,6 +37,7 @@ export const webNotificationService = {
                         };
                         return button;
                     }),
+                    sound: notification_sound.sound,
                 }
             );
         }

@@ -14,6 +14,7 @@ class ResUsers(models.Model):
         html=False,
         action=None,
         params=None,
+        sound=None,
     ):
         if self.env.context.get("_notify_channel_message", False):
             return super(ResUsers, self.sudo())._notify_channel(
@@ -25,6 +26,7 @@ class ResUsers(models.Model):
                 html=html,
                 action=action,
                 params=params,
+                sound=sound,
             )
         return super()._notify_channel(
             type_message=type_message,
@@ -35,4 +37,5 @@ class ResUsers(models.Model):
             html=html,
             action=action,
             params=params,
+            sound=sound,
         )
