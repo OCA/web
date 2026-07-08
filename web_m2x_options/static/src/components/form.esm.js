@@ -14,6 +14,10 @@ import {
     KanbanMany2ManyTagsAvatarField,
     Many2ManyTagsAvatarField,
 } from "@web/views/fields/many2many_tags_avatar/many2many_tags_avatar_field";
+import {
+    many2ManyTagsAvatarUserField,
+    kanbanMany2ManyTagsAvatarUserField,
+} from "@mail/views/web/fields/many2many_avatar_user_field/many2many_avatar_user_field";
 
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {evaluateBooleanExpr} from "@web/core/py_js/py";
@@ -66,6 +70,16 @@ Many2ManyTagsAvatarField.props = {
 
 KanbanMany2ManyTagsAvatarField.props = {
     ...KanbanMany2ManyTagsAvatarField.props,
+    ...fieldColorProps,
+};
+
+many2ManyTagsAvatarUserField.props = {
+    ...many2ManyTagsAvatarUserField.props,
+    ...fieldColorProps,
+};
+
+kanbanMany2ManyTagsAvatarUserField.props = {
+    ...kanbanMany2ManyTagsAvatarUserField.props,
     ...fieldColorProps,
 };
 
