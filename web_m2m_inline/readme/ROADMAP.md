@@ -1,0 +1,1 @@
+There is a bug with updating existing records: if a user clicks on existing rows and makes changes, then discards those changes and subsequently clicks to add a new record, the existing records get updated incorrectly.

@@ -1,0 +1,87 @@
+<?xml version="1.0" ?>
+<t
+    t-name="c2c_governance.AutoCompleteListRenderer.recordRowTemplate"
+    t-inherit-mode="primary"
+    t-inherit="web.ListRenderer.RecordRow"
+>
+  <xpath expr="//t[@t-if=&quot;column.type === 'field'&quot;]" position="replace">
+    <t t-if="column.type === 'field'">
+      <t
+                t-set="isInvisible"
+                t-value="evalInvisible(column.invisible, record) or !(column.name in record.data)"
+            />
+      <td
+                t-on-keydown="(ev) =&gt; this.onCellKeydown(ev, group, record)"
+                class="o_data_cell cursor-pointer"
+                t-att-class="getCellClass(column, record)"
+                t-att-name="column.name"
+                t-att-colspan="column.colspan"
+                t-att-data-tooltip="!isInvisible ? getCellTitle(column, record) : false"
+                data-tooltip-delay="1000"
+                tabindex="-1"
+                t-on-click="(ev) =&gt; this.onCellClicked(record, column, ev)"
+            >
+        <t t-if="!isInvisible">
+          <t t-if="showM2OSelectionField">
+            <div
+                            class="o_field_many2many_selection d-inline-flex w-100"
+                            t-ref="autoComplete"
+                        >
+              <CustomMany2XAutocomplete
+                                id="column.id"
+                                value="record.data.name"
+                                resModel="relation"
+                                autoSelect="true"
+                                fieldString="string"
+                                update="update"
+                                activeActions="activeActions"
+                                quickCreate="quickCreate"
+                                context="props.context"
+                                getDomain.bind="getDomain"
+                                isToMany="true"
+                                nameCreateField="props.nameCreateField"
+                                noSearchMore="false"
+                            />
+            </div>
+          </t>
+          <t t-else="">
+            <t
+                            t-if="canUseFormatter(column, record)"
+                            t-out="getFormattedValue(column, record)"
+                        />
+            <Field
+                            t-else=""
+                            name="column.name"
+                            record="record"
+                            type="column.widget"
+                            class="getFieldClass(column)"
+                            fieldInfo="column"
+                            t-props="getFieldProps(record, column)"
+                        />
+          </t>
+        </t>
+      </td>
+    </t>
+  </xpath>
+  <xpath
+        expr="//t[@t-if=&quot;displayOptionalFields or hasX2ManyAction&quot;]/t[@t-if=&quot;hasX2ManyAction&quot;]"
+        position="replace"
+    >
+    <t t-if="hasX2ManyAction">
+      <td
+                class="o_list_record_remove text-center"
+                t-on-keydown="(ev) =&gt; this.onCellKeydown(ev, group, record)"
+                t-on-click.stop="(ev) =&gt; this.onDeleteRecord(record, ev)"
+                tabindex="-1"
+            >
+        <button
+                    class="fa"
+                    t-att-class="{                                 'fa-trash-o': quickUnlink,                                                              'fa-times': !quickUnlink,                             }"
+                    name="delete"
+                    aria-label="Delete row"
+                    tabindex="-1"
+                />
+      </td>
+    </t>
+  </xpath>
+</t>
