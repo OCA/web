@@ -5,6 +5,10 @@ from odoo import _, api, exceptions, fields, models
 from odoo.addons.bus.models.bus import channel_with_db, json_dump
 from odoo.addons.web.controllers.utils import clean_action
 
+import base64
+import io
+from gtts import gTTS
+
 DEFAULT_MESSAGE = "Default message"
 
 SUCCESS = "success"
@@ -49,13 +53,10 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         action=None,
-        html=False,
         params=None,
     ):
         title = title or _("Success")
-        self._notify_channel(
-            SUCCESS, message, title, sticky, target, html, action, params
-        )
+        self._notify_channel(SUCCESS, message, title, sticky, target, action, params)
 
     def notify_danger(
         self,
@@ -63,14 +64,11 @@ class ResUsers(models.Model):
         title=None,
         sticky=False,
         target=None,
-        html=False,
         action=None,
         params=None,
     ):
         title = title or _("Danger")
-        self._notify_channel(
-            DANGER, message, title, sticky, target, html, action, params
-        )
+        self._notify_channel(DANGER, message, title, sticky, target, action, params)
 
     def notify_warning(
         self,
@@ -78,14 +76,11 @@ class ResUsers(models.Model):
         title=None,
         sticky=False,
         target=None,
-        html=False,
         action=None,
         params=None,
     ):
         title = title or _("Warning")
-        self._notify_channel(
-            WARNING, message, title, sticky, target, html, action, params
-        )
+        self._notify_channel(WARNING, message, title, sticky, target, action, params)
 
     def notify_info(
         self,
@@ -93,12 +88,11 @@ class ResUsers(models.Model):
         title=None,
         sticky=False,
         target=None,
-        html=False,
         action=None,
         params=None,
     ):
         title = title or _("Information")
-        self._notify_channel(INFO, message, title, sticky, target, html, action, params)
+        self._notify_channel(INFO, message, title, sticky, target, action, params)
 
     def notify_default(
         self,
@@ -106,47 +100,83 @@ class ResUsers(models.Model):
         title=None,
         sticky=False,
         target=None,
-        html=False,
         action=None,
         params=None,
     ):
         title = title or _("Default")
-        self._notify_channel(
-            DEFAULT, message, title, sticky, target, html, action, params
-        )
+        self._notify_channel(DEFAULT, message, title, sticky, target, action, params)
 
     def _notify_channel(
         self,
         type_message=DEFAULT,
         message=DEFAULT_MESSAGE,
         title=None,
-        sticky=False,
+        sticky=True,
         target=None,
-        html=False,
         action=None,
         params=None,
     ):
-        if not (self.env.user._is_admin() or self.env.su) and any(
-            user.id != self.env.uid for user in self
-        ):
-            raise exceptions.UserError(
-                _("Sending a notification to another user is forbidden.")
-            )
+        if not (self.env.user._is_admin() or self.env.su) and any(user.id != self.env.uid for user in self):
+            raise exceptions.UserError(_("Sending a notification to another user is forbidden."))
+
         if not target:
             target = self.partner_id
+
+        # Generate voice from message using gTTS
+        gtts_obj = gTTS(message)
+        mp3_buffer = io.BytesIO()
+        gtts_obj.write_to_fp(mp3_buffer)
+        mp3_buffer.seek(0)
+        sound_stream = base64.b64encode(mp3_buffer.read()).decode('utf-8')
+
         if action:
             action = clean_action(action, self.env)
+
         bus_message = {
             "type": type_message,
             "message": message,
             "title": title,
             "sticky": sticky,
-            "html": html,
             "action": action,
             "params": dict(params or []),
+            "sound_stream": sound_stream,  # Attach the voice stream
         }
-        for partner in target:
-            partner._bus_send(
-                "web_notify",
-                bus_message,
-            )
+
+        notifications = [[partner, "web.notify", [bus_message]] for partner in target]
+        self.env["bus.bus"]._sendmany(notifications)
+
+    # def _notify_channel(
+    #     self,
+    #     type_message=DEFAULT,
+    #     message=DEFAULT_MESSAGE,
+    #     title=None,
+    #     sticky=False,
+    #     target=None,
+    #     action=None,
+    #     params=None,
+    # ):
+    #     if not (self.env.user._is_admin() or self.env.su) and any(
+    #         user.id != self.env.uid for user in self
+    #     ):
+    #         raise exceptions.UserError(
+    #             _("Sending a notification to another user is forbidden.")
+    #         )
+    #     if not target:
+    #         target = self.partner_id
+    #     if action:
+    #         action = clean_action(action, self.env)
+    #     bus_message = {
+    #         "type": type_message,
+    #         "message": message,
+    #         "title": title,
+    #         "sticky": sticky,
+    #         "action": action,
+    #         "params": dict(params or []),
+    #     }
+
+    #     # ➕ Add the sound stream
+    #     if alert_type == "voice":
+    #         bus_message["sound_stream"] = voice_alert_binary
+
+    #     notifications = [[partner, "web.notify", [bus_message]] for partner in target]
+    #     self.env["bus.bus"]._sendmany(notifications)

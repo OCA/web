@@ -24,18 +24,21 @@ msgstr ""
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
+#, python-format
 msgid "Danger"
 msgstr "Perigo"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
+#, python-format
 msgid "Default"
 msgstr "Padrão"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
+#, python-format
 msgid "Information"
 msgstr "Informação"
 
@@ -67,18 +70,21 @@ msgstr "Notificar o nome do canal de alerta"
 #. module: web_notify
 #. odoo-javascript
 #: code:addons/web_notify/static/src/js/services/notification_services.esm.js:0
+#, python-format
 msgid "Open"
 msgstr "Aberto"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
+#, python-format
 msgid "Sending a notification to another user is forbidden."
 msgstr "É proibido enviar uma notificação para outro usuário."
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
+#, python-format
 msgid "Success"
 msgstr "Sucesso"
 
@@ -120,6 +126,7 @@ msgstr "Usuário"
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
+#, python-format
 msgid "Warning"
 msgstr "Alerta"
 
