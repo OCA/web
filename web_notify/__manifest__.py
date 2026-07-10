@@ -17,6 +17,6 @@
             "web_notify/static/src/js/services/*.js",
         ]
     },
-    "demo": ["views/res_users_demo.xml"],
+    # "demo": ["views/res_users_demo.xml"],
     "installable": True,
 }
