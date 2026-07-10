@@ -123,56 +123,27 @@ class ResUsers(models.Model):
             target = self.partner_id
 
         # Generate voice from message using gTTS
-        gtts_obj = gTTS(message)
-        mp3_buffer = io.BytesIO()
-        gtts_obj.write_to_fp(mp3_buffer)
-        mp3_buffer.seek(0)
-        sound_stream = base64.b64encode(mp3_buffer.read()).decode('utf-8')
+        # gtts_obj = gTTS(message)
+        # mp3_buffer = io.BytesIO()
+        # gtts_obj.write_to_fp(mp3_buffer)
+        # mp3_buffer.seek(0)
+        # sound_stream = base64.b64encode(mp3_buffer.read()).decode('utf-8')
 
         if action:
             action = clean_action(action, self.env)
 
-        bus_message = {
-            "type": type_message,
-            "message": message,
-            "title": title,
-            "sticky": sticky,
-            "action": action,
-            "params": dict(params or []),
-            "sound_stream": sound_stream,  # Attach the voice stream
-        }
+        # bus_message = {
+        #     "type": type_message,
+        #     "message": message,
+        #     "title": title,
+        #     "sticky": sticky,
+        #     "action": action,
+        #     "params": dict(params or []),
+        #     "sound_stream": sound_stream,  # Attach the voice stream
+        # }
 
         notifications = [[partner, "web.notify", [bus_message]] for partner in target]
         self.env["bus.bus"]._sendmany(notifications)
-
-    # def _notify_channel(
-    #     self,
-    #     type_message=DEFAULT,
-    #     message=DEFAULT_MESSAGE,
-    #     title=None,
-    #     sticky=False,
-    #     target=None,
-    #     action=None,
-    #     params=None,
-    # ):
-    #     if not (self.env.user._is_admin() or self.env.su) and any(
-    #         user.id != self.env.uid for user in self
-    #     ):
-    #         raise exceptions.UserError(
-    #             _("Sending a notification to another user is forbidden.")
-    #         )
-    #     if not target:
-    #         target = self.partner_id
-    #     if action:
-    #         action = clean_action(action, self.env)
-    #     bus_message = {
-    #         "type": type_message,
-    #         "message": message,
-    #         "title": title,
-    #         "sticky": sticky,
-    #         "action": action,
-    #         "params": dict(params or []),
-    #     }
 
     #     # ➕ Add the sound stream
     #     if alert_type == "voice":
