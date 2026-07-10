@@ -7,7 +7,7 @@ from odoo.addons.web.controllers.utils import clean_action
 
 import base64
 import io
-from gtts import gTTS
+# from gtts import gTTS
 
 DEFAULT_MESSAGE = "Default message"
 
