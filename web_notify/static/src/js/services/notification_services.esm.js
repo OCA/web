@@ -1,6 +1,6 @@
 import { registry } from "@web/core/registry";
 import { markup } from "@odoo/owl";
-import { simpleNotificationService } from "@bus/simple_notificaition_service";
+// import { simpleNotificationService } from "@bus/simple_notificaition_service";
 
 export const webNotificationService = {
     dependencies: ["bus_service", "notification", "action"],
