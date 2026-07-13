@@ -220,4 +220,5 @@ X2Many2DMatrixRenderer.props = {
     showColumnTotals: {type: Boolean, optional: true},
     isXClickable: {type: Boolean, optional: true},
     isYClickable: {type: Boolean, optional: true},
+    x2mListColumns: {type: Array, optional: true},
 };

@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===========================
 2D matrix for x2many fields
 ===========================
@@ -17,7 +13,7 @@
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -148,16 +144,16 @@ crucial part is that we fill the field in the default function:
                (0, 0, {
                    'name': 'Sample task name',
                    'project_id': p.id,
-                   'user_id': u.id,
-                   'planned_hours': 0,
+                   'user_ids': u.ids,
+                   'allocated_hours': 0,
                    'message_needaction': False,
                    'date_deadline': fields.Date.today(),
                })
                # if the project doesn't have a task for the user,
                # create a new one
-               if not p.task_ids.filtered(lambda x: x.user_id == u) else
+               if not p.task_ids.filtered(lambda x: u in x.user_ids) else
                # otherwise, return the task
-               (4, p.task_ids.filtered(lambda x: x.user_id == u)[0].id)
+               (4, p.task_ids.filtered(lambda x: u in x.user_ids)[0].id)
                for p in projects
                for u in users
            ]
@@ -168,12 +164,11 @@ Now in our wizard, we can use:
 
 .. code:: xml
 
-   <field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_y_axis="user_id" field_value="planned_hours">
+   <field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_y_axis="display_name" field_value="allocated_hours">
        <tree>
-           <field name="task_ids"/>
            <field name="project_id"/>
-           <field name="user_id"/>
-           <field name="planned_hours"/>
+           <field name="display_name"/>
+           <field name="allocated_hours"/>
        </tree>
    </field>
 
@@ -244,6 +239,9 @@ Contributors
 - Christopher Ormaza <chris.ormaza@forgeflow.com>
 - SodexisTeam <dev@sodexis.com>
 - Jasmin Solanki <jasmin.solanki@forgeflow.com>
+- `Komit <https://komit-consulting.com>`__:
+
+  - Cuong NGUYEN MINH TRAN MANH <cuong.nmtm@komit-consulting.com>
 
 Maintainers
 -----------

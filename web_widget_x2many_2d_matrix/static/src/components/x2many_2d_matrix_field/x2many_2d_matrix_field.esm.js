@@ -2,6 +2,7 @@
 
 import {Component} from "@odoo/owl";
 import {X2Many2DMatrixRenderer} from "@web_widget_x2many_2d_matrix/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.esm";
+import {X2ManyField} from "@web/views/fields/x2many/x2many_field";
 import {archParseBoolean} from "@web/views/utils";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
@@ -29,6 +30,7 @@ export class X2Many2DMatrixField extends Component {
 }
 
 X2Many2DMatrixField.template = "web_widget_x2many_2d_matrix.X2Many2DMatrixField";
+X2Many2DMatrixField.components = {X2Many2DMatrixRenderer, X2ManyField};
 X2Many2DMatrixField.props = {
     ...standardFieldProps,
     list_view: {type: Object, optional: false},
@@ -37,9 +39,10 @@ X2Many2DMatrixField.props = {
     isYClickable: {type: Boolean, optional: true},
     showRowTotals: {type: Boolean, optional: true},
     showColumnTotals: {type: Boolean, optional: true},
+    views: {type: Object, optional: true},
+    x2mListColumns: {type: Array, optional: true},
 };
 
-X2Many2DMatrixField.components = {X2Many2DMatrixRenderer};
 export const x2Many2DMatrixField = {
     component: X2Many2DMatrixField,
     extractProps({attrs, views}) {
@@ -60,6 +63,7 @@ export const x2Many2DMatrixField = {
                 "show_column_totals" in attrs
                     ? archParseBoolean(attrs.show_column_totals)
                     : true,
+            x2mListColumns: views.list.columns,
         };
     },
 };
