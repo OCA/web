@@ -1,6 +1,6 @@
 # Copyright 2016 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 
 from odoo.addons.bus.models.bus import channel_with_db, json_dump
 from odoo.addons.web.controllers.utils import clean_action
@@ -52,7 +52,7 @@ class ResUsers(models.Model):
         html=False,
         params=None,
     ):
-        title = title or _("Success")
+        title = title or self.env._("Success")
         self._notify_channel(
             SUCCESS, message, title, sticky, target, html, action, params
         )
@@ -67,7 +67,7 @@ class ResUsers(models.Model):
         action=None,
         params=None,
     ):
-        title = title or _("Danger")
+        title = title or self.env._("Danger")
         self._notify_channel(
             DANGER, message, title, sticky, target, html, action, params
         )
@@ -82,7 +82,7 @@ class ResUsers(models.Model):
         action=None,
         params=None,
     ):
-        title = title or _("Warning")
+        title = title or self.env._("Warning")
         self._notify_channel(
             WARNING, message, title, sticky, target, html, action, params
         )
@@ -97,7 +97,7 @@ class ResUsers(models.Model):
         action=None,
         params=None,
     ):
-        title = title or _("Information")
+        title = title or self.env._("Information")
         self._notify_channel(INFO, message, title, sticky, target, html, action, params)
 
     def notify_default(
@@ -110,7 +110,7 @@ class ResUsers(models.Model):
         action=None,
         params=None,
     ):
-        title = title or _("Default")
+        title = title or self.env._("Default")
         self._notify_channel(
             DEFAULT, message, title, sticky, target, html, action, params
         )
@@ -130,7 +130,7 @@ class ResUsers(models.Model):
             user.id != self.env.uid for user in self
         ):
             raise exceptions.UserError(
-                _("Sending a notification to another user is forbidden.")
+                self.env._("Sending a notification to another user is forbidden.")
             )
         if not target:
             target = self.partner_id
