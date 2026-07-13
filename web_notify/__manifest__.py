@@ -6,9 +6,9 @@
     "name": "Web Notify",
     "summary": """
         Send notification messages to user""",
-    "version": "18.0.1.1.1",
+    "version": "19.0.1.0.0",
     "license": "LGPL-3",
-    "author": "ACSONE SA/NV," "AdaptiveCity," "Odoo Community Association (OCA)",
+    "author": "ACSONE SA/NV,AdaptiveCity,Odoo Community Association (OCA)",
     "development_status": "Production/Stable",
     "website": "https://github.com/OCA/web",
     "depends": ["web", "bus", "base", "mail"],

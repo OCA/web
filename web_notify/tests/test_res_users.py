@@ -113,23 +113,47 @@ class TestResUsers(common.TransactionCase):
     def test_notify_many(self):
         # check that the notification of a list of users is done with
         # a single call to the bus
-        users = self.env.user.search([(1, "=", 1)])
-
+        user1 = self.env["res.users"].create(
+            {
+                "name": "Test User 1",
+                "login": "test_user_1",
+                "email": "user1@test.com",
+            }
+        )
+        user2 = self.env["res.users"].create(
+            {
+                "name": "Test User 2",
+                "login": "test_user_2",
+                "email": "user2@test.com",
+            }
+        )
+        users = user1 | user2
         self.assertTrue(len(users) > 1)
         self.env.user.notify_warning(message="message", target=users.partner_id)
 
     def test_notify_other_user(self):
-        other_user = self.env.ref("base.user_demo")
+        other_user = self.env["res.users"].create(
+            {
+                "name": "Demo User",
+                "login": "demo_user_test",
+                "email": "demo@test.com",
+            }
+        )
         other_user_model = self.env["res.users"].with_user(other_user)
         with self.assertRaises(exceptions.UserError):
             other_user_model.browse(self.env.uid).notify_info(message="hello")
 
         # This method for SUPER user
-        other_user = self.env.ref("base.user_demo")
         other_user_model = self.env["res.users"].with_user(other_user)
         with self.assertRaises(exceptions.UserError):
             other_user_model.browse(SUPERUSER_ID).notify_info(message="hello")
 
     def test_notify_admin_allowed_other_user(self):
-        other_user = self.env.ref("base.user_demo")
+        other_user = self.env["res.users"].create(
+            {
+                "name": "Demo User 2",
+                "login": "demo_user_test_2",
+                "email": "demo2@test.com",
+            }
+        )
         other_user.notify_info(message="hello")
