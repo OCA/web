@@ -29,7 +29,6 @@ export const webNotificationService = {
                     type: notification.type,
                     sticky: notification.sticky,
                     className: notification.className,
-                    messageIsHtml: notification.html,
                     buttons: buttons.map((button) => {
                         const onClick = button.onClick;
                         button.onClick = async () => {
