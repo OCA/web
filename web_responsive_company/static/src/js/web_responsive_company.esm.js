@@ -9,11 +9,17 @@ patch(SwitchCompanyMenu.prototype, "web_responsive_company.SwitchCompanyMenu", {
     setup() {
         this._super();
 
+        const companies = Object.values(
+            this.companyService.availableCompanies || {}
+        ).sort((a, b) => a.name.localeCompare(b.name));
+
         this.state = useState({
             companiesToToggle: [],
-            results: Object.values(this.companyService.availableCompanies || {}),
+            allCompaniesSorted: companies,
+            filteredCompaniesSorted: companies,
             hasResults: false,
         });
+
         this.searchInputRef = useRef("SearchBarInput");
     },
 
@@ -36,16 +42,16 @@ patch(SwitchCompanyMenu.prototype, "web_responsive_company.SwitchCompanyMenu", {
     _searchCompanies() {
         const query = this.searchInputRef.el.value;
         this.state.hasResults = query !== "";
-        const companies = Object.values(this.companyService.availableCompanies || {});
-        this.state.results = this.state.hasResults
-            ? fuzzyLookup(query, companies, (c) => c.name)
-            : companies;
+
+        this.state.filteredCompaniesSorted = this.state.hasResults
+            ? fuzzyLookup(query, this.state.allCompaniesSorted, (c) => c.name)
+            : this.state.allCompaniesSorted;
     },
 
     /* Key down on input search bar*/
     _onKeyDownSearchInput(ev) {
         if (ev.code === "Tab" || ev.code === "ArrowDown") {
-            if (this.state.results.length) {
+            if (this.state.filteredCompaniesSorted.length) {
                 ev.preventDefault();
                 document.querySelector(".company-card").focus();
             }
