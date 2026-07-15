@@ -107,12 +107,12 @@ class TileTile(models.Model):
 
     domain = fields.Text(default="[]", required=True)
 
-    domain_error = fields.Char(compute="_compute_data")
+    domain_error = fields.Char(compute="_compute_data", compute_sudo=True)
 
     action_id = fields.Many2one(
         comodel_name="ir.actions.act_window",
         string="Action",
-        help="Let empty to use the default action related to" " the selected model.",
+        help="Let empty to use the default action related to the selected model.",
         domain="[('res_model', '=', model_name)]",
     )
 
@@ -122,10 +122,12 @@ class TileTile(models.Model):
 
     hide_if_null = fields.Boolean(
         string="Hide if null",
-        help="If checked, the item will be hidden" " if the primary value is null.",
+        help="If checked, the item will be hidden if the primary value is null.",
     )
 
-    hidden = fields.Boolean(compute="_compute_data", search="_search_hidden")
+    hidden = fields.Boolean(
+        compute="_compute_data", compute_sudo=True, search="_search_hidden"
+    )
 
     # Primary Value
     primary_function = fields.Selection(
@@ -146,13 +148,13 @@ class TileTile(models.Model):
         "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000.",
     )
 
-    primary_value = fields.Float(compute="_compute_data")
+    primary_value = fields.Float(compute="_compute_data", compute_sudo=True)
 
-    primary_formated_value = fields.Char(compute="_compute_data")
+    primary_formated_value = fields.Char(compute="_compute_data", compute_sudo=True)
 
     primary_helper = fields.Char(compute="_compute_helper", store=True)
 
-    primary_error = fields.Char(compute="_compute_data")
+    primary_error = fields.Char(compute="_compute_data", compute_sudo=True)
 
     # Secondary Value
     secondary_function = fields.Selection(
@@ -171,13 +173,13 @@ class TileTile(models.Model):
         "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000.",
     )
 
-    secondary_value = fields.Float(compute="_compute_data")
+    secondary_value = fields.Float(compute="_compute_data", compute_sudo=True)
 
-    secondary_formated_value = fields.Char(compute="_compute_data")
+    secondary_formated_value = fields.Char(compute="_compute_data", compute_sudo=True)
 
     secondary_helper = fields.Char(compute="_compute_helper", store=True)
 
-    secondary_error = fields.Char(compute="_compute_data")
+    secondary_error = fields.Char(compute="_compute_data", compute_sudo=True)
 
     # Compute Section
     @api.depends(
@@ -202,7 +204,7 @@ class TileTile(models.Model):
             tile.primary_error = False
             tile.secondary_error = False
             if not tile.model_id or not tile.active:
-                return
+                continue
 
             model = self.env[tile.model_id.model]
             eval_context = self._get_eval_context()
@@ -214,7 +216,7 @@ class TileTile(models.Model):
                     "Domain Error"
                 )
                 tile.domain_error = str(e)
-                return
+                continue
             fields = [
                 f.name for f in [tile.primary_field_id, tile.secondary_field_id] if f
             ]
