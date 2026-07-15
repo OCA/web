@@ -22,7 +22,15 @@ class ResUsers(models.Model):
 
     @property
     def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS + self.TOOLTIP_READABLE_FIELDS
+        # ``tooltip_show_add_helper_allowed`` is a computed (read-only) field
+        # added to the user preferences form, so it must be self-readable too.
+        # Otherwise the ``res.users.read`` self-read shortcut is skipped and
+        # reading one's own preferences can raise an AccessError.
+        return (
+            super().SELF_READABLE_FIELDS
+            + self.TOOLTIP_READABLE_FIELDS
+            + ["tooltip_show_add_helper_allowed"]
+        )
 
     @property
     def SELF_WRITEABLE_FIELDS(self):
