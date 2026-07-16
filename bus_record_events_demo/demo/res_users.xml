@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <!-- Demo User 1 -->
+    <record
+        id="user_demo_bus_1"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="partner_id" ref="base.partner_demo" />
+        <field name="login">demo_bus_1</field>
+        <field name="password">demo_bus_1</field>
+        <field name="name">Demo Bus User 1</field>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]" />
+    </record>
+
+    <!-- Demo User 2 -->
+    <record
+        id="user_demo_bus_2"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="login">demo_bus_2</field>
+        <field name="password">demo_bus_2</field>
+        <field name="name">Demo Bus User 2</field>
+        <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]" />
+    </record>
+</odoo>
