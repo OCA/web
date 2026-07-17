@@ -1,1 +1,4 @@
 - Arnau Cruz \<arnau.cruz@forgeflow.com\>
+- Lois Rilo \<lois.rilo@forgeflow.com\>
+- [CIT-Services](https://cit-services.eu):
+  - Prayag <prayag.k@cit-services.eu>

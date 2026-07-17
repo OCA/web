@@ -1,4 +1,4 @@
-# Copyright 2024 ForgeFlow S.L.
+# Copyright 2024-26 ForgeFlow S.L.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import json
@@ -25,14 +25,19 @@ class CustomGroupsTreeNode(ExcelExport):
     def context(self, value):
         self._context = value
 
+    def _strip_beyond_depth(self, node, current_depth, max_depth):
+        if current_depth >= max_depth:
+            aggregated_values = node.aggregated_values
+            node.children = OrderedDict()
+            node.data = []
+            node.aggregated_values = aggregated_values
+        else:
+            for child_node in node.children.values():
+                self._strip_beyond_depth(child_node, current_depth + 1, max_depth)
+
     def from_group_data(self, fields, columns_headers, groups):
-        collapse_groups = self.context.get("collapse_groups")
-        if collapse_groups:
-            for _child_key, child_node in groups.children.items():
-                aggregated_values = child_node.aggregated_values
-                if child_node.children:
-                    child_node.children = OrderedDict()
-                if child_node.data:
-                    child_node.data = []
-                child_node.aggregated_values = aggregated_values
+        expand_depth = self.context.get("expand_depth")
+        if expand_depth is not None:
+            for child_node in groups.children.values():
+                self._strip_beyond_depth(child_node, 0, expand_depth)
         return super().from_group_data(fields, columns_headers, groups)
