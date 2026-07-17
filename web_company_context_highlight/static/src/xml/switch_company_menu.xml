@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Acsone
+     Author: Pierre Verkest <pierre.verkest@apycod.fr>
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<templates xml:space="preserve">
+    <t t-inherit="web.SwitchCompanyMenu" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_switch_company_menu')]" position="attributes">
+            <attribute
+                name="t-attf-class"
+            >o_switch_company_menu d-none d-md-block {{ user.activeCompanies.length > 1 ? 'o_company_context_highlighted' : '' }}</attribute>
+            <attribute
+                name="t-attf-style"
+            >{{ user.activeCompanies.length > 1 ? '--o-company-context-highlight-bg: ' + highlightColor + '; --o-company-context-highlight-color: ' + highlightTextColor + ';' : '' }}</attribute>
+        </xpath>
+        <xpath expr="//span[hasclass('oe_topbar_name')]" position="before">
+            <t t-if="user.activeCompanies.length > 1">
+                <i
+                    class="fa fa-building-o me-1 align-middle d-none d-lg-inline-block"
+                    title="Multi-company context active"
+                />
+            </t>
+        </xpath>
+    </t>
+</templates>
