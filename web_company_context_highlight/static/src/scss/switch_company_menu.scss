@@ -1,0 +1,10 @@
+.o_switch_company_menu.o_company_context_highlighted {
+    button {
+        background-color: var(--o-company-context-highlight-bg, #ffc107) !important;
+        color: var(--o-company-context-highlight-color, #212529) !important;
+        border-radius: 4px;
+        font-weight: bold;
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+}

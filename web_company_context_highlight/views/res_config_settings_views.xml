@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Acsone
+     Author: Pierre Verkest <pierre.verkest@apycod.fr>
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.web_company_context_highlight</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//block[@name='companies_setting_container']"
+                position="inside"
+            >
+                <setting
+                    id="web_company_context_highlight_setting"
+                    string="Company Switcher Highlight"
+                    help="Configure background and text colors to highlight the company switcher when multiple companies are selected."
+                >
+                    <div class="content-group">
+                        <div class="row mt16">
+                            <label
+                                for="web_company_context_highlight_color"
+                                string="Background Color"
+                                class="col-lg-4 o_light_label"
+                            />
+                            <field
+                                name="web_company_context_highlight_color"
+                                widget="color"
+                                class="oe_inline"
+                            />
+                        </div>
+                        <div class="row mt8">
+                            <label
+                                for="web_company_context_highlight_text_color"
+                                string="Text Color"
+                                class="col-lg-4 o_light_label"
+                            />
+                            <field
+                                name="web_company_context_highlight_text_color"
+                                widget="color"
+                                class="oe_inline"
+                            />
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
