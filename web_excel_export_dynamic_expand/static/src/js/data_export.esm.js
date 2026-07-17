@@ -1,17 +1,38 @@
 import {patch} from "@web/core/utils/patch";
 import {ListController} from "@web/views/list/list_controller";
+import {useBus} from "@web/core/utils/hooks";
+
+function computeCollapseGroups(root) {
+    const groups = root.groups; // Undefined/empty for ungrouped lists
+    return (
+        Array.isArray(groups) && groups.length > 0 && groups.every((g) => g.isFolded)
+    );
+}
 
 patch(ListController.prototype, {
-    async downloadExport() {
-        const hasDataRow = document.querySelectorAll(".o_data_row").length > 0;
-        const hasGroup = document.querySelectorAll(".o_group_header").length > 0;
-        const collapseGroups = !hasDataRow && hasGroup;
+    setup() {
+        const searchModel = this.env.searchModel;
+        if (searchModel) {
+            useBus(searchModel, "direct-export-data", () => {
+                if (this.model && this.model.root) {
+                    this.model.root.config.context = {
+                        ...this.model.root.config.context,
+                        collapse_groups: computeCollapseGroups(this.model.root),
+                    };
+                }
+            });
+        }
+        super.setup(...arguments);
 
-        this.props.context = {
-            ...this.props.context,
-            collapse_groups: collapseGroups,
+        const originalExportRecords = this.exportRecords;
+        this.exportRecords = async (...args) => {
+            if (this.model && this.model.root) {
+                this.model.root.config.context = {
+                    ...this.model.root.config.context,
+                    collapse_groups: computeCollapseGroups(this.model.root),
+                };
+            }
+            return originalExportRecords.call(this, ...args);
         };
-
-        await super.downloadExport(...arguments);
     },
 });
