@@ -69,6 +69,7 @@ addon | version | maintainers | summary
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 18.0.1.0.1 |  | Allows you to dynamically color fields on tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 18.0.1.0.1 |  | Open the linked resource when clicking on their name
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 18.0.1.0.1 | <a href='https://github.com/LoisRForgeFlow'><img src='https://github.com/LoisRForgeFlow.png' width='32' height='32' style='border-radius:50%;' alt='LoisRForgeFlow'/></a> <a href='https://github.com/JasminSForgeFlow'><img src='https://github.com/JasminSForgeFlow.png' width='32' height='32' style='border-radius:50%;' alt='JasminSForgeFlow'/></a> | This widget allows to display charts using Bokeh library.
+[web_widget_char_size](web_widget_char_size/) | 18.0.1.0.0 |  | Add size option to Char widget
 [web_widget_domain_editor_dialog](web_widget_domain_editor_dialog/) | 18.0.1.0.0 |  | Recovers the Domain Editor Dialog functionality
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 18.0.2.0.0 |  | This module adds support for dynamic dropdown widget
 [web_widget_image_download](web_widget_image_download/) | 18.0.1.0.0 |  | Allows to download any image from its widget
