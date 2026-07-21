@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_concurrent_edit_global_warning.FormStatusIndicator"
+        t-inherit="web.FormStatusIndicator"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath
+            expr="//div[hasclass('o_form_status_indicator_buttons')]"
+            position="inside"
+        >
+            <button
+                type="button"
+                class="o_form_button_concurrent_edit_tooltip btn btn-danger py-0"
+                t-if="showConcurrentEditWarning"
+                t-on-click.stop="toggleConcurrentEditWarningPopover"
+                aria-label="Concurrent Edit Detected"
+                t-ref="concurrent_edit_warning_button"
+            >
+                <i class="fa fa-warning fa-fw" />
+            </button>
+            <button
+                type="button"
+                class="o_form_button_concurrent_save_tooltip btn btn-warning py-0"
+                t-if="remoteSaved.value"
+                t-on-click.stop="toggleConcurrentSaveWarningPopover"
+                aria-label="Concurrent Save Detected"
+                t-ref="concurrent_save_warning_button"
+            >
+                <i class="fa fa-warning fa-fw" />
+            </button>
+        </xpath>
+        <xpath
+            expr="//div[hasclass('o_form_status_indicator_buttons')]"
+            position="before"
+        >
+            <span
+                t-if="remoteDirty and !showConcurrentEditWarning and !(props.model.root.isVirtual or displayButtons)"
+                class="text-muted small ms-2"
+                data-tooltip="This record is being edited by another user"
+            >
+                <i class="fa fa-users fa-fw" />
+            </span>
+        </xpath>
+        <xpath
+            expr="//div[hasclass('o_form_status_indicator_buttons')]"
+            position="before"
+        >
+            <span
+                t-if="remoteSaved.value and !(props.model.root.isVirtual or displayButtons)"
+                t-on-click.stop="reloadRecord"
+                class="text-info small ms-2"
+                style="cursor: pointer;"
+                data-tooltip="This record has been modified by another user"
+            >
+                <i class="fa fa-refresh fa-fw" />
+            </span>
+        </xpath>
+    </t>
+
+    <t t-name="web_concurrent_edit_global_warning.ConcurrentEditWarningPopover" owl="1">
+        <div class="o-tooltip o-concurrent_edit_tooltip danger">
+            <header>
+                <h3 class="o_popover_header">
+                    Concurrent Edit Detected!
+                </h3>
+                <aside>
+                    <button
+                        type="button"
+                        class="btn"
+                        aria-label="Refresh"
+                        t-on-click="props.refreshConcurrentEditRemotes"
+                    >
+                        <i class="fa fa-refresh" aria-hidden="true" />
+                    </button>
+                    <button
+                        type="button"
+                        class="btn"
+                        aria-label="Close"
+                        t-on-click="props.onClose"
+                    >
+                        <i class="fa fa-times" aria-hidden="true" />
+                    </button>
+                </aside>
+            </header>
+            <div class="popover-body">
+                <p>
+                    This record is already being edited by <t
+                        t-esc="props.userCount"
+                    /> other user<span t-if="props.userCount &gt; 1">s</span>.
+                </p>
+                <p>
+                    It is recommended to wait for the other user to finish editing before making changes.
+                </p>
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    t-on-click="props.discardChanges"
+                >
+                    <i class="fa fa-undo" aria-hidden="true" />
+                    Discard Local Changes
+                </button>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="web_concurrent_edit_global_warning.ConcurrentSaveWarningPopover" owl="1">
+        <div class="o-tooltip o-concurrent_edit_tooltip warning">
+            <header>
+                <h3 class="o_popover_header">
+                    Concurrent Save Detected!
+                </h3>
+                <aside>
+                    <button
+                        type="button"
+                        class="btn"
+                        aria-label="Close"
+                        t-on-click="props.onClose"
+                    >
+                        <i class="fa fa-times" aria-hidden="true" />
+                    </button>
+                </aside>
+            </header>
+            <div class="popover-body">
+                <p>
+                    This record seems to have changed.
+                </p>
+                <p>
+                    It is recommended to reload the record to see the latest changes before making changes.
+                </p>
+                <button
+                    type="button"
+                    class="btn btn-warning"
+                    t-on-click="props.refreshChanges"
+                >
+                    <i class="fa fa-undo fa-fw" aria-hidden="true" />
+                    Reload record
+                </button>
+            </div>
+        </div>
+    </t>
+
+</templates>
