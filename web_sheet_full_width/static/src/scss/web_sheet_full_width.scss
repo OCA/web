@@ -1,9 +1,16 @@
 .o_form_view {
-    .o_form_sheet_bg .o_form_sheet {
+    // Since v17 the sheet max-width is set on .o_form_sheet_bg, not on
+    // .o_form_sheet anymore, so the override has to target the former.
+    // The auto right margin is also reset: some modules (e.g.
+    // web_chatter_position) set width: auto on this element, and with an auto
+    // margin it would shrink to its content width instead of using the whole
+    // available width.
+    .o_form_sheet_bg {
         max-width: none !important;
-        width: auto !important;
+        margin-right: 0 !important;
     }
-    .o_FormRenderer_chatterContainer {
+    // The chatter container class was renamed when Discuss was rewritten in OWL.
+    .o-mail-Form-chatter {
         max-width: none;
     }
 }
