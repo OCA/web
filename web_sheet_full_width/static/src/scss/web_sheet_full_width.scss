@@ -3,7 +3,10 @@
         max-width: none !important;
         width: auto !important;
     }
-    .o_FormRenderer_chatterContainer {
+    // 19.0: la clase o_FormRenderer_chatterContainer ya no existe. El chatter
+    // dentro de un formulario pasa a o-mail-Form-chatter (nomenclatura o-mail-*
+    // introducida al reescribir Discuss en OWL).
+    .o-mail-Form-chatter {
         max-width: none;
     }
 }
