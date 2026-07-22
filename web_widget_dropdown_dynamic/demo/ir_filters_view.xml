@@ -4,12 +4,12 @@
         <field name="model">ir.filters</field>
         <field name="inherit_id" ref="base.ir_filters_view_form" />
         <field name="arch" type="xml">
-            <field name="user_id" position="after">
+            <field name="user_ids" position="after">
                 <field
                     name="x_dynamic_dropdown_int"
                     widget="dynamic_dropdown"
                     options="{'values': 'dynamic_dropdown_int_method_demo'}"
-                    context="{'depending_on': user_id}"
+                    context="{'depending_on': user_ids}"
                 />
             </field>
         </field>

@@ -4,13 +4,22 @@ import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {Component, onWillStart, onWillUpdateProps} from "@odoo/owl";
 import {useOwnedDialogs} from "@web/core/utils/hooks";
+import {SelectMenu} from "@web/core/select_menu/select_menu";
+import {hasTouch} from "@web/core/browser/feature_detection";
 
 export class FieldDynamicDropdown extends Component {
+    // The core SelectionField template renders a <SelectMenu>, which must be
+    // declared here because OWL resolves subcomponents from this component.
+    static components = {SelectMenu};
     static template = "web.SelectionField";
     static props = {
         ...standardFieldProps,
         method: {type: String},
         context: {type: Object},
+        // The core template references props.placeholder, which
+        // standardFieldProps does not include; the core SelectionField
+        // declares it separately too.
+        placeholder: {type: String, optional: true},
     };
     setup() {
         super.setup();
@@ -42,7 +51,7 @@ export class FieldDynamicDropdown extends Component {
             if (
                 this.props.record.data[this.props.name] &&
                 !this.specialData
-                    .map((val) => val[0])
+                    .map((val) => String(val[0]))
                     .includes(String(this.props.record.data[this.props.name]))
             ) {
                 this.props.record.update({[this.props.name]: null});
@@ -51,42 +60,68 @@ export class FieldDynamicDropdown extends Component {
         }
         return [];
     }
-    get value() {
-        return String(this.props.record.data[this.props.name]);
-    }
-    parseInteger(value) {
-        return Number(value);
+    /**
+     * The template consumes `choices` as [{value, label}], not as
+     * [value, label] pairs. Values are normalized to String so that SelectMenu
+     * matches the current value on integer fields too (the server may return
+     * the value as text).
+     */
+    get choices() {
+        return this.options.map(([value, label]) => ({value: String(value), label}));
     }
     /**
-     * @param {Event} ev
+     * On small screens with touch, SelectMenu opens as a bottom sheet.
+     * Same condition as the core SelectionField.
      */
-    onChange(ev) {
-        let isInvalid = false;
-        let value = JSON.parse(ev.target.value);
+    get isBottomSheet() {
+        return this.env.isSmall && hasTouch();
+    }
+    /**
+     * The template uses `string` to render the value in readonly mode.
+     */
+    get string() {
+        const current = this.props.record.data[this.props.name];
+        if (current === false || current === null || current === undefined) {
+            return "";
+        }
+        const option = this.options.find((opt) => String(opt[0]) === String(current));
+        return option ? option[1] : "";
+    }
+    get value() {
+        const raw = this.props.record.data[this.props.name];
+        if (raw === false || raw === null || raw === undefined) {
+            return undefined;
+        }
+        return String(raw);
+    }
+    /**
+     * SelectMenu calls onSelect(value) with the value directly, and with null
+     * when clearing.
+     */
+    onChange(value) {
+        if (value === null || value === undefined) {
+            this.props.record.update({[this.props.name]: false});
+            return;
+        }
+        let newValue = value;
         if (this.type === "integer") {
-            value = Number(value);
-            if (!value) {
-                if (this.props.record) {
-                    this.props.record.setInvalidField(this.props.name);
-                }
-                isInvalid = true;
+            newValue = Number(value);
+            if (!newValue) {
+                this.props.record.setInvalidField(this.props.name);
+                return;
             }
         }
-        if (!isInvalid) {
-            this.props.record.update({[this.props.name]: value});
-        }
-    }
-    stringify(value) {
-        return JSON.stringify(value);
+        this.props.record.update({[this.props.name]: newValue});
     }
 }
 export const dynamicDropdownField = {
     component: FieldDynamicDropdown,
     displayName: _t("Dynamic Dropdown"),
     supportedTypes: ["char", "integer", "selection"],
-    extractProps: ({options}, {context}) => ({
+    extractProps: ({options, placeholder}, {context}) => ({
         method: options?.values,
         context,
+        placeholder,
     }),
 };
 registry.category("fields").add("dynamic_dropdown", dynamicDropdownField);
