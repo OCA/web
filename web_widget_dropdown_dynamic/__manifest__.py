@@ -5,7 +5,7 @@
     "name": "Dynamic Dropdown Widget",
     "summary": "This module adds support for dynamic dropdown widget",
     "category": "Web",
-    "version": "18.0.2.0.0",
+    "version": "19.0.1.0.0",
     "license": "LGPL-3",
     "author": "CorporateHub, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
@@ -15,8 +15,8 @@
         "web.assets_backend": [
             "web_widget_dropdown_dynamic/static/src/js/field_dynamic_dropdown.esm.js",
         ],
-        "web.qunit_suite_tests": [
-            "web_widget_dropdown_dynamic/static/tests/web_widget_dropdown_dynamic_tests.esm.js",
+        "web.assets_unit_tests": [
+            "web_widget_dropdown_dynamic/static/tests/**/*.js",
         ],
     },
     "demo": [
