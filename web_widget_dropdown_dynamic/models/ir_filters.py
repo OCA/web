@@ -12,7 +12,15 @@ class IrFilters(models.Model):
         values = [
             ("1", "One"),
         ]
-        if self.env.context.get("depending_on") == self.env.ref("base.user_admin").id:
+        # depending_on may arrive as a list of ids (Many2many) or as a single
+        # id (Many2one); both forms are accepted on purpose.
+        depending_on = self.env.context.get("depending_on")
+        admin_id = self.env.ref("base.user_admin").id
+        if isinstance(depending_on, (list, tuple)):
+            matches = admin_id in depending_on
+        else:
+            matches = depending_on == admin_id
+        if matches:
             values += [
                 ("2", "Two"),
             ]
