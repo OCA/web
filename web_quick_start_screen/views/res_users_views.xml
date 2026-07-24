@@ -4,9 +4,15 @@
         <field name="inherit_id" ref="base.view_users_form" />
         <field name="model">res.users</field>
         <field name="arch" type="xml">
-            <field name="action_id" position="before">
-                <field name="quick_start_screen_id" />
-            </field>
+            <group name="other_preferences" position="before">
+                <group
+                    string="Menus Customization"
+                    groups="base.group_no_one"
+                    invisible="share"
+                >
+                    <field name="quick_start_screen_id" />
+                </group>
+            </group>
         </field>
     </record>
 </odoo>

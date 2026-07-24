@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="0">
-    <record id="quick_start_screen_action_contacts" model="quick.start.screen.action">
+    <record
+        id="quick_start_screen_action_contacts_demo"
+        model="quick.start.screen.action"
+    >
         <field name="name">Contacts</field>
         <field
             name="description"
@@ -10,7 +13,7 @@
         <field name="color">7</field>
     </record>
     <record
-        id="quick_start_screen_action_access_rights"
+        id="quick_start_screen_action_access_rights_demo"
         model="quick.start.screen.action"
     >
         <field name="name">Access rights</field>
@@ -22,7 +25,7 @@
         <field name="color">4</field>
     </record>
     <record
-        id="quick_start_screen_action_config_actions"
+        id="quick_start_screen_action_config_actions_demo"
         model="quick.start.screen.action"
     >
         <field name="name">Configure screen actions</field>
@@ -43,12 +46,12 @@
         <field name="name">Demo start screen</field>
         <field
             name="action_ids"
-            eval="[Command.link(ref('web_quick_start_screen.quick_start_screen_action_contacts')), Command.link(ref('web_quick_start_screen.quick_start_screen_action_config_actions'))]"
+            eval="[Command.link(ref('web_quick_start_screen.quick_start_screen_action_contacts_demo')), Command.link(ref('web_quick_start_screen.quick_start_screen_action_config_actions_demo'))]"
         />
     </record>
-    <record id="base.user_demo" model="res.users">
+    <record id="base.user_admin" model="res.users">
         <field
-            name="groups_id"
+            name="group_ids"
             eval="[Command.link(ref('web_quick_start_screen.group_quick_start_screen'))]"
         />
         <field name="quick_start_screen_id" ref="quick_start_screen_demo" />

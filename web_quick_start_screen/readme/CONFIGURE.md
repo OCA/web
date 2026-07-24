@@ -15,7 +15,7 @@ To create quick start screens:
 
 To assign a quick start screen to a user:
 
-- Go to *Settings > Users and groups > Users* and select one.
+- Go to *Settings > Users and Companies > Users* and select one.
 - In the *Preferences* tab, *Menus customization* section, you can choose which
   *Quick start screen* will that user use.
 - If you want to make the user start always in his start screen, in the same section
@@ -23,5 +23,5 @@ To assign a quick start screen to a user:
 
 To activate the quick start screen menu for a user:
 
-- Go to *Settings > Users and groups > Users* (with debug mode on)
-- In *Technical* groups, set *Quick Start Screen* on.
+- Go to *Settings > Users and Companies > Users* (with debug mode on)
+- In *Extra Rights* groups, set *Quick Start Screen* on.
