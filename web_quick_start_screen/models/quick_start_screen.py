@@ -13,10 +13,10 @@ class QuicktStartScreen(models.Model):
     action_ids = fields.Many2many(comodel_name="quick.start.screen.action")
 
     @api.model
-    @tools.ormcache("frozenset(self.env.user.groups_id.ids)")
+    @tools.ormcache("frozenset(self.env.user.group_ids.ids)")
     def _visible_action_ids(self):
         """Inspired on how menus visibility work in core"""
-        screen_actions = self.action_ids.search([]).sudo()
+        screen_actions = self.action_ids.search([]).sudo()  # pylint: disable=no-search-all
         visible = self.action_ids.browse()
         access = self.env["ir.model.access"]
         MODEL_BY_TYPE = {

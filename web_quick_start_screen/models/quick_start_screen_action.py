@@ -27,7 +27,7 @@ class DecontracStartScreenAction(models.Model):
         required=True,
     )
     domain = fields.Char(
-        help="Add extra domain if needed. You can use `ref('<xml_id>')` and it will be"
+        help="Add extra domain if needed. You can use `ref('<xml_id>')` and it will be "
         "evaluated. You can also use `datetime` and `context_today` in the same way"
         "`ir.filters` do."
     )
@@ -60,8 +60,13 @@ class DecontracStartScreenAction(models.Model):
             # We need to deal with the active_id and overwrite it if needed
             # MIG TODO: Check if this is affected
             active_id = extra_context.get("active_id", 0)
+            action_ctx = action.get("context", "{}")
+            if isinstance(action_ctx, str):
+                action_ctx = safe_eval(action_ctx, {"active_id": active_id})
+            elif not isinstance(action_ctx, dict):
+                action_ctx = {}
             action["context"] = dict(
-                safe_eval(action.get("context", "{}"), {"active_id": active_id}),
+                action_ctx,
                 **extra_context,
             )
         if self.domain:

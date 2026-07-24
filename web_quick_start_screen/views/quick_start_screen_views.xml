@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="quick_start_screen_list_view" model="ir.ui.view">
         <field name="model">quick.start.screen</field>

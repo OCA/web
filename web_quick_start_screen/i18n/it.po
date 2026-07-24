@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2025-04-15 14:30+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
@@ -17,22 +17,22 @@ msgstr ""
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: web_quick_start_screen
-#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_contacts
+#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_contacts_demo
 msgid "<span>Browse <b>contacts</b></span>"
 msgstr "<span>Sfoglia<b>contatti</b></span>"
 
 #. module: web_quick_start_screen
-#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_config_actions
+#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_config_actions_demo
 msgid "<span>Configure this <b>screen actions</b></span>"
 msgstr "<span>Configura queste <b>azioni schermata</b></span>"
 
 #. module: web_quick_start_screen
-#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_access_rights
+#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_access_rights_demo
 msgid "<span>Explore <b>access rights</b></span>"
 msgstr "<span>Esplora <b>diritti di accesso</b></span>"
 
 #. module: web_quick_start_screen
-#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_access_rights
+#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_access_rights_demo
 msgid "Access rights"
 msgstr "Diritti di accesso"
 
@@ -89,12 +89,12 @@ msgid "Color"
 msgstr "Colore"
 
 #. module: web_quick_start_screen
-#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_config_actions
+#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_config_actions_demo
 msgid "Configure screen actions"
 msgstr "Configura azioni schermata"
 
 #. module: web_quick_start_screen
-#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_contacts
+#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_contacts_demo
 msgid "Contacts"
 msgstr "Contatti"
 
