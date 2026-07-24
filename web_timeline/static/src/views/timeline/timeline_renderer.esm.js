@@ -31,6 +31,9 @@ export class TimelineRenderer extends Component {
         this.min_height = this.params.min_height;
         this.date_start = this.params.date_start;
         this.dependency_arrow = this.params.dependency_arrow;
+        // Dependency arrows are shown by default when configured, but can be
+        // toggled off at runtime through the button in the toolbar.
+        this.showDependencies = useState({data: Boolean(this.dependency_arrow)});
         this.fields = this.params.fields;
         this.timeline = false;
         this.initial_data_loaded = false;
@@ -87,6 +90,16 @@ export class TimelineRenderer extends Component {
                 end: DateTime.now().plus({hours: 24}).toJSDate(),
             });
         }
+    }
+
+    /**
+     * Toggle the display of dependency arrows.
+     *
+     * @private
+     */
+    _onToggleDependenciesClicked() {
+        this.showDependencies.data = !this.showDependencies.data;
+        this.draw_canvas();
     }
 
     /**
@@ -257,7 +270,7 @@ export class TimelineRenderer extends Component {
      */
     draw_canvas() {
         this.canvas.clear();
-        if (this.dependency_arrow) {
+        if (this.dependency_arrow && this.showDependencies.data) {
             this.draw_dependencies();
         }
     }
