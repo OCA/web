@@ -1,0 +1,82 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_action_desktop_only
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_action_desktop_only
+#: model:ir.model,name:web_action_desktop_only.model_ir_actions_actions
+msgid "Actions"
+msgstr ""
+
+#. module: web_action_desktop_only
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_act_url__desktop_only
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_act_window__desktop_only
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_act_window_close__desktop_only
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_actions__desktop_only
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_client__desktop_only
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_report__desktop_only
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_server__desktop_only
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_cron__desktop_only
+msgid "Desktop Only"
+msgstr ""
+
+#. module: web_action_desktop_only
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_act_url__desktop_only
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_act_window__desktop_only
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_act_window_close__desktop_only
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_actions__desktop_only
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_client__desktop_only
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_report__desktop_only
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_server__desktop_only
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_cron__desktop_only
+msgid ""
+"If checked, the menu entry associated to this action will only be visible on"
+" desktop devices (hidden on mobile)."
+msgstr ""
+
+#. module: web_action_desktop_only
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_act_url__main_action
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_act_window__main_action
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_act_window_close__main_action
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_actions__main_action
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_client__main_action
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_report__main_action
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_actions_server__main_action
+#: model:ir.model.fields,help:web_action_desktop_only.field_ir_cron__main_action
+msgid ""
+"If checked, this action can be considered as a main action of their module. "
+"When some menus are hidden on mobile due to the desktop_only flag, this "
+"action becomes the app entry point."
+msgstr ""
+
+#. module: web_action_desktop_only
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_act_url__main_action
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_act_window__main_action
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_act_window_close__main_action
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_actions__main_action
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_client__main_action
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_report__main_action
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_actions_server__main_action
+#: model:ir.model.fields,field_description:web_action_desktop_only.field_ir_cron__main_action
+msgid "Main Action"
+msgstr ""
+
+#. module: web_action_desktop_only
+#: model:ir.model,name:web_action_desktop_only.model_ir_ui_menu
+msgid "Menu"
+msgstr ""
+
+#. module: web_action_desktop_only
+#: model_terms:ir.ui.view,arch_db:web_action_desktop_only.view_window_action_form
+msgid "Mobile Visibility"
+msgstr ""
