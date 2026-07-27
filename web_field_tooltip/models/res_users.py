@@ -22,7 +22,11 @@ class ResUsers(models.Model):
 
     @property
     def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS + self.TOOLTIP_READABLE_FIELDS
+        return (
+            super().SELF_READABLE_FIELDS
+            + self.TOOLTIP_READABLE_FIELDS
+            + ["tooltip_show_add_helper_allowed"]
+        )
 
     @property
     def SELF_WRITEABLE_FIELDS(self):
