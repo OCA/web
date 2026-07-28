@@ -1,0 +1,72 @@
+// Interactive dependency editing (drag-to-link + arrow removal), active only
+// on gantt_ux views with edit rights (.o_tlg_dep_editable set by the
+// renderer patch).
+
+.o_timeline_gantt {
+    .o_tlg_overlay {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 4;
+    }
+    // 28px hit zone overlapping the pill's right edge (positioned by the
+    // dragger); the visual is a 14px disc centered inside it. The white halo
+    // keeps the disc readable over bar labels that overflow the pill.
+    .o_tlg_handle {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        pointer-events: auto;
+        cursor: crosshair;
+        touch-action: none;
+        z-index: 5;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 7px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--o-tlg-accent);
+            box-sizing: border-box;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+        }
+    }
+    .o_tlg_ghost {
+        stroke: var(--o-tlg-accent);
+        stroke-width: 1.5;
+        stroke-dasharray: 4 3;
+        fill: none;
+        pointer-events: none;
+    }
+    .vis-item.o_tlg_drop_ok {
+        outline: 2px solid var(--o-tlg-accent);
+        outline-offset: 1px;
+    }
+    .vis-item.o_tlg_drop_invalid {
+        outline: 2px solid var(--o-tlg-danger);
+        outline-offset: 1px;
+        cursor: not-allowed !important;
+    }
+
+    // While a link drag is active: crosshair everywhere, the handle and the
+    // existing arrows become transparent to hit-testing (elementFromPoint
+    // must reach the bars, not a crossing arrow's 10px corridor).
+    &.o_tlg_linking {
+        .vis-timeline,
+        .vis-timeline * {
+            cursor: crosshair !important;
+        }
+        .vis-item.o_tlg_drop_invalid,
+        .vis-item.o_tlg_drop_invalid * {
+            cursor: not-allowed !important;
+        }
+        .o_tlg_handle {
+            pointer-events: none;
+        }
+        .o_tlg_dep_hit,
+        .o_tlg_dep_arrow {
+            pointer-events: none !important;
+        }
+    }
+}
