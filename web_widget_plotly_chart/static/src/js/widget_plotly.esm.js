@@ -1,12 +1,11 @@
-/** @odoo-module **/
-
-import {CharField} from "@web/views/fields/char/char_field";
-import {loadBundle} from "@web/core/assets";
+import {CharField, charField} from "@web/views/fields/char/char_field";
+import {onPatched, onWillStart, useEffect, useRef} from "@odoo/owl";
+import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 
-import {onPatched, onWillStart, useEffect, useRef} from "@odoo/owl";
-
 export class PlotlyChartWidget extends CharField {
+    static template = "web_widget_plotly_chart.PlotlyChartWidgetField";
+
     setup() {
         super.setup();
 
@@ -21,17 +20,16 @@ export class PlotlyChartWidget extends CharField {
         });
 
         onWillStart(() =>
-            loadBundle({
-                jsLibs: [
-                    "/web_widget_plotly_chart/static/src/lib/plotly/plotly-2.32.0.min.js",
-                ],
-            })
+            loadJS(
+                "/web_widget_plotly_chart/static/src/lib/plotly/plotly-2.32.0.min.js"
+            )
         );
     }
+
     updatePlotly(value) {
-        const value_html = $(value);
-        const div = value_html.find(".plotly-graph-div").get(0).outerHTML || "";
-        const script = value_html.find("script").get(0).textContent || "";
+        const doc = new DOMParser().parseFromString(value || "", "text/html");
+        const div = doc.querySelector(".plotly-graph-div")?.outerHTML || "";
+        const script = doc.querySelector("script")?.textContent || "";
 
         if (this.widget.el) {
             this.widget.el.innerHTML = div;
@@ -40,12 +38,10 @@ export class PlotlyChartWidget extends CharField {
     }
 }
 
-PlotlyChartWidget.template = "web_widget_plotly_chart.PlotlyChartWidgetField";
-PlotlyChartWidget.supportedTypes = ["char", "text"];
-
 export const plotlyChartWidget = {
-    ...CharField,
+    ...charField,
     component: PlotlyChartWidget,
+    supportedTypes: ["char", "text"],
 };
 
 registry.category("fields").add("plotly_chart", plotlyChartWidget);

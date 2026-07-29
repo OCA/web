@@ -5,11 +5,11 @@
     "maintainers": ["robyf70"],
     "website": "https://github.com/OCA/web",
     "category": "Web",
-    "version": "17.0.1.0.0",
+    "version": "19.0.1.0.0",
     "depends": ["web"],
     "data": [],
     "external_dependencies": {
-        "python": ["plotly==5.22.0"],
+        "python": ["plotly"],
     },
     "assets": {
         "web.assets_backend": [
