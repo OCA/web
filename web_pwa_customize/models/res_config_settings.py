@@ -29,12 +29,8 @@ class ResConfigSettings(models.TransientModel):
     @api.model
     def get_values(self):
         res = super().get_values()
-        pwa_icon_attachment = (
-            self.env["ir.attachment"]
-            .sudo()
-            .search([("url", "like", self._pwa_icon_url_base + ".")])
-        )
-        res["pwa_icon"] = pwa_icon_attachment.datas if pwa_icon_attachment else False
+        pwa_icon = self.env["ir.attachment"].sudo()._get_pwa_icon()
+        res["pwa_icon"] = pwa_icon.datas if pwa_icon else False
         return res
 
     @api.model
