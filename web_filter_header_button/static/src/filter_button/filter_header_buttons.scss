@@ -1,0 +1,39 @@
+.o_control_panel {
+    position: relative;
+}
+
+.o_filter_header_toggle {
+    flex: 0 0 auto !important;
+    width: auto;
+    min-width: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.o_filter_header_button_bar {
+    margin-top: 0.375rem;
+    overflow: hidden;
+    transition: max-height 0.2s ease-in-out, opacity 0.15s ease-in-out;
+    max-height: 8rem;
+    opacity: 1;
+
+    .btn {
+        border-radius: 0;
+    }
+
+    .btn.active {
+        font-weight: 600;
+    }
+}
+
+.o_filter_header_button_bar_hide {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    pointer-events: none;
+}
+
+.o_filter_header_button_bar_show {
+    max-height: 8rem;
+    opacity: 1;
+}

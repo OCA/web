@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="filter_button.FilterButton" owl="1">
+        <t t-set="filters" t-value="this.props.filters" />
+        <div t-if="filters" class="o_cp_bottom_filter_buttons">
+            <div class="btn-group" role="group">
+                <button
+                    t-if="filters and filters.length"
+                    t-attf-class="btn btn-outline-primary"
+                    t-att-title="env._t('Clear Filters')"
+                    t-att-aria-label="env._t('Clear Filters')"
+                    t-on-click.stop="this.onClickReset"
+                >
+                    <i class="fa fa-times" />
+                </button>
+                <t t-foreach="filters" t-as="filter" t-key="filter.id">
+                    <t t-set="options" t-value="filter.context.shown_in_panel" />
+                    <t t-set="filter_mapping" t-value="mapFilterType(filter)" />
+                    <t t-set="color" t-value="filter_mapping.color || 'primary'" />
+                    <t
+                        t-set="name"
+                        t-value="options.name !== undefined ? options.name : filter.description"
+                    />
+                    <button
+                        t-attf-class="btn ms-0 border-start-0 {{filter.isActive ? `btn-${color}` : `btn-outline-${color}`}}"
+                        t-att-title="name"
+                        t-att-aria-label="name"
+                        t-on-click.stop="() => this.onToggleFilter(filter)"
+                        t-att-data-hotkey="options.hotkey"
+                    >
+                        <i
+                            t-if="options.icon"
+                            t-attf-class="fa {{options.icon}} {{name !== '' ? 'mr-1' : ''}}"
+                        />
+                        <t t-esc="name" />
+                    </button>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>
