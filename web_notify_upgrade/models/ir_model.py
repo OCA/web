@@ -3,9 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
 
-from odoo import _, api, models
-
-from odoo.addons.bus.models.bus_presence import AWAY_TIMER, DISCONNECTION_TIMER
+from odoo import api, models
 
 _logger = logging.getLogger(__name__)
 
@@ -21,6 +19,16 @@ class IrModelData(models.Model):
         self._notify_active_users_of_upgrade()
         return rv
 
+    def _get_active_users_to_notify_of_upgrade(self):
+        """Return the users to notify of the upgrade."""
+        # Find users who are currently online or away
+        online_presences = self.env["mail.presence"].search(
+            [("status", "in", ("online", "away"))]
+        )
+        users = online_presences.mapped("user_id")
+        # Respect Do Not Disturb (busy status)
+        return users.filtered(lambda u: u.manual_im_status != "busy")
+
     def _notify_active_users_of_upgrade(self):
         # Look for active users
         active_users = self._get_active_users_to_notify_of_upgrade()
@@ -28,34 +36,18 @@ class IrModelData(models.Model):
             _logger.info(
                 "Installation detected. Notifying %s active users", len(active_users)
             )
-            # Notify them
+            # Notify them using the web_notify mechanism
             active_users.notify_info(**self._get_upgrade_notification_params())
-
-    def _get_active_users_to_notify_of_upgrade(self):
-        """Return the active users that should be notified of the upgrade."""
-        self.env.cr.execute(
-            """
-            SELECT user_id
-            FROM bus_presence
-            WHERE last_poll is not null
-                AND (
-                    age(now() AT TIME ZONE 'UTC', last_poll) < interval %s
-                    OR age(now() AT TIME ZONE 'UTC', last_presence) < interval %s
-                )
-        """,
-            (f"{DISCONNECTION_TIMER} seconds", f"{AWAY_TIMER} seconds"),
-        )
-        return self.env["res.users"].browse([res[0] for res in self.env.cr.fetchall()])
 
     def _get_upgrade_notification_params(self):
         """Return the parameters to pass to the notify_info method."""
         return dict(
-            message=_(
-                "Your odoo instance has been upgraded, " "please reload the web page."
+            message=self.env._(
+                "Your odoo instance has been upgraded, please reload the web page."
             )
             + "<br />"
             '<button onclick="location.reload(true)" class="btn btn-primary mt-4">'
-            '<i class="fa fa-refresh"></i>' + _("Reload") + "</button>",
-            title=_("Upgrade Notification"),
+            '<i class="fa fa-refresh"></i>' + self.env._("Reload") + "</button>",
+            title=self.env._("Upgrade Notification"),
             sticky=True,
         )
