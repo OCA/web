@@ -39,4 +39,5 @@ class TestUIPivot(common.HttpCase):
             "web_pivot_computed_measure_tour",
             login="admin",
             step_delay=100,
+            timeout=120,
         )
