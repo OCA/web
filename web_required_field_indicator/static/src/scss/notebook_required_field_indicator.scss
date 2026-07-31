@@ -1,0 +1,4 @@
+.o_notebook_headers .nav-link.o_web_required_field_indicator_page_invalid {
+    color: map-get($theme-colors, "danger") !important;
+    border-bottom-color: map-get($theme-colors, "danger");
+}
