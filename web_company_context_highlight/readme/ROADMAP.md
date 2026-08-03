@@ -1,0 +1,1 @@
+backport configuration introduced by original PR (https://github.com/OCA/web/pull/3611).

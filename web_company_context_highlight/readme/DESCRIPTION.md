@@ -6,8 +6,8 @@ By applying a visual highlight to the company switcher when multiple companies a
 
 * with multiple companies selected
 
-  ![company switcher with multiple companies selected](../static/img/web_company_context_highlight_multiple_companies_selected.png)
+  ![web_company_context_highlight_multiple_companies_selected](../static/img/web_company_context_highlight_multiple_companies_selected.png)
 
 * with one company selected
 
-  ![company switcher with one company selected](../static/img/web_company_context_highlight_one_company_selected.png)
+  ![web_company_context_highlight_one_company_selected](../static/img/web_company_context_highlight_one_company_selected.png)
