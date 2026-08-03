@@ -6,6 +6,12 @@
 */
 
 .o_switch_company_menu {
+    .o_company_context_highlighted {
+        border: 1px $o-navbar-entry-color solid;
+        border-radius: 4px;
+        padding: 6px;
+    }
+
     .dropdown-menu {
         display: inline-block !important;
         flex-wrap: wrap;
