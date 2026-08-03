@@ -8,6 +8,15 @@
         <!-- Toggler -->
         <t t-set-slot="toggler" t-on-click="_onClickToggler">
             <i class="fa fa-building d-lg-none" accesskey="y" />
+            <t t-if="selectedCompanies.length > 1">
+                <i
+                        class="fa me-1 d-lg-inline-block o_company_context_highlighted"
+                        title="Multiple companies selected"
+                    >
+                    <t t-esc="selectedCompanies.length" />
+                </i>
+            </t>
+
             <span
                     class="oe_topbar_name d-none d-lg-block"
                     accesskey="y"
