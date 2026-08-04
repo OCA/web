@@ -351,9 +351,22 @@ class TileTile(models.Model):
         if self.action_id:
             action = self.action_id.sudo().read()[0]
         else:
+            view_modes = set(
+                self.env["ir.ui.view"]
+                .sudo()
+                .search([("model", "=", self.model_name)])
+                .mapped("type")
+            )
+            # remove search view as it is not a valid display view
+            view_modes.discard("search")
+            view_modes = list(view_modes)
+            if "tree" in view_modes:
+                # If tree is the list of available views
+                # put it at the first place
+                view_modes.remove("tree")
+                view_modes = ["tree"] + view_modes
             action = {
-                "view_mode": "tree",
-                "view_id": False,
+                "view_mode": ",".join(view_modes),
                 "res_model": self.model_name,
                 "type": "ir.actions.act_window",
                 "target": "current",
