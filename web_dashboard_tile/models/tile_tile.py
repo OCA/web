@@ -349,7 +349,7 @@ class TileTile(models.Model):
     # Action methods
     def open_link(self):
         if self.action_id:
-            action = self.action_id.read()[0]
+            action = self.action_id.sudo().read()[0]
         else:
             action = {
                 "view_mode": "tree",
