@@ -1,0 +1,67 @@
+/* Copyright 2023 Taras Shabaranskyi
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+:root {
+    .o_grid_apps_menu[data-theme="milk"],
+    .o_grid_apps_menu[data-theme="community"] {
+        --app-menu-background: linear-gradient(
+            to bottom,
+            #{$o-gray-300},
+            #{desaturate(darken($o-gray-300, 5%), 15)}
+        );
+        --app-menu-text-color: #{$o-gray-900};
+        --app-menu-text-shadow: 1px 1px 1px #{rgba(black, 0.4)};
+        --app-menu-hover-background: #{rgba(white, 0.08)};
+        --apps-menu-scrollbar-background: #{$o-gray-400};
+        --apps-menu-empty-search-color: #{$o-gray-900};
+    }
+}
+
+.o_grid_apps_menu {
+    .o-app-menu-item {
+        &__icon {
+            background-color: $o-gray-400;
+        }
+
+        &__active {
+            background-color: $o-gray-900;
+            border-radius: 50%;
+            color: $o-gray-100;
+            text-shadow: none;
+        }
+    }
+
+    .search-container {
+        // Search box
+        .search-input {
+            background-color: $o-gray-300;
+
+            .search-icon {
+                color: $o-gray-900;
+            }
+
+            .form-control {
+                color: $o-gray-900;
+
+                &::placeholder {
+                    color: $o-gray-700;
+                }
+            }
+        }
+
+        // Search results (canonical searchbar)
+        .search-item {
+            background-color: $o-gray-300;
+
+            &__name {
+                color: $o-gray-900;
+                text-shadow: none;
+            }
+
+            &.highlight,
+            &:hover {
+                background-color: $o-gray-400;
+            }
+        }
+    }
+}
