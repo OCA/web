@@ -3,6 +3,7 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
 import {PivotModel} from "@web/views/pivot/pivot_model";
+import {_t} from "@web/core/l10n/translation";
 import {computeReportMeasures} from "@web/views/utils";
 import {evalOperation} from "../helpers/utils.esm";
 import {patch} from "@web/core/utils/patch";
@@ -144,10 +145,20 @@ patch(PivotModel.prototype, {
     _fillComputedMeasuresData(subGroupData, config) {
         for (const cm of this._computed_measures) {
             if (!this._isMeasureEnabled(cm.id, config)) continue;
+            // _getMeasurements() later looks up this value as "<cm.id>:sum"
+            // (our virtual field's aggregator, set in _createVirtualField),
+            // so the computed result must be stored under that same key.
             if (subGroupData.__count === 0) {
-                subGroupData[cm.id] = false;
+                subGroupData[`${cm.id}:sum`] = false;
             } else {
-                subGroupData[cm.id] = evalOperation(cm.operation, subGroupData);
+                // Raw group values are keyed as "fieldName:aggregator" (e.g.
+                // "partner_latitude:sum"), while cm.operation references bare
+                // field names, so we need an unsuffixed lookup for evalOperation.
+                const values = {};
+                for (const key in subGroupData) {
+                    values[key.split(":")[0]] = subGroupData[key];
+                }
+                subGroupData[`${cm.id}:sum`] = evalOperation(cm.operation, values);
             }
         }
     },
@@ -167,24 +178,24 @@ patch(PivotModel.prototype, {
     },
 
     /**
-     * _getGroupSubdivision method invokes the read_group method of the
-     * model via rpc and the passed 'fields' argument is the list of
+     * _getGroupsSubdivision method invokes the read_group method of the
+     * model via rpc and the passed 'measureSpecs' param is the list of
      * measure names that is in this.metaData.activeMeasures, so we remove the
-     * computed measures form this.metaData.activeMeasures before calling _super
+     * computed measures form params.measureSpecs before calling _super
      * to prevent any possible exception.
      *
      * @override
      */
-    async _getGroupSubdivision(group, rowGroupBy, colGroupBy, config) {
+    async _getGroupsSubdivision(params, groupInfo) {
         const computed_measures = [];
-        for (let i = 0; i < config.measureSpecs.length; i++)
-            if (config.measureSpecs[i].startsWith("__computed_")) {
-                computed_measures.push(config.measureSpecs[i]);
-                config.measureSpecs.splice(i, 1);
+        for (let i = 0; i < params.measureSpecs.length; i++)
+            if (params.measureSpecs[i].startsWith("__computed_")) {
+                computed_measures.push(params.measureSpecs[i]);
+                params.measureSpecs.splice(i, 1);
                 i--;
             }
-        const res = await super._getGroupSubdivision(...arguments);
-        Object.assign(config.measureSpecs, computed_measures);
+        const res = await super._getGroupsSubdivision(params, groupInfo);
+        Object.assign(params.measureSpecs, computed_measures);
         return res;
     },
 
@@ -202,7 +213,7 @@ patch(PivotModel.prototype, {
             });
             if (umeasures.length && this._isMeasureEnabled(umeasures[0].id)) {
                 return Promise.reject(
-                    this.env._t(
+                    _t(
                         "This measure is currently used by a 'computed measure'. Please, disable the computed measure first."
                     )
                 );
@@ -255,8 +266,7 @@ patch(PivotModel.prototype, {
             metaData.measures = computeReportMeasures(
                 metaData.fields,
                 metaData.fieldAttrs,
-                metaData.activeMeasures,
-                metaData.additionalMeasures
+                metaData.activeMeasures
             );
             config = {metaData, data: this.data};
         }

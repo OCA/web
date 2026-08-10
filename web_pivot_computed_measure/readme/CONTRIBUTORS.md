@@ -3,3 +3,5 @@
   - Pedro M. Baeza
   - Ernesto Tejeda
   - Carlos Roca
+- [Smile](https://www.smile.eu):
+  - Yasser Fahmi

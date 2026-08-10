@@ -3,7 +3,7 @@
 {
     "name": "Web Pivot Computed Measure",
     "category": "web",
-    "version": "18.0.1.0.5",
+    "version": "19.0.1.0.0",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/web",
@@ -19,14 +19,10 @@
             "web_pivot_computed_measure/static/src/**/*.esm.js",
             "web_pivot_computed_measure/static/src/**/*.scss",
             "web_pivot_computed_measure/static/src/**/*.xml",
-            ("remove", "web_pivot_computed_measure/static/src/test/*.esm.js"),
             ("remove", "web_pivot_computed_measure/static/src/pivot/*"),
         ],
         "web.assets_backend_lazy": [
             "web_pivot_computed_measure/static/src/pivot/*",
-        ],
-        "web.assets_tests": [
-            "web_pivot_computed_measure/static/src/test/test.esm.js",
         ],
     },
 }
