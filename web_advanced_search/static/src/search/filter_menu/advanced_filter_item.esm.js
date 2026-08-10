@@ -1,57 +1,34 @@
-/** @odoo-module **/
+import {Component} from "@odoo/owl";
+import {DomainSelectorDialog} from "@web/core/domain_selector_dialog/domain_selector_dialog";
+import {DropdownItem} from "@web/core/dropdown/dropdown_item";
+import {_t} from "@web/core/l10n/translation";
+import {useService} from "@web/core/utils/hooks";
 
-import Domain from "web.Domain";
-import DomainSelectorDialog from "web.DomainSelectorDialog";
-import config from "web.config";
-import {getHumanDomain} from "../../js/utils.esm";
-import {standaloneAdapter} from "web.OwlCompatibility";
-const {Component, useRef} = owl;
+export default class AdvancedFilterItem extends Component {
+    static template = "web_advanced_search.AdvancedFilterItem";
+    static components = {DropdownItem};
+    static props = {};
 
-class AdvancedFilterItem extends Component {
     setup() {
-        this.itemRef = useRef("dropdown-item");
+        this.dialogService = useService("dialog");
     }
+
     /**
-     * Prevent propagation of dropdown-item-selected event, so that it
-     * doesn't reach the FilterMenu onFilterSelected event handler.
-     */
-    mounted() {
-        $(this.itemRef.el).on("dropdown-item-selected", (event) =>
-            event.stopPropagation()
-        );
-    }
-    /**
-     * Open advanced search dialog
-     *
-     * @returns {DomainSelectorDialog} The opened dialog itself.
+     * Open advanced search dialog, mirroring searchModel.spawnCustomFilterDialog().
      */
     onClick() {
-        const adapterParent = standaloneAdapter({Component});
-        const dialog = new DomainSelectorDialog(
-            adapterParent,
-            this.env.searchModel.resModel,
-            "[]",
-            {
-                debugMode: config.isDebug(),
-                readonly: false,
-            }
-        );
-        // Add 1st domain node by default
-        dialog.opened(() => dialog.domainSelector._onAddFirstButtonClick());
-        // Configure handler
-        dialog.on("domain_selected", this, function (e) {
-            const preFilter = {
-                description: getHumanDomain(dialog.domainSelector),
-                domain: Domain.prototype.arrayToString(e.data.domain),
-                type: "filter",
-            };
-            this.env.searchModel.createNewFilters([preFilter]);
+        const searchModel = this.env.searchModel;
+        this.dialogService.add(DomainSelectorDialog, {
+            resModel: searchModel.resModel,
+            defaultConnector: "|",
+            domain: "[]",
+            context: searchModel.globalContext,
+            onConfirm: (domain) => searchModel.splitAndAddDomain(domain),
+            disableConfirmButton: (domain) => domain === "[]",
+            title: _t("Advanced Filter"),
+            confirmButtonText: _t("Search"),
+            discardButtonText: _t("Discard"),
+            isDebugMode: searchModel.isDebugMode,
         });
-        return dialog.open();
     }
 }
-
-AdvancedFilterItem.components = {AdvancedFilterItem};
-
-AdvancedFilterItem.template = "web_advanced_search.AdvancedFilterItem";
-export default AdvancedFilterItem;

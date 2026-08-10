@@ -5,14 +5,12 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <templates>
-    <t t-inherit="web.legacy.FilterMenu" t-inherit-mode="extension" owl="1">
-        <CustomFilterItem position="after">
+    <t t-inherit="web.SearchBarMenu" t-inherit-mode="extension">
+        <xpath
+            expr="//DropdownItem[@onSelected.bind='onAddCustomFilterClick']"
+            position="after"
+        >
             <AdvancedFilterItem />
-        </CustomFilterItem>
-    </t>
-    <t t-inherit="web.FilterMenu" t-inherit-mode="extension" owl="1">
-        <CustomFilterItem position="after">
-            <AdvancedFilterItem />
-        </CustomFilterItem>
+        </xpath>
     </t>
 </templates>

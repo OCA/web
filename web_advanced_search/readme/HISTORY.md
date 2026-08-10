@@ -1,3 +1,9 @@
+## 19.0.1.0.0 (2026-08-10)
+
+- Migrate to 19.0
+
+  \[FyasserF\]
+
 ## 11.0.1.0.2 (2018-10-31)
 
 - Fix initialization of 1st domain node

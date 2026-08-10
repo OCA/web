@@ -5,11 +5,12 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <templates>
-    <t t-name="web_advanced_search.AdvancedFilterItem" owl="1">
-        <a
-            role="menuitem"
-            t-on-click="onClick"
-            class=" dropdown-item o_add_advanced_search"
-        > Add Advanced Filter </a>
+    <t t-name="web_advanced_search.AdvancedFilterItem">
+        <DropdownItem
+            class="'o_menu_item o_add_advanced_search'"
+            onSelected.bind="onClick"
+        >
+            Add Advanced Filter
+        </DropdownItem>
     </t>
 </templates>

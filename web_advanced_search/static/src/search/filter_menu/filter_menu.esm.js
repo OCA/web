@@ -1,16 +1,14 @@
-/** @odoo-module **/
-
 import AdvancedFilterItem from "./advanced_filter_item.esm";
-import {FilterMenu} from "@web/search/filter_menu/filter_menu";
+import {SearchBarMenu} from "@web/search/search_bar_menu/search_bar_menu";
 import {patch} from "@web/core/utils/patch";
 /**
- * Patches the FilterMenu for owl widgets.
+ * Patches the SearchBarMenu to register the AdvancedFilterItem component.
  */
-patch(FilterMenu, "web_advanced_search.FilterMenu", {
+patch(SearchBarMenu, {
     components: {
-        ...FilterMenu.components,
+        ...SearchBarMenu.components,
         AdvancedFilterItem,
     },
 });
 
-export default FilterMenu;
+export default SearchBarMenu;
