@@ -9,7 +9,7 @@
     "depends": ["web"],
     "data": [],
     "external_dependencies": {
-        "python": ["plotly==5.22.0"],
+        "python": ["plotly"],
     },
     "assets": {
         "web.assets_backend": [
