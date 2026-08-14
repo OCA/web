@@ -1,12 +1,14 @@
 /** @odoo-module **/
 
-import {CharField} from "@web/views/fields/char/char_field";
+import {CharField, charField} from "@web/views/fields/char/char_field";
 import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 
 import {onPatched, onWillStart, useEffect, useRef} from "@odoo/owl";
 
 export class PlotlyChartWidget extends CharField {
+    static template = "web_widget_plotly_chart.PlotlyChartWidgetField";
+
     setup() {
         super.setup();
 
@@ -38,12 +40,10 @@ export class PlotlyChartWidget extends CharField {
     }
 }
 
-PlotlyChartWidget.template = "web_widget_plotly_chart.PlotlyChartWidgetField";
-PlotlyChartWidget.supportedTypes = ["char", "text"];
-
 export const plotlyChartWidget = {
-    ...CharField,
+    ...charField,
     component: PlotlyChartWidget,
+    supportedTypes: ["char", "text"],
 };
 
 registry.category("fields").add("plotly_chart", plotlyChartWidget);
