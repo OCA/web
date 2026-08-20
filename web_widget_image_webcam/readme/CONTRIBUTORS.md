@@ -1,0 +1,7 @@
+- Siddharth Bhalgami \<siddharth.bhalgami@gmail.com\>
+- Kaushal Prajapati \<kbprajapati@live.com\>
+- [Druidoo](https://www.druidoo.io):
+  - Iván Todorovich
+- Shivam Soni \<s.soni.serpentcs@gmail.com\>
+- [Trobz](https://www.trobz.com):
+  - Phan Hong Phuc \<phucph@trobz.com\>
