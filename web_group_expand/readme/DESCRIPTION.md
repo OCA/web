@@ -4,3 +4,7 @@ or collapse all the groups at once.
 The buttons appear in the top right, in place of the pagination.
 
 One level of groups is expanded or collapsed at a time.
+
+The buttons are disabled when they would have no effect: the expand
+button when all groups are already expanded, and the collapse button
+when all groups are already collapsed.
