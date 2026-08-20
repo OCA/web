@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Le Filament - License AGPL-3.0 or later -->
+<odoo>
+    <!-- ============ fc.demo.resource ============ -->
+    <record id="fc_demo_resource_view_list" model="ir.ui.view">
+        <field name="name">fc.demo.resource.list</field>
+        <field name="model">fc.demo.resource</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="resource_type" />
+            </list>
+        </field>
+    </record>
+
+    <record id="fc_demo_resource_view_form" model="ir.ui.view">
+        <field name="name">fc.demo.resource.form</field>
+        <field name="model">fc.demo.resource</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="resource_type" />
+                        <field name="active" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="fc_demo_resource_act" model="ir.actions.act_window">
+        <field name="name">Resources (demo)</field>
+        <field name="res_model">fc.demo.resource</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ============ fc.demo.booking ============ -->
+    <record id="fc_demo_booking_view_list" model="ir.ui.view">
+        <field name="name">fc.demo.booking.list</field>
+        <field name="model">fc.demo.booking</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="resource_id" />
+                <field name="user_id" />
+                <field name="date_start" />
+                <field name="date_stop" />
+            </list>
+        </field>
+    </record>
+
+    <record id="fc_demo_booking_view_form" model="ir.ui.view">
+        <field name="name">fc.demo.booking.form</field>
+        <field name="model">fc.demo.booking</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="resource_id" />
+                            <field name="user_id" />
+                        </group>
+                        <group>
+                            <field name="date_start" />
+                            <field name="date_stop" />
+                        </group>
+                    </group>
+                    <group>
+                        <field
+                            name="description"
+                            nolabel="1"
+                            placeholder="Description..."
+                        />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Standard calendar view (for comparison) -->
+    <record id="fc_demo_booking_view_calendar" model="ir.ui.view">
+        <field name="name">fc.demo.booking.calendar</field>
+        <field name="model">fc.demo.booking</field>
+        <field name="arch" type="xml">
+            <calendar
+                date_start="date_start"
+                date_stop="date_stop"
+                color="resource_id"
+                event_open_popup="true"
+                mode="week"
+                quick_create="0"
+            >
+                <field name="name" />
+                <field name="resource_id" filters="1" />
+                <field name="user_id" />
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Resource view: vertical columns per resource -->
+    <record id="fc_demo_booking_view_resource" model="ir.ui.view">
+        <field name="name">fc.demo.booking.resource</field>
+        <field name="model">fc.demo.booking</field>
+        <field name="arch" type="xml">
+            <resource
+                date_start="date_start"
+                date_stop="date_stop"
+                color="resource_id"
+                event_open_popup="true"
+                quick_create="0"
+                mode="day"
+                resource_field="resource_id"
+            >
+                <field name="name" />
+                <field name="resource_id" filters="1" />
+                <field name="user_id" />
+            </resource>
+        </field>
+    </record>
+
+    <record id="fc_demo_booking_act" model="ir.actions.act_window">
+        <field name="name">Bookings (demo)</field>
+        <field name="res_model">fc.demo.booking</field>
+        <field name="view_mode">resource,calendar,list,form</field>
+        <field
+            name="view_ids"
+            eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'resource', 'view_id': ref('fc_demo_booking_view_resource')}),
+            (0, 0, {'view_mode': 'calendar', 'view_id': ref('fc_demo_booking_view_calendar')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('fc_demo_booking_view_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('fc_demo_booking_view_form')})]"
+        />
+    </record>
+
+    <!-- ============ Menus ============ -->
+    <menuitem id="menu_fc_demo_root" name="Resource Demo" sequence="90" />
+    <menuitem
+        id="menu_fc_demo_booking"
+        name="Bookings"
+        parent="menu_fc_demo_root"
+        action="fc_demo_booking_act"
+        sequence="10"
+    />
+    <menuitem
+        id="menu_fc_demo_resource"
+        name="Resources"
+        parent="menu_fc_demo_root"
+        action="fc_demo_resource_act"
+        sequence="20"
+    />
+</odoo>
