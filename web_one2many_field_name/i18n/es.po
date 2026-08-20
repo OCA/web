@@ -1,0 +1,35 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_one2many_field_name
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-15 00:00+0000\n"
+"PO-Revision-Date: 2026-07-15 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_one2many_field_name
+#. odoo-javascript
+#: code:addons/web_one2many_field_name/static/src/web_one2many_field_name/web_one2many_field_name.xml:0
+msgid "One2many:"
+msgstr "One2many:"
+
+#. module: web_one2many_field_name
+#. odoo-javascript
+#: code:addons/web_one2many_field_name/static/src/web_one2many_field_name/web_one2many_field_name.xml:0
+msgid "Click to copy"
+msgstr "Clic para copiar"
+
+#. module: web_one2many_field_name
+#. odoo-javascript
+#: code:addons/web_one2many_field_name/static/src/web_one2many_field_name/web_one2many_field_name.xml:0
+msgid "Copy value"
+msgstr "Copiar valor"
