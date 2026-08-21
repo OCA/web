@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t
+        t-name="ChatterTopbar"
+        t-inherit="mail.ChatterTopbar"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath
+            expr="//button[hasclass('o_ChatterTopbar_buttonToggleAttachments')]"
+            position="after"
+        >
+            <button
+                class="o_ChatterTopbar_button o_ChatterTopbar_buttonCamera btn btn-light btn-primary"
+                type="button"
+                t-att-disabled="!chatterTopbar.chatter.isTemporary and !chatterTopbar.chatter.hasWriteAccess"
+                t-on-click="onClickButtonCamera"
+            >
+                <i class="fa fa-camera fa-lg me-1" role="img" aria-label="Camera" />
+
+                <input
+                    type="file"
+                    t-ref="cameraInputRef"
+                    class="o_hidden"
+                    accept="image/*"
+                    capture="environment"
+                    t-on-change="onCameraInputChange"
+                />
+            </button>
+        </xpath>
+    </t>
+</templates>
