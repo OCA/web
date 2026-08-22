@@ -2,12 +2,15 @@
 # License AGPL-3.0 or later (http://gnu.org/licenses/agpl).
 {
     "name": "Web Send Message as Popup",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "maintainer": "Camptocamp",
     "license": "AGPL-3",
     "category": "Hidden",
     "depends": ["web", "mail"],
     "website": "https://github.com/OCA/web",
-    "assets": {"web.assets_backend": ["web_send_message_popup/static/src/**/*.js"]},
+    "assets": {
+        "web.assets_backend": ["web_send_message_popup/static/src/**/*.js"],
+        "web.assets_unit_tests": ["web_send_message_popup/static/tests/**/*"],
+    },
 }
