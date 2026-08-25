@@ -14,26 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_quick_start_screen
-#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_contacts_demo
-msgid "<span>Browse <b>contacts</b></span>"
-msgstr ""
-
-#. module: web_quick_start_screen
-#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_config_actions_demo
-msgid "<span>Configure this <b>screen actions</b></span>"
-msgstr ""
-
-#. module: web_quick_start_screen
-#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_access_rights_demo
-msgid "<span>Explore <b>access rights</b></span>"
-msgstr ""
-
-#. module: web_quick_start_screen
-#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_access_rights_demo
-msgid "Access rights"
-msgstr ""
-
-#. module: web_quick_start_screen
 #: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__action_ids
 msgid "Action"
 msgstr ""
@@ -64,8 +44,8 @@ msgstr ""
 #. module: web_quick_start_screen
 #: model:ir.model.fields,help:web_quick_start_screen.field_quick_start_screen_action__domain
 msgid ""
-"Add extra domain if needed. You can use `ref('<xml_id>')` and it will "
-"beevaluated. You can also use `datetime` and `context_today` in the same "
+"Add extra domain if needed. You can use `ref('<xml_id>')` and it will be "
+"evaluated. You can also use `datetime` and `context_today` in the same "
 "way`ir.filters` do."
 msgstr ""
 
@@ -77,16 +57,6 @@ msgstr ""
 #. module: web_quick_start_screen
 #: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__color
 msgid "Color"
-msgstr ""
-
-#. module: web_quick_start_screen
-#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_config_actions_demo
-msgid "Configure screen actions"
-msgstr ""
-
-#. module: web_quick_start_screen
-#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_contacts_demo
-msgid "Contacts"
 msgstr ""
 
 #. module: web_quick_start_screen
@@ -107,11 +77,6 @@ msgid "Created on"
 msgstr ""
 
 #. module: web_quick_start_screen
-#: model:quick.start.screen,name:web_quick_start_screen.quick_start_screen_demo
-msgid "Demo start screen"
-msgstr ""
-
-#. module: web_quick_start_screen
 #: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__description
 msgid "Description"
 msgstr ""
@@ -119,6 +84,7 @@ msgstr ""
 #. module: web_quick_start_screen
 #: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__display_name
 #: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__display_name
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_res_users__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -135,6 +101,7 @@ msgstr ""
 #. module: web_quick_start_screen
 #: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__id
 #: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__id
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_res_users__id
 msgid "ID"
 msgstr ""
 
@@ -158,6 +125,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__write_date
 #: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model_terms:ir.ui.view,arch_db:web_quick_start_screen.view_users_form
+msgid "Menus Customization"
 msgstr ""
 
 #. module: web_quick_start_screen
@@ -198,6 +170,7 @@ msgstr ""
 #. module: web_quick_start_screen
 #. odoo-python
 #: code:addons/web_quick_start_screen/models/quick_start_screen.py:0
+#: code:addons/web_quick_start_screen/tests/test_web_quick_start_screen.py:0
 #: model:ir.ui.menu,name:web_quick_start_screen.menu_start
 #: model:ir.ui.menu,name:web_quick_start_screen.menu_start_screen
 msgid "Start"
