@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="quick_start_screen_action_list" model="ir.ui.view">
+        <field name="model">quick.start.screen.action</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="description" />
+                <field name="action_ref_id" groups="base.group_system" />
+            </list>
+        </field>
+    </record>
+    <record id="quick_start_screen_action_kanban" model="ir.ui.view">
+        <field name="model">quick.start.screen.action</field>
+        <field name="arch" type="xml">
+            <kanban create="0" edit="0" delete="0" js_class="quick_start_screen">
+                <field name="id" />
+                <field name="name" />
+                <field name="description" />
+                <field name="image" />
+                <field name="icon_name" />
+                <field name="color" />
+                <field name="context" />
+                <templates>
+                    <t t-name="card" class="flex-row">
+                        <aside class="d-flex align-items-center me-2">
+                            <field
+                                t-if="record.image.raw_value"
+                                name="image"
+                                widget="image"
+                                options="{'img_class': 'object-fit-contain'}"
+                            />
+                            <i
+                                t-else=""
+                                t-attf-class="fa #{record.icon_name.raw_value or 'fa-flash'} fa-3x o_start_icon_color_#{record.color.raw_value}"
+                                t-att-title="record.name.raw_value"
+                            />
+                        </aside>
+                        <main>
+                            <h3 class="card-title" t-out="record.name.raw_value" />
+                            <a
+                                type="object"
+                                data-reload-on-close="true"
+                                name="run_action"
+                                role="button"
+                                href="#"
+                                class="btn-lnk stretched-link"
+                                t-att-string="record.name.raw_value"
+                            >
+                                <span t-out="record.description.raw_value" />
+                            </a>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="quick_start_screen_action_form" model="ir.ui.view">
+        <field name="model">quick.start.screen.action</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="action_ref_id" groups="base.group_system" />
+                        <field name="description" widget="html" />
+                        <field name="icon_name" invisible="image" />
+                        <field name="color" widget="color_picker" invisible="image" />
+                        <field name="domain" groups="base.group_system" />
+                        <field name="context" groups="base.group_system" />
+                        <field name="image" widget="image" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="quick_start_screen_action_action" model="ir.actions.act_window">
+        <field name="name">Quick Start Screen Actions</field>
+        <field name="res_model">quick.start.screen.action</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem
+        id="menu_quick_start_screen_action"
+        name="Quick Start Screen Actions"
+        parent="base.next_id_2"
+        action="web_quick_start_screen.quick_start_screen_action_action"
+    />
+</odoo>
