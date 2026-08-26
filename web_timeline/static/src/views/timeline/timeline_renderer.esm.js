@@ -437,7 +437,7 @@ export class TimelineRenderer extends Component {
                     nestingGroup.nestedGroups.forEach((nestedGroupId) => {
                         const nestedGroup = groups.get(nestedGroupId);
                         if (nestedGroup) {
-                            hiddenNestedGroups.add(nestedGroup);
+                            hiddenNestedGroups.add(nestedGroup.id);
                             getNestedGroups(nestedGroup);
                         }
                     });
@@ -445,19 +445,22 @@ export class TimelineRenderer extends Component {
             };
             getNestedGroups(group);
         });
-
+        const groupsToUpdate = [];
         groups.forEach((group) => {
-            if (hiddenNestedGroups.has(group)) {
+            if (hiddenNestedGroups.has(group.id)) {
                 return;
             }
             const groupInRange = groupsInRange.has(group.id);
             if (Boolean(group.visible) !== groupInRange) {
-                groups.update({
+                groupsToUpdate.push({
                     id: group.id,
                     visible: groupInRange,
                 });
             }
         });
+        if (groupsToUpdate.length > 0) {
+            groups.update(groupsToUpdate);
+        }
     }
     /**
      * Get the groups.
