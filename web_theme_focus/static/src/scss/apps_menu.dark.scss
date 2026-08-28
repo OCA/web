@@ -1,0 +1,12 @@
+// Copyright 2026 volkantasci
+// License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+/* web_theme_focus — Enterprise app-menu variables (dark). */
+body[data-app-theme="focus"] {
+    --app-menu-background:
+        url("../img/app_switcher_background_dark.svg"),
+        linear-gradient(135deg, #1d1e23, #101114);
+    --app-menu-text-color: #c8c8c8;
+    --app-menu-hover-background: rgba(255, 255, 255, 0.08);
+    --app-menu-text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+}

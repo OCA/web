@@ -1,0 +1,56 @@
+// Copyright 2026 volkantasci
+// License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+/* web_theme_focus — full-bleed Focus gradient behind a transparent navbar.
+   In Odoo 19 the webclient root IS <body> (body_classname = "o_web_client"),
+   so the gradient must be painted on body itself, not on a descendant
+   .o_web_client. web_responsive's .app-menu-container starts below the navbar
+   (it is a navbar descendant), so its gradient never reaches behind the
+   navbar. Paint the gradient on body, keep the navbar and the app-menu
+   container transparent, so one continuous gradient shows through. The
+   linear-gradient layer is a fallback: even if the SVG cannot be fetched,
+   the drawer is never blank.
+
+   Light mode: the navbar is transparent over the light gradient, so its
+   content (normally white, designed for the dark navbar) is re-colored dark
+   for contrast. Dark mode restores the white content in navbar.dark.scss. */
+body[data-app-theme="focus"].o_apps_menu_opened {
+    background-image:
+        url("../img/app_switcher_background_light.svg"),
+        linear-gradient(135deg, #e4e9f7, #ece5f8);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    .o_main_navbar {
+        background: transparent !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+        color: #3c3c3c;
+        --NavBar-entry-color: #3c3c3c;
+        --NavBar-entry-color--hover: #1a1a1a;
+        --NavBar-entry-color--active: #1a1a1a;
+        --NavBar-brand-color: #3c3c3c;
+        --NavBar-entry-backgroundColor--hover: rgba(0, 0, 0, 0.06);
+        --NavBar-entry-backgroundColor--active: rgba(0, 0, 0, 0.06);
+    }
+
+    .o_grid_apps_menu__button {
+        color: #3c3c3c !important;
+    }
+
+    /* The transparent drawer container would let the previously-opened view
+       show through behind the gradient — hide the action area while the
+       drawer is open (the full-bleed body gradient takes its place).
+       visibility alone is not enough: descendants that force
+       visibility: visible (e.g. kanban card kebab buttons on hover, field
+       translate buttons) stay visible. opacity: 0 hides the whole subtree. */
+    .o_action_manager {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .app-menu-container {
+        background: transparent !important;
+    }
+}

@@ -1,0 +1,26 @@
+// Copyright 2026 volkantasci
+// License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+/* web_theme_focus — dark variant of the full-bleed Focus gradient and the
+   navbar content color. Loaded via the web.assets_web_dark bundle (dark color
+   scheme only): overrides the light background-image, and restores the light
+   (white) navbar content so it stays readable over the dark gradient. */
+body[data-app-theme="focus"].o_apps_menu_opened {
+    background-image:
+        url("../img/app_switcher_background_dark.svg"),
+        linear-gradient(135deg, #1d1e23, #101114);
+
+    .o_main_navbar {
+        color: rgba(255, 255, 255, 0.9);
+        --NavBar-entry-color: rgba(255, 255, 255, 0.9);
+        --NavBar-entry-color--hover: #ffffff;
+        --NavBar-entry-color--active: #ffffff;
+        --NavBar-brand-color: rgba(255, 255, 255, 0.9);
+        --NavBar-entry-backgroundColor--hover: rgba(255, 255, 255, 0.08);
+        --NavBar-entry-backgroundColor--active: rgba(255, 255, 255, 0.08);
+    }
+
+    .o_grid_apps_menu__button {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+}
