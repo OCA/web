@@ -123,6 +123,10 @@ Contributors
 
 - ``Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>``\ \_
 
+- `Data Dance s.r.o. <https://www.datadance.eu/>`__
+
+  - Radovan Skolnik <radovan@skolnik.info>
+
 Other credits
 -------------
 

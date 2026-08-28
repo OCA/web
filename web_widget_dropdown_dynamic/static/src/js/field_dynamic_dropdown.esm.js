@@ -11,6 +11,7 @@ export class FieldDynamicDropdown extends Component {
         ...standardFieldProps,
         method: {type: String},
         context: {type: Object},
+        required: {type: Boolean, optional: true},
     };
     setup() {
         super.setup();
@@ -35,6 +36,19 @@ export class FieldDynamicDropdown extends Component {
             });
         }
         return specialDataCaches[key];
+    }
+    get string() {
+        const value = this.props.record.data[this.props.name];
+        if (!value || !this.specialData) {
+            return "";
+        }
+        if (!this.specialData) {
+            return "";
+        }
+        const option = this.specialData.find(
+            (o) => o[0] === value || String(o[0]) === String(value)
+        );
+        return option ? String(option[1]) : String(value);
     }
     get options() {
         const fieldType = this.type || "";
@@ -84,9 +98,10 @@ export const dynamicDropdownField = {
     component: FieldDynamicDropdown,
     displayName: _t("Dynamic Dropdown"),
     supportedTypes: ["char", "integer", "selection"],
-    extractProps: ({options}, {context}) => ({
+    extractProps: ({options}, {context, required}) => ({
         method: options?.values,
         context,
+        required,
     }),
 };
 registry.category("fields").add("dynamic_dropdown", dynamicDropdownField);
