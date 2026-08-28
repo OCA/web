@@ -4,6 +4,7 @@
 # Copyright 2021 ITerra - Sergey Shebanin
 # Copyright 2023 Onestein - Anjeel Haria
 # Copyright 2023 Taras Shabaranskyi
+# Copyright 2025 Mohammed Shahil
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 {
@@ -12,7 +13,7 @@
     "version": "18.0.1.0.7",
     "category": "Website",
     "website": "https://github.com/OCA/web",
-    "author": "LasLabs, Tecnativa, ITerra, Onestein, "
+    "author": "LasLabs, Tecnativa, ITerra, Onestein, mohammedshahil, "
     "Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "installable": True,
