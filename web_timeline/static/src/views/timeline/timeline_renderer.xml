@@ -3,28 +3,33 @@
     <t t-name="web_timeline.TimelineRenderer">
         <div class="oe_timeline_view" t-ref="root">
             <div class="oe_timeline_buttons">
-                <button
-                    t-att-class="'oe_timeline_button_today btn ' + (mode.data == 'today' ? ' btn-primary' : 'btn-default')"
-                    t-on-click="_onTodayClicked"
-                >Today</button>
-                <div class="btn-group btn-sm">
+                <div class="btns-group">
                     <button
-                        t-att-class="'oe_timeline_button_scale_day btn ' + (mode.data == 'day' ? ' btn-primary' : 'btn-default')"
-                        t-on-click="_onScaleDayClicked"
-                    >Day</button>
-                    <button
-                        t-att-class="'oe_timeline_button_scale_week btn ' + (mode.data == 'week' ? ' btn-primary' : 'btn-default')"
-                        t-on-click="_onScaleWeekClicked"
-                    >Week</button>
-                    <button
-                        t-att-class="'oe_timeline_button_scale_month btn ' + (mode.data == 'month' ? ' btn-primary' : 'btn-default')"
-                        t-on-click="_onScaleMonthClicked"
-                    >Month</button>
-                    <button
-                        t-att-class="'oe_timeline_button_scale_year btn ' + (mode.data == 'year' ? ' btn-primary' : 'btn-default')"
-                        t-on-click="_onScaleYearClicked"
-                    >Year</button>
+                        t-att-class="'oe_timeline_button_today btn ' + (mode.data == 'today' ? ' btn-primary' : 'btn-default')"
+                        t-on-click="_onTodayClicked"
+                    >Today</button>
+                    <div class="btn-group btn-sm">
+                        <button
+                            t-att-class="'oe_timeline_button_scale_day btn ' + (mode.data == 'day' ? ' btn-primary' : 'btn-default')"
+                            t-on-click="_onScaleDayClicked"
+                        >Day</button>
+                        <button
+                            t-att-class="'oe_timeline_button_scale_week btn ' + (mode.data == 'week' ? ' btn-primary' : 'btn-default')"
+                            t-on-click="_onScaleWeekClicked"
+                        >Week</button>
+                        <button
+                            t-att-class="'oe_timeline_button_scale_month btn ' + (mode.data == 'month' ? ' btn-primary' : 'btn-default')"
+                            t-on-click="_onScaleMonthClicked"
+                        >Month</button>
+                        <button
+                            t-att-class="'oe_timeline_button_scale_year btn ' + (mode.data == 'year' ? ' btn-primary' : 'btn-default')"
+                            t-on-click="_onScaleYearClicked"
+                        >Year</button>
+                    </div>
                 </div>
+                <button t-on-click="exportSVG" type='button' class="btn btn-default">
+                    Export SVG
+                                </button>
             </div>
             <div class="oe_timeline_widget" t-ref="canvas" />
         </div>

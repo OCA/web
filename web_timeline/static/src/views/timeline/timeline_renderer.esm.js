@@ -19,8 +19,62 @@ import {useService} from "@web/core/utils/hooks";
 
 const {DateTime} = luxon;
 
+/**
+ * Inline computed styles from a source DOM tree into a cloned tree.
+ *
+ * This is required because the exported SVG must be self-contained:
+ * external CSS from Odoo assets is not available once the SVG is opened
+ * outside the browser.
+ *
+ */
+
+function inlineAllStyles(srcRoot, dstRoot) {
+    const srcEls = [srcRoot, ...srcRoot.querySelectorAll("*")];
+    const dstEls = [dstRoot, ...dstRoot.querySelectorAll("*")];
+
+    const props = [
+        "display",
+        "position",
+        "top",
+        "left",
+        "right",
+        "bottom",
+        "width",
+        "height",
+        "margin",
+        "padding",
+        "border",
+        "border-radius",
+        "background",
+        "background-color",
+        "color",
+        "font",
+        "font-size",
+        "font-family",
+        "font-weight",
+        "line-height",
+        "text-align",
+        "white-space",
+        "transform",
+        "box-sizing",
+    ];
+
+    for (let i = 0; i < srcEls.length; i++) {
+        const src = srcEls[i];
+        const dst = dstEls[i];
+        if (!dst) continue;
+
+        const cs = window.getComputedStyle(src);
+        const style = props.map((p) => `${p}:${cs.getPropertyValue(p)};`).join("");
+        dst.setAttribute("style", style);
+    }
+}
+
 export class TimelineRenderer extends Component {
     setup() {
+        super.setup?.();
+        this.timelineRef = useRef("timelineRoot");
+
         this.orm = useService("orm");
         this.rootRef = useRef("root");
         this.canvasRef = useRef("canvas");
@@ -142,6 +196,51 @@ export class TimelineRenderer extends Component {
             const end = start.plus({hours: getHoursFromStart(start)});
             this.timeline.setWindow(start.toJSDate(), end.toJSDate());
         }
+    }
+
+    /**
+     * Export the currently visible timeline as an SVG file.
+     *
+     * The vis-timeline library renders the timeline using HTML elements
+     * instead of SVG. To allow exporting, the rendered DOM is embedded
+     * inside an SVG using a <foreignObject>.
+     *
+     * Computed styles are inlined so the exported file preserves the
+     * visual appearance outside Odoo.
+     *
+     * NOTE:
+     * - Uses SVG foreignObject (viewer compatibility may vary).
+     */
+
+    exportSVG() {
+        const root = this.rootRef.el;
+        if (!root) return;
+
+        const timelineEl = root.querySelector(".vis-timeline");
+        if (!timelineEl) return;
+
+        const rect = timelineEl.getBoundingClientRect();
+
+        const cloned = timelineEl.cloneNode(true);
+
+        inlineAllStyles(timelineEl, cloned);
+
+        const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${Math.ceil(rect.width)}" height="${Math.ceil(rect.height)}">
+  <foreignObject width="100%" height="100%">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      ${cloned.outerHTML}
+    </div>
+  </foreignObject>
+</svg>`;
+
+        const blob = new Blob([svg], {type: "image/svg+xml;charset=utf-8"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "timeline.svg";
+        a.click();
+        URL.revokeObjectURL(url);
     }
 
     /**
