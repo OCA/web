@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_hierarchy_list.X2ManyField"
+        t-inherit="web.X2ManyField"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//ListRenderer" position="replace">
+            <HierarchyListRenderer
+                t-if="props.viewMode === 'list'"
+                t-props="rendererProps"
+                onParentRecordUpdate.bind="onParentRecordUpdate"
+                onBreadcrumbReset.bind="onBreadcrumbReset"
+            />
+        </xpath>
+    </t>
+
+</templates>
