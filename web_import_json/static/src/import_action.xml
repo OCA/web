@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_import_json.ImportAction" t-inherit="ImportAction" owl="1">
+        <xpath expr="//FileInput" position="attributes">
+            <attribute
+                name="acceptedFileExtensions"
+            >'.csv, .xls, .xlsx, .xlsm, .ods, .json'</attribute>
+        </xpath>
+    </t>
+</templates>
