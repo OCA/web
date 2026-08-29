@@ -1,0 +1,35 @@
+// Copyright 2026 OCA
+// License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+
+// Merge button: hidden by default, shown when the <tr> is hovered.
+.o_pivot {
+    tbody tr {
+        .o_pivot_merge_btn {
+            visibility: hidden;
+            line-height: 1;
+            vertical-align: middle;
+            color: var(--o-action-color, #{$link-color});
+            opacity: 0.6;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        &:hover .o_pivot_merge_btn {
+            visibility: visible;
+        }
+    }
+
+    // Unmerge button: always visible on merged rows; slightly different style.
+    .o_pivot_unmerge_btn {
+        line-height: 1;
+        vertical-align: middle;
+        color: var(--o-warning-color, #{$warning});
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
