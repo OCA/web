@@ -67,3 +67,5 @@ comfortably
   log.
 
   ![image](../static/img/chatter-colors.png)
+
+- When the user chooses to display file viewer, then preview attachments directly display in the interface.
