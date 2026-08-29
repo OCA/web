@@ -28,3 +28,8 @@ Double-click on the record to edit it. Double-click in open area to
 create a new record with the group and start date linked to the area you
 clicked in. By holding the Ctrl key and dragging left to right, you can
 create a new record with the dragged start and end date.
+
+When the view defines dependency arrows (the `dependency_arrow` attribute),
+a **Dependencies** button appears in the toolbar. Arrows are shown by
+default; click the button to hide them and click again to show them. This
+is useful when a large number of links makes the chart hard to read.
