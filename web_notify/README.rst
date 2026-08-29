@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==========
 Web Notify
 ==========
@@ -17,7 +13,7 @@ Web Notify
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -123,6 +119,12 @@ you'll find two buttons that'll allow you test the module.
 
 .. |image1| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_notify/static/img/notifications_screenshot.gif
 .. |image2| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_notify/static/img/test_notifications_demo.png
+
+Known issues / Roadmap
+======================
+
+The html parameter is not used. message is always rendered as HTML. The
+html parameter should probaly be dropped in future versions.
 
 Bug Tracker
 ===========
