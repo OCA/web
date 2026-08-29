@@ -1,0 +1,58 @@
+<odoo>
+    <record id="demo_action" model="ir.actions.server">
+        <field name="name">web_ir_actions_act_window_message test (html)</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="base.model_ir_module_module" />
+        <field name="code">
+record.write({'shortdesc': '%s modified before message box' % record.shortdesc})
+action = {
+    'type': 'ir.actions.act_window.message',
+    'title': 'The message title',
+    'message': 'This is a message containing a html entity: &amp;#127881; (should be rendered as emoticon) '
+    'When the box is closed, the form/list should be reloaded to reflect that the action has changed the module name',
+    'is_html_message': True,
+    'close_button_title': 'Custom close button text',
+}
+        </field>
+        <field name="binding_model_id" ref="base.model_ir_module_module" />
+    </record>
+    <record id="demo_action_action_button" model="ir.actions.server">
+        <field name="name">web_ir_actions_act_window_message test (text)</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="base.model_ir_module_module" />
+        <field name="code">
+            action = {
+                'type': 'ir.actions.act_window.message',
+                'message': 'This is a message containing a html entity: &amp;#127881; (should be rendered as text) '
+                'Should show three buttons, one of them highlighted',
+                'close_button_title': False,
+                'buttons': [
+                    {
+                        'name': 'Append text to module name',
+                        'type': 'method',
+                        'model': model._name,
+                        'method': 'write',
+                        'args': [record.id],
+                        'kwargs': {'vals': {'shortdesc': '%s modified by message box' % record.name}},
+                    },
+                    {
+                        'name': 'Open module in new form',
+                        'type': 'ir.actions.act_window',
+                        'res_model': model._name,
+                        'res_id': record.id,
+                        'views': [(False, 'form')],
+                    },
+                    {
+                        'name': 'Run the update module list wizard',
+                        'type': 'ir.actions.act_window',
+                        'res_model': 'base.module.update',
+                        'target': 'new',
+                        'classes': 'btn btn-primary',
+                        'views': [(False, 'form')],
+                    },
+                ],
+            }
+        </field>
+        <field name="binding_model_id" ref="base.model_ir_module_module" />
+    </record>
+</odoo>
