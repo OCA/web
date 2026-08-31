@@ -1,7 +1,7 @@
 # Copyright 2023 ForgeFlow S.L. (https://www.forgeflow.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
-from odoo import api
+from odoo import Command, api
 from odoo.tests import common
 
 
@@ -10,7 +10,24 @@ class TestWebNotifyChannelMessage(common.TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env.user = cls.env.ref("base.user_admin")
-        cls.other_user = cls.env.ref("base.user_demo")
+        cls.other_user = cls.env["res.users"].create(
+            {
+                "name": "Demo User",
+                "login": "demo",
+                "password": "demo",
+                "email": "demo@example.com",
+                "company_id": cls.env.ref("base.main_company").id,
+                "group_ids": [
+                    Command.set(
+                        [
+                            cls.env.ref("base.group_user").id,
+                            cls.env.ref("base.group_partner_manager").id,
+                            cls.env.ref("base.group_allow_export").id,
+                        ]
+                    )
+                ],
+            }
+        )
         cls.env = api.Environment(cls.cr, cls.env.user.id, {})
         cls.env.user.tz = False  # Make sure there's no timezone in user
         cls.user_internal = cls.env["res.users"].create(

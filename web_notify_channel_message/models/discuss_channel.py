@@ -2,7 +2,7 @@
 # Copyright 2023 ForgeFlow S.L. (https://www.forgeflow.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, models
+from odoo import models
 
 
 class DiscussChannel(models.Model):
@@ -15,7 +15,9 @@ class DiscussChannel(models.Model):
                 if user in message.author_id.user_ids:
                     continue
                 user.with_context(_notify_channel_message=True).notify_info(
-                    message=_("You have a new message in channel %s") % self.name
+                    message=self.env._(
+                        "You have a new message in channel %s", self.name
+                    )
                 )
 
     def message_post(self, *, message_type="notification", **kwargs):
