@@ -41,7 +41,7 @@ addon | version | maintainers | summary
 [web_environment_ribbon](web_environment_ribbon/) | 16.0.1.0.0 |  | Web Environment Ribbon
 [web_export_html_as_text](web_export_html_as_text/) | 16.0.1.0.0 |  | Web Export Html As Text
 [web_field_numeric_formatting](web_field_numeric_formatting/) | 16.0.1.0.0 |  | Allow to render float and integer fields without thousands separator
-[web_field_tooltip](web_field_tooltip/) | 16.0.1.2.0 |  | Displays customizable tooltips for fields
+[web_field_tooltip](web_field_tooltip/) | 16.0.1.2.1 |  | Displays customizable tooltips for fields
 [web_font_size_report_layout](web_font_size_report_layout/) | 16.0.1.1.0 |  | Adds a font size selector (pt) to the Document Layout wizard
 [web_form_banner](web_form_banner/) | 16.0.1.1.0 |  | Web Form Banner
 [web_group_by_percentage](web_group_by_percentage/) | 16.0.1.0.1 |  | Show the percentage of the total sum in group by rows
