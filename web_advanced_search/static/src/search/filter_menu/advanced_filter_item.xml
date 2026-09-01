@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright 2017-2018 Jairo Llopis <jairo.llopis@tecnativa.com>
+    Copyright 2022 Camptocamp SA (https://www.camptocamp.com).
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<templates>
+    <t t-name="web_advanced_search.AdvancedFilterItem">
+        <DropdownItem
+            class="'o_menu_item o_add_advanced_search'"
+            onSelected.bind="onClick"
+        >
+            Add Advanced Filter
+        </DropdownItem>
+    </t>
+</templates>
