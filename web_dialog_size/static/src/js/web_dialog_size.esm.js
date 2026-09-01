@@ -5,6 +5,12 @@ import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
 import {patch} from "@web/core/utils/patch";
 import {useService} from "@web/core/utils/hooks";
 
+function triggerWindowResize() {
+    requestAnimationFrame(() => {
+        window.dispatchEvent(new Event("resize"));
+    });
+}
+
 export class ExpandButton extends Component {
     setup() {
         this.orm = useService("orm");
@@ -30,12 +36,12 @@ export class ExpandButton extends Component {
 
     dialog_button_extend() {
         this.props.setsize("dialog_full_screen");
-        this.render();
+        triggerWindowResize();
     }
 
     dialog_button_restore() {
         this.props.setsize(this.last_size);
-        this.render();
+        triggerWindowResize();
     }
 }
 
