@@ -18,6 +18,7 @@ sup.field-tooltip {
 
 .popup-div {
     min-width: 100px;
+    max-width: 400px;
     min-height: 30px;
 
     > * {
@@ -31,5 +32,16 @@ sup.field-tooltip {
 
     .popover-content {
         background-color: white;
+    }
+
+    &.popup-dark-mode {
+        .popover-title {
+            font-weight: bold;
+            background-color: #242733;
+        }
+
+        .popover-content {
+            background-color: unset;
+        }
     }
 }

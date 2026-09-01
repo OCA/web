@@ -16,7 +16,9 @@
     </t>
 
     <t t-name="web_field_tooltip.FieldTooltipPopover" owl="1">
-        <div class="popup-div">
+        <div
+            t-attf-class="popup-div {{ props.colorMode === 'dark' ? 'popup-dark-mode' : '' }}"
+        >
             <div class="popover-title">
                 <span t-esc="props.title" />
             </div>
