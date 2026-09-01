@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Le Filament (https://le-filament.com)
+     License AGPL-3.0 (https://www.gnu.org/licenses/agpl) -->
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_searchpanel_toggle_all.SearchPanel.Regular"
+        t-inherit="web.SearchPanel.Regular"
+        t-inherit-mode="extension"
+    >
+        <xpath
+            expr="//header[hasclass('o_search_panel_section_header')]/b"
+            position="attributes"
+        >
+            <attribute
+                name="t-att-class"
+            >section.type === 'filter' ? 'o_searchpanel_toggle_all cursor-pointer user-select-none' : ''</attribute>
+            <attribute
+                name="t-att-title"
+            >section.type === 'filter' ? toggleSectionTitle(section.id) : ''</attribute>
+            <attribute
+                name="t-on-click"
+            >() =&gt; section.type === 'filter' ? this.toggleSection(section.id) : null</attribute>
+        </xpath>
+    </t>
+
+</templates>
