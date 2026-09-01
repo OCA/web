@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.web.m2x.dialog.no.create</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <block name="performance" position="after">
+                <block
+                    title="Search Dialog"
+                    name="m2x_dialog_no_create_setting_container"
+                >
+                    <setting
+                        string="Allow Create from Search Dialog"
+                        help="The New button in many2one/many2many search dialogs is hidden by default. Add models here to allow creation from the dialog."
+                        company_dependent="1"
+                    >
+                        <field
+                            name="m2x_dialog_create_model_ids"
+                            widget="many2many_tags"
+                            class="w-100"
+                        />
+                    </setting>
+                </block>
+            </block>
+        </field>
+    </record>
+</odoo>
