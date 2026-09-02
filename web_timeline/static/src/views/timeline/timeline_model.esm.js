@@ -140,6 +140,11 @@ export class TimelineModel extends Model {
                 this.fields[this.date_stop],
                 record[this.date_stop]
             );
+            // If date_stop is a date field (not datetime), set it to end of day
+            // This ensures the full day is included in the timeline
+            if (date_stop && this.fields[this.date_stop].type === "date") {
+                date_stop = date_stop.endOf("day");
+            }
         }
         if (!date_stop && date_delay) {
             date_stop = date_start.plus({hours: date_delay});
