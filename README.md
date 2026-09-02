@@ -26,7 +26,7 @@ addon | version | maintainers | summary
 [web_company_context_highlight](web_company_context_highlight/) | 19.0.1.0.0 | <a href='https://github.com/pverkest'><img src='https://github.com/pverkest.png' width='32' height='32' style='border-radius:50%;' alt='pverkest'/></a> | Highlight the company switcher when multiple companies are selected
 [web_dark_mode](web_dark_mode/) | 19.0.1.0.0 |  | Enabled Dark Mode for the Odoo Backend
 [web_date_format_numeric](web_date_format_numeric/) | 19.0.1.0.0 |  | Display all date/datetime fields in numeric format
-[web_dialog_size](web_dialog_size/) | 19.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
+[web_dialog_size](web_dialog_size/) | 19.0.1.0.1 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_editor_class_selector](web_editor_class_selector/) | 19.0.1.0.0 | <a href='https://github.com/carlos-lopez-tecnativa'><img src='https://github.com/carlos-lopez-tecnativa.png' width='32' height='32' style='border-radius:50%;' alt='carlos-lopez-tecnativa'/></a> | Web editor class selector
 [web_environment_ribbon](web_environment_ribbon/) | 19.0.1.0.0 |  | Web Environment Ribbon
 [web_favicon](web_favicon/) | 19.0.1.0.0 |  | Allows to set a custom shortcut icon (aka favicon)
