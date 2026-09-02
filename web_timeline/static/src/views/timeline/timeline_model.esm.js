@@ -64,10 +64,10 @@ export class TimelineModel extends Model {
         // because it is not supported by Odoo
         // In the module sale_timesheet_timeline, it is used
         // with default_group_by = task_user_ids
-        let field_to_order = this.params.default_group_by;
-        if (this.fields[field_to_order].type === "many2many") {
-            field_to_order = undefined;
-        }
+        const field_to_order = this.params.default_group_by;
+        // If (this.fields[field_to_order].type === "many2many") {
+        //     field_to_order = undefined;
+        // }
         this.data = await this.keepLast.add(
             this.orm.call(this.model_name, "search_read", [], {
                 fields: fields,
@@ -87,39 +87,61 @@ export class TimelineModel extends Model {
      */
     _event_data_transform(record) {
         const [date_start, date_stop] = this._get_event_dates(record);
-        let group = record[this.last_group_bys[0]];
-        if (group && Array.isArray(group) && group.length > 0) {
-            group = group[0];
+        const group = record[this.last_group_bys[0]];
+        let groups = [];
+        if (
+            group &&
+            Array.isArray(group) &&
+            group.length === 2 &&
+            typeof group[1] === "string"
+        ) {
+            // TODO: this breaks if m2m and only 2 items
+            //  I guess detect if its a number/id or array of ids
+            groups.push(group[0]);
         } else {
-            group = -1;
+            groups = group || [];
         }
-        let colorToApply = false;
-        for (const color of this.colors) {
-            if (evaluate(color.ast, record)) {
-                colorToApply = color.color;
+        if (groups.length === 0) {
+            groups = [-1];
+        }
+
+        console.log("groups", groups);
+        // eslint-disable-next-line prefer-const
+        let all_timeline_items = [];
+
+        for (const this_group of groups) {
+            let colorToApply = false;
+            for (const color of this.colors) {
+                if (evaluate(color.ast, record)) {
+                    colorToApply = color.color;
+                }
             }
-        }
 
-        let content = record.display_name;
-        if (this.recordTemplate) {
-            content = this._render_timeline_item(record);
-        }
+            let content = record.display_name;
+            if (this.recordTemplate) {
+                content = this._render_timeline_item(record);
+            }
 
-        const timeline_item = {
-            start: date_start.toJSDate(),
-            content: content,
-            id: record.id,
-            order: record.order,
-            group: group,
-            evt: record,
-            style: `background-color: ${colorToApply};`,
-        };
-        // Only specify range end when there actually is one.
-        // ➔ Instantaneous events / those with inverted dates are displayed as points.
-        if (date_stop && DateTime.fromISO(date_start) < DateTime.fromISO(date_stop)) {
-            timeline_item.end = date_stop.toJSDate();
+            const timeline_item = {
+                start: date_start.toJSDate(),
+                content: content,
+                id: record.id + (this_group ? `_${this_group}` : ""),
+                order: record.order,
+                group: this_group,
+                evt: record,
+                style: `background-color: ${colorToApply};`,
+            };
+            // Only specify range end when there actually is one.
+            // ➔ Instantaneous events / those with inverted dates are displayed as points.
+            if (
+                date_stop &&
+                DateTime.fromISO(date_start) < DateTime.fromISO(date_stop)
+            ) {
+                timeline_item.end = date_stop.toJSDate();
+            }
+            all_timeline_items.push(timeline_item);
         }
-        return timeline_item;
+        return all_timeline_items;
     }
     /**
      * Get dates from given event
@@ -194,8 +216,13 @@ export class TimelineModel extends Model {
      * @returns {jQuery.Deferred}
      */
     async remove_completed(event) {
-        await this.orm.call(this.model_name, "unlink", [[event.evt.id]]);
-        const unlink_index = this.data.findIndex((item) => item.id === event.evt.id);
+        const item_id =
+            typeof event.evt.id === "string" && event.evt.id.indexOf("_") !== -1
+                ? Number(event.evt.id.split("_")[0]) || event.evt.id.split("_")[0]
+                : Number(event.evt.id) || event.evt.id;
+
+        await this.orm.call(this.model_name, "unlink", [[item_id]]);
+        const unlink_index = this.data.findIndex((item) => item.id === item_id);
         if (unlink_index !== -1) {
             this.data.splice(unlink_index, 1);
         }

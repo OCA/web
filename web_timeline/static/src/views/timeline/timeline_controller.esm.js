@@ -80,6 +80,13 @@ export class TimelineController extends Component {
      * @returns {jQuery.Deferred}
      */
     _onItemDoubleClick(event) {
+        const item_id =
+            typeof event.item === "string" && event.item.indexOf("_") !== -1
+                ? Number(event.item.split("_")[0]) || event.item.split("_")[0]
+                : Number(event.item) || event.item;
+
+        // Update event item to be just the ID
+        event.item = item_id;
         return this.openItem(event.item, false);
     }
 
@@ -92,7 +99,10 @@ export class TimelineController extends Component {
      * @returns {Object}
      */
     _onUpdate(item) {
-        const item_id = Number(item.evt.id) || item.evt.id;
+        const item_id =
+            typeof item.evt.id === "string" && item.evt.id.indexOf("_") !== -1
+                ? Number(item.evt.id.split("_")[0]) || item.evt.id.split("_")[0]
+                : Number(item.evt.id) || item.evt.id;
         return this.openItem(item_id, true);
     }
 
@@ -101,6 +111,12 @@ export class TimelineController extends Component {
      * @param {Boolean} is_editable
      */
     openItem(item_id, is_editable) {
+        const _id =
+            typeof item_id === "string" && item_id.indexOf("_") !== -1
+                ? Number(item_id.split("_")[0]) || item_id.split("_")[0]
+                : Number(item_id) || item_id;
+        item_id = _id;
+
         if (this.open_popup_action) {
             const options = {
                 resModel: this.model.model_name,
@@ -243,7 +259,11 @@ export class TimelineController extends Component {
             context[`default_${this.date_delay}`] = diff.hours;
         }
         if (item.group > 0) {
-            context[`default_${this.model.last_group_bys[0]}`] = item.group;
+            if (this.model.fields[this.model.last_group_bys[0]].type !== "many2many") {
+                context[`default_${this.model.last_group_bys[0]}`] = item.group;
+            } else {
+                context[`default_${this.model.last_group_bys[0]}`] = [item.group];
+            }
         }
         // Show popup
         this.dialogService.add(
