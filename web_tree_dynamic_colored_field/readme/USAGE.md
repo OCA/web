@@ -68,3 +68,18 @@ Example:
 **Note that you can use single or normal quotes. If the declaration of
 the options doesn't follow the JSON format, the options string will be
 evaluated using py.eval()**
+
+- You can use another field's label referring to a color too... In the tree view declaration, put
+  `options="{'fg_color': 'my_other_color_field'}"`
+  attribute in the `field` tag:
+
+      ...
+      <field name="arch" type="xml">
+          <tree string="View name">
+              ...
+              <field name="my_other_color_field" column_invisible="True"/>
+              <field name="name" options="{'fg_color': 'my_other_color_field'}"/>
+              ...
+          </tree>
+      </field>
+      ...
