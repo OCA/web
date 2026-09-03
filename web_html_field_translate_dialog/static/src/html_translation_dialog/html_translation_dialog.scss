@@ -1,0 +1,28 @@
+.o_html_translation_dialog {
+    .o_html_translation_editor {
+        // Give every language editor a comfortable, scrollable working area.
+        max-height: 18rem;
+        overflow-y: auto;
+
+        .o-wysiwyg {
+            min-height: 6rem;
+        }
+
+        // Raw HTML ("technical") view: a plain, resizable code area.
+        textarea.o_codeview {
+            min-height: 12rem;
+            padding: 0.5rem;
+            resize: vertical;
+            white-space: pre;
+
+            &:focus {
+                outline: none;
+                box-shadow: none;
+            }
+        }
+    }
+
+    .o_html_translation_lang.o_language_current > .o_form_label {
+        color: var(--primary);
+    }
+}
