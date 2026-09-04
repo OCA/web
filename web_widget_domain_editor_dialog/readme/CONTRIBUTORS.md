@@ -5,3 +5,7 @@
 - Darshan Patel \<<darshan.barcelona@gmail.com>\>
 - Helly kapatel \<<helly.kapatel@initos.com>\>
 - Carlos Lopez \<<celm1990@gmail.com>\>
+
+- [CIT-Services](https://cit-services.in/):
+  - Linto Antony \<<l.antony@cit-services.eu>\>
+
