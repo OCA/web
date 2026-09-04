@@ -1,0 +1,37 @@
+// Copyright 2026 volkantasci
+// License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+/* web_theme_focus — app-menu color variables (light).
+   Defined on <body> (set by app_theme.esm.js) so the full-bleed gradient
+   painted on .o_web_client (see navbar.scss) can read --app-menu-background. */
+body[data-app-theme="focus"] {
+    --app-menu-background:
+        url("../img/app_switcher_background_light.svg"),
+        linear-gradient(to bottom, #e9e6f9, #edebf8);
+    --app-menu-text-color: #3c3c3c;
+    --app-menu-text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.4);
+    --app-menu-hover-background: rgba(255, 255, 255, 0.35);
+}
+
+/* Focus app drawer: no search bar, larger app
+   icons and more spacing between them. Applies to both color schemes. */
+.o_grid_apps_menu[data-theme="focus"] {
+    .search-container {
+        display: none !important;
+    }
+
+    .o-app-menu-list {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 0.5rem;
+    }
+
+    .o-app-menu-item {
+        padding: 1rem 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .o-app-menu-item__icon {
+        width: 70px;
+        max-width: 70px;
+    }
+}
