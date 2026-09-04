@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-inherit="mail.MessagingMenu.content" t-inherit-mode="extension">
+        <xpath expr="//ChannelSelector" position="before">
+            <t
+                t-if="state.adding === 'group'"
+                t-set="category"
+                t-value="store.discuss.groups"
+            />
+        </xpath>
+    </t>
+
+    <t t-inherit="mail.MessagingMenu.content" t-inherit-mode="extension">
+        <xpath expr="//MessagingMenuQuickSearch" position="before">
+            <button
+                class="o-mail-MessagingMenu-headerFilter btn btn-link px-2 py-1 m-1 lh-1"
+                t-att-class="store.discuss.activeTab === 'group' ? 'fw-bold o-active' : 'text-muted'"
+                type="button"
+                role="tab"
+                t-on-click="() => store.discuss.activeTab = 'group'"
+            >Groups</button>
+        </xpath>
+    </t>
+</templates>

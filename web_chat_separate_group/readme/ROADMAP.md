@@ -1,0 +1,2 @@
+- make thread ordering method configurable
+- make quick search visibility configurable
