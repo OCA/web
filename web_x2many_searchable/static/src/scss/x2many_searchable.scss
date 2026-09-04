@@ -1,0 +1,18 @@
+// Keep the inline x2many search bar above the list header
+// on very small screens where the layout can overlap.
+.o_field_x2many_list {
+    .o_x2m_search_panel {
+        position: relative;
+        z-index: 2;
+        background-color: var(--o-view-background-color);
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .o_field_x2many_list {
+        .o_x2m_search_panel {
+            position: sticky;
+            top: 0;
+        }
+    }
+}
