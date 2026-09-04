@@ -1,0 +1,26 @@
+.o_form_sheet_bg,
+.o-mail-Form-chatter.o-aside,
+.o_form_renderer.o_form_nosheet {
+    position: relative;
+}
+
+.o_web_form_view_resizable_handle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    width: 8px;
+    cursor: col-resize;
+    opacity: 1;
+}
+
+.o_web_form_view_resizable_handle.o_web_form_view_resizable_handle_start {
+    right: auto;
+    left: 0;
+    border-right: 0;
+}
+
+.o_attachment_preview.o_web_form_view_resizable_preview_disabled {
+    pointer-events: none !important;
+}
