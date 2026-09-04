@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 try:
     import mpld3
     from bs4 import BeautifulSoup
-except (OSError, ImportError) as err:
+except (OSError, ImportError) as err:  # pragma: no cover
     _logger.debug(err)
 
 
@@ -20,7 +20,7 @@ class AbstractMpld3Parser(models.AbstractModel):
     _description = "Utility to parse ploot figure to json data for widget Mpld3"
 
     @api.model
-    def convert_figure_to_json(self, figure):
+    def convert_figure_to_json(self, figure):  # pragma: no cover
         html_string = mpld3.fig_to_html(figure, no_extras=True, include_libraries=False)
         soup = BeautifulSoup(html_string, "lxml")
         json_data = {

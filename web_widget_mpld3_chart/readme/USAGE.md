@@ -18,12 +18,13 @@ To insert a mpld3 chart in a view proceed as follows:
 
 4.  In its computed method do:
 
-        def _compute_mpld3_chart(self):
-            for rec in self:
-                # Design your mpld3 figure:
-                plt.scatter([1, 10], [5, 9])
-                figure = plt.figure()
-                rec.mpld3_chart = self.convert_figure_to_json(figure)
+            def _compute_mpld3_chart(self):
+               for rec in self:
+                  # Design your mpld3 figure on an explicit figure object
+                  figure, ax = plt.subplots()
+                  ax.scatter([1, 10], [5, 9])
+                  rec.mpld3_chart = self.convert_figure_to_json(figure)
+                  plt.close(figure)
 
 5.  In the view, add something like this wherever you want to display
     your mpld3 chart:

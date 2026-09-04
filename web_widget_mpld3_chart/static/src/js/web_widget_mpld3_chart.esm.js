@@ -5,16 +5,16 @@ import {registry} from "@web/core/registry";
 export default class Mpld3ChartJsonWidget extends Component {
     setup() {
         this.widget = useRef("widget");
-        onPatched(() => {
-            var script = document.createElement("script");
-            script.text = this.props.record.data[this.props.name].script;
-            this.widget.el.append(script);
-        });
-        onMounted(() => {
-            var script = document.createElement("script");
-            script.text = this.props.record.data[this.props.name].script;
-            this.widget.el.append(script);
-        });
+        const appendScript = () => {
+            const chartData = this.props.record.data[this.props.name];
+            if (chartData && chartData.script) {
+                const script = document.createElement("script");
+                script.text = chartData.script;
+                this.widget.el.append(script);
+            }
+        };
+        onPatched(appendScript);
+        onMounted(appendScript);
         onWillStart(async () => {
             await loadJS("/web_widget_mpld3_chart/static/src/lib/d3/d3.v5.js");
             await loadJS(
@@ -23,7 +23,6 @@ export default class Mpld3ChartJsonWidget extends Component {
         });
     }
     markup(value) {
-        console.log("Marking up...");
         return markup(value);
     }
 }
@@ -32,6 +31,7 @@ Mpld3ChartJsonWidget.template = "web_widget_mpld3_chart.Mpld3ChartJsonWidget";
 
 export const mpld3ChartJsonWidget = {
     component: Mpld3ChartJsonWidget,
+    supportedTypes: ["json"],
 };
 
 registry.category("fields").add("mpld3_chart", mpld3ChartJsonWidget);
