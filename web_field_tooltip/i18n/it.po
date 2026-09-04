@@ -1,0 +1,162 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_field_tooltip
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-04-23 14:35+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: web_field_tooltip
+#. odoo-python
+#: code:addons/web_field_tooltip/models/ir_model_fields_tooltip.py:0
+#, python-format
+msgid "A tooltip already exists for this field"
+msgstr "Esiste già una descrizione per questo campo"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__active
+msgid "Active"
+msgstr "Attivo"
+
+#. module: web_field_tooltip
+#: model_terms:ir.ui.view,arch_db:web_field_tooltip.ir_model_fields_tooltip_form_view
+#: model_terms:ir.ui.view,arch_db:web_field_tooltip.ir_model_fields_tooltip_search_view
+msgid "Archived"
+msgstr "In archivio"
+
+#. module: web_field_tooltip
+#: model:ir.model,name:web_field_tooltip.model_base
+msgid "Base"
+msgstr "Base"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__field_id
+msgid "Field"
+msgstr "Campo"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__field_name
+msgid "Field Name"
+msgstr "Nome campo"
+
+#. module: web_field_tooltip
+#: model:ir.model,name:web_field_tooltip.model_ir_model_fields_tooltip
+msgid "Field Tooltip"
+msgstr "Descrizione campo"
+
+#. module: web_field_tooltip
+#: model:ir.actions.act_window,name:web_field_tooltip.ir_model_fields_tooltip_act_window
+#: model:ir.ui.menu,name:web_field_tooltip.ir_model_fields_tooltip_menu
+msgid "Fields Tooltips"
+msgstr "Descrizioni campi"
+
+#. module: web_field_tooltip
+#: model:ir.model,name:web_field_tooltip.model_ir_http
+msgid "HTTP Routing"
+msgstr "Instradamento HTTP"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: web_field_tooltip
+#. odoo-javascript
+#: code:addons/web_field_tooltip/static/src/views/form/form_controller.esm.js:0
+#, python-format
+msgid "Manage tooltips"
+msgstr "Gestione descrizioni"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__model_id
+msgid "Model"
+msgstr "Modello"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__model
+msgid "Model Name"
+msgstr "Nome modello"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,help:web_field_tooltip.field_ir_model_fields_tooltip__model_id
+msgid "Model for the Field Tooltip."
+msgstr "Modello per la descrizione campo."
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,help:web_field_tooltip.field_ir_model_fields_tooltip__active
+msgid "Set active to false to hide the Tooltip without removing it."
+msgstr ""
+"Impostare attiva a falso per nascondere la descrizione senza eleiminarla."
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_res_users__tooltip_show_add_helper
+msgid "Show helper to add tooltips on fields"
+msgstr "Visualizza aiuto per aggiungere la descrizione sui campi"
+
+#. module: web_field_tooltip
+#: model:res.groups,comment:web_field_tooltip.group_tooltip_manager
+msgid "The user will be able to manage all the tooltips."
+msgstr "L'utente potrà gestire tutte le descrizioni."
+
+#. module: web_field_tooltip
+#: model:res.groups,name:web_field_tooltip.group_tooltip_manager
+msgid "Tooltip Manager"
+msgstr "Gestore descrizioni"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_res_users__tooltip_show_add_helper_allowed
+msgid "Tooltip Show Add Helper Allowed"
+msgstr "Consentito visualizzare aggiunta aiuto descrizione"
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__tooltip_text
+msgid "Tooltip Text"
+msgstr "Testo descrizione"
+
+#. module: web_field_tooltip
+#: model:ir.model,name:web_field_tooltip.model_res_users
+msgid "User"
+msgstr "Utente"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
