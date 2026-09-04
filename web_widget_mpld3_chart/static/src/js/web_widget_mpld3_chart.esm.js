@@ -23,7 +23,6 @@ export default class Mpld3ChartJsonWidget extends Component {
         });
     }
     markup(value) {
-        console.log("Marking up...");
         return markup(value);
     }
 }
@@ -32,6 +31,7 @@ Mpld3ChartJsonWidget.template = "web_widget_mpld3_chart.Mpld3ChartJsonWidget";
 
 export const mpld3ChartJsonWidget = {
     component: Mpld3ChartJsonWidget,
+    supportedTypes: ["json"],
 };
 
 registry.category("fields").add("mpld3_chart", mpld3ChartJsonWidget);
