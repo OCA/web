@@ -33,7 +33,7 @@ export class TimelineArchParser {
                 zoomKey: "ctrlKey",
             },
         };
-        const fieldNames = fields.display_name ? ["display_name"] : [];
+        const fieldNames = new Set(fields.display_name ? ["display_name"] : []);
         visitXML(arch, (node) => {
             switch (node.tagName) {
                 case "timeline": {
@@ -122,9 +122,7 @@ export class TimelineArchParser {
                 }
                 case "field": {
                     const fieldName = node.getAttribute("name");
-                    if (!fieldNames.includes(fieldName)) {
-                        fieldNames.push(fieldName);
-                    }
+                    fieldNames.add(fieldName);
                     break;
                 }
                 case "t": {
@@ -142,27 +140,45 @@ export class TimelineArchParser {
             "default_group_by",
             "progress",
             "date_delay",
-            archInfo.default_group_by,
+            ...archInfo.default_group_by.split(","),
         ];
+        fieldsToGather
+            .map((field) =>
+                field === "default_group_by"
+                    ? archInfo[field].split(",")
+                    : archInfo[field]
+            )
+            .flat()
+            .filter(Boolean)
+            .forEach((field) => fieldNames.add(field));
 
-        for (const field of fieldsToGather) {
-            if (archInfo[field] && !fieldNames.includes(archInfo[field])) {
-                fieldNames.push(archInfo[field]);
-            }
-        }
-        for (const color of archInfo.colors) {
-            if (!fieldNames.includes(color.field)) {
-                fieldNames.push(color.field);
-            }
-        }
+        archInfo.colors
+            .map((color) => color.field)
+            .forEach((field) => fieldNames.add(field));
 
-        if (
-            archInfo.dependency_arrow &&
-            !fieldNames.includes(archInfo.dependency_arrow)
-        ) {
-            fieldNames.push(archInfo.dependency_arrow);
+        if (archInfo.dependency_arrow) {
+            fieldNames.add(archInfo.dependency_arrow);
         }
-        archInfo.fieldNames = fieldNames;
+        archInfo.fieldNames = [...fieldNames];
+
+        fieldsToGather
+            .map((field) =>
+                field === "default_group_by"
+                    ? archInfo[field].split(",")
+                    : archInfo[field]
+            )
+            .flat()
+            .filter(Boolean)
+            .forEach((field) => fieldNames.add(field));
+
+        archInfo.colors
+            .map((color) => color.field)
+            .forEach((field) => fieldNames.add(field));
+
+        if (archInfo.dependency_arrow) {
+            fieldNames.add(archInfo.dependency_arrow);
+        }
+        archInfo.fieldNames = [...fieldNames];
         return archInfo;
     }
     /**
