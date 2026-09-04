@@ -1,0 +1,181 @@
+/***********************************************************
+        Variables
+************************************************************/
+
+/* The wtc prefix keeps these from conflicting with bootstrap vars*/
+$wtc-input-border-color: $o-gray-500 !default;
+$wtc-input-border-color-focus: $o-community-color !default;
+$wtc-input-color-required: $o-gray-900 !default;
+// Note, it is very important that this be a mix with transparent! The reason is that the normal $o-input-bg
+// is transparent and so some styles are built assuming this. The most notable examples are monetary fields
+// which are set up like this:
+// <div name="list_price" class="o_field_widget o_required_modifier o_field_monetary oe_inline">
+//      <div class="text-nowrap d-inline-flex w-100 align-items-baseline position-relative">
+//          <span class="o_input position-absolute pe-none d-flex w-100">
+//              <span>$&nbsp;</span>
+//              <span class="opacity-0 d-inline-block overflow-hidden mw-100 o_monetary_ghost_value">0.00</span>
+//          </span>
+//          <span class="opacity-0">$&nbsp;</span>
+//          <input class="o_input flex-grow-1 flex-shrink-1" autocomplete="off" id="list_price_0" type="text">
+//      </div>
+// </div>
+// So a non transparent background on the <input> element blocks off the display. so it is much better to immitate $o-input-invalid-bg
+// https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/scss/primary_variables.scss#L170
+$wtc-input-background-color-required: mix(#0000ff, transparent, 10) !default;
+$wtc-input-color-placeholder-required: #6c757d !default;
+
+/***********************************************************
+        Handle Borders
+************************************************************/
+// Only activate these styles when the classic-theme class is set on the body
+body.classic-theme {
+    /* Odoo sets this without consideration for nesting, as occurs with custom properties.
+ * https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/views/fields/fields.scss#L36C1-L39C2
+ * We fix that here. We also use our special toned down version of $o-action for full borders */
+    .o_field_widget:focus-within {
+        &:has(.o_field_widget) {
+            @include print-variable(o-input-border-color, $wtc-input-border-color);
+            @include print-variable(o-caret-color, $input-color);
+        }
+        @include print-variable(o-input-border-color, $wtc-input-border-color-focus);
+        @include print-variable(o-caret-color, $wtc-input-border-color-focus);
+    }
+
+    // https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/views/fields/fields.scss#L50C1-L65C2
+    .o_input {
+        border: $input-border-width solid var(--o-input-border-color);
+        border-radius: 3px;
+    }
+
+    // An odd case. The search input when adding a new user to an existing task from kanban
+    // https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/views/fields/many2many_tags_avatar/many2many_tags_avatar_field.scss#L62C9-L62C55
+    .o_m2m_tags_avatar_field_popover .o-autocomplete .o-autocomplete--input.o_input {
+        border-width: $input-border-width;
+        padding-left: $o-input-padding-x;
+    }
+
+    // All these selectors are probably not necessary, but just following:
+    // https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/views/fields/properties/properties_field.scss#L12C1-L45C2
+    .o_field_properties,
+    .o_field_properties.o_field_invalid,
+    .o_property_field_popover {
+        .o_input:focus,
+        .dropdown:focus ~ .o_dropdown_button,
+        .dropdown:focus-within ~ .o_dropdown_button,
+        .o_input:focus ~ .o_datepicker_button,
+        .o_dropdown_button:focus {
+            @include print-variable(
+                o-input-border-color,
+                $wtc-input-border-color-focus
+            );
+            * {
+                @include print-variable(
+                    o-input-border-color,
+                    $wtc-input-border-color-focus
+                );
+            }
+        }
+    }
+
+    // Give tag type custom properties input borders too. Note the code we are overriding
+    // https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/views/fields/properties/property_value.scss#L43C1-L46C2
+    .o_field_property_many2many_value:not(.readonly),
+// https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/views/fields/properties/property_tags.scss#L29C1-L32C2
+.o_field_property_tag:not(.readonly) {
+        border: $input-border-width solid var(--o-input-border-color);
+        border-radius: 3px;
+    }
+
+    .o_form_view {
+        /* Odoo sets borders to transparent unless hovered or focused. We override this.
+     * https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/views/form/form_controller.scss#L202C1-L204C6 */
+        &:not(.o_field_highlight)
+            .o_field_widget:not(.o_field_invalid):not(.o_field_highlight)
+            .o_input:not(:hover):not(:focus) {
+            --o-input-border-color: #{$wtc-input-border-color};
+        }
+
+        /* Monetary fields need some special help */
+        .o_field_monetary {
+            /* Prevent having double border for monetary fields */
+            span.o_input:has(~ input.o_input) {
+                border: $input-border-width solid transparent !important;
+            }
+
+            /* Keep the monetary symbol away from the border when it is outside the border */
+            /* For when the symbol is on the left side */
+            span.o_input + span.opacity-0 {
+                margin-right: 3px;
+            }
+            /* For when the symbol is on the right side */
+            span.o_input ~ span.opacity-0:not(span.o_input + span.opacity-0) {
+                margin-left: 3px;
+            }
+        }
+    }
+
+    /***********************************************************
+        Form View : Handle Background for required fields
+************************************************************/
+
+    // https://github.com/odoo/odoo/blob/18.0/addons/web/static/src/views/fields/fields.scss#L31C1-L34C2
+    .o_required_modifier {
+        @include print-variable(
+            o-input-background-color,
+            $wtc-input-background-color-required
+        );
+    }
+
+    /***********************************************************
+        Tree View : Handle style for input fields
+************************************************************/
+
+    // We override all lists, not just in forms
+    .o_list_renderer .o_data_row {
+        // Prevent item description from getting $wtc-input-background-color-required when row not in focus
+        &:not(.selected_row) .o_input {
+            background-color: initial;
+        }
+        &.o_selected_row > .o_data_cell {
+            &.o_required_modifier:not(.o_readonly_modifier),
+            &.o_invalid_cell:not(.o_readonly_modifier) {
+                /* Disable border bottom as the field has now a background */
+                border-bottom: 0px;
+            }
+            > .o_field_widget {
+                // We have to manually reintroduce the input invalid styles
+                &.o_field_invalid:not(.o_readonly_modifier):not(
+                        .o_invisible_modifier
+                    ):has(.o_input) {
+                    --o-input-background-color: #{$o-input-invalid-bg};
+                    .o_input {
+                        --o-input-border-color: #{$o-danger};
+                    }
+                }
+                &:not(.o_readonly_modifier):not(.o_invisible_modifier) {
+                    &.o_required_modifier:not(.o_field_invalid) {
+                        .o_input {
+                            color: $wtc-input-color-required;
+                            --o-input-background-color: #{$wtc-input-background-color-required} !important;
+                            background-color: var(
+                                --o-input-background-color
+                            ) !important;
+                        }
+                    }
+                    // Handle borders
+                    .o_input {
+                        border: $input-border-width solid var(--o-input-border-color) !important;
+                        /* Prevent double borders in nested o_input like tags */
+                        .o_input {
+                            border: 0 !important;
+                        }
+                    }
+                }
+                // Handle monetary fields in list
+                &.o_field_monetary span.o_input:has(~ input.o_input) {
+                    border: $input-border-width solid transparent !important;
+                }
+            }
+        }
+    }
+}

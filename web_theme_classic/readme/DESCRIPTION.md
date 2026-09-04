@@ -1,0 +1,21 @@
+This module extends the Odoo Community Edition `web` module to improve
+the visibility of input fields.
+
+**Rational:** Since Odoo V17, the design is very pure. That's great, but
+it generates some problem for users :
+
+- Fields are not identifiable. (we can not know exactly
+  where they are until you hover over them with the cursor)
+- There is no indication for the required fields until trying to save
+  (or exit the screen)
+
+In a way, this module restores the form display of version 15, but
+preserving the "save on the fly" new feature.
+
+**Without this module**
+
+![](../static/description/product_template_form_without_module.png)
+
+**With this module**
+
+![](../static/description/product_template_form_with_module.png)
