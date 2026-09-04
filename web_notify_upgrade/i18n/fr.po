@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_notify_upgrade
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2024-08-14 16:58+0000\n"
+"Last-Translator: David Beal <david.beal@akretion.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: web_notify_upgrade
+#: model:ir.model,name:web_notify_upgrade.model_ir_model_data
+msgid "Model Data"
+msgstr "Model Data"
+
+#. module: web_notify_upgrade
+#. odoo-python
+#: code:addons/web_notify_upgrade/models/ir_model.py:0
+#, python-format
+msgid "Reload"
+msgstr "Recharger"
+
+#. module: web_notify_upgrade
+#. odoo-python
+#: code:addons/web_notify_upgrade/models/ir_model.py:0
+#, python-format
+msgid "Upgrade Notification"
+msgstr "Notification de mise à jour"
+
+#. module: web_notify_upgrade
+#. odoo-python
+#: code:addons/web_notify_upgrade/models/ir_model.py:0
+#, python-format
+msgid "Your odoo instance has been upgraded, please reload the web page."
+msgstr "Votre instance odoo a été mise à jour, merci de recharger la page web."
