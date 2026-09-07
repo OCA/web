@@ -1,3 +1,5 @@
+/** @odoo-module **/
+
 (function () {
     "use strict";
 
