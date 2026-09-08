@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===============================
 Web Excel Export Dynamic Expand
 ===============================
@@ -17,7 +13,7 @@ Web Excel Export Dynamic Expand
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -32,9 +28,16 @@ Web Excel Export Dynamic Expand
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-When exporting a tree view to an Excel file, you can decide if you want
-to export only the main groups or the full tree, depending if all groups
-are collapsed, or there is one open.
+When exporting a list view to an Excel file, the export mirrors the
+current group expansion state. The number of group levels visible in the
+UI determines how many levels are included in the export:
+
+-  All groups collapsed → only top-level group summary rows.
+-  N levels of groups expanded → N levels of group summary rows, each
+   with its aggregated values but no further detail.
+-  All levels expanded → full export including individual records.
+
+This works with any number of Group By filters applied simultaneously.
 
 **Table of contents**
 
@@ -62,7 +65,8 @@ Authors
 Contributors
 ------------
 
-- Arnau Cruz <arnau.cruz@forgeflow.com>
+-  Arnau Cruz <arnau.cruz@forgeflow.com>
+-  Lois Rilo <lois.rilo@forgeflow.com>
 
 Maintainers
 -----------
