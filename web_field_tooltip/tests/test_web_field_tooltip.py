@@ -46,3 +46,21 @@ class TestWebFieldTooltip(TransactionCase):
             self.Tooltip.with_context(default_model=self.partner_model_name)
         )
         self.assertEqual(res_partner_form.model_id, self.partner_model)
+
+    def test_tooltip_allowed_is_self_readable(self):
+        # ``tooltip_show_add_helper_allowed`` is displayed on the user
+        # preferences form, so a user must be able to read it on their own
+        # record. If it is missing from SELF_READABLE_FIELDS, the res.users
+        # self-read shortcut is skipped and reading one's own preferences
+        # (together with any group-restricted field also present on the form)
+        # raises an AccessError.
+        user = self.env["res.users"].create(
+            {
+                "name": "Test Tooltip User",
+                "login": "test_tooltip_user",
+                "groups_id": [(6, 0, [self.env.ref("base.group_user").id])],
+            }
+        )
+        self.assertIn("tooltip_show_add_helper_allowed", user.SELF_READABLE_FIELDS)
+        # A non-manager user can read the field on their own record.
+        user.with_user(user).read(["tooltip_show_add_helper_allowed"])
