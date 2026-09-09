@@ -2,7 +2,7 @@
 /* global QUnit */
 
 import {Component, mount, xml} from "@odoo/owl";
-import {getFixture} from "@web/../tests/helpers/utils";
+import {destroy, getFixture} from "@web/../tests/helpers/utils";
 import {makeTestEnv} from "@web/../tests/helpers/mock_env";
 import {registry} from "@web/core/registry";
 import {useRecordStream} from "../../../src/js/hooks/use_record_stream.esm";
@@ -14,9 +14,11 @@ QUnit.module("Hooks", {}, function () {
     QUnit.test("subscribes to channel and handles updates", async function (assert) {
         const serviceMock = {
             addChannel: (channel) => assert.step(`addChannel:${channel}`),
+            deleteChannel: (channel) => assert.step(`deleteChannel:${channel}`),
             subscribe: (callback) => {
                 assert.step("subscribe");
                 this.callback = callback;
+                return () => null;
             },
             displayNotification: (msg) => assert.step(`notify:${msg}`),
         };
@@ -36,7 +38,7 @@ QUnit.module("Hooks", {}, function () {
 
         const env = await makeTestEnv();
         const target = getFixture();
-        await mount(TestComponent, target, {env});
+        const component = await mount(TestComponent, target, {env});
 
         assert.verifySteps(["addChannel:record_events:test.model", "subscribe"]);
 
@@ -57,11 +59,18 @@ QUnit.module("Hooks", {}, function () {
         });
         await waitForDebounce();
         assert.verifySteps([]);
+
+        destroy(component);
+        assert.verifySteps(
+            ["deleteChannel:record_events:test.model"],
+            "the channel is released when the component unmounts"
+        );
     });
 
     QUnit.test("handles dirty state", async function (assert) {
         const serviceMock = {
             addChannel: () => null,
+            deleteChannel: () => null,
             subscribe: (callback) => {
                 this.callback = callback;
                 return () => null;
