@@ -1,3 +1,5 @@
+# Copyright 2025 Binhex
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 # web_font_size_report_layout/models/base_document_layout.py
 import logging
 
@@ -15,13 +17,6 @@ class BaseDocumentLayout(models.TransientModel):
         string="Font size",
     )
 
-    @api.onchange("report_font_size")
-    def _onchange_report_font_size(self):
-        func = getattr(self, "_compute_preview", None)
-        if not callable(func):
-            return
-        try:
-            func()
-        except Exception as exc:  # pylint: disable=broad-except
-            _logger.debug("Failed computing document layout preview: %s", exc)
-            self.preview = False
+    @api.depends("report_font_size")
+    def _compute_preview(self):
+        return super()._compute_preview()
