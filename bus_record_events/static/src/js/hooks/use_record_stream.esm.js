@@ -25,6 +25,7 @@ export function useRecordStream(
     const service = useService("bus_record_event_service");
     let unsubscribe = null;
     let debounceTimer = null;
+    let channel = null;
 
     const clearDebounce = () => {
         if (debounceTimer !== null) {
@@ -114,7 +115,7 @@ export function useRecordStream(
     };
 
     onWillStart(() => {
-        const channel = id ? `record_events:${model}:${id}` : `record_events:${model}`;
+        channel = id ? `record_events:${model}:${id}` : `record_events:${model}`;
         service.addChannel(channel);
     });
 
@@ -126,6 +127,9 @@ export function useRecordStream(
         clearDebounce();
         if (unsubscribe) {
             unsubscribe();
+        }
+        if (channel) {
+            service.deleteChannel(channel);
         }
     });
 }
