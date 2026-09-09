@@ -7,6 +7,7 @@ export const busRecordEventService = {
     dependencies: ["bus_service", "notification"],
     start(env, {bus_service, notification}) {
         const subscribers = new Set();
+        const channelRefCounts = new Map();
 
         const displayNotification = (message, options = {}) => {
             notification.add(markup(message), {
@@ -52,10 +53,23 @@ export const busRecordEventService = {
                 return () => subscribers.delete(callback);
             },
             addChannel(channel) {
-                bus_service.addChannel(channel);
+                const count = (channelRefCounts.get(channel) || 0) + 1;
+                channelRefCounts.set(channel, count);
+                if (count === 1) {
+                    bus_service.addChannel(channel);
+                }
             },
             deleteChannel(channel) {
-                bus_service.deleteChannel(channel);
+                const count = channelRefCounts.get(channel);
+                if (!count) {
+                    return;
+                }
+                if (count <= 1) {
+                    channelRefCounts.delete(channel);
+                    bus_service.deleteChannel(channel);
+                } else {
+                    channelRefCounts.set(channel, count - 1);
+                }
             },
             displayNotification,
         };
