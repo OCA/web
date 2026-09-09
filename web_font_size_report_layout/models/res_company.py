@@ -1,4 +1,14 @@
+# Copyright 2025 Binhex
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 from odoo import api, fields, models
+
+STYLE_FIELDS = {
+    "external_report_layout_id",
+    "font",
+    "report_font_size",
+    "primary_color",
+    "secondary_color",
+}
 
 
 class ResCompany(models.Model):
@@ -22,26 +32,12 @@ class ResCompany(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         companies = super().create(vals_list)
-        style_fields = {
-            "external_report_layout_id",
-            "font",
-            "report_font_size",
-            "primary_color",
-            "secondary_color",
-        }
-        if any(not style_fields.isdisjoint(values) for values in vals_list):
+        if any(not STYLE_FIELDS.isdisjoint(values) for values in vals_list):
             self._update_asset_style()
         return companies
 
     def write(self, values):
         res = super().write(values)
-        style_fields = {
-            "external_report_layout_id",
-            "font",
-            "report_font_size",
-            "primary_color",
-            "secondary_color",
-        }
-        if not style_fields.isdisjoint(values):
+        if not STYLE_FIELDS.isdisjoint(values):
             self._update_asset_style()
         return res
