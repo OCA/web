@@ -18,6 +18,7 @@ export class BusGraphController extends GraphController {
 export const busGraphView = {
     ...graphView,
     Controller: BusGraphController,
+    props: (genericProps, view) => graphView.props(genericProps, view),
 };
 
 registry.category("views").add("bus_record_event_graph", busGraphView);
