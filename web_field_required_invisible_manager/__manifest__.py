@@ -7,7 +7,7 @@
     "author": "Ilyas, ooops404, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "maintainers": ["ilyasProgrammer"],
-    "depends": ["base"],
+    "depends": ["base", "mail"],
     "data": [
         "security/ir.model.access.csv",
         "views/views.xml",
