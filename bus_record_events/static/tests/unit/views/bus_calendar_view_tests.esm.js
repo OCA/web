@@ -28,6 +28,7 @@ QUnit.module("Views", (hooks) => {
 
         const serviceMock = {
             addChannel: () => null,
+            deleteChannel: () => null,
             subscribe: (callback) => {
                 busCallback = callback;
                 return () => null;
