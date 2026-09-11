@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bus_record_event_demo_user,bus.record.event.demo.user,model_bus_record_event_demo,base.group_user,1,1,1,1
+access_bus_record_event_demo_admin,bus.record.event.demo.admin,model_bus_record_event_demo,base.group_system,1,1,1,1

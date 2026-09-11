@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_bus_record_event_demo_tree" model="ir.ui.view">
+        <field name="name">bus.record.event.demo.tree</field>
+        <field name="model">bus.record.event.demo</field>
+        <field name="arch" type="xml">
+            <tree js_class="bus_record_event_list">
+                <field name="name" />
+                <field name="date" />
+                <field name="value" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-success="state == 'done'"
+                />
+                <field name="user_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_bus_record_event_demo_form" model="ir.ui.view">
+        <field name="name">bus.record.event.demo.form</field>
+        <field name="model">bus.record.event.demo</field>
+        <field name="arch" type="xml">
+            <form js_class="bus_record_event_form">
+                <header>
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        options="{'clickable': '1'}"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="user_id" />
+                        </group>
+                        <group>
+                            <field name="date" />
+                            <field name="value" />
+                            <field name="priority" widget="priority" />
+                        </group>
+                    </group>
+                    <field name="description" placeholder="Description..." />
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_bus_record_event_demo_kanban" model="ir.ui.view">
+        <field name="name">bus.record.event.demo.kanban</field>
+        <field name="model">bus.record.event.demo</field>
+        <field name="arch" type="xml">
+            <kanban js_class="bus_record_event_kanban" default_group_by="state">
+                <field name="state" />
+                <field name="user_id" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name" />
+                                    </strong>
+                                </div>
+                                <div class="o_dropdown_kanban dropdown">
+                                    <a
+                                        class="dropdown-toggle o-no-caret btn"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        href="#"
+                                        aria-label="Dropdown menu"
+                                        title="Dropdown menu"
+                                    >
+                                        <span class="fa fa-ellipsis-v" />
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable">
+                                            <a
+                                                role="menuitem"
+                                                type="edit"
+                                                class="dropdown-item"
+                                            >Edit</a>
+                                        </t>
+                                        <t t-if="widget.deletable">
+                                            <a
+                                                role="menuitem"
+                                                type="delete"
+                                                class="dropdown-item"
+                                            >Delete</a>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <field name="date" />
+                                <field name="value" />
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left">
+                                    <field name="priority" widget="priority" />
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <field
+                                        name="user_id"
+                                        widget="many2one_avatar_user"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_bus_record_event_demo_calendar" model="ir.ui.view">
+        <field name="name">bus.record.event.demo.calendar</field>
+        <field name="model">bus.record.event.demo</field>
+        <field name="arch" type="xml">
+            <calendar
+                js_class="bus_record_event_calendar"
+                string="Events"
+                date_start="date"
+                color="user_id"
+            >
+                <field name="name" />
+                <field name="user_id" />
+                <field name="state" />
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_bus_record_event_demo_pivot" model="ir.ui.view">
+        <field name="name">bus.record.event.demo.pivot</field>
+        <field name="model">bus.record.event.demo</field>
+        <field name="arch" type="xml">
+            <pivot js_class="bus_record_event_pivot" string="Events">
+                <field name="date" type="row" interval="month" />
+                <field name="state" type="col" />
+                <field name="value" type="measure" />
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_bus_record_event_demo_graph" model="ir.ui.view">
+        <field name="name">bus.record.event.demo.graph</field>
+        <field name="model">bus.record.event.demo</field>
+        <field name="arch" type="xml">
+            <graph js_class="bus_record_event_graph" string="Events">
+                <field name="state" />
+                <field name="value" type="measure" />
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_bus_record_event_demo" model="ir.actions.act_window">
+        <field name="name">Bus Event Demo</field>
+        <field name="res_model">bus.record.event.demo</field>
+        <field name="view_mode">tree,kanban,calendar,pivot,graph,form</field>
+    </record>
+
+    <menuitem
+        id="menu_bus_record_event_demo"
+        name="Bus Event Demo"
+        action="action_bus_record_event_demo"
+        sequence="100"
+    />
+</odoo>
