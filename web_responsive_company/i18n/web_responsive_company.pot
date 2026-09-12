@@ -29,5 +29,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_responsive_company/static/src/xml/web_responsive_company.xml:0
 #, python-format
+msgid "Multiple companies selected"
+msgstr ""
+
+#. module: web_responsive_company
+#. odoo-javascript
+#: code:addons/web_responsive_company/static/src/xml/web_responsive_company.xml:0
+#, python-format
 msgid "Search companies..."
 msgstr ""
