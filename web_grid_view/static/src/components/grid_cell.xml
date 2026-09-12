@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_grid_view.GridCell">
+        <t t-if="props.isEditing">
+            <input
+                type="text"
+                t-ref="input"
+                class="o_grid_cell_input form-control form-control-sm text-center"
+                t-on-input="input.onInput"
+                t-on-keydown="input.onKeydown"
+                t-on-blur="input.commit"
+                t-on-click.stop=""
+            />
+        </t>
+        <t t-else="">
+            <span t-esc="displayValue" />
+        </t>
+    </t>
+</templates>
