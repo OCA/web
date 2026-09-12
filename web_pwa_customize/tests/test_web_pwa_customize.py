@@ -115,8 +115,11 @@ class TestWebPwaCustomize(HttpCaseWithUserDemo):
             "/web_pwa_customize/apple_touch_icon", allow_redirects=False
         )
         self.assertEqual(response.status_code, 303)
-        self.assertEqual(
-            response.headers["Location"], "/web/static/img/odoo-icon-ios.png"
+        # Werkzeug renders this Location either as a bare path or as an
+        # absolute URL depending on the environment (both are valid per
+        # RFC 7231) - assert on the path, not on which form it took.
+        self.assertTrue(
+            response.headers["Location"].endswith("/web/static/img/odoo-icon-ios.png")
         )
 
     def test_apple_touch_icon_redirects_to_configured_png(self):
@@ -129,8 +132,8 @@ class TestWebPwaCustomize(HttpCaseWithUserDemo):
             "/web_pwa_customize/apple_touch_icon", allow_redirects=False
         )
         self.assertEqual(response.status_code, 303)
-        self.assertEqual(
-            response.headers["Location"], "/web_pwa_customize/icon192x192.png"
+        self.assertTrue(
+            response.headers["Location"].endswith("/web_pwa_customize/icon192x192.png")
         )
 
     def test_apple_touch_icon_redirects_to_configured_svg(self):
@@ -146,7 +149,9 @@ class TestWebPwaCustomize(HttpCaseWithUserDemo):
             "/web_pwa_customize/apple_touch_icon", allow_redirects=False
         )
         self.assertEqual(response.status_code, 303)
-        self.assertEqual(response.headers["Location"], "/web_pwa_customize/icon.svg")
+        self.assertTrue(
+            response.headers["Location"].endswith("/web_pwa_customize/icon.svg")
+        )
 
     def test_apple_touch_icon_link_uses_our_route(self):
         self.authenticate("admin", "admin")
