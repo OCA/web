@@ -17,62 +17,47 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: web_responsive_company
-#. openerp-web
-#: code:addons/web_responsive_company/static/src/xml/web_responsive_company.xml:77
-#: code:addons/web_responsive_company/static/src/xml/web_responsive_company.xml:80
-#, python-format
-msgid "Alt"
-msgstr "Alt"
-
-#. module: web_responsive_company
-#. openerp-web
-#: code:addons/web_responsive_company/static/src/xml/web_responsive_company.xml:75
-#, python-format
-msgid "Change company"
-msgstr "تغییر شرکت"
-
-#. module: web_responsive_company
-#. openerp-web
-#: code:addons/web_responsive_company/static/src/xml/web_responsive_company.xml:80
-#, python-format
-msgid "Control"
-msgstr "کنترل"
-
-#. module: web_responsive_company
-#: model:res.company,overdue_msg:web_responsive_company.company_acsone
-#: model:res.company,overdue_msg:web_responsive_company.company_akretion
-#: model:res.company,overdue_msg:web_responsive_company.company_camp_to_camp
-#: model:res.company,overdue_msg:web_responsive_company.company_coop_it_easy
-#: model:res.company,overdue_msg:web_responsive_company.company_grap
-#: model:res.company,overdue_msg:web_responsive_company.company_tecnativa
-msgid ""
-"Dear Sir/Madam,\n"
-"\n"
-"Our records indicate that some payments on your account are still due. "
-"Please find details below.\n"
-"If the amount has already been paid, please disregard this notice. "
-"Otherwise, please forward us the total amount stated below.\n"
-"If you have any queries regarding your account, Please contact us.\n"
-"\n"
-"Thank you in advance for your cooperation.\n"
-"Best Regards,"
-msgstr ""
-
-#. module: web_responsive_company
 #: model:ir.model,name:web_responsive_company.model_ir_http
 msgid "HTTP Routing"
 msgstr "مسیریابی HTTP"
 
 #. module: web_responsive_company
-#. openerp-web
-#: code:addons/web_responsive_company/static/src/xml/web_responsive_company.xml:30
+#. odoo-javascript
+#: code:addons/web_responsive_company/static/src/xml/web_responsive_company.xml:0
 #, python-format
-msgid "Search company..."
-msgstr "جستجو شرکت ..."
+msgid "Logo"
+msgstr ""
 
 #. module: web_responsive_company
-#. openerp-web
-#: code:addons/web_responsive_company/static/src/xml/web_responsive_company.xml:77
+#. odoo-javascript
+#: code:addons/web_responsive_company/static/src/xml/web_responsive_company.xml:0
 #, python-format
-msgid "Shift"
-msgstr "شیفت"
+msgid "Multiple companies selected"
+msgstr ""
+
+#. module: web_responsive_company
+#. odoo-javascript
+#: code:addons/web_responsive_company/static/src/xml/web_responsive_company.xml:0
+#, python-format
+msgid "Search companies..."
+msgstr ""
+
+#, python-format
+#~ msgid "Alt"
+#~ msgstr "Alt"
+
+#, python-format
+#~ msgid "Change company"
+#~ msgstr "تغییر شرکت"
+
+#, python-format
+#~ msgid "Control"
+#~ msgstr "کنترل"
+
+#, python-format
+#~ msgid "Search company..."
+#~ msgstr "جستجو شرکت ..."
+
+#, python-format
+#~ msgid "Shift"
+#~ msgstr "شیفت"
