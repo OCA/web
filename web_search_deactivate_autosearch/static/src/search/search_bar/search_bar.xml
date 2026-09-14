@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        id="add_autosearch_checkbox_searchbar"
+        t-inherit="web.SearchBar"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//SearchBarMenu" position="after">
+            <div
+                class="form-check d-flex align-items-center ms-2"
+                style="margin-top:auto;margin-bottom:auto;"
+            >
+                <input
+                    id="autosearch_input"
+                    class="form-check-input"
+                    type="checkbox"
+                    t-on-change="toggleAutoSearch"
+                    t-att-checked="autosearch"
+                />
+                <label
+                    for="autosearch_input"
+                    class="form-check-label fw-bold ms-2"
+                >Auto search</label>
+            </div>
+        </xpath>
+    </t>
+</templates>
