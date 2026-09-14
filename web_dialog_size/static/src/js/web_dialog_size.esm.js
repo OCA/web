@@ -7,14 +7,30 @@ import {Component, onWillRender} from "@odoo/owl";
 import {Dialog} from "@web/core/dialog/dialog";
 import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
 
+// The dialog size configuration is static for a session: fetch it once and
+// share the promise between all dialogs instead of one RPC per dialog.
+let configPromise = null;
+
+function getDialogSizeConfig() {
+    if (!configPromise) {
+        configPromise = rpc
+            .query({
+                model: "ir.config_parameter",
+                method: "get_web_dialog_size_config",
+            })
+            .catch((error) => {
+                configPromise = null;
+                throw error;
+            });
+    }
+    return configPromise;
+}
+
 export class ExpandButton extends Component {
     setup() {
         this.lastSize = this.props.getsize();
         this.currentSize = this.props.getsize();
-        this.config = rpc.query({
-            model: "ir.config_parameter",
-            method: "get_web_dialog_size_config",
-        });
+        this.config = getDialogSizeConfig();
 
         onWillRender(() => {
             // If the form lost its current state, we need to set it again
