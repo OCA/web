@@ -71,6 +71,27 @@
                 <field name="action_id" position="after">
                     <field name="is_redirect_home" invisible="action_id" />
                 </field>
+
+                <xpath expr="//page[@name='preferences']" position="inside">
+                    <group string="File Viewer">
+                        <field name="is_auto_open_invoice_preview" />
+                    </group>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="view_users_form_simple_modif" model="ir.ui.view">
+        <field name="name">res.users.form.simple.modif.web.responsive</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//group[@name='signature']" position="after">
+                    <group string="File Viewer">
+                        <field name="is_auto_open_invoice_preview" />
+                    </group>
+                </xpath>
             </data>
         </field>
     </record>
