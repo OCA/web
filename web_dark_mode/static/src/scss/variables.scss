@@ -63,3 +63,37 @@ $o-webclient-background-color: $o-gray-300;
     --settings__tab-color: #{$o-gray-700};
     --settings__title-bg: #{$o-gray-100};
 }
+
+.bootstrap-datetimepicker-widget .datepicker table thead tr:nth-child(2) th,
+.bootstrap-datetimepicker-widget .datepicker table td.cw {
+    background-color: #{$o-gray-300};
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #{$o-gray-800};
+}
+
+.bootstrap-datetimepicker-widget .datepicker table {
+    --datepicker-color: #dedad6 important;
+    --datepicker__thead-bg: #070605 important;
+}
+
+.daterangepicker.show-calendar {
+    --daterangepicker-border: 1px solid rgba(0, 0, 0, 0.15);
+    --bs-datetimepicker-btn-hover-bg: #242733;
+    --bs-datetimepicker-btn-hover-color: #{$o-gray-800};
+    --daterangepicker-border-radius: 0.25rem;
+    --daterangepicker-bg: #070605;
+    --daterangepicker-color: #dedad6;
+    --daterangepicker__table-bg: transparent;
+    --daterangepicker__thead-bg: #070605;
+    --daterangepicker__cell-border-color: #dee2e6;
+    --daterangepicker__cell-bg--hover: rgba(255, 255, 255, 0.3);
+    --daterangepicker__select-bg: #fff;
+    --daterangepicker__select-border-color: #87888e;
+    --daterangepicker__select-color: #212529;
+    border: var(--daterangepicker-border);
+    border-radius: var(--daterangepicker-border-radius);
+    background-color: var(--daterangepicker-bg);
+    box-shadow: var(--daterangepicker-box-shadow);
+    font-family: inherit;
+}
