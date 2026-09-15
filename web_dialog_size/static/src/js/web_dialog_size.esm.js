@@ -158,6 +158,7 @@ SelectCreateDialog.components = Object.assign(SelectCreateDialog.components || {
     ExpandButton,
 });
 Dialog.components = Object.assign(Dialog.components || {}, {ExpandButton});
-// Patch annoying validation method
-Dialog.props.size.validate = (s) =>
-    ["sm", "md", "lg", "xl", "dialog_full_screen"].includes(s);
+// Keep Odoo's standard dialog sizes and add the custom maximized size.
+const coreValidateDialogSize = Dialog.props.size.validate;
+Dialog.props.size.validate = (size) =>
+    coreValidateDialogSize(size) || size === "dialog_full_screen";
