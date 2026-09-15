@@ -32,6 +32,13 @@ class ResUsers(models.Model):
         readonly=False,
     )
 
+    is_auto_open_invoice_preview = fields.Boolean(
+        string="Auto-open Invoice Preview",
+        help="Automatically open the PDF preview of the invoice attachment "
+        "when the invoice is opened.",
+        default=True,
+    )
+
     @api.depends("action_id")
     def _compute_redirect_home(self):
         """
