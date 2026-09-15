@@ -1,0 +1,2 @@
+- Zina Rasoamanana \<<zina.rasoamanana@acsone.eu>\>
+- Samir Guesmi \<<samir.guesmi@acsone.eu>\>
