@@ -1,0 +1,127 @@
+.o_form_view.o_web_toggle_chatter_enabled:not(.o_web_toggle_chatter_mobile_mode),
+.o_form_renderer.o_web_toggle_chatter_enabled:not(.o_web_toggle_chatter_mobile_mode) {
+    --o-web-toggle-chatter-toggle-size: 34px;
+    --o-web-toggle-chatter-toggle-offset: -34px;
+    --o-web-toggle-chatter-width: 30%;
+    --o-web-toggle-chatter-sheet-width: 70%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    .o_web_toggle_chatter_toggle_wrapper {
+        position: relative;
+        width: 0;
+        min-width: 0;
+        z-index: 10;
+    }
+
+    .o_web_toggle_chatter_toggle_btn {
+        position: absolute;
+        left: var(--o-web-toggle-chatter-toggle-offset);
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 100;
+        width: var(--o-web-toggle-chatter-toggle-size);
+        height: var(--o-web-toggle-chatter-toggle-size);
+        padding: 0;
+        box-sizing: border-box;
+        border: 1px solid var(--border-color, #d8dadd);
+        border-radius: 50%;
+        background: var(--o-view-background-color, #fff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--o-main-text-color, #495057);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        transition:
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            color 0.2s ease;
+
+        &:hover {
+            background: var(--bs-gray-100, #f3f5f7);
+            border-color: var(--bs-gray-400, #c6ccd2);
+            color: var(--o-gray-900, #212529);
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 2px rgba(113, 125, 136, 0.25);
+        }
+
+        .fa {
+            font-size: 22px;
+            line-height: 1;
+            display: block;
+        }
+
+        .fa-angle-right {
+            transform: translate(1px, -1px);
+        }
+
+        .fa-angle-left {
+            transform: translate(-1px, -1px);
+        }
+    }
+
+    .o-mail-Form-chatter {
+        flex: 0 0 var(--o-web-toggle-chatter-width);
+        max-width: var(--o-web-toggle-chatter-width);
+        min-width: 0;
+        overflow: hidden;
+        opacity: 1;
+        transition:
+            flex-basis 0.25s ease,
+            max-width 0.25s ease,
+            opacity 0.2s ease;
+    }
+
+    .o_form_sheet_bg {
+        flex: 1 1 auto;
+        width: var(--o-web-toggle-chatter-sheet-width);
+        max-width: 100%;
+        min-width: 0;
+        transition: width 0.3s ease;
+    }
+
+    &.o_web_toggle_chatter_collapsed {
+        overflow-x: hidden;
+
+        .o_form_sheet_bg {
+            width: 100%;
+        }
+
+        .o-mail-Form-chatter {
+            flex-basis: 0;
+            max-width: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+}
+
+.o_form_view.o_web_toggle_chatter_enabled.o_web_toggle_chatter_mobile_mode,
+.o_form_renderer.o_web_toggle_chatter_enabled.o_web_toggle_chatter_mobile_mode {
+    .o_web_toggle_chatter_toggle_wrapper {
+        display: none;
+    }
+}
+
+.o_form_view.o_web_toggle_chatter_enabled.flex-column,
+.o_form_renderer.o_web_toggle_chatter_enabled.flex-column,
+.o_form_view.o_web_toggle_chatter_enabled .o_form_renderer.flex-column {
+    .o_web_toggle_chatter_toggle_wrapper {
+        display: none;
+    }
+
+    .o-mail-Form-chatter {
+        flex-basis: auto;
+        max-width: none;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .o_form_sheet_bg {
+        width: auto;
+    }
+}
