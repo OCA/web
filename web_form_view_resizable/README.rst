@@ -69,8 +69,8 @@ Authors
 Contributors
 ------------
 
-- Souheil Bejaoui souheil.bejaoui@acsone.eu
-- samir GUESMI samir.guesmi@acsone.eu
+-  Souheil Bejaoui souheil.bejaoui@acsone.eu
+-  samir GUESMI samir.guesmi@acsone.eu
 
 Maintainers
 -----------

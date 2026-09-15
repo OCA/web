@@ -3,14 +3,11 @@ import {FormRenderer} from "@web/views/form/form_renderer";
 import {patch} from "@web/core/utils/patch";
 
 const HANDLE_CLASS = "o_web_form_view_resizable_handle";
-const HANDLE_START_CLASS = "o_web_form_view_resizable_handle_start";
-const ASIDE_CHATTER_SELECTOR = ":scope > .o-mail-Form-chatter.o-aside";
 const SHEET_SELECTOR = ":scope > .o_form_sheet_bg";
 const PREVIEW_SELECTOR = ".o_attachment_preview";
 const PREVIEW_RESIZING_CLASS = "o_web_form_view_resizable_preview_disabled";
 const RESIZING_CLASS = "o_web_form_view_resizing";
 const MIN_WIDTH = 400;
-const MAX_WIDTH = 1200;
 const RESIZE_STATE = Symbol("web_form_view_resizable");
 
 function clampWidth(width, minWidth, maxWidth) {
@@ -32,11 +29,7 @@ patch(FormRenderer.prototype, {
             this._removeResizableFormView();
             return;
         }
-        const asideChatterEl = rootEl.querySelector(ASIDE_CHATTER_SELECTOR);
-        const hasAsideChatter = Boolean(asideChatterEl);
-        const targetEl =
-            (hasAsideChatter ? asideChatterEl : rootEl.querySelector(SHEET_SELECTOR)) ||
-            rootEl;
+        const targetEl = rootEl.querySelector(SHEET_SELECTOR) || rootEl;
         const resizeState = this[RESIZE_STATE];
         if (
             resizeState &&
@@ -48,10 +41,10 @@ patch(FormRenderer.prototype, {
         }
         this._removeResizableFormView();
 
-        this._setupResizableFormView(rootEl, targetEl, hasAsideChatter);
+        this._setupResizableFormView(rootEl, targetEl);
     },
 
-    _setupResizableFormView(rootEl, targetEl, hasAsideChatter) {
+    _setupResizableFormView(rootEl, targetEl) {
         const previewEls = [...rootEl.querySelectorAll(PREVIEW_SELECTOR)];
         if (targetEl.querySelector(`:scope > .${HANDLE_CLASS}`)) {
             return;
@@ -59,10 +52,7 @@ patch(FormRenderer.prototype, {
 
         const handleEl = document.createElement("div");
         handleEl.className = HANDLE_CLASS;
-        if (hasAsideChatter) {
-            handleEl.classList.add(HANDLE_START_CLASS);
-        }
-        targetEl.append(handleEl);
+        targetEl.parentNode.insertBefore(handleEl, targetEl.nextSibling);
 
         let pointerId = null;
         let fixedEdge = 0;
@@ -71,16 +61,9 @@ patch(FormRenderer.prototype, {
             targetEl.style.width = `${width}px`;
         };
         const getBounds = () => {
-            const totalWidth =
-                rootEl.getBoundingClientRect().width || window.innerWidth;
-            if (hasAsideChatter) {
-                const minWidth = Math.max(0, totalWidth - MAX_WIDTH);
-                const maxWidth = Math.max(minWidth, totalWidth - MIN_WIDTH);
-                return {minWidth, maxWidth};
-            }
             return {
                 minWidth: MIN_WIDTH,
-                maxWidth: MAX_WIDTH,
+                maxWidth: window.screen.width,
             };
         };
         const stopResizing = () => {
@@ -103,7 +86,7 @@ patch(FormRenderer.prototype, {
             ev.preventDefault();
             const targetRect = targetEl.getBoundingClientRect();
             pointerId = ev.pointerId;
-            fixedEdge = hasAsideChatter ? targetRect.right : targetRect.left;
+            fixedEdge = targetRect.left;
             handleEl.setPointerCapture(pointerId);
             for (const previewEl of previewEls) {
                 previewEl.classList.add(PREVIEW_RESIZING_CLASS);
@@ -114,9 +97,7 @@ patch(FormRenderer.prototype, {
             if (ev.pointerId !== pointerId) {
                 return;
             }
-            const nextWidth = hasAsideChatter
-                ? fixedEdge - ev.clientX
-                : ev.clientX - fixedEdge;
+            const nextWidth = ev.clientX - fixedEdge;
             const {minWidth, maxWidth} = getBounds();
             setTargetWidth(clampWidth(nextWidth, minWidth, maxWidth));
         };
