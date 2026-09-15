@@ -17,8 +17,11 @@ class TestWebWidgetPattern(TransactionCase):
 @tagged("post_install", "-at_install")
 class TestWebWidgetPatternHoot(HttpCase):
     def test_js(self):
+        # Regex (not a fuzzy text filter): HOOT otherwise matches
+        # other WebWidget* suites such as web_widget_autocomplete.
         self.browser_js(
-            "/web/tests?headless&loglevel=2&preset=desktop&filter=WebWidgetPattern",
+            "/web/tests?headless&loglevel=2&preset=desktop"
+            "&filter=/WebWidgetPattern/",
             "",
             "",
             login="admin",
