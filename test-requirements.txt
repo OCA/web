@@ -1,1 +1,2 @@
 odoo_test_helper
+odoo-addon-web_widget_pattern @ git+https://github.com/OCA/web.git@refs/pull/3670/head#subdirectory=web_widget_pattern
