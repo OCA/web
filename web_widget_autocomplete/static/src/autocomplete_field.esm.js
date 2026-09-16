@@ -2,6 +2,7 @@ import {useChildRef, useService} from "@web/core/utils/hooks";
 import {CharField, charField} from "@web/views/fields/char/char_field";
 import {AutoComplete} from "@web/core/autocomplete/autocomplete";
 import {_t} from "@web/core/l10n/translation";
+import {getActiveHotkey} from "@web/core/hotkeys/hotkey_service";
 import {registry} from "@web/core/registry";
 import {useDebounced} from "@web/core/utils/timing";
 import {useInputField} from "@web/views/fields/input_field_hook";
@@ -52,6 +53,45 @@ export class DelayedAutoComplete extends AutoComplete {
                 }
             }
         }, this.props.delay);
+    }
+
+    /**
+     * Stop Enter from reaching ``useInputField``. Core AutoComplete only
+     * ``stopPropagation``s, so the field hook can still commit the typed
+     * string after (or instead of) the selected row.
+     *
+     * @param {KeyboardEvent} ev
+     * @returns {Promise<void>}
+     */
+    async onInputKeydown(ev) {
+        const hotkey = getActiveHotkey(ev);
+        if (
+            hotkey === "enter" &&
+            (this.loadingPromise || (this.isOpened && this.state.activeSourceOption))
+        ) {
+            ev.stopImmediatePropagation();
+        }
+        return super.onInputKeydown(ev);
+    }
+
+    /**
+     * Keep the input in sync with the selected label before ``onSelect``.
+     * A later ``useInputField`` commit would otherwise still see the typed
+     * request string.
+     *
+     * @param {Object} option
+     * @param {Object} [params]
+     * @returns {void}
+     */
+    selectOption(option, params = {}) {
+        const label = option && option.label;
+        if (typeof label === "string") {
+            this.state.value = label;
+            if (this.inputRef.el) {
+                this.inputRef.el.value = label;
+            }
+        }
+        return super.selectOption(option, params);
     }
 }
 

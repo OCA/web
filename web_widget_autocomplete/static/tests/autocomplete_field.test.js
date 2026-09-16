@@ -185,6 +185,33 @@ describe("WebWidgetAutocomplete", () => {
         expect(field.props.record.data.id).toBe(1);
     });
 
+    test("Enter on a highlighted suggestion writes the selected row", async () => {
+        onRpc("address_auto_complete", () => [
+            SUGGESTION,
+            {
+                address_string: "Assisi, Italy",
+                address_ref: 2,
+                city: "Assisi",
+            },
+        ]);
+        patchUpdateSteps();
+        await mountAutocompleteForm();
+        await typeAndWait("Per");
+        expect(".o-autocomplete--dropdown-item").toHaveCount(2);
+        await contains(".o_field_widget[name='address_string'] input").press(
+            "ArrowDown"
+        );
+        await animationFrame();
+        await contains(".o_field_widget[name='address_string'] input").press("Enter");
+        await animationFrame();
+        expect.verifySteps(["update:address_ref,address_string,city"]);
+        expect(".o_field_widget[name='address_string'] input").toHaveValue(
+            "Assisi, Italy"
+        );
+        expect(".o_field_widget[name='city'] input").toHaveValue("Assisi");
+        expect(".o_field_widget[name='address_ref'] input").toHaveValue("2");
+    });
+
     test("readonly extra is included in the select update", async () => {
         onRpc("address_auto_complete", () => [SUGGESTION]);
         patchUpdateSteps();
