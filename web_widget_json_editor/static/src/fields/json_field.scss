@@ -1,0 +1,115 @@
+.o_field_json_editor {
+    width: 100%;
+
+    .json-editor-container {
+        width: 100%;
+        min-height: 300px;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        overflow: hidden;
+        position: relative;
+
+        .jsoneditor {
+            border: none;
+            height: 100%;
+            min-height: 300px;
+
+            .jsoneditor-menu {
+                background-color: $gray-200;
+                border-bottom: 1px solid $border-color;
+
+                // Style for the mode dropdown container
+                ul.jsoneditor-menu {
+                    background-color: $white;
+                    border: 1px solid $border-color;
+                    border-radius: $border-radius;
+                    box-shadow: 0 2px 4px rgba($black, 0.1);
+                }
+
+                // Style for all menu buttons
+                button {
+                    background-color: $o-brand-primary;
+                    border: none;
+                    opacity: 1;
+
+                    &.jsoneditor-separator {
+                        margin-right: 0.5rem;
+                    }
+
+                    // Mode selection buttons
+                    &.jsoneditor-type-modes {
+                        background-color: transparent;
+                        color: $gray-700;
+
+                        .jsoneditor-icon {
+                            filter: brightness(0.5);
+                        }
+
+                        .jsoneditor-text {
+                            color: $gray-700;
+                        }
+
+                        // Selected mode
+                        &.jsoneditor-selected {
+                            background-color: $o-brand-primary;
+
+                            .jsoneditor-icon {
+                                filter: brightness(1);
+                            }
+
+                            .jsoneditor-text {
+                                color: $white;
+                            }
+                        }
+
+                        &:hover:not(.jsoneditor-selected) {
+                            background-color: $gray-300;
+                        }
+                    }
+                }
+            }
+
+            .ace-jsoneditor {
+                min-height: 250px;
+            }
+
+            .jsoneditor-outer {
+                margin: 0;
+                padding: 0;
+            }
+
+            .ace_editor {
+                font-family: $font-family-monospace;
+                font-size: $font-size-sm;
+            }
+
+            // Ensure menu doesn't get clipped
+            .jsoneditor-menu {
+                position: relative;
+                z-index: 1;
+            }
+
+            // Fix tree/view mode scrollbar area
+            .jsoneditor-tree {
+                overflow: auto;
+            }
+        }
+    }
+
+    .json-view {
+        background-color: $gray-100;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        padding: 0.5rem;
+        margin: 0;
+        max-height: 300px;
+        overflow: auto;
+        font-family: $font-family-monospace;
+        font-size: $font-size-sm;
+        white-space: pre-wrap;
+    }
+}
+
+.jsoneditor-poweredBy {
+    display: none !important;
+}
