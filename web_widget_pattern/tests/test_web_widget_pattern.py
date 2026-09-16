@@ -1,7 +1,10 @@
 # Copyright 2024 Hunki Enterprises BV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
 
-from odoo.tests.common import HttpCase, TransactionCase, tagged
+import odoo
+from odoo.tests.common import TransactionCase
+
+from odoo.addons.web.tests.test_js import WebSuite
 
 
 class TestWebWidgetPattern(TransactionCase):
@@ -14,14 +17,11 @@ class TestWebWidgetPattern(TransactionCase):
         self.assertEqual(field_description["pattern"], "[0-9]")
 
 
-@tagged("post_install", "-at_install")
-class TestWebWidgetPatternHoot(HttpCase):
-    def test_js(self):
-        self.browser_js(
-            "/web/tests?headless&loglevel=2&preset=desktop&filter=WebWidgetPattern",
-            "",
-            "",
-            login="admin",
-            success_signal="[HOOT] Test suite succeeded",
-            error_checker=lambda x: "[HOOT]" not in x,
-        )
+@odoo.tests.tagged("post_install", "-at_install")
+class TestWebWidgetPatternHoot(WebSuite):
+    def get_hoot_filters(self):
+        self._test_params = [("+", "@web_widget_pattern")]
+        return super().get_hoot_filters()
+
+    def test_web_widget_pattern(self):
+        self.test_unit_desktop()
