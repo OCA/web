@@ -24,6 +24,9 @@ export const iconPopoverField = {
     component: IconPopoverField,
     displayName: _t("Icon Popover"),
     supportedTypes: ["char", "text"],
+    // In list views the column only holds an icon: keep it as narrow as the
+    // handle column, unless a header label is displayed.
+    listViewWidth: ({hasLabel}) => (hasLabel ? false : 20),
     supportedOptions: [
         {
             label: _t("Icon"),

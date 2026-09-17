@@ -9,3 +9,6 @@ Use the `popover` widget on `Char` or `Text` fields.
     nolabel="1"
 />
 ```
+
+In list views, use `nolabel="1"` to hide the column header: the column is then
+kept as narrow as the icon.
