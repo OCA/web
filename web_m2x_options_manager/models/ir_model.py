@@ -7,33 +7,58 @@ from odoo import fields, models
 class IrModel(models.Model):
     _inherit = "ir.model"
 
-    m2x_create_edit_option_ids = fields.One2many(
+    m2x_option_ids = fields.One2many(
         "m2x.create.edit.option",
         "model_id",
     )
+    m2x_comodels_option_ids = fields.One2many(
+        "m2x.create.edit.option",
+        "comodel_id",
+    )
+    comodel_field_ids = fields.One2many("ir.model.fields", "comodel_id")
 
-    def button_empty(self):
-        for ir_model in self:
-            ir_model._empty_m2x_create_edit_option()
+    def button_empty_m2x_options(self):
+        self._empty_m2x_options(own=True)
 
-    def button_fill(self):
-        for ir_model in self:
-            ir_model._fill_m2x_create_edit_option()
+    def button_fill_m2x_options(self):
+        self._fill_m2x_options(own=True)
 
-    def _empty_m2x_create_edit_option(self):
-        """Removes every option for model ``self``"""
-        self.ensure_one()
-        self.m2x_create_edit_option_ids.unlink()
+    def button_empty_m2x_comodels_options(self):
+        self._empty_m2x_options(comodels=True)
 
-    def _fill_m2x_create_edit_option(self):
-        """Adds every missing field option for model ``self``"""
-        self.ensure_one()
-        existing = self.m2x_create_edit_option_ids.mapped("field_id")
-        valid = self.field_id.filtered(lambda f: f.ttype in ("many2many", "many2one"))
-        vals = [(0, 0, {"field_id": f.id}) for f in valid - existing]
-        self.write({"m2x_create_edit_option_ids": vals})
+    def button_fill_m2x_comodels_options(self):
+        self._fill_m2x_options(comodels=True)
 
+    def _empty_m2x_options(self, own=False, comodels=False):
+        """Removes every option for model ``self``'s fields
 
-class IrModelFields(models.Model):
-    _inherit = "ir.model.fields"
-    _rec_names_search = ["name", "field_description"]
+        :param bool own: if True, deletes options for model's fields
+        :param bool comodels: if True, deletes options for fields where ``self`` is
+            the field's comodel
+        """
+        to_delete = self.env["m2x.create.edit.option"]
+        if own:
+            to_delete += self.m2x_option_ids
+        if comodels:
+            to_delete += self.m2x_comodels_option_ids
+        if to_delete:
+            to_delete.unlink()
+
+    def _fill_m2x_options(self, own=False, comodels=False):
+        """Adds every missing field option for model ``self`` (with default values)
+
+        :param bool own: if True, creates options for model's fields
+        :param bool comodels: if True, creates options for fields where ``self`` is
+            the field's comodel
+        """
+        todo = set()
+        if own:
+            exist = self.m2x_option_ids.field_id
+            valid = self.field_id.filtered("can_have_options")
+            todo.update((valid - exist).ids)
+        if comodels:
+            exist = self.m2x_comodels_option_ids.field_id
+            valid = self.comodel_field_ids.filtered("can_have_options")
+            todo.update((valid - exist).ids)
+        if todo:
+            self.env["m2x.create.edit.option"].create([{"field_id": i} for i in todo])
