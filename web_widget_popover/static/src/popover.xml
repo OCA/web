@@ -2,7 +2,9 @@
 <templates xml:space="preserve">
 
     <t t-name="web_widget_popover.IconPopoverField">
-        <span
+        <!-- An <i>, not a <span>: list cells force `vertical-align: top` on
+             spans of char fields, which pushes the icon above the row text. -->
+        <i
             t-if="value"
             t-attf-class="fa {{props.icon}}"
             t-att-data-tooltip-info='tooltipInfo'
