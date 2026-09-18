@@ -374,8 +374,9 @@ ul.auto-toc {
 field from a public <tt class="docutils literal">&#64;api.model</tt> method on the same model.</p>
 <p>Type in the field; after a configurable number of characters the widget
 calls the method with the trimmed input, shows matching rows, and on
-select writes the Char plus any extra Char or Integer keys that exist on
-the model and in the current view.</p>
+select writes the Char plus supported extra scalar and relational fields
+that exist on the model and in the current view. See Usage for supported
+value formats.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -406,9 +407,72 @@ declare Char fields and the method.</p>
 dicts. Each dict’s keys are field names. The widget field’s key is the
 label shown in the dropdown and the value written to the Char. Any
 number of extra keys may be present; on <strong>select</strong> they are written to
-sibling Char or Integer fields that exist on the <strong>model and in the same
-view</strong> (visible or <tt class="docutils literal">invisible</tt>). Keys missing from the model, missing
-from the view, or whose type is not Char/Integer are skipped.</p>
+sibling fields that exist on the <strong>model and in the same view</strong> (visible
+or <tt class="docutils literal">invisible</tt>). Keys missing from the model or view, unsupported
+field types, and invalid values are skipped. The <tt class="docutils literal">id</tt> key is always
+ignored.</p>
+<p>Supported extra values (Python values are converted to JSON by the RPC):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Field type</th>
+<th class="head">Value returned by the method</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Char, Text, HTML</td>
+<td>String; use an empty string to clear</td>
+</tr>
+<tr><td>Integer, Float, Monetary</td>
+<td>A value convertible to a finite number,
+as with the existing Integer behavior</td>
+</tr>
+<tr><td>Boolean</td>
+<td><tt class="docutils literal">True</tt> or <tt class="docutils literal">False</tt></td>
+</tr>
+<tr><td>Selection</td>
+<td>An exact selection key, or <tt class="docutils literal">False</tt> to
+clear</td>
+</tr>
+<tr><td>Date</td>
+<td><tt class="docutils literal"><span class="pre">&quot;YYYY-MM-DD&quot;</span></tt>, or <tt class="docutils literal">False</tt> to clear</td>
+</tr>
+<tr><td>Datetime</td>
+<td><tt class="docutils literal"><span class="pre">&quot;YYYY-MM-DD</span> HH:MM:SS&quot;</tt> in UTC, or
+<tt class="docutils literal">False</tt> to clear</td>
+</tr>
+<tr><td>Many2one</td>
+<td>A positive integer ID,
+<tt class="docutils literal">[id, display_name]</tt>, or <tt class="docutils literal">False</tt> to
+clear</td>
+</tr>
+<tr><td>One2many, Many2many</td>
+<td>A list of the ORM commands described
+below</td>
+</tr>
+</tbody>
+</table>
+<p>Invalid dates are skipped. Datetimes are converted from UTC to the
+client timezone by Odoo. A bare Many2one ID is resolved through Odoo to
+obtain its display name; the related record must exist and be readable
+by the user.</p>
+<p>Supported x2many commands are <tt class="docutils literal">(0, 0, values)</tt> to create a related
+record, <tt class="docutils literal">(4, id)</tt> or <tt class="docutils literal">(4, id, 0)</tt> to link an existing record, and
+<tt class="docutils literal">(6, 0, ids)</tt> to replace the relation. For example, <tt class="docutils literal">[(4, 12)]</tt>
+links record 12 and <tt class="docutils literal">[(0, 0, {&quot;name&quot;: <span class="pre">&quot;Visit&quot;})]</span></tt> creates a related
+record. Create values must use the related model’s server-side field
+formats.</p>
+<p><strong>Replace removes relations omitted from the supplied IDs.</strong> In
+particular, <tt class="docutils literal">[(6, 0, <span class="pre">[])]</span></tt> clears the relation; for One2many fields,
+Odoo’s inverse field deletion policy can also delete removed records. An
+empty command list <tt class="docutils literal">[]</tt> makes no relation changes. Other opcodes and
+malformed command shapes are rejected for that field as a whole. These
+checks validate the payload format; the model method must enforce its
+own authorization and Odoo access rights still apply when related
+records are read or saved.</p>
 <p>Free typing (without selecting a row) updates only the Char. Extra
 fields keep their previous values until the next select.</p>
 <p>A <strong>readonly</strong> extra is still filled in the UI on select. It is
