@@ -37,7 +37,6 @@
             "web_responsive/static/src/search/**/*",
             "web_responsive/static/src/views/**/*",
             "web_responsive/static/src/webclient/**/*",
-            "/web_responsive/static/src/components/file_viewer/*",
             "/web_responsive/static/src/chatter/**/*",
             # Don't include dark mode files in light mode
             ("remove", "web_responsive/static/src/**/*.dark.scss"),
