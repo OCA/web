@@ -14,7 +14,7 @@ class MailChannel(models.Model):
             for user in users:
                 if user in message.author_id.user_ids:
                     continue
-                user.notify_info(
+                user.with_context(_notify_channel_message=True).notify_info(
                     message=_("You have a new message in channel %s") % self.name
                 )
 

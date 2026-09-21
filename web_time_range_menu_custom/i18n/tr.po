@@ -58,30 +58,18 @@ msgstr "Hafta"
 msgid "Year"
 msgstr "Yıl"
 
-#. module: web_time_range_menu_custom
-#. odoo-javascript
-#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
-msgid "day"
-msgstr "gün"
+#~ msgid "day"
+#~ msgstr "gün"
 
-#. module: web_time_range_menu_custom
-#. odoo-javascript
-#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
-msgid "month"
-msgstr "ay"
+#~ msgid "month"
+#~ msgstr "ay"
 
-#. module: web_time_range_menu_custom
-#. odoo-javascript
-#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
-msgid "week"
-msgstr "hafta"
+#~ msgid "week"
+#~ msgstr "hafta"
 
-#. module: web_time_range_menu_custom
-#. odoo-javascript
-#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
-msgid "year"
-msgstr "yıl"
+#~ msgid "year"
+#~ msgstr "yıl"

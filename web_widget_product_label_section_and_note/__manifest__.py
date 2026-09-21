@@ -1,6 +1,6 @@
 {
     "name": "Web widget product label section and note",
-    "version": "16.0.1.0.3",
+    "version": "16.0.1.0.5",
     "summary": "unify the product and name into a single column",
     "author": "Tecnativa, Odoo Community Association (OCA), Odoo S.A.",
     "website": "https://github.com/OCA/web",

@@ -1,0 +1,20 @@
+<templates xml:space="preserve">
+    <t
+        t-name="web_group_by_percentage.GroupRow"
+        t-inherit="web.ListRenderer.GroupRow"
+        t-inherit-mode="extension"
+    >
+        <xpath
+            expr="//t[@t-esc='formatAggregateValue(group, column)']"
+            position="before"
+        >
+            <span t-if="column.type === 'field'" class="web_group_by_percentage">
+                <!--
+                    We add a non-breaking space at the end of the percentage,
+                    to clearly seperate the percentage from the actual value.
+                -->
+                <t t-out="aggregatePercentage(group, column) + ' '" />
+            </span>
+        </xpath>
+    </t>
+</templates>

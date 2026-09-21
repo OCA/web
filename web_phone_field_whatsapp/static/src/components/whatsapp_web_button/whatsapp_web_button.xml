@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="web_phone_field_whatsapp.WhatsAppWebButton" owl="1">
+        <a
+            t-att-title="title"
+            t-att-href="phoneHref"
+            class="ms-3 d-inline-flex align-items-center o_field_phone_whatsapp_web"
+            target="_blank"
+        >
+            <i class="fa fa-whatsapp" />
+            <small class="fw-bold ms-1">Web</small>
+        </a>
+    </t>
+</templates>

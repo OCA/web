@@ -144,6 +144,9 @@ export class X2Many2DMatrixRenderer extends Component {
             record = this.matrix[y][x].records[0];
             value = this.matrix[y][x].value;
         }
+        if (!record) {
+            return false;
+        }
         if (this.list.fields[this.matrixFields.value].type === "boolean") {
             record.bypass_readonly = true;
         }

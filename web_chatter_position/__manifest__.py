@@ -4,8 +4,9 @@
 {
     "name": "Chatter Position",
     "summary": "Add an option to change the chatter position",
-    "version": "16.0.1.0.3",
+    "version": "16.0.1.0.5",
     "author": "Hynsys Technologies, Camptocamp, Odoo Community Association (OCA)",
+    "maintainers": ["trisdoan"],
     "website": "https://github.com/OCA/web",
     "license": "LGPL-3",
     "category": "Extra Tools",
@@ -14,6 +15,11 @@
     "assets": {
         "web.assets_backend": [
             "/web_chatter_position/static/src/**/*.js",
+            (
+                "after",
+                "/web/static/src/views/form/form_controller.xml",
+                "/web_chatter_position/static/src/views/form/form_controller.xml",
+            ),
         ],
     },
 }

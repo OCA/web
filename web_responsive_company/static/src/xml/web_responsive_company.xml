@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+
+<!-- Add accesskey + Appear on small screen too -->
+<t t-name="web.SwitchCompanyMenu" owl="1">
+    <Dropdown class="'o_switch_company_menu'" position="'bottom-end'">
+        <!-- Toggler -->
+        <t t-set-slot="toggler" t-on-click="_onClickToggler">
+            <i class="fa fa-building d-lg-none" accesskey="y" />
+            <t t-if="selectedCompanies.length > 1">
+                <i
+                        class="fa me-1 d-lg-inline-block o_company_context_highlighted"
+                        title="Multiple companies selected"
+                    >
+                    <t t-esc="selectedCompanies.length" />
+                </i>
+            </t>
+
+            <span
+                    class="oe_topbar_name d-none d-lg-block"
+                    accesskey="y"
+                    t-esc="currentCompany.name"
+                />
+        </t>
+
+        <!-- Search bar -->
+        <div class="search-bar">
+            <span class="fa fa-search search-icon" />
+            <input
+                    id="search-input"
+                    type="search"
+                    t-ref="SearchBarInput"
+                    t-on-input="_searchCompanies"
+                    t-on-keydown="_onKeyDownSearchInput"
+                    placeholder="Search companies..."
+                    class="form-control"
+                />
+        </div>
+
+        <!-- All or filtered companies -->
+        <t
+                t-foreach="state.filteredCompaniesSorted"
+                class="search-results"
+                t-as="company"
+                t-key="company.id"
+            >
+            <t t-call="web.SwitchCompanyItem">
+                <t t-set="company" t-value="company" />
+            </t>
+        </t>
+    </Dropdown>
+</t>
+
+
+<t t-name="web.SwitchCompanyItem" owl="1">
+
+  <t t-set="isCompanySelected" t-value="selectedCompanies.includes(company.id)" />
+  <t t-set="isCurrent" t-value="company.id === companyService.currentCompany.id" />
+  <DropdownItem
+            class="'card company-card ' + (selectedCompanies.includes(company.id) ? ' company-selected ' : '') + (company.id === companyService.currentCompany.id ? 'company-current ' : '')"
+            t-on-keydown="ev => this._onKeyDownCompanyCard(ev, company.id)"
+            t-on-click.stop="() => this.toggleCompany(company.id)"
+        >
+
+    <!-- Checkbox -->
+    <div
+                role="menuitemcheckbox"
+                t-att-aria-checked="isCompanySelected ? 'true' : 'false'"
+                t-att-aria-label="company.name"
+                t-att-title="(isCompanySelected ? 'Unselect ' : 'Select ') + company.name + ' content.'"
+                tabindex="0"
+                class="border-end toggle_company"
+                t-on-click.stop="() => this.toggleCompany(company.id)"
+                z-index="2000"
+            >
+
+        <span class="">
+           <i
+                        class="fa fa-fw"
+                        t-att-class="isCurrent ? 'fa-check-circle text-success' : (isCompanySelected ? 'fa-check-circle-o text-primary' : 'fa-circle-o')"
+                    />
+        </span>
+    </div>
+
+    <!-- Card -->
+    <div
+                class="company-card-body"
+                data-menu="company"
+                t-att-data-company-id="company.id"
+                t-att-title="'Switch to ' + company.name"
+                t-on-click.stop="() => this.logIntoCompany(company.id)"
+            >
+      <img
+                    class="card-body-img img-fluid"
+                    t-att-src="'/web/image?model=res.company&amp;field=logo&amp;id=' + company.id"
+                    alt="Logo"
+                />
+    </div>
+
+    <div
+                role="button"
+                class="log_into"
+                t-att-class="isCurrent ? 'alert-primary fw-bold' : 'btn btn-light border-0'"
+                t-att-title="'Switch to ' + company.name"
+                t-on-click="() => this.logIntoCompany(company.id)"
+            >
+        <span class="company_label" t-esc="company.name" />
+    </div>
+
+  </DropdownItem>
+</t>
+
+</templates>

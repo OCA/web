@@ -1,0 +1,50 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_edit_user_filter
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-01-28 15:53+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: web_edit_user_filter
+#. odoo-javascript
+#: code:addons/web_edit_user_filter/static/src/js/customFavorite.esm.js:0
+#, python-format
+msgid "A filter with same name already exists."
+msgstr "Esiste già un filtro con lo stesso nome."
+
+#. module: web_edit_user_filter
+#. odoo-javascript
+#: code:addons/web_edit_user_filter/static/src/js/customFavorite.esm.js:0
+#, python-format
+msgid "A name for your favorite filter is required."
+msgstr "È richiesto un nome per il filtro preferito."
+
+#. module: web_edit_user_filter
+#. odoo-javascript
+#: code:addons/web_edit_user_filter/static/src/js/searchBar.esm.js:0
+#, python-format
+msgid "Edit Filters <a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>"
+msgstr ""
+"Modifica filtri <a href=\"#\" class=\"close\" data-dismiss=\"alert\">"
+"&times;</a>"
+
+#. module: web_edit_user_filter
+#: model:ir.model.fields,field_description:web_edit_user_filter.field_ir_filters__facet
+msgid "Facet"
+msgstr "Faccetta"
+
+#. module: web_edit_user_filter
+#: model:ir.model,name:web_edit_user_filter.model_ir_filters
+msgid "Filters"
+msgstr "Filtri"

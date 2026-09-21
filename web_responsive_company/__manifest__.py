@@ -1,0 +1,26 @@
+# Copyright (C) 2021 - Today: GRAP (http://www.grap.coop)
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
+{
+    "name": "Web Responsive - Company Menu",
+    "summary": "Improve the diplay of the list of the companies",
+    "version": "16.0.1.1.0",
+    "category": "Web",
+    "website": "https://github.com/OCA/web",
+    "author": "GRAP,Odoo Community Association (OCA)",
+    "license": "LGPL-3",
+    "installable": True,
+    "depends": ["web_responsive"],
+    "assets": {
+        "web.assets_backend": [
+            "/web_responsive_company/static/src/js/web_responsive_company.esm.js",
+            "/web_responsive_company/static/src/scss/web_responsive_company.scss",
+            "/web_responsive_company/static/src/xml/web_responsive_company.xml",
+        ],
+    },
+    "demo": [
+        "demo/res_groups.xml",
+        "demo/res_company.xml",
+    ],
+}

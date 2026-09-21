@@ -29,20 +29,6 @@ msgstr "Sve"
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
-#, python-format
-msgid "Attachment counter loading..."
-msgstr "Učitavam brojač priloga..."
-
-#. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
-#, python-format
-msgid "Attachments"
-msgstr "Prilozi"
-
-#. module: web_responsive
-#. odoo-javascript
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "CLEAR"
@@ -69,6 +55,13 @@ msgstr "TRAŽI"
 #, python-format
 msgid "Home Menu"
 msgstr "Glavni izbornik"
+
+#. module: web_responsive
+#. odoo-javascript
+#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
+#, python-format
+msgid "Log note"
+msgstr "Zabilježi napomenu"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -122,22 +115,29 @@ msgstr "Pretraži..."
 
 #. module: web_responsive
 #. odoo-javascript
+#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
+#, python-format
+msgid "Send message"
+msgstr "Pošalji poruku"
+
+#. module: web_responsive
+#. odoo-javascript
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "View switcher"
 msgstr "Izmjena pogleda"
 
 #, python-format
+#~ msgid "Attachment counter loading..."
+#~ msgstr "Učitavam brojač priloga..."
+
+#, python-format
+#~ msgid "Attachments"
+#~ msgstr "Prilozi"
+
+#, python-format
 #~ msgid "Activities"
 #~ msgstr "Aktivnosti"
-
-#, python-format
-#~ msgid "Log note"
-#~ msgstr "Zabilježi napomenu"
-
-#, python-format
-#~ msgid "Send message"
-#~ msgstr "Pošalji poruku"
 
 #~ msgid "<span class=\"sr-only\">Toggle App Drawer</span>"
 #~ msgstr "<span class=\"sr-only\">Izmjeni izbornik aplikacije</span>"

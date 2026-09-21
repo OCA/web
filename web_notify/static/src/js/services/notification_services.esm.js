@@ -4,12 +4,12 @@ import {browser} from "@web/core/browser/browser";
 import {registry} from "@web/core/registry";
 
 export const webNotificationService = {
-    dependencies: ["bus_service", "notification", "action"],
+    dependencies: ["bus_service", "action", "notification_sound"],
 
-    start(env, {bus_service, notification, action}) {
+    start(env, {bus_service, action, notification_sound}) {
         let webNotifTimeouts = {};
         /**
-         * Displays the web notification on user's screen
+         * Displays the web notification with sound on user's screen
          * @param {*} notifications
          */
         function displaywebNotification(notifications) {
@@ -34,20 +34,24 @@ export const webNotificationService = {
                             },
                         ];
                     }
-                    const notificationRemove = notification.add(Markup(notif.message), {
-                        title: notif.title,
-                        type: notif.type,
-                        sticky: notif.sticky,
-                        className: notif.className,
-                        buttons: buttons.map((button) => {
-                            const onClick = button.onClick;
-                            button.onClick = async () => {
-                                await onClick();
-                                notificationRemove();
-                            };
-                            return button;
-                        }),
-                    });
+                    const notificationRemove = notification_sound.add(
+                        Markup(notif.message),
+                        {
+                            title: notif.title,
+                            type: notif.type,
+                            sticky: notif.sticky,
+                            className: notif.className,
+                            buttons: buttons.map((button) => {
+                                const onClick = button.onClick;
+                                button.onClick = async () => {
+                                    await onClick();
+                                    notificationRemove();
+                                };
+                                return button;
+                            }),
+                            sound: notif.sound,
+                        }
+                    );
                 });
             });
         }

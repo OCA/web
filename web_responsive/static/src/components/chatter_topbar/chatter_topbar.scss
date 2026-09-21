@@ -1,0 +1,12 @@
+/* Copyright 2025 Dixmit
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+.o_ChatterTopbar {
+    .o_ChatterTopbar_buttonSendMessage[small],
+    .o_ChatterTopbar_buttonLogNote[small] {
+        font-size: 0px;
+        i {
+            font-size: 1rem;
+        }
+    }
+}

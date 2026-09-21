@@ -13,7 +13,7 @@
     </t>
     <t t-inherit="web.ControlPanel.Regular" t-inherit-mode="extension">
         <xpath expr="//div[hasclass('o_cp_bottom_right')]" t-operation="inside">
-            <nav class="btn-group">
+            <nav class="btn-group" t-if="env.searchModel">
                 <HelpButton
                     resModel="env.searchModel.resModel"
                     viewType="env.config.viewType"
@@ -23,7 +23,7 @@
     </t>
     <t t-inherit="web.ControlPanel.Small" t-inherit-mode="extension">
         <xpath expr="//div[hasclass('o_cp_bottom_right')]" t-operation="inside">
-            <nav class="btn-group">
+            <nav class="btn-group" t-if="env.searchModel">
                 <HelpButton
                     resModel="env.searchModel.resModel"
                     viewType="env.config.viewType"

@@ -1,0 +1,173 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_merge_notebook_tab
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-03-11 12:45+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: web_merge_notebook_tab
+#. odoo-python
+#: code:addons/web_merge_notebook_tab/models/ir_ui_view_merge_notebook_tab.py:0
+#, python-format
+msgid "'%(position)s' : Incorrect position."
+msgstr "'%(position)s' : posizione errata."
+
+#. module: web_merge_notebook_tab
+#. odoo-python
+#: code:addons/web_merge_notebook_tab/models/ir_ui_view_merge_notebook_tab.py:0
+#, python-format
+msgid "'%(tab_names)s' : Incorrect Tab Names to merge."
+msgstr "'%(tab_names)s' : nomi linguetta da unire errati."
+
+#. module: web_merge_notebook_tab
+#. odoo-python
+#: code:addons/web_merge_notebook_tab/models/ir_ui_view_merge_notebook_tab.py:0
+#, python-format
+msgid "'%s' : Incorrect Tab Name."
+msgstr "'%s' : nome linguetta errato."
+
+#. module: web_merge_notebook_tab
+#: model:ir.model,name:web_merge_notebook_tab.model_base
+msgid "Base"
+msgstr "Base"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,help:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__view_xml_id
+msgid "ID of the view defined in xml file"
+msgstr "ID della vista definita nel file XML"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: web_merge_notebook_tab
+#: model:ir.actions.act_window,name:web_merge_notebook_tab.action_ir_ui_view_merge_notebook_tab
+#: model:ir.model,name:web_merge_notebook_tab.model_ir_ui_view_merge_notebook_tab
+#: model:ir.ui.menu,name:web_merge_notebook_tab.menu_ir_ui_view_merge_notebook_tab
+msgid "Merge Notebook Tab Settings"
+msgstr "Impostazioni unione linguetta notebook"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__merge_tab_names
+msgid "Merge Tab Names"
+msgstr "Unione nomi linguetta"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__model_id
+msgid "Model"
+msgstr "Modello"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__model
+msgid "Model Name"
+msgstr "Nome modello"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,help:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__tab_name_position
+msgid ""
+"Name of the tab after which the new tab will be inserted. Let empty to "
+"position the tab first."
+msgstr ""
+"Nome della linguetta dopo il quale verrà inserita la nuova linguetta. "
+"Lasciare vuoto per posizionarla all'inizio."
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__tab_name
+msgid "Tab Name"
+msgstr "Nome linguetta"
+
+#. module: web_merge_notebook_tab
+#. odoo-python
+#: code:addons/web_merge_notebook_tab/models/ir_ui_view_merge_notebook_tab.py:0
+#, python-format
+msgid "Tab Name '%(position)s' is not available."
+msgstr "Il nome linguetta '%(position)s' non è disponibilie."
+
+#. module: web_merge_notebook_tab
+#. odoo-python
+#: code:addons/web_merge_notebook_tab/models/ir_ui_view_merge_notebook_tab.py:0
+#, python-format
+msgid "Tab Name '%(tab_name)s' is not available."
+msgstr "Il nome linguetta '%(tab_name)s' non è disponibile."
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__tab_name_position
+msgid "Tab Name Position"
+msgstr "Posizione nome linguetta"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__tab_names_available
+msgid "Tab Names Available"
+msgstr "Nome linguetta disponibile"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__tab_string
+msgid "Tab String"
+msgstr "Stringa linguetta"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,help:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__tab_name
+msgid ""
+"Technical field. 'name' field of the <page> element that will be inserted."
+msgstr "Campo tecnico. Il campo 'name' dell'elemento <page> che verrà inserito."
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,help:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__tab_string
+msgid ""
+"Text displayed in the header of the tab. 'string' field of the <page> "
+"element that will be inserted."
+msgstr ""
+"Testo visualizzato nella testata della linguetta. Il campo 'string' "
+"dell'elemento <page> che verrà inserito."
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__view_id
+msgid "View"
+msgstr "Vista"
+
+#. module: web_merge_notebook_tab
+#: model:ir.model.fields,field_description:web_merge_notebook_tab.field_ir_ui_view_merge_notebook_tab__view_xml_id
+msgid "View XML ID"
+msgstr "ID XML vista"

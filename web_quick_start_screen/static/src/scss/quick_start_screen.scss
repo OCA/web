@@ -1,0 +1,6 @@
+// Set all the colors but the "no-color" one
+@for $size from 2 through length($o-colors) {
+    .o_start_icon_color_#{$size - 1} {
+        color: nth($o-colors, $size);
+    }
+}

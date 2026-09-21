@@ -22,6 +22,11 @@ msgid "Discussion Channel"
 msgstr "Canal de Discusión"
 
 #. module: web_notify_channel_message
+#: model:ir.model,name:web_notify_channel_message.model_res_users
+msgid "User"
+msgstr ""
+
+#. module: web_notify_channel_message
 #. odoo-python
 #: code:addons/web_notify_channel_message/models/mail_channel.py:0
 #, python-format

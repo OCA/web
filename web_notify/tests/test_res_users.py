@@ -1,5 +1,5 @@
 # Copyright 2016 ACSONE SA/NV
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import json
 
@@ -20,6 +20,7 @@ class TestResUsers(common.TransactionCase):
             "sticky": True,
             "action": None,
             "params": {},
+            "sound": "/mail/static/src/audio/ting.mp3",
         }
         self.env.user.notify_success(**test_msg)
         news = bus_bus.search(domain) - existing
@@ -38,6 +39,7 @@ class TestResUsers(common.TransactionCase):
             "sticky": True,
             "action": None,
             "params": {},
+            "sound": "/mail/static/src/audio/ting.mp3",
         }
         self.env.user.notify_danger(**test_msg)
         news = bus_bus.search(domain) - existing
@@ -56,6 +58,7 @@ class TestResUsers(common.TransactionCase):
             "sticky": True,
             "action": None,
             "params": {},
+            "sound": "/mail/static/src/audio/ting.mp3",
         }
         self.env.user.notify_warning(**test_msg)
         news = bus_bus.search(domain) - existing
@@ -74,6 +77,7 @@ class TestResUsers(common.TransactionCase):
             "sticky": True,
             "action": None,
             "params": {},
+            "sound": "/mail/static/src/audio/ting.mp3",
         }
         self.env.user.notify_info(**test_msg)
         news = bus_bus.search(domain) - existing
@@ -92,6 +96,7 @@ class TestResUsers(common.TransactionCase):
             "sticky": True,
             "action": None,
             "params": {},
+            "sound": "/mail/static/src/audio/ting.mp3",
         }
         self.env.user.notify_default(**test_msg)
         news = bus_bus.search(domain) - existing

@@ -8,6 +8,20 @@
                 <field name="name" />
                 <field name="category_id" />
                 <field name="model_id" />
+                <group>
+                    <filter
+                        string="Category"
+                        name="group_by_category_id"
+                        domain="[]"
+                        context="{'group_by':'category_id'}"
+                    />
+                    <filter
+                        string="Model"
+                        name="group_by_model_id"
+                        domain="[]"
+                        context="{'group_by':'model_id'}"
+                    />
+                </group>
             </search>
         </field>
     </record>
@@ -19,13 +33,13 @@
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="category_id" />
-                <field name="model_id" />
-                <field name="primary_function" />
-                <field name="primary_field_id" />
-                <field name="secondary_function" />
-                <field name="secondary_field_id" />
-                <field name="user_id" />
-                <field name="group_ids" />
+                <field name="model_id" optional="hide" />
+                <field name="primary_function" optional="show" />
+                <field name="primary_field_id" optional="show" />
+                <field name="secondary_function" optional="hide" />
+                <field name="secondary_field_id" optional="hide" />
+                <field name="user_id" optional="hide" />
+                <field name="group_ids" widget="many2many_tags" optional="hide" />
                 <field name="background_color" widget="color" />
             </tree>
         </field>
@@ -37,29 +51,44 @@
             <form>
                 <field name="model_name" invisible="1" />
                 <sheet>
-                    <h1>
-                        <field name="name" />
-                    </h1>
-                    <group col="4" string="Display">
-                        <field name="category_id" colspan="4" />
-                        <field name="background_color" widget="color" />
-                        <field name="font_color" widget="color" />
+                    <div class="oe_title">
+                        <h1 class="d-flex flex-row">
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group string="Display">
+                        <group colspan="2">
+                            <field name="category_id" />
+                        </group>
+                        <group>
+                            <field name="background_color" widget="color" />
+                        </group>
+                        <group>
+                            <field name="font_color" widget="color" />
+                        </group>
                     </group>
-                    <group col="4" string="Technical Informations">
-                        <field name="model_id" />
-                        <field name="action_id" />
+                    <group string="Technical Informations">
+                        <group>
+                            <field name="model_id" />
+                        </group>
+                        <group>
+                            <field name="action_id" />
+                        </group>
+                    </group>
+                    <group string="Domain">
                         <field
                             name="domain"
-                            colspan="4"
+                            colspan="2"
+                            nolabel="1"
                             widget="ace"
                             option="{'mode': 'python'}"
                         />
-                        <field
-                            name="domain_error"
-                            attrs="{'invisible':[('domain_error','=',False)]}"
-                            nolabel="1"
-                            colspan="4"
-                        />
+                        <div
+                            colspan="2"
+                            class="alert alert-danger"
+                            role="alert"
+                            attrs="{'invisible': [('domain_error', '=', False)]}"
+                        ><field nolabel="1" name="domain_error" /></div>
                     </group>
                     <notebook>
                         <page string="Settings">

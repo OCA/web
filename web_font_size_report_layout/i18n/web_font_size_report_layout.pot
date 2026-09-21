@@ -1,0 +1,91 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_font_size_report_layout
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_font_size_report_layout
+#: model:ir.model.fields.selection,name:web_font_size_report_layout.selection__res_company__report_font_size__10
+msgid "10 pt"
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model:ir.model.fields.selection,name:web_font_size_report_layout.selection__res_company__report_font_size__11
+msgid "11 pt"
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model:ir.model.fields.selection,name:web_font_size_report_layout.selection__res_company__report_font_size__12
+msgid "12 pt"
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model:ir.model.fields.selection,name:web_font_size_report_layout.selection__res_company__report_font_size__13
+msgid "13 pt"
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model:ir.model.fields.selection,name:web_font_size_report_layout.selection__res_company__report_font_size__14
+msgid "14 pt"
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model:ir.model.fields.selection,name:web_font_size_report_layout.selection__res_company__report_font_size__9
+msgid "9 pt"
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model:ir.model.fields,help:web_font_size_report_layout.field_base_document_layout__report_font_size
+#: model:ir.model.fields,help:web_font_size_report_layout.field_res_company__report_font_size
+msgid ""
+"Base font size for PDF content (in points), applied on the external report "
+"layout."
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model:ir.model,name:web_font_size_report_layout.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model:ir.model,name:web_font_size_report_layout.model_base_document_layout
+msgid "Company Document Layout"
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model:ir.model.fields,field_description:web_font_size_report_layout.field_base_document_layout__report_font_size
+msgid "Font size"
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model:ir.model.fields,field_description:web_font_size_report_layout.field_res_company__report_font_size
+msgid "Report font size"
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model_terms:ir.ui.view,arch_db:web_font_size_report_layout.styles_company_report_global_fontsize
+msgid ""
+"body, .o_report_layout, .page,\n"
+"            .o_report_layout *, .page *,\n"
+"            table, td, th, p, li, span, div  {\n"
+"                font-size:"
+msgstr ""
+
+#. module: web_font_size_report_layout
+#: model_terms:ir.ui.view,arch_db:web_font_size_report_layout.styles_company_report_global_fontsize
+msgid ""
+"pt !important;\n"
+"            }\n"
+"            .o_report_layout h1, .page h1 { font-size: 1.6em !important; }\n"
+"            .o_report_layout h2, .page h2 { font-size: 1.3em !important; }\n"
+"            .o_report_layout h3, .page h3 { font-size: 1.15em !important; }"
+msgstr ""

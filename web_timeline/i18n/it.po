@@ -18,13 +18,6 @@ msgstr ""
 
 #. module: web_timeline
 #. odoo-javascript
-#: code:addons/web_timeline/static/src/js/timeline_renderer.js:0
-#, python-format
-msgid "<b>UNASSIGNED</b>"
-msgstr "<b>NON ASSEGNATO</b>"
-
-#. module: web_timeline
-#. odoo-javascript
 #: code:addons/web_timeline/static/src/js/timeline_controller.esm.js:0
 #, python-format
 msgid "Are you sure you want to delete this record?"
@@ -105,3 +98,7 @@ msgstr "Settimana"
 #, python-format
 msgid "Year"
 msgstr "Anno"
+
+#, python-format
+#~ msgid "<b>UNASSIGNED</b>"
+#~ msgstr "<b>NON ASSEGNATO</b>"

@@ -53,13 +53,25 @@ odoo.define("web_timeline.TimelineModel", function (require) {
          * @returns {jQuery.Deferred}
          */
         _loadTimeline: function () {
+            const groupByFields = this.default_group_by
+                ? this.default_group_by.split(",")
+                : [];
+            const orderFields = groupByFields.map((group) => {
+                // Handle the case where the group by is a field with a group operator
+                // e.g. date:month. For ordering, Odoo expects the base field name.
+                return {name: group.includes(":") ? group.split(":")[0] : group};
+            });
+            // For fields to read, Odoo expects the full specifier if it's a :operator group,
+            // as this will be the key in the returned records.
+            const fieldsToRead = _.uniq([...this.fieldNames, ...groupByFields]);
+
             return this._rpc({
                 model: this.modelName,
                 method: "search_read",
                 kwargs: {
-                    fields: this.fieldNames,
+                    fields: fieldsToRead,
                     domain: this.data.domain,
-                    order: [{name: this.default_group_by}],
+                    order: orderFields,
                     context: this.data.context,
                 },
             }).then((events) => {

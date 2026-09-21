@@ -285,3 +285,21 @@ ProductLabelSectionAndNoteField.template =
 registry
     .category("fields")
     .add("product_label_section_and_note_field", ProductLabelSectionAndNoteField);
+
+// Patch HTMLElement to set a max width on the product and label field cells.
+// Odoo does not facilitate inheritance in the function computeColumnWidthsFromContent,
+// so we need to patch the getBoundingClientRect method to enforce a max width.
+const originalGetBoundingClientRect = HTMLElement.prototype.getBoundingClientRect;
+HTMLElement.prototype.getBoundingClientRect = function () {
+    const rect = originalGetBoundingClientRect.call(this);
+    if (
+        this.classList &&
+        this.classList.contains("o_product_label_section_and_note_field_cell")
+    ) {
+        return {
+            ...rect,
+            width: Math.min(rect.width, 400), // Set your desired max width here
+        };
+    }
+    return rect;
+};

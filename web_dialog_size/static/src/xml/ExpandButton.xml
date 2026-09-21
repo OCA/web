@@ -5,7 +5,7 @@
             t-if="props.getsize() == 'dialog_full_screen'"
             type="button"
             class="btn btn-secondary dialog_button_extend"
-            t-on-click="dialog_button_restore"
+            t-on-click="toggleSize"
         >
             <i class="fa fa-compress" />
         </button>
@@ -13,7 +13,7 @@
             t-if="props.getsize() != 'dialog_full_screen'"
             type="button"
             class="btn btn-secondary dialog_button_restore"
-            t-on-click="dialog_button_extend"
+            t-on-click="toggleSize"
         >
             <i class="fa fa-expand" />
         </button>

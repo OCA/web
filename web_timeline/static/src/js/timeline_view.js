@@ -70,6 +70,20 @@ odoo.define("web_timeline.TimelineView", function (require) {
                 }
             }
 
+            const fieldNamesCopy = [...fieldNames];
+            for (const field of fieldNamesCopy) {
+                if (field.includes(",")) {
+                    // Multiple group by fields
+                    fieldNames.pop(field);
+                    fieldNames.push(...field.split(","));
+                }
+                if (field.includes(":")) {
+                    // Group by date field may have a group operator, e.g. date:month
+                    fieldNames.pop(field);
+                    fieldNames.push(field.split(":")[0]);
+                }
+            }
+
             const archFieldNames = _.map(
                 _.filter(this.arch.children, (item) => item.tag === "field"),
                 (item) => item.attrs.name

@@ -52,6 +52,7 @@ msgstr "Colore sfondo"
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile__category_id
+#: model_terms:ir.ui.view,arch_db:web_dashboard_tile.view_tile_tile_search
 msgid "Category"
 msgstr "Categoria"
 
@@ -109,6 +110,7 @@ msgstr "Nome visualizzato"
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile__domain
+#: model_terms:ir.ui.view,arch_db:web_dashboard_tile.view_tile_tile_form
 msgid "Domain"
 msgstr "Dominio"
 
@@ -246,6 +248,7 @@ msgstr "Valore minimo di '%s'"
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile__model_id
+#: model_terms:ir.ui.view,arch_db:web_dashboard_tile.view_tile_tile_search
 msgid "Model"
 msgstr "Modello"
 

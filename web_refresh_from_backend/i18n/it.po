@@ -1,0 +1,100 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_refresh_from_backend
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-03-10 11:45+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: web_refresh_from_backend
+#. odoo-javascript
+#: code:addons/web_refresh_from_backend/static/src/views/form/form_controller_patch.esm.js:0
+#, python-format
+msgid "All unsaved changes will be lost! Continue?"
+msgstr "Verranno perse tutte le modifiche non salvate! Continuare?"
+
+#. module: web_refresh_from_backend
+#. odoo-javascript
+#: code:addons/web_refresh_from_backend/static/src/views/form/form_controller_patch.esm.js:0
+#: code:addons/web_refresh_from_backend/static/src/views/list/list_controller_patch.esm.js:0
+#, python-format
+msgid "Cancel"
+msgstr "Annulla"
+
+#. module: web_refresh_from_backend
+#. odoo-javascript
+#: code:addons/web_refresh_from_backend/static/src/views/form/form_controller_patch.esm.js:0
+#, python-format
+msgid "Continue"
+msgstr "Continua"
+
+#. module: web_refresh_from_backend
+#. odoo-javascript
+#: code:addons/web_refresh_from_backend/static/src/views/form/form_controller_patch.esm.js:0
+#, python-format
+msgid "Could not reload form. "
+msgstr "Impossibile ricaricare il modulo. "
+
+#. module: web_refresh_from_backend
+#. odoo-javascript
+#: code:addons/web_refresh_from_backend/static/src/views/kanban/kanban_controller_patch.esm.js:0
+#, python-format
+msgid "Could not reload kanban. "
+msgstr "Impossibile ricaricare il Kanban. "
+
+#. module: web_refresh_from_backend
+#. odoo-javascript
+#: code:addons/web_refresh_from_backend/static/src/views/list/list_controller_patch.esm.js:0
+#, python-format
+msgid "Could not reload list. "
+msgstr "Impossibile ricaricare l'elenco. "
+
+#. module: web_refresh_from_backend
+#. odoo-javascript
+#: code:addons/web_refresh_from_backend/static/src/views/list/list_controller_patch.esm.js:0
+#, python-format
+msgid "Could not save record. "
+msgstr "Impossibile salvare il record. "
+
+#. module: web_refresh_from_backend
+#. odoo-javascript
+#: code:addons/web_refresh_from_backend/static/src/views/form/form_controller_patch.esm.js:0
+#, python-format
+msgid "Form is being refreshed from backend"
+msgstr "Il modulo è stato aggiornato dal backend"
+
+#. module: web_refresh_from_backend
+#. odoo-javascript
+#: code:addons/web_refresh_from_backend/static/src/views/list/list_controller_patch.esm.js:0
+#, python-format
+msgid "List is being refreshed from backend"
+msgstr "L'elenco è stato aggiornato dal backend"
+
+#. module: web_refresh_from_backend
+#. odoo-javascript
+#: code:addons/web_refresh_from_backend/static/src/views/list/list_controller_patch.esm.js:0
+#, python-format
+msgid "Save & Refresh"
+msgstr "Salva e aggiorna"
+
+#. module: web_refresh_from_backend
+#: model:ir.model,name:web_refresh_from_backend.model_res_users
+msgid "User"
+msgstr "Utente"
+
+#. module: web_refresh_from_backend
+#. odoo-javascript
+#: code:addons/web_refresh_from_backend/static/src/views/list/list_controller_patch.esm.js:0
+#, python-format
+msgid "You have unsaved edits. Save them before refreshing?"
+msgstr "Ci sono modifiche non salvate. Salvarle prima di aggiornare?"

@@ -1,0 +1,1 @@
+Handling focus on search bar might be improved with better JS knowledge.

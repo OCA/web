@@ -25,20 +25,6 @@ msgstr "Hepsi"
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
-#, python-format
-msgid "Attachment counter loading..."
-msgstr "Ek sayacı yükleniyor..."
-
-#. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
-#, python-format
-msgid "Attachments"
-msgstr "Ekler"
-
-#. module: web_responsive
-#. odoo-javascript
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "CLEAR"
@@ -65,6 +51,13 @@ msgstr "FİLTRE"
 #, python-format
 msgid "Home Menu"
 msgstr "Ana Menü"
+
+#. module: web_responsive
+#. odoo-javascript
+#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
+#, python-format
+msgid "Log note"
+msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
@@ -118,10 +111,25 @@ msgstr "Arama..."
 
 #. module: web_responsive
 #. odoo-javascript
+#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
+#, python-format
+msgid "Send message"
+msgstr ""
+
+#. module: web_responsive
+#. odoo-javascript
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "View switcher"
 msgstr "Görüntü Değiştiriciyi"
+
+#, python-format
+#~ msgid "Attachment counter loading..."
+#~ msgstr "Ek sayacı yükleniyor..."
+
+#, python-format
+#~ msgid "Attachments"
+#~ msgstr "Ekler"
 
 #, python-format
 #~ msgid "Create"

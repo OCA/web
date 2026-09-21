@@ -26,9 +26,12 @@
                     </td>
                     <td t-foreach="columns" t-as="column" t-key="column.value">
                         <t
-                            t-component="ValueFieldComponent"
-                            t-props="getValueFieldProps(column.value, row.value)"
+                            t-set="value"
+                            t-value="getValueFieldProps(column.value, row.value)"
                         />
+                        <t t-if="value">
+                            <t t-component="ValueFieldComponent" t-props="value" />
+                        </t>
                     </td>
                     <td
                         t-if="props.showRowTotals and _canAggregate()"

@@ -1,0 +1,54 @@
+<odoo>
+    <record id="quick_start_screen_tree_view" model="ir.ui.view">
+        <field name="model">quick.start.screen</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="name" />
+                <field
+                    name="action_ids"
+                    widget="many2many_tags"
+                    options="{'color_field': 'color'}"
+                />
+                <button
+                    type="object"
+                    name="action_screen_actions"
+                    class="btn btn-primary"
+                    title="Go to the start screen"
+                    icon="fa-flash"
+                />
+            </tree>
+        </field>
+    </record>
+    <record id="start_screen_action_config" model="ir.actions.act_window">
+        <field name="res_model">quick.start.screen</field>
+        <field name="name">Quick Start Screens</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <record id="start_screen_action" model="ir.actions.server">
+        <field name="name">Quick Start Screen</field>
+        <field name="model_id" ref="web_quick_start_screen.model_quick_start_screen" />
+        <field name="state">code</field>
+        <field name="code">
+action = (records or model).action_screen_actions()
+        </field>
+    </record>
+    <menuitem
+        id="menu_quick_start_screen_action_config"
+        name="Quick Start Screens"
+        parent="base.next_id_2"
+        action="web_quick_start_screen.start_screen_action_config"
+    />
+    <menuitem
+        id="menu_start"
+        name="Start"
+        web_icon="web_quick_start_screen,static/description/icon.png"
+        sequence="6"
+        groups="web_quick_start_screen.group_quick_start_screen"
+    />
+    <menuitem
+        id="menu_start_screen"
+        name="Start"
+        parent="menu_start"
+        action="web_quick_start_screen.start_screen_action"
+    />
+</odoo>
