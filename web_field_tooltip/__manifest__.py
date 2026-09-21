@@ -6,7 +6,7 @@
     "name": "Web Field Tooltip",
     "summary": """
         Displays customizable tooltips for fields""",
-    "version": "16.0.1.2.1",
+    "version": "16.0.1.2.2",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
