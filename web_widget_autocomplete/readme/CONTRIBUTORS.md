@@ -1,2 +1,4 @@
 - [Cetmix OÜ](https://cetmix.com):
   - Ivan Sokolov
+- [Data Dance s.r.o.](https://www.datadance.eu/):
+  - Radovan Skolnik \<<radovan@skolnik.info>\>
