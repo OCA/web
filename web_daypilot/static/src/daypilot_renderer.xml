@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_daypilot.DayPilotRenderer">
+        <div class="o_daypilot_renderer o_renderer bg-view h-100">
+            <div
+                class="o_daypilot_header d-flex align-items-center gap-1 px-3 pe-md-1 py-2 px-print-0 pt-print-0 border-bottom"
+            >
+                <DayPilotRendererControls model="props.model" />
+            </div>
+            <!-- Keep in sync with DAYPILOT_CONTAINER_CLASSES in daypilot_renderer.js -->
+            <div t-ref="daypilot" class="o_daypilot_container h-100" />
+        </div>
+    </t>
+
+</templates>
