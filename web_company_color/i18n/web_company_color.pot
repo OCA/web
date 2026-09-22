@@ -92,6 +92,16 @@ msgid "Qweb"
 msgstr ""
 
 #. module: web_company_color
+#: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
+msgid "Reset colors"
+msgstr ""
+
+#. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__scss_modif_timestamp
 msgid "SCSS Modif. Timestamp"
+msgstr ""
+
+#. module: web_company_color
+#: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
+msgid "This will remove the custom colors of this company. Continue?"
 msgstr ""
