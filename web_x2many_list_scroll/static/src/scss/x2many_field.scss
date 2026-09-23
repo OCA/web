@@ -1,0 +1,47 @@
+// Copyright 2026 Jarsa
+// License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+
+// The list renderer is the one element that scrolls, in both directions, so
+// the header Odoo already sticks to it and the row of totals stay in sight
+// while the rows roll. The height is a number of rows: the row and header
+// heights are measured on the rendered list and set as custom properties on
+// the field; the values here only cover the instant before that measure.
+.o_field_x2many.o_web_x2many_list_scroll {
+    --o-x2many-list-scroll-row-height: 2.5rem;
+    --o-x2many-list-scroll-header-height: 2.5rem;
+
+    .o_list_renderer {
+        max-height: calc(
+            var(--o-x2many-list-scroll-rows) * var(--o-x2many-list-scroll-row-height) +
+                var(--o-x2many-list-scroll-header-height)
+        );
+        overflow: auto;
+
+        // Sticky parts on their own compositing layer: on a touch screen the
+        // fling of the rows otherwise redraws the header a frame late and a
+        // sliver of rows shows above it.
+        .o_list_table thead,
+        .o_list_table tfoot {
+            will-change: transform;
+        }
+
+        .o_list_table tfoot {
+            position: sticky;
+            bottom: 0;
+            z-index: var(--o-x2many-list-scroll-zindex);
+        }
+    }
+}
+
+// Inside a form Odoo flattens the header of a list to z-index 0, because
+// there the list never scrolls. Here it does: the rows roll under the header
+// and the widgets they carry (tags, badges, toggles) paint over it, being
+// later in the flow. The header and the footer go one level above any row
+// content. Same specificity as the rule of Odoo, plus the class of the module.
+.o_form_view .o_field_x2many.o_web_x2many_list_scroll .o_list_renderer .o_list_table {
+    --o-x2many-list-scroll-zindex: 2;
+
+    thead {
+        z-index: var(--o-x2many-list-scroll-zindex);
+    }
+}
