@@ -190,4 +190,38 @@ QUnit.module("Views", (hooks) => {
         await click($item_content);
         assert.containsNone($item_content.parentElement, ".vis-delete");
     });
+
+    QUnit.test("no dependency toggle without dependency_arrow", async (assert) => {
+        await makeView({
+            type: "timeline",
+            resModel: "order",
+            serverData,
+            arch: '<timeline date_start="date_start" date_stop="date_stop" default_group_by="partner_id"/>',
+        });
+        assert.containsNone(target, ".oe_timeline_button_dependencies");
+    });
+
+    QUnit.test("toggle dependency arrows", async (assert) => {
+        serverData.models.order.fields.dependency_ids = {
+            string: "Dependencies",
+            type: "many2many",
+            relation: "order",
+        };
+        for (const rec of serverData.models.order.records) {
+            rec.dependency_ids = [];
+        }
+        await makeView({
+            type: "timeline",
+            resModel: "order",
+            serverData,
+            arch: '<timeline date_start="date_start" date_stop="date_stop" default_group_by="partner_id" dependency_arrow="dependency_ids"/>',
+        });
+        const $btn = target.querySelector(".oe_timeline_button_dependencies");
+        assert.ok($btn, "dependency toggle button should be present");
+        assert.hasClass($btn, "btn-primary", "arrows are shown by default");
+        await click($btn);
+        assert.doesNotHaveClass($btn, "btn-primary", "arrows hidden after toggle");
+        await click($btn);
+        assert.hasClass($btn, "btn-primary", "arrows shown again after re-toggle");
+    });
 });
