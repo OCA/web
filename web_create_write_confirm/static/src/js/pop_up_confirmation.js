@@ -67,7 +67,7 @@ odoo.define("web_create_write_confirm.pop_up_confirmation", function (require) {
                                 }
                                 index++;
                                 if (popup_values.length > index) {
-                                    this.display_popup(
+                                    self.display_popup(
                                         popup_values,
                                         record,
                                         record_id,
@@ -80,7 +80,7 @@ odoo.define("web_create_write_confirm.pop_up_confirmation", function (require) {
                                         record_id,
                                         datas
                                     );
-                                    this.save();
+                                    self.save();
                                 }
                             },
                         }).on("closed", null, resolve);
