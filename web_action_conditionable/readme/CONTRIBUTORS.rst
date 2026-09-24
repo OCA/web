@@ -5,3 +5,4 @@
 * Jasper Jumelet <jasper.jumelet@codeforward.nl>
 * `Trobz <https://trobz.com>`_:
     * Nguyễn Minh Chiến <chien@trobz.com>
+* Holger Brunn <mail@hunki-enterprises.com> (https://hunki-enterprises.com)
