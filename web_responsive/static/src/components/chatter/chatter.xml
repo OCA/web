@@ -14,15 +14,14 @@
             <button
                 class="o-mail-Chatter-sendMessage btn text-nowrap me-1"
                 t-att-class="{
-                'btn-secondary': state.composerType !== 'message',
-                'btn-primary active': state.composerType === 'message',
-                'my-2': !props.compactHeight
+                'btn-secondary': this.state.composerType !== 'message',
+                'btn-primary active': this.state.composerType === 'message'
             }"
-                t-att-disabled="!state.thread.hasWriteAccess and !(state.thread.hasReadAccess and state.thread.canPostOnReadonly) and props.threadId"
+                t-att-disabled="!this.state.thread.canPostMessage and this.thread().id"
                 data-hotkey="m"
                 t-on-click="() => this.toggleComposer('message')"
             >
-                <i class="fa fa-envelope me-sm-1" />
+                <i class="oi oi-fw me-sm-1" data-icon="mail" />
                 <span class="d-none d-sm-inline">Send message</span>
             </button>
         </xpath>
@@ -30,15 +29,14 @@
             <button
                 class="o-mail-Chatter-logNote btn text-nowrap me-1"
                 t-att-class="{
-                'btn-primary active': state.composerType === 'note',
-                'btn-secondary': state.composerType !== 'note',
-                'my-2': !props.compactHeight
+                'btn-primary active': this.state.composerType === 'note',
+                'btn-secondary': this.state.composerType !== 'note'
             }"
-                t-att-disabled="!state.thread.hasWriteAccess and !(state.thread.hasReadAccess and state.thread.canPostOnReadonly) and props.threadId"
+                t-att-disabled="!this.state.thread.canPostMessage and this.thread().id"
                 data-hotkey="shift+m"
                 t-on-click="() => this.toggleComposer('note')"
             >
-                <i class="fa fa-sticky-note me-sm-1" />
+                <i class="oi oi-fw me-sm-1" data-icon="sticky_note_2" />
                 <span class="d-none d-sm-inline">Log note</span>
             </button>
         </xpath>
@@ -46,7 +44,7 @@
             expr="//button[hasclass('o-mail-Chatter-activity')]/span"
             position="before"
         >
-            <i class="fa fa-clock-o me-sm-1" />
+            <i class="oi oi-fw me-sm-1" data-icon="schedule" />
         </xpath>
         <xpath
             expr="//button[hasclass('o-mail-Chatter-activity')]/span"

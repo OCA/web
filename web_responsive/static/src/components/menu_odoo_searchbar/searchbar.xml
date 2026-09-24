@@ -9,12 +9,15 @@
     <t t-name="web_responsive.AppsMenuOdooSearchBar">
         <div class="search-container">
             <div class="search-input">
-                <i class="fa fa-search search-icon fs-4 my-auto d-none d-sm-flex" />
+                <i
+                    class="oi search-icon fs-4 my-auto d-none d-sm-flex"
+                    data-icon="search"
+                />
                 <input
                     type="search"
-                    t-ref="SearchBarInput"
-                    t-on-input="_onSearchInput"
-                    t-on-click="_onSearchClick"
+                    t-ref="this.searchBarInputRef"
+                    t-on-input="this._onSearchInput"
+                    t-on-click="this._onSearchClick"
                     autocomplete="off"
                     placeholder="Search menus..."
                     class="form-control"

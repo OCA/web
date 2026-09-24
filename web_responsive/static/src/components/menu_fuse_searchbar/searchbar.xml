@@ -8,29 +8,29 @@
         t-inherit="web_responsive.AppsMenuCanonicalSearchBar"
         t-inherit-mode="primary"
     >
-        <xpath expr="//t[@t-foreach='state.rootItems']" position="attributes">
+        <xpath expr="//t[@t-foreach='this.state.rootItems']" position="attributes">
             <attribute name="t-as">result</attribute>
             <attribute name="t-key">result.item.xmlid</attribute>
         </xpath>
-        <xpath expr="//t[@t-foreach='state.rootItems']/li" position="before">
+        <xpath expr="//t[@t-foreach='this.state.rootItems']/li" position="before">
             <t t-set="menu" t-value="result.item" />
         </xpath>
-        <xpath expr="//t[@t-foreach='state.rootItems']/li" position="attributes">
+        <xpath expr="//t[@t-foreach='this.state.rootItems']/li" position="attributes">
             <attribute
                 name="t-attf-class"
-            >search-item {{highlighted(result_index)}}</attribute>
+            >search-item {{this.highlighted(result_index)}}</attribute>
         </xpath>
-        <xpath expr="//t[@t-foreach='state.subItems']" position="attributes">
+        <xpath expr="//t[@t-foreach='this.state.subItems']" position="attributes">
             <attribute name="t-as">result</attribute>
             <attribute name="t-key">result.item.xmlid</attribute>
         </xpath>
-        <xpath expr="//t[@t-foreach='state.subItems']/li" position="before">
+        <xpath expr="//t[@t-foreach='this.state.subItems']/li" position="before">
             <t t-set="menu" t-value="result.item" />
         </xpath>
-        <xpath expr="//t[@t-foreach='state.subItems']/li" position="attributes">
+        <xpath expr="//t[@t-foreach='this.state.subItems']/li" position="attributes">
             <attribute
                 name="t-attf-class"
-            >search-item {{highlighted(result_index, true)}}</attribute>
+            >search-item {{this.highlighted(result_index, true)}}</attribute>
         </xpath>
     </t>
 </templates>

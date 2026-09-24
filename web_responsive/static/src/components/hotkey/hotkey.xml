@@ -15,7 +15,7 @@
             >'shift+' + ((section_index + 1) % 10).toString()</attribute>
         </xpath>
         <xpath
-            expr="//t[@t-if='currentAppSectionsExtra.length']//t[@t-set='hotkey']"
+            expr="//t[@t-if='this.currentAppSectionsExtra.length']//t[@t-set='hotkey']"
             position="attributes"
         >
             <attribute

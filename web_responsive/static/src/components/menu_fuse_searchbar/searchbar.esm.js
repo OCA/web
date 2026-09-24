@@ -27,5 +27,4 @@ export class AppsMenuFuseSearchBar extends AppsMenuCanonicalSearchBar {
     }
 }
 
-AppsMenuFuseSearchBar.props = {};
 AppsMenuFuseSearchBar.template = "web_responsive.AppsMenuFuseSearchBar";

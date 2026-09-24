@@ -57,7 +57,7 @@ export const unpatchControlPanel = patch(ControlPanel.prototype, {
         browser.requestAnimationFrame(() => (this.isScrolling = false));
 
         /** @type {HTMLElement}*/
-        const rootEl = this.root.el;
+        const rootEl = this.root();
         const scrollTop = this.getScrollingElement().scrollTop;
         const activeAnimation = scrollTop > this.initialScrollTop;
 

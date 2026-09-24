@@ -4,15 +4,19 @@
  * Copyright 2023 Taras Shabaranskyi
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-import {Component, onWillUpdateProps} from "@odoo/owl";
+import {Component, computed, t, useProps} from "@odoo/owl";
 import {getWebIconData} from "@web_responsive/components/apps_menu_tools.esm";
 
 export class AppMenuItem extends Component {
-    setup() {
-        super.setup();
-        this.webIconData = getWebIconData(this.props.app);
-        onWillUpdateProps(this.onUpdateProps);
-    }
+    props = useProps({
+        app: t.object(),
+        href: t.string(),
+        // NavBar passes null when no app is currently selected
+        currentApp: t.or([t.object(), t.literal(null)]).optional(),
+        onClick: t.function(),
+    });
+    // Derived from the reactive props (Owl 3: computed replaces onWillUpdateProps)
+    webIconData = computed(() => getWebIconData(this.props.app));
 
     get isActive() {
         const {currentApp} = this.props;
@@ -27,10 +31,6 @@ export class AppMenuItem extends Component {
         return classItems.join(" ");
     }
 
-    onUpdateProps(nextProps) {
-        this.webIconData = getWebIconData(nextProps.app);
-    }
-
     onClick() {
         if (typeof this.props.onClick === "function") {
             this.props.onClick(this.props.app);
@@ -40,13 +40,4 @@ export class AppMenuItem extends Component {
 
 Object.assign(AppMenuItem, {
     template: "web_responsive.AppMenuItem",
-    props: {
-        app: Object,
-        href: String,
-        currentApp: {
-            type: Object,
-            optional: true,
-        },
-        onClick: Function,
-    },
 });
