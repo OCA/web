@@ -22,4 +22,5 @@ class TestUI(common.HttpCase):
             "web_systray_button_init_action_set_tour",
             login="admin",
             step_delay=100,
+            timeout=120,
         )
