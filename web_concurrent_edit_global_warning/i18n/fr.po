@@ -1,0 +1,129 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_concurrent_edit_global_warning
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Florian Mounier <florian.mounier@akretion.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "Close"
+msgstr "Fermer"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "Concurrent Edit Detected"
+msgstr "Modification concurrente détectée"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "Concurrent Edit Detected!"
+msgstr "Modification concurrente détectée !"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "Concurrent Save Detected"
+msgstr "Enregistrement concurrent détecté"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "Concurrent Save Detected!"
+msgstr "Enregistrement concurrent détecté !"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "Discard Local Changes"
+msgstr "Abandonner les modifications locales"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid ""
+"It is recommended to reload the record to see the latest changes before "
+"making changes."
+msgstr ""
+"Il est recommandé de recharger l'enregistrement pour voir les dernières "
+"modifications avant d'apporter de nouvelles modifications."
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid ""
+"It is recommended to wait for the other user to finish editing before making"
+" changes."
+msgstr ""
+"Il est recommandé d'attendre que l'autre utilisateur ait terminé de modifier "
+"l'enregistrement avant d'apporter de nouvelles modifications."
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "Refresh"
+msgstr "Actualiser"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "Reload record"
+msgstr "Recharger l'enregistrement"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "This record has been modified by another user"
+msgstr "Cet enregistrement a été modifié par un autre utilisateur"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "This record is already being edited by"
+msgstr "Cet enregistrement est déjà en cours de modification par"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "This record is being edited by another user"
+msgstr "Cet enregistrement est en cours de modification par un autre utilisateur"
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "This record seems to have changed."
+msgstr "Cet enregistrement semble avoir été modifié."
+
+#. module: web_concurrent_edit_global_warning
+#. odoo-javascript
+#: code:addons/web_concurrent_edit_global_warning/static/src/views/form/form_status_indicator/form_status_indicator.xml:0
+#, python-format
+msgid "other user"
+msgstr "autre utilisateur"
