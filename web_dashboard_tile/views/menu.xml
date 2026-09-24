@@ -5,6 +5,7 @@
         id="menu_tile_configuration"
         name="Overview Settings"
         parent="spreadsheet_dashboard.spreadsheet_dashboard_menu_configuration"
+        groups="web_dashboard_tile.group_tile_manager"
         sequence="160"
     />
 
