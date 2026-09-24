@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="web_button_box_max_buttons_default" model="ir.config_parameter">
+        <field name="key">web_button_box.max_buttons</field>
+        <field name="value">7</field>
+    </record>
+</odoo>
