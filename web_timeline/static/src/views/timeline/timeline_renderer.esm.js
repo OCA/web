@@ -12,7 +12,6 @@ import {
     useState,
 } from "@odoo/owl";
 import {TimelineCanvas} from "./timeline_canvas.esm";
-import {_t} from "@web/core/l10n/translation";
 import {loadBundle} from "@web/core/assets";
 import {renderToString} from "@web/core/utils/render";
 import {useService} from "@web/core/utils/hooks";
@@ -185,6 +184,19 @@ export class TimelineRenderer extends Component {
      */
     init_timeline() {
         this._computeMode();
+        const self = this;
+        if (this.model.params.show_only_active_groups) {
+            // Visibility should also be updated when toggling group visibility,
+            // so we monkey-patch the method responsible for that in the timeline library
+            // for lack of a better way to hook into that functionality.
+            const {ItemSet} = vis.timeline.components;
+            const toggleGroupShowNested = ItemSet.prototype.toggleGroupShowNested;
+            ItemSet.prototype.toggleGroupShowNested = function () {
+                const rv = toggleGroupShowNested.apply(this, arguments);
+                self._adjust_group_visibility();
+                return rv;
+            };
+        }
         this.options.editable = {};
         if (this.model.canEdit) {
             this.options.onMove = this.on_move.bind(this);
@@ -216,7 +228,7 @@ export class TimelineRenderer extends Component {
             },
         };
         this.timeline = new vis.Timeline(this.canvasRef.el, {}, this.options);
-        this.timeline.on("click", this.on_timeline_click.bind(this));
+        this.timeline.on("doubleClick", this.on_timeline_click.bind(this));
         if (!this.options.onUpdate) {
             // In read-only mode, catch double-clicks this way.
             this.timeline.on("doubleClick", this.on_timeline_double_click.bind(this));
@@ -230,6 +242,7 @@ export class TimelineRenderer extends Component {
             this.draw_canvas();
             this.load_initial_data();
         });
+        this.timeline.on("rangechanged", this.on_range_changed.bind(this));
     }
     /**
      * Returns the XSS whitelist for the timeline library.
@@ -276,13 +289,15 @@ export class TimelineRenderer extends Component {
         const keys = Object.keys(items);
         for (const key of keys) {
             const item = items[key];
-            const data = datas.get(Number(key));
+            const data = datas.get(key);
             if (!data || !data.evt) {
                 return;
             }
             for (const id of data.evt[this.dependency_arrow]) {
-                if (keys.indexOf(id.toString()) !== -1) {
-                    this.draw_dependency(item, items[id]);
+                for (const k of keys) {
+                    if (k.split("_")[0].toString() === id.toString()) {
+                        this.draw_dependency(item, items[k]);
+                    }
                 }
             }
         }
@@ -300,6 +315,9 @@ export class TimelineRenderer extends Component {
      */
     draw_dependency(from, to, options) {
         if (!from.displayed || !to.displayed) {
+            return;
+        }
+        if (!from.dom || !from.dom.box || !to.dom || !to.dom.box) {
             return;
         }
         const defaults = Object.assign({line_color: "black", line_width: 1}, options);
@@ -332,19 +350,118 @@ export class TimelineRenderer extends Component {
         const data = [];
         for (const record of records) {
             if (record[this.date_start]) {
-                data.push(this.model._event_data_transform(record));
+                const transformed = this.model._event_data_transform(record);
+                if (Array.isArray(transformed)) {
+                    data.push(...transformed);
+                } else {
+                    data.push(transformed);
+                }
             }
         }
         const groups = await this.split_groups(records);
+        this.groups = groups;
         this.timeline.setGroups(groups);
         this.timeline.setItems(data);
+        this._adjust_group_visibility();
         const mode = !this.mode.data || this.mode.data === "fit";
         const adjust = typeof adjust_window === "undefined" || adjust_window;
         if (mode && adjust) {
             this.timeline.fit();
         }
     }
+    /**
+     * Extract the group hierarchy for a given item.
+     *
+     * @param {Object} item
+     * @returns {Array} An array of group IDs representing the group hierarchy
+     *                  for the item.
+     * @private
+     */
+    _extract_item_group_hierarchy(item) {
+        const groupHierarchy = [];
+        try {
+            const itemGroupPathJson = item.group;
+            const itemPathSegments = JSON.parse(itemGroupPathJson);
+            for (let i = 0; i < itemPathSegments.length; i++) {
+                const subPathJson = JSON.stringify(itemPathSegments.slice(0, i + 1));
+                groupHierarchy.push(subPathJson);
+            }
+        } catch (e) {
+            console.error(
+                "Error extracting group hierarchy for item. Group JSON string was:",
+                item.group,
+                "Error:",
+                e
+            );
+        }
+        return groupHierarchy;
+    }
 
+    /**
+     * Get the currently displayed items.
+     *
+     * @private
+     * @returns {vis.DataSet} The items currently in the timeline's visible window.
+     */
+    _items_in_range() {
+        const range = this.timeline.getWindow();
+        return this.timeline.itemsData.get({
+            filter: (item) =>
+                item.start < range.end && (item.end || item.start) > range.start,
+        });
+    }
+
+    /**
+     * Adjust group visibility based on currently visible items.
+     *
+     * @private
+     */
+    _adjust_group_visibility() {
+        const items = this.model.params.show_only_active_groups
+            ? this._items_in_range()
+            : this.timeline.itemsData.get();
+        const groupsInRange = items.reduce((groupSet, item) => {
+            const itemGroups = this._extract_item_group_hierarchy(item);
+            itemGroups.forEach((g) => groupSet.add(g));
+            return groupSet;
+        }, new Set());
+        const groups = this.timeline.groupsData.getDataSet();
+        const hiddenNestedGroups = new Set();
+        groups.forEach((group) => {
+            if (group.showNested !== false || !group.nestedGroups) {
+                return;
+            }
+            // Recursively get all nested groups and add them to the hiddenNestedGroups set
+            const getNestedGroups = (nestingGroup) => {
+                if (nestingGroup.nestedGroups) {
+                    nestingGroup.nestedGroups.forEach((nestedGroupId) => {
+                        const nestedGroup = groups.get(nestedGroupId);
+                        if (nestedGroup) {
+                            hiddenNestedGroups.add(nestedGroup.id);
+                            getNestedGroups(nestedGroup);
+                        }
+                    });
+                }
+            };
+            getNestedGroups(group);
+        });
+        const groupsToUpdate = [];
+        groups.forEach((group) => {
+            if (hiddenNestedGroups.has(group.id)) {
+                return;
+            }
+            const groupInRange = groupsInRange.has(group.id);
+            if (Boolean(group.visible) !== groupInRange) {
+                groupsToUpdate.push({
+                    id: group.id,
+                    visible: groupInRange,
+                });
+            }
+        });
+        if (groupsToUpdate.length > 0) {
+            groups.update(groupsToUpdate);
+        }
+    }
     /**
      * Get the groups.
      *
@@ -354,59 +471,293 @@ export class TimelineRenderer extends Component {
      */
     async split_groups(records) {
         if (this.model.last_group_bys.length === 0) {
-            return records;
+            return [];
         }
         const groups = [];
-        groups.push({id: -1, content: _t("<b>UNASSIGNED</b>"), order: -1});
-        var seq = 1;
-        for (const evt of records) {
-            const grouped_field = this.model.last_group_bys[0];
-            const group_name = evt[grouped_field];
-            if (group_name && group_name instanceof Array) {
-                const group = groups.find(
-                    (existing_group) => existing_group.id === group_name[0]
-                );
-                if (group) {
-                    continue;
-                }
-                // Check if group is m2m in this case add id -> value of all
-                // found entries.
-                if (this.fields[grouped_field].type === "many2many") {
-                    const list_values = await this.get_m2m_grouping_datas(
-                        this.fields[grouped_field].relation,
-                        group_name
-                    );
-                    for (const vals of list_values) {
-                        const is_inside = groups.some((gr) => gr.id === vals.id);
-                        if (!is_inside) {
-                            vals.order = seq;
-                            seq += 1;
-                            groups.push(vals);
-                        }
+        let seq = 1;
+
+        const groupLevel = this.model.last_group_bys.reduce((acc, g, index) => {
+            acc[g] = index + 1;
+            return acc;
+        }, {});
+
+        // Memoization for M2M name_get calls
+        const m2mNameCache = {};
+        const getM2MNames = async (model, ids) => {
+            const cacheKey = `${model}-${ids.sort().join(",")}`;
+            if (m2mNameCache[cacheKey]) {
+                return m2mNameCache[cacheKey];
+            }
+            const names = await this.orm.read(model, ids, ["display_name"]);
+            const result = names.map((name) => ({
+                id: name.id,
+                content: name.display_name,
+            }));
+            m2mNameCache[cacheKey] = result;
+            return result;
+        };
+
+        const createGroup = (segmentObject, displayName, parentGroupsInput, lvl) => {
+            const parentGroups =
+                parentGroupsInput && parentGroupsInput.length
+                    ? parentGroupsInput
+                    : [null];
+            const createdGroups = [];
+
+            for (const parent of parentGroups) {
+                let newPathSegments = [];
+                if (parent && parent.id) {
+                    try {
+                        const parentPathSegments = JSON.parse(parent.id);
+                        newPathSegments = [...parentPathSegments, segmentObject];
+                    } catch (e) {
+                        console.error("Error parsing parent group ID:", parent.id, e);
+                        newPathSegments = [segmentObject];
                     }
                 } else {
-                    groups.push({
-                        id: group_name[0],
-                        content: group_name[1],
-                        order: seq,
+                    newPathSegments = [segmentObject];
+                }
+                const subGroupId = JSON.stringify(newPathSegments);
+
+                let group = groups && groups.find((g) => g.id === subGroupId);
+                if (!group) {
+                    const group_record_values = {};
+                    newPathSegments.forEach((segment) => {
+                        // Do not set m2m fields for group_record_values
+                        if (
+                            this.fields[segment.field] &&
+                            this.fields[segment.field].type === "many2many"
+                        ) {
+                            return;
+                        }
+                        group_record_values[segment.field] = segment.value;
                     });
-                    seq += 1;
+
+                    group = {
+                        id: subGroupId,
+                        content: displayName || "UNASSIGNED",
+                        group_record_values,
+                        order: displayName === "UNASSIGNED" ? seq++ : seq++,
+                        treeLevel: lvl,
+                        visible: displayName !== "UNASSIGNED",
+                    };
+                    groups.push(group);
+                }
+                createdGroups.push(group);
+
+                if (parent && parent.id) {
+                    if (!parent.nestedGroups) {
+                        parent.nestedGroups = [];
+                    }
+                    if (!parent.nestedGroups.includes(group.id)) {
+                        parent.nestedGroups.push(group.id);
+                    }
+                }
+            }
+            return createdGroups;
+        };
+
+        /* eslint-disable complexity */
+        const processGroup = async (
+            grouped_field_spec,
+            groupValue,
+            groupLvl,
+            parentGroups
+        ) => {
+            const base_grouped_field = grouped_field_spec.includes(":")
+                ? grouped_field_spec.split(":")[0]
+                : grouped_field_spec;
+            const fieldInfo = this.fields[base_grouped_field];
+
+            if (fieldInfo.type === "many2many") {
+                const m2mIds = Array.isArray(groupValue)
+                    ? groupValue
+                    : groupValue
+                      ? [groupValue]
+                      : [];
+                if (m2mIds.length === 0) {
+                    return createGroup(
+                        {
+                            field: base_grouped_field,
+                            value: false,
+                            spec: grouped_field_spec,
+                        },
+                        "UNASSIGNED",
+                        parentGroups,
+                        groupLvl
+                    );
+                }
+                const listValues = await getM2MNames(fieldInfo.relation, m2mIds);
+                const createdM2mGroups = [];
+                for (const vals of listValues) {
+                    if (m2mIds.includes(vals.id)) {
+                        const newM2mGroups = createGroup(
+                            {
+                                field: base_grouped_field,
+                                value: vals.id,
+                                spec: grouped_field_spec,
+                            },
+                            vals.content,
+                            parentGroups,
+                            groupLvl
+                        );
+                        createdM2mGroups.push(...newM2mGroups);
+                    }
+                }
+                if (createdM2mGroups.length === 0 && m2mIds.length > 0) {
+                    for (const id of m2mIds) {
+                        const newM2mGroups = createGroup(
+                            {
+                                field: base_grouped_field,
+                                value: id,
+                                spec: grouped_field_spec,
+                            },
+                            `ID: ${id}`,
+                            parentGroups,
+                            groupLvl
+                        );
+                        createdM2mGroups.push(...newM2mGroups);
+                    }
+                } else if (m2mIds.length === 0) {
+                    return createGroup(
+                        {
+                            field: base_grouped_field,
+                            value: false,
+                            spec: grouped_field_spec,
+                        },
+                        "UNASSIGNED",
+                        parentGroups,
+                        groupLvl
+                    );
+                }
+                return createdM2mGroups;
+            } else if (
+                grouped_field_spec.includes(":") &&
+                (fieldInfo.type === "date" || fieldInfo.type === "datetime")
+            ) {
+                const displayName = groupValue ? String(groupValue) : "UNASSIGNED";
+                return createGroup(
+                    {
+                        field: base_grouped_field,
+                        value: groupValue,
+                        spec: grouped_field_spec,
+                    },
+                    displayName,
+                    parentGroups,
+                    groupLvl
+                );
+            } else if (Array.isArray(groupValue)) {
+                // Standard [id, name] for m2o, etc.
+                const id = groupValue[0];
+                const name = groupValue[1];
+                return createGroup(
+                    {
+                        field: base_grouped_field,
+                        value: id,
+                        spec: grouped_field_spec,
+                    },
+                    name,
+                    parentGroups,
+                    groupLvl
+                );
+            } else if (
+                groupValue !== undefined &&
+                groupValue !== null &&
+                groupValue !== false
+            ) {
+                // Simple type (string, number, boolean true)
+                if (fieldInfo.relation && typeof groupValue === "number") {
+                    const names = await getM2MNames(fieldInfo.relation, [groupValue]);
+                    const displayName =
+                        names.length > 0 ? names[0].content : `ID: ${groupValue}`;
+                    return createGroup(
+                        {
+                            field: base_grouped_field,
+                            value: groupValue,
+                            spec: grouped_field_spec,
+                        },
+                        displayName,
+                        parentGroups,
+                        groupLvl
+                    );
+                }
+                // For selection fields, look up the human-readable label
+                if (fieldInfo.type === "selection" && fieldInfo.selection) {
+                    const selEntry = fieldInfo.selection.find(
+                        ([val]) => val === groupValue
+                    );
+                    const displayName = selEntry ? selEntry[1] : String(groupValue);
+                    return createGroup(
+                        {
+                            field: base_grouped_field,
+                            value: groupValue,
+                            spec: grouped_field_spec,
+                        },
+                        displayName,
+                        parentGroups,
+                        groupLvl
+                    );
+                }
+                return createGroup(
+                    {
+                        field: base_grouped_field,
+                        value: groupValue,
+                        spec: grouped_field_spec,
+                    },
+                    String(groupValue),
+                    parentGroups,
+                    groupLvl
+                );
+            }
+            return createGroup(
+                {field: base_grouped_field, value: false, spec: grouped_field_spec},
+                "UNASSIGNED",
+                parentGroups,
+                groupLvl
+            );
+        };
+
+        for (const evt of records) {
+            let currentParentGroups = [null];
+            for (const grouped_field_spec of this.model.last_group_bys) {
+                const groupValue = evt[grouped_field_spec];
+                const groupLvl = groupLevel[grouped_field_spec];
+                currentParentGroups = await processGroup(
+                    grouped_field_spec,
+                    groupValue,
+                    groupLvl,
+                    currentParentGroups
+                );
+                if (!currentParentGroups || currentParentGroups.length === 0) {
+                    break;
                 }
             }
         }
+        // Ensure unique group ordering
+        groups.sort((a, b) => {
+            if (a.treeLevel !== b.treeLevel) {
+                return a.treeLevel - b.treeLevel;
+            }
+            if (a.content === "UNASSIGNED" && b.content !== "UNASSIGNED") return 1;
+            if (a.content !== "UNASSIGNED" && b.content === "UNASSIGNED") return -1;
+            if (a.content < b.content) return -1;
+            if (a.content > b.content) return 1;
+            return a.order - b.order;
+        });
+        groups.forEach((g, index) => (g.order = index + 1));
         return groups;
     }
 
-    async get_m2m_grouping_datas(model, group_name) {
-        const groups = [];
-        for (const gr of group_name) {
-            const record_info = await this.orm.call(model, "read", [
-                gr,
-                ["display_name"],
-            ]);
-            groups.push({id: record_info[0].id, content: record_info[0].display_name});
+    /**
+     * Handle a change in the timeline range.
+     *
+     * @param {RangeEvent} e
+     * @private
+     */
+    on_range_changed() {
+        if (this.params.show_only_active_groups) {
+            this._adjust_group_visibility();
         }
-        return groups;
     }
 
     /**
@@ -428,6 +779,7 @@ export class TimelineRenderer extends Component {
      * @private
      */
     on_timeline_double_click(e) {
+        this.on_timeline_click(e);
         if (e.what === "item" && e.item !== -1) {
             this.props.onItemDoubleClick(e);
         }
