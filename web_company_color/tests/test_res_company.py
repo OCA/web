@@ -51,7 +51,7 @@ class TestResCompany(common.TransactionCase):
         values = company_id.sudo()._scss_get_sanitized_values()
         self.assertEqual(
             values["color_navbar_bg"],
-            "$o-brand-odoo",
+            "#71639e",
             "Invalid Navbar Background Color",
         )
         company_id.sudo().write({"color_navbar_bg": "#DEAD00"})

@@ -217,10 +217,12 @@ class ResCompany(models.Model):
         values = dict(self.company_colors or {})
         values.update(
             {
-                "color_navbar_bg": (values.get("color_navbar_bg") or "$o-brand-odoo"),
-                "color_navbar_bg_hover": (values.get("color_navbar_bg_hover")),
+                "color_navbar_bg": (values.get("color_navbar_bg") or "#71639e"),
+                "color_navbar_bg_hover": (
+                    values.get("color_navbar_bg_hover") or "darken(#71639e, 10%)"
+                ),
                 "color_navbar_border_bottom": values.get("color_navbar_border_bottom")
-                or f"darken({values.get('color_navbar_bg') or '$o-brand-odoo'}, 10%)",
+                or f"darken({values.get('color_navbar_bg') or '#71639e'}, 10%)",
                 "color_navbar_text": (values.get("color_navbar_text") or "#FFF"),
                 "color_button_bg": values.get("color_button_bg") or "#71639e",
                 "color_button_bg_hover": values.get("color_button_bg_hover")
