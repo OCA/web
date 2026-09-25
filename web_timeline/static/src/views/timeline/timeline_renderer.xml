@@ -24,6 +24,12 @@
                         t-att-class="'oe_timeline_button_scale_year btn ' + (mode.data == 'year' ? ' btn-primary' : 'btn-default')"
                         t-on-click="_onScaleYearClicked"
                     >Year</button>
+                    <input
+                        name="date-input"
+                        type="date"
+                        class="form-control oe_timeline_date_input"
+                        t-on-change="_onDateInputChanged"
+                    />
                 </div>
             </div>
             <div class="oe_timeline_widget" t-ref="canvas" />
