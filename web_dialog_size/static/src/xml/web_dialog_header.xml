@@ -4,7 +4,7 @@
     <t t-inherit="web.Dialog.header" t-inherit-mode="extension" owl="1">
         <xpath expr="//button[hasclass('btn-close')]" position="before">
             <ExpandButton
-                getsize="getSize"
+                size="getSize()"
                 setsize="setSize"
                 t-if="!isFullscreen and getSize and setSize"
             />
