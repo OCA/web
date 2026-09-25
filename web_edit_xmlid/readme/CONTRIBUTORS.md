@@ -1,0 +1,2 @@
+- [DEC](https://www.decgroupe.com):
+  - Yann Papouin \<ypa@decgroupe.com\>

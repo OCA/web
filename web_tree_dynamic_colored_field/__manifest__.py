@@ -9,7 +9,11 @@
     "author": "Camptocamp, Therp BV, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/web",
-    "demo": ["demo/res_users.xml"],
+    "demo": [
+        "demo/ir_config_parameter.xml",
+        "demo/res_users.xml",
+        "demo/res_groups.xml",
+    ],
     "installable": True,
     "assets": {
         "web.assets_backend": [
