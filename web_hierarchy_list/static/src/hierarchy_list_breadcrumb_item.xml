@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+
+    <t t-name="web_hierarchy_list.BreadcrumbItem">
+        <li class="breadcrumb-item">
+            <strong><span
+                    class="cursor-pointer text-primary"
+                    t-out="props.getDisplayName(props.record)"
+                    t-on-click.synthetic="onGlobalClick"
+                /></strong>
+        </li>
+    </t>
+
+</templates>
