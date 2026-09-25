@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_web_assets,access_web_assets,web_assets_manager.model_web_assets,base.group_system,1,1,1,1
+access_web_assets_file,access_web_assets_file,web_assets_manager.model_web_assets_file,base.group_system,1,1,0,0
+access_web_assets_wizard,access_web_assets_wizard,web_assets_manager.model_web_assets_wizard,base.group_system,1,1,1,1
