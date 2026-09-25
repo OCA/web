@@ -1,0 +1,1 @@
+- Be able to configure steps values for the three colors and also in inversed mode.

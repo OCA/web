@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2024 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_widget_progressbar_color.ProgressBarFieldGradient"
+        t-inherit="web.ProgressBarField"
+        t-inherit-mode="primary"
+        owl="1"
+    />
+</templates>
