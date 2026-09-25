@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 ForgeFlow S.L. (https://www.forgeflow.com)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html). -->
+<odoo noupdate="1">
+    <record id="config_parameter_delay" model="ir.config_parameter">
+        <field name="key">web_loading_block_ui.delay</field>
+        <field name="value">3000</field>
+    </record>
+</odoo>
