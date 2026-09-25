@@ -1,0 +1,12 @@
+// Minimum width of the resource columns + horizontal scrolling when there are
+// many resources.
+.o_calendar_renderer {
+    .fc-resource-timegrid,
+    .fc-resourceTimeGridDay-view,
+    .fc-resourceTimeGridWeek-view {
+        .fc-col-header-cell,
+        .fc-timegrid-col {
+            min-width: 80px;
+        }
+    }
+}
