@@ -329,12 +329,16 @@ export class TimelineRenderer extends Component {
      * @private
      */
     async on_data_loaded(records, adjust_window) {
-        const data = [];
+        let data = []; // Changed to non const to allow concat
+
         for (const record of records) {
             if (record[this.date_start]) {
-                data.push(this.model._event_data_transform(record));
+                // Change here to allow multiple items per record
+                // Does this make the get_m2m_grouping_datas function obsolete?
+                data = data.concat(this.model._event_data_transform(record));
             }
         }
+
         const groups = await this.split_groups(records);
         this.timeline.setGroups(groups);
         this.timeline.setItems(data);
@@ -428,6 +432,8 @@ export class TimelineRenderer extends Component {
      * @private
      */
     on_timeline_double_click(e) {
+        // Fun Fact: this function never gets called.
+        // On_timeline_click fires twice but this never does.
         if (e.what === "item" && e.item !== -1) {
             this.props.onItemDoubleClick(e);
         }
