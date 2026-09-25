@@ -1,0 +1,85 @@
+.o_daypilot_view {
+    --DayPilot__Buttons-height: 50px;
+
+    @media (max-width: 767px) {
+        --DayPilot__Buttons-height: 101px;
+    }
+
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+
+    > .o_control_panel {
+        flex: 0 0 auto;
+    }
+
+    > .o_content {
+        flex: 1 1 auto;
+        min-height: 0;
+        // Must beat the core rule ".o_action .o_content { overflow: auto }":
+        // scrolling is delegated to DayPilot's internal grid, otherwise the
+        // header row scrolls away and nested scrollbars appear.
+        overflow: hidden !important;
+    }
+
+    .o_view_nocontent {
+        position: relative;
+        z-index: 25;
+    }
+
+    .o_view_sample_data .o_sample_data_disabled {
+        @include o-sample-data-disabled;
+    }
+
+    .o_daypilot_button_add {
+        margin-right: 8px;
+    }
+
+    @include media-only(print) {
+        > .o_content {
+            overflow: auto !important;
+        }
+    }
+}
+
+.o_daypilot_renderer {
+    display: flex;
+    flex-direction: column;
+
+    .o_daypilot_header {
+        flex: 0 0 auto;
+    }
+
+    .o_daypilot_container {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        // This element is the DayPilot root (nav.top). DayPilot Lite has no
+        // "fill parent" heightSpec: it assigns the scrollable grid a fixed
+        // pixel height derived from the business hours, so the calendar
+        // either overflows the container (nested scrollbars, header scrolls
+        // away) or gets clipped (bottom hours unreachable). A flex column
+        // makes the grid fill the leftover height instead: the header stays
+        // pinned and the grid keeps its single internal scrollbar.
+        // DayPilot's update() rewrites this element's className, so these
+        // classes are also passed via the `cssClass` option in
+        // daypilot_renderer.js — removing that option breaks this layout.
+        display: flex;
+        flex-direction: column;
+
+        // First in-flow child is the header row; it must never shrink.
+        > div:first-child {
+            flex: 0 0 auto;
+        }
+
+        // Second child is the scrollable grid. It has no class in the Lite
+        // build; the remaining children are absolutely positioned overlays.
+        // min-height:0 is required so it can shrink below its content height.
+        > div:nth-child(2) {
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+    }
+}

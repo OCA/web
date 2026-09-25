@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Demo resources to act as DayPilot columns -->
+    <record id="demo_resource_alice" model="resource.resource">
+        <field name="name">Alice (Demo)</field>
+        <field name="resource_type">material</field>
+    </record>
+    <record id="demo_resource_bob" model="resource.resource">
+        <field name="name">Bob (Demo)</field>
+        <field name="resource_type">material</field>
+    </record>
+    <record id="demo_resource_carol" model="resource.resource">
+        <field name="name">Carol (Demo)</field>
+        <field name="resource_type">material</field>
+    </record>
+
+    <!-- Demo time off entries, anchored to "today" so they are always visible -->
+    <record id="demo_leave_alice_morning" model="resource.calendar.leaves">
+        <field name="name">Alice - Morning break</field>
+        <field name="resource_id" ref="demo_resource_alice" />
+        <field name="time_type">leave</field>
+        <field
+            name="date_from"
+            eval="(datetime.now().replace(hour=9, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="date_to"
+            eval="(datetime.now().replace(hour=10, minute=30, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+    <record id="demo_leave_alice_lunch" model="resource.calendar.leaves">
+        <field name="name">Alice - Lunch</field>
+        <field name="resource_id" ref="demo_resource_alice" />
+        <field name="time_type">leave</field>
+        <field
+            name="date_from"
+            eval="(datetime.now().replace(hour=13, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="date_to"
+            eval="(datetime.now().replace(hour=14, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+    <record id="demo_leave_bob_training" model="resource.calendar.leaves">
+        <field name="name">Bob - Training</field>
+        <field name="resource_id" ref="demo_resource_bob" />
+        <field name="time_type">other</field>
+        <field
+            name="date_from"
+            eval="(datetime.now().replace(hour=11, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="date_to"
+            eval="(datetime.now().replace(hour=12, minute=30, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+    <record id="demo_leave_carol_afternoon" model="resource.calendar.leaves">
+        <field name="name">Carol - Time off</field>
+        <field name="resource_id" ref="demo_resource_carol" />
+        <field name="time_type">leave</field>
+        <field
+            name="date_from"
+            eval="(datetime.now().replace(hour=15, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="date_to"
+            eval="(datetime.now().replace(hour=17, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+</odoo>
