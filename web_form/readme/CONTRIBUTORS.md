@@ -1,0 +1,2 @@
+- Samir GUESMI samir.guesmi@acsone.eu (https://www.acsone.eu)
+- Souheil BEJAOUI souheil.bejaoui@acsone.eu (https://www.acsone.eu)
