@@ -9,7 +9,7 @@ class IrModelData(models.Model):
         # Set a flag to prevent the deletion of tables and columns
         # related to ir.actions.act_multi.
         if "web_ir_actions_act_multi" in modules_to_remove:
-            self = self.with_context(uninstall_web_ir_actions_act_multi=True)
+            self = self.with_context(uninstall_web_ir_actions_act_multi=True)  # noqa: PLW0642
         return super()._module_data_uninstall(modules_to_remove)
 
 
