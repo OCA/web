@@ -1,0 +1,2 @@
+- [Humanilog](https://humanilog.org):
+  - Jan-Marten Veddeler \<<j.veddeler@humanilog.org>\>
