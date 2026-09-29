@@ -1,15 +1,16 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import api, models
 
 
-class IrActionsActMulti(models.Model):
+class IrActionsActMulti(models.AbstractModel):
+    """Action type of the action dicts returned by Python, handled by the
+    web client. No records are stored: the server only needs the model to
+    clean the returned action (web.controllers.utils.clean_action)."""
+
     _name = "ir.actions.act_multi"
-    _description = "Action Mulit"
-    _inherit = "ir.actions.actions"
-    _table = "ir_actions"
+    _description = "Action Multi"
 
-    type = fields.Char(default="ir.actions.act_multi")
-
+    @api.model
     def _get_readable_fields(self):
-        return super()._get_readable_fields() | {"actions"}
+        return self.env["ir.actions.actions"]._get_readable_fields() | {"actions"}
