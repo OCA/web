@@ -18,6 +18,7 @@
             "web_ir_actions_act_window_page/static/tests/web_ir_actions_act_window_page_tour.esm.js",
         ],
     },
+    "maintainers": ["hbrunn"],
     "demo": ["demo/demo_action.xml"],
     "installable": True,
     "license": "AGPL-3",
