@@ -42,5 +42,14 @@
             <i class="fa fa-clock-o me-sm-1" />
             <span class="d-none d-sm-inline">Activity</span>
         </xpath>
+        <!-- Rebuild the AttachmentList when the thread changes, just like the Thread.
+         This this ensures we close FileViewer opened from there when we use the pager buttons -->
+        <xpath
+            expr="//div[hasclass('o-mail-AttachmentBox')]//AttachmentList"
+            position="attributes"
+        >
+            <attribute name="t-key">state.thread.localId</attribute>
+        </xpath>
+        <xpath expr="//button[@t-on-click='popoutAttachment']" position="replace" />
     </t>
 </templates>

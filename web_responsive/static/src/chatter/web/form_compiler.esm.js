@@ -8,6 +8,15 @@ import {setAttributes} from "@web/core/utils/xml";
 patch(FormCompiler.prototype, {
     compile(node, params) {
         const res = super.compile(node, params);
+        // Remount preview host on pager (same idea as AttachmentList t-key).
+        const attachmentViewXml = res.querySelector(
+            ".o_attachment_preview t[t-component='__comp__.mailComponents.AttachmentView']"
+        );
+        if (attachmentViewXml) {
+            setAttributes(attachmentViewXml, {
+                "t-key": "__comp__.props.record.resId",
+            });
+        }
         const chatterContainerHookXml = res.querySelector(
             ".o-mail-Form-chatter:not(.o-isInFormSheetBg)"
         );

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Liam Noonan
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<templates xml:space="preserve">
+    <t t-name="web_responsive.FileViewerAttachmentView">
+        <div class="o-mail-Attachment d-none" />
+    </t>
+</templates>

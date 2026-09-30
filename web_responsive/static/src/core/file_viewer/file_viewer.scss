@@ -22,20 +22,65 @@
         }
     }
 
-    &__minimized {
+    &__minimized,
+    &__popout {
         .o-FileViewer-view:not(.o-FileViewer-viewImage) {
             width: 100% !important;
             height: 100% !important;
         }
     }
 
+    &__popout {
+        .o-FileViewer {
+            z-index: 0;
+        }
+        .o-FileViewer-main {
+            padding: 0;
+        }
+    }
+
     .o-FileViewer-navigation {
-        transition: box-shadow 0.2s;
+        opacity: 0;
+        transition:
+            opacity 1s,
+            box-shadow 0.2s;
 
         &:hover {
             box-shadow: 0 0 0px 4px var(--background-color);
         }
+
+        /*
+         * HACK: In light mode the navigation circles are black and the PDF viewer
+         * background is also black. When we widen the PDF viewer to 100% in aside and
+         * popout modes, the nav circles do not contrast, so the best I could come up
+         * with is to make the icon itself wider and bolder with this text-shadow hack.
+         */
+        span.oi {
+            font-weight: 1000;
+
+            &.oi-chevron-left {
+                text-shadow:
+                    -1px 0 0 currentColor,
+                    -2px 0 0 currentColor,
+                    -3px 0 0 currentColor;
+            }
+            &.oi-chevron-right {
+                text-shadow:
+                    1px 0 0 currentColor,
+                    2px 0 0 currentColor,
+                    3px 0 0 currentColor;
+            }
+        }
     }
+
+    &:hover .o-FileViewer-navigation {
+        opacity: 1;
+    }
+}
+
+/* We need this to render, but not display. */
+.o_attachment_preview {
+    display: none !important;
 }
 
 body:has(.wr_apps_menu_container) .o-FileViewerContainer {
