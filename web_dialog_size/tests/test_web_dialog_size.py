@@ -5,16 +5,13 @@ from odoo.tests.common import TransactionCase
 
 
 class TestWebDialogSize(TransactionCase):
-    def setUp(self):
-        super().setUp()
-
     def test_get_web_dialog_size_config(self):
         obj = self.env["ir.config_parameter"]
 
         self.assertFalse(obj.get_web_dialog_size_config()["default_maximize"])
 
-        obj.set_param("web_dialog_size.default_maximize", "True")
+        obj.set_bool("web_dialog_size.default_maximize", True)
         self.assertTrue(obj.get_web_dialog_size_config()["default_maximize"])
 
-        obj.set_param("web_dialog_size.default_maximize", "False")
+        obj.set_bool("web_dialog_size.default_maximize", False)
         self.assertFalse(obj.get_web_dialog_size_config()["default_maximize"])
