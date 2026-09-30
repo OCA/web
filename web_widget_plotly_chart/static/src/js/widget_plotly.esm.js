@@ -23,9 +23,7 @@ export class PlotlyChartWidget extends CharField {
         });
 
         onWillStart(() =>
-            loadJS(
-                "/web_widget_plotly_chart/static/src/lib/plotly/plotly-2.32.0.min.js"
-            )
+            loadJS("/web_widget_plotly_chart/static/src/lib/plotly/plotly-4.1.1.min.js")
         );
     }
     updatePlotly(value) {
