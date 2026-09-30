@@ -4,6 +4,11 @@ odoo.define('web_dialog_size.web_dialog_size', function (require) {
 var rpc = require('web.rpc');
 var Dialog = require('web.Dialog');
 
+var config = rpc.query({
+    model: 'ir.config_parameter',
+    method: 'get_web_dialog_size_config',
+});
+
 Dialog.include({
 
     willStart: function () {
@@ -11,12 +16,8 @@ Dialog.include({
         return this._super.apply(this, arguments).then(function () {
             self.$modal.find('.dialog_button_extend').on('click', self.proxy('_extending'));
             self.$modal.find('.dialog_button_restore').on('click', self.proxy('_restore'));
-            return rpc.query({
-                model: 'ir.config_parameter',
-                method: 'get_param',
-                args: ['web_dialog_size.default_maximize',],
-            }).then(function(default_maximize) {
-                if (default_maximize === "True" || default_maximize === 1) {
+            return config.done(function(default_maximize) {
+                if (default_maximize) {
                     self._extending();
                 } else {
                     self._restore();
@@ -32,7 +33,7 @@ Dialog.include({
                 handle: '.modal-header',
                 helper: false
             });
-        };
+        }
         return this;
     },
 
