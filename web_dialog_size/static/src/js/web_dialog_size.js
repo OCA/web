@@ -23,14 +23,14 @@ Dialog.include({
     },
 
     _extending: function() {
-        var dialog = this.$el.parents('.modal-dialog');
+        var dialog = this.$modal.find('.modal-dialog');
         dialog.addClass('dialog_full_screen');
         dialog.find('.dialog_button_extend').hide();
         dialog.find('.dialog_button_restore').show();
     },
 
     _restore: function() {
-        var dialog = this.$el.parents('.modal-dialog');
+        var dialog = this.$modal.find('.modal-dialog');
         dialog.removeClass('dialog_full_screen');
         dialog.find('.dialog_button_restore').hide();
         dialog.find('.dialog_button_extend').show();
