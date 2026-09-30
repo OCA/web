@@ -81,6 +81,8 @@ Contributors
   * Jairo Llopis
   * Ernesto Tejeda
 
+* Sudhir Arya <sudhir@erpharbor.com>
+
 Maintainers
 ~~~~~~~~~~~
 
