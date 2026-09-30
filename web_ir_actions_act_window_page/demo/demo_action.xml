@@ -21,6 +21,17 @@
         <field name="code">action = {"type": "ir.actions.act_window.page.list"}</field>
     </record>
 
+    <record model="ir.actions.act_window" id="demo_action">
+        <field name="name">web_ir_actions_act_window_page demo</field>
+        <field name="path">web_ir_actions_act_window_page_demo</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field
+            name="domain"
+            eval="str([['id', 'in', [ref('base.partner_admin'), ref('base.partner_demo')]]])"
+        />
+    </record>
+
     <!-- Adding some redundant buttons to the partner form so that this module can be tested on runbot.
     You might be more interested in returning this action type from a method in your code. -->
     <record id="view_partner_form" model="ir.ui.view">

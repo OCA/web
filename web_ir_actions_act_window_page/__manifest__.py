@@ -13,7 +13,10 @@
     "assets": {
         "web.assets_backend": [
             "web_ir_actions_act_window_page/static/src/web_ir_actions_act_window_page.esm.js",
-        ]
+        ],
+        "web.assets_tests": [
+            "web_ir_actions_act_window_page/static/tests/web_ir_actions_act_window_page_tour.esm.js",
+        ],
     },
     "demo": ["demo/demo_action.xml"],
     "installable": True,
