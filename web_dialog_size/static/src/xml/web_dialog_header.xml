@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-inherit="web.Dialog.header" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('btn-close')]" position="before">
+            <button
+                t-if="!fullscreen"
+                type="button"
+                class="btn oi oi-lg opacity-50 opacity-100-hover"
+                t-att-data-icon="this.size === 'fs' ? 'close_fullscreen' : 'expand_content'"
+                t-att-title="this.size === 'fs' ? 'Compress' : 'Expand'"
+                t-on-click="this.toggleDialogSize"
+            />
+        </xpath>
+    </t>
+</templates>
