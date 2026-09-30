@@ -26,15 +26,15 @@ Dialog.include({
         });
     },
 
-    open: function() {
-        this._super.apply(this, arguments);
-        if (this.$modal) {
-            this.$modal.draggable({
-                handle: '.modal-header',
-                helper: false
-            });
-        }
-        return this;
+    opened: function(handler) {
+        return this._super.apply(this, arguments).then(function(){
+            if (this.$modal) {
+                this.$modal.draggable({
+                    handle: '.modal-header',
+                    helper: false
+                });
+            }
+        }.bind(this));
     },
 
     close: function() {
