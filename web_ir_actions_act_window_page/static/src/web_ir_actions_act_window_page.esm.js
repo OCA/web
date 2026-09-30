@@ -1,4 +1,3 @@
-/** @odoo-module **/
 // (c) 2013-2015 Therp BV (<http://therp.nl>)
 // (c) 2023 Hunki Enterprises BV (<https://hunki-enterprises.com>)
 // License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
@@ -28,9 +27,9 @@ actionHandlersRegistry.add("ir.actions.act_window.page.list", async (params) =>
     executeWindowActionList(params)
 );
 
-patch(Pager.prototype, "navigate event listener", {
+patch(Pager.prototype, {
     setup() {
-        this._super.apply();
+        super.setup(...arguments);
         const handleNavigate = (ev) => this._handleNavigate(ev);
         useBus(this.env.bus, "pager:navigate", handleNavigate);
     },

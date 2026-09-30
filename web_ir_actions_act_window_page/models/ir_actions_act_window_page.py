@@ -8,7 +8,7 @@ class IrActionsActWindowPagePrev(models.AbstractModel):
     _description = "Action to page to the previous record from a form view button"
 
     def _get_readable_fields(self):
-        return set()  # pragma: no cover
+        return {"type"}
 
 
 class IrActionsActWindowPageNext(models.AbstractModel):
@@ -16,7 +16,7 @@ class IrActionsActWindowPageNext(models.AbstractModel):
     _description = "Action to page to the next record from a form view button"
 
     def _get_readable_fields(self):
-        return set()  # pragma: no cover
+        return {"type"}
 
 
 class IrActionsActWindowPageList(models.AbstractModel):
@@ -24,4 +24,4 @@ class IrActionsActWindowPageList(models.AbstractModel):
     _description = "Action to switch to the list view"
 
     def _get_readable_fields(self):
-        return set()  # pragma: no cover
+        return {"type"}

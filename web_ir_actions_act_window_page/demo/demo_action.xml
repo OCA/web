@@ -14,6 +14,13 @@
         <field name="code">action = {"type": "ir.actions.act_window.page.next"}</field>
     </record>
 
+    <record model="ir.actions.server" id="demo_pager_list">
+        <field name="name">Switch to list view</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="state">code</field>
+        <field name="code">action = {"type": "ir.actions.act_window.page.list"}</field>
+    </record>
+
     <!-- Adding some redundant buttons to the partner form so that this module can be tested on runbot.
     You might be more interested in returning this action type from a method in your code. -->
     <record id="view_partner_form" model="ir.ui.view">
@@ -26,6 +33,13 @@
                     type="action"
                     string="Previous Partner"
                     icon="fa-arrow-left"
+                    class="oe_stat_button"
+                />
+                <button
+                    name="%(web_ir_actions_act_window_page.demo_pager_list)d"
+                    type="action"
+                    string="Switch to list view"
+                    icon="fa-list"
                     class="oe_stat_button"
                 />
                 <button
