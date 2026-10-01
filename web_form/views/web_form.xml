@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="web_form_form_view">
+        <field name="name">web.form.form
+        </field>
+        <field name="model">web.form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="model_id" />
+                    </group>
+                    <notebook>
+                        <page string="Inputs">
+                            <field name="form_input_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="name" />
+                                    <field name="label" />
+                                    <field name="input_type" />
+                                    <field
+                                        name="required"
+                                        readonly="input_type == 'freetext'"
+                                    />
+                                    <field
+                                        name="readonly"
+                                        readonly="input_type == 'freetext'"
+                                    />
+                                    <field name="value" string="Input Default Value" />
+                                    <field
+                                        name="field_id"
+                                        options="{'no_create_edit': True}"
+                                        readonly="input_type == 'freetext'"
+                                    />
+                                </list>
+                            </field>
+                            <div>
+                                <h3>How to use input default values</h3>
+                                <p>The <strong>input default value</strong> field
+                                    is
+                                    a Python code to get a value based on
+                                    predefined
+                                    variables. It accept string, boolean and
+                                    number
+                                    values.
+                                </p>
+                                <p>The only predefined variables are</p>
+                                <ul>
+                                    <li>
+                                        <code>form</code>
+                                        (current form object)
+                                    </li>
+                                    <li>
+                                        <code>partner</code>
+                                        (the partner destination of the form)
+                                    </li>
+                                    <li>
+                                        <code>date</code>
+                                        <ul>
+                                            <li>
+                                                Today
+                                                <code>
+                                                    context_today()
+                                                </code>
+                                            </li>
+                                            <li>
+                                                Today +/- n days. (n is
+                                                integer. ie:10)
+                                                <code
+                                            >context_today() + relativedelta(days=n)
+                                                </code><br />
+                                                Options: days, months and years
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <p>For <code>many2one</code> fields, value
+                                    should end
+                                    with the
+                                    <code>.id</code>
+                                </p>
+                            </div>
+                        </page>
+                        <page string="Default Values">
+                            <field name="form_default_ids">
+                                <list editable="bottom">
+                                    <field
+                                        name="field_id"
+                                        options="{'no_create_edit': True}"
+                                    />
+                                    <field name="value" />
+                                </list>
+                            </field>
+                            <div>
+                                <h3>How to use input default values</h3>
+                                <p>The <strong>input default value</strong> field
+                                    is
+                                    a Python code to get a value based on
+                                    predefined
+                                    variables. It accept string, boolean and
+                                    number
+                                    values.
+                                </p>
+                                <p>The only predefined variables are</p>
+                                <ul>
+                                    <li>
+                                        <code>form</code>
+                                        (current form object)
+                                    </li>
+                                    <li>
+                                        <code>partner</code>
+                                        (the partner destination of the form)
+                                    </li>
+                                    <li>
+                                        <code>date</code>
+                                        <ul>
+                                            <li>
+                                                Today
+                                                <code>
+                                                    context_today()
+                                                </code>
+                                            </li>
+                                            <li>
+                                                Today +/- n days. (n is
+                                                integer. ie:10)
+                                                <code
+                                            >context_today() + relativedelta(days=n)
+                                                </code><br />
+                                                Options: days, months and years
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <p>For <code>many2one</code> fields, value
+                                    should end
+                                    with the
+                                    <code>.id</code>
+                                </p>
+                            </div>
+                        </page>
+                        <page string="Mail Template Configuration">
+                            <group>
+                                <field name="mail_template_model_id" />
+                                <field
+                                    name="mail_template_partner_field_id"
+                                    options="{'no_create_edit': True}"
+                                />
+                                <field name="url_mail_template" />
+                            </group>
+                        </page>
+                        <page string="Form Design">
+                            <separator string="Header" />
+                            <field name="form_header" />
+                            <separator string="Footer" />
+                            <field name="form_footer" />
+                        </page>
+                        <page string="Preview Form">
+                            <field name="test_partner_id" />
+                            <button
+                                name="action_preview"
+                                type="object"
+                                string="Preview"
+                            />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="web_form_list_view">
+        <field name="name">web.form.list
+        </field>
+        <field name="model">web.form</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code" />
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="web_form_act_window">
+        <field name="name">Web Form</field>
+        <field name="res_model">web.form</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem
+        id="menu_web_form"
+        name="Web Form"
+        web_icon="web_form,static/description/icon.png"
+        groups="web_form.web_form_user"
+    />
+    <!-- Submenu: Configs -->
+    <menuitem
+        id="sub_menu_web_form"
+        name="Forms"
+        parent="menu_web_form"
+        action="web_form_act_window"
+        sequence="10"
+    />
+</odoo>
