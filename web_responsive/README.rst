@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==============
 Web Responsive
 ==============
@@ -17,7 +13,7 @@ Web Responsive
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -100,6 +96,9 @@ comfortably
   log.
 
   |image11|
+
+- When the user chooses to display file viewer, then preview attachments
+  directly display in the interface.
 
 .. |image| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/redirecthome.gif
 .. |image1| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/appmenu.gif
