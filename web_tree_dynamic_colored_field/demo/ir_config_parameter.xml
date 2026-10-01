@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_ir_config_list" model="ir.ui.view">
+        <field name="model">ir.config_parameter</field>
+        <field name="inherit_id" ref="base.view_ir_config_list" />
+        <field name="arch" type="xml">
+            <field name="key" position="attributes">
+                <attribute name="options">{
+                    "fg_color": "key",
+                    "bg_color": "value",
+                }</attribute>
+            </field>
+            <field name="value" position="attributes">
+                <attribute name="options">{
+                    "fg_color": "value",
+                    "bg_color": "key",
+                }</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

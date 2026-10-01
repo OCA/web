@@ -14,6 +14,14 @@
                 name="t-attf-style"
             >{{getDynamicColoredStyle(column, record)}}</attribute>
         </xpath>
+        <xpath
+            expr="//t[@t-if=&quot;column.type === 'button_group'&quot;]//td"
+            position="attributes"
+        >
+            <attribute
+                name="t-attf-style"
+            >{{getDynamicColoredStyle(column, record)}}</attribute>
+        </xpath>
     </t>
 
 </templates>
