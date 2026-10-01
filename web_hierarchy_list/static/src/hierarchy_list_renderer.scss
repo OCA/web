@@ -1,0 +1,12 @@
+$hierarchy_list_drill_down_width: 24px;
+
+.o_hierarchy_list_drill_down_column_header {
+    min-width: $hierarchy_list_drill_down_width;
+    max-width: $hierarchy_list_drill_down_width;
+}
+
+.o_hierarchy_list_drill_down_column {
+    // We do not want the left padding rule of bootstrap for the first col to be applied.
+    // Indeed as the column width is forced, this would result in having the icon overflowing.
+    padding: 0.5rem 0.3rem !important;
+}
