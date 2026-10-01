@@ -5,3 +5,4 @@
 - Phuc Tran Thanh \<<phuc@trobz.com>\>
 - Sylvain LE GAL \<<https://twitter.com/legalsylvain>\>
 - Jurgis Pralgauskis \<<jurgis@versada.eu>\>
+- Yann Papouin \<<ypa@decgroupe.com>\>
