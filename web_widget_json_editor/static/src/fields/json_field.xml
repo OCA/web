@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_widget_json_editor.JsonEditorField" owl="1">
+        <div class="o_field_json_editor">
+            <t t-if="props.readonly">
+                <pre class="json-view">
+                    <t t-esc="formatValue()" />
+                </pre>
+            </t>
+            <t t-else="">
+                <div t-ref="editor" class="json-editor-container" />
+            </t>
+        </div>
+    </t>
+</templates>
