@@ -26,3 +26,8 @@ $vis-item-content-padding: 0 3px !important;
         }
     }
 }
+
+.oe_timeline_buttons {
+    display: flex;
+    justify-content: space-between;
+}
