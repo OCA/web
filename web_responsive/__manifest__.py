@@ -49,6 +49,7 @@
             "/web_responsive/static/src/components/control_panel/*",
             "/web_responsive/static/src/components/command_palette/*",
             "/web_responsive/static/src/views/form/*",
+            "/web_responsive/static/src/css/navbar_override.scss",
         ],
         "web.assets_clickbot": [
             "/web_responsive/static/src/clickbot/clickbot.esm.js",
