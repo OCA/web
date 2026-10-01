@@ -1,0 +1,7 @@
+[project]
+name = "odoo-addon-web-apply-field-style"
+version = "18.0.1.0.0"
+
+[build-system]
+requires = ["whool"]
+build-backend = "whool.buildapi"
