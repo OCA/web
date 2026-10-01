@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="webclient_bootstrap_pwa"
+        inherit_id="web.webclient_bootstrap"
+        priority="99"
+    >
+        <xpath expr="//meta[@name='theme-color']" position="attributes">
+            <attribute
+                name="t-att-content"
+            >request.env['ir.config_parameter'].sudo().get_param('pwa.manifest.theme_color', '#71639e')</attribute>
+        </xpath>
+        <xpath expr="//meta[@name='theme-color']" position="after">
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+            <meta
+                name="apple-mobile-web-app-title"
+                t-att-content="request.env['ir.config_parameter'].sudo().get_param('pwa.manifest.short_name', 'Odoo')"
+            />
+        </xpath>
+        <xpath expr="//link[@rel='apple-touch-icon']" position="replace">
+            <t
+                t-set="pwa_icon_attachment"
+                t-value="request.env['ir.attachment'].sudo().search([('url', 'like', '/web_pwa_customize/icon')], limit=1)"
+            />
+            <link
+                rel="apple-touch-icon"
+                t-att-href="pwa_icon_attachment.url if pwa_icon_attachment else '/web/static/img/odoo-icon-ios.png'"
+            />
+        </xpath>
+    </template>
+</odoo>
