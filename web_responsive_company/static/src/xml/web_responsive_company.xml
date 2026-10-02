@@ -93,7 +93,7 @@
             >
       <img
                     class="card-body-img img-fluid"
-                    t-att-src="'/web/image?model=res.company&amp;field=logo&amp;id=' + company.id"
+                    t-att-src="'/web/image?model=res.company&amp;field=logo_web&amp;id=' + company.id"
                     alt="Logo"
                 />
     </div>
