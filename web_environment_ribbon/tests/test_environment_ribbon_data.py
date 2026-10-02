@@ -8,9 +8,9 @@ class TestEnvironmentRibbonData(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env["ir.config_parameter"].set_param("ribbon.name", "Test Ribbon {db_name}")
-        cls.env["ir.config_parameter"].set_param("ribbon.color", "#000000")
-        cls.env["ir.config_parameter"].set_param("ribbon.background.color", "#FFFFFF")
+        cls.env["ir.config_parameter"].set_str("ribbon.name", "Test Ribbon {db_name}")
+        cls.env["ir.config_parameter"].set_str("ribbon.color", "#000000")
+        cls.env["ir.config_parameter"].set_str("ribbon.background.color", "#FFFFFF")
 
     def test_environment_ribbon(self):
         """This test confirms that the data that is fetched by the javascript
