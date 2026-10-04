@@ -1,10 +1,9 @@
-/** @odoo-module alias=web_timeline.TimelineController **/
 /**
  * Copyright 2023 Onestein - Anjeel Haria
  * Copyright 2024 Tecnativa - Carlos López
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
  */
-import {Component, useRef} from "@odoo/owl";
+import {Component, signal, t, useProps} from "@odoo/owl";
 import {ConfirmationDialog} from "@web/core/confirmation_dialog/confirmation_dialog";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
 import {Layout} from "@web/search/layout";
@@ -21,13 +20,22 @@ import {useSetupAction} from "@web/search/action_hook";
 const {DateTime} = luxon;
 
 export class TimelineController extends Component {
+    static template = "web_timeline.TimelineView";
+    static components = {Layout, SearchBar};
+    props = useProps({
+        ...standardViewProps,
+        Model: t.function(),
+        modelParams: t.object(),
+        Renderer: t.function(),
+    });
+    rootRef = signal.ref();
+
     /**
      * @override
      */
     setup() {
-        this.rootRef = useRef("root");
         this.model = useModel(this.props.Model, this.props.modelParams);
-        useSetupAction({rootRef: useRef("root")});
+        useSetupAction({rootRef: this.rootRef});
         this.searchBarToggler = useSearchBarToggler();
         this.date_start = this.props.modelParams.date_start;
         this.date_stop = this.props.modelParams.date_stop;
@@ -109,14 +117,13 @@ export class TimelineController extends Component {
             if (is_editable) {
                 options.onRecordSaved = async () => {
                     await this.model.load(this.getSearchProps());
-                    this.render();
                 };
             } else {
                 options.preventEdit = true;
             }
             this.Dialog = this.dialogService.add(FormViewDialog, options, {});
         } else {
-            this.env.services.action.switchView("form", {
+            this.actionService.switchView("form", {
                 resId: item_id,
                 mode: is_editable ? "edit" : "readonly",
             });
@@ -184,7 +191,6 @@ export class TimelineController extends Component {
             item.callback(item.item);
         }
         await this.model.load(this.getSearchProps());
-        this.render();
     }
 
     /**
@@ -261,11 +267,3 @@ export class TimelineController extends Component {
         );
     }
 }
-TimelineController.template = "web_timeline.TimelineView";
-TimelineController.components = {Layout, SearchBar};
-TimelineController.props = {
-    ...standardViewProps,
-    Model: Function,
-    modelParams: Object,
-    Renderer: Function,
-};

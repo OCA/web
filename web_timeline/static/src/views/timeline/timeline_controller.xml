@@ -2,15 +2,21 @@
 <templates xml:space="preserve">
 
     <t t-name="web_timeline.TimelineView">
-        <div t-att-class="props.className" t-ref="root">
+        <div t-att-class="this.props.className" t-ref="this.rootRef">
             <Layout
-                className="model.useSampleModel ? 'o_view_sample_data' : ''"
-                display="props.display"
+                className="this.model.useSampleModel ? 'o_view_sample_data' : ''"
+                display="this.props.display"
             >
-                <t t-set-slot="layout-actions">
-                    <SearchBar t-if="searchBarToggler.state.showSearchBar" />
+                <t t-set-slot="control-panel-actions">
+                    <SearchBar toggler="this.searchBarToggler" />
                 </t>
-                <t t-component="props.Renderer" t-props="rendererProps" />
+                <t t-set-slot="control-panel-navigation-additional">
+                    <t
+                        t-component="this.searchBarToggler.component"
+                        t-props="this.searchBarToggler.props"
+                    />
+                </t>
+                <t t-component="this.props.Renderer" t-props="this.rendererProps" />
             </Layout>
         </div>
     </t>
