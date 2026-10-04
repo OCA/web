@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <!-- Add demo timeline view on crons so we can showcase this module without project_timeline. -->
     <record id="ir_cron_timeline" model="ir.ui.view">
