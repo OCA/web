@@ -10,8 +10,15 @@
 
     <record id="group_export_xlsx_data" model="res.groups">
         <field name="name">Direct Export (xlsx)</field>
-        <field name="user_ids" eval="[(5, 0, 0)]" />
+        <field name="privilege_id" ref="res_groups_privilege_export" />
+        <field
+            name="user_ids"
+            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+        />
     </record>
+    <!-- Since 19.0, base.group_system implies base.group_allow_export, so the
+         implication added up to 18.0 would give 'Export All' to every Settings
+         user. Remove it (also on databases upgraded from 18.0). -->
     <record id="base.group_allow_export" model="res.groups">
         <field
             name="implied_ids"
