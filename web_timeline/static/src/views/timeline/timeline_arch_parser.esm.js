@@ -78,6 +78,7 @@ export class TimelineArchParser {
                     if (node.hasAttribute("zoomKey")) {
                         archInfo.options.zoomKey =
                             node.getAttribute("zoomKey") || "ctrlKey";
+                        archInfo.options.verticalScroll = true;
                     }
                     if (node.hasAttribute("margin")) {
                         archInfo.options.margin = node.getAttribute("margin")
