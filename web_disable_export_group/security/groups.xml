@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2016 Onestein
      License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).-->
 <odoo>
     <record id="res_groups_privilege_export" model="res.groups.privilege">
         <field name="name">Export All</field>
-        <field name="sequence">999</field>
+        <field name="sequence" eval="999" />
         <field name="category_id" ref="base.module_category_hidden" />
     </record>
 
