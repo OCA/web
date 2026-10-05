@@ -43,6 +43,7 @@ addon | version | maintainers | summary
 [web_help](web_help/) | 18.0.1.0.0 |  | Help Framework
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 18.0.1.0.0 |  | Enables triggering of more than one action on ActionManager
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 18.0.1.0.1 |  | Show a message box to users
+[web_loading_block_ui](web_loading_block_ui/) | 18.0.1.0.0 |  | Block the screen with a centered loading overlay while requests are pending
 [web_m2x_options](web_m2x_options/) | 18.0.1.0.3 |  | web_m2x_options
 [web_m2x_options_manager](web_m2x_options_manager/) | 18.0.1.0.0 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
 [web_no_bubble](web_no_bubble/) | 18.0.1.0.0 |  | Remove the bubbles from the web interface
