@@ -6,8 +6,7 @@
 import {registry} from "@web/core/registry";
 
 registry.category("web_tour.tours").add("export_tour_xlsx_button_ok", {
-    test: true,
-    url: "/web#model=ir.ui.view&view_type=list&cids=&action=base.action_ui_view",
+    url: "/odoo/action-base.action_ui_view",
     steps: () => [
         {
             content: "Open cog menu",
@@ -21,16 +20,31 @@ registry.category("web_tour.tours").add("export_tour_xlsx_button_ok", {
     ],
 });
 registry.category("web_tour.tours").add("export_tour_xlsx_button_ko", {
-    test: true,
-    url: "/web#model=ir.ui.view&view_type=list&cids=&action=base.action_ui_view",
+    url: "/odoo/action-base.action_ui_view",
     steps: () => [
         {
-            content: "Wait for list view to load",
+            content: "Open cog menu, if any (it is not shown when empty)",
             trigger: ".o_list_view",
+            run: async () => {
+                const toggle = document.querySelector(
+                    ".o_cp_action_menus button.dropdown-toggle"
+                );
+                if (!toggle) {
+                    return;
+                }
+                toggle.click();
+                for (
+                    let i = 0;
+                    i < 50 && !document.querySelector(".dropdown-menu");
+                    i++
+                ) {
+                    await new Promise((resolve) => setTimeout(resolve, 100));
+                }
+            },
         },
         {
-            content: "Check if 'Export all' button is not accessible",
-            trigger: ".o_control_panel:not(:has(.o_export_all_menu))",
+            content: "Check if 'Export all' button does not exist",
+            trigger: "body:not(:has(.o_export_all_menu))",
         },
     ],
 });

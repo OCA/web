@@ -1,0 +1,2 @@
+id,name,model_id,group_id/id,operation,domain
+access_ir_exports_group_xls,ir_exports group_xls,ir.exports,web_disable_export_group.group_export_xlsx_data,r,

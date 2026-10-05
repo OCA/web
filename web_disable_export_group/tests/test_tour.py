@@ -4,16 +4,14 @@
 import odoo.tests
 from odoo.tests import new_test_user
 
+# Odoo 20 starts test tours on the given URL, not on the tour "url"
+VIEWS_URL = "/odoo/action-base.action_ui_view"
+
 
 @odoo.tests.tagged("post_install", "-at_install")
 class TestTour(odoo.tests.HttpCase):
     def setUp(self):
         super().setUp()
-        group_id = self.env.ref("web_disable_export_group.group_export_xlsx_data")
-        admin_user = self.env.ref("base.user_admin")
-        field_name = "group_ids" if "group_ids" in admin_user._fields else "groups_id"
-        admin_user.write({field_name: [(4, group_id.id)]})
-
         new_test_user(
             self.env,
             login="user_not_export",
@@ -31,10 +29,14 @@ class TestTour(odoo.tests.HttpCase):
         )
 
     def test_admin(self):
-        self.start_tour("/web", "export_tour_xlsx_button_ok", login="admin")
+        self.start_tour(VIEWS_URL, "export_tour_xlsx_button_ok", login="admin")
 
     def test_user_not_export(self):
-        self.start_tour("/web", "export_tour_xlsx_button_ko", login="user_not_export")
+        self.start_tour(
+            VIEWS_URL, "export_tour_xlsx_button_ko", login="user_not_export"
+        )
 
     def test_user_export_xlsx(self):
-        self.start_tour("/web", "export_tour_xlsx_button_ok", login="user_export_xlsx")
+        self.start_tour(
+            VIEWS_URL, "export_tour_xlsx_button_ok", login="user_export_xlsx"
+        )
