@@ -21,12 +21,9 @@
     "data": [],
     "assets": {
         "web.assets_backend": [
-            "web_tree_many2one_clickable/static/src/components/"
-            "many2one_button/many2one_button.esm.js",
-            "web_tree_many2one_clickable/static/src/components/"
-            "many2one_button/many2one_button.scss",
-            "web_tree_many2one_clickable/static/src/components/"
-            "many2one_button/many2one_button.xml",
+            "web_tree_many2one_clickable/static/src/components/many2one_button/many2one_button.esm.js",
+            "web_tree_many2one_clickable/static/src/components/many2one_button/many2one_button.scss",
+            "web_tree_many2one_clickable/static/src/components/many2one_button/many2one_button.xml",
         ]
     },
 }
