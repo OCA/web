@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Taras Shabaranskyi
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<templates>
+    <t
+        t-name="web_responsive.Chatter"
+        t-inherit="mail.Chatter"
+        t-inherit-mode="extension"
+    >
+        <xpath
+            expr="//button[hasclass('o-mail-Chatter-sendMessage')]"
+            position="replace"
+        >
+            <button
+                class="o-mail-Chatter-sendMessage btn text-nowrap me-1"
+                t-att-class="{
+                'btn-secondary': this.state.composerType !== 'message',
+                'btn-primary active': this.state.composerType === 'message'
+            }"
+                t-att-disabled="!this.state.thread.canPostMessage and this.thread().id"
+                data-hotkey="m"
+                t-on-click="() => this.toggleComposer('message')"
+            >
+                <i class="oi oi-fw me-sm-1" data-icon="mail" />
+                <span class="d-none d-sm-inline">Send message</span>
+            </button>
+        </xpath>
+        <xpath expr="//button[hasclass('o-mail-Chatter-logNote')]" position="replace">
+            <button
+                class="o-mail-Chatter-logNote btn text-nowrap me-1"
+                t-att-class="{
+                'btn-primary active': this.state.composerType === 'note',
+                'btn-secondary': this.state.composerType !== 'note'
+            }"
+                t-att-disabled="!this.state.thread.canPostMessage and this.thread().id"
+                data-hotkey="shift+m"
+                t-on-click="() => this.toggleComposer('note')"
+            >
+                <i class="oi oi-fw me-sm-1" data-icon="sticky_note_2" />
+                <span class="d-none d-sm-inline">Log note</span>
+            </button>
+        </xpath>
+        <xpath
+            expr="//button[hasclass('o-mail-Chatter-activity')]/span"
+            position="before"
+        >
+            <i class="oi oi-fw me-sm-1" data-icon="schedule" />
+        </xpath>
+        <xpath
+            expr="//button[hasclass('o-mail-Chatter-activity')]/span"
+            position="attributes"
+        >
+            <attribute name="class" add="d-none d-sm-inline" separator=" " />
+        </xpath>
+        <!-- remove extra padding between the activity separator and the search message -->
+        <xpath
+            expr="//span[hasclass('o-mail-Chatter-topbarGrow')]"
+            position="attributes"
+        >
+            <attribute name="class" remove="pe-2" add="px-0" separator=" " />
+        </xpath>
+    </t>
+</templates>
