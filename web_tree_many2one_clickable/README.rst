@@ -102,6 +102,8 @@ Contributors
 
 - Maciej Wichowski <maciej@versada.eu>
 
+- Jaydev <jaydev@cloudastra.in>
+
 - `Tecnativa <https://www.tecnativa.com>`__
 
   - Pedro M. Baeza
