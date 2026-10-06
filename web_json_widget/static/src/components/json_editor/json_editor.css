@@ -1,0 +1,5 @@
+/* for sake of organization, this file is only for UI fixes related to Odoo */
+/* this is to avoid the context menu going below the chatter buttons */
+.jsoneditor-contextmenu-root {
+    z-index: 100;
+}
