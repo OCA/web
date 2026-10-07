@@ -23,6 +23,7 @@ Many2XAutocomplete.props = {
 Many2One.props = {
     ...Many2One.props,
     ...m2xOverrideProps,
+    ...fieldColorProps,
     searchLimit: {type: Number, optional: true},
 };
 
@@ -139,6 +140,8 @@ many2one.computeM2OProps = (fieldProps) => {
         searchLimit: fieldProps.searchLimit,
         m2xCreateOverride: fieldProps.m2xCreateOverride,
         m2xCreateEditOverride: fieldProps.m2xCreateEditOverride,
+        fieldColor: fieldProps.fieldColor,
+        fieldColorOptions: fieldProps.fieldColorOptions,
     };
 };
 
@@ -168,6 +171,8 @@ patch(many2OneField.Many2OneField.prototype, {
         props.searchLimit = this.props.searchLimit;
         props.m2xCreateOverride = this.props.m2xCreateOverride;
         props.m2xCreateEditOverride = this.props.m2xCreateEditOverride;
+        props.fieldColor = this.props.fieldColor;
+        props.fieldColorOptions = this.props.fieldColorOptions;
         return props;
     },
 });
@@ -297,7 +302,10 @@ patch(Many2XAutocomplete.prototype, {
         this.field_color = this.props.fieldColor;
         this.colors = this.props.fieldColorOptions;
         if (this.colors && this.field_color) {
-            var value_ids = options.map((result) => result.value);
+            // Record suggestions carry their record in data; the "Search
+            // More" and "Create" entries have none.
+            const recordId = (option) => option.data?.record?.id;
+            var value_ids = options.map(recordId).filter(Boolean);
             const objects = await this.orm.call(
                 this.props.resModel,
                 "search_read",
@@ -309,7 +317,7 @@ patch(Many2XAutocomplete.prototype, {
             );
             for (var index in objects) {
                 for (var index_value in options) {
-                    if (options[index_value].value === objects[index].id) {
+                    if (recordId(options[index_value]) === objects[index].id) {
                         // Find value in values by comparing ids
                         var option = options[index_value];
                         // Find color with field value as key
