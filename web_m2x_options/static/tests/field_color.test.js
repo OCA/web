@@ -61,3 +61,49 @@ test("many2one dropdown suggestions are coloured by field_color", async () => {
         "Acme Warehouse": "color:blue",
     });
 });
+
+async function suggestionStyles(options) {
+    patchWithCleanup(session, {web_m2x_options: {}});
+    await mountView({
+        type: "form",
+        resModel: "partner",
+        resId: 3,
+        arch: `
+            <form>
+                <field name="parent_id" options="${options}"/>
+            </form>`,
+    });
+    await contains(".o_field_many2one input").edit("Acme", {confirm: false});
+    await runAllTimers();
+    const items = queryAll(
+        ".o_field_many2one .o-autocomplete--dropdown-item:not(.o_m2o_dropdown_option) .dropdown-item"
+    );
+    return Object.fromEntries(
+        items.map((el) => [el.textContent.trim(), el.getAttribute("style")])
+    );
+}
+
+test("color_style 'text' keeps the default text colouring", async () => {
+    const styles = await suggestionStyles(
+        "{'field_color': 'type', 'color_style': 'text', 'colors': {'contact': 'success', 'delivery': 'blue'}}"
+    );
+    expect(styles).toEqual({
+        Acme: "color:success",
+        "Acme Warehouse": "color:blue",
+    });
+});
+
+test("color_style 'bar' draws a theme-aware left accent bar", async () => {
+    const styles = await suggestionStyles(
+        "{'field_color': 'type', 'color_style': 'bar', 'colors': {'contact': 'success', 'delivery': '#123456'}}"
+    );
+    expect(styles).toEqual({
+        Acme: "box-shadow: inset 3px 0 0 var(--success)",
+        "Acme Warehouse": "box-shadow: inset 3px 0 0 #123456",
+    });
+    // The theme variable must resolve, or the bar silently disappears.
+    const acme = queryAll(".o-autocomplete--dropdown-item .dropdown-item").find(
+        (el) => el.textContent.trim() === "Acme"
+    );
+    expect(getComputedStyle(acme).boxShadow).toMatch(/rgb/);
+});

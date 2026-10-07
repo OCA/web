@@ -418,6 +418,15 @@ be used with colors.</blockquote>
 <blockquote>
 A dictionary to link field value with a HTML color. This option has
 to be used with field_color.</blockquote>
+<p><tt class="docutils literal">color_style</tt> <em>string</em> (Default: <tt class="docutils literal">text</tt>)</p>
+<blockquote>
+How the color is shown in the drop-down panel. <tt class="docutils literal">text</tt> colors the
+record’s text. <tt class="docutils literal">bar</tt> draws a thin accent bar on the left of the
+record and leaves the text untouched. With <tt class="docutils literal">bar</tt>, a Bootstrap theme
+color name (<tt class="docutils literal">primary</tt>, <tt class="docutils literal">secondary</tt>, <tt class="docutils literal">success</tt>, <tt class="docutils literal">info</tt>,
+<tt class="docutils literal">warning</tt>, <tt class="docutils literal">danger</tt>, <tt class="docutils literal">light</tt>, <tt class="docutils literal">dark</tt>) follows the light or
+dark theme; any other value is used as a HTML color. This option has
+to be used with field_color and colors.</blockquote>
 </div>
 <div class="section" id="ir-config-parameter-options">
 <h3><a class="toc-backref" href="#toc-entry-3">ir.config_parameter options</a></h3>
@@ -457,6 +466,11 @@ Number of displayed lines on all One2many fields</blockquote>
 <pre class="code xml literal-block">
 ...<span class="w">
 </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;partner_id&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">&quot;{'limit': 10, 'field_color':'type', 'colors':{'contact':'green', 'invoice': 'red', 'delivery': 'blue'}}&quot;</span><span class="nt">/&gt;</span><span class="w">
+</span>...
+</pre>
+<pre class="code xml literal-block">
+...<span class="w">
+</span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;partner_id&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">&quot;{'field_color': 'type', 'color_style': 'bar', 'colors': {'contact': 'success', 'invoice': 'warning', 'delivery': 'info'}}&quot;</span><span class="nt">/&gt;</span><span class="w">
 </span>...
 </pre>
 </div>
