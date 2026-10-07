@@ -54,6 +54,11 @@ patch(ListRenderer.prototype, {
                     }
                 }
             }
+            // 'definition' can be a field's label referring to a color
+            if (definition in record.data && record.data[definition]) {
+                result = record.data[definition];
+            }
+
             return result || undefined;
         }
     },
