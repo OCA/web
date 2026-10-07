@@ -7,7 +7,13 @@ export const fieldColorProps = {
     fieldColorStyle: {type: String, optional: true},
 };
 
+export const fieldIconProps = {
+    fieldIcon: {type: String, optional: true},
+    fieldIconOptions: {type: Object, optional: true},
+};
+
 patch(standardFieldProps, {
     ...fieldColorProps,
+    ...fieldIconProps,
     searchLimit: {type: Number, optional: true},
 });
