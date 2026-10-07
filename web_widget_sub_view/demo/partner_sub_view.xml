@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_partner_sub_view" model="ir.ui.view">
+        <field name="name">res.partner.sub.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Sub View">
+                    <widget
+                        name="sub_view_widget"
+                        model="res.partner"
+                        domain="[('parent_id', '=', id)]"
+                        context="{'default_parent_id': id}"
+                        favorite="0"
+                    />
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>
