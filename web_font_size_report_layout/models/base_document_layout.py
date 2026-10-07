@@ -7,6 +7,7 @@ from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
+
 # pylint: disable=no-wizard-in-models
 class BaseDocumentLayout(models.TransientModel):
     _inherit = "base.document.layout"
