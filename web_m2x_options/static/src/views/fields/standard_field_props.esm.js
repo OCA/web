@@ -7,6 +7,11 @@ export const fieldColorProps = {
     fieldColorStyle: {type: String, optional: true},
 };
 
+export const fieldIconProps = {
+    fieldIcon: {type: String, optional: true},
+    fieldIconOptions: {type: Object, optional: true},
+};
+
 // Set when the field defines its own create/create_edit options, so the
 // Many2One component does not apply the system parameters over them
 export const m2xOverrideProps = {
@@ -16,6 +21,7 @@ export const m2xOverrideProps = {
 
 patch(standardFieldProps, {
     ...fieldColorProps,
+    ...fieldIconProps,
     ...m2xOverrideProps,
     searchLimit: {type: Number, optional: true},
 });

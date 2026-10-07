@@ -427,6 +427,16 @@ color name (<tt class="docutils literal">primary</tt>, <tt class="docutils liter
 <tt class="docutils literal">warning</tt>, <tt class="docutils literal">danger</tt>, <tt class="docutils literal">light</tt>, <tt class="docutils literal">dark</tt>) follows the light or
 dark theme; any other value is used as a HTML color. This option has
 to be used with field_color and colors.</blockquote>
+<p><tt class="docutils literal">field_icon</tt> <em>string</em></p>
+<blockquote>
+A string to define the field used to pick an icon. This option has to
+be used with icons.</blockquote>
+<p><tt class="docutils literal">icons</tt> <em>dictionary</em></p>
+<blockquote>
+A dictionary to link field value with a Font Awesome icon class,
+shown on the left of the record in the drop-down panel. Values
+without an entry get no icon. This option has to be used with
+field_icon.</blockquote>
 </div>
 <div class="section" id="ir-config-parameter-options">
 <h3><a class="toc-backref" href="#toc-entry-3">ir.config_parameter options</a></h3>
@@ -471,6 +481,11 @@ Number of displayed lines on all One2many fields</blockquote>
 <pre class="code xml literal-block">
 ...<span class="w">
 </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;partner_id&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">&quot;{'field_color': 'type', 'color_style': 'bar', 'colors': {'contact': 'success', 'invoice': 'warning', 'delivery': 'info'}}&quot;</span><span class="nt">/&gt;</span><span class="w">
+</span>...
+</pre>
+<pre class="code xml literal-block">
+...<span class="w">
+</span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;partner_id&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">&quot;{'field_icon': 'type', 'icons': {'contact': 'fa-user', 'invoice': 'fa-money', 'delivery': 'fa-truck'}}&quot;</span><span class="nt">/&gt;</span><span class="w">
 </span>...
 </pre>
 </div>
