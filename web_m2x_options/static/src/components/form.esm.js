@@ -95,6 +95,7 @@ export function m2o_options_props(props, attrs, options) {
     newProps = m2o_options_props_open(newProps, attrs, options);
     newProps.fieldColor = options.field_color;
     newProps.fieldColorOptions = options.colors;
+    newProps.fieldColorStyle = options.color_style;
     return newProps;
 }
 
@@ -118,6 +119,7 @@ many2one.computeM2OProps = (fieldProps) => {
         searchLimit: fieldProps.searchLimit,
         fieldColor: fieldProps.fieldColor,
         fieldColorOptions: fieldProps.fieldColorOptions,
+        fieldColorStyle: fieldProps.fieldColorStyle,
     };
 };
 
@@ -146,6 +148,7 @@ patch(many2OneField.Many2OneField.prototype, {
         props.searchLimit = this.props.searchLimit;
         props.fieldColor = this.props.fieldColor;
         props.fieldColorOptions = this.props.fieldColorOptions;
+        props.fieldColorStyle = this.props.fieldColorStyle;
         return props;
     },
 });
@@ -187,6 +190,7 @@ patch(Many2One.prototype, {
         if (field_color && field_color_options) {
             ret_props.fieldColor = field_color;
             ret_props.fieldColorOptions = field_color_options;
+            ret_props.fieldColorStyle = this.props.fieldColorStyle;
         }
         if (!evaluateSystemParameterDefaultTrue("create")) {
             ret_props.quickCreate = null;
@@ -251,6 +255,7 @@ patch(many2ManyTagsField, {
         newProps = this.m2m_options_props_limit(newProps, attrs, options);
         newProps.fieldColor = options.field_color;
         newProps.fieldColorOptions = options.colors;
+        newProps.fieldColorStyle = options.color_style;
         return newProps;
     },
     extractProps({attrs, options, string}, dynamicInfo) {
@@ -258,6 +263,28 @@ patch(many2ManyTagsField, {
         return this.m2m_options_props(props, attrs, options);
     },
 });
+
+// Bootstrap theme colours resolve through CSS variables, which Odoo defines
+// for both the light and the dark theme. Odoo compiles Bootstrap without the
+// "bs-" prefix, so the variable is --success, not --bs-success.
+const BOOTSTRAP_COLORS = new Set([
+    "primary",
+    "secondary",
+    "success",
+    "info",
+    "warning",
+    "danger",
+    "light",
+    "dark",
+]);
+
+function colorStyle(style, color) {
+    if (style === "bar") {
+        const css = BOOTSTRAP_COLORS.has(color) ? `var(--${color})` : color;
+        return `box-shadow: inset 3px 0 0 ${css}`;
+    }
+    return "color:" + color;
+}
 
 patch(Many2XAutocomplete.prototype, {
     async loadOptionsSource(request) {
@@ -286,7 +313,7 @@ patch(Many2XAutocomplete.prototype, {
                         // Find color with field value as key
                         var color =
                             this.colors[objects[index][this.field_color]] || "black";
-                        option.style = "color:" + color;
+                        option.style = colorStyle(this.props.fieldColorStyle, color);
                         break;
                     }
                 }

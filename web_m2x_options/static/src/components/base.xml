@@ -22,6 +22,7 @@
             <attribute name="searchLimit">props.searchLimit</attribute>
             <attribute name="fieldColor">props.fieldColor</attribute>
             <attribute name="fieldColorOptions">props.fieldColorOptions</attribute>
+            <attribute name="fieldColorStyle">props.fieldColorStyle</attribute>
         </xpath>
     </t>
 
