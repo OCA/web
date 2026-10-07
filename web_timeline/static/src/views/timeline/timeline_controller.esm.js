@@ -246,19 +246,28 @@ export class TimelineController extends Component {
             context[`default_${this.model.last_group_bys[0]}`] = item.group;
         }
         // Show popup
-        this.dialogService.add(
-            FormViewDialog,
-            {
-                resId: false,
-                context: makeContext([context], this.env.searchModel.context),
-                onRecordSaved: async (record) => {
-                    const new_record = await this.model.create_completed(record.resId);
-                    callback(new_record);
+        if (this.open_popup_action) {
+            this.dialogService.add(
+                FormViewDialog,
+                {
+                    resId: false,
+                    context: makeContext([context], this.env.searchModel.context),
+                    onRecordSaved: async (record) => {
+                        const new_record = await this.model.create_completed(
+                            record.resId
+                        );
+                        callback(new_record);
+                    },
+                    resModel: this.model.model_name,
                 },
-                resModel: this.model.model_name,
-            },
-            {onClose: () => callback()}
-        );
+                {onClose: () => callback()}
+            );
+        } else {
+            this.env.services.action.switchView("form", {
+                resId: false,
+                mode: "edit",
+            });
+        }
     }
 }
 TimelineController.template = "web_timeline.TimelineView";
