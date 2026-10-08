@@ -1,11 +1,14 @@
 import * as many2OneField from "@web/views/fields/many2one/many2one_field";
 import * as many2one from "@web/views/fields/many2one/many2one";
+import {
+    fieldColorProps,
+    fieldIconProps,
+} from "../views/fields/standard_field_props.esm";
 import {FormController} from "@web/views/form/form_controller";
 import {KanbanMany2One, Many2One} from "@web/views/fields/many2one/many2one";
 import {Many2OneReferenceField} from "@web/views/fields/many2one_reference/many2one_reference_field";
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {evaluateBooleanExpr} from "@web/core/py_js/py";
-import {fieldColorProps} from "../views/fields/standard_field_props.esm";
 import {isX2Many} from "@web/views/utils";
 import {many2ManyTagsField} from "@web/views/fields/many2many_tags/many2many_tags_field";
 import {patch} from "@web/core/utils/patch";
@@ -15,10 +18,13 @@ import {session} from "@web/session";
 Many2XAutocomplete.props = {
     ...Many2XAutocomplete.props,
     ...fieldColorProps,
+    ...fieldIconProps,
 };
 
 Many2One.props = {
     ...Many2One.props,
+    ...fieldColorProps,
+    ...fieldIconProps,
     searchLimit: {type: Number, optional: true},
 };
 
@@ -94,6 +100,9 @@ export function m2o_options_props(props, attrs, options) {
     newProps = m2o_options_props_open(newProps, attrs, options);
     newProps.fieldColor = options.field_color;
     newProps.fieldColorOptions = options.colors;
+    newProps.fieldColorStyle = options.color_style;
+    newProps.fieldIcon = options.field_icon;
+    newProps.fieldIconOptions = options.icons;
     return newProps;
 }
 
@@ -115,6 +124,11 @@ many2one.computeM2OProps = (fieldProps) => {
     return {
         ..._super,
         searchLimit: fieldProps.searchLimit,
+        fieldColor: fieldProps.fieldColor,
+        fieldColorOptions: fieldProps.fieldColorOptions,
+        fieldColorStyle: fieldProps.fieldColorStyle,
+        fieldIcon: fieldProps.fieldIcon,
+        fieldIconOptions: fieldProps.fieldIconOptions,
     };
 };
 
@@ -134,6 +148,7 @@ patch(Many2OneReferenceField, {
 KanbanMany2One.props = {
     ...KanbanMany2One.props,
     ...fieldColorProps,
+    ...fieldIconProps,
     searchLimit: {type: Number, optional: true},
 };
 
@@ -141,6 +156,11 @@ patch(many2OneField.Many2OneField.prototype, {
     get m2oProps() {
         const props = super.m2oProps;
         props.searchLimit = this.props.searchLimit;
+        props.fieldColor = this.props.fieldColor;
+        props.fieldColorOptions = this.props.fieldColorOptions;
+        props.fieldColorStyle = this.props.fieldColorStyle;
+        props.fieldIcon = this.props.fieldIcon;
+        props.fieldIconOptions = this.props.fieldIconOptions;
         return props;
     },
 });
@@ -182,6 +202,11 @@ patch(Many2One.prototype, {
         if (field_color && field_color_options) {
             ret_props.fieldColor = field_color;
             ret_props.fieldColorOptions = field_color_options;
+            ret_props.fieldColorStyle = this.props.fieldColorStyle;
+        }
+        if (this.props.fieldIcon && this.props.fieldIconOptions) {
+            ret_props.fieldIcon = this.props.fieldIcon;
+            ret_props.fieldIconOptions = this.props.fieldIconOptions;
         }
         if (!evaluateSystemParameterDefaultTrue("create")) {
             ret_props.quickCreate = null;
@@ -246,6 +271,9 @@ patch(many2ManyTagsField, {
         newProps = this.m2m_options_props_limit(newProps, attrs, options);
         newProps.fieldColor = options.field_color;
         newProps.fieldColorOptions = options.colors;
+        newProps.fieldColorStyle = options.color_style;
+        newProps.fieldIcon = options.field_icon;
+        newProps.fieldIconOptions = options.icons;
         return newProps;
     },
     extractProps({attrs, options, string}, dynamicInfo) {
@@ -254,33 +282,69 @@ patch(many2ManyTagsField, {
     },
 });
 
+// Bootstrap theme colours resolve through CSS variables, which Odoo defines
+// for both the light and the dark theme. Odoo compiles Bootstrap without the
+// "bs-" prefix, so the variable is --success, not --bs-success.
+const BOOTSTRAP_COLORS = new Set([
+    "primary",
+    "secondary",
+    "success",
+    "info",
+    "warning",
+    "danger",
+    "light",
+    "dark",
+]);
+
+function colorStyle(style, color) {
+    if (style === "bar") {
+        const css = BOOTSTRAP_COLORS.has(color) ? `var(--${color})` : color;
+        return `box-shadow: inset 3px 0 0 ${css}`;
+    }
+    return "color:" + color;
+}
+
 patch(Many2XAutocomplete.prototype, {
     async loadOptionsSource(request) {
         var options = await super.loadOptionsSource(request);
         this.field_color = this.props.fieldColor;
         this.colors = this.props.fieldColorOptions;
-        if (this.colors && this.field_color) {
-            var value_ids = options.map((result) => result.value);
+        const useColor = Boolean(this.colors && this.field_color);
+        const fieldIcon = this.props.fieldIcon;
+        const icons = this.props.fieldIconOptions;
+        const useIcon = Boolean(fieldIcon && icons);
+        if (useColor || useIcon) {
+            // Record suggestions carry their record in data; the "Search
+            // More" and "Create" entries have none.
+            const recordId = (option) => option.data?.record?.id;
+            var value_ids = options.map(recordId).filter(Boolean);
             const objects = await this.orm.call(
                 this.props.resModel,
                 "search_read",
                 [],
                 {
                     domain: [["id", "in", value_ids]],
-                    fields: [this.field_color],
+                    fields: [
+                        ...(useColor ? [this.field_color] : []),
+                        ...(useIcon ? [fieldIcon] : []),
+                    ],
                 }
             );
-            for (var index in objects) {
-                for (var index_value in options) {
-                    if (options[index_value].value === objects[index].id) {
-                        // Find value in values by comparing ids
-                        var option = options[index_value];
-                        // Find color with field value as key
-                        var color =
-                            this.colors[objects[index][this.field_color]] || "black";
-                        option.style = "color:" + color;
-                        break;
-                    }
+            const objectsById = Object.fromEntries(
+                objects.map((object) => [object.id, object])
+            );
+            for (const option of options) {
+                const object = objectsById[recordId(option)];
+                if (!object) {
+                    continue;
+                }
+                if (useColor) {
+                    // Find color with field value as key
+                    const color = this.colors[object[this.field_color]] || "black";
+                    option.style = colorStyle(this.props.fieldColorStyle, color);
+                }
+                if (useIcon) {
+                    option.icon = icons[object[fieldIcon]];
                 }
             }
         }
