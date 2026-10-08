@@ -72,9 +72,7 @@ class ResCompany(models.Model):
             website = self.env["website"].browse(self.env.context.get("website_id"))
             return website.image_url(website, "favicon")
         company_id = (
-            request.httprequest.cookies.get("cids")
-            if request.httprequest.cookies.get("cids")
-            else False
+            request.cookies.get("cids") if request.cookies.get("cids") else False
         )
         company = (
             self.browse(int(company_id.split("-")[0])).sudo()
