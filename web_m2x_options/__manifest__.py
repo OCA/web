@@ -30,7 +30,10 @@
                 "web_m2x_options/static/src/views/fields/standard_field_props.esm.js",
             ),
             "web_m2x_options/static/src/components/base.xml",
-        ]
+        ],
+        "web.assets_unit_tests": [
+            "web_m2x_options/static/tests/**/*",
+        ],
     },
     "installable": True,
 }
