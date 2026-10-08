@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_control_panel_main')]" position="after">
+            <t t-if="this.env.config.viewType and this.env.config.viewType !== 'form'">
+                <Transition
+                    visible="state.showButtonFilters"
+                    name="'o-fade'"
+                    t-slot-scope="transition"
+                    leaveDuration="500"
+                >
+                    <div
+                        class="o_embedded_actions overflow-hidden d-flex flex-wrap w-100 align-items-center justify-content-center gap-2"
+                        t-att-class="transition.className"
+                    >
+                        <FilterButton
+                            filters="this.env.searchModel.headerButtonFilters"
+                        />
+                    </div>
+                </Transition>
+            </t>
+        </xpath>
+
+        <xpath expr="//button[@t-on-click='onClickShowEmbedded']" position="after">
+            <button
+                t-if="state.headerButtonFilters?.length"
+                class="btn btn-secondary"
+                t-att-class="{active: state.showButtonFilters}"
+                t-on-click="onClickShowshowButtonFilters"
+            >
+                <i class="fa fa-filter" />
+            </button>
+        </xpath>
+    </t>
+</templates>
