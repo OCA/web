@@ -1,0 +1,295 @@
+// Enterprise-Gantt-style light theme for web_timeline views that opt in via
+// gantt_ux="true". Scoped under .o_timeline_gantt (set by the renderer patch)
+// so every other timeline view keeps the stock look.
+//
+// All colors and sizes are --o-tlg-* design tokens defined once below; every
+// rule consumes var(...). No raw hex outside this block (the arrowhead marker
+// fill in canvas_defs.xml mirrors --o-tlg-arrow).
+
+.o_timeline_gantt {
+    --o-tlg-text: #374151;
+    --o-tlg-muted: #8f95a3;
+    --o-tlg-border: #e7e9ed;
+    --o-tlg-grid: #f1f2f4;
+    --o-tlg-band: #f8f7fa;
+    --o-tlg-weekend: #f5f6f8;
+    --o-tlg-accent: #714b67;
+    --o-tlg-today: rgba(113, 75, 103, 0.12);
+    --o-tlg-arrow: #8f95a3;
+    --o-tlg-bar: #f3c6cf;
+    --o-tlg-bar-border: #b0798d;
+    --o-tlg-bar-text: #574149;
+    --o-tlg-unassigned-border: #8f95a3;
+    --o-tlg-row-h: 36px;
+    --o-tlg-bar-h: 22px;
+    --o-tlg-danger: #d23f3f;
+    --o-tlg-row-hover: rgba(113, 75, 103, 0.05);
+    // Sidebar only carries project bands (task names live on the bars).
+    --o-tlg-sidebar-w: 200px;
+
+    // Motion policy: color/opacity/outline only, 120ms ease-out. Geometry is
+    // never animated (the timeline repositions elements on every redraw).
+
+    .vis-timeline {
+        border: none;
+        background: #fff;
+        font-size: 13px;
+        color: var(--o-tlg-text);
+    }
+
+    // ── Sidebar ─────────────────────────────────────────────────────────
+    .vis-panel.vis-left {
+        border: none;
+        border-right: 1px solid var(--o-tlg-border);
+        width: var(--o-tlg-sidebar-w);
+        min-width: var(--o-tlg-sidebar-w);
+    }
+    .vis-labelset .vis-label {
+        display: flex;
+        align-items: center;
+        min-height: var(--o-tlg-row-h);
+        border-bottom: 1px solid var(--o-tlg-border);
+        color: var(--o-tlg-text);
+
+        .vis-inner {
+            padding: 0 8px;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    // Project header bands (parent groups).
+    .vis-labelset .vis-label.o_tlg_project_row {
+        background: var(--o-tlg-band);
+        font-weight: 600;
+
+        &.vis-nesting-group:before {
+            color: var(--o-tlg-accent);
+            font-size: 9px;
+            width: 18px;
+            text-align: center;
+            flex: none;
+        }
+        &.vis-nesting-group.expanded:before {
+            content: "\25BE"; // ▾
+        }
+        &.vis-nesting-group.collapsed:before {
+            content: "\25B8"; // ▸
+        }
+        .o_tlg_count {
+            color: var(--o-tlg-muted);
+            font-weight: 400;
+            margin-left: 6px;
+        }
+    }
+    // Task rows are blank alignment tracks (names live on the bars); kill
+    // vis's injected level darkening, keep the row-trace hover + click-open.
+    .vis-labelset .vis-label.o_tlg_task_row {
+        background: #fff;
+        cursor: pointer;
+        transition: background-color 120ms ease-out;
+
+        &.vis-nested-group.vis-group-level-1 {
+            background: #fff;
+        }
+        &:hover {
+            background: var(--o-tlg-row-hover);
+        }
+    }
+
+    // ── Chart rows ──────────────────────────────────────────────────────
+    .vis-foreground .vis-group {
+        border-bottom: 1px solid var(--o-tlg-border);
+        min-height: var(--o-tlg-row-h);
+    }
+    .vis-foreground .vis-group.o_tlg_project_row {
+        background: var(--o-tlg-band);
+    }
+    .vis-foreground .vis-group.o_tlg_task_row:hover {
+        background-color: var(--o-tlg-row-hover);
+    }
+
+    // ── Bars (pills) ────────────────────────────────────────────────────
+    .vis-item.vis-range {
+        height: var(--o-tlg-bar-h);
+        border: 1px solid var(--o-tlg-bar-border);
+        border-radius: calc(var(--o-tlg-bar-h) / 2);
+        // Record colors arrive as --o-tlg-item-color (model patch); the
+        // stock theme's linen `:hover !important` rule is beaten by keeping
+        // the same declaration on both states and darkening via filter.
+        background-color: var(--o-tlg-item-color, var(--o-tlg-bar)) !important;
+        color: var(--o-tlg-bar-text);
+        font-size: 12px;
+        line-height: calc(var(--o-tlg-bar-h) - 2px);
+        transition:
+            filter 120ms ease-out,
+            outline-color 120ms ease-out;
+
+        &:hover {
+            background-color: var(--o-tlg-item-color, var(--o-tlg-bar)) !important;
+            filter: brightness(0.96);
+            cursor: pointer !important;
+        }
+        &.o_tlg_colored {
+            border-color: rgba(0, 0, 0, 0.44);
+            border-color: color-mix(in srgb, var(--o-tlg-item-color) 65%, black);
+        }
+        &.vis-selected {
+            outline: 2px solid var(--o-tlg-accent);
+            outline-offset: 1px;
+            border-color: var(--o-tlg-bar-border);
+        }
+        &.vis-editable.vis-selected {
+            background-color: var(--o-tlg-item-color, var(--o-tlg-bar)) !important;
+        }
+        // Label overflow (Enterprise behavior): a non-hidden frame flips
+        // vis's RangeItem into overflow mode — the label renders past the
+        // pill edge instead of being clipped, and sticks to the left window
+        // edge while panning. The pill itself keeps its date-range width.
+        .vis-item-overflow {
+            overflow: visible;
+        }
+        .vis-item-content {
+            padding: 0 10px !important;
+            height: var(--o-tlg-bar-h);
+        }
+        .vis-drag-left,
+        .vis-drag-right {
+            cursor: ew-resize;
+        }
+    }
+    // Row-rhythm guards: the untouched project_timeline item template
+    // (avatars + hours) must never grow a row past 36px. No width clamp:
+    // the label is meant to spill past narrow pills (see above), and any
+    // inline-size containment here would collapse vis's shrink-to-fit
+    // content box to zero width, blanking the bars entirely.
+    .o_project_timeline_item {
+        height: calc(var(--o-tlg-bar-h) - 2px);
+        overflow: hidden;
+        white-space: nowrap;
+
+        img {
+            max-height: 16px;
+            max-width: 16px;
+            vertical-align: middle;
+        }
+    }
+
+    // Point items (no end date) → milestone diamond.
+    .vis-item.vis-point {
+        color: var(--o-tlg-bar-text);
+    }
+    .vis-item.vis-dot {
+        border: none;
+        border-radius: 2px;
+        width: 12px;
+        height: 12px;
+        transform: rotate(45deg);
+        background: var(--o-tlg-accent);
+    }
+
+    // Synthetic items.
+    .vis-item.o_tlg_ghost_chip {
+        height: 16px;
+        border: 1px dashed var(--o-tlg-muted);
+        border-radius: 8px;
+        color: var(--o-tlg-muted);
+        font-size: 10px;
+        line-height: 14px;
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 3px,
+            var(--o-tlg-grid) 3px,
+            var(--o-tlg-grid) 6px
+        ) !important;
+
+        .vis-item-content {
+            padding: 0 6px !important;
+        }
+    }
+    .vis-item.o_tlg_rollup {
+        height: 10px;
+        border: 1px solid var(--o-tlg-bar-border);
+        border-radius: 5px;
+        background-color: var(--o-tlg-bar) !important;
+        opacity: 0.65;
+    }
+
+    // ── Time axis ───────────────────────────────────────────────────────
+    .vis-panel.vis-top {
+        border: none;
+        border-bottom: 1px solid var(--o-tlg-border);
+    }
+    .vis-time-axis .vis-text {
+        color: var(--o-tlg-muted);
+        font-size: 11px;
+    }
+    .vis-time-axis .vis-text.vis-major {
+        color: var(--o-tlg-text);
+        font-weight: 600;
+        font-size: 12px;
+    }
+    // Today's minor label as a filled accent pill (Enterprise cue).
+    .vis-time-axis .vis-text.vis-minor.vis-today {
+        background: var(--o-tlg-accent);
+        color: #fff;
+        border-radius: 9px;
+        margin: 1px 2px;
+        line-height: 16px;
+    }
+    .vis-grid.vis-vertical {
+        border-color: var(--o-tlg-grid);
+    }
+    .vis-grid.vis-saturday,
+    .vis-grid.vis-sunday {
+        background: var(--o-tlg-weekend);
+    }
+    .vis-grid.vis-today {
+        background: var(--o-tlg-today);
+    }
+    .vis-current-time {
+        background-color: var(--o-tlg-accent);
+        width: 2px;
+    }
+
+    // ── Dependency arrows ───────────────────────────────────────────────
+    // The overlay SVG root stays pointer-events: none; only the strokes are
+    // interactive (and only when dependency editing is enabled).
+    .o_tlg_dep_arrow {
+        stroke: var(--o-tlg-arrow);
+        stroke-width: 1.5;
+        transition: stroke 120ms ease-out;
+
+        &.o_tlg_pending {
+            stroke: var(--o-tlg-accent);
+            stroke-dasharray: 4 3;
+        }
+        &.o_tlg_new {
+            stroke: var(--o-tlg-accent);
+            stroke-width: 2.5;
+        }
+    }
+    .o_tlg_dep_hit {
+        pointer-events: none;
+        outline: none;
+    }
+    &.o_tlg_dep_editable .o_tlg_dep_hit {
+        pointer-events: visibleStroke;
+        cursor: pointer;
+    }
+    .o_tlg_dep_hit:hover + .o_tlg_dep_arrow,
+    .o_tlg_dep_hit:focus + .o_tlg_dep_arrow {
+        stroke: var(--o-tlg-accent);
+        stroke-width: 2;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .vis-item.vis-range,
+        .vis-labelset .vis-label.o_tlg_task_row,
+        .o_tlg_dep_arrow {
+            transition: none;
+        }
+    }
+}
