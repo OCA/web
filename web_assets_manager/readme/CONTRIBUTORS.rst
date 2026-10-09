@@ -1,0 +1,2 @@
+* initOS GmbH
+* Nitrokey GmbH
