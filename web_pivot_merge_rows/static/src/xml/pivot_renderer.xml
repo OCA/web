@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 OCA -->
+<!-- License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<templates xml:space="preserve">
+
+    <!--
+        Override 1: Redirect <tbody> t-foreach from table.rows to this.getRows().
+        t-key uses _originalIndex to maintain OWL key stability across merges.
+    -->
+    <t t-inherit="web.PivotRenderer" t-inherit-mode="extension">
+        <xpath expr="//tbody/tr[@t-foreach='table.rows']" position="attributes">
+            <attribute name="t-foreach">this.getRows()</attribute>
+            <attribute name="t-key">'row_' + row._originalIndex</attribute>
+        </xpath>
+    </t>
+
+    <!--
+        Override 2: Inject merge/unmerge buttons into the row header <th>.
+        Only active on row headers (isXAxis === false).
+        "+" shown when canMergeRow() is true (same-indent row exists below).
+        "×" shown when row.isMerged is true.
+    -->
+    <t t-inherit="web.PivotHeader.title" t-inherit-mode="extension">
+        <xpath expr="//th" position="inside">
+            <t t-if="!isXAxis">
+                <button
+                    t-if="this.canMergeRow(cell)"
+                    class="o_pivot_merge_btn btn btn-sm p-0 ms-1"
+                    t-att-title="'Merge with row below'"
+                    t-on-click.stop="() => this.onMergeClick(cell._originalIndex)"
+                >
+                    <i class="fa fa-plus-circle" />
+                </button>
+                <button
+                    t-if="cell.isMerged"
+                    class="o_pivot_unmerge_btn btn btn-sm p-0 ms-1"
+                    t-att-title="'Unmerge rows'"
+                    t-on-click.stop="() => this.onUnmergeClick(cell._originalIndex)"
+                >
+                    <i class="fa fa-times-circle" />
+                </button>
+            </t>
+        </xpath>
+    </t>
+
+</templates>
