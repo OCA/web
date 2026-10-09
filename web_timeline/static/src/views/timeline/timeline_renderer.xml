@@ -25,6 +25,13 @@
                         t-on-click="_onScaleYearClicked"
                     >Year</button>
                 </div>
+                <button
+                    t-if="dependency_arrow"
+                    t-att-class="'oe_timeline_button_dependencies btn btn-sm ms-2 ' + (showDependencies.data ? 'btn-primary' : 'btn-default')"
+                    t-att-aria-pressed="showDependencies.data"
+                    t-on-click="_onToggleDependenciesClicked"
+                    title="Show or hide dependency arrows"
+                >Dependencies</button>
             </div>
             <div class="oe_timeline_widget" t-ref="canvas" />
         </div>
