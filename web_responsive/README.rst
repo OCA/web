@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==============
 Web Responsive
 ==============
@@ -17,7 +13,7 @@ Web Responsive
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -62,16 +58,24 @@ This module adds responsiveness to web backend.
 
   |image5|
 
+- Optionally, when opening an invoice (account.move), its most recent
+  PDF attachment is automatically displayed in the side document viewer.
+  Enable \*\* File Viewer / Auto-open Invoice Preview*\* on the user's
+  *Preferences* tab (*Settings -> Users -> Companies -> Users*), per
+  user.
+
+  |image6|
+
 **Features for mobile**: \* View type picker dropdown displays
 comfortably
 
 - Control panel buttons use icons to save space.
 
-  |image6|
+  |image7|
 
 - Followers and send button is displayed on mobile. Avatar is hidden.
 
-  |image7|
+  |image8|
 
 - Big inputs on form in edit mode
 
@@ -83,23 +87,23 @@ comfortably
   be more intuitive or accessible by fingers of one hand. F.x. Alt + S
   for Save
 
-  |image8|
+  |image9|
 
 - Autofocus on search menu box when opening the app menu
 
-  |image9|
+  |image10|
 
 - When the chatter is on the side part, the document viewer fills that
   part for side-by-side reading instead of full screen. You can still
   put it on full width preview clicking on the new maximize button.
 
-  |image10|
+  |image11|
 
 - When the user chooses to send a public message the color of the
   composer is different from the one when the message is an internal
   log.
 
-  |image11|
+  |image12|
 
 .. |image| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/redirecthome.gif
 .. |image1| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/appmenu.gif
@@ -107,12 +111,13 @@ comfortably
 .. |image3| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/listview.gif
 .. |image4| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/formview.gif
 .. |image5| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/listview.gif
-.. |image6| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/form_buttons.gif
-.. |image7| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/chatter.png
-.. |image8| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/shortcuts.gif
-.. |image9| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/appsearch.gif
-.. |image10| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/document_viewer.gif
-.. |image11| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/chatter-colors.png
+.. |image6| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/auto_open_invoice_preview.png
+.. |image7| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/form_buttons.gif
+.. |image8| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/chatter.png
+.. |image9| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/shortcuts.gif
+.. |image10| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/appsearch.gif
+.. |image11| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/document_viewer.gif
+.. |image12| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_responsive/static/img/chatter-colors.png
 
 **Table of contents**
 
@@ -127,6 +132,16 @@ The following keyboard shortcuts are implemented:
 - Navigate app search results - Arrow keys
 - Choose app result - ``Enter``
 - ``Esc`` to close app drawer
+
+Auto-open invoice preview
+-------------------------
+
+Enable *Auto-open Invoice Preview* in your user preferences (*Your
+Profile → Preferences*). When enabled, opening an invoice
+(``account.move``) automatically shows its most recent PDF attachment in
+the file viewer on the side of the form. The setting is per user and
+takes effect on the next invoice you open. If an invoice has several PDF
+attachments, the viewer navigation cycles through all of them.
 
 Known issues / Roadmap
 ======================
@@ -184,6 +199,8 @@ Contributors
 - Angel Patel <patelangel1414@gmail.com>
 
 - Mohamed Alkobrosli <malkobrosly@kencove.com>
+
+- Khanh Bui <vancouver2990@web.de>
 
 Maintainers
 -----------
