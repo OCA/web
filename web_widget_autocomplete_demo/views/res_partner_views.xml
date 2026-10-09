@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Cetmix OÜ
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="res_partner_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.partner.view.form.inherit.web_widget_autocomplete_demo</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[hasclass('o_address_format')][not(@name)]/field[@name='city']"
+                position="attributes"
+            >
+                <attribute name="widget">autocomplete</attribute>
+                <attribute
+                    name="options"
+                >{'function': 'umbria_city_autocomplete', 'min_symbols': 1}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

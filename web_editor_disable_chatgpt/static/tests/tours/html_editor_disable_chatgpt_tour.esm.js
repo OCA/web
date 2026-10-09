@@ -74,5 +74,9 @@ registry.category("web_tour.tours").add("html_editor_disable_chatgpt_tour", {
             trigger: ".o_form_button_cancel",
             run: "click",
         },
+        {
+            content: "Wait for discard to finish",
+            trigger: ".o_form_renderer.o_form_saved",
+        },
     ],
 });
