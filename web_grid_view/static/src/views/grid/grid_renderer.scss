@@ -1,0 +1,129 @@
+.o_grid_renderer {
+    height: inherit;
+    overflow: hidden;
+
+    .o_grid_grid {
+        min-width: fit-content;
+    }
+
+    @media (min-width: 768px) {
+        .o_grid_sticky_top {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .o_grid_sticky_left {
+            position: sticky;
+            left: 0;
+            z-index: 5;
+        }
+        .o_grid_sticky_right {
+            position: sticky;
+            right: 0;
+            z-index: 5;
+        }
+        .o_grid_sticky_corner {
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 15;
+        }
+        .o_grid_sticky_bottom {
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+        }
+    }
+
+    .o_grid_column_title {
+        position: relative;
+        span {
+            white-space: pre-line;
+            line-height: 1.2;
+            text-align: center;
+        }
+    }
+
+    .o_grid_section_title {
+        font-weight: 700;
+        font-size: 0.9rem;
+    }
+
+    .o_grid_row_title {
+        font-weight: 500;
+        font-size: 0.875rem;
+        span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 250px;
+        }
+    }
+
+    .o_grid_cell {
+        position: relative;
+        font-variant-numeric: tabular-nums;
+        transition: background-color 0.1s ease;
+        &:hover {
+            background-color: rgba(var(--bs-primary-rgb), 0.12) !important;
+        }
+    }
+
+    .o_grid_cell_highlighted {
+        background-color: rgba(var(--bs-primary-rgb), 0.15) !important;
+    }
+
+    .o_grid_cell_value {
+        font-size: 0.85rem;
+    }
+    .o_grid_cell_empty {
+        font-size: 0.75rem;
+        opacity: 0.3;
+    }
+    .o_grid_total_cell {
+        font-variant-numeric: tabular-nums;
+    }
+
+    .o_grid_cell_input {
+        text-align: center;
+        padding: 0;
+        border: 2px solid var(--bs-primary);
+        border-radius: 4px;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+.o_grid_toolbar .btn {
+    border-radius: 6px;
+}
+.o_grid_scale_active {
+    background-color: var(--bs-primary) !important;
+    color: white !important;
+    border-color: var(--bs-primary) !important;
+}
+
+.o_grid_magnifier {
+    cursor: pointer;
+    display: none;
+    font-size: 0.7rem;
+    text-decoration: none;
+    z-index: 2;
+    i {
+        opacity: 0.4;
+        transition: opacity 0.15s;
+    }
+    &:hover i {
+        opacity: 1;
+    }
+}
+
+.o_grid_cell:hover .o_grid_magnifier {
+    display: flex;
+}
+
+.o_grid_add_line .btn-link {
+    font-size: 0.8rem;
+    &:hover {
+        text-decoration: none;
+    }
+}
