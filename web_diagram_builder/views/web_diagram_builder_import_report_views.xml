@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_web_diagram_builder_import_report_form" model="ir.ui.view">
+        <field name="name">web.diagram.builder.import.report.form</field>
+        <field name="model">web.diagram.builder.import.report</field>
+        <field name="arch" type="xml">
+            <form string="Download Report">
+                <sheet>
+                    <group>
+                        <field name="file_format" string="Format"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_download"
+                            string="Download"
+                            type="object"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_web_diagram_builder_import_result_form" model="ir.ui.view">
+        <field name="name">web.diagram.builder.import.result.form</field>
+        <field name="model">web.diagram.builder.import.result</field>
+        <field name="arch" type="xml">
+            <form string="Import Results">
+                <sheet>
+                    <div class="alert alert-info" role="alert"><strong>Tip:</strong> Always export your CSV directly from the Diagram Builder form to ensure the file format is correct.</div>
+                    <field name="line_ids" readonly="1">
+                        <tree decoration-success="status == 'success'"
+                              decoration-danger="status == 'error'">
+                            <field name="file_name" string="File"/>
+                            <field name="status" string="Status"/>
+                            <field name="builder_id" string="Diagram Created"/>
+                            <field name="error_message" string="Error" optional="show"/>
+                        </tree>
+                    </field>
+                </sheet>
+                <footer>
+                    <button string="Download Report"
+                            name="action_download_report"
+                            type="object"
+                            class="btn-primary"/>
+                    <button string="Go to Diagrams"
+                            type="action"
+                            name="%(action_web_diagram_builder)d"
+                            class="btn-secondary"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
