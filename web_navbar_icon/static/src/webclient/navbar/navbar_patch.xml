@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+  <t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
+        <xpath expr="//DropdownItem[@t-foreach='apps']" position="replace">
+            <DropdownItem
+                t-foreach="apps"
+                t-as="app"
+                t-key="app.id"
+                class="{ 'o_app': true, focus: this.menuService.getCurrentApp() === app, 'o_disabled_offline': !this._isAvailable(app) }"
+                onSelected="() => this.onNavBarDropdownItemSelection(app)"
+                attrs="{ href: this.getMenuItemHref(app), 'data-menu-xmlid': app.xmlid, 'data-section': app.id }"
+            >
+                <span
+                    class="o_navbar_apps_menu_icon_container d-inline-flex align-items-center justify-content-center me-2 flex-shrink-0"
+                >
+                    <img
+                        t-if="app.webIconData"
+                        class="o_navbar_apps_menu_icon"
+                        t-attf-src="{{app.webIconData}}"
+                    />
+                    <i
+                        t-elif="app.webIcon"
+                        class="oi o_navbar_apps_menu_icon"
+                        t-att-data-icon="app.webIcon.split(',')[0]"
+                        t-att-style="'color:' + app.webIcon.split(',')[1]"
+                    />
+                </span>
+                <t t-out="app.name" />
+            </DropdownItem>
+        </xpath>
+    </t>
+
+</templates>
