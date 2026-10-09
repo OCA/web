@@ -5,34 +5,46 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <block id="pwa_settings" position="inside">
-                <setting>
-                    <field name="pwa_short_name" placeholder="Odoo" />
-                </setting>
-                <setting string="Colors">
-                    <div class="w-50 row">
-                        <span class="d-block w-75 py-2">Background Color</span>
-                        <field
-                            name="pwa_background_color"
-                            class="d-block w-25 p-0 m-0"
-                            widget="color"
-                        />
-                    </div>
-                    <div class="w-50 row mt-1">
-                        <span class="d-block w-75 py-2">Theme Color</span>
-                        <field
-                            name="pwa_theme_color"
-                            class="d-block w-25 p-0 m-0"
-                            widget="color"
-                        />
-                    </div>
-                </setting>
-                <setting string="Icon">
-                    <div class="w-50 row">
-                        <field name="pwa_icon" widget="image" class="oe_avatar" />
-                    </div>
-                </setting>
-            </block>
+            <data>
+                <!-- This block (including core's own pre-existing
+                     web_app_name field) is normally hidden unless
+                     developer mode is on - drop that restriction so the
+                     settings this module adds are actually reachable.
+                     General Settings itself already requires admin
+                     access, so this doesn't expose anything that wasn't
+                     already admin-only. -->
+                <xpath expr="//block[@id='pwa_settings']" position="attributes">
+                    <attribute name="groups" />
+                </xpath>
+                <block id="pwa_settings" position="inside">
+                    <setting>
+                        <field name="pwa_short_name" placeholder="Odoo" />
+                    </setting>
+                    <setting string="Colors">
+                        <div class="w-50 row">
+                            <span class="d-block w-75 py-2">Background Color</span>
+                            <field
+                                name="pwa_background_color"
+                                class="d-block w-25 p-0 m-0"
+                                widget="color"
+                            />
+                        </div>
+                        <div class="w-50 row mt-1">
+                            <span class="d-block w-75 py-2">Theme Color</span>
+                            <field
+                                name="pwa_theme_color"
+                                class="d-block w-25 p-0 m-0"
+                                widget="color"
+                            />
+                        </div>
+                    </setting>
+                    <setting string="Icon">
+                        <div class="w-50 row">
+                            <field name="pwa_icon" widget="image" class="oe_avatar" />
+                        </div>
+                    </setting>
+                </block>
+            </data>
         </field>
     </record>
 </odoo>
