@@ -4,7 +4,6 @@
         <a
             class="btn open_tab_widget fa fa-external-link"
             t-att-href="_getReference()"
-            target="_blank"
             t-on-click="openNewTab"
             t-att-title="props.title"
         />
