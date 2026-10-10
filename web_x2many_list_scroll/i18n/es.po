@@ -1,0 +1,83 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_x2many_list_scroll
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 20:02+0000\n"
+"PO-Revision-Date: 2026-09-17 20:02+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_x2many_list_scroll
+#: model:ir.model,name:web_x2many_list_scroll.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: web_x2many_list_scroll
+#: model:ir.model.fields,field_description:web_x2many_list_scroll.field_ir_http__display_name
+#: model:ir.model.fields,field_description:web_x2many_list_scroll.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: web_x2many_list_scroll
+#: model:ir.model,name:web_x2many_list_scroll.model_ir_http
+msgid "HTTP Routing"
+msgstr "Enrutamiento HTTP"
+
+#. module: web_x2many_list_scroll
+#: model:ir.model.fields,field_description:web_x2many_list_scroll.field_ir_http__id
+#: model:ir.model.fields,field_description:web_x2many_list_scroll.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_x2many_list_scroll
+#: model_terms:ir.ui.view,arch_db:web_x2many_list_scroll.res_config_settings_view_form
+msgid "Lists in Forms"
+msgstr "Listas en formularios"
+
+#. module: web_x2many_list_scroll
+#: model_terms:ir.ui.view,arch_db:web_x2many_list_scroll.res_config_settings_view_form
+msgid ""
+"Lists of lines inside forms (order lines, invoice lines...) scroll within "
+"this number of rows instead of stretching the page, so their header and "
+"totals stay in sight. 0 leaves them as they are."
+msgstr ""
+"Las listas de líneas dentro de los formularios (líneas de pedido, de "
+"factura...) hacen scroll dentro de este número de filas en vez de estirar la"
+" página, así su encabezado y sus totales quedan a la vista. 0 las deja como "
+"están."
+
+#. module: web_x2many_list_scroll
+#: model:ir.model.fields,help:web_x2many_list_scroll.field_res_config_settings__web_x2many_list_scroll_rows
+msgid ""
+"Rows a list inside a form shows before it scrolls, with its header and its "
+"totals staying in sight. 0 leaves the lists as they are. A form can set its "
+"own number, or 0, on the field with options=\"{'scroll_rows': 15}\"."
+msgstr ""
+"Filas que muestra una lista dentro de un formulario antes de hacer scroll, "
+"con su encabezado y sus totales a la vista. 0 deja las listas como están. Un"
+" formulario puede fijar su propio número, o 0, en el campo con "
+"options=\"{'scroll_rows': 15}\"."
+
+#. module: web_x2many_list_scroll
+#: model_terms:ir.ui.view,arch_db:web_x2many_list_scroll.res_config_settings_view_form
+msgid "Scrollable Lists"
+msgstr "Listas con scroll"
+
+#. module: web_x2many_list_scroll
+#: model:ir.model.fields,field_description:web_x2many_list_scroll.field_res_config_settings__web_x2many_list_scroll_rows
+msgid "Visible Rows in Form Lists"
+msgstr "Filas visibles en listas de formularios"
+
+#. module: web_x2many_list_scroll
+#: model_terms:ir.ui.view,arch_db:web_x2many_list_scroll.res_config_settings_view_form
+msgid "Visible rows"
+msgstr "Filas visibles"

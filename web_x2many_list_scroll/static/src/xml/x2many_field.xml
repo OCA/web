@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Jarsa
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<templates xml:space="preserve">
+    <t
+        t-name="web_x2many_list_scroll.X2ManyField"
+        t-inherit="web.X2ManyField"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//div[@t-att-class='className']" position="attributes">
+            <attribute name="t-att-style">scrollStyle</attribute>
+            <attribute name="t-ref">scrollRoot</attribute>
+        </xpath>
+    </t>
+</templates>
