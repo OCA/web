@@ -1,9 +1,9 @@
 # Copyright 2019 Alexandre Díaz <dev@redneboa.es>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import base64
 from colorsys import hls_to_rgb, rgb_to_hls
 
 from odoo import api, fields, models
+from odoo.tools.binary import BinaryBytes
 
 from ..utils import convert_to_image, image_to_rgb, n_rgb_to_hex
 
@@ -171,7 +171,7 @@ class ResCompany(models.Model):
                 "color_link_text_hover",
             )
             result = super().write(values)
-            if any([field in values for field in fields_to_check]):
+            if any(field in values for field in fields_to_check):
                 self.scss_create_or_update_attachment()
         else:
             result = super().write(values)
@@ -237,13 +237,13 @@ class ResCompany(models.Model):
     def scss_create_or_update_attachment(self):
         IrAttachmentObj = self.env["ir.attachment"]
         for record in self:
-            datas = base64.b64encode(record._scss_generate_content().encode("utf-8"))
+            raw = BinaryBytes(record._scss_generate_content().encode("utf-8"))
             custom_url = record.scss_get_url()
             custom_attachment = IrAttachmentObj.sudo().search(
                 [("url", "=", custom_url), ("company_id", "=", record.id)]
             )
             values = {
-                "datas": datas,
+                "raw": raw,
                 "url": custom_url,
                 "name": custom_url,
                 "company_id": record.id,
@@ -254,4 +254,4 @@ class ResCompany(models.Model):
                 custom_attachment.sudo().write(values)
             else:
                 IrAttachmentObj.sudo().create(values)
-        self.env.registry.clear_cache()
+        self.env.transaction.invalidate_ormcache()

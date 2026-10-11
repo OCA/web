@@ -12,7 +12,7 @@ class AssetsBundleCompanyColor(AssetsBundle):
             active_company_id = int(
                 request.httprequest.cookies.get("cids", "").split("-")[0]
             )
-        except Exception:
+        except (AttributeError, RuntimeError, ValueError):
             active_company_id = False
         company_id = (
             self.env["res.company"].browse(active_company_id) or self.env.company
