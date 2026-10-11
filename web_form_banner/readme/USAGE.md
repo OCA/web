@@ -79,8 +79,8 @@ if your rule is triggered based on an update to a trigger field.
 
 ``` python
 {
-  "visible": bool(record.partner_id.comment),
-  "values": {"comment": record.partner_id.comment},
+    "visible": bool(record.partner_id.comment),
+    "values": {"comment": record.partner_id.comment},
 }
 ```
 
@@ -89,8 +89,8 @@ explicit values key:
 
 ``` python
 {
-  "visible": bool(record.partner_id.comment),
-  "comment": record.partner_id.comment,
+    "visible": bool(record.partner_id.comment),
+    "comment": record.partner_id.comment,
 }
 ```
 
@@ -102,9 +102,9 @@ explicit values key:
 
 ``` python
 {
-  "visible": record.amount_total >= 30000,
-  "severity": "danger" if record.amount_total >= 100000 else "warning",
-  "values": {"amount_total": record.amount_total},
+    "visible": record.amount_total >= 30000,
+    "severity": "danger" if record.amount_total >= 100000 else "warning",
+    "values": {"amount_total": record.amount_total},
 }
 ```
 
@@ -116,8 +116,12 @@ explicit values key:
 
 ``` python
 {
-  "visible": bool(record.validity_date and context_today() > record.validity_date and record.state in ["draft", "sent"]),
-  "values": {"validity_date": record.validity_date},
+    "visible": bool(
+        record.validity_date
+        and context_today() > record.validity_date
+        and record.state in ["draft", "sent"]
+    ),
+    "values": {"validity_date": record.validity_date},
 }
 ```
 
@@ -128,7 +132,9 @@ explicit values key:
 - Message Value Code (multi-line with result):
 
 ``` python
-cnt = env["mail.activity"].search_count([("res_model","=",record._name),("res_id","=",record.id)])
+cnt = env["mail.activity"].search_count(
+    [("res_model", "=", record._name), ("res_id", "=", record.id)]
+)
 result = {"visible": cnt > 0, "values": {"cnt": cnt}}
 ```
 
@@ -154,13 +160,16 @@ trigger fields)**
 ``` python
 domain = [("partner_id", "=", draft.partner_id.id)]
 if record_id:
-  domain += [("id", "<", record_id)]
+    domain += [("id", "<", record_id)]
 last = model.search(domain, order="date_order desc, id desc", limit=1)
 if last:
-  html = "<strong>Previous order:</strong> <a href='%s'>%s</a>" % (url_for(last), last.name)
-  result = {"visible": True, "html": html}
+    html = "<strong>Previous order:</strong> <a href='%s'>%s</a>" % (
+        url_for(last),
+        last.name,
+    )
+    result = {"visible": True, "html": html}
 else:
-  result = {"visible": False}
+    result = {"visible": False}
 ```
 
 If we set up the rules for a partner record as shown below:
