@@ -30,7 +30,7 @@ def image_to_rgb(img):
     rgb_sum = [0, 0, 0]
     # Mix. image colors using addition method
     RGBA_WHITE = (255, 255, 255, 255)
-    for i in range(0, height * width):
+    for i in range(height * width):
         rgba = img.getpixel((i % width, i / width))
         if rgba[3] > 128 and rgba != RGBA_WHITE:
             rgb_sum[0] += rgba[0]
