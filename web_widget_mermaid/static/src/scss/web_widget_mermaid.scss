@@ -1,0 +1,64 @@
+/* Field container - applied by Odoo's field wrapper */
+.o_field_mermaid {
+    width: 100%;
+}
+
+/* Inner container */
+.o_field_mermaid_container {
+    width: 100%;
+}
+
+/* Textarea wrapper div */
+.o_field_mermaid_container > div {
+    width: 100%;
+}
+
+/* Textarea styling */
+.o_field_mermaid_container textarea {
+    width: 100%;
+    height: auto;
+    resize: none;
+    overflow-y: hidden;
+    font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    tab-size: 4;
+}
+
+/* Diagram display area */
+.o_form_field_mermaid {
+    min-height: 50px;
+    overflow: auto;
+}
+
+.o_field_mermaid_clickable {
+    cursor: pointer;
+    border: 1px dashed transparent;
+    border-radius: 4px;
+    padding: 8px;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.o_field_mermaid_clickable:hover {
+    border-color: $o-brand-primary;
+    background-color: rgba($o-brand-primary, 0.01);
+}
+
+.o_field_mermaid_empty {
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed $o-gray-500;
+}
+
+.o_field_mermaid_empty:hover {
+    border-color: $o-brand-primary;
+}
+
+.o_field_mermaid_placeholder {
+    font-style: italic;
+}

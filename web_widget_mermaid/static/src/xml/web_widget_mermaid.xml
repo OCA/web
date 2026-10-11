@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_widget_mermaid.MermaidField">
+        <div class="o_field_mermaid_container">
+            <!-- Edit mode: show textarea -->
+            <t t-if="state.isEditing and !props.readonly">
+                <div t-ref="div">
+                    <textarea
+                        class="o_input"
+                        t-att-id="props.id"
+                        t-att-placeholder="placeholderText"
+                        t-ref="textarea"
+                        t-on-blur="onTextareaBlur"
+                        t-on-input="onTextareaInput"
+                        t-on-keydown="onTextareaKeydown"
+                        t-att-value="value"
+                    />
+                </div>
+            </t>
+            <!-- Display mode: show diagram or placeholder -->
+            <t t-else="">
+                <div
+                    t-att-class="'o_form_field_mermaid' + (props.readonly ? '' : ' o_field_mermaid_clickable') + (isEmpty ? ' o_field_mermaid_empty' : '')"
+                    t-ref="chart"
+                    t-on-click="onDiagramClick"
+                >
+                    <span
+                        t-if="isEmpty and !props.readonly"
+                        class="o_field_mermaid_placeholder text-muted"
+                    >
+                        <i class="fa fa-plus-circle me-1" />
+                        <t t-esc="placeholderText" />
+                    </span>
+                </div>
+            </t>
+            <pre t-if="state.errorMessage" class="text-danger mt-2">
+                <t t-esc="state.errorMessage" />
+            </pre>
+        </div>
+    </t>
+</templates>
