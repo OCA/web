@@ -1,7 +1,7 @@
 import {CssSelector} from "./css_selector.esm";
 import {Plugin} from "@html_editor/plugin";
 import {_t} from "@web/core/l10n/translation";
-import {reactive} from "@odoo/owl";
+import {proxy} from "@odoo/owl";
 import {closestElement} from "@html_editor/utils/dom_traversal";
 import {isVisibleTextNode} from "@html_editor/utils/dom_info";
 import {withSequence} from "@html_editor/utils/resource";
@@ -37,7 +37,7 @@ export class CssSelectorPlugin extends Plugin {
   };
 
   setup() {
-    this.custom_css = reactive({displayName: this.defaultCustomCssName});
+    this.custom_css = proxy({displayName: this.defaultCustomCssName});
     this.custom_class_css = this.config.custom_class_css;
   }
   updateCustomCssSelectorParams() {

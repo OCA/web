@@ -1,6 +1,6 @@
 {
     "name": "Web editor class selector",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "summary": "",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
@@ -8,9 +8,9 @@
         "html_editor",
     ],
     "data": [
-        "security/ir.model.access.csv",
         "views/web_editor_class_views.xml",
         "views/menus.xml",
+        "security/ir.access.csv",
     ],
     "demo": [
         "demo/web_editor_class_demo.xml",

@@ -3,19 +3,19 @@
         <Dropdown>
             <button
                 class="btn btn-light"
-                t-att-title="props.title"
-                t-att-disabled="props.isDisabled"
+                t-att-title="this.props.title"
+                t-att-disabled="this.props.isDisabled"
             >
-                <span class="px-1" t-esc="state.displayName" />
+                <span class="px-1" t-out="this.state.displayName" />
             </button>
             <t t-set-slot="content">
-                <t t-foreach="items" t-as="item" t-key="item_index">
+                <t t-foreach="this.items" t-as="item" t-key="item_index">
                     <DropdownItem
                         class="item.class_name"
                         onSelected="() => this.onSelected(item)"
                         t-on-pointerdown.prevent="() => {}"
                     >
-                        <t t-esc="item.name" />
+                        <t t-out="item.name" />
                     </DropdownItem>
                 </t>
             </t>
