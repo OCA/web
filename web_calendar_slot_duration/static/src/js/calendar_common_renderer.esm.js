@@ -5,11 +5,11 @@ import {CalendarCommonRenderer} from "@web/views/calendar/calendar_common/calend
 import {patch} from "@web/core/utils/patch";
 
 patch(CalendarCommonRenderer.prototype, {
-    get options() {
-        const options = super.options;
-        if (this.env.searchModel.context.calendar_slot_duration) {
-            options.slotDuration = this.env.searchModel.context.calendar_slot_duration;
-        }
-        return options;
-    },
+  get options() {
+    const options = super.options;
+    if (this.env.searchModel.context.calendar_slot_duration) {
+      options.slotDuration = this.env.searchModel.context.calendar_slot_duration;
+    }
+    return options;
+  },
 });
