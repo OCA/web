@@ -3,7 +3,6 @@
 # Copyright 2024 OERP Canada <https://www.oerp.ca>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import base64
 import hashlib
 import io
 from random import randrange
@@ -13,6 +12,7 @@ from PIL import Image
 import odoo
 from odoo import api, fields, models, tools
 from odoo.http import request
+from odoo.tools.binary import BinaryBytes
 
 
 class ResCompany(models.Model):
@@ -22,7 +22,7 @@ class ResCompany(models.Model):
         img_path = odoo.tools.misc.file_path("web/static/img/favicon.ico")
         with tools.file_open(img_path, "rb") as f:
             if original:
-                return base64.b64encode(f.read())
+                return BinaryBytes(f.read(), filename="favicon.ico")
             # Modify the source image to add a colored bar on the bottom
             # This could seem overkill to modify the pixels 1 by 1, but
             # Pillow doesn't provide an easy way to do it, and this
@@ -48,7 +48,7 @@ class ResCompany(models.Model):
                         )
             stream = io.BytesIO()
             new_image.save(stream, format="ICO")
-            return base64.b64encode(stream.getvalue())
+            return BinaryBytes(stream.getvalue(), filename="favicon.ico")
 
     favicon = fields.Binary(
         string="Company Favicon",
