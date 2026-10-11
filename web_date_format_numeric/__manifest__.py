@@ -4,7 +4,7 @@
 {
     "name": "Web Date Format Numeric",
     "summary": "Display all date/datetime fields in numeric format",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Website",
