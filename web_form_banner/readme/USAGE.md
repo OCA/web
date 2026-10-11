@@ -40,7 +40,7 @@
 - time, \`datetime\`: Standard Python time/datetime modules.
 - \`dateutil\`: { "parser": dateutil.parser, "relativedelta":
   dateutil.relativedelta }
-- \`timezone\`: pytz.timezone for TZ handling.
+- \`timezone\`: zoneinfo.ZoneInfo for TZ handling.
 - float_compare, float_is_zero, \`float_round\`: Odoo float utils for
   precision-safe comparisons/rounding.
 

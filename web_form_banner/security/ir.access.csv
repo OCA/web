@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_web_form_banner_rule_public,web_form_banner_rule_public,web.form.banner.rule,base.group_public,r,
+access_web_form_banner_rule_portal,web_form_banner_rule_portal,web.form.banner.rule,base.group_portal,r,
+access_web_form_banner_rule_user,web_form_banner_rule_user,web.form.banner.rule,base.group_user,r,
+access_web_form_banner_rule_group_system,web_form_banner_rule_group_system,web.form.banner.rule,base.group_system,crud,

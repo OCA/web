@@ -130,7 +130,7 @@
                                 <li><code>dateutil</code>: <code
                                 >{ "parser": dateutil.parser, "relativedelta": dateutil.relativedelta }</code></li>
                                 <li><code>timezone</code>: <code
-                                >pytz.timezone</code> for TZ handling.</li>
+                                >zoneinfo.ZoneInfo</code> for TZ handling.</li>
                                 <li><code>float_compare</code>, <code
                                 >float_is_zero</code>, <code
                                 >float_round</code>: Odoo float utils for precision-safe comparisons/rounding.</li>

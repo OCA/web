@@ -21,13 +21,13 @@ Web Form Banner
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/19.0/web_form_banner
+    :target: https://github.com/OCA/web/tree/20.0/web_form_banner
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-19-0/web-19-0-web_form_banner
+    :target: https://translation.odoo-community.org/projects/web-20-0/web-20-0-web_form_banner
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=19.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=20.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -62,42 +62,42 @@ Usage
 Usage of message fields:
 ------------------------
 
-- **Message** (message): Text shown in the banner. Supports
-  ${placeholders} filled from values returned by message_value_code.
-  Ignored if message_value_code returns an html value.
-- **HTML** (message_is_html): If enabled, the message string is rendered
-  as HTML; otherwise it's treated as plain text.
-- **Message Value Code** (message_value_code): Safe Python expression
-  evaluated per record. Return a dict such as {"visible": True,
-  "severity": "warning", "values": {"name": record.name}}. Use either
-  message or html (from this code), not both. Several evaluation context
-  variables are available.
+-  **Message** (message): Text shown in the banner. Supports
+   ${placeholders} filled from values returned by message_value_code.
+   Ignored if message_value_code returns an html value.
+-  **HTML** (message_is_html): If enabled, the message string is
+   rendered as HTML; otherwise it's treated as plain text.
+-  **Message Value Code** (message_value_code): Safe Python expression
+   evaluated per record. Return a dict such as {"visible": True,
+   "severity": "warning", "values": {"name": record.name}}. Use either
+   message or html (from this code), not both. Several evaluation
+   context variables are available.
 
 Evaluation context variables available in Message Value Code:
 -------------------------------------------------------------
 
-- \`env\`: Odoo environment for ORM access.
-- \`user\`: Current user (env.user).
-- \`ctx\`: Copy of the current context (dict(env.context)).
-- \`record\`: Current record (the form's record).
-- \`draft\`: The persisted field values of the ORM record (before
-  applying the current form's unsaved changes) + the current unsaved
-  changes on trigger fields. Should be used instead of record when your
-  rule is triggered dynamically by an update to a trigger field. It
-  doesn't include any values from complex fields (one2many/reference,
-  etc).
-- \`record_id\`: Integer id of the record being edited, or False if the
-  form is creating a new record.
-- \`model\`: Shortcut to the current model (env[record._name]).
-- \`url_for(obj): Helper that returns a backend form URL for \`obj.
-- \`context_today(ts=None)\`: User-timezone “today” (date) for reliable
-  date comparisons.
-- time, \`datetime\`: Standard Python time/datetime modules.
-- \`dateutil\`: { "parser": dateutil.parser, "relativedelta":
-  dateutil.relativedelta }
-- \`timezone\`: pytz.timezone for TZ handling.
-- float_compare, float_is_zero, \`float_round\`: Odoo float utils for
-  precision-safe comparisons/rounding.
+-  \`env\`: Odoo environment for ORM access.
+-  \`user\`: Current user (env.user).
+-  \`ctx\`: Copy of the current context (dict(env.context)).
+-  \`record\`: Current record (the form's record).
+-  \`draft\`: The persisted field values of the ORM record (before
+   applying the current form's unsaved changes) + the current unsaved
+   changes on trigger fields. Should be used instead of record when your
+   rule is triggered dynamically by an update to a trigger field. It
+   doesn't include any values from complex fields (one2many/reference,
+   etc).
+-  \`record_id\`: Integer id of the record being edited, or False if the
+   form is creating a new record.
+-  \`model\`: Shortcut to the current model (env[record._name]).
+-  \`url_for(obj): Helper that returns a backend form URL for \`obj.
+-  \`context_today(ts=None)\`: User-timezone “today” (date) for reliable
+   date comparisons.
+-  time, \`datetime\`: Standard Python time/datetime modules.
+-  \`dateutil\`: { "parser": dateutil.parser, "relativedelta":
+   dateutil.relativedelta }
+-  \`timezone\`: zoneinfo.ZoneInfo for TZ handling.
+-  float_compare, float_is_zero, \`float_round\`: Odoo float utils for
+   precision-safe comparisons/rounding.
 
 All of the above are injected by the module to the safe_eval locals.
 
@@ -120,9 +120,9 @@ Message setting examples:
 
 **A) Missing email on contact (warning)**
 
-- Model: res.partner
-- Message: This contact has no email.
-- Message Value Code:
+-  Model: res.partner
+-  Message: This contact has no email.
+-  Message Value Code:
 
 .. code:: python
 
@@ -130,15 +130,15 @@ Message setting examples:
 
 **B) Show partner comment if available**
 
-- Model: purchase.order
-- Message: Vendor Comments: ${comment}
-- Message Value Code (single expression):
+-  Model: purchase.order
+-  Message: Vendor Comments: ${comment}
+-  Message Value Code (single expression):
 
 .. code:: python
 
    {
-     "visible": bool(record.partner_id.comment),
-     "values": {"comment": record.partner_id.comment},
+       "visible": bool(record.partner_id.comment),
+       "values": {"comment": record.partner_id.comment},
    }
 
 It is also possible to use "convenience placeholders" without an
@@ -147,54 +147,60 @@ explicit values key:
 .. code:: python
 
    {
-     "visible": bool(record.partner_id.comment),
-     "comment": record.partner_id.comment,
+       "visible": bool(record.partner_id.comment),
+       "comment": record.partner_id.comment,
    }
 
 **C) High-value sale order (dynamic severity)**
 
-- Model: sale.order
-- Message: High-value order: ${amount_total}
-- Message Value Code:
+-  Model: sale.order
+-  Message: High-value order: ${amount_total}
+-  Message Value Code:
 
 .. code:: python
 
    {
-     "visible": record.amount_total >= 30000,
-     "severity": "danger" if record.amount_total >= 100000 else "warning",
-     "values": {"amount_total": record.amount_total},
+       "visible": record.amount_total >= 30000,
+       "severity": "danger" if record.amount_total >= 100000 else "warning",
+       "values": {"amount_total": record.amount_total},
    }
 
 **D) Quotation past validity date**
 
-- Model: sale.order
-- Message: This quotation is past its validity date (${validity_date}).
-- Message Value Code:
+-  Model: sale.order
+-  Message: This quotation is past its validity date (${validity_date}).
+-  Message Value Code:
 
 .. code:: python
 
    {
-     "visible": bool(record.validity_date and context_today() > record.validity_date and record.state in ["draft", "sent"]),
-     "values": {"validity_date": record.validity_date},
+       "visible": bool(
+           record.validity_date
+           and context_today() > record.validity_date
+           and record.state in ["draft", "sent"]
+       ),
+       "values": {"validity_date": record.validity_date},
    }
 
 **E) Pending activities on a task (uses \`env\`)**
 
-- Model: project.task
-- Message: There are ${cnt} pending activities.
-- Message Value Code (multi-line with result):
+-  Model: project.task
+-  Message: There are ${cnt} pending activities.
+-  Message Value Code (multi-line with result):
 
 .. code:: python
 
-   cnt = env["mail.activity"].search_count([("res_model","=",record._name),("res_id","=",record.id)])
+   cnt = env["mail.activity"].search_count(
+       [("res_model", "=", record._name), ("res_id", "=", record.id)]
+   )
    result = {"visible": cnt > 0, "values": {"cnt": cnt}}
 
 **F) Product is missing internal reference (uses trigger fields)**
 
-- Model: product.template
-- Trigger Fields: default_code
-- Message: Make sure to set an internal reference!
-- Message Value Code:
+-  Model: product.template
+-  Trigger Fields: default_code
+-  Message: Make sure to set an internal reference!
+-  Message Value Code:
 
 .. code:: python
 
@@ -203,41 +209,39 @@ explicit values key:
 **G) HTML banner linking to the customer's last sales order (uses
 trigger fields)**
 
-- Model: sale.order
-- Trigger Fields: partner_id
-- Message: (leave blank; html provided by Message Value Code)
-- Message Value Code (multi-line with result):
+-  Model: sale.order
+-  Trigger Fields: partner_id
+-  Message: (leave blank; html provided by Message Value Code)
+-  Message Value Code (multi-line with result):
 
 .. code:: python
 
    domain = [("partner_id", "=", draft.partner_id.id)]
    if record_id:
-     domain += [("id", "<", record_id)]
+       domain += [("id", "<", record_id)]
    last = model.search(domain, order="date_order desc, id desc", limit=1)
    if last:
-     html = "<strong>Previous order:</strong> <a href='%s'>%s</a>" % (url_for(last), last.name)
-     result = {"visible": True, "html": html}
+       html = "<strong>Previous order:</strong> <a href='%s'>%s</a>" % (
+           url_for(last),
+           last.name,
+       )
+       result = {"visible": True, "html": html}
    else:
-     result = {"visible": False}
+       result = {"visible": False}
 
 If we set up the rules for a partner record as shown below:
 
-|image1|
+.. image:: https://raw.githubusercontent.com/OCA/web/20.0/web_form_banner/static/description/partner_email_rule.png
 
-|image2|
+.. image:: https://raw.githubusercontent.com/OCA/web/20.0/web_form_banner/static/description/partner_tag_rule.png
 
 The banners will be displayed in the partner form view:
 
-|image3|
+.. image:: https://raw.githubusercontent.com/OCA/web/20.0/web_form_banner/static/description/partner_layout_banner.png
 
 Once the values are filled in, the banners will disappear:
 
-|image4|
-
-.. |image1| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_form_banner/static/description/partner_email_rule.png
-.. |image2| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_form_banner/static/description/partner_tag_rule.png
-.. |image3| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_form_banner/static/description/partner_layout_banner.png
-.. |image4| image:: https://raw.githubusercontent.com/OCA/web/19.0/web_form_banner/static/description/partner_layout_no_banner.png
+.. image:: https://raw.githubusercontent.com/OCA/web/20.0/web_form_banner/static/description/partner_layout_no_banner.png
 
 Known issues / Roadmap
 ======================
@@ -253,15 +257,15 @@ may render distorted.
 Limitations of draft eval context variable
 ------------------------------------------
 
-- draft is always available in the eval context, but for new records
-  (record_id = False) it only contains the trigger fields from the
-  banner rules.
-- For existing records, draft overlays the trigger field values on top
-  of the persisted record; all other fields come from Model.new defaults
-  rather than the database.
-- Only simple field types are included: char, text, html, selection,
-  boolean, integer, float, monetary, date, datetime, many2one, and
-  many2many. **one2many/reference/other types are omitted.**
+-  draft is always available in the eval context, but for new records
+   (record_id = False) it only contains the trigger fields from the
+   banner rules.
+-  For existing records, draft overlays the trigger field values on top
+   of the persisted record; all other fields come from Model.new
+   defaults rather than the database.
+-  Only simple field types are included: char, text, html, selection,
+   boolean, integer, float, monetary, date, datetime, many2one, and
+   many2many. **one2many/reference/other types are omitted.**
 
 Bug Tracker
 ===========
@@ -269,7 +273,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_form_banner%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_form_banner%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -284,10 +288,10 @@ Authors
 Contributors
 ------------
 
-- `Quartile <https://www.quartile.co>`__:
+-  `Quartile <https://www.quartile.co>`__:
 
-  - Yoshi Tashiro
-  - Aung Ko Ko Lin
+   -  Yoshi Tashiro
+   -  Aung Ko Ko Lin
 
 Maintainers
 -----------
@@ -313,6 +317,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-yostashiro| |maintainer-aungkokolin1997| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/19.0/web_form_banner>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/20.0/web_form_banner>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

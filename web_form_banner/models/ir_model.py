@@ -33,7 +33,7 @@ class Base(models.AbstractModel):
             return res
         try:
             root = etree.fromstring(res["arch"])
-        except Exception:
+        except (etree.XMLSyntaxError, ValueError):
             return res
         for rule in rules:
             targets = root.xpath(rule.target_xpath or "//sheet")

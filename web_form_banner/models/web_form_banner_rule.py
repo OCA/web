@@ -3,12 +3,12 @@
 
 import logging
 from string import Template
+from zoneinfo import ZoneInfo
 
 from dateutil import parser as dateparse
 from dateutil.relativedelta import relativedelta
 from lxml import etree
 from markupsafe import escape
-from pytz import timezone
 
 from odoo import api, fields, models, tools
 from odoo.exceptions import ValidationError
@@ -166,7 +166,7 @@ class WebFormBannerRule(models.Model):
             base = (
                 self.env["ir.config_parameter"]
                 .sudo()
-                .get_param("web.base.url", default="")
+                .get_str("web.base.url", default="")
             )
             return f"{base}/web#id={rec.id}&model={rec._name}&view_type=form"
         except Exception:
@@ -182,7 +182,7 @@ class WebFormBannerRule(models.Model):
                 "parser": dateparse,
                 "relativedelta": relativedelta,
             },
-            "timezone": timezone,
+            "timezone": ZoneInfo,
             "float_compare": float_compare,
             "float_is_zero": float_is_zero,
             "float_round": float_round,
@@ -238,7 +238,7 @@ class WebFormBannerRule(models.Model):
         code = rule.message_value_code.strip()
         try:
             out = safe_eval(code, eval_ctx, mode="eval") or {}
-        except Exception:
+        except (SyntaxError, TypeError, ValueError):
             safe_eval(code, eval_ctx, mode="exec")
             out = eval_ctx.get("result") or {}
         return out if isinstance(out, dict) else {}
@@ -251,7 +251,7 @@ class WebFormBannerRule(models.Model):
         tpl = Template(rule.message or "")
         try:
             rendered = tpl.safe_substitute(values)
-        except Exception:
+        except (KeyError, TypeError, ValueError):
             rendered = rule.message or ""
         if rule.message_is_html:
             return rendered
@@ -263,20 +263,20 @@ class WebFormBannerRule(models.Model):
     def compute_message(self, rule_id, model, res_id, form_vals=None):
         """Return {visible, severity, html} for the given rule and record."""
         lang = self.env.context.get("lang") or self.env.user.lang
-        self = self.with_context(lang=lang)
-        rule = self.browse(int(rule_id)).sudo()
+        rule_model = self.with_context(lang=lang)
+        rule = rule_model.browse(int(rule_id)).sudo()
         if not rule.exists() or not rule.active:
             return {"visible": False}
-        values = self._sanitize_values(model, form_vals)
-        draft, record, record_id = self._build_eval_record(model, res_id, values)
-        eval_ctx = self._get_eval_context(record)
+        values = rule_model._sanitize_values(model, form_vals)
+        draft, record, record_id = rule_model._build_eval_record(model, res_id, values)
+        eval_ctx = rule_model._get_eval_context(record)
         eval_ctx.update(
             {
                 "draft": draft,  # DB base + simple field overrides
                 "record_id": record_id,
             }
         )
-        out = self._run_rule_code(rule, eval_ctx) or {}
+        out = rule_model._run_rule_code(rule, eval_ctx) or {}
         severity = out.get("severity", rule.severity or "danger")
         visible = out.get("visible", True)
         if not visible:
@@ -286,5 +286,5 @@ class WebFormBannerRule(models.Model):
             for k, v in out.items()
             if k not in {"visible", "severity", "values", "html"}
         }
-        html = self._render_html(rule, values, out.get("html"))
+        html = rule_model._render_html(rule, values, out.get("html"))
         return {"visible": True, "severity": severity, "html": html}
