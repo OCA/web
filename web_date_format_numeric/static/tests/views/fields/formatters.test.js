@@ -9,21 +9,21 @@ import {session} from "@web/session";
 describe.current.tags("headless");
 
 test("formatDate.extractOptions defaults to session.use_date_format_numeric", () => {
-    patchWithCleanup(session, {use_date_format_numeric: true});
-    expect(formatDate.extractOptions({options: {}})).toEqual({numeric: true});
+  patchWithCleanup(session, {use_date_format_numeric: true});
+  expect(formatDate.extractOptions({options: {}})).toEqual({numeric: true});
 
-    patchWithCleanup(session, {use_date_format_numeric: false});
-    expect(formatDate.extractOptions({options: {}})).toEqual({numeric: false});
+  patchWithCleanup(session, {use_date_format_numeric: false});
+  expect(formatDate.extractOptions({options: {}})).toEqual({numeric: false});
 });
 
 test("formatDate.extractOptions: options.numeric overrides session.use_date_format_numeric", () => {
-    patchWithCleanup(session, {use_date_format_numeric: true});
-    expect(formatDate.extractOptions({options: {numeric: "false"}})).toEqual({
-        numeric: false,
-    });
+  patchWithCleanup(session, {use_date_format_numeric: true});
+  expect(formatDate.extractOptions({options: {numeric: "false"}})).toEqual({
+    numeric: false,
+  });
 
-    patchWithCleanup(session, {use_date_format_numeric: false});
-    expect(formatDate.extractOptions({options: {numeric: "true"}})).toEqual({
-        numeric: true,
-    });
+  patchWithCleanup(session, {use_date_format_numeric: false});
+  expect(formatDate.extractOptions({options: {numeric: "true"}})).toEqual({
+    numeric: true,
+  });
 });

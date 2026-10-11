@@ -6,15 +6,15 @@ import {ListDateTimeField} from "@web/views/fields/datetime/list_datetime_field"
 import {registry} from "@web/core/registry";
 
 registry
-    .category("fields")
-    .add("list.date", {...dateField, component: ListDateTimeField}, {force: true})
-    .add(
-        "list.daterange",
-        {...dateRangeField, component: ListDateTimeField},
-        {force: true}
-    )
-    .add(
-        "list.datetime",
-        {...dateTimeField, component: ListDateTimeField},
-        {force: true}
-    );
+  .category("fields")
+  .add("list.date", {...dateField, component: ListDateTimeField}, {force: true})
+  .add(
+    "list.daterange",
+    {...dateRangeField, component: ListDateTimeField},
+    {force: true}
+  )
+  .add(
+    "list.datetime",
+    {...dateTimeField, component: ListDateTimeField},
+    {force: true}
+  );
