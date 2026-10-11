@@ -4,9 +4,9 @@
 */
 // Set sheet to full width when chatter is forced to bottom
 .o_form_view_container {
-    .o_form_sheet_bg.o_fullwidth,
-    .o_form_sheet_bg.o_fullwidth .o_form_sheet {
-        max-width: none !important;
-        width: auto !important;
-    }
+  .o_form_sheet_bg.o_fullwidth,
+  .o_form_sheet_bg.o_fullwidth .o_form_sheet {
+    max-width: none !important;
+    width: auto !important;
+  }
 }
