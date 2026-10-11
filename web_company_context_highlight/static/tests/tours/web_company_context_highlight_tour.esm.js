@@ -9,7 +9,7 @@ registry.category("web_tour.tours").add("web_company_context_highlight_tour", {
   steps: () => [
     // 1. Check absence of desktop building icon on the initial page load, and click switcher button
     {
-      trigger: ".o_switch_company_menu:not(.o_company_context_highlighted) button",
+      trigger: "button.o_switch_company_menu:not(.o_company_context_highlighted)",
       run: function (actions) {
         const buildingIcon = document.querySelector(
           ".o_switch_company_menu .fa-building-o.d-lg-inline-block"
@@ -24,8 +24,7 @@ registry.category("web_tour.tours").add("web_company_context_highlight_tour", {
     },
     // 2. Select Company B checkbox to enable multi-company context
     {
-      trigger:
-        ".o_switch_company_item:contains('Company B') div[role='menuitemcheckbox']",
+      trigger: ".o_switch_company_item:contains('Company B') input[type='checkbox']",
       run: "click",
     },
     // 3. Click the confirm button to apply the change (causes reload)
@@ -36,7 +35,7 @@ registry.category("web_tour.tours").add("web_company_context_highlight_tour", {
     },
     // 4. After reload, wait for the switcher to be highlighted, then check that the desktop building icon is present, and click to open the dropdown
     {
-      trigger: ".o_switch_company_menu.o_company_context_highlighted button",
+      trigger: "button.o_switch_company_menu.o_company_context_highlighted",
       run: function (actions) {
         const buildingIcon = document.querySelector(
           ".o_switch_company_menu .fa-building-o.d-lg-inline-block"
@@ -51,8 +50,7 @@ registry.category("web_tour.tours").add("web_company_context_highlight_tour", {
     },
     // 5. Deselect Company B
     {
-      trigger:
-        ".o_switch_company_item:contains('Company B') div[role='menuitemcheckbox']",
+      trigger: ".o_switch_company_item:contains('Company B') input[type='checkbox']",
       run: "click",
     },
     // 6. Click the confirm button again (causes reload)
@@ -63,7 +61,7 @@ registry.category("web_tour.tours").add("web_company_context_highlight_tour", {
     },
     // 7. Verify we are back to single company, NOT highlighted, and desktop building icon is gone
     {
-      trigger: ".o_switch_company_menu:not(.o_company_context_highlighted) button",
+      trigger: "button.o_switch_company_menu:not(.o_company_context_highlighted)",
       run: function () {
         const buildingIcon = document.querySelector(
           ".o_switch_company_menu .fa-building-o.d-lg-inline-block"
