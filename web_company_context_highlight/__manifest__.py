@@ -5,7 +5,7 @@
 {
     "name": "Web Company Context Highlight",
     "summary": "Highlight the company switcher when multiple companies are selected",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "author": "Acsone, Odoo Community Association (OCA)",
     "maintainers": ["pverkest"],
     "website": "https://github.com/OCA/web",

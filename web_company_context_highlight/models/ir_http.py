@@ -13,12 +13,12 @@ class IrHttp(models.AbstractModel):
         highlight_color = (
             self.env["ir.config_parameter"]
             .sudo()
-            .get_param("web_company_context_highlight.color", "#ffc107")
+            .get_str("web_company_context_highlight.color", "#ffc107")
         )
         text_color = (
             self.env["ir.config_parameter"]
             .sudo()
-            .get_param("web_company_context_highlight.text_color", "#212529")
+            .get_str("web_company_context_highlight.text_color", "#212529")
         )
         session["web_company_context_highlight_color"] = highlight_color
         session["web_company_context_highlight_text_color"] = text_color
