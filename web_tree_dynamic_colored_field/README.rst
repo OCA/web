@@ -28,16 +28,65 @@ Colorize field in tree views
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module aims to add support for dynamically coloring fields in tree
+This module aims to add support for dynamically coloring fields in list
 view according to data in the record.
 
 Features
 --------
 
 - Add attribute ``bg_color`` on field's ``options`` to color background
-  of a cell in tree view
+  of a cell in list view
 - Add attribute ``fg_color`` on field's ``options`` to change text color
-  of a cell in tree view
+  of a cell in list view
+- Add attribute ``bg_color_field`` on list's ``colors`` to change
+  background color of the entire row in list view (\*)
+- Add attribute ``fg_color_field`` on list's ``colors`` to change text
+  color of the entire row in list view (\*)
+
+(\*) This functionality only works for a list defined in a form. (Since
+13.0, the ``colors`` attribute is no longer in the RelaxNG schema of the
+list view, so we can't use it like before, but it looks like the RNG is
+not checked for embedded list.)
+
+Testing
+-------
+
+Some views are overriden for demoing this module functionnalities:
+
+Demo of field static colors or colors based on conditions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+On the Users list view: The ``name`` and ``login_date`` fields are
+colored according to conditions written in view definition.
+
+|image1|
+
+Demo of field dynamic colors based on another field text content that returns the wanted color (background/foreground)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+On the System Parameters list view, create a new key/value pair:
+
+- For the ``key`` field: Its content is the text color, the ``value``
+  field is its background color.
+- For the ``value`` field: Its content is the background color, the
+  ``value`` field is the text color.
+
+|image2|
+
+Demo of row dynamic colors based on a fields text content that returns the wanted color (background/foreground)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+On the Groups form view > "Access Rights": Two demo fields have been
+added, one to set the background color and the other one for the
+foreground color, to test it you just have to set a color (eg: blue,
+yellow, #00FDF0), the entire row background/foreground colors are
+immediatly updated.
+
+|image3|
+
+.. |image1| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_tree_dynamic_colored_field/static/description/demo1.jpg
+.. |image2| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_tree_dynamic_colored_field/static/description/demo2.jpg
+.. |image3| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_tree_dynamic_colored_field/static/description/demo3.jpg
 
 **Table of contents**
 
@@ -47,76 +96,79 @@ Features
 Usage
 =====
 
-- In the tree view declaration, put
+Using view conditions
+=====================
+
+- In the list view declaration, put
   ``options='{"bg_color": "red: customer==True"}`` attribute in the
   ``field`` tag:
 
-  ::
+  .. code:: xml
 
      ...
      <field name="arch" type="xml">
-         <tree string="View name">
+         <list string="View name">
              ...
              <field name="name" options='{"bg_color": "red: customer == True"}'/>
              ...
-         </tree>
+         </list>
      </field>
      ...
 
-     With this example, column which renders 'name' field will have its **background** colored in red on customer records.
+  With this example, column which renders 'name' field will have its
+  **background** colored in red on customer records.
 
-- In the tree view declaration, put
+- In the list view declaration, put
   ``options='{"fg_color": "white:customer == True"}'`` attribute in the
   ``field`` tag:
 
-  ::
+  .. code:: xml
 
      ...
      <field name="arch" type="xml">
-         <tree string="View name">
+         <list string="View name">
              ...
              <field name="name" options='{"fg_color": "white:customer == True"}'/>
              ...
-         </tree>
+         </list>
      </field>
      ...
 
-     With this example, column which renders 'name' field will have its **text** colored in white on customer records.
+  With this example, column which renders 'name' field will have its
+  **text** colored in white on customer records.
 
 - If you want to use more than one color, you can split the attributes
   using ';':
 
-::
-
-   options='{"fg_color": "red:red_color == True; green:green_color == True"}'
-
-Example:
-
-.. code:: xml
-
-   ...
-    <field name="arch" type="xml">
-        <tree string="View name">
-            ...
-            <field name="name" options='{"fg_color": "red:red_color == True; green:green_color == True"}'/>
-            ...
-        </tree>
-    </field>
-    ...
-
-- Can use strings too... In the tree view declaration, put
-  ``options="{'fg_color': 'green:customer_state == \'success\''}"``
-  attribute in the ``field`` tag:
-
   ::
+
+     options='{"fg_color": "red:red_color == True; green:green_color == True"}'
+
+  .. code:: xml
 
      ...
      <field name="arch" type="xml">
-         <tree string="View name">
+         <list string="View name">
+             ...
+             <field name="name" options='{"fg_color": "red:red_color == True; green:green_color == True"}'/>
+             ...
+         </list>
+     </field>
+     ...
+
+- Can use strings too... In the list view declaration, put
+  ``options="{'fg_color': 'green:customer_state == \'success\''}"``
+  attribute in the ``field`` tag:
+
+  .. code:: xml
+
+     ...
+     <field name="arch" type="xml">
+         <list string="View name">
              ...
              <field name="name" options="{'fg_color': 'green:customer_state == \'success\''}"/>
              ...
-         </tree>
+         </list>
      </field>
      ...
 
@@ -124,15 +176,33 @@ Example:
 the options doesn't follow the JSON format, the options string will be
 evaluated using py.eval()**
 
+Using view fields
+=================
+
+- In the list view declaration, put
+  ``options='{"bg_color": "my_color"}`` attribute in the ``field`` tag:
+
+  .. code:: xml
+
+     ...
+     <field name="arch" type="xml">
+         <list string="View name">
+             ...
+             <field name="my_color" column_invisible="1"/>
+             <field name="name" options='{"bg_color": "my_color"}'/>
+             ...
+         </list>
+     </field>
+     ...
+
+  With this example, the content of the field named ``my_color`` will be
+  used to populate the ``background-color`` CSS value. Use a compute
+  field to return whichever color you want depending on the other record
+  values.
+
 Known issues / Roadmap
 ======================
 
-- Before version 13.0, this module had a feature allowing to change the
-  color of a line depending on a field, using a ``colors`` attribute
-  with the name of the field on the ``<tree>`` element. Since 13.0, the
-  ``colors`` attribute is no longer in the RelaxNG schema of the tree
-  view, so we can't use it anymore. This feature has then been dropped,
-  but could be reimplement in another way.
 - Since version 17.0 coloring is written into ``style`` attribute of
   (td) element
 
@@ -165,6 +235,7 @@ Contributors
 - Phuc Tran Thanh <phuc@trobz.com>
 - Sylvain LE GAL <https://twitter.com/legalsylvain>
 - Jurgis Pralgauskis <jurgis@versada.eu>
+- Yann Papouin <ypa@decgroupe.com>
 
 Other credits
 -------------
