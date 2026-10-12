@@ -6,12 +6,14 @@
     <t t-name="web_refresher.Button">
         <nav class="oe_refresher" aria-label="Refresher" aria-atomic="true">
             <button
-                class="fa fa-refresh btn btn-icon oe_pager_refresh"
+                class="btn btn-icon oe_pager_refresh"
                 aria-label="Refresh"
-                t-on-click="onClickRefresh"
+                t-on-click="this.onClickRefresh"
                 title="Refresh"
                 tabindex="-1"
-            />
+            >
+                <i class="oi oi-fw" data-icon="refresh" />
+            </button>
         </nav>
     </t>
 </template>

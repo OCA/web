@@ -3,9 +3,9 @@
  * Copyright 2023 Taras Shabaranskyi
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-import {Component} from "@odoo/owl";
+import {Component, t, usePlugin, useProps} from "@odoo/owl";
+import {ActionPlugin} from "@web/webclient/actions/action_plugin";
 import {useDebounced} from "@web/core/utils/timing";
-import {useService} from "@web/core/utils/hooks";
 
 export function useRefreshAnimation(timeout) {
     const refreshClass = "o_content__refresh";
@@ -28,9 +28,9 @@ export function useRefreshAnimation(timeout) {
 
     function animate() {
         clearAnimationTimeout();
-        contentClassList().add(refreshClass);
+        contentClassList()?.add(refreshClass);
         timeoutId = setTimeout(() => {
-            contentClassList().remove(refreshClass);
+            contentClassList()?.remove(refreshClass);
             clearAnimationTimeout();
         }, timeout);
     }
@@ -39,9 +39,14 @@ export function useRefreshAnimation(timeout) {
 }
 
 export class Refresher extends Component {
+    static template = "web_refresher.Button";
+    props = useProps({
+        searchModel: t.object().optional(),
+        pagerProps: t.object().optional(),
+    });
+
     setup() {
-        super.setup();
-        this.action = useService("action");
+        this.action = usePlugin(ActionPlugin);
         this.refreshAnimation = useRefreshAnimation(1000);
         this.onClickRefresh = useDebounced(this.onClickRefresh, 200);
     }
@@ -112,11 +117,3 @@ export class Refresher extends Component {
         }
     }
 }
-
-Object.assign(Refresher, {
-    template: "web_refresher.Button",
-    props: {
-        searchModel: {type: Object, optional: true},
-        pagerProps: {type: Object, optional: true},
-    },
-});

@@ -9,8 +9,8 @@
         t-inherit-mode="extension"
     >
         <xpath expr="//div[hasclass('o_cp_pager')]" position="before">
-            <div class="oe_cp_refresher" role="search" t-ref="refresher">
-                <Refresher t-props="refresherProps" />
+            <div class="oe_cp_refresher" role="search">
+                <Refresher t-props="this.refresherProps" />
             </div>
         </xpath>
     </t>
