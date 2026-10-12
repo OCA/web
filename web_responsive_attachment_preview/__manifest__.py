@@ -4,7 +4,7 @@
 {
     "name": "Responsive web client, with attachment preview",
     "summary": "Always show the attachment preview ie on invoices",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "development_status": "Beta",
     "category": "Technical",
     "website": "https://github.com/OCA/web",
@@ -14,9 +14,10 @@
     "depends": [
         "web_responsive",
     ],
+    "installable": True,
     "assets": {
         "web.assets_backend": [
-            "web_responsive_attachment_preview/static/src/js/form_controller.esm.js",
+            "web_responsive_attachment_preview/static/src/js/form_renderer.esm.js",
         ],
     },
 }

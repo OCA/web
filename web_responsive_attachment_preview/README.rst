@@ -17,13 +17,13 @@ Responsive web client, with attachment preview
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/16.0/web_responsive_attachment_preview
+    :target: https://github.com/OCA/web/tree/18.0/web_responsive_attachment_preview
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_responsive_attachment_preview
+    :target: https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_responsive_attachment_preview
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -36,13 +36,30 @@ for example on invoices by standard Odoo when using ``web_responsive``.
 .. contents::
    :local:
 
+Usage
+=====
+
+Open a saved record with a PDF or supported image attachment in a form
+that includes an attachment preview container, such as an invoice or
+vendor bill.
+
+On a browser viewport at least 1534 CSS pixels wide, the attachment
+preview appears on the right side and the chatter appears below the
+form. On smaller viewports, Odoo keeps its standard layout without an
+automatic side preview.
+
+Forms without an attachment preview container, and records without a PDF
+or supported image attachment, keep their standard layout. This module
+restores Odoo's existing layout rules; it does not add preview
+containers to other forms.
+
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_responsive_attachment_preview%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_responsive_attachment_preview%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -57,8 +74,8 @@ Authors
 Contributors
 ------------
 
--  Holger Brunn <mail@hunki-enterprises.com>
-   (https://hunki-enterprises.com)
+- Holger Brunn <mail@hunki-enterprises.com>
+  (https://hunki-enterprises.com)
 
 Maintainers
 -----------
@@ -81,6 +98,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-hbrunn| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/16.0/web_responsive_attachment_preview>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/18.0/web_responsive_attachment_preview>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
