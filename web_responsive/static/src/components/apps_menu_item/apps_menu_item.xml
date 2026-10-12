@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2018 Tecnativa - Jairo Llopis
+     Copyright 2021 ITerra - Sergey Shebanin
+     Copyright 2023 Onestein - Anjeel Haria
+     Copyright 2023 Taras Shabaranskyi
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<templates>
+    <t t-name="web_responsive.AppMenuItem">
+        <a
+            t-att-class="this.className"
+            role="button"
+            t-att-data-menu-xmlid="this.props.app.xmlid"
+            t-att-href="this.props.href"
+            t-on-click="this.onClick"
+            draggable="false"
+        >
+            <div
+                class="position-relative o_app"
+                t-att-data-menu-xmlid="this.props.app.xmlid"
+            >
+                <img
+                    class="o-app-menu-item__icon rounded-3"
+                    draggable="false"
+                    t-att-src="this.webIconData()"
+                />
+                <i
+                    t-if="this.isActive"
+                    class="oi o-app-menu-item__active"
+                    data-icon="check_circle"
+                />
+            </div>
+            <span class="o-app-menu-item__name" t-att-title="this.props.app.name">
+                <t t-out="this.props.app.name" />
+            </span>
+        </a>
+    </t>
+</templates>
