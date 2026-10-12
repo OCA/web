@@ -12,11 +12,12 @@
             position="replace"
         >
             <button
-                class="o-mail-Chatter-sendMessage btn text-nowrap me-1"
+                class="o-mail-Chatter-sendMessage btn text-nowrap"
                 t-att-class="{
-                'btn-secondary': this.state.composerType !== 'message',
-                'btn-primary active': this.state.composerType === 'message'
-            }"
+                    'btn-primary': this.state.composerType !== 'note',
+                    'btn-secondary': this.state.composerType === 'note',
+                    'active': this.state.composerType === 'message',
+                }"
                 t-att-disabled="!this.state.thread.canPostMessage and this.thread().id"
                 data-hotkey="m"
                 t-on-click="() => this.toggleComposer('message')"
@@ -27,11 +28,11 @@
         </xpath>
         <xpath expr="//button[hasclass('o-mail-Chatter-logNote')]" position="replace">
             <button
-                class="o-mail-Chatter-logNote btn text-nowrap me-1"
+                class="o-mail-Chatter-logNote btn text-nowrap"
                 t-att-class="{
-                'btn-primary active': this.state.composerType === 'note',
-                'btn-secondary': this.state.composerType !== 'note'
-            }"
+                    'btn-primary active': this.state.composerType === 'note',
+                    'btn-secondary': this.state.composerType !== 'note',
+                }"
                 t-att-disabled="!this.state.thread.canPostMessage and this.thread().id"
                 data-hotkey="shift+m"
                 t-on-click="() => this.toggleComposer('note')"

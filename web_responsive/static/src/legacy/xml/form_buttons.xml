@@ -24,7 +24,8 @@
     </t>
 
     <!-- Odoo 20 only keeps the "New" button in web.FormView.Buttons: the inline
-         save/discard buttons already live, icon-only, in web.FormStatusIndicator -->
+         save/discard buttons already live, icon-only, in web.FormStatusIndicator,
+         and the dialog ones moved to web.FormView.DialogButtons -->
     <t
         t-name="web_responsive.FormView.Buttons"
         t-inherit="web.FormView.Buttons"
@@ -38,6 +39,47 @@
                 t-on-click.stop="this.create"
                 t-if="this.canCreate"
                 t-att-data-available-offline="this.isNewButtonAvailableOffline"
+            >
+                <t t-call="web_responsive.icon_button_create" />
+            </button>
+        </xpath>
+    </t>
+
+    <!-- Form view buttons when the form is opened in a dialog -->
+    <t
+        t-name="web_responsive.FormView.DialogButtons"
+        t-inherit="web.FormView.DialogButtons"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//button[hasclass('o_form_button_save')]" position="replace">
+            <button
+                t-if="this.model.root.isInEdition"
+                type="button"
+                class="btn btn-primary o_form_button_save"
+                data-hotkey="s"
+                t-on-click.stop="() => this.saveButtonClicked({closable: true})"
+            >
+                <t t-call="web_responsive.icon_button_save" />
+            </button>
+        </xpath>
+        <xpath expr="//button[hasclass('o_form_button_cancel')]" position="replace">
+            <button
+                t-if="this.model.root.isInEdition"
+                type="button"
+                class="btn btn-secondary o_form_button_cancel"
+                data-hotkey="j"
+                t-on-click.stop="this.discard"
+            >
+                <t t-call="web_responsive.icon_button_discard" />
+            </button>
+        </xpath>
+        <xpath expr="//button[hasclass('o_form_button_create')]" position="replace">
+            <button
+                t-if="!this.model.root.isInEdition and this.canCreate"
+                type="button"
+                class="btn btn-secondary o_form_button_create"
+                data-hotkey="c"
+                t-on-click.stop="this.create"
             >
                 <t t-call="web_responsive.icon_button_create" />
             </button>
