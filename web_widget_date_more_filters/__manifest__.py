@@ -5,7 +5,7 @@
     "category": "web",
     "version": "16.0.1.0.0",
     "website": "https://github.com/OCA/web",
-    "author": "Elise Gigot <egigot@openstudio.fr>, Odoo Community Association (OCA)",
+    "author": "OpenStudio, Odoo Community Association (OCA)",
     "depends": ["web"],
     "summary": "Add some filters to the date filters widget",
     "license": "AGPL-3",
