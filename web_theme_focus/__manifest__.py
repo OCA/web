@@ -13,6 +13,9 @@
     "depends": ["web", "web_dark_mode", "web_responsive"],
     "excludes": ["web_enterprise"],
     "installable": True,
+    "data": [
+        "views/res_users_views.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "web_theme_focus/static/src/js/app_theme.esm.js",

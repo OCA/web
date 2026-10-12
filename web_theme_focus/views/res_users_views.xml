@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- KÖK NEDEN FIX (2026-10-12): web_responsive'ın apps-menu preferences
+         görünümü, res.users ACL'i normal kullanıcıya write vermediği için
+         istemci tarafında READONLY render ediliyor (dropdown açılmaz, seçim
+         yapılamaz). Standart "Tercihlerim" görünümü bunu edit="1" ile ezer
+         (base.view_users_form_simple_modif). Aynı tekniği uyguluyoruz. -->
+    <record id="view_apps_menu_prefs_editable" model="ir.ui.view">
+        <field name="name">res.users.apps.menu.preferences.form.editable</field>
+        <field name="model">res.users</field>
+        <field
+            name="inherit_id"
+            ref="web_responsive.res_users_view_form_apps_menu_preferences"
+        />
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="edit">1</attribute>
+            </form>
+        </field>
+    </record>
+</odoo>
