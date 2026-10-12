@@ -1,73 +1,75 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_timesheet_custom_date_filter
+# 	* web_widget_date_more_filters
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Simon Maillard <simon@ogesta.fr>\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#. module: hr_timesheet_custom_date_filter
+#. module: web_widget_date_more_filters
 #. odoo-javascript
-#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
-#, python-format
+#: code:addons/web_widget_date_more_filters/static/src/js/web_widget_date_more_filters.esm.js:0
 msgid "Today"
 msgstr "Aujourd'hui"
 
-#. module: hr_timesheet_custom_date_filter
+#. module: web_widget_date_more_filters
 #. odoo-javascript
-#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
-#, python-format
+#: code:addons/web_widget_date_more_filters/static/src/js/web_widget_date_more_filters.esm.js:0
 msgid "Yesterday"
 msgstr "Hier"
 
-#. module: hr_timesheet_custom_date_filter
+#. module: web_widget_date_more_filters
 #. odoo-javascript
-#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
-#, python-format
+#: code:addons/web_widget_date_more_filters/static/src/js/web_widget_date_more_filters.esm.js:0
 msgid "This week"
 msgstr "Cette semaine"
 
-#. module: hr_timesheet_custom_date_filter
+#. module: web_widget_date_more_filters
 #. odoo-javascript
-#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
-#, python-format
+#: code:addons/web_widget_date_more_filters/static/src/js/web_widget_date_more_filters.esm.js:0
 msgid "Last week"
 msgstr "La semaine dernière"
 
-#. module: hr_timesheet_custom_date_filter
+#. module: web_widget_date_more_filters
 #. odoo-javascript
-#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
-#, python-format
+#: code:addons/web_widget_date_more_filters/static/src/js/web_widget_date_more_filters.esm.js:0
 msgid "Last 7 days"
 msgstr "7 derniers jours"
 
-#. module: hr_timesheet_custom_date_filter
+#. module: web_widget_date_more_filters
 #. odoo-javascript
-#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
-#, python-format
+#: code:addons/web_widget_date_more_filters/static/src/js/web_widget_date_more_filters.esm.js:0
 msgid "Last 30 days"
 msgstr "30 derniers jours"
 
-#. module: hr_timesheet_custom_date_filter
+#. module: web_widget_date_more_filters
 #. odoo-javascript
-#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
-#, python-format
+#: code:addons/web_widget_date_more_filters/static/src/js/web_widget_date_more_filters.esm.js:0
 msgid "Last 365 days"
 msgstr "365 derniers jours"
 
-#. module: hr_timesheet_custom_date_filter
+#. module: web_widget_date_more_filters
 #. odoo-javascript
-#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
-#, python-format
+#: code:addons/web_widget_date_more_filters/static/src/js/web_widget_date_more_filters.esm.js:0
 msgid "From Date"
 msgstr "À partir du"
 
-#. module: hr_timesheet_custom_date_filter
+#. module: web_widget_date_more_filters
 #. odoo-javascript
-#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
-#, python-format
+#: code:addons/web_widget_date_more_filters/static/src/js/web_widget_date_more_filters.esm.js:0
 msgid "Until"
 msgstr "Jusqu'au"
 
-#. module: hr_timesheet_custom_date_filter
+#. module: web_widget_date_more_filters
 #. odoo-javascript
-#: code:addons/static/src/js/hr_timesheet_custom_date_filter.js:0
-#, python-format
+#: code:addons/web_widget_date_more_filters/static/src/js/web_widget_date_more_filters.esm.js:0
 msgid "Week"
 msgstr "Semaine"
