@@ -13,6 +13,7 @@
         "web.assets_backend": [
             "web_widget_sub_view/static/src/**/*.esm.js",
             "web_widget_sub_view/static/src/**/*.xml",
+            "web_widget_sub_view/static/src/**/*.scss",
         ],
     },
     "demo": [
