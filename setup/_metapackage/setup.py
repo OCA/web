@@ -88,6 +88,7 @@ setuptools.setup(
         'odoo-addon-web_widget_product_label_section_and_note>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_progressbar_gradient>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_remaining_days_exact_date>=16.0dev,<16.1dev',
+        'odoo-addon-web_widget_sub_view>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_x2many_2d_matrix>=16.0dev,<16.1dev',
     ],
     classifiers=[
