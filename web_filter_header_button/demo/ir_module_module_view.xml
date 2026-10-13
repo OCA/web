@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_module_filter" model="ir.ui.view">
+        <field name="model">ir.module.module</field>
+        <field name="inherit_id" ref="base.view_module_filter" />
+        <field name="arch" type="xml">
+            <filter name="installed" position="attributes">
+                <attribute
+                    name="context"
+                >{'shown_in_panel': {'icon': 'fa-toggle-on', 'hotkey': 'i'}}</attribute>
+            </filter>
+            <filter name="not_installed" position="attributes">
+                <attribute
+                    name="context"
+                >{'shown_in_panel': {'icon': 'fa-toggle-off', 'hotkey': 'u'}}</attribute>
+            </filter>
+            <filter name="state" position="attributes">
+                <attribute
+                    name="context"
+                >{'group_by':'state', 'shown_in_panel': {'icon': 'fa-th-list', 'hotkey': 's'}}</attribute>
+            </filter>
+        </field>
+    </record>
+</odoo>
