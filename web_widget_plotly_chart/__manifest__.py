@@ -5,7 +5,7 @@
     "maintainers": ["robyf70"],
     "website": "https://github.com/OCA/web",
     "category": "Web",
-    "version": "18.0.1.0.0",
+    "version": "20.0.1.0.0",
     "depends": ["web"],
     "data": [],
     "external_dependencies": {
