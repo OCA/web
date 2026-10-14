@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_grid_view.FloatToggleGridCell">
+        <button
+            class="o_grid_toggle_btn btn btn-sm"
+            t-on-click="onClick"
+            t-att-title="props.cell?.value ? 'Checked' : 'Unchecked'"
+        >
+            <i
+                t-att-class="props.cell?.value ? 'fa fa-check-square-o text-success' : 'fa fa-square-o text-muted'"
+            />
+        </button>
+    </t>
+</templates>

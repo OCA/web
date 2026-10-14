@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_grid_view.GridComponent">
+        <t
+            t-component="componentClass"
+            type="props.type"
+            cell="props.cell"
+            row="props.row"
+            isEditing="props.isEditing"
+            onCommit="props.onCommit"
+            onNavigate="props.onNavigate"
+        />
+    </t>
+</templates>
