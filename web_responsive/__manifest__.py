@@ -19,47 +19,40 @@
     "development_status": "Production/Stable",
     "maintainers": ["Tardo", "SplashS"],
     "excludes": ["web_enterprise"],
-    "data": [
-        "views/res_users_views.xml",
-    ],
     "assets": {
-        "web._assets_primary_variables": {
-            "/web_responsive/static/src/legacy/scss/form_variable.scss",
-            "/web_responsive/static/src/legacy/scss/primary_variable.scss",
-        },
+        "web._assets_primary_variables": [
+            (
+                "before",
+                "web/static/src/**/*.variables.scss",
+                "web_responsive/static/src/**/*.variables.scss",
+            ),
+            # These depend on web/static/src/webclient/navbar/navbar.variables.scss
+            # so we need to add them after the variables.scss files.
+            # Another option would be to add them to the web._assets_secondary_variables
+            # bundle but I feel they still belong in the primary bundle.
+            "web_responsive/static/src/**/*.post_variables.scss",
+        ],
         "web.assets_backend": [
-            "web_responsive/static/src/lib/fuse/fuse.basic.min.js",
-            "/web_responsive/static/src/legacy/scss/web_responsive.scss",
-            "/web_responsive/static/src/legacy/scss/big_boxes.scss",
-            "/web_responsive/static/src/legacy/scss/list_sticky_header.scss",
-            "/web_responsive/static/src/legacy/js/web_responsive.esm.js",
-            "/web_responsive/static/src/legacy/xml/form_buttons.xml",
-            "/web_responsive/static/src/legacy/xml/custom_favorite_item.xml",
-            "/web_responsive/static/src/components/apps_menu_tools.esm.js",
-            "/web_responsive/static/src/components/apps_menu/*",
-            "/web_responsive/static/src/components/apps_menu_item/*",
-            "/web_responsive/static/src/components/menu_canonical_searchbar/*",
-            "/web_responsive/static/src/components/menu_odoo_searchbar/*",
-            "/web_responsive/static/src/components/menu_fuse_searchbar/*",
-            "/web_responsive/static/src/components/menu_searchbar/*",
-            "/web_responsive/static/src/components/hotkey/*",
-            "/web_responsive/static/src/components/file_viewer/*",
-            "/web_responsive/static/src/components/chatter/*",
-            "/web_responsive/static/src/components/control_panel/*",
-            "/web_responsive/static/src/components/command_palette/*",
-            "/web_responsive/static/src/views/form/*",
+            "web_responsive/static/src/core/**/*",
+            "web_responsive/static/src/search/**/*",
+            "web_responsive/static/src/views/**/*",
+            "web_responsive/static/src/webclient/**/*",
+            "/web_responsive/static/src/chatter/**/*",
             # Don't include dark mode files in light mode
             ("remove", "web_responsive/static/src/**/*.dark.scss"),
         ],
         "web.assets_web_dark": [
-            "web_responsive/static/src/**/*.dark.scss",
+            (
+                "before",
+                "web_responsive/static/src/**/*.post_variables.scss",
+                "web_responsive/static/src/**/*.post_variables.dark.scss",
+            ),
         ],
         "web.assets_clickbot": [
             "/web_responsive/static/src/clickbot/clickbot.esm.js",
         ],
-        "web.qunit_suite_tests": [
-            "/web_responsive/static/tests/apps_menu_tests.esm.js",
-            "/web_responsive/static/tests/apps_menu_search_tests.esm.js",
+        "web.assets_unit_tests": [
+            "web_responsive/static/tests/**/*.test.js",
         ],
     },
     "sequence": 1,

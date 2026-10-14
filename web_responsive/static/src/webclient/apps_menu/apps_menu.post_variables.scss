@@ -1,0 +1,35 @@
+/* Copyright 2023 Taras Shabaranskyi
+ * Copyright 2026 Liam Noonan
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+// Dimensions
+$wr-app-menu-list-max-width: 860px !default;
+$wr-app-menu-item-icon-size: 70px !default;
+
+// Backgrounds and colors
+$wr-app-menu-background:
+    url("../../img/home-menu-bg-overlay.svg"),
+    linear-gradient(
+        to bottom,
+        $o-navbar-background,
+        desaturate(lighten($o-navbar-background, 15%), 10)
+    ) !default;
+$wr-app-menu-icon-background: transparentize(white, 0.9) !default;
+$wr-app-menu-icon-background-focus: transparentize(white, 0.9) !default;
+$wr-app-menu-text-color: $o-navbar-entry-color !default;
+
+// Shadows
+$wr-app-menu-icon-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.2),
+    0 2px 2px rgba(0, 0, 0, 0.02),
+    0 4px 4px rgba(0, 0, 0, 0.02),
+    0 8px 8px rgba(0, 0, 0, 0.02),
+    0 16px 16px rgba(0, 0, 0, 0.02) !default;
+
+$wr-app-menu-item-shadow:
+    0 2px 2px rgba(0, 0, 0, 0.03),
+    0 4px 4px rgba(0, 0, 0, 0.03),
+    0 8px 8px rgba(0, 0, 0, 0.03),
+    0 16px 16px rgba(0, 0, 0, 0.03) !default;
+
+$wr-app-menu-text-shadow: 1px 1px 1px rgba(black, 0.4) !default;

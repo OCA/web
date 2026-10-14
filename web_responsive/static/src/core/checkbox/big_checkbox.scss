@@ -1,0 +1,35 @@
+/* Copyright 2018 Tecnativa - Jairo Llopis
+ * Copyright 2021 ITerra - Sergey Shebanin
+ * Copyright 2023 Onestein - Anjeel Haria
+ * Copyright 2023 Taras Shabaranskyi
+ * Copyright 2026 Liam Noonan
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+$wr-form-check-input-width: 1.25em;
+$wr-form-check-padding-start: $wr-form-check-input-width + 0.5em;
+
+/* If you want to restrict to certain areas, just add here.
+.o_popover,
+.o_list_renderer {
+*/
+.o-checkbox,
+.form-check {
+    &:not(.form-switch):has(.form-check-input[type="checkbox"]) {
+        padding-left: $wr-form-check-padding-start;
+        .form-check-input {
+            width: $wr-form-check-input-width;
+            height: $wr-form-check-input-width;
+            margin-top: ($line-height-base - $wr-form-check-input-width) * 0.5;
+            margin-left: -$wr-form-check-padding-start;
+        }
+    }
+}
+
+.o_setting_box {
+    .o_setting_left_pane:has(.form-check-input) {
+        padding-top: 0.25em;
+    }
+    .o_setting_right_pane {
+        margin-left: calc(#{$wr-form-check-input-width} + 10px);
+    }
+}

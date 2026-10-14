@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Liam Noonan
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<templates xml:space="preserve">
+    <t t-name="web_responsive.FormChatter">
+        <t t-if="props.isChatterAside">
+            <ResizablePanel
+                handleSide="'start'"
+                class="props.chatterContainerClass"
+                minWidth="minWidth"
+                initialWidth="chatterWidth"
+                onResize.bind="onResize"
+            >
+                <t t-component="props.chatterComponent" t-props="chatterProps" />
+            </ResizablePanel>
+        </t>
+        <div t-else="" t-att-class="props.chatterContainerClass">
+            <t t-component="props.chatterComponent" t-props="chatterProps" />
+        </div>
+    </t>
+</templates>

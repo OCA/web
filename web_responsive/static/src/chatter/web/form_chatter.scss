@@ -1,0 +1,23 @@
+/* Copyright 2026 Liam Noonan
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+:root {
+    --wr-resizable-chatter-min-width: #{$o-mail-Chatter-minWidth};
+    --wr-resizable-chatter-width: #{$o-mail-Chatter-minWidth};
+}
+
+.o-mail-Form-chatter.o-aside.o_resizable_panel {
+    padding-inline-start: map-get($spacers, 2);
+
+    .o_resizable_panel_handle {
+        width: map-get($spacers, 2);
+        border-inline-start: $border-width solid $border-color;
+    }
+}
+
+// Prevent flex basis on the o_form_sheet_bg from causing a jump when resizing the chatter.
+.o_form_view:has(.o-mail-Form-chatter.o_resizable_panel) {
+    .o_form_sheet_bg {
+        flex-basis: auto;
+    }
+}
