@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_toggle_chatter.ChatterToggleButton">
+        <button
+            type="button"
+            class="o_web_toggle_chatter_toggle_btn btn btn-light"
+            t-on-click.prevent="__comp__.onToggleChatter"
+            t-att-aria-label="__comp__.webToggleChatterState.isVisible ? 'Toggle chatter' : 'Show chatter'"
+        >
+            <i
+                t-attf-class="fa {{ __comp__.webToggleChatterState.isVisible ? 'fa-angle-right' : 'fa-angle-left' }}"
+            />
+        </button>
+    </t>
+</templates>
