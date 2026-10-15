@@ -16,7 +16,9 @@
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
-    "depends": ["web"],
+    # This dependency should be replaced by "web" if this commit is merged:
+    # https://github.com/odoo/odoo/pull/287582/changes/20771f34cad87b1753a7ab81e5fc172663591c89
+    "depends": ["html_editor"],
     "assets": {
         "web.assets_backend": [
             (
