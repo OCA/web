@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2017 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+     <t
+        t-name="web_m2x_options.Many2ManyTagsField"
+        t-inherit="web.Many2ManyTagsField"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//Many2XAutocomplete" position="attributes">
+            <attribute name="searchLimit">this.props.searchLimit</attribute>
+            <attribute name="fieldColor">this.props.fieldColor</attribute>
+            <attribute name="fieldColorOptions">this.props.fieldColorOptions</attribute>
+        </xpath>
+    </t>
+
+</templates>
