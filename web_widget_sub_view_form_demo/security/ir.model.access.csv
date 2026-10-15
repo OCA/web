@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_partner_teacher,partner.teacher,model_partner_teacher,base.group_user,1,1,1,1
+access_partner_course,partner.course,model_partner_course,base.group_user,1,1,1,1
+access_partner_student,partner.student,model_partner_student,base.group_user,1,1,1,1

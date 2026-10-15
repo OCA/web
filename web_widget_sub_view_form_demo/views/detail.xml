@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="partner_teacher_form" model="ir.ui.view">
+        <field name="model">partner.teacher</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" invisible="1" />
+                            <field name="subject" />
+                            <field name="hire_date" />
+                            <field name="contract" />
+                            <field name="full_time" />
+                        </group>
+                        <group>
+                            <field name="hours" />
+                            <field name="currency_id" invisible="1" />
+                            <field name="salary" />
+                            <field name="tag_ids" widget="many2many_tags" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="courses" string="Courses">
+                            <field name="course_ids">
+                                <list editable="bottom">
+                                    <field name="name" />
+                                    <field name="hours" />
+                                </list>
+                            </field>
+                        </page>
+                        <page name="bio" string="Bio">
+                            <field name="bio" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="partner_student_form" model="ir.ui.view">
+        <field name="model">partner.student</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="photo" widget="image" class="oe_avatar" />
+                    <group>
+                        <group>
+                            <field name="partner_id" invisible="1" />
+                            <field name="level" />
+                            <field name="enrollment_date" />
+                            <field name="last_visit" />
+                        </group>
+                        <group>
+                            <field name="average" />
+                            <field name="tutor_id" />
+                            <field name="document" filename="document_name" />
+                            <field name="document_name" invisible="1" />
+                        </group>
+                    </group>
+                    <field name="note" placeholder="Note..." />
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
