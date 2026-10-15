@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_widget_sub_view_form.SubViewForm">
+        <!-- nothing shown while the reference is empty -->
+        <div t-if="ref" class="o_sub_view_form">
+            <!-- t-key: rebuild the view when the reference changes -->
+            <View t-key="ref.resModel + ',' + ref.resId" t-props="viewProps" />
+        </div>
+    </t>
+</templates>
