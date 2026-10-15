@@ -20,16 +20,22 @@
     "assets": {
         "web.assets_backend": [
             (
-                "before",
-                "web/static/src/views/fields/*",
-                "web_m2x_options/static/src/components/form.esm.js",
-            ),
-            (
                 "after",
                 "web/static/src/views/fields/standard_field_props.js",
                 "web_m2x_options/static/src/views/fields/standard_field_props.esm.js",
             ),
-            "web_m2x_options/static/src/components/base.xml",
+            (
+                "before",
+                "web/static/src/views/fields/*",
+                "web_m2x_options/static/src/utils.esm.js",
+            ),
+            (
+                "before",
+                "web/static/src/views/fields/*",
+                "web_m2x_options/static/src/views/fields/**",
+            ),
+            "web_m2x_options/static/src/views/form/form_controller.esm.js",
+            "web_m2x_options/static/src/core/autocomplete/autocomplete.xml",
         ]
     },
     "installable": True,
