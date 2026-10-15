@@ -1,3 +1,4 @@
 - [Tecnativa](https://www.tecnativa.com):
   - Víctor Martínez
   - Pedro M. Baeza
+- [LadyHwesta](https://github.com/LadyHwesta) (apple-touch-icon support, settings visibility)
