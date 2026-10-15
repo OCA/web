@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 - TODAY, Wesley Oliveira <wesley.oliveira@escodoo.com.br>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+
+    <t t-inherit="mail.MessageList" t-inherit-mode="extension" owl="1">
+        <!-- Chatter only: messages of the same day get a separator with their date and time -->
+        <xpath expr="//t[@t-if='current_day !== message_day']" position="after">
+            <t t-elif="messageListView.threadViewOwner.threadViewer.chatter">
+                <div
+                    class="o_MessageList_separator o_MessageList_separatorMessage o_MessageList_item d-flex flex-shrink-0 align-items-center w-100 pt-2 px-2"
+                >
+                    <hr class="o_MessageList_separatorLine flex-grow-1 w-auto" />
+                    <span
+                        class="o_MessageList_separatorLabel px-2 small text-muted opacity-50"
+                        t-esc="messageListViewItem.message.datetime"
+                    />
+                    <hr class="o_MessageList_separatorLine flex-grow-1 w-auto" />
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

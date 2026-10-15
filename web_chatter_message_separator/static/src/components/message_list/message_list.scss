@@ -1,0 +1,12 @@
+/* Copyright 2026 - TODAY, Wesley Oliveira <wesley.oliveira@escodoo.com.br>
+   License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
+
+.o_MessageList_separatorDate .o_MessageList_separatorLine,
+.o_MessageList_separatorMessage .o_MessageList_separatorLine {
+    height: 0;
+    margin: 0;
+    border: 0;
+    border-top: 1px solid $gray-500 !important;
+    background-color: transparent;
+    opacity: 1;
+}
