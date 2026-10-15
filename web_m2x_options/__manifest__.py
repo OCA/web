@@ -16,7 +16,7 @@
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
-    "depends": ["web"],
+    "depends": ["html_editor"],
     "assets": {
         "web.assets_backend": [
             (
