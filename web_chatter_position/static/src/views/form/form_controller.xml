@@ -10,21 +10,16 @@
         t-inherit="web.FormView"
         t-inherit-mode="extension"
     >
-        <xpath
-            expr="//t[@t-set-slot='control-panel-create-button'][last()]"
-            position="after"
-        >
-            <t t-set-slot="control-panel-always-buttons">
-                <button
-                    t-if="isChatterToggleVisible"
-                    type="button"
-                    class="btn btn-secondary o_chatter_position_button"
-                    t-on-click="onClickChangePosition"
-                    title="Toggle chatter position"
-                >
-                    <i class="fa fa-arrows-h" />
-                </button>
-            </t>
+        <xpath expr="//t[@t-set-slot='control-panel-buttons']" position="inside">
+            <button
+                t-if="this.isChatterToggleVisible"
+                type="button"
+                class="btn btn-secondary o_chatter_position_button"
+                t-on-click="this.onClickChangePosition"
+                title="Toggle chatter position"
+            >
+                <i class="oi" data-icon="swap_horiz" />
+            </button>
         </xpath>
     </t>
 

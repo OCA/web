@@ -5,7 +5,7 @@
 
 import {append, setAttributes} from "@web/core/utils/xml";
 import {FormCompiler} from "@web/views/form/form_compiler";
-import {SIZES} from "@web/core/ui/ui_service";
+import {SIZES} from "@web/core/ui/ui_utils";
 import {patch} from "@web/core/utils/patch";
 
 patch(FormCompiler.prototype, {

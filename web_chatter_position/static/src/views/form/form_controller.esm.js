@@ -2,17 +2,16 @@
     Copyright 2026 ForgeFlow S.L. (https://www.forgeflow.com).
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 */
-import {onMounted, onPatched, useExternalListener, useState} from "@odoo/owl";
-
-import {browser} from "@web/core/browser/browser";
-import {SIZES} from "@web/core/ui/ui_service";
-import {patch} from "@web/core/utils/patch";
+import {onMounted, onPatched, proxy, useListener} from "@odoo/owl";
 import {FormController} from "@web/views/form/form_controller";
+import {SIZES} from "@web/core/ui/ui_utils";
+import {browser} from "@web/core/browser/browser";
+import {patch} from "@web/core/utils/patch";
 
 patch(FormController.prototype, {
     setup() {
         super.setup(...arguments);
-        this.chatterPositionState = useState({
+        this.chatterPositionState = proxy({
             currentPosition: odoo.web_chatter_position || "auto",
         });
 
@@ -20,13 +19,14 @@ patch(FormController.prototype, {
             this.moveChatter();
         });
 
-        useExternalListener(browser, "resize", () => {
+        useListener(browser, "resize", () => {
             if (this.chatterPositionState.currentPosition === "bottom") {
-                const formSheetBg = this.rootRef?.el?.querySelector(".o_form_sheet_bg");
+                const rootEl = this.rootRef();
+                const formSheetBg = rootEl?.querySelector(".o_form_sheet_bg");
                 if (formSheetBg) {
                     this._moveChatter(formSheetBg);
-                    this.rootRef.el.style.overflowX = "hidden";
-                    this.rootRef.el.style.overflowY = "auto";
+                    rootEl.style.overflowX = "hidden";
+                    rootEl.style.overflowY = "auto";
                 }
             }
         });
@@ -44,7 +44,7 @@ patch(FormController.prototype, {
     },
 
     get isChatterToggleVisible() {
-        if (this.env.inDialog || this.env.isSmall) {
+        if (this.env.inDialog || this.ui.isSmall) {
             return false;
         }
         if (this.ui.size < SIZES.XXL) {
@@ -64,7 +64,7 @@ patch(FormController.prototype, {
         ) {
             return;
         }
-        const rootEl = this.rootRef?.el;
+        const rootEl = this.rootRef();
         if (!rootEl) {
             return;
         }
@@ -81,10 +81,11 @@ patch(FormController.prototype, {
     },
 
     _moveChatter(target) {
-        if (!target || !this.rootRef?.el) {
+        const rootEl = this.rootRef();
+        if (!target || !rootEl) {
             return;
         }
-        const currentChatter = this.rootRef.el.querySelector(".o-mail-Form-chatter");
+        const currentChatter = rootEl.querySelector(".o-mail-Form-chatter");
         if (!currentChatter) {
             return;
         }
@@ -98,12 +99,12 @@ patch(FormController.prototype, {
                 "mt-md-0",
                 "w-auto"
             );
-            const formSheetBg = this.rootRef.el.querySelector(".o_form_sheet_bg");
+            const formSheetBg = rootEl.querySelector(".o_form_sheet_bg");
             if (formSheetBg) {
                 formSheetBg.classList.add("o_fullwidth");
             }
-            this.rootRef.el.style.overflowX = "hidden";
-            this.rootRef.el.style.overflowY = "auto";
+            rootEl.style.overflowX = "hidden";
+            rootEl.style.overflowY = "auto";
         } else {
             currentChatter.classList.remove(
                 "o-isInFormSheetBg",
@@ -112,12 +113,12 @@ patch(FormController.prototype, {
                 "w-auto"
             );
             currentChatter.classList.add("o-aside", "w-print-100");
-            const formSheetBg = this.rootRef.el.querySelector(".o_form_sheet_bg");
+            const formSheetBg = rootEl.querySelector(".o_form_sheet_bg");
             if (formSheetBg) {
                 formSheetBg.classList.remove("o_fullwidth");
             }
-            this.rootRef.el.style.overflowX = "";
-            this.rootRef.el.style.overflowY = "";
+            rootEl.style.overflowX = "";
+            rootEl.style.overflowY = "";
         }
     },
 });

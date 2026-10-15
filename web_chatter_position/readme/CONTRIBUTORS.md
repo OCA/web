@@ -12,3 +12,4 @@
   - Joan Sisquella \<<joan.sisquella@forgeflow.com>\>
 - [Tecnativa](https://www.tecnativa.com/):
   - Sergio Teruel
+- Panithan k. \<<panithank@ecosoft.co.th>\>
