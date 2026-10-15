@@ -71,9 +71,13 @@ patch(FormCompiler.prototype, {
         const form = super.compileForm(el, params);
         const sheet = form.querySelector(".o_form_sheet_bg");
         if (sheet && odoo.web_chatter_position === "sided") {
+            // Keep the core classes, only force the side by side layout
+            const tAttfClass = form.getAttribute("t-attf-class") || "";
             setAttributes(form, {
-                "t-attf-class": "",
-                class: "d-flex d-print-block flex-nowrap h-100",
+                "t-attf-class": tAttfClass.replace(
+                    /\{\{[^}]*"flex-column"[^}]*\}\}/,
+                    "flex-nowrap h-100"
+                ),
             });
         }
         return form;
