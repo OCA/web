@@ -14,12 +14,5 @@ class ResUsers(models.Model):
             ("sided", "Sided"),
         ],
         default="auto",
+        user_writeable=True,
     )
-
-    @property
-    def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS + ["chatter_position"]
-
-    @property
-    def SELF_WRITEABLE_FIELDS(self):
-        return super().SELF_WRITEABLE_FIELDS + ["chatter_position"]

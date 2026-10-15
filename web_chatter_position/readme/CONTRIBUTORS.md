@@ -8,3 +8,4 @@
   - Tris Doan \<<tridm@trobz.com>\>
 - [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
   - Bhavesh Heliconia
+- Panithan k. \<<panithank@ecosoft.co.th>\>
