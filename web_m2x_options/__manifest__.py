@@ -36,7 +36,10 @@
             ),
             "web_m2x_options/static/src/views/form/form_controller.esm.js",
             "web_m2x_options/static/src/core/autocomplete/autocomplete.xml",
-        ]
+        ],
+        "web.assets_unit_tests": [
+            "web_m2x_options/static/tests/**/*",
+        ],
     },
     "installable": True,
 }

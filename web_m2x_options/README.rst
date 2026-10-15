@@ -172,6 +172,7 @@ Contributors
   - David Vidal <david.vidal@tecnativa.com>
   - Ernesto Tejeda <ernesto.tejeda87@gmail.com>
   - Carlos Roca
+  - Carlos Lopez
 
 - Bhavesh Odedra <bodedra@opensourceintegrators.com>
 
