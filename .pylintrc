@@ -92,20 +92,11 @@ enable=anomalous-backslash-in-string,
     no-write-in-compute,
     # messages that do not cause the lint step to fail
     consider-merging-classes-inherited,
-    create-user-wo-reset-password,
-    dangerous-filter-wo-user,
     deprecated-module,
-    file-not-used,
     invalid-commit,
-    missing-manifest-dependency,
-    missing-newline-extrafiles,
     missing-readme,
-    no-utf8-coding-comment,
     odoo-addons-relative-import,
-    old-api7-method-defined,
     redefined-builtin,
-    too-complex,
-    unnecessary-utf8-coding-comment,
     manifest-external-assets
 
 

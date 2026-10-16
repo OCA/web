@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_widget_sub_view.SubViewWidget">
+        <div t-ref="viewContainer" style="min-height: 1px">
+            <View t-if="state.viewLoaded" t-key="state.viewKey" t-props="viewProps" />
+        </div>
+    </t>
+    <t t-name="web_widget_sub_view.SubViewButtons">
+        <button
+            type="button"
+            class="btn btn-secondary"
+            t-on-click="() => props.createRecord({ linkExisting: true })"
+        >
+            <i class="fa fa-link me-1" />
+            Link
+        </button>
+    </t>
+</templates>
