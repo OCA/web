@@ -1,6 +1,4 @@
-/** @odoo-module */
-
-import {Component} from "@odoo/owl";
+import {Component, useSubEnv} from "@odoo/owl";
 import {Domain} from "@web/core/domain";
 import {View} from "@web/views/view";
 import {makeContext} from "@web/core/context";
@@ -8,64 +6,75 @@ import {registry} from "@web/core/registry";
 import {standardWidgetProps} from "@web/views/widgets/standard_widget_props";
 import {useService} from "@web/core/utils/hooks";
 
-const {useSubEnv} = owl;
+export class SubViewWidget extends Component {
+    static template = "web_widget_sub_view.SubViewWidget";
+    static components = {View};
+    static props = {
+        ...standardWidgetProps,
+        resModel: String,
+        recordAction: String,
+        createAction: {type: String, optional: true},
+        context: String,
+        domain: String,
+        viewType: {type: String, optional: true},
+        filter: Boolean,
+        groupBy: Boolean,
+        favorite: Boolean,
+    };
 
-class SubViewWidget extends Component {
     setup() {
-        super.setup();
         this.action = useService("action");
         this.orm = useService("orm");
-        useSubEnv({
-            config: {},
-        });
+        useSubEnv({config: {}});
     }
+
     get context() {
-        return makeContext([this.props.context], this.props.record.data);
+        return makeContext(
+            [this.props.context],
+            this.props.record.evalContextWithVirtualIds
+        );
     }
+
     get viewProps() {
-        const domain = new Domain(this.props.domain);
-        var searchTypes = [];
+        const {record} = this.props;
+        const searchMenuTypes = [];
         if (this.props.filter) {
-            searchTypes.push("filter");
+            searchMenuTypes.push("filter");
         }
         if (this.props.groupBy) {
-            searchTypes.push("groupBy");
+            searchMenuTypes.push("groupBy");
         }
         if (this.props.favorite) {
-            searchTypes.push("favorite");
+            searchMenuTypes.push("favorite");
         }
-        const result = {
+
+        const type = this.props.viewType || (this.env.isSmall ? "kanban" : "list");
+        return {
             display: {
                 controlPanel: {
-                    // Hiding the control panel buttons
                     "top-left": false,
                     "bottom-left": true,
                 },
             },
-            searchMenuTypes: searchTypes,
+            searchMenuTypes,
             resModel: this.props.resModel,
             searchViewId: false,
-            domain: domain.toList(this.props.record.data),
+            domain: new Domain(this.props.domain).toList(
+                record.evalContextWithVirtualIds
+            ),
             context: this.context,
             noBreadcrumbs: true,
             showButtons: true,
             selectRecord: this.selectRecord.bind(this),
             createRecord: this.createRecord.bind(this),
-            type: this.props.ViewType,
+            type,
+            ...(type === "list" ? {allowSelectors: false} : {}),
         };
-        if (!result.type && this.env.isSmall) {
-            result.type = "kanban";
-        } else if (!result.type) {
-            result.type = "list";
-        }
-        if (result.type === "list") {
-            result.allowSelectors = false;
-        }
-        return result;
     }
+
     async createRecord() {
         if (this.props.createAction) {
-            this.action.doActionButton({
+            return this.action.doActionButton({
                 name: this.props.createAction,
                 type: "action",
                 resModel: this.props.record.resModel,
@@ -77,60 +86,45 @@ class SubViewWidget extends Component {
                     this.props.record.model.notify();
                 },
             });
-        } else {
-            this.action.doActionButton({
-                name: "get_formview_action",
-                type: "object",
-                resModel: this.props.resModel,
-                resIds: [],
-                context: this.context,
-            });
         }
+        return this.action.doActionButton({
+            name: "get_formview_action",
+            type: "object",
+            resModel: this.props.resModel,
+            resIds: [],
+            context: this.context,
+        });
     }
+
     async selectRecord(resId) {
-        const context = makeContext([
-            this.props.record.getFieldContext(),
-            this.context,
-        ]);
         const action = await this.orm.call(
             this.props.resModel,
             this.props.recordAction,
             [[resId]],
-            {context}
+            {context: this.context}
         );
-        this.action.doAction(action);
+        return this.action.doAction(action);
     }
 }
 
-SubViewWidget.template = "web_widget_sub_view.SubViewWidget";
-SubViewWidget.props = {
-    ...standardWidgetProps,
-    resModel: String,
-    recordAction: String,
-    createAction: {type: String, optional: true},
-    context: String,
-    domain: String,
-    ViewType: {type: String, optional: true},
-    filter: Boolean,
-    groupBy: Boolean,
-    favorite: Boolean,
-};
-SubViewWidget.components = {
-    View,
-};
-SubViewWidget.defaultProps = {};
-SubViewWidget.extractProps = ({attrs}) => {
-    return {
+export const subViewWidget = {
+    component: SubViewWidget,
+    extractProps: ({attrs}) => ({
         resModel: attrs.model,
         context: attrs.context || "{}",
         recordAction: attrs["open-action"] || "get_formview_action",
         createAction: attrs["create-action"],
         domain: attrs.domain || "[]",
-        ViewType: attrs["view-type"],
-        filter: Boolean(JSON.parse(attrs.filter || "1")),
-        groupBy: Boolean(JSON.parse(attrs["group-by"] || "1")),
-        favorite: Boolean(JSON.parse(attrs.favorite || "1")),
-    };
+        viewType: attrs["view-type"],
+        filter:
+            attrs.filter === undefined || ["1", "true", "True"].includes(attrs.filter),
+        groupBy:
+            attrs["group-by"] === undefined ||
+            ["1", "true", "True"].includes(attrs["group-by"]),
+        favorite:
+            attrs.favorite === undefined ||
+            ["1", "true", "True"].includes(attrs.favorite),
+    }),
 };
 
-registry.category("view_widgets").add("sub_view_widget", SubViewWidget);
+registry.category("view_widgets").add("sub_view_widget", subViewWidget);

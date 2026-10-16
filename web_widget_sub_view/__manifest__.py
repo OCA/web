@@ -3,20 +3,19 @@
 
 {
     "name": "Web Widget Sub View",
-    "summary": """Create a subview widget""",
-    "version": "16.0.1.0.0",
+    "summary": "Embed a searchable subview inside a form",
+    "version": "19.0.1.0.0",
     "license": "AGPL-3",
-    "author": "Dixmit,Odoo Community Association (OCA)",
+    "author": "Dixmit, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
-            "web_widget_sub_view/static/src/**/*.esm.js",
+            "web_widget_sub_view/static/src/**/*.js",
             "web_widget_sub_view/static/src/**/*.xml",
-            "web_widget_sub_view/static/src/**/*.scss",
         ],
     },
-    "demo": [
-        "demo/partner_sub_view.xml",
-    ],
+    "demo": ["demo/partner_sub_view.xml"],
+    "installable": True,
+    "application": False,
 }
