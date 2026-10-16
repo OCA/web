@@ -393,7 +393,7 @@ ul.auto-toc {
 <div class="section" id="usage">
 <h2><a class="toc-backref" href="#toc-entry-1">Usage</a></h2>
 <p>This is a technical module.</p>
-<p>You can add this kind of elements by using</p>
+<p>You can add this kind of elements by using:</p>
 <pre class="code xml literal-block">
 <span class="nt">&lt;widget</span><span class="w">
   </span><span class="na">name=</span><span class="s">&quot;sub_view_widget&quot;</span><span class="w">
@@ -402,20 +402,43 @@ ul.auto-toc {
   </span><span class="na">context=</span><span class="s">&quot;{'search_default_parent_id': id}&quot;</span><span class="w">
 </span><span class="nt">/&gt;</span>
 </pre>
-<p>It is necessary to use model. Context is recomended for setting default
-values and forcing specific views or default searching values.</p>
-<p>Also, you can use:</p>
+<p>The <tt class="docutils literal">model</tt> attribute is required. Context is recommended for setting
+default values and forcing specific views or default searching values.</p>
+<p>Available options:</p>
 <ul class="simple">
-<li>view-type: To force an specific view kind. By default it uses list in
-desktop and kanban in mobile.</li>
-<li>create-action: To force an specific action for creation (it is a
-xmlid)</li>
-<li>open-action: The function to launch to open the record. By default, it
-uses get_formview_action.</li>
-<li>filter: set 0 to hide the filters</li>
-<li>group-by: set 0 to hide the group-by</li>
-<li>favorite: set 0 to hide the favorite</li>
+<li><tt class="docutils literal"><span class="pre">view-type</span></tt> forces a view type. By default, it uses list on desktop
+and kanban on mobile.</li>
+<li><tt class="docutils literal"><span class="pre">create-action</span></tt> forces a specific action for creation (an XML ID).</li>
+<li><tt class="docutils literal"><span class="pre">open-action</span></tt> selects the method used to open a record. By default,
+it uses <tt class="docutils literal">get_formview_action</tt>.</li>
+<li><tt class="docutils literal"><span class="pre">filter=&quot;0&quot;</span></tt> hides the filters.</li>
+<li><tt class="docutils literal"><span class="pre">group-by=&quot;0&quot;</span></tt> hides the group-by menu.</li>
+<li><tt class="docutils literal"><span class="pre">favorite=&quot;0&quot;</span></tt> hides favorites.</li>
+<li><tt class="docutils literal"><span class="pre">lazy=&quot;1&quot;</span></tt> delays loading the subview until its container becomes
+visible. Without this option, the subview loads immediately.</li>
+<li><tt class="docutils literal"><span class="pre">link=&quot;0&quot;</span></tt> hides the button used to link existing records. It is
+shown by default for list and kanban views.</li>
+<li><tt class="docutils literal"><span class="pre">link-domain</span></tt> sets the domain used by the record selector. It
+defaults to <tt class="docutils literal">[]</tt>.</li>
+<li><tt class="docutils literal"><span class="pre">new=&quot;0&quot;</span></tt> hides the button used to create records in list and kanban
+views. It is shown by default when creation is allowed by the view.</li>
 </ul>
+<p>The link button writes the <tt class="docutils literal">default_*</tt> values from <tt class="docutils literal">context</tt> to the
+selected records. For example, <tt class="docutils literal">default_parent_id</tt> links selected
+partners to the current partner through their <tt class="docutils literal">parent_id</tt> field. Save
+the current record before linking existing records.</p>
+<p>For example, to load a subview only when its notebook page becomes
+visible:</p>
+<pre class="code xml literal-block">
+<span class="nt">&lt;widget</span><span class="w">
+  </span><span class="na">name=</span><span class="s">&quot;sub_view_widget&quot;</span><span class="w">
+  </span><span class="na">model=</span><span class="s">&quot;res.partner&quot;</span><span class="w">
+  </span><span class="na">domain=</span><span class="s">&quot;[('parent_id', '=', id)]&quot;</span><span class="w">
+  </span><span class="na">context=</span><span class="s">&quot;{'default_parent_id': id}&quot;</span><span class="w">
+  </span><span class="na">lazy=</span><span class="s">&quot;1&quot;</span><span class="w">
+  </span><span class="na">link-domain=</span><span class="s">&quot;[('parent_id', '=', False)]&quot;</span><span class="w">
+</span><span class="nt">/&gt;</span>
+</pre>
 </div>
 <div class="section" id="bug-tracker">
 <h2><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h2>
