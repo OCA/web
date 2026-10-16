@@ -1,0 +1,9 @@
+// Copyright 2026 glueckkanja AG
+// License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+// Bootstrap gives dropdown items their own color: let colored autocomplete
+// entries inherit the text class set on the list item.
+.o-autocomplete--dropdown-item.text-warning .dropdown-item,
+.o-autocomplete--dropdown-item.text-danger .dropdown-item {
+    color: inherit;
+}

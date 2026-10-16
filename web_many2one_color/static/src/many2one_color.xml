@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 glueckkanja AG
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+    <t t-inherit="web.Many2One" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_many2one')]" position="attributes">
+            <attribute
+                name="t-att-class"
+            >(props.cssClass || '') + ' ' + colorStateClass</attribute>
+        </xpath>
+        <xpath expr="//a[hasclass('o_form_uri')]" position="attributes">
+            <attribute
+                name="t-att-class"
+            >(props.linkCssClass || '') + ' ' + colorStateClass</attribute>
+            <attribute
+                name="t-att-data-tooltip"
+            >colorStateTooltip || displayName</attribute>
+        </xpath>
+        <xpath expr="//span[@t-esc='displayName']" position="attributes">
+            <attribute
+                name="t-att-data-tooltip"
+            >colorStateTooltip || displayName</attribute>
+        </xpath>
+        <xpath
+            expr="//div[hasclass('o_field_many2one_selection')]"
+            position="attributes"
+        >
+            <attribute name="t-att-data-tooltip">colorStateTooltip</attribute>
+        </xpath>
+    </t>
+</templates>
