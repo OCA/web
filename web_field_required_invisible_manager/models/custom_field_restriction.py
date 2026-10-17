@@ -41,7 +41,6 @@ class CustomFieldRestriction(models.Model):
     model_name = fields.Char(
         compute="_compute_model_name",
         store=True,
-        string="Model Name",
         index=True,
     )
     condition_domain = fields.Char()

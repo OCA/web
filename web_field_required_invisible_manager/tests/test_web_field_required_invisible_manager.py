@@ -2,11 +2,13 @@
 # Copyright 2025 Simone Rubino - PyTech
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from lxml import etree
+
 from odoo.tests import Form, common
 from odoo.tools import get_cache_key_counter
 
 
-class TestFieldRequiredIvisibleManager(common.SavepointCase):
+class TestFieldRequiredIvisibleManager(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestFieldRequiredIvisibleManager, cls).setUpClass()
@@ -152,11 +154,18 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
         """res.users has company_ids field. It has restrictions.
         Restrictions should be added into company tree view"""
         user = self.env["res.users"].search([], limit=1)
-        arch = user.fields_view_get(view_id=self.view_users_form.id, view_type="form")
-        sub_arch = arch["fields"]["company_ids"]["views"]["tree"]["arch"]
+        view = user.get_view(view_id=self.view_users_form.id, view_type="form")
+        doc = etree.fromstring(view["arch"])
+        sub_view_node = doc.xpath("//field[@name='company_ids']/tree")[0]
+        sub_arch = etree.tostring(sub_view_node, encoding="unicode")
         self.assertIn("x_computed_res_company_name_readonly", sub_arch)
         self.assertIn("x_computed_res_company_street_required", sub_arch)
         self.assertIn("x_computed_res_company_city_visibility", sub_arch)
+        # The web client has to load the fields added to the subview
+        company_fields = view["models"]["res.company"]
+        self.assertIn("x_computed_res_company_name_readonly", company_fields)
+        self.assertIn("x_computed_res_company_street_required", company_fields)
+        self.assertIn("x_computed_res_company_city_visibility", company_fields)
 
     def test_all_web_field_required_invisible_manager(self):
         # related fields are created
@@ -169,20 +178,16 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
         self.required_rec_id._compute_model_name()
         self.assertEqual(self.required_rec_id.model_name, "res.partner")
         # fields_view_get()
-        self.deco_addict.fields_view_get(
-            view_id=self.partner_form_view.id, view_type="form"
-        )
-        self.deco_addict.fields_view_get(
-            view_id=self.partner_tree_view.id, view_type="tree"
-        )
-        self.res_partner_title_madam.fields_view_get(
+        self.deco_addict.get_view(view_id=self.partner_form_view.id, view_type="form")
+        self.deco_addict.get_view(view_id=self.partner_tree_view.id, view_type="tree")
+        self.res_partner_title_madam.get_view(
             view_id=self.view_partner_title_form.id, view_type="form"
         )
-        self.res_partner_title_madam.fields_view_get(
+        self.res_partner_title_madam.get_view(
             view_id=self.view_partner_title_tree.id, view_type="tree"
         )
-        self.env.user.fields_view_get(view_id=self.view_users_form.id, view_type="form")
-        self.env.user.fields_view_get(view_id=self.view_users_tree.id, view_type="tree")
+        self.env.user.get_view(view_id=self.view_users_form.id, view_type="form")
+        self.env.user.get_view(view_id=self.view_users_tree.id, view_type="tree")
         # read
         self.deco_addict.read(
             [
@@ -207,7 +212,7 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
         )
         # change domain, reset cache. Should be True now
         self.invisible_rec_id.condition_domain = "[('id', '>', 0)]"
-        self.deco_addict.invalidate_cache()
+        self.deco_addict.invalidate_recordset()
         self.deco_addict.read(["x_computed_res_partner_name_visibility"])
         self.assertTrue(self.deco_addict.x_computed_res_partner_name_visibility)
         # default get
@@ -229,8 +234,8 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
             "</notebook>",
             "</notebook><field name='company_ids'><form><br/></form></field>",
         )
-        self.env.user.fields_view_get(view_id=self.view_users_form.id, view_type="form")
-        self.env.user.fields_view_get(view_id=self.view_users_tree.id, view_type="tree")
+        self.env.user.get_view(view_id=self.view_users_form.id, view_type="form")
+        self.env.user.get_view(view_id=self.view_users_tree.id, view_type="tree")
 
     def test_cache_found_restrictions(self):
         """The Restrictions found are cached by model."""
