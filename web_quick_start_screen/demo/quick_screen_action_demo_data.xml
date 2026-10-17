@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo noupdate="0">
     <record
         id="quick_start_screen_action_contacts_demo"
@@ -10,7 +10,7 @@
         ><![CDATA[ <span>Browse <b>contacts</b></span>]]></field>
         <field name="action_ref_id" ref="base.action_partner_form" />
         <field name="icon_name">fa-users</field>
-        <field name="color">7</field>
+        <field name="color" eval="7" />
     </record>
     <record
         id="quick_start_screen_action_access_rights_demo"
@@ -22,7 +22,7 @@
         ><![CDATA[ <span>Explore <b>access rights</b></span>]]></field>
         <field name="action_ref_id" ref="base.ir_access_act" />
         <field name="icon_name">fa-eye</field>
-        <field name="color">4</field>
+        <field name="color" eval="4" />
     </record>
     <record
         id="quick_start_screen_action_config_actions_demo"
