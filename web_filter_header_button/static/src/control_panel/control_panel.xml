@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="web_filter_header_button.ControlPanel.Regular"
+        t-inherit="web.ControlPanel.Regular"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_search_options')]/*[last()]" position="after">
+            <t t-set="sm" t-value="env.searchModel" />
+            <t
+                t-set="hbf"
+                t-value="(sm &amp;&amp; sm.headerButtonFilters) ? sm.headerButtonFilters : []"
+            />
+            <button
+                t-if="hbf.length"
+                type="button"
+                class="btn btn-secondary mx-2 o_filter_header_toggle"
+                t-att-title="env._t('Toggle filter buttons')"
+                t-att-aria-label="env._t('Toggle filter buttons')"
+                t-att-aria-expanded="hbfShowButtonFilters ? 'true' : 'false'"
+                t-on-click.stop.prevent="onClickToggleHeaderButtons"
+            >
+                <i class="fa fa-sliders" /> Filter Buttons
+            </button>
+        </xpath>
+    </t>
+
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_control_panel')]" position="inside">
+            <t t-set="sm" t-value="env.searchModel" />
+            <t
+                t-set="hbf"
+                t-value="(sm &amp;&amp; sm.headerButtonFilters) ? sm.headerButtonFilters : []"
+            />
+            <div
+                t-if="hbf.length"
+                t-att-class="'o_filter_header_button_bar ' + (hbfShowButtonFilters ? 'o_filter_header_button_bar_show' : 'o_filter_header_button_bar_hide')"
+            >
+                  <FilterButton filters="hbf" />
+              </div>
+        </xpath>
+    </t>
+</templates>
