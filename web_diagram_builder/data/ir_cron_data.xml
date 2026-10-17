@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="ir_cron_compute_diagram_builders" model="ir.cron">
+        <field name="name">Web Diagram Builder: Refresh All</field>
+        <field name="model_id" ref="model_web_diagram_builder"/>
+        <field name="state">code</field>
+        <field name="code">model.action_compute_all()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active">False</field>
+        <field name="user_id" ref="base.user_root"/>
+    </record>
+
+</odoo>
