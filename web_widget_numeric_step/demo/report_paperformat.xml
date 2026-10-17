@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="paperformat_view_form" model="ir.ui.view">
+        <field name="model">report.paperformat</field>
+        <field name="inherit_id" ref="base.paperformat_view_form" />
+        <field name="arch" type="xml">
+            <field name="margin_top" position="attributes">
+                <attribute name="widget">numeric_step</attribute>
+                <attribute
+                    name="options"
+                >{'step': 0.5, 'min': 0, 'max': 100}</attribute>
+            </field>
+            <field name="margin_bottom" position="attributes">
+                <attribute name="widget">numeric_step</attribute>
+                <attribute
+                    name="options"
+                >{'step': 0.5, 'min': 0, 'max': 100}</attribute>
+            </field>
+            <field name="margin_left" position="attributes">
+                <attribute name="widget">numeric_step</attribute>
+                <attribute name="options">{'step': 1, 'min': 0, 'max': 50}</attribute>
+            </field>
+            <field name="margin_right" position="attributes">
+                <attribute name="widget">numeric_step</attribute>
+                <attribute name="options">{'step': 1, 'min': 0, 'max': 50}</attribute>
+            </field>
+            <field name="header_spacing" position="attributes">
+                <attribute name="widget">numeric_step</attribute>
+                <attribute name="options">{'step': 5, 'min': 0, 'max': 100}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

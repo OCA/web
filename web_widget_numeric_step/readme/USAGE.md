@@ -1,4 +1,4 @@
-In your xml view, add `widget="numeric_step"` This will add the 2
+In your xml view, add `widget="numeric_step"` to a float or integer field. This will add the 2
 buttons "+" and "-" just next to the input field in edit mode. Iteration
 step by default is 1.
 
@@ -40,6 +40,8 @@ Iteration with 10 step, max limit 15, placeholder with onchange
 
 **Demo**
 
-You can test the feature by going to Settings > Technical > Scheduled Actions. The 
-field "Execute Every" is configured to use the widget with 2 step, min to 0 and max 
-to 40.
+You can test the feature by going to Settings > Technical > Reporting > Paper Format.
+The fields "Top Margin (mm)" and "Bottom Margin (mm)" are configured to use the
+widget with 0.5 step, min to 0 and max to 100, and the fields "Left Margin (mm)"
+and "Right Margin (mm)" with 1 step, min to 0 and max to 50. The integer field
+"Header spacing" is configured with 5 step, min to 0 and max to 100.

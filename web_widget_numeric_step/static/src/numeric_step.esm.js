@@ -1,20 +1,56 @@
-import {FloatField} from "@web/views/fields/float/float_field";
+import {
+    FloatField,
+    floatField,
+    floatFieldProps,
+} from "@web/views/fields/float/float_field";
+import {t, useProps} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
+import {formatInteger} from "@web/views/fields/formatters";
+import {parseInteger} from "@web/views/fields/parsers";
 import {registry} from "@web/core/registry";
-import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class NumericStep extends FloatField {
-    setup() {
-        super.setup();
+    static template = "web_widget_numeric_step";
+    props = useProps({
+        ...floatFieldProps,
+        step: t.number().optional(1),
+        min: t.number().optional(),
+        max: t.number().optional(),
+        placeholder: t.string().optional(),
+        additional_class: t.string().optional(),
+    });
+
+    get isInteger() {
+        return this.props.record.fields[this.props.name].type === "integer";
+    }
+    parse(value) {
+        if (this.isInteger && this.props.inputType !== "number") {
+            return parseInteger(value, {allowOperation: true});
+        }
+        return super.parse(value);
+    }
+    get formattedValue() {
+        // Same logic as the core IntegerField, so integers are not shown as floats
+        if (
+            !this.isInteger ||
+            !this.props.formatNumber ||
+            (this.props.inputType === "number" && !this.props.readonly)
+        ) {
+            return super.formattedValue;
+        }
+        return formatInteger(this.value, {
+            humanReadable: this.props.humanReadable && !this.state.hasFocus,
+            decimals: this.props.decimals,
+        });
     }
     _onStepClick(ev) {
         const mode = ev.target.dataset.mode;
         this._doStep(mode);
     }
     _onKeyDown(ev) {
-        if (ev.keyCode === 38) {
+        if (ev.key === "ArrowUp") {
             this._doStep("plus");
-        } else if (ev.keyCode === 40) {
+        } else if (ev.key === "ArrowDown") {
             this._doStep("minus");
         }
     }
@@ -27,7 +63,6 @@ export class NumericStep extends FloatField {
         const throttleLimit = 100;
         if (now - this._lastWheelTime >= throttleLimit) {
             this._lastWheelTime = now;
-
             if (ev.deltaY > 0) {
                 this._doStep("minus");
             } else {
@@ -45,38 +80,29 @@ export class NumericStep extends FloatField {
         } else if (mode === "minus") {
             cval -= this.props.step;
         }
-        if (cval < this.props.min) {
+        if (this.props.min !== undefined && cval < this.props.min) {
             cval = this.props.min;
-        } else if (cval > this.props.max) {
+        } else if (this.props.max !== undefined && cval > this.props.max) {
             cval = this.props.max;
+        }
+        if (this.isInteger) {
+            cval = Math.round(cval);
         }
         this.updateField(cval);
     }
 }
 
-NumericStep.template = "web_widget_numeric_step";
-NumericStep.props = {
-    ...standardFieldProps,
-    inputType: {type: String, optional: true},
-    step: {type: Number, optional: true},
-    min: {type: Number, optional: true},
-    max: {type: Number, optional: true},
-    placeholder: {type: String, optional: true},
-    additional_class: {type: String, optional: true},
-};
-NumericStep.defaultProps = {
-    ...FloatField.defaultProps,
-    inputType: "text",
-};
-
 export const numericStep = {
+    ...floatField,
     component: NumericStep,
-    supportedTypes: ["float"],
+    supportedTypes: ["float", "integer"],
     displayName: _t("Numeric Step"),
-    extractProps: ({attrs, options}) => {
+    // Width of the core float column plus the two step buttons
+    listViewWidth: 165,
+    extractProps({attrs, options}) {
+        const props = floatField.extractProps(...arguments);
         return {
-            name: attrs.name,
-            inputType: attrs.type,
+            ...props,
             step: options.step || 1,
             min: options.min,
             max: options.max,
