@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_start_screen,access_quick_start_screen,quick.start.screen,base.group_user,ru,
+access_quick_start_screen_action,access_quick_start_screen_action,quick.start.screen.action,base.group_user,ru,
+access_start_screen_admin,access_quick_start_screen_admin,quick.start.screen,base.group_system,crud,
+access_quick_start_screen_action_admin,access_quick_start_screen_action_admin,quick.start.screen.action,base.group_system,crud,

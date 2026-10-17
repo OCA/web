@@ -63,14 +63,38 @@ class TestQuickStartScreenVisibility(WebQuickStartScreenCommon):
         self.assertIn(self.quick_start_screen_action_1.id, visible)
         self.assertIn(self.quick_start_screen_action_2.id, visible)
 
+    def test_visible_action_ids_cache_invalidation(self):
+        """Creating, archiving or deleting actions must refresh the cached ids"""
+        act_url = self.env["ir.actions.act_url"].create(
+            {"name": "Cache URL", "url": "https://odoo.com", "target": "new"}
+        )
+        # Warm up the ormcache (creating the act_url already invalidates it)
+        self.start_screen_1._visible_action_ids()
+        new_action = self.env["quick.start.screen.action"].create(
+            {
+                "name": "Cache Action",
+                "action_ref_id": f"ir.actions.act_url,{act_url.id}",
+            }
+        )
+        self.start_screen_1.action_ids = [Command.link(new_action.id)]
+        self.assertIn(new_action.id, self.start_screen_1._visible_action_ids())
+        result = self.start_screen_1.action_screen_actions()
+        self.assertIn(new_action.id, result["domain"][0][2])
+        new_action.active = False
+        self.assertNotIn(new_action.id, self.start_screen_1._visible_action_ids())
+        new_action.active = True
+        self.assertIn(new_action.id, self.start_screen_1._visible_action_ids())
+        new_action.unlink()
+        self.assertNotIn(new_action.id, self.start_screen_1._visible_action_ids())
+
     def test_visible_action_ids_no_model_access(self):
         """Actions whose model has no read access should be excluded"""
         # Clear ormcache so the body executes fresh under the mock
-        self.env.registry.clear_cache()
-        # Patch ir.model.access.check to deny access
+        self.env.transaction.invalidate_ormcache()
+        # Deny the read access to the model of the first action
         with patch.object(
-            type(self.env["ir.model.access"]),
-            "check",
+            type(self.env["res.partner"]),
+            "has_access",
             return_value=False,
         ):
             visible = self.start_screen_1._visible_action_ids()

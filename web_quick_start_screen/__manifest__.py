@@ -3,14 +3,14 @@
 {
     "name": "Quick Start Screen",
     "summary": "Configurable start screen for quick actions",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "category": "web",
     "depends": ["web"],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "security/security.xml",
         "views/quick_screen_action_view.xml",
         "views/quick_start_screen_views.xml",

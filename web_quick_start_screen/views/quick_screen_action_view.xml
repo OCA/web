@@ -33,7 +33,9 @@
                             />
                             <i
                                 t-else=""
-                                t-attf-class="fa #{record.icon_name.raw_value or 'fa-flash'} fa-3x o_start_icon_color_#{record.color.raw_value}"
+                                class="oi oi-3x"
+                                t-attf-class="o_start_icon_color_#{record.color.raw_value}"
+                                t-att-data-icon="record.icon_name.raw_value or 'flash_on'"
                                 t-att-title="record.name.raw_value"
                             />
                         </aside>

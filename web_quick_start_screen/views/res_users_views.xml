@@ -11,6 +11,7 @@
                     invisible="share"
                 >
                     <field name="quick_start_screen_id" />
+                    <field name="action_id" />
                 </group>
             </group>
         </field>

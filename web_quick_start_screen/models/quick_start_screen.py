@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 from collections import defaultdict
 
-from odoo import api, fields, models, tools
+from odoo import api, fields, models
 
 
 class QuicktStartScreen(models.Model):
@@ -13,12 +13,11 @@ class QuicktStartScreen(models.Model):
     action_ids = fields.Many2many(comodel_name="quick.start.screen.action")
 
     @api.model
-    @tools.ormcache("frozenset(self.env.user.group_ids.ids)")
+    @api.ormcache("frozenset(self.env.user._get_group_ids())")
     def _visible_action_ids(self):
         """Inspired on how menus visibility work in core"""
         screen_actions = self.action_ids.search([]).sudo()  # pylint: disable=no-search-all
         visible = self.action_ids.browse()
-        access = self.env["ir.model.access"]
         MODEL_BY_TYPE = {
             "ir.actions.act_window": "res_model",
             "ir.actions.report": "model",
@@ -34,7 +33,10 @@ class QuicktStartScreen(models.Model):
             model_name = (
                 action._name in MODEL_BY_TYPE and action[MODEL_BY_TYPE[action._name]]
             )
-            if not model_name or access.check(model_name, "read", False):
+            if not model_name or (
+                (model := self.env.get(model_name)) is not None
+                and model.has_access("read")
+            ):
                 visible += screen_action
         return set(visible.ids)
 
@@ -58,11 +60,12 @@ class QuicktStartScreen(models.Model):
 
     def action_screen_actions(self):
         """Normally called from a server action"""
-        if not self:
-            self = self.env.user.quick_start_screen_id
-        if not self:
-            self = self.browse(self.env.context.get("default_quick_start_screen_id"))
-        action = self._prepare_screen_action()
-        visible_actions = set(self.action_ids.ids) & self._visible_action_ids()
+        screen = (
+            self
+            or self.env.user.quick_start_screen_id
+            or self.browse(self.env.context.get("default_quick_start_screen_id"))
+        )
+        action = screen._prepare_screen_action()
+        visible_actions = set(screen.action_ids.ids) & screen._visible_action_ids()
         action["domain"] = [("id", "in", list(visible_actions))]
         return action

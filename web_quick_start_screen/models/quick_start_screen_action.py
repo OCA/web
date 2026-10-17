@@ -8,12 +8,17 @@ class DecontracStartScreenAction(models.Model):
     _name = "quick.start.screen.action"
     _description = "Actions to be launched from a quick start screen"
     _order = "sequence, id"
+    # Invalidate quick.start.screen._visible_action_ids() ormcache
+    _clear_cache_name = "default"
+    _clear_cache_on_fields = ("active", "action_ref_id")
 
     active = fields.Boolean(default=True)
     sequence = fields.Integer()
     name = fields.Char(required=True, translate=True)
     image = fields.Image("Start screen icon", max_width=128, max_height=128, store=True)
-    icon_name = fields.Char(help="Just set the Font Awesome icon name. e.g.: fa-truck")
+    icon_name = fields.Char(
+        help="Name of the Material Symbols icon, e.g.: local_shipping"
+    )
     color = fields.Integer(help="Choose the icon color")
     description = fields.Html(translate=True)
     action_ref_id = fields.Reference(

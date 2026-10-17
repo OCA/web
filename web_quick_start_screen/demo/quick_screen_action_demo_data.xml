@@ -9,7 +9,7 @@
             name="description"
         ><![CDATA[ <span>Browse <b>contacts</b></span>]]></field>
         <field name="action_ref_id" ref="base.action_partner_form" />
-        <field name="icon_name">fa-users</field>
+        <field name="icon_name">group</field>
         <field name="color" eval="7" />
     </record>
     <record
@@ -20,8 +20,8 @@
         <field
             name="description"
         ><![CDATA[ <span>Explore <b>access rights</b></span>]]></field>
-        <field name="action_ref_id" ref="base.ir_access_act" />
-        <field name="icon_name">fa-eye</field>
+        <field name="action_ref_id" ref="base.ir_access_action" />
+        <field name="icon_name">visibility</field>
         <field name="color" eval="4" />
     </record>
     <record
@@ -38,7 +38,7 @@
         />
         <field
             name="image"
-            type="base64"
+            type="bytes"
             file="web_quick_start_screen/static/description/icon.png"
         />
     </record>

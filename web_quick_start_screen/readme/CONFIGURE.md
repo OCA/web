@@ -18,8 +18,8 @@ To assign a quick start screen to a user:
 - Go to *Settings > Users and Companies > Users* and select one.
 - In the *Preferences* tab, *Menus customization* section, you can choose which
   *Quick start screen* will that user use.
-- If you want to make the user start always in his start screen, in the same section
-  select the action *Quick Start Screen*.
+- If you want to make the user start always in their start screen, in the same section
+  set the *Home Action* field to *Quick Start Screen*.
 
 To activate the quick start screen menu for a user:
 

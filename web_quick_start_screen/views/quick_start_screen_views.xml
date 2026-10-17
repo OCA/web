@@ -15,7 +15,7 @@
                     name="action_screen_actions"
                     class="btn btn-primary"
                     title="Go to the start screen"
-                    icon="fa-flash"
+                    icon="flash_on"
                 />
             </list>
         </field>

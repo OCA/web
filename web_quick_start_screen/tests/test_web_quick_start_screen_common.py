@@ -14,7 +14,7 @@ class WebQuickStartScreenCommon(TransactionCase):
                 "description": "<span>Browse <b>contacts</b></span>",
                 "action_ref_id": f"ir.actions.act_window,"
                 f"{cls.env.ref('base.action_partner_form').id}",
-                "icon_name": "fa-users",
+                "icon_name": "group",
                 "color": 7,
             }
         )
@@ -24,8 +24,8 @@ class WebQuickStartScreenCommon(TransactionCase):
                 "name": "Access rights",
                 "description": "<span>Explore <b>access rights</b></span>",
                 "action_ref_id": f"ir.actions.act_window,"
-                f"{cls.env.ref('base.ir_access_act').id}",
-                "icon_name": "fa-eyes",
+                f"{cls.env.ref('base.ir_access_action').id}",
+                "icon_name": "visibility",
                 "color": 4,
             }
         )
