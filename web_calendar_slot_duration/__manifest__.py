@@ -16,7 +16,12 @@
         "web.assets_backend": [
             "web_calendar_slot_duration/static/src/js/calendar_common_renderer.esm.js",
             "web_calendar_slot_duration/static/src/js/calendar_model.esm.js",
-        ]
+        ],
+        "web.assets_unit_tests": [
+            "web_calendar_slot_duration/static/src/js/calendar_common_renderer.esm.js",
+            "web_calendar_slot_duration/static/src/js/calendar_model.esm.js",
+            "web_calendar_slot_duration/static/tests/**/*.test.js",
+        ],
     },
     "data": ["demo/scheduled_actions.xml"],
     "depends": ["web"],

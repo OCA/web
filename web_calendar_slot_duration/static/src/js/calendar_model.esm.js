@@ -15,7 +15,8 @@ patch(CalendarModel.prototype, {
       const slot_duration = this.env.searchModel.context.calendar_slot_duration;
       const [hours, minutes, seconds] = slot_duration
         .match(/(\d+):(\d+):(\d+)/)
-        .slice(1, 4);
+        .slice(1, 4)
+        .map(Number);
       const durationFloat = hours + minutes / 60 + seconds / 3600;
       partialRecord.end = partialRecord.start.plus({hours: durationFloat});
     }
