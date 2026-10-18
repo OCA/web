@@ -19,5 +19,9 @@
             "/web_chatter_position/static/src/**/*.js",
             "/web_chatter_position/static/src/**/*.scss",
         ],
+        "web.assets_unit_tests": [
+            "/web_chatter_position/static/src/js/web_chatter_position.esm.js",
+            "/web_chatter_position/static/tests/web_chatter_position.test.js",
+        ],
     },
 }
