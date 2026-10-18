@@ -8,10 +8,10 @@ import {patch} from "@web/core/utils/patch";
 import {session} from "@web/session";
 
 patch(SwitchCompanyMenu.prototype, {
-  setup() {
-    super.setup();
-    this.highlightColor = session.web_company_context_highlight_color || "#ffc107";
-    this.highlightTextColor =
-      session.web_company_context_highlight_text_color || "#212529";
-  },
+    setup() {
+        super.setup();
+        this.highlightColor = session.web_company_context_highlight_color || "#ffc107";
+        this.highlightTextColor =
+            session.web_company_context_highlight_text_color || "#212529";
+    },
 });
