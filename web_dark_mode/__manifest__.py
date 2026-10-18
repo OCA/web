@@ -5,7 +5,7 @@
     "name": "Dark Mode",
     "summary": "Enabled Dark Mode for the Odoo Backend",
     "license": "AGPL-3",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "website": "https://github.com/OCA/web",
     "author": "initOS GmbH, Odoo Community Association (OCA)",
     "depends": ["web"],
@@ -16,19 +16,14 @@
             "web_dark_mode/static/src/js/switch_item.esm.js",
         ],
         "web.assets_backend_lazy_dark": [
-            ("include", "web.assets_variables_dark"),
+            ("include", "web.dark_mode_variables"),
             ("include", "web.assets_backend_helpers_dark"),
         ],
-        "web.assets_variables_dark": [
+        "web.dark_mode_variables": [
             (
                 "before",
                 "web/static/src/scss/primary_variables.scss",
                 "web_dark_mode/static/src/scss/primary_variables.dark.scss",
-            ),
-            (
-                "before",
-                "web/static/src/scss/secondary_variables.scss",
-                "web_dark_mode/static/src/scss/secondary_variables.dark.scss",
             ),
             (
                 "before",
@@ -49,7 +44,8 @@
             ),
         ],
         "web.assets_web_dark": [
-            ("include", "web.assets_variables_dark"),
+            ("include", "web.dark_mode_variables"),
+            ("include", "web.dark_mode_assets_backend"),
             ("include", "web.assets_backend_helpers_dark"),
             "web_dark_mode/static/src/**/*.dark.scss",
         ],
