@@ -13,6 +13,9 @@ $warning-bg-subtle: tint-color($o-warning, 65%) !default;
 $danger-text-emphasis: shade-color($o-danger, 75%) !default;
 $danger-bg-subtle: tint-color($o-danger, 65%) !default;
 
+// Subtle backgrounds
+$primary-bg-subtle: tint-color($o-brand-primary, 45%) !default;
+
 // Shadows
 $box-shadow: 0 0.5rem 1rem rgba($o-white, 0.4) !default;
 $box-shadow-sm: 0 0.125rem 0.25rem rgba($o-white, 0.2) !default;
@@ -43,7 +46,10 @@ $kbd-box-shadow:
 
 // Input
 $input-focus-box-shadow: 0 !default;
-$input-focus-border-color: $o-enterprise-action-color !default;
+$input-focus-border-color: mix($o-component-active-border, $o-white, 75%) !default;
 $form-check-input-checked-color: $o-white !default;
 $form-check-input-checked-border-color: $o-enterprise-action-color !default;
 $form-check-input-checked-bg-color: $o-enterprise-action-color !default;
+$form-check-input-indeterminate-color: $o-white !default;
+$form-check-input-indeterminate-border-color: $o-enterprise-action-color !default;
+$form-check-input-indeterminate-bg-color: $o-enterprise-action-color !default;

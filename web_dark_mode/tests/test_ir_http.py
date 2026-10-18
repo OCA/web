@@ -11,9 +11,6 @@ HOST = "127.0.0.1"
 class TestColorScheme(HttpCase):
     def setUp(self):
         super().setUp()
-        self.test_portal_user = new_test_user(
-            self.env, "test_portal_user", groups="base.group_portal"
-        )
         self.test_internal_user = new_test_user(
             self.env, "test_internal_user", groups="base.group_user"
         )
@@ -24,10 +21,10 @@ class TestColorScheme(HttpCase):
             }
         )
 
-    # Non internal user -> skip logic, do nothing
+    # Non internal user -> skip logic. Portal user not covered as this module does
+    # not depend on the portal module, thereby making it impossible to test in OCA CI
     def test_01_non_internal_user_ignored(self):
-        self.authenticate(self.test_portal_user.login, self.test_portal_user.login)
-        response = self.url_open("/my")
+        response = self.url_open("/web/login")
         cookie_header = response.headers.get("Set-Cookie", "")
         self.assertNotIn(
             "color_scheme",
