@@ -9,12 +9,20 @@ class QWeb(models.AbstractModel):
     _inherit = "ir.qweb"
 
     def _generate_asset_links_cache(
-        self, bundle, css=True, js=True, assets_params=None, rtl=False, autoprefix=False
+        self,
+        bundle,
+        css=True,
+        js=True,
+        binary=False,
+        assets_params=None,
+        rtl=False,
+        autoprefix=False,
     ):
         res = super()._generate_asset_links_cache(
             bundle,
             css=css,
             js=js,
+            binary=binary,
             assets_params=assets_params,
             rtl=rtl,
             autoprefix=autoprefix,
@@ -31,6 +39,7 @@ class QWeb(models.AbstractModel):
         bundle,
         css=True,
         js=True,
+        binary=False,
         debug_assets=False,
         assets_params=None,
         rtl=False,
@@ -40,6 +49,7 @@ class QWeb(models.AbstractModel):
             bundle,
             css=css,
             js=js,
+            binary=binary,
             debug_assets=debug_assets,
             assets_params=assets_params,
             rtl=rtl,
@@ -63,6 +73,7 @@ class QWeb(models.AbstractModel):
         bundle,
         css=True,
         js=True,
+        binary=False,
         debug=False,
         defer_load=False,
         lazy_load=False,
@@ -73,6 +84,7 @@ class QWeb(models.AbstractModel):
             bundle,
             css=css,
             js=js,
+            binary=binary,
             debug=debug,
             defer_load=defer_load,
             lazy_load=lazy_load,
