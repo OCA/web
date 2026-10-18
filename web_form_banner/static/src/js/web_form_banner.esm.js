@@ -87,10 +87,14 @@ async function refreshBanners(ctrl, extraChanges) {
       null
     );
     if ((ctrl.__wfbSeq || 0) !== seq) return;
+    if (!r.visible) {
+      el.classList.add("o_invisible_modifier");
+      continue;
+    }
     // Replace only the alert class
     el.classList.remove("alert-info", "alert-warning", "alert-danger");
     el.classList.add("alert-" + r.severity);
-    el.classList.toggle("o_invisible_modifier", !(r && r.visible));
+    el.classList.remove("o_invisible_modifier");
     setHtml(el, r.html);
   }
 }
