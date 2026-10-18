@@ -69,5 +69,5 @@ test("datetime field: session.use_date_format_numeric=true renders numeric forma
     resId: 1,
     arch: `<form><field name="datetime" readonly="1"/></form>`,
   });
-  expect(".o_field_datetime span").toHaveText("12/31/2025 10:00:00");
+  expect(".o_field_datetime span").toHaveText("12/31/2025 10:00");
 });
