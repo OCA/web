@@ -58,8 +58,15 @@ class TestResCompany(common.TransactionCase):
         )
 
     def test_binary_asset_nodes(self):
-        nodes = self.env["ir.qweb"]._get_asset_nodes("web.assets_backend", binary=True)
-        self.assertTrue(nodes)
+        qweb = self.env["ir.qweb"]
+        color_nodes = qweb._get_asset_nodes("web_company_color.company_color_assets")
+        self.assertTrue(
+            any(
+                tag == "link" and attributes.get("href", "").startswith(URL_BASE)
+                for tag, attributes in color_nodes
+            )
+        )
+        self.assertTrue(qweb._get_asset_nodes("web.assets_backend", binary=True))
 
     def test_change_color(self):
         company_id = self.env["res.company"].search([], limit=1)
