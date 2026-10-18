@@ -3,9 +3,9 @@
 // but odoo has everything hardcoded to the light mode versions of the variables, so we are left
 // with this rather hacky way of inverting shades and tints
 @function tint-color($color, $weight) {
-  @return mix(#000000, $color, $weight);
+    @return mix(#000000, $color, $weight);
 }
 
 @function shade-color($color, $weight) {
-  @return mix(#ffffff, $color, $weight);
+    @return mix(#ffffff, $color, $weight);
 }

@@ -55,77 +55,77 @@ $o-list-group-active-bg: $o-gray-300 !default;
 // Buttons
 $o-btns-bs-override: () !default;
 $o-btns-bs-override: map-merge(
-  $o-btns-bs-override,
-  (
-    "primary": (
-      background: $o-brand-primary,
-      border: $o-brand-primary,
-      color: $o-black,
-      hover-background: lighten($o-brand-primary, 5%),
-      hover-border: lighten($o-brand-primary, 5%),
-      hover-color: $o-black,
+    $o-btns-bs-override,
+    (
+        "primary": (
+            background: $o-brand-primary,
+            border: $o-brand-primary,
+            color: $o-black,
+            hover-background: lighten($o-brand-primary, 5%),
+            hover-border: lighten($o-brand-primary, 5%),
+            hover-color: $o-black,
 
-      active-background: lighten($o-brand-primary, 10%),
-      active-border: lighten($o-brand-primary, 10%),
-      active-color: $o-black,
-    ),
-    "secondary": (
-      background: $o-gray-300,
-      border: $o-gray-300,
-      color: $o-gray-900,
+            active-background: lighten($o-brand-primary, 10%),
+            active-border: lighten($o-brand-primary, 10%),
+            active-color: $o-black,
+        ),
+        "secondary": (
+            background: $o-gray-300,
+            border: $o-gray-300,
+            color: $o-gray-900,
 
-      hover-background: $o-gray-400,
-      hover-border: $o-gray-400,
-      hover-color: $o-gray-900,
+            hover-background: $o-gray-400,
+            hover-border: $o-gray-400,
+            hover-color: $o-gray-900,
 
-      active-background: mix($o-action, $o-gray-100, 10%),
-      active-border: $o-action,
-      active-color: $o-black,
-    ),
-    "light": (
-      background: transparent,
-      border: transparent,
-      color: $o-gray-800,
+            active-background: mix($o-action, $o-gray-100, 10%),
+            active-border: $o-action,
+            active-color: $o-black,
+        ),
+        "light": (
+            background: transparent,
+            border: transparent,
+            color: $o-gray-800,
 
-      hover-background: $o-gray-300,
-      hover-border: $o-gray-300,
-      hover-color: $o-gray-900,
+            hover-background: $o-gray-300,
+            hover-border: $o-gray-300,
+            hover-color: $o-gray-900,
 
-      active-background: mix($o-action, $o-gray-100, 10%),
-      active-border: $o-action,
-      active-color: $o-black,
-    ),
-  )
+            active-background: mix($o-action, $o-gray-100, 10%),
+            active-border: $o-action,
+            active-color: $o-black,
+        ),
+    )
 );
 
 $o-btns-bs-outline-override: () !default;
 $o-btns-bs-outline-override: map-merge(
-  $o-btns-bs-outline-override,
-  (
-    "primary": (
-      background: transparent,
-      border: saturate(lighten($o-brand-primary, 20%), 25%),
-      color: saturate(lighten($o-brand-primary, 20%), 25%),
-      hover-background: lighten($o-brand-primary, 5%),
-      hover-border: lighten($o-brand-primary, 5%),
-      hover-color: $o-black,
+    $o-btns-bs-outline-override,
+    (
+        "primary": (
+            background: transparent,
+            border: saturate(lighten($o-brand-primary, 20%), 25%),
+            color: saturate(lighten($o-brand-primary, 20%), 25%),
+            hover-background: lighten($o-brand-primary, 5%),
+            hover-border: lighten($o-brand-primary, 5%),
+            hover-color: $o-black,
 
-      active-background: lighten($o-brand-primary, 10%),
-      active-border: lighten($o-brand-primary, 10%),
-      active-color: $o-black,
-    ),
-    "secondary": (
-      background: transparent,
-      border: $o-gray-300,
-      color: $o-gray-900,
+            active-background: lighten($o-brand-primary, 10%),
+            active-border: lighten($o-brand-primary, 10%),
+            active-color: $o-black,
+        ),
+        "secondary": (
+            background: transparent,
+            border: $o-gray-300,
+            color: $o-gray-900,
 
-      hover-background: $o-gray-300,
-      hover-border: $o-gray-300,
-      hover-color: $o-gray-900,
+            hover-background: $o-gray-300,
+            hover-border: $o-gray-300,
+            hover-color: $o-gray-900,
 
-      active-background: mix($o-action, $o-gray-100, 10%),
-      active-border: $o-action,
-      active-color: $o-black,
-    ),
-  )
+            active-background: mix($o-action, $o-gray-100, 10%),
+            active-border: $o-action,
+            active-color: $o-black,
+        ),
+    )
 );
