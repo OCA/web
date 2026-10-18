@@ -5,11 +5,13 @@ import {proxy} from "@odoo/owl";
 import {closestElement} from "@html_editor/utils/dom_traversal";
 import {isVisibleTextNode} from "@html_editor/utils/dom_info";
 import {withSequence} from "@html_editor/utils/resource";
+import {createCustomCssFormats} from "../utils/utils.esm";
 
 export class CssSelectorPlugin extends Plugin {
   static id = "css_selector_plugin";
   static dependencies = ["selection", "format"];
   resources = {
+    format_specs: createCustomCssFormats(this.config.custom_class_css ?? []),
     toolbar_groups: [withSequence(60, {id: "css-selector"})],
     toolbar_items: [
       {
@@ -21,7 +23,7 @@ export class CssSelectorPlugin extends Plugin {
           getItems: () => this.custom_class_css,
           getDisplay: () => this.custom_css,
           onSelected: (item) => {
-            this.dependencies.format.formatSelection(item.class_name, {
+            this.dependencies.format.requestFormat(item.class_name, {
               formatProps: {className: item.class_name},
               applyStyle: true,
             });
@@ -38,7 +40,7 @@ export class CssSelectorPlugin extends Plugin {
 
   setup() {
     this.custom_css = proxy({displayName: this.defaultCustomCssName});
-    this.custom_class_css = this.config.custom_class_css;
+    this.custom_class_css = this.config.custom_class_css ?? [];
   }
   updateCustomCssSelectorParams() {
     this.custom_css.displayName = this.customCssName;

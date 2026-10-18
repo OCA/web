@@ -1,22 +1,28 @@
 import {closestElement} from "@html_editor/utils/dom_traversal";
-import {formatsSpecs} from "@html_editor/utils/formatting";
 
-// This function is called in the getEditorConfig method of the Wysiwyg class
-// It generates the new formatsSpecs object with the custom CSS class
 export function createCustomCssFormats(custom_class_css) {
-  const newformatsSpecs = {};
-  const class_names = custom_class_css.map((customCss) => customCss.class_name);
+  const classNames = custom_class_css.map((customCss) => customCss.class_name);
   const removeCustomClass = (node) => {
-    for (const class_name of class_names) {
-      node.classList.remove(class_name);
-      if (node.parentElement) {
-        node.parentElement.classList.remove(class_name);
+    const parent = node.parentElement;
+    for (const element of [node, parent]) {
+      if (!element?.classList) {
+        continue;
+      }
+      for (const className of classNames) {
+        element.classList.remove(className);
+      }
+      if (!element.classList.length) {
+        element.removeAttribute("class");
       }
     }
+    if (parent?.tagName === "SPAN" && parent.attributes.length === 0) {
+      parent.replaceWith(...parent.childNodes);
+    }
   };
-  for (const customCss of custom_class_css) {
+  return custom_class_css.map((customCss) => {
     const className = customCss.class_name;
-    newformatsSpecs[className] = {
+    return {
+      id: className,
       tagName: "span",
       isFormatted: (node) => closestElement(node).classList.contains(className),
       isTag: (node) =>
@@ -29,6 +35,5 @@ export function createCustomCssFormats(custom_class_css) {
       addNeutralStyle: (node) => removeCustomClass(node),
       removeStyle: (node) => removeCustomClass(node),
     };
-  }
-  Object.assign(formatsSpecs, newformatsSpecs);
+  });
 }

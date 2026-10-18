@@ -21,7 +21,9 @@
             "web_editor_class_selector/static/src/scss/demo_styles.scss",
             "web_editor_class_selector/static/src/js/fields/**/*",
             "web_editor_class_selector/static/src/js/utils/**/*",
-            "web_editor_class_selector/static/src/js/wysiwyg/**/*",
+        ],
+        "web.assets_unit_tests": [
+            "web_editor_class_selector/static/tests/**/*",
         ],
     },
     "maintainers": ["carlos-lopez-tecnativa"],
