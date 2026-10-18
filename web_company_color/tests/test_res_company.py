@@ -1,8 +1,12 @@
 # Copyright 2019 Alexandre Díaz <dev@redneboa.es>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from PIL import Image
+
 from odoo.tests import common
 
+from ..hooks import uninstall_hook
 from ..models.res_company import URL_BASE
+from ..utils import image_to_rgb
 
 
 class TestResCompany(common.TransactionCase):
@@ -34,6 +38,23 @@ class TestResCompany(common.TransactionCase):
         # company_id.sudo().unlink()
         # self._test_scss_attachment()
 
+    def test_unlink_company_removes_scss_attachment(self):
+        company = self.env["res.company"].create({"name": "Company To Delete"})
+        attachment = self.env["ir.attachment"].search(
+            [("url", "=", company.scss_get_url()), ("company_id", "=", company.id)]
+        )
+        self.assertTrue(attachment)
+        company.unlink()
+        self.assertFalse(attachment.exists())
+
+    def test_uninstall_hook_removes_scss_attachments(self):
+        attachment = self.env["ir.attachment"].search(
+            [("url", "=like", f"{URL_BASE}%")], limit=1
+        )
+        self.assertTrue(attachment)
+        uninstall_hook(self.env)
+        self.assertFalse(attachment.exists())
+
     def test_change_logo(self):
         company_id = self.env["res.company"].search([], limit=1)
         company_id.sudo().write({"logo": self.IMG_GREEN})
@@ -56,6 +77,34 @@ class TestResCompany(common.TransactionCase):
         self.assertEqual(
             values["color_navbar_bg"], "#DEAD00", "Invalid Navbar Background Color"
         )
+
+    def test_compute_color_without_logo(self):
+        company = self.env["res.company"].create(
+            {"name": "Company Without Logo", "logo": False}
+        )
+        company = company.with_context(
+            default_color_navbar_bg="#123456",
+            default_color_navbar_bg_hover="#234567",
+            default_color_navbar_text="#ffffff",
+        )
+        company.button_compute_color()
+        self.assertEqual(company.color_navbar_bg, "#123456")
+        self.assertEqual(company.color_navbar_bg_hover, "#234567")
+        self.assertEqual(company.color_navbar_text, "#ffffff")
+
+    def test_image_to_rgb_handles_rgb_and_transparent_pixels(self):
+        rgb_image = Image.new("RGB", (1, 1), (0, 255, 0))
+        self.assertEqual(image_to_rgb(rgb_image), (0.0, 1.0, 0.0))
+
+        rgba_image = Image.new("RGBA", (8, 4), (0, 0, 0, 0))
+        rgba_image.paste((0, 255, 0, 255), (4, 0, 8, 4))
+        self.assertEqual(image_to_rgb(rgba_image), (0.0, 1.0, 0.0))
+
+    def test_write_ignores_colors_when_context_requests_it(self):
+        company = self.env.company
+        company.write({"name": "Renamed Company"})
+        company.with_context(ignore_company_color=True).write({"name": "Renamed Again"})
+        self.assertEqual(company.name, "Renamed Again")
 
     def test_binary_asset_nodes(self):
         qweb = self.env["ir.qweb"]
