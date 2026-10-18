@@ -11,7 +11,7 @@
     "website": "https://github.com/OCA/web",
     "license": "LGPL-3",
     "category": "Web",
-    "depends": ["web", "base_setup", "web_tour"],
+    "depends": ["web", "base_setup", "bus", "web_tour"],
     "data": ["views/res_config_settings_views.xml"],
     "assets": {
         "web.assets_backend": [
