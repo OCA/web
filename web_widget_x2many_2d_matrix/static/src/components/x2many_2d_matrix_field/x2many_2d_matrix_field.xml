@@ -3,14 +3,14 @@
     <t t-name="web_widget_x2many_2d_matrix.X2Many2DMatrixField">
         <div class="table-responsive">
             <X2Many2DMatrixRenderer
-                list="list"
-                list_view="list_view"
-                matrixFields="props.matrixFields"
-                showRowTotals="props.showRowTotals"
-                showColumnTotals="props.showColumnTotals"
-                readonly="props.readonly"
-                isXClickable="props.isXClickable"
-                isYClickable="props.isYClickable"
+                list="this.list"
+                list_view="this.list_view"
+                matrixFields="this.props.matrixFields"
+                showRowTotals="this.props.showRowTotals"
+                showColumnTotals="this.props.showColumnTotals"
+                readonly="this.props.readonly"
+                isXClickable="this.props.isXClickable"
+                isYClickable="this.props.isYClickable"
             />
         </div>
     </t>

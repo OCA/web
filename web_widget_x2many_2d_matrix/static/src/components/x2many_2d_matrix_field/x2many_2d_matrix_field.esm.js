@@ -1,10 +1,22 @@
-import {Component} from "@odoo/owl";
+import {Component, t, useProps} from "@odoo/owl";
 import {X2Many2DMatrixRenderer} from "@web_widget_x2many_2d_matrix/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.esm";
 import {exprToBoolean} from "@web/core/utils/strings";
+// eslint-disable-next-line no-unused-vars
+import {onWillRender} from "@web/owl2/utils";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class X2Many2DMatrixField extends Component {
+    props = useProps({
+        ...standardFieldProps,
+        list_view: t.object(),
+        matrixFields: t.object(),
+        isXClickable: t.boolean().optional(),
+        isYClickable: t.boolean().optional(),
+        showRowTotals: t.boolean().optional(),
+        showColumnTotals: t.boolean().optional(),
+    });
+
     setup() {
         this.activeField = this.props.record.activeFields[this.props.name];
     }
@@ -27,15 +39,6 @@ export class X2Many2DMatrixField extends Component {
 }
 
 X2Many2DMatrixField.template = "web_widget_x2many_2d_matrix.X2Many2DMatrixField";
-X2Many2DMatrixField.props = {
-    ...standardFieldProps,
-    list_view: {type: Object, optional: false},
-    matrixFields: {type: Object, optional: false},
-    isXClickable: {type: Boolean, optional: true},
-    isYClickable: {type: Boolean, optional: true},
-    showRowTotals: {type: Boolean, optional: true},
-    showColumnTotals: {type: Boolean, optional: true},
-};
 
 X2Many2DMatrixField.components = {X2Many2DMatrixRenderer};
 export const x2Many2DMatrixField = {

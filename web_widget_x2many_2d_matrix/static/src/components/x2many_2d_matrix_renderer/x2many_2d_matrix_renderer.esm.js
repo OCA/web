@@ -1,10 +1,22 @@
+import {Component, onWillRender, t, useProps} from "@odoo/owl";
 import {evaluateBooleanExpr, evaluateExpr} from "@web/core/py_js/py";
-import {Component, onWillRender} from "@odoo/owl";
 import {Domain} from "@web/core/domain";
 import {Record} from "@web/model/relational_model/record";
 import {getFieldContext} from "@web/model/relational_model/utils";
 
 export class X2Many2DMatrixRenderer extends Component {
+    props = useProps({
+        list: t.object(),
+        list_view: t.object(),
+        matrixFields: t.object(),
+        readonly: t.boolean().optional(),
+        domain: t.or([t.array(), t.function()]).optional(),
+        showRowTotals: t.boolean().optional(),
+        showColumnTotals: t.boolean().optional(),
+        isXClickable: t.boolean().optional(),
+        isYClickable: t.boolean().optional(),
+    });
+
     setup() {
         onWillRender(() => {
             const records = this.list.records;
@@ -205,14 +217,3 @@ export class X2Many2DMatrixRenderer extends Component {
 }
 
 X2Many2DMatrixRenderer.template = "web_widget_x2many_2d_matrix.X2Many2DMatrixRenderer";
-X2Many2DMatrixRenderer.props = {
-    list: {type: Object, optional: false},
-    list_view: {type: Object, optional: false},
-    matrixFields: {type: Object, optional: false},
-    readonly: {type: Boolean, optional: true},
-    domain: {type: [Array, Function], optional: true},
-    showRowTotals: {type: Boolean, optional: true},
-    showColumnTotals: {type: Boolean, optional: true},
-    isXClickable: {type: Boolean, optional: true},
-    isYClickable: {type: Boolean, optional: true},
-};

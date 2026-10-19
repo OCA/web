@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "2D matrix for x2many fields",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "maintainers": ["JasminSForgeFlow", "DavidJForgeFlow", "hbrunn"],
     "development_status": "Production/Stable",
     "author": (
@@ -28,16 +28,26 @@
     "installable": True,
     "assets": {
         "web.assets_backend": [
-            "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_renderer/"
-            "x2many_2d_matrix_renderer.esm.js",
-            "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_renderer/"
-            "x2many_2d_matrix_renderer.xml",
-            "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_field/"
-            "x2many_2d_matrix_field.esm.js",
-            "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_field/"
-            "x2many_2d_matrix_field.xml",
-            "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_field/"
-            "x2many_2d_matrix_field.scss",
+            (
+                "web_widget_x2many_2d_matrix/static/src/components/"
+                "x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.esm.js"
+            ),
+            (
+                "web_widget_x2many_2d_matrix/static/src/components/"
+                "x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.xml"
+            ),
+            (
+                "web_widget_x2many_2d_matrix/static/src/components/"
+                "x2many_2d_matrix_field/x2many_2d_matrix_field.esm.js"
+            ),
+            (
+                "web_widget_x2many_2d_matrix/static/src/components/"
+                "x2many_2d_matrix_field/x2many_2d_matrix_field.xml"
+            ),
+            (
+                "web_widget_x2many_2d_matrix/static/src/components/"
+                "x2many_2d_matrix_field/x2many_2d_matrix_field.scss"
+            ),
         ],
         "web.assets_unit_tests": [
             "web_widget_x2many_2d_matrix/static/tests/*",

@@ -2,69 +2,69 @@
 <templates>
     <t t-name="web_widget_x2many_2d_matrix.X2Many2DMatrixRenderer">
         <table
-            t-if="rows.length > 0"
+            t-if="this.rows.length > 0"
             class="o_list_table table table-responsive table-sm table-hover position-relative mb-0 o_list_table_ungrouped table-striped"
         >
             <thead>
                 <tr>
                     <th />
                     <th
-                        t-foreach="columns"
+                        t-foreach="this.columns"
                         t-as="column"
                         t-key="column.value"
                         class="text-center"
                     >
                         <t
-                            t-component="xFieldComponent"
-                            t-props="_getAxisFieldProps(column.rawValue, 'x')"
+                            t-component="this.xFieldComponent"
+                            t-props="this._getAxisFieldProps(column.rawValue, 'x')"
                         />
                     </th>
-                    <th t-if="props.showRowTotals" />
+                    <th t-if="this.props.showRowTotals" />
                 </tr>
             </thead>
             <tbody>
-                <tr t-foreach="rows" t-as="row" t-key="row.value">
+                <tr t-foreach="this.rows" t-as="row" t-key="row.value">
                     <td>
                         <t
-                            t-component="yFieldComponent"
-                            t-props="_getAxisFieldProps(row.rawValue, 'y')"
+                            t-component="this.yFieldComponent"
+                            t-props="this._getAxisFieldProps(row.rawValue, 'y')"
                         />
                     </td>
-                    <td t-foreach="columns" t-as="column" t-key="column.value">
+                    <td t-foreach="this.columns" t-as="column" t-key="column.value">
                         <t
                             t-set="value_field_props"
-                            t-value="_getValueFieldProps(column.value, row.value)"
+                            t-value="this._getValueFieldProps(column.value, row.value)"
                         />
                         <t
                             t-if="value_field_props"
-                            t-component="valueFieldComponent"
+                            t-component="this.valueFieldComponent"
                             t-props="value_field_props"
                         />
                     </td>
                     <td
-                        t-if="props.showRowTotals and _canAggregate()"
+                        t-if="this.props.showRowTotals and this._canAggregate()"
                         class="row-total"
                     >
                         <t
-                            t-component="valueFieldComponent"
-                            t-props="_getAggregateProps(_aggregateRow(row.value))"
+                            t-component="this.valueFieldComponent"
+                            t-props="this._getAggregateProps(this._aggregateRow(row.value))"
                         />
                     </td>
                 </tr>
             </tbody>
             <tfoot>
-                <tr t-if="props.showColumnTotals and _canAggregate()">
+                <tr t-if="this.props.showColumnTotals and this._canAggregate()">
                     <th />
-                    <th t-foreach="columns" t-as="column" t-key="column.value">
+                    <th t-foreach="this.columns" t-as="column" t-key="column.value">
                         <t
-                            t-component="valueFieldComponent"
-                            t-props="_getAggregateProps(_aggregateColumn(column.value))"
+                            t-component="this.valueFieldComponent"
+                            t-props="this._getAggregateProps(this._aggregateColumn(column.value))"
                         />
                     </th>
-                    <th t-if="props.showRowTotals" class="col-total">
+                    <th t-if="this.props.showRowTotals" class="col-total">
                         <t
-                            t-component="valueFieldComponent"
-                            t-props="_getAggregateProps(_aggregateAll())"
+                            t-component="this.valueFieldComponent"
+                            t-props="this._getAggregateProps(this._aggregateAll())"
                         />
                     </th>
                 </tr>
