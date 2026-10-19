@@ -3,17 +3,13 @@
 
 {
     "name": "Widget Open on new Tab",
-    "summary": """
-        Allow to open record from trees on new tab from tree views""",
-    "version": "18.0.1.0.0",
+    "summary": "Allow to open records from list and kanban views in a new tab",
+    "version": "19.0.1.0.0",
     "license": "AGPL-3",
     "author": "Creu Blanca,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "demo": ["demo/res_users_view.xml"],
-    "data": [
-        "views/ir_model_views.xml",
-    ],
     "assets": {
         "web.assets_backend": [
             "web_widget_open_tab/static/src/xml/open_tab_widget.xml",
