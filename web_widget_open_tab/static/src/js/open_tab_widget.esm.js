@@ -4,6 +4,12 @@ import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class OpenTabWidget extends Component {
+    static template = "web_widget_open_tab.openTab";
+    static props = {
+        ...standardFieldProps,
+        title: {type: String, optional: true},
+    };
+
     openNewTab(ev) {
         ev.stopPropagation();
     }
@@ -11,12 +17,6 @@ export class OpenTabWidget extends Component {
         return `/odoo/${this.props.record.resModel}/${this.props.record.data.id}`;
     }
 }
-
-OpenTabWidget.template = "web_widget_open_tab.openTab";
-OpenTabWidget.props = {
-    ...standardFieldProps,
-    title: {type: String, optional: true},
-};
 
 export const openTabWidget = {
     component: OpenTabWidget,

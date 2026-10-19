@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record id="view_users_tree" model="ir.ui.view">
-        <field name="model">res.users</field>
-        <field name="inherit_id" ref="base.view_users_tree" />
+    <record id="res_partner_kanban_view" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view" />
         <field name="arch" type="xml">
-            <field name="name" position="before">
+            <xpath expr="//footer" position="inside">
                 <field name="id" widget="open_tab" />
-            </field>
+            </xpath>
         </field>
     </record>
 </odoo>
