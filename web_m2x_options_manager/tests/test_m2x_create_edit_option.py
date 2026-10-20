@@ -20,11 +20,11 @@ class TestM2xCreateEditOption(Common):
         )
         self.assertEqual(
             self._eval_node_options(form_doc.xpath("//field[@name='parent_id']")[0]),
-            {"create": False, "create_edit": False},
+            {"no_quick_create": True, "no_create_edit": True},
         )
         self.assertEqual(
             self._eval_node_options(form_doc.xpath("//field[@name='category_id']")[0]),
-            {"create": False, "create_edit": False},
+            {"no_quick_create": True, "no_create_edit": True},
         )
 
         # Create options, check view has been updated
@@ -55,19 +55,19 @@ class TestM2xCreateEditOption(Common):
         form_doc = self._get_test_view_parsed()
         self.assertEqual(
             self._eval_node_options(form_doc.xpath("//field[@name='title']")[0]),
-            {"create": True, "create_edit": True},
+            {"no_quick_create": False, "no_create_edit": False},
         )
         self.assertEqual(
             self._eval_node_options(form_doc.xpath("//field[@name='parent_id']")[0]),
             # These remain the same because the options are defined w/ 'set_true':
             # but the node already contains them, so no override is applied
-            {"create": False, "create_edit": False},
+            {"no_quick_create": True, "no_create_edit": True},
         )
         self.assertEqual(
             self._eval_node_options(form_doc.xpath("//field[@name='category_id']")[0]),
             # These change values because the options are defined w/ 'force_true':
             # options' values are overridden even if the node already contains them
-            {"create": True, "create_edit": True},
+            {"no_quick_create": False, "no_create_edit": False},
         )
 
         # Update options on ``res.partner.parent_id``, check its node has been updated
@@ -77,7 +77,7 @@ class TestM2xCreateEditOption(Common):
         form_doc = self._get_test_view_parsed()
         self.assertEqual(
             self._eval_node_options(form_doc.xpath("//field[@name='parent_id']")[0]),
-            {"create": True, "create_edit": True},
+            {"no_quick_create": False, "no_create_edit": False},
         )
 
     def test_m2x_option_name(self):
