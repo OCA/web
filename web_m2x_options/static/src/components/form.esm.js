@@ -19,6 +19,7 @@ Many2XAutocomplete.props = {
 
 Many2One.props = {
     ...Many2One.props,
+    ...fieldColorProps,
     searchLimit: {type: Number, optional: true},
 };
 
@@ -94,6 +95,7 @@ export function m2o_options_props(props, attrs, options) {
     newProps = m2o_options_props_open(newProps, attrs, options);
     newProps.fieldColor = options.field_color;
     newProps.fieldColorOptions = options.colors;
+    newProps.fieldColorStyle = options.color_style;
     return newProps;
 }
 
@@ -115,6 +117,9 @@ many2one.computeM2OProps = (fieldProps) => {
     return {
         ..._super,
         searchLimit: fieldProps.searchLimit,
+        fieldColor: fieldProps.fieldColor,
+        fieldColorOptions: fieldProps.fieldColorOptions,
+        fieldColorStyle: fieldProps.fieldColorStyle,
     };
 };
 
@@ -141,6 +146,9 @@ patch(many2OneField.Many2OneField.prototype, {
     get m2oProps() {
         const props = super.m2oProps;
         props.searchLimit = this.props.searchLimit;
+        props.fieldColor = this.props.fieldColor;
+        props.fieldColorOptions = this.props.fieldColorOptions;
+        props.fieldColorStyle = this.props.fieldColorStyle;
         return props;
     },
 });
@@ -182,6 +190,7 @@ patch(Many2One.prototype, {
         if (field_color && field_color_options) {
             ret_props.fieldColor = field_color;
             ret_props.fieldColorOptions = field_color_options;
+            ret_props.fieldColorStyle = this.props.fieldColorStyle;
         }
         if (!evaluateSystemParameterDefaultTrue("create")) {
             ret_props.quickCreate = null;
@@ -246,6 +255,7 @@ patch(many2ManyTagsField, {
         newProps = this.m2m_options_props_limit(newProps, attrs, options);
         newProps.fieldColor = options.field_color;
         newProps.fieldColorOptions = options.colors;
+        newProps.fieldColorStyle = options.color_style;
         return newProps;
     },
     extractProps({attrs, options, string}, dynamicInfo) {
@@ -254,13 +264,38 @@ patch(many2ManyTagsField, {
     },
 });
 
+// Bootstrap theme colours resolve through CSS variables, which Odoo defines
+// for both the light and the dark theme. Odoo compiles Bootstrap without the
+// "bs-" prefix, so the variable is --success, not --bs-success.
+const BOOTSTRAP_COLORS = new Set([
+    "primary",
+    "secondary",
+    "success",
+    "info",
+    "warning",
+    "danger",
+    "light",
+    "dark",
+]);
+
+function colorStyle(style, color) {
+    if (style === "bar") {
+        const css = BOOTSTRAP_COLORS.has(color) ? `var(--${color})` : color;
+        return `box-shadow: inset 3px 0 0 ${css}`;
+    }
+    return "color:" + color;
+}
+
 patch(Many2XAutocomplete.prototype, {
     async loadOptionsSource(request) {
         var options = await super.loadOptionsSource(request);
         this.field_color = this.props.fieldColor;
         this.colors = this.props.fieldColorOptions;
         if (this.colors && this.field_color) {
-            var value_ids = options.map((result) => result.value);
+            // Record suggestions carry their record in data; the "Search
+            // More" and "Create" entries have none.
+            const recordId = (option) => option.data?.record?.id;
+            var value_ids = options.map(recordId).filter(Boolean);
             const objects = await this.orm.call(
                 this.props.resModel,
                 "search_read",
@@ -272,13 +307,13 @@ patch(Many2XAutocomplete.prototype, {
             );
             for (var index in objects) {
                 for (var index_value in options) {
-                    if (options[index_value].value === objects[index].id) {
+                    if (recordId(options[index_value]) === objects[index].id) {
                         // Find value in values by comparing ids
                         var option = options[index_value];
                         // Find color with field value as key
                         var color =
                             this.colors[objects[index][this.field_color]] || "black";
-                        option.style = "color:" + color;
+                        option.style = colorStyle(this.props.fieldColorStyle, color);
                         break;
                     }
                 }
