@@ -24,10 +24,10 @@
         "views/res_users_views.xml",
     ],
     "assets": {
-        "web._assets_primary_variables": {
+        "web._assets_primary_variables": [
             "/web_responsive/static/src/legacy/scss/form_variable.scss",
             "/web_responsive/static/src/legacy/scss/primary_variable.scss",
-        },
+        ],
         "web.assets_backend": [
             "web_responsive/static/src/lib/fuse/fuse.basic.min.js",
             "/web_responsive/static/src/legacy/scss/web_responsive.scss",
