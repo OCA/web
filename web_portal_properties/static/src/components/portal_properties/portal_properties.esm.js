@@ -34,7 +34,7 @@ export const portalPropertiesField = {
         return {
             context: dynamicInfo.context,
             columns: parseInt(attrs.columns || "1", 10),
-            showAddButton: exprToBoolean(attrs.showAddButton),
+            editMode: exprToBoolean(attrs.editMode),
         };
     },
 };

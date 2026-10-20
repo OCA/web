@@ -13,5 +13,5 @@ class TestWebPortalProperties(WebSuite):
         self._test_params = [("+", "@web_portal_properties")]
         return super().get_hoot_filters()
 
-    def test_automation_oca(self):
+    def test_web_portal_properties(self):
         self.test_unit_desktop()

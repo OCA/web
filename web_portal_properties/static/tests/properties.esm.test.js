@@ -69,7 +69,7 @@ test("Portal Properties: check field", async () => {
     expect(".o_field_properties").toHaveCount(1);
     await toggleActionMenu();
     await animationFrame();
-    expect(".o-dropdown--menu span:contains(Add Properties)").toHaveCount(1, {
+    expect(".o-dropdown--menu span:contains(Edit Properties)").toHaveCount(1, {
         message: "The add button must be in the cog menu",
     });
     await click(".o-dropdown--menu span .fa-cogs");
