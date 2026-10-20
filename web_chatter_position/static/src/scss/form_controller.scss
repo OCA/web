@@ -1,0 +1,12 @@
+/*
+    Copyright 2024 Alitec Pte Ltd (https://www.alitec.sg).
+    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+*/
+// Set sheet to full width when chatter is forced to bottom
+.o_form_view_container {
+    .o_form_sheet_bg.o_fullwidth,
+    .o_form_sheet_bg.o_fullwidth .o_form_sheet {
+        max-width: none !important;
+        width: auto !important;
+    }
+}
