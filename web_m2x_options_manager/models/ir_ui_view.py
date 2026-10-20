@@ -8,12 +8,14 @@ class IrUiView(models.Model):
     _inherit = "ir.ui.view"
 
     def _postprocess_tag_field(self, node, name_manager, node_info):
+        # OVERRIDE: check ``m2x.create.edit.option`` config when processing a ``field``
+        # node in views
         res = super()._postprocess_tag_field(node, name_manager, node_info)
-        if node.tag == "field":
-            mname = name_manager.model._name
-            field = name_manager.model._fields.get(node.get("name"))
-            if field and field.type in ("many2many", "many2one"):
-                rec = self.env["m2x.create.edit.option"].get(mname, field.name)
-                if rec:
-                    rec._apply_options(node)
+        m2x_option = self.env["m2x.create.edit.option"].get(
+            name_manager.model._name,
+            # ``name`` is required in ``<field/>`` items
+            node.attrib["name"],
+        )
+        if m2x_option:
+            m2x_option._apply_options(node)
         return res
