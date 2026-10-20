@@ -16,22 +16,14 @@
                             t-if="property['type'] == 'many2one'"
                         />
                         <t t-elif="property['type'] == 'selection'">
-                            <t
-                                t-foreach="property['selection']"
-                                t-as="option"
-                                t-key="option[0]"
-                            >
+                            <t t-foreach="property['selection']" t-as="option">
                                 <t t-if="option[0] == property['value']">
                                     <span t-esc="option[1]" />
                                 </t>
                             </t>
                         </t>
                         <t t-elif="property['type'] == 'tags'">
-                            <t
-                                t-foreach="property['tags']"
-                                t-as="option"
-                                t-key="option[0]"
-                            >
+                            <t t-foreach="property['tags']" t-as="option">
                                 <t t-if="option[0] in property['value']">
                                     <span
                                         t-esc="option[1]"
@@ -41,11 +33,7 @@
                             </t>
                         </t>
                         <span t-elif="property['type'] == 'many2many'">
-                            <t
-                                t-foreach="property['value']"
-                                t-as="value"
-                                t-key="value[0]"
-                            >
+                            <t t-foreach="property['value']" t-as="value">
                                 <span
                                     t-esc="value[1]"
                                     class="o_tag o_tag_color_0 badge rounded-pill"
