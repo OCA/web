@@ -1,0 +1,54 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: web_theme_classic
+#. odoo-javascript
+#: code:addons/web_theme_classic/static/src/js/switch_theme.esm.js:0
+msgid "Classic Theme"
+msgstr ""
+
+#. module: web_theme_classic
+#: model:ir.model.fields,field_description:web_theme_classic.field_res_users__persistent_classic_theme
+msgid "Classic Theme Persistent"
+msgstr ""
+
+#. module: web_theme_classic
+#: model:ir.model,name:web_theme_classic.model_ir_http
+msgid "HTTP Routing"
+msgstr ""
+
+#. module: web_theme_classic
+#: model:ir.model.fields,field_description:web_theme_classic.field_res_users_settings__persistent_classic_theme
+msgid "Persistent Classic Theme"
+msgstr ""
+
+#. module: web_theme_classic
+#: model:ir.model.fields,help:web_theme_classic.field_res_users__persistent_classic_theme
+msgid ""
+"This enables Classic Theme on this user's account across all devices. \n"
+" Disabling it will will alow you to to use the toggle in the user burger "
+"menu in the navbar to enable Classic Mode on a specific session/device \n"
+"The toggle is not visible while Persistent Classic Theme is enabled"
+msgstr ""
+
+#. module: web_theme_classic
+#: model:ir.model,name:web_theme_classic.model_res_users
+msgid "User"
+msgstr ""
+
+#. module: web_theme_classic
+#: model:ir.model,name:web_theme_classic.model_res_users_settings
+msgid "User Settings"
+msgstr ""
