@@ -32,7 +32,7 @@ class ResConfigSettings(models.TransientModel):
         pwa_icon_attachment = (
             self.env["ir.attachment"]
             .sudo()
-            .search([("url", "like", self._pwa_icon_url_base + ".")])
+            .search([("url", "like", self._pwa_icon_url_base + ".")], limit=1)
         )
         res["pwa_icon"] = pwa_icon_attachment.datas if pwa_icon_attachment else False
         return res
