@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="disable_remaining_days_rule_view_tree" model="ir.ui.view">
+        <field name="name">disable.remaining.days.rule.view.list</field>
+        <field name="model">disable.remaining.days.rule</field>
+        <field name="arch" type="xml">
+            <list string="Disable Remaining Days Rules" editable="top">
+                <field name="res_model_id" />
+                <field name="res_model_name" />
+                <field name="diseable_view_types" />
+                <button
+                    name="action_open_set_disable_remaining_days_rule_wizard"
+                    type="object"
+                    string="Add View Type"
+                    title="Add View Type"
+                />
+                <field name="diseable_view_types_json" column_invisible="1" />
+                <field
+                    name="date_type_fields_ids"
+                    widget="many2many_tags"
+                    options="{'no_create': True}"
+                    context="{'hide_model': True}"
+                />
+                <field name="company_id" />
+                <field name="active" widget="boolean_toggle" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_disable_remaining_days_rule" model="ir.actions.act_window">
+        <field name="name">Disable Remaining Days Rules</field>
+        <field name="res_model">disable.remaining.days.rule</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'active_test': False}</field>
+    </record>
+
+    <menuitem
+        action="action_disable_remaining_days_rule"
+        id="menu_action_disable_remaining_days_rule"
+        parent="base.next_id_2"
+        sequence="20"
+    />
+</odoo>

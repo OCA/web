@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="disable_remaining_days_rule_wizard_form">
+        <field name="name">disable.remaining.days.rule.wizard.form</field>
+        <field name="model">disable.remaining.days.rule.wizard</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <field name="line_ids" mode="list">
+                    <list editable="bottom">
+                        <field name="name" />
+                        <field name="technical_name" />
+                        <field name="selected" widget="boolean_toggle" />
+                    </list>
+                </field>
+                <footer>
+                    <button
+                        name="action_define_remaining_days_rule_by_view_type"
+                        string="Disable View Types"
+                        type="object"
+                        class="btn-primary"
+                        data-hotkey="p"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="x"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

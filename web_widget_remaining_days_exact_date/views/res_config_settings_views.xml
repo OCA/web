@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="40" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='user_default_rights']" position="after">
+                <block
+                    title="Visibility"
+                    id="visibility_settings"
+                    groups="base.group_system"
+                >
+                    <setting
+                        string="Disable Remaining Days"
+                        help="If active, the remaining days widget will be disabled for all models."
+                        id="disable_remaining_days"
+                    >
+                        <field name="disable_remaining_days" />
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
