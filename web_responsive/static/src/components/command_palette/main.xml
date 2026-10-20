@@ -6,17 +6,17 @@
         t-inherit-mode="extension"
     >
         <xpath expr="//Dialog" position="attributes">
-            <attribute name="contentClass">contentClass</attribute>
+            <attribute name="contentClass">this.contentClass</attribute>
         </xpath>
-        <xpath expr="//div[@t-ref='root']" position="attributes">
-            <attribute name="class">o_command_palette_root</attribute>
+        <xpath expr="//div[@t-ref='this.root']" position="attributes">
+            <attribute name="class" add="o_command_palette_root" separator=" " />
         </xpath>
         <xpath expr="//div[hasclass('o_command_palette_search')]" position="before">
             <div class="o_command_palette_exit">
                 <button
                     type="button"
                     class="btn btn-secondary w-100"
-                    t-on-click="props.close"
+                    t-on-click="this.props.close"
                 >Exit</button>
             </div>
         </xpath>

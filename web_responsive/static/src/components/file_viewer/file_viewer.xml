@@ -11,35 +11,35 @@
     >
         <xpath expr="div[hasclass('justify-content-center')]" position="attributes">
             <attribute name="class" add="o-FileViewerContainer" separator=" " />
-            <attribute name="t-att-class">rootClass</attribute>
-            <attribute name="t-ref">root</attribute>
+            <attribute name="t-att-class">this.rootClass</attribute>
+            <attribute name="t-ref">this.root</attribute>
         </xpath>
-        <xpath expr="//iframe[@t-ref='iframeViewerPdf']" position="attributes">
+        <xpath expr="//iframe[@t-ref='this.iframeViewerPdfRef']" position="attributes">
             <attribute name="class" add="o-FileViewer-viewPdf" separator=" " />
         </xpath>
-        <xpath expr="//div[@t-on-click.stop='close']" position="before">
-            <t t-if="state.allowMinimize">
+        <xpath expr="//div[@t-on-click.stop='this.close']" position="before">
+            <t t-if="this.state.allowMinimize">
                 <div
-                    t-if="!state.maximized"
-                    t-on-click="setMaximized.bind(this, true)"
+                    t-if="!this.state.maximized"
+                    t-on-click="this.setMaximized.bind(this, true)"
                     class="o-FileViewer-headerButton d-flex align-items-center mb-0 px-3 h4 text-reset cursor-pointer"
                     role="button"
                     name="maximize"
                     title="Maximize"
                     aria-label="Maximize"
                 >
-                    <i class="fa fa-fw fa-window-maximize" role="img" />
+                    <i class="oi oi-fw" data-icon="fullscreen" role="img" />
                 </div>
                 <div
-                    t-if="state.maximized"
+                    t-if="this.state.maximized"
                     class="o-FileViewer-headerButton d-flex align-items-center mb-0 px-3 h4 text-reset cursor-pointer"
-                    t-on-click="setMaximized.bind(this, false)"
+                    t-on-click="this.setMaximized.bind(this, false)"
                     role="button"
                     name="minimize"
                     title="Minimize"
                     aria-label="Minimize"
                 >
-                    <i class="fa fa-fw fa-window-minimize" role="img" />
+                    <i class="oi oi-fw" data-icon="close_fullscreen" role="img" />
                 </div>
             </t>
         </xpath>

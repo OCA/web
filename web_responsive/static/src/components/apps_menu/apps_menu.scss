@@ -36,6 +36,8 @@
     width: 100vw;
     z-index: 1000;
     left: 0 !important;
+    // Keep the panel below the fixed navbar in Odoo 20.
+    top: $o-navbar-height;
 }
 
 .o_apps_menu_opened .o_main_navbar {
@@ -58,7 +60,12 @@
         border: unset;
         outline: unset;
         margin-right: 0.25rem;
-        min-height: $o-navbar-height;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // Extend the button through the navbar's vertical padding.
+        margin-top: -$o-navbar-padding-v;
+        margin-bottom: -$o-navbar-padding-v;
         height: $o-navbar-height;
         width: $o-navbar-height;
         color: $o-navbar-brand-color;
