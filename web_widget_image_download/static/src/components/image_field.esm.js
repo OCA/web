@@ -1,12 +1,10 @@
-/** @odoo-module **/
-
 /* Copyright 2016 Flavio Corpa <flavio.corpa@tecnativa.com>
  * Copyright 2016 Jairo Llopis <jairo.llopis@tecnativa.com>
  * Copyright 2024 Manuel Regidor <manuel.regidor@sygel.es>
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-import {patch} from "@web/core/utils/patch";
 import {ImageField} from "@web/views/fields/image/image_field";
+import {patch} from "@web/core/utils/patch";
 const {document} = globalThis;
 
 patch(ImageField.prototype, {
