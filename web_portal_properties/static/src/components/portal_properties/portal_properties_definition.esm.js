@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import {PropertyDefinition} from "@web/views/fields/properties/property_definition";
 
 export class PortalPropertyDefinition extends PropertyDefinition {
