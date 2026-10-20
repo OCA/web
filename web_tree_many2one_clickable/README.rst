@@ -36,6 +36,8 @@ This addon forces Odoo to use many2one widget on a many2one fields in
 tree views. This allows users to open linked resources from trees
 directly, using a button without accessing the form.
 
+This also works in the lines of sales, purchases and invoices.
+
 **Table of contents**
 
 .. contents::
@@ -62,9 +64,6 @@ Known issues / Roadmap
 This widget is currently not working on the product field in the lines
 tree of the sale order form, see https://github.com/OCA/web/pull/1438
 for further details.
-
-To add this functionality to lines of sales, purchases and invoices, as
-they are special views, is required a glue module that add this feature.
 
 Bug Tracker
 ===========
@@ -108,6 +107,10 @@ Contributors
   - Antonio Espinosa
   - Alexandre Díaz
   - Carlos Roca
+
+- `Toews Consulting <https://toews.consulting>`__
+
+  - Derek Loewen <derek.loewen@toews.consulting>
 
 Maintainers
 -----------
