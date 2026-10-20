@@ -83,6 +83,19 @@ $chatter_zone_width: 35% !important;
                         .oe_form_field_html
                     ):not(.o_field_image) {
                     min-height: 35px;
+
+                    // Odoo 20 inputs are 25px high, so they sat at the top of
+                    // the 35px wrapper leaving empty space below the text:
+                    // let them fill it. Monetary/percentage fields draw their
+                    // symbol in an overlay that keeps the core height, and
+                    // tag/reference fields lay out several controls around
+                    // their input, so they are left as they were.
+                    &:not(.o_field_monetary):not(.o_field_percentage):not(
+                            [class*="o_field_many2many_tags"]
+                        ):not(.o_field_reference)
+                        input.o_input {
+                        min-height: 35px;
+                    }
                 }
 
                 .o_x2m_control_panel {
