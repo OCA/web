@@ -1,0 +1,2 @@
+id,name,model_id,group_id/id,operation,domain
+access_ir_actions_act_multi,access_ir_actions_act_multi,ir.actions.act_multi,base.group_system,crud,
