@@ -5,7 +5,6 @@
 
 import {ImageField} from "@web/views/fields/image/image_field";
 import {patch} from "@web/core/utils/patch";
-const {document} = globalThis;
 
 patch(ImageField.prototype, {
     download() {
