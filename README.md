@@ -23,6 +23,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [web_environment_ribbon](web_environment_ribbon/) | 20.0.1.0.0 |  | Web Environment Ribbon
+[web_m2x_options](web_m2x_options/) | 20.0.1.0.0 |  | web_m2x_options
 
 [//]: # (end addons)
 
