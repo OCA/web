@@ -47,6 +47,7 @@
             "/web_responsive/static/src/components/file_viewer/*",
             "/web_responsive/static/src/components/chatter/*",
             "/web_responsive/static/src/components/control_panel/*",
+            "/web_responsive/static/src/components/search_panel/*",
             "/web_responsive/static/src/components/command_palette/*",
             "/web_responsive/static/src/views/form/*",
         ],
