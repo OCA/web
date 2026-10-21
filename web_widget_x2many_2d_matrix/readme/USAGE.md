@@ -81,16 +81,16 @@ class MyWizard(models.TransientModel):
             (0, 0, {
                 'name': 'Sample task name',
                 'project_id': p.id,
-                'user_id': u.id,
-                'planned_hours': 0,
+                'user_ids': u.ids,
+                'allocated_hours': 0,
                 'message_needaction': False,
                 'date_deadline': fields.Date.today(),
             })
             # if the project doesn't have a task for the user,
             # create a new one
-            if not p.task_ids.filtered(lambda x: x.user_id == u) else
+            if not p.task_ids.filtered(lambda x: u in x.user_ids) else
             # otherwise, return the task
-            (4, p.task_ids.filtered(lambda x: x.user_id == u)[0].id)
+            (4, p.task_ids.filtered(lambda x: u in x.user_ids)[0].id)
             for p in projects
             for u in users
         ]
@@ -101,12 +101,11 @@ class MyWizard(models.TransientModel):
 Now in our wizard, we can use:
 
 ``` xml
-<field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_y_axis="user_id" field_value="planned_hours">
+<field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_y_axis="display_name" field_value="allocated_hours">
     <tree>
-        <field name="task_ids"/>
         <field name="project_id"/>
-        <field name="user_id"/>
-        <field name="planned_hours"/>
+        <field name="display_name"/>
+        <field name="allocated_hours"/>
     </tree>
 </field>
 ```
