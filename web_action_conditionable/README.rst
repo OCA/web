@@ -28,7 +28,7 @@ web_action_conditionable
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-Add support for conditions on create and delete actions on One2Many fields.
+Add support for conditions on create and delete actions on One2Many fields, as well as conditions for create, delete, duplicate and edit actions on forms.
 
 **Table of contents**
 
@@ -38,19 +38,31 @@ Add support for conditions on create and delete actions on One2Many fields.
 Usage
 =====
 
-Odoo by default support:
+Odoo by default supports:
 
 ::
 
    <tree delete="false" create="false">
 
-with this module you can:
+with this module you can do:
 
 ::
 
    <tree delete="state=='draft'" create="state!='sent'">
 
 It works in any tree view, so you can use it in One2many.
+
+Similarly in forms you can write:
+
+::
+
+    <form create="false" delete="false" duplicate="false" edit="false">
+
+and with this module you can do:
+
+::
+
+    <form create="state=='draft'" delete="state!='done'" duplicate="some_field=='some value'" edit="state!='done'">
 
 Bug Tracker
 ===========
@@ -80,6 +92,7 @@ Contributors
 * Jasper Jumelet <jasper.jumelet@codeforward.nl>
 * `Trobz <https://trobz.com>`_:
     * Nguyễn Minh Chiến <chien@trobz.com>
+* Holger Brunn <mail@hunki-enterprises.com> (https://hunki-enterprises.com)
 
 Other credits
 ~~~~~~~~~~~~~
