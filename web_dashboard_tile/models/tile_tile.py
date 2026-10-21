@@ -102,12 +102,11 @@ class TileTile(models.Model):
     model_id = fields.Many2one(
         comodel_name="ir.model", string="Model", required=True, ondelete="cascade"
     )
-
-    model_name = fields.Char(string="Model name", related="model_id.model")
+    model_name = fields.Char(string="Model name", related="model_id.model", store=True)
 
     domain = fields.Text(default="[]", required=True)
 
-    domain_error = fields.Char(compute="_compute_data", compute_sudo=True)
+    domain_error = fields.Char(compute="_compute_data")
 
     action_id = fields.Many2one(
         comodel_name="ir.actions.act_window",
@@ -125,9 +124,7 @@ class TileTile(models.Model):
         help="If checked, the item will be hidden if the primary value is null.",
     )
 
-    hidden = fields.Boolean(
-        compute="_compute_data", compute_sudo=True, search="_search_hidden"
-    )
+    hidden = fields.Boolean(compute="_compute_data", search="_search_hidden")
 
     # Primary Value
     primary_function = fields.Selection(
@@ -143,18 +140,22 @@ class TileTile(models.Model):
         " ('ttype', 'in', ['float', 'integer', 'monetary'])]",
     )
 
+    primary_field_name = fields.Char(
+        string="Primary Field Name", related="primary_field_id.name", store=True
+    )
+
     primary_format = fields.Char(
         help="Python Format String valid with str.format()\n"
         "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000.",
     )
 
-    primary_value = fields.Float(compute="_compute_data", compute_sudo=True)
+    primary_value = fields.Float(compute="_compute_data")
 
-    primary_formated_value = fields.Char(compute="_compute_data", compute_sudo=True)
+    primary_formated_value = fields.Char(compute="_compute_data")
 
     primary_helper = fields.Char(compute="_compute_helper", store=True)
 
-    primary_error = fields.Char(compute="_compute_data", compute_sudo=True)
+    primary_error = fields.Char(compute="_compute_data")
 
     # Secondary Value
     secondary_function = fields.Selection(
@@ -168,22 +169,26 @@ class TileTile(models.Model):
         " ('ttype', 'in', ['float', 'integer', 'monetary'])]",
     )
 
+    secondary_field_name = fields.Char(
+        string="Secondary Field Name", related="secondary_field_id.name", store=True
+    )
+
     secondary_format = fields.Char(
         help="Python Format String valid with str.format()\n"
         "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000.",
     )
 
-    secondary_value = fields.Float(compute="_compute_data", compute_sudo=True)
+    secondary_value = fields.Float(compute="_compute_data")
 
-    secondary_formated_value = fields.Char(compute="_compute_data", compute_sudo=True)
+    secondary_formated_value = fields.Char(compute="_compute_data")
 
     secondary_helper = fields.Char(compute="_compute_helper", store=True)
 
-    secondary_error = fields.Char(compute="_compute_data", compute_sudo=True)
+    secondary_error = fields.Char(compute="_compute_data")
 
     # Compute Section
     @api.depends(
-        "model_id",
+        "model_name",
         "domain",
         "primary_format",
         "primary_function",
@@ -203,10 +208,10 @@ class TileTile(models.Model):
             tile.domain_error = False
             tile.primary_error = False
             tile.secondary_error = False
-            if not tile.model_id or not tile.active:
+            if not tile.model_name or not tile.active:
                 continue
 
-            model = self.env[tile.model_id.model]
+            model = self.env[tile.model_name]
             eval_context = self._get_eval_context()
             domain = tile.domain or "[]"
             try:
@@ -217,12 +222,12 @@ class TileTile(models.Model):
                 )
                 tile.domain_error = str(e)
                 continue
-            fields = [
-                f.name for f in [tile.primary_field_id, tile.secondary_field_id] if f
+            field_names = [
+                x for x in [tile.primary_field_name, tile.secondary_field_name] if x
             ]
             read_vals = (
-                fields
-                and model.search_read(safe_eval(domain, eval_context), fields)
+                field_names
+                and model.search_read(safe_eval(domain, eval_context), field_names)
                 or []
             )
             for f in ["primary_", "secondary_"]:
@@ -274,8 +279,8 @@ class TileTile(models.Model):
     def _compute_active(self):
         IrModelAccess = self.env["ir.model.access"]
         for tile in self:
-            if tile.model_id:
-                tile.active = IrModelAccess.check(tile.model_id.model, "read", False)
+            if tile.model_name:
+                tile.active = IrModelAccess.check(tile.model_name, "read", False)
             else:
                 tile.active = True
 
@@ -318,9 +323,9 @@ class TileTile(models.Model):
             if any(
                 [
                     tile.primary_field_id
-                    and tile.primary_field_id.model_id.id != tile.model_id.id,
+                    and tile.primary_field_id.model_id != tile.model_id,
                     tile.secondary_field_id
-                    and tile.secondary_field_id.model_id.id != tile.model_id.id,
+                    and tile.secondary_field_id.model_id != tile.model_id,
                 ]
             ):
                 raise ValidationError(
@@ -344,12 +349,25 @@ class TileTile(models.Model):
     # Action methods
     def open_link(self):
         if self.action_id:
-            action = self.action_id.read()[0]
+            action = self.action_id.sudo().read()[0]
         else:
+            view_modes = set(
+                self.env["ir.ui.view"]
+                .sudo()
+                .search([("model", "=", self.model_name)])
+                .mapped("type")
+            )
+            # remove search view as it is not a valid display view
+            view_modes.discard("search")
+            view_modes = list(view_modes)
+            if "tree" in view_modes:
+                # If tree is the list of available views
+                # put it at the first place
+                view_modes.remove("tree")
+                view_modes = ["tree"] + view_modes
             action = {
-                "view_mode": "tree",
-                "view_id": False,
-                "res_model": self.model_id.model,
+                "view_mode": ",".join(view_modes),
+                "res_model": self.model_name,
                 "type": "ir.actions.act_window",
                 "target": "current",
                 "domain": self.domain,

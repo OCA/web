@@ -57,7 +57,9 @@ Tile can be:
 Configuration
 =============
 
-First, you have to create tile categories.
+First, ensure you are member of the group "Overview Manager".
+
+Then, you have to create tile categories.
 
 * Go to "Dashboards > Configuration > Overview Settings > Dashboard Categories"
 
