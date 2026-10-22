@@ -1,16 +1,16 @@
-import {markup, onMounted, onPatched, onWillStart, useRef} from "@odoo/owl";
+import {markup, onMounted, onPatched, onWillStart, signal} from "@odoo/owl";
 import {CharField, charField} from "@web/views/fields/char/char_field";
 import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 
 export async function loadBokehLibraries() {
     const scripts = [
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.9.0.min.js",
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.9.0.min.js",
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.9.0.min.js",
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.9.0.min.js",
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.9.0.min.js",
-        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.9.0.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.10.1.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.10.1.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.10.1.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.10.1.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.10.1.min.js",
+        "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.10.1.min.js",
     ];
 
     for (const script of scripts) {
@@ -18,17 +18,18 @@ export async function loadBokehLibraries() {
     }
 }
 export default class BokehChartWidget extends CharField {
+    widget = signal.ref();
+
     setup() {
-        this.widget = useRef("widget");
         onPatched(() => {
             var script = document.createElement("script");
             script.text = this.json_value.script;
-            this.widget.el.append(script);
+            this.widget().append(script);
         });
         onMounted(() => {
             var script = document.createElement("script");
             script.text = this.json_value.script;
-            this.widget.el.append(script);
+            this.widget().append(script);
         });
         super.setup();
         onWillStart(() => loadBokehLibraries());

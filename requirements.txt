@@ -1,2 +1,2 @@
 # generated from manifests external_dependencies
-bokeh==3.9.0
+bokeh==3.10.1
