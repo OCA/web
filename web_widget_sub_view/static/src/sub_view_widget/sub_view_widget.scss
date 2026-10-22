@@ -5,3 +5,28 @@
     > :first-child:not(.o_group).o_widget_sub_view_widget {
     @include o-form-sheet-negative-margin;
 }
+
+.o_notebook.vertical
+    .o_notebook_content
+    > .tab-pane
+    > :first-child:not(.o_group).o_widget_sub_view_widget {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.o_widget_sub_view_widget {
+    position: relative;
+
+    // !important: the rules being overridden are nested under `html .o_web_client`,
+    // which outranks this selector's specificity regardless of source order.
+    .o_content {
+        position: static !important;
+        height: auto !important;
+        overflow: visible !important;
+
+        > .o_view_controller {
+            position: static !important;
+            height: auto !important;
+        }
+    }
+}
