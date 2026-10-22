@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
-<title>Web Widget Sub View</title>
+<title>README.rst</title>
 <style type="text/css">
 
 /*
@@ -408,8 +408,18 @@ values and forcing specific views or default searching values.</p>
 <ul class="simple">
 <li>view-type: To force an specific view kind. By default it uses list in
 desktop and kanban in mobile.</li>
-<li>create-action: To force an specific action for creation (it is a
-xmlid)</li>
+<li>create-action: To force an specific action for creation. Depending on
+create-action-type, it is either the name of a Python method on the
+model, or the id/xmlid of an existing action.</li>
+<li>create-action-type: How create-action should be interpreted:<ul>
+<li>object (default): create-action is a method name on the model,
+called server-side. Whatever action it returns (e.g. opening a
+wizard) is executed.</li>
+<li>action: create-action is an existing action’s id or xmlid (e.g.
+<tt class="docutils literal">%(module.action_xmlid)s</tt>), which is loaded and executed directly,
+without calling any method.</li>
+</ul>
+</li>
 <li>open-action: The function to launch to open the record. By default, it
 uses get_formview_action.</li>
 <li>filter: set 0 to hide the filters</li>
@@ -451,6 +461,8 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
+<p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
+<p><a class="reference external image-reference" href="https://github.com/etobella"><img alt="etobella" src="https://github.com/etobella.png?size=40px" /></a></p>
 <p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/16.0/web_widget_sub_view">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
