@@ -21,5 +21,8 @@
             "web_widget_bokeh_chart/static/src/js/web_widget_bokeh_json_chart.esm.js",
             "web_widget_bokeh_chart/static/src/xml/bokeh.xml",
         ],
+        "web.assets_unit_tests": [
+            "web_widget_bokeh_chart/static/tests/**/*",
+        ],
     },
 }
