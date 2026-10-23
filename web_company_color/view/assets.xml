@@ -15,5 +15,12 @@
         <xpath expr="//t[@t-set='head_web']">
             <t t-call-assets="web_company_color.company_color_assets" />
         </xpath>
+        <!-- Phone browsers colour their toolbar with this tag -->
+        <xpath expr="//meta[@name='theme-color']" position="attributes">
+            <attribute name="content" />
+            <attribute
+                name="t-att-content"
+            >request and request.env['res.company']._get_company_color_theme_color() or '#71639e'</attribute>
+        </xpath>
     </template>
 </odoo>

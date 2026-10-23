@@ -17,7 +17,10 @@ def convert_to_image(field_binary):
 
 def image_to_rgb(img):
     def normalize_vec3(vec3):
-        _l = 1.0 / math.sqrt(vec3[0] * vec3[0] + vec3[1] * vec3[1] + vec3[2] * vec3[2])
+        magnitude = math.sqrt(sum(component * component for component in vec3))
+        if not magnitude:
+            return (0.0, 0.0, 0.0)
+        _l = 1.0 / magnitude
         return (vec3[0] * _l, vec3[1] * _l, vec3[2] * _l)
 
     # Force Alpha Channel
@@ -28,13 +31,17 @@ def image_to_rgb(img):
     width, height = (max(1, int(width / 4)), max(1, int(height / 4)))
     img = img.resize((width, height))
     rgb_sum = [0, 0, 0]
+    included_pixels = 0
     # Mix. image colors using addition method
     RGBA_WHITE = (255, 255, 255, 255)
     for i in range(0, height * width):
-        rgba = img.getpixel((i % width, i / width))
+        rgba = img.getpixel((i % width, i // width))
         if rgba[3] > 128 and rgba != RGBA_WHITE:
+            included_pixels += 1
             rgb_sum[0] += rgba[0]
             rgb_sum[1] += rgba[1]
             rgb_sum[2] += rgba[2]
+    if not included_pixels:
+        return (1.0, 1.0, 1.0)
     _r, _g, _b = normalize_vec3(rgb_sum)
     return (_r, _g, _b)

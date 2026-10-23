@@ -10,3 +10,4 @@
   - Carlos Roca
 - [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
   - Bhavesh Heliconia
+- Yasir KK

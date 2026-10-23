@@ -8,50 +8,6 @@ from .assetsbundle import AssetsBundleCompanyColor
 class QWeb(models.AbstractModel):
     _inherit = "ir.qweb"
 
-    def _generate_asset_links_cache(
-        self, bundle, css=True, js=True, assets_params=None, rtl=False, autoprefix=False
-    ):
-        res = super()._generate_asset_links_cache(
-            bundle,
-            css=css,
-            js=js,
-            assets_params=assets_params,
-            rtl=rtl,
-            autoprefix=autoprefix,
-        )
-        if bundle == "web_company_color.company_color_assets":
-            asset = AssetsBundleCompanyColor(
-                bundle, [], env=self.env, css=True, js=True
-            )
-            res += [asset.get_company_color_asset_node()]
-        return res
-
-    def _generate_asset_links(
-        self,
-        bundle,
-        css=True,
-        js=True,
-        debug_assets=False,
-        assets_params=None,
-        rtl=False,
-        autoprefix=False,
-    ):
-        res = super()._generate_asset_links(
-            bundle,
-            css=css,
-            js=js,
-            debug_assets=debug_assets,
-            assets_params=assets_params,
-            rtl=rtl,
-            autoprefix=autoprefix,
-        )
-        if bundle == "web_company_color.company_color_assets":
-            asset = AssetsBundleCompanyColor(
-                bundle, [], env=self.env, css=True, js=True
-            )
-            res += [asset.get_company_color_asset_node()]
-        return res
-
     def _get_asset_content(self, bundle, assets_params=None):
         """Handle 'special' web_company_color bundle"""
         if bundle == "web_company_color.company_color_assets":
@@ -69,7 +25,20 @@ class QWeb(models.AbstractModel):
         media=None,
         autoprefix=False,
     ):
-        res = super()._get_asset_nodes(
+        if bundle == "web_company_color.company_color_assets":
+            if not css:
+                return []
+            # Company selection belongs to this request, never the shared
+            # asset cache. Mutating cached links leaked previous companies'
+            # styles into later pages, including companies with no overrides.
+            asset = AssetsBundleCompanyColor(
+                bundle, [], env=self.env, css=True, js=False
+            )
+            url = asset.get_company_color_asset_node()
+            node = self._link_to_node(url, media=media)
+            node[1].pop("type", None)
+            return [node]
+        return super()._get_asset_nodes(
             bundle,
             css=css,
             js=js,
@@ -79,9 +48,3 @@ class QWeb(models.AbstractModel):
             media=media,
             autoprefix=autoprefix,
         )
-        for tag, attributes in res:
-            if tag == "link" and attributes.get("href", "").startswith(
-                "/web_company_color/static/src/scss/custom_colors."
-            ):
-                attributes.pop("type", None)
-        return res
