@@ -6,3 +6,4 @@
 - Stefan Rijnhart \<<stefan@opener.amsterdam>\>
 - [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
   - Bhavesh Heliconia
+- Mario Castillo López <@mcastillol14>

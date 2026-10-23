@@ -1,4 +1,4 @@
-import {useComponent, useEffect, useExternalListener} from "@odoo/owl";
+import {useEffect, useListener} from "@odoo/owl";
 import {ListRenderer} from "@web/views/list/list_renderer";
 import {browser} from "@web/core/browser/browser";
 import {patch} from "@web/core/utils/patch";
@@ -13,10 +13,10 @@ import {useDebounced} from "@web/core/utils/timing";
  * @param {getState} some internals from the list view passed in its setUp
  * @param {orig} the return value from upstream useMagicColumWidths, consisting
  * of a _resizing variable reference and an onStartResize function reference.
+ * @param {renderer} the list renderer component instance (passed explicitly,
+ * since useComponent no longer exists in the signal-based owl shipped with 20.0)
  */
-export function useMagicColumnWidths(tableRef, getState, orig) {
-    const renderer = useComponent();
-
+export function useMagicColumnWidths(tableRef, getState, orig, renderer) {
     /**
      * Override on onStartResize as returned from upstream's useMagicColumnWidths.
      * We call super, then add event listeners for our own stopResize handler
@@ -67,7 +67,10 @@ export function useMagicColumnWidths(tableRef, getState, orig) {
      * Set stored column widths.
      */
     function setStoredColumnWidths() {
-        const table = tableRef.el;
+        const table = tableRef();
+        if (!table) {
+            return;
+        }
         const headers = [...table.querySelectorAll("thead th")];
         const state = getState();
         const resModel = state.model.config.resModel;
@@ -95,12 +98,12 @@ export function useMagicColumnWidths(tableRef, getState, orig) {
     /**
      * Call setStoredColumnWidths on init and on window resize.
      */
-    if (renderer.constructor.useMagicColumnWidths) {
+    if (renderer.useMagicColumnWidths) {
         useEffect(setStoredColumnWidths);
         const debouncedResizeCallback = useDebounced(() => {
             setStoredColumnWidths();
         }, 300);
-        useExternalListener(window, "resize", debouncedResizeCallback);
+        useListener(window, "resize", debouncedResizeCallback);
     }
 
     orig.onStartResizeOrig = orig.onStartResize;
@@ -129,7 +132,8 @@ patch(ListRenderer.prototype, {
                     model: this.props.list.model,
                 };
             },
-            columnWidthsOrig
+            columnWidthsOrig,
+            this
         );
     },
 });
