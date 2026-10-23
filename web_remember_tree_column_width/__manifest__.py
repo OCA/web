@@ -5,7 +5,7 @@
     "website": "https://github.com/OCA/web",
     "license": "LGPL-3",
     "category": "Extra Tools",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "maintainers": [
         "frahikLV",
         "luisg123v",
