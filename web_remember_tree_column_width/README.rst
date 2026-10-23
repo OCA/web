@@ -73,6 +73,8 @@ Contributors
 
   - Bhavesh Heliconia
 
+- Mario Castillo López <@mcastillol14>
+
 Maintainers
 -----------
 
