@@ -108,6 +108,11 @@ class ResCompany(models.Model):
 """
 
     BUTTON_TEMPLATE = """
+:root {
+  /* Company palette for other modules' custom styles. */
+  --web-company-color-primary: %(color_button_bg)s;
+  --web-company-color-primary-hover: %(color_button_bg_hover)s;
+}
 .o_web_client {
   --primary: %(color_button_bg)s;
   --primary-rgb: %(color_button_bg_rgb)s;

@@ -265,3 +265,12 @@ class TestResCompany(common.TransactionCase):
         self.assertEqual(Company._get_company_color_theme_color(), "#71639e")
         company.write({"color_navbar_bg": "#4F6D8A"})
         self.assertEqual(Company._get_company_color_theme_color(), "#4F6D8A")
+
+    def test_company_palette_is_exposed_as_css_variables(self):
+        company = self.env["res.company"].search([], limit=1)
+        company.write(
+            {"color_button_bg": "#1E4F91", "color_button_bg_hover": "#173D70"}
+        )
+        content = company._scss_generate_content()
+        self.assertIn("--web-company-color-primary: #1E4F91;", content)
+        self.assertIn("--web-company-color-primary-hover: #173D70;", content)
