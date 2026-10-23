@@ -67,7 +67,7 @@ class SubViewWidget extends Component {
         if (this.props.createAction) {
             this.action.doActionButton({
                 name: this.props.createAction,
-                type: "action",
+                type: this.props.createActionType,
                 resModel: this.props.record.resModel,
                 resId: this.props.record.resId,
                 resIds: this.props.record.resIds,
@@ -108,6 +108,7 @@ SubViewWidget.props = {
     resModel: String,
     recordAction: String,
     createAction: {type: String, optional: true},
+    createActionType: {type: String, optional: true},
     context: String,
     domain: String,
     ViewType: {type: String, optional: true},
@@ -125,6 +126,7 @@ SubViewWidget.extractProps = ({attrs}) => {
         context: attrs.context || "{}",
         recordAction: attrs["open-action"] || "get_formview_action",
         createAction: attrs["create-action"],
+        createActionType: attrs["create-action-type"] || "object",
         domain: attrs.domain || "[]",
         ViewType: attrs["view-type"],
         filter: Boolean(JSON.parse(attrs.filter || "1")),
