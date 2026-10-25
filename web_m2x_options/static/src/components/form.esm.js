@@ -73,6 +73,29 @@ patch(many2OneField, {
     m2o_options_props_create(props, attrs, options) {
         const ir_options = session.web_m2x_options;
         if (options.create === false) {
+            props.canCreate = false;
+        } else if (options.create) {
+            props.canCreate = attrs.can_create
+                ? evaluateBooleanExpr(attrs.can_create)
+                : true;
+        } else if (
+            ir_options["web_m2x_options.create"] === "False" &&
+            props.canCreate
+        ) {
+            props.canCreate = false;
+        } else if (
+            ir_options["web_m2x_options.create"] === "True" &&
+            !props.canCreate
+        ) {
+            props.canCreate = attrs.can_create
+                ? evaluateBooleanExpr(attrs.can_create)
+                : true;
+        }
+        return props;
+    },
+    m2o_options_props_quick_create(props, attrs, options) {
+        const ir_options = session.web_m2x_options;
+        if (options.create === false) {
             props.canQuickCreate = false;
         } else if (options.create) {
             props.canQuickCreate = attrs.can_create
@@ -163,6 +186,7 @@ patch(many2OneField, {
 
     m2o_options_props(props, attrs, options) {
         props = this.m2o_options_props_create(props, attrs, options);
+        props = this.m2o_options_props_quick_create(props, attrs, options);
         props = this.m2o_options_props_create_edit(props, attrs, options);
         props = this.m2o_options_props_limit(props, attrs, options);
         props = this.m2o_options_props_search_more(props, attrs, options);
@@ -211,6 +235,27 @@ patch(Many2OneField.prototype, {
 
 patch(many2ManyTagsField, {
     m2m_options_props_create(props, attrs, options) {
+        const ir_options = session.web_m2x_options;
+        // Create option already available for m2m fields
+        if (!options.create) {
+            if (
+                ir_options["web_m2x_options.create"] === "False" &&
+                props.canCreate
+            ) {
+                props.canCreate = false;
+            } else if (
+                ir_options["web_m2x_options.create"] === "True" &&
+                !props.canCreate
+            ) {
+                props.canCreate = attrs.can_create
+                    ? evaluateBooleanExpr(attrs.can_create)
+                    : true;
+            }
+        }
+        return props;
+    },
+
+    m2m_options_props_quick_create(props, attrs, options) {
         const ir_options = session.web_m2x_options;
         // Create option already available for m2m fields
         if (!options.create) {
@@ -289,6 +334,7 @@ patch(many2ManyTagsField, {
 
     m2m_options_props(props, attrs, options) {
         props = this.m2m_options_props_create(props, attrs, options);
+        props = this.m2m_options_props_quick_create(props, attrs, options);
         props = this.m2m_options_props_create_edit(props, attrs, options);
         props = this.m2m_options_props_limit(props, attrs, options);
         props = this.m2m_options_props_search_more(props, attrs, options);
