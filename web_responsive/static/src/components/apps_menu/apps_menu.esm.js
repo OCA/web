@@ -6,10 +6,15 @@
  * Copyright 2023 Taras Shabaranskyi
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-import {Component, onWillStart, useState} from "@odoo/owl";
+import {Component, onWillStart, useRef, useState} from "@odoo/owl";
 import {useBus, useService} from "@web/core/utils/hooks";
+import {useSortable} from "@web/core/utils/sortable_owl";
 import {AppMenuItem} from "@web_responsive/components/apps_menu_item/apps_menu_item.esm";
 import {AppsMenuSearchBar} from "@web_responsive/components/menu_searchbar/searchbar.esm";
+import {
+    saveAppsMenuOrder,
+    sortApps,
+} from "@web_responsive/components/apps_menu_tools.esm";
 import {NavBar} from "@web/webclient/navbar/navbar";
 import {WebClient} from "@web/webclient/webclient";
 import {browser} from "@web/core/browser/browser";
@@ -63,6 +68,14 @@ export class AppsMenu extends Component {
         }
         useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", () => {
             this.setOpenState(false);
+        });
+        this.appMenuListRef = useRef("appMenuList");
+        useSortable({
+            ref: this.appMenuListRef,
+            elements: ".o-app-menu-item",
+            applyChangeOnDrop: true,
+            cursor: "grabbing",
+            onDrop: () => this.onAppsReordered(),
         });
         this._setupKeyNavigation();
     }
@@ -160,6 +173,25 @@ export class AppsMenu extends Component {
             }
         }
     }
+
+    /**
+     * Persist the apps order once a drag & drop sequence has ended.
+     */
+    onAppsReordered() {
+        const {el} = this.appMenuListRef;
+        if (!el) {
+            return;
+        }
+        const ids = [
+            ...new Set(
+                [...el.querySelectorAll(".o-app-menu-item[data-menu-id]")].map((item) =>
+                    Number(item.dataset.menuId)
+                )
+            ),
+        ].filter(Number.isFinite);
+        saveAppsMenuOrder(ids);
+        this.env.bus.trigger("MENUS:APP-CHANGED");
+    }
 }
 
 // Add this patch after the WebClient patch
@@ -170,6 +202,14 @@ patch(NavBar.prototype, {
         useBus(this.env.bus, "APP_MENU:TOGGLE_SIDEBAR", () => {
             this._openAppMenuSidebar();
         });
+    },
+
+    /**
+     * Apps sorted following the per-user ordering, with unknown apps
+     * appended in their default order.
+     */
+    get sortedApps() {
+        return sortApps(this.menuService.getApps());
     },
 
     openAppMenu() {

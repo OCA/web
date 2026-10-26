@@ -28,3 +28,5 @@
   - Bhavesh Heliconia
 - [IKU Solutions](https://www.iku.solutions)
   - Yan Chirino \<<yan.chirino@iku.solutions>\>
+
+- Daniel Reis \<<dreis.pt@gmail.com>\>

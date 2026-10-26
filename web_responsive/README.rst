@@ -46,6 +46,9 @@ This module adds responsiveness to web backend.
 
   |image1|
 
+- Drag and drop app icons to reorder them; the arrangement is remembered
+  per user
+
 - Quick menu search inside the app menu
 
   |image2|
@@ -128,6 +131,10 @@ The following keyboard shortcuts are implemented:
 - Choose app result - ``Enter``
 - ``Esc`` to close app drawer
 
+App icons in the app drawer can be reordered by dragging and dropping
+them. The arrangement is stored in the user's settings and restored on
+the next session.
+
 Known issues / Roadmap
 ======================
 
@@ -192,6 +199,8 @@ Contributors
 - `IKU Solutions <https://www.iku.solutions>`__
 
   - Yan Chirino <yan.chirino@iku.solutions>
+
+- Daniel Reis <dreis.pt@gmail.com>
 
 Maintainers
 -----------
