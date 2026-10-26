@@ -5,7 +5,7 @@ import {ListRenderer} from "@web/views/list/list_renderer";
 import {patch} from "@web/core/utils/patch";
 import {exprToBoolean} from "@web/core/utils/strings";
 import {browser} from "@web/core/browser/browser";
-import {x2ManyCommands} from "@web/core/orm_service";
+import {x2ManyCommands} from "@web/core/orm_plugin";
 
 const SCALAR_TYPES = [
     "integer",
@@ -28,10 +28,10 @@ patch(ListRenderer.prototype, {
         this.keyDuplicateLineColumn = `duplicate_line_column,${key}`;
         this.duplicateLineAllowed = Boolean(
             parent &&
-                parent.props &&
-                parent.props.fieldInfo &&
-                parent.props.fieldInfo.options &&
-                parent.props.fieldInfo.options.allow_clone
+            parent.props &&
+            parent.props.fieldInfo &&
+            parent.props.fieldInfo.options &&
+            parent.props.fieldInfo.options.allow_clone
         );
         this.duplicateLineColumn = exprToBoolean(
             browser.localStorage.getItem(this.keyDuplicateLineColumn),
