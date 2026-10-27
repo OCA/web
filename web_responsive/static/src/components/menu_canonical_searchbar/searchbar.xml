@@ -7,26 +7,32 @@
 <templates>
     <!-- Search bar -->
     <t t-name="web_responsive.AppsMenuCanonicalSearchBar">
-        <div class="search-container" t-att-class="{'has-results': state.hasResults}">
+        <div
+            class="search-container"
+            t-att-class="{'has-results': this.state.hasResults}"
+        >
             <div class="search-input">
-                <i class="fa fa-search search-icon fs-4 my-auto d-none d-sm-flex" />
+                <i
+                    class="oi search-icon fs-4 my-auto d-none d-sm-flex"
+                    data-icon="search"
+                />
                 <input
                     type="search"
-                    t-ref="SearchBarInput"
-                    t-on-input="_searchMenus"
-                    t-on-keydown="_onKeyDown"
+                    t-ref="this.searchBarInputRef"
+                    t-on-input="this._searchMenus"
+                    t-on-keydown="this._onKeyDown"
                     autocomplete="off"
                     placeholder="Search menus..."
                     class="form-control"
                 />
             </div>
             <ul
-                t-if="hasItemsToDisplay"
+                t-if="this.hasItemsToDisplay"
                 class="list-unstyled search-list"
-                t-ref="searchItems"
+                t-ref="this.searchItemsRef"
             >
-                <t t-foreach="state.rootItems" t-as="menu" t-key="menu.id">
-                    <li t-attf-class="search-item {{highlighted(menu_index)}}">
+                <t t-foreach="this.state.rootItems" t-as="menu" t-key="menu.id">
+                    <li t-attf-class="search-item {{this.highlighted(menu_index)}}">
                         <a
                             t-attf-class="search-item__link"
                             t-att-href="menu.path"
@@ -42,7 +48,7 @@
                             />
                             <span class="search-item__name" t-att-title="menu.name">
                                 <t
-                                    t-foreach="_splitName(menu.displayName)"
+                                    t-foreach="this._splitName(menu.displayName)"
                                     t-as="name"
                                     t-key="name_index"
                                 >
@@ -55,12 +61,14 @@
                 </t>
                 <li
                     class="search-item-divider"
-                    t-if="state.rootItems.length and state.subItems.length"
+                    t-if="this.state.rootItems.length and this.state.subItems.length"
                 >
                     <hr class="w-100" />
                 </li>
-                <t t-foreach="state.subItems" t-as="menu" t-key="menu.id">
-                    <li t-attf-class="search-item {{highlighted(menu_index, true)}}">
+                <t t-foreach="this.state.subItems" t-as="menu" t-key="menu.id">
+                    <li
+                        t-attf-class="search-item {{this.highlighted(menu_index, true)}}"
+                    >
                         <a
                             t-attf-class="search-item__link"
                             t-att-href="menu.path"
@@ -74,7 +82,7 @@
                                 t-att-title="menu.name"
                             >
                                 <t
-                                    t-foreach="_splitName(menu.displayName)"
+                                    t-foreach="this._splitName(menu.displayName)"
                                     t-as="name"
                                     t-key="name_index"
                                 >
@@ -87,7 +95,7 @@
                 </t>
             </ul>
             <ul
-                t-if="!hasItemsToDisplay and inputValue"
+                t-if="!this.hasItemsToDisplay and this.inputValue"
                 class="list-unstyled search-list"
             >
                 <li class="empty-search-item">

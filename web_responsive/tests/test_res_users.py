@@ -9,12 +9,16 @@ class TestResUsers(BaseCommon):
     def test_compute_redirect_home(self):
         record = new_test_user(self.env, login="jeant@mail.com")
         self.assertFalse(record.is_redirect_home)
-        action = self.env["ir.actions.act_window"].create(
-            {
-                "name": "Test Action",
-                "type": "ir.actions.act_window",
-                "res_model": record._name,
-            }
+        action = (
+            self.env["ir.actions.act_window"]
+            .sudo()
+            .create(
+                {
+                    "name": "Test Action",
+                    "type": "ir.actions.act_window",
+                    "res_model": record._name,
+                }
+            )
         )
         record.action_id = action.id
         self.assertFalse(record.is_redirect_home)

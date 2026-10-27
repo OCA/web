@@ -17,6 +17,28 @@ $chatter_zone_width: 35% !important;
     }
 }
 
+@include media-breakpoint-down(md) {
+    .o_form_view .o_form_sheet_bg,
+    .o_form_view .o_form_sheet {
+        background-color: $o-view-background-color;
+    }
+
+    .o_form_view {
+        .o_inner_group:not(.oe_subtotal_footer)
+            :is(.o_cell, .o_cell_custom):not(.o_wrap_label):not(.o_no_box):not(
+                :has(.o_outlined)
+            ),
+        .o_inner_group .o_property_field.o_wrap_label .o_property_field_value,
+        .o_outlined {
+            &:has(.o_field_widget.o_readonly_modifier):not(
+                    :has(.o_field_widget:not(.o_readonly_modifier))
+                ) {
+                background-color: $o-view-background-color;
+            }
+        }
+    }
+}
+
 @include media-breakpoint-down(sm) {
     .ui-menu-item-wrapper {
         display: inline-flex !important;
@@ -73,6 +95,13 @@ $chatter_zone_width: 35% !important;
                         .oe_form_field_html
                     ):not(.o_field_image) {
                     min-height: 35px;
+
+                    &:not(.o_field_monetary):not(.o_field_percentage):not(
+                            [class*="o_field_many2many_tags"]
+                        ):not(.o_field_reference)
+                        input.o_input {
+                        min-height: 35px;
+                    }
                 }
 
                 .o_x2m_control_panel {

@@ -5,7 +5,7 @@
  * Copyright 2023 Taras Shabaranskyi
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-import {Component, onPatched, onWillPatch, useRef, useState} from "@odoo/owl";
+import {Component, onPatched, onWillPatch, proxy, signal, useProps} from "@odoo/owl";
 import {
     collectRootMenuItems,
     collectSubMenuItems,
@@ -20,18 +20,21 @@ import {scrollTo} from "@web/core/utils/scrolling";
  * @extends Component
  */
 export class AppsMenuCanonicalSearchBar extends Component {
+    props = useProps({});
+
     setup() {
         super.setup();
-        this.state = useState({
+        this.state = proxy({
             rootItems: [],
             subItems: [],
             offset: 0,
             hasResults: false,
         });
-        this.searchBarInput = useAutofocus({refName: "SearchBarInput"});
+        this.searchBarInputRef = signal.ref();
+        this.searchBarInput = useAutofocus({ref: this.searchBarInputRef});
         this._searchMenus = debounce(this._searchMenus, 200);
         this.menuService = useService("menu");
-        this.searchItemsRef = useRef("searchItems");
+        this.searchItemsRef = signal.ref();
         this.rootMenuItems = this.getRootMenuItems();
         this.subMenuItems = this.getSubMenuItems();
         onWillPatch(this._computeResultOffset);
@@ -42,7 +45,7 @@ export class AppsMenuCanonicalSearchBar extends Component {
      * @returns {String}
      */
     get inputValue() {
-        const {el} = this.searchBarInput;
+        const el = this.searchBarInput();
         return el ? el.value : "";
     }
 
@@ -146,14 +149,14 @@ export class AppsMenuCanonicalSearchBar extends Component {
             ev.stopPropagation();
             ev.preventDefault();
             if (this.inputValue) {
-                this.searchBarInput.el.value = "";
+                this.searchBarInput().value = "";
                 Object.assign(this.state, {rootItems: [], subItems: []});
                 this.state.hasResults = false;
             } else {
                 this.env.bus.trigger("ACTION_MANAGER:UI-UPDATED");
             }
         } else if (code === "Tab") {
-            if (this.searchItemsRef.el) {
+            if (this.searchItemsRef()) {
                 ev.preventDefault();
                 if (ev.shiftKey) {
                     this.state.offset--;
@@ -162,17 +165,17 @@ export class AppsMenuCanonicalSearchBar extends Component {
                 }
             }
         } else if (code === "ArrowUp") {
-            if (this.searchItemsRef.el) {
+            if (this.searchItemsRef()) {
                 ev.preventDefault();
                 this.state.offset--;
             }
         } else if (code === "ArrowDown") {
-            if (this.searchItemsRef.el) {
+            if (this.searchItemsRef()) {
                 ev.preventDefault();
                 this.state.offset++;
             }
         } else if (code === "Enter") {
-            const element = this.searchItemsRef.el;
+            const element = this.searchItemsRef();
             if (this.hasItemsToDisplay && element) {
                 ev.preventDefault();
                 this._selectHighlightedSearchItem(element);
@@ -210,13 +213,13 @@ export class AppsMenuCanonicalSearchBar extends Component {
 
     _scrollToHighlight() {
         // Scroll to selected element on keyboard navigation
-        const element = this.searchItemsRef.el;
+        const element = this.searchItemsRef();
         if (!(this.totalItemsCount && element)) {
             return;
         }
         const activeElement = element.querySelector(".highlight");
         if (activeElement) {
-            scrollTo(activeElement, element);
+            scrollTo(activeElement, {scrollable: element});
         }
     }
 
@@ -232,5 +235,4 @@ export class AppsMenuCanonicalSearchBar extends Component {
     }
 }
 
-AppsMenuCanonicalSearchBar.props = {};
 AppsMenuCanonicalSearchBar.template = "web_responsive.AppsMenuCanonicalSearchBar";

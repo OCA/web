@@ -17,7 +17,7 @@
         as the default one took physical place in the DOM -->
         <xpath expr="//Dropdown" position="replace">
             <t t-if="this.ui.isSmall">
-                <t t-call="web.NavBar.AppsMenu.Sidebar" />
+                <t t-call="web.NavBar.AppsMenu.Sidebar" apps="apps" />
             </t>
             <t t-else="" />
             <AppsMenu>
@@ -29,9 +29,9 @@
                     t-as="app"
                     t-key="app.id"
                     app="app"
-                    currentApp="currentApp"
-                    href="getMenuItemHref(app)"
-                    onClick="onNavBarDropdownItemSelection.bind(this)"
+                    currentApp="this.currentApp"
+                    href="this.getMenuItemHref(app)"
+                    onClick.bind="this.onNavBarDropdownItemSelection"
                 />
             </AppsMenu>
         </xpath>
@@ -39,19 +39,19 @@
 
     <!-- Apps menu -->
     <t t-name="web_responsive.AppsMenu">
-        <div class="o_grid_apps_menu" t-att-data-theme="theme">
+        <div class="o_grid_apps_menu" t-att-data-theme="this.theme">
             <button
                 class="o_grid_apps_menu__button"
                 title="Home Menu"
                 data-hotkey="h"
-                t-on-click.stop="onMenuClick"
+                t-on-click.stop="this.onMenuClick"
             >
-                <i class="oi oi-apps fs-4" />
+                <i class="oi fs-4" data-icon="apps" />
             </button>
-            <div t-if="state.open" class="app-menu-container">
-                <t t-slot="search_bar" />
+            <div t-if="this.state.open" class="app-menu-container">
+                <t t-call-slot="search_bar" />
                 <div class="o-app-menu-list">
-                    <t t-slot="default" />
+                    <t t-call-slot="default" />
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
 
     <!-- Apps Menu Sidebar -->
     <t t-inherit="web.NavBar.AppsMenu.Sidebar" t-inherit-mode="extension">
-        <xpath expr="//i[hasclass('fa fa-bars')]" position="replace">
+        <xpath expr="//i[hasclass('oi')][@data-icon='menu']" position="replace">
             <!-- Remove the burger menu icon -->
         </xpath>
 
@@ -83,9 +83,9 @@
         <xpath expr="//button[hasclass('o_mobile_menu_toggle')]" position="after">
             <button
                 class="o_mobile_menu_toggle o_nav_entry o-no-caret d-md-none border-0 pe-3"
-                t-on-click.prevent="_openAppMenuSidebarMobile"
+                t-on-click.prevent="this._openAppMenuSidebarMobile"
             >
-                <i class="oi oi-panel-right" />
+                <i class="oi" data-icon="dock_to_right" />
             </button>
         </xpath>
     </t>
