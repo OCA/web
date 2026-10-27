@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="web_dialog_size.ExpandButton">
+        <button
+            t-if="this.maximized"
+            type="button"
+            class="btn oi oi-lg opacity-50 opacity-100-hover dialog_button_restore"
+            data-icon="fullscreen_exit"
+            aria-label="Restore"
+            tabindex="-1"
+            t-on-click="this.toggle"
+        />
+        <button
+            t-else=""
+            type="button"
+            class="btn oi oi-lg opacity-50 opacity-100-hover dialog_button_extend"
+            data-icon="fullscreen"
+            aria-label="Maximize"
+            tabindex="-1"
+            t-on-click="this.toggle"
+        />
+    </t>
+</templates>
