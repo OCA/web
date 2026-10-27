@@ -29,41 +29,23 @@ class ResCompany(models.Model):
               background-color: %(color_navbar_bg_hover)s !important;
             }
           }
-
-          > ul {
-            > li {
-              > a, > label {
-                color: %(color_navbar_text)s !important;
-
-                &:hover, &:focus, &:active, &:focus:active {
-                  background-color: %(color_navbar_bg_hover)s !important;
-                }
-              }
-            }
+        }
+        .o_main_navbar .o_menu_brand {
+          color: rgba(%(color_navbar_text)s, 0.9) !important;
+          &:hover, &:focus, &:active, &:focus:active {
+            background: none !important;
+            color: %(color_navbar_text)s !important;
           }
         }
-        .o_menu_brand {
-            color: %(color_navbar_text)s !important;
-            &:hover, &:focus, &:active, &:focus:active {
-              background-color: %(color_navbar_bg_hover)s !important;
-            }
-          }
-
-          a[href],
-          a[tabindex],
-          .btn-link,
-          .o_external_button {
-            color: %(color_link_text)s;
-            .o_main_navbar {
-            color: none;
-            }
-          }
+        a[href],
+        a[tabindex],
+        .btn-link,
+        .o_external_button {
+          color: %(color_link_text)s;
+        }
         a:hover,
         .btn-link:hover {
           color: %(color_link_text_hover)s;
-          .o_main_navbar {
-            color: none;
-          }
         }
         .btn-primary:not(.disabled),
         .ui-autocomplete .ui-menu-item > a.ui-state-active {
@@ -89,12 +71,12 @@ class ResCompany(models.Model):
         .o_form_view .oe_button_box .oe_stat_button > span .o_stat_value {
           color: %(color_link_text)s !important;
         }
-        .o_form_view .o_form_statusbar > .o_statusbar_status >
-        .o_arrow_button.btn-primary.disabled {
+        .o_form_view .o_form_statusbar .o_statusbar_status
+        .o_arrow_button.o_arrow_button_current {
           color: %(color_link_text)s !important;
         }
         .o_required_modifier{
-          :focus-within {
+          &:focus-within {
             --o-input-border-color: %(color_button_bg)s !important;
             --o-caret-color: %(color_button_bg)s !important;
           }
@@ -184,6 +166,8 @@ class ResCompany(models.Model):
 
     def button_reset_colors(self):
         self.write({"company_colors": {}})
+        # Reload like a regular save does, so the reset colors are applied
+        return {"type": "ir.actions.client", "tag": "reload_context"}
 
     def button_compute_color(self):
         self.ensure_one()
@@ -215,12 +199,16 @@ class ResCompany(models.Model):
         # This allow extend company_colors and only sanitize selected fields
         # or add custom values
         values = dict(self.company_colors or {})
+        # The SCSS is compiled alone, so Odoo SCSS variables
+        # (like $o-brand-odoo) are not available: use literal colors.
+        navbar_bg = values.get("color_navbar_bg") or "#71639e"
         values.update(
             {
-                "color_navbar_bg": (values.get("color_navbar_bg") or "$o-brand-odoo"),
-                "color_navbar_bg_hover": (values.get("color_navbar_bg_hover")),
+                "color_navbar_bg": navbar_bg,
+                "color_navbar_bg_hover": values.get("color_navbar_bg_hover")
+                or f"darken({navbar_bg}, 10%)",
                 "color_navbar_border_bottom": values.get("color_navbar_border_bottom")
-                or f"darken({values.get('color_navbar_bg') or '$o-brand-odoo'}, 10%)",
+                or f"darken({navbar_bg}, 10%)",
                 "color_navbar_text": (values.get("color_navbar_text") or "#FFF"),
                 "color_button_bg": values.get("color_button_bg") or "#71639e",
                 "color_button_bg_hover": values.get("color_button_bg_hover")
@@ -229,7 +217,7 @@ class ResCompany(models.Model):
                 "color_link_text": values.get("color_link_text") or "#71639e",
                 "color_link_text_hover": values.get("color_link_text_hover")
                 or "darken(#71639e, 10%)",
-                "color_submenu_text": values.get("color_link_text") or "#374151",
+                "color_submenu_text": values.get("color_submenu_text") or "#374151",
             }
         )
         return values
