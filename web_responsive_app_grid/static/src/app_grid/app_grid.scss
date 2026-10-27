@@ -1,0 +1,295 @@
+/* License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+@keyframes o_app_grid_float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+// App Menu Preferences move to the "Options" link in the app grid; the
+// systray shortcut stays registered but is not displayed.
+.o-dropdown:has(.fa-tint) {
+    display: none;
+}
+
+.o_app_grid {
+    padding: 0.5rem 0 1rem;
+
+    &__cells {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.25rem;
+        width: unquote("min(840px, 92vw)");
+        margin: 0 auto;
+
+        @include media-breakpoint-up(md) {
+            grid-template-columns: repeat(6, 1fr);
+        }
+    }
+
+    &__cell {
+        min-height: 96px;
+        display: flex;
+        border-radius: 0.75rem;
+        transition:
+            outline-color 0.15s,
+            background-color 0.15s;
+        outline: 2px dashed transparent;
+        outline-offset: -2px;
+
+        @include media-breakpoint-up(sm) {
+            min-height: 110px;
+        }
+
+        &.o_drop_move {
+            outline-color: rgba(128, 128, 128, 0.6);
+        }
+    }
+
+    &__actions {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1100;
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    &__options,
+    &__discard {
+        border: unset;
+        padding: 0;
+        color: var(--app-menu-text-color, #{$white});
+        background: none;
+        text-decoration: none;
+    }
+
+    &__save {
+        border: unset;
+        border-radius: 2rem;
+        padding: 0.35rem 1.75rem;
+        color: #{$white};
+        background: rgba($black, 0.45);
+        backdrop-filter: blur(6px);
+    }
+
+    &__item {
+        flex: 1;
+
+        &.o_dragged {
+            // Position:fixed follower; keep it above the grid.
+            z-index: 1100;
+            // Pointer-follow updates must be instant: kill the float
+            // animation and any leftover transition while dragging.
+            animation: none !important;
+            transition: none !important;
+        }
+    }
+
+    &.o_editing &__item {
+        animation: o_app_grid_float 1.2s ease-in-out infinite;
+        cursor: grab;
+    }
+
+    &.o_editing &__item:nth-of-type(even) {
+        animation-delay: -0.6s;
+    }
+}
+
+.o_app_grid {
+    &__sep {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        height: 1.5rem;
+        padding: 0 0.5rem;
+        align-self: start;
+
+        &::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-top: 1px solid rgba(128, 128, 128, 0.45);
+        }
+
+        &.o_sep_cue::before {
+            border-top: 2px dashed rgba(128, 128, 128, 0.8);
+        }
+    }
+
+    &__sep_title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        color: var(--app-menu-text-color, #{$white});
+        opacity: 0.7;
+    }
+
+    &__sep_input {
+        flex: 0 1 12rem;
+        border: unset;
+        border-bottom: 1px dashed rgba(128, 128, 128, 0.6);
+        padding: 0;
+        color: inherit;
+        background: none;
+        outline: none;
+    }
+
+    &__sep_remove {
+        margin-left: auto;
+        border: unset;
+        padding: 0 0.35rem;
+        line-height: 1;
+        color: var(--app-menu-text-color, #{$white});
+        background: none;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+// Fill the drawer height so long-press works anywhere on the canvas.
+.o_app_grid {
+    min-height: 100%;
+}
+
+// Premium UX layer ------------------------------------------------------
+
+// Faded copy of the dragged icon inside the landing slot.
+.o_app_grid__ghost {
+    position: absolute;
+    inset: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: auto;
+    border-radius: 0.75rem;
+    object-fit: contain;
+    opacity: 0.35;
+    filter: grayscale(0.3);
+    pointer-events: none;
+}
+
+.o_app_grid__cell {
+    position: relative;
+}
+
+.o_app_grid__item {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+// Lifted look while dragging (position/transform come from the hook).
+.o_app_grid__item.o_dragged {
+    transform: scale(1.06);
+    // Above the fixed actions bar (z-index: 1100).
+    z-index: 1101;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+}
+
+// Brief settle after the icon lands in its slot.
+.o_app_grid__item.o_landed {
+    animation: o_app_grid_land 0.18s ease-out !important;
+}
+
+@keyframes o_app_grid_land {
+    from {
+        transform: scale(1.08);
+    }
+}
+
+// One-shot settle-in when edit mode starts, then the float takes over.
+.o_app_grid.o_editing .o_app_grid__item {
+    animation:
+        o_app_grid_enter 0.15s ease-out,
+        o_app_grid_float 1.2s ease-in-out 0.15s infinite;
+}
+
+.o_app_grid.o_editing .o_app_grid__item:nth-of-type(even) {
+    animation-delay:
+        0s,
+        -0.6s;
+}
+
+@keyframes o_app_grid_enter {
+    from {
+        transform: scale(0.94);
+        opacity: 0;
+    }
+}
+
+// Cascade-in when the grid is shown (stagger via inline animation-delay).
+.o_app_grid:not(.o_editing) .o_app_grid__item {
+    animation: o_app_grid_enter 0.35s ease-out backwards;
+}
+
+// One-time discoverability hint for the long-press gesture.
+.o_app_grid__hint {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1100;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    color: var(--app-menu-text-color, #{$white});
+    background: rgba($black, 0.55);
+    font-size: 0.85rem;
+    animation: o_app_grid_enter 0.3s ease-out;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .o_app_grid .o_app_grid__item {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+// Separator grab affordance + opening gap animation ---------------------
+
+.o_editing .o_app_grid__sep {
+    cursor: grab;
+    border-radius: 0.5rem;
+    background: rgba(128, 128, 128, 0.12);
+}
+
+// Grip icon on the left; the remove button keeps the right edge.
+.o_editing .o_app_grid__sep::after {
+    content: "\2261"; // ≡
+    order: -1;
+    margin: 0 0.4rem 0 0;
+    color: var(--app-menu-text-color, #{$white});
+    opacity: 0.5;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+// Animate the margin gap that opens at the hovered boundary.
+.o_app_grid__cell {
+    transition:
+        outline-color 0.15s,
+        background-color 0.15s,
+        margin-top 0.15s;
+}
+
+.o_app_grid__item {
+    transition: margin-top 0.15s;
+}
+
+// The sepMove boundary cue is display-only.
+.o_app_grid__sep.o_sep_cue {
+    pointer-events: none;
+}
