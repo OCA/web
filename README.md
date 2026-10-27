@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [web_dialog_size](web_dialog_size/) | 20.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_environment_ribbon](web_environment_ribbon/) | 20.0.1.0.0 |  | Web Environment Ribbon
 [web_m2x_options](web_m2x_options/) | 20.0.1.0.0 |  | web_m2x_options
+[web_responsive](web_responsive/) | 20.0.1.0.0 | <a href='https://github.com/Tardo'><img src='https://github.com/Tardo.png' width='32' height='32' style='border-radius:50%;' alt='Tardo'/></a> <a href='https://github.com/SplashS'><img src='https://github.com/SplashS.png' width='32' height='32' style='border-radius:50%;' alt='SplashS'/></a> | Responsive web client, community-supported
 
 [//]: # (end addons)
 
