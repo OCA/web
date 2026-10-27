@@ -4,9 +4,8 @@
 
 {
     "name": "Web Dialog Size",
-    "summary": """
-        A module that lets the user expand a
-        dialog box to the full screen width.""",
+    "summary": "A module that lets the user expand a "
+    "dialog box to the full screen width.",
     "author": "ACSONE SA/NV, "
     "Therp BV, "
     "Siddharth Bhalgami,"
@@ -15,7 +14,7 @@
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "category": "web",
-    "version": "19.0.1.0.2",
+    "version": "20.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["web"],
     "installable": True,
@@ -29,11 +28,9 @@
                 "/web/static/src/core/dialog/dialog.xml",
                 "/web_dialog_size/static/src/xml/web_dialog_header.xml",
             ),
-            (
-                "after",
-                "/web/static/src/views/view_dialogs/select_create_dialog.xml",
-                "/web_dialog_size/static/src/xml/select_create_dialog.xml",
-            ),
+        ],
+        "web.assets_unit_tests": [
+            "/web_dialog_size/static/tests/**/*",
         ],
     },
 }

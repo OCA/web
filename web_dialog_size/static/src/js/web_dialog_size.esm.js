@@ -1,10 +1,14 @@
-import {Component, onWillRender} from "@odoo/owl";
+import {Component, signal} from "@odoo/owl";
 import {ActionDialog} from "@web/webclient/actions/action_dialog";
 import {Dialog} from "@web/core/dialog/dialog";
 import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
+import {browser} from "@web/core/browser/browser";
 import {patch} from "@web/core/utils/patch";
 import {useService} from "@web/core/utils/hooks";
-import {browser} from "@web/core/browser/browser";
+import {useSubEnv} from "@web/owl2/utils";
+
+const STORAGE_KEY = "odoo.web_dialog_size.value";
+const LAST_SERVER_KEY = "odoo.web_dialog_size.last_server_value";
 
 function triggerWindowResize() {
     requestAnimationFrame(() => {
@@ -13,152 +17,49 @@ function triggerWindowResize() {
 }
 
 export class ExpandButton extends Component {
-    setup() {
-        this.original_size = this.props.getoriginalsize
-            ? this.props.getoriginalsize()
-            : this.props.getsize() !== "dialog_full_screen"
-              ? this.props.getsize()
-              : "md";
+    static template = "web_dialog_size.ExpandButton";
+    static propsSchema = {};
+
+    get maximized() {
+        return this.env.webDialogSize.maximized();
     }
 
-    dialog_button_extend() {
-        this.props.setsize("dialog_full_screen");
-        browser.localStorage.setItem("odoo.web_dialog_size.value", "true");
-        triggerWindowResize();
-    }
-
-    dialog_button_restore() {
-        this.props.setsize(this.original_size);
-        browser.localStorage.setItem("odoo.web_dialog_size.value", "false");
+    toggle() {
+        const maximized = !this.maximized;
+        this.env.webDialogSize.maximized.set(maximized);
+        browser.localStorage.setItem(STORAGE_KEY, String(maximized));
         triggerWindowResize();
     }
 }
 
-ExpandButton.template = "web_dialog_size.ExpandButton";
-
 patch(Dialog.prototype, {
     setup() {
-        this.originalSize = this.props.size;
         super.setup();
-        this.setSize = this.setSize.bind(this);
-        this.getSize = this.getSize.bind(this);
-        this.getOriginalSize = this.getOriginalSize.bind(this);
-
-        const storedValue = browser.localStorage.getItem("odoo.web_dialog_size.value");
-        const lastServerValue = browser.localStorage.getItem(
-            "odoo.web_dialog_size.last_server_value"
-        );
-
-        if (storedValue === "true") {
-            this._forcedSize = "dialog_full_screen";
-            this.props.size = "dialog_full_screen";
-        }
+        const storedValue = browser.localStorage.getItem(STORAGE_KEY);
+        const lastServerValue = browser.localStorage.getItem(LAST_SERVER_KEY);
+        this.maximized = signal(storedValue === "true");
+        // Components rendered in the dialog slots (e.g. the header button) inherit it
+        useSubEnv({webDialogSize: {maximized: this.maximized}});
 
         const orm = useService("orm");
         orm.call("ir.config_parameter", "get_web_dialog_size_config").then((r) => {
             const serverValue = String(Boolean(r.default_maximize));
             if (serverValue !== lastServerValue) {
-                browser.localStorage.setItem(
-                    "odoo.web_dialog_size.last_server_value",
-                    serverValue
-                );
-
+                browser.localStorage.setItem(LAST_SERVER_KEY, serverValue);
                 if (storedValue === null || storedValue === lastServerValue) {
-                    browser.localStorage.setItem(
-                        "odoo.web_dialog_size.value",
-                        serverValue
-                    );
-                    if (serverValue === "true") {
-                        this.setSize("dialog_full_screen");
-                    } else if (this._forcedSize === "dialog_full_screen") {
-                        this.setSize(this.originalSize || "md");
-                    }
-                }
-            }
-        });
-
-        onWillRender(() => {
-            if (this._forcedSize && this.props.size !== this._forcedSize) {
-                this.props.size = this._forcedSize;
-            }
-        });
-    },
-
-    setSize(size) {
-        this._forcedSize = size;
-        this.props.size = size;
-        this.render();
-    },
-
-    getSize() {
-        return this.props.size;
-    },
-
-    getOriginalSize() {
-        return this.originalSize || "md";
-    },
-});
-
-patch(SelectCreateDialog.prototype, {
-    setup() {
-        this.originalSize = this.props.size;
-        super.setup();
-        this.setSize = this.setSize.bind(this);
-        this.getSize = this.getSize.bind(this);
-        this.getOriginalSize = this.getOriginalSize.bind(this);
-
-        const storedValue = browser.localStorage.getItem("odoo.web_dialog_size.value");
-        const lastServerValue = browser.localStorage.getItem(
-            "odoo.web_dialog_size.last_server_value"
-        );
-
-        if (storedValue === "true") {
-            this.props.size = "dialog_full_screen";
-        }
-
-        const orm = useService("orm");
-        orm.call("ir.config_parameter", "get_web_dialog_size_config").then((r) => {
-            const serverValue = String(Boolean(r.default_maximize));
-            if (serverValue !== lastServerValue) {
-                browser.localStorage.setItem(
-                    "odoo.web_dialog_size.last_server_value",
-                    serverValue
-                );
-                if (storedValue === null || storedValue === lastServerValue) {
-                    browser.localStorage.setItem(
-                        "odoo.web_dialog_size.value",
-                        serverValue
-                    );
-                    if (serverValue === "true") {
-                        this.setSize("dialog_full_screen");
-                    } else if (this.props.size === "dialog_full_screen") {
-                        this.setSize(this.originalSize || "md");
-                    }
+                    browser.localStorage.setItem(STORAGE_KEY, serverValue);
+                    this.maximized.set(serverValue === "true");
                 }
             }
         });
     },
 
-    setSize(size) {
-        this.props.size = size;
-        this.render();
-    },
-
-    getSize() {
-        return this.props.size;
-    },
-
-    getOriginalSize() {
-        return this.originalSize || "md";
+    get size() {
+        return this.maximized() ? "dialog_full_screen" : super.size;
     },
 });
 
-Object.assign(ActionDialog.components, {ExpandButton});
-SelectCreateDialog.components = Object.assign(SelectCreateDialog.components || {}, {
-    ExpandButton,
-});
-Dialog.components = Object.assign(Dialog.components || {}, {ExpandButton});
-// Keep Odoo's standard dialog sizes and add the custom maximized size.
-const coreValidateDialogSize = Dialog.props.size.validate;
-Dialog.props.size.validate = (size) =>
-    coreValidateDialogSize(size) || size === "dialog_full_screen";
+// The header template resolves components in the context of the slot owner
+for (const DialogComponent of [Dialog, ActionDialog, SelectCreateDialog]) {
+    DialogComponent.components = {...DialogComponent.components, ExpandButton};
+}

@@ -13,8 +13,8 @@ class TestWebDialogSize(TransactionCase):
 
         self.assertFalse(obj.get_web_dialog_size_config()["default_maximize"])
 
-        obj.set_param("web_dialog_size.default_maximize", "True")
+        obj.set_bool("web_dialog_size.default_maximize", True)
         self.assertTrue(obj.get_web_dialog_size_config()["default_maximize"])
 
-        obj.set_param("web_dialog_size.default_maximize", "False")
+        obj.set_bool("web_dialog_size.default_maximize", False)
         self.assertFalse(obj.get_web_dialog_size_config()["default_maximize"])

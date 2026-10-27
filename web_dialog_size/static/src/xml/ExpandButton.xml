@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templates>
-    <t t-name="web_dialog_size.ExpandButton" owl="1">
+    <t t-name="web_dialog_size.ExpandButton">
         <button
-            t-if="props.getsize() == 'dialog_full_screen'"
+            t-if="this.maximized"
             type="button"
-            class="btn btn-secondary dialog_button_restore"
-            t-on-click="dialog_button_restore"
-        >
-            <i class="fa fa-window-restore" />
-        </button>
+            class="btn oi oi-lg opacity-50 opacity-100-hover dialog_button_restore"
+            data-icon="fullscreen_exit"
+            aria-label="Restore"
+            tabindex="-1"
+            t-on-click="this.toggle"
+        />
         <button
-            t-if="props.getsize() != 'dialog_full_screen'"
+            t-else=""
             type="button"
-            class="btn btn-secondary dialog_button_extend"
-            t-on-click="dialog_button_extend"
-        >
-            <i class="fa fa-window-maximize" />
-        </button>
+            class="btn oi oi-lg opacity-50 opacity-100-hover dialog_button_extend"
+            data-icon="fullscreen"
+            aria-label="Maximize"
+            tabindex="-1"
+            t-on-click="this.toggle"
+        />
     </t>
 </templates>
