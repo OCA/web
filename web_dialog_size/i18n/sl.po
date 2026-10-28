@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-10-28 11:46+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,6 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: web_dialog_size
 #: model:ir.module.module,description:base.module_web_dialog_size
@@ -151,29 +153,29 @@ msgstr ""
 #. module: web_dialog_size
 #: model:ir.model.fields,field_description:web_dialog_size.field_ir_config_parameter__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: web_dialog_size
 #: model:ir.model.fields,field_description:web_dialog_size.field_ir_config_parameter__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_dialog_size
 #. odoo-javascript
 #: code:addons/web_dialog_size/static/src/xml/ExpandButton.xml:0
 msgid "Maximize"
-msgstr ""
+msgstr "Maksimiraj"
 
 #. module: web_dialog_size
 #. odoo-javascript
 #: code:addons/web_dialog_size/static/src/xml/ExpandButton.xml:0
 msgid "Restore"
-msgstr ""
+msgstr "Obnovi"
 
 #. module: web_dialog_size
 #: model:ir.model,name:web_dialog_size.model_ir_config_parameter
 msgid "System Parameter"
-msgstr ""
+msgstr "Sistemski parameter"
 
 #. module: web_dialog_size
 #: model:ir.module.module,shortdesc:base.module_web_dialog_size
