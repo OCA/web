@@ -7,6 +7,14 @@
     .o_form_sheet_bg.o_fullwidth,
     .o_form_sheet_bg.o_fullwidth .o_form_sheet {
         max-width: none !important;
-        width: auto !important;
+    }
+    // Width must not follow the content: x2many lists size their columns
+    // from it, which would loop on every resize
+    .o_form_sheet_bg.o_fullwidth {
+        width: 100% !important;
+    }
+    // Same for the sheet beside a sided chatter
+    .o_form_renderer.flex-nowrap > .o_form_sheet_bg {
+        min-width: 0;
     }
 }
