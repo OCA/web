@@ -4,9 +4,8 @@
 
 {
     "name": "Web Notify",
-    "summary": """
-        Send notification messages to user""",
-    "version": "19.0.1.0.1",
+    "summary": "Send notification messages to user",
+    "version": "20.0.1.0.0",
     "license": "LGPL-3",
     "author": "ACSONE SA/NV,AdaptiveCity,Odoo Community Association (OCA)",
     "development_status": "Production/Stable",
@@ -15,6 +14,7 @@
     "assets": {
         "web.assets_backend": [
             "web_notify/static/src/js/services/*.js",
+            "web_notify/static/src/scss/web_notify.scss",
         ]
     },
     "demo": ["views/res_users_demo.xml"],

@@ -21,19 +21,19 @@ class ResUsers(models.Model):
     def _compute_channel_names(self):
         for record in self:
             record.notify_success_channel_name = json_dump(
-                channel_with_db(self.env.cr.dbname, record.partner_id)
+                channel_with_db(self.env.cr.dbname, record)
             )
             record.notify_danger_channel_name = json_dump(
-                channel_with_db(self.env.cr.dbname, record.partner_id)
+                channel_with_db(self.env.cr.dbname, record)
             )
             record.notify_warning_channel_name = json_dump(
-                channel_with_db(self.env.cr.dbname, record.partner_id)
+                channel_with_db(self.env.cr.dbname, record)
             )
             record.notify_info_channel_name = json_dump(
-                channel_with_db(self.env.cr.dbname, record.partner_id)
+                channel_with_db(self.env.cr.dbname, record)
             )
             record.notify_default_channel_name = json_dump(
-                channel_with_db(self.env.cr.dbname, record.partner_id)
+                channel_with_db(self.env.cr.dbname, record)
             )
 
     notify_success_channel_name = fields.Char(compute="_compute_channel_names")
@@ -133,7 +133,9 @@ class ResUsers(models.Model):
                 self.env._("Sending a notification to another user is forbidden.")
             )
         if not target:
-            target = self.partner_id
+            # v20: bus notifications go to res.users channels (partners are routed
+            # to their users by bus.listener.mixin)
+            target = self
         if action:
             action = clean_action(action, self.env)
         bus_message = {
@@ -145,8 +147,8 @@ class ResUsers(models.Model):
             "action": action,
             "params": dict(params or []),
         }
-        for partner in target:
-            partner._bus_send(
+        for recipient in target:
+            recipient._bus_send(
                 "web_notify",
                 bus_message,
             )

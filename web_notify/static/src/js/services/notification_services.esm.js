@@ -2,6 +2,8 @@ import {markup} from "@odoo/owl";
 import {registry} from "@web/core/registry";
 import {_t} from "@web/core/l10n/translation";
 
+const NOTIFICATION_TYPES = ["warning", "danger", "success", "info"];
+
 export const webNotificationService = {
     dependencies: ["bus_service", "notification", "action"],
 
@@ -23,13 +25,22 @@ export const webNotificationService = {
                 ];
             }
 
+            // The v20 notification schema only accepts warning/danger/success/info:
+            // "default" is shown as a neutral notification (see web_notify.scss).
+            const isDefault = !NOTIFICATION_TYPES.includes(notification.type);
+            const className = [
+                notification.className,
+                isDefault && "o_web_notify_default",
+            ]
+                .filter(Boolean)
+                .join(" ");
             const notificationRemove = notificationService.add(
                 notification.html ? markup(notification.message) : notification.message,
                 {
                     title: notification.title,
-                    type: notification.type,
-                    sticky: notification.sticky,
-                    className: notification.className,
+                    type: isDefault ? "info" : notification.type,
+                    sticky: Boolean(notification.sticky),
+                    className,
                     buttons: buttons.map((button) => {
                         const onClick = button.onClick;
                         button.onClick = async () => {

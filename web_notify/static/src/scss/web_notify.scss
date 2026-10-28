@@ -1,0 +1,7 @@
+// "default" notifications: neutral bar instead of the info colour
+.o_notification.o_web_notify_default {
+    .o_notification_bar,
+    .o_notification_progress {
+        background-color: $gray-500 !important;
+    }
+}
