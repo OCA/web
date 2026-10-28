@@ -64,8 +64,18 @@ Also, you can use:
 
 - view-type: To force an specific view kind. By default it uses list in
   desktop and kanban in mobile.
-- create-action: To force an specific action for creation (it is a
-  xmlid)
+- create-action: To force an specific action for creation. Depending on
+  create-action-type, it is either the name of a Python method on the
+  model, or the id/xmlid of an existing action.
+- create-action-type: How create-action should be interpreted:
+
+  - object (default): create-action is a method name on the model,
+    called server-side. Whatever action it returns (e.g. opening a
+    wizard) is executed.
+  - action: create-action is an existing action's id or xmlid (e.g.
+    ``%(module.action_xmlid)s``), which is loaded and executed directly,
+    without calling any method.
+
 - open-action: The function to launch to open the record. By default, it
   uses get_formview_action.
 - filter: set 0 to hide the filters
@@ -109,6 +119,14 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-etobella| image:: https://github.com/etobella.png?size=40px
+    :target: https://github.com/etobella
+    :alt: etobella
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-etobella| 
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/16.0/web_widget_sub_view>`_ project on GitHub.
 

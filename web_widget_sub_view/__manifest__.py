@@ -8,6 +8,7 @@
     "license": "AGPL-3",
     "author": "Dixmit,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
+    "maintainers": ["etobella"],
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
