@@ -1,0 +1,15 @@
+$o-navbar-background: $o-view-background-color !default;
+
+$o-navbar-entry-color: $o-gray-700 !default;
+$o-navbar-entry-color--hover: $o-gray-900 !default;
+$o-navbar-entry-bg--hover: mix($o-brand-odoo, $o-navbar-background, 8%) !default;
+
+// Not readable enough on a dark navbar (e.g. with web_dark_mode)
+$o-navbar-brand-color: if(
+    $o-webclient-color-scheme == dark,
+    $o-gray-900,
+    $o-brand-odoo
+) !default;
+
+$o-navbar-badge-color: $o-white !default;
+$o-navbar-badge-text-shadow: none !default;
