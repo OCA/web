@@ -1,0 +1,70 @@
+// Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
+// License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+
+// Keep in sync with CHATTER_MIN_WIDTH and VIEW_MIN_WIDTH in chatter_patch.esm.js
+$o-chatter-resizable-min-width: 10px;
+$o-chatter-resizable-view-min-width: 10px;
+
+.o-mail-ChatterContainer.o-aside {
+    &:has(> .o_chatter_resize_handle) {
+        position: relative;
+    }
+
+    &.o_chatter_resized {
+        // Override fixed widths set by other modules, e.g. web_responsive
+        flex: 0 0 var(--ChatterResizable-width) !important;
+        width: var(--ChatterResizable-width);
+        min-width: $o-chatter-resizable-min-width;
+        max-width: calc(100% - #{$o-chatter-resizable-view-min-width});
+        overflow: hidden;
+    }
+}
+
+.o_chatter_resize_handle {
+    display: none;
+    z-index: 10;
+    width: 6px;
+    cursor: col-resize;
+    touch-action: none;
+    background-color: rgba($primary, 0.15);
+    transition: background-color 0.15s;
+
+    // Only beside a view, where the container takes the width
+    .o-mail-ChatterContainer.o-aside > & {
+        display: block;
+    }
+
+    // Grip in the middle of the edge
+    &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 1px;
+        width: 4px;
+        height: 40px;
+        margin-top: -20px;
+        border-radius: 2px;
+        background-color: rgba($primary, 0.6);
+    }
+
+    &:hover,
+    .o_chatter_resizing & {
+        background-color: rgba($primary, 0.4);
+    }
+}
+
+body.o_chatter_resizing {
+    cursor: col-resize;
+    user-select: none;
+}
+
+// Let the form use all the room left beside a side chatter, also on very wide
+// screens, so that it does not jump when the chatter is resized or restored
+.o_form_renderer:has(> .o-mail-Form-chatter.o-aside) {
+    max-width: none;
+}
+
+.o_form_sheet_bg:has(+ .o-mail-Form-chatter.o-aside) {
+    max-width: none;
+    min-width: $o-chatter-resizable-view-min-width;
+}

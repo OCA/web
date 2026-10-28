@@ -1,0 +1,20 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_chatter_resizable
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260926\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_chatter_resizable
+#. odoo-javascript
+#: code:addons/web_chatter_resizable/static/src/chatter/chatter_patch.xml:0
+msgid "Drag to resize the chatter, double-click to restore its width"
+msgstr ""
