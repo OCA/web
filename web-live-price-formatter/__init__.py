@@ -1,0 +1,1 @@
+"""Web Live Price Formatter."""
