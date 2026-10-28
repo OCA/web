@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<templates xml:space="preserve">
+    <t t-inherit="web.FormView" t-inherit-mode="extension">
+        <xpath expr="//Layout" position="inside">
+            <t t-set-slot="control-panel-navigation-additional">
+                <button
+                    t-if="chatterVisibility.asideCount"
+                    type="button"
+                    class="btn btn-secondary o_chatter_visibility_toggle"
+                    t-att-class="{active: !chatterVisibility.hidden}"
+                    t-att-title="chatterVisibilityTitle"
+                    t-att-aria-pressed="chatterVisibility.hidden ? 'false' : 'true'"
+                    t-on-click="toggleChatterVisibility"
+                >
+                    <i class="oi oi-panel-right" />
+                </button>
+            </t>
+        </xpath>
+    </t>
+</templates>
