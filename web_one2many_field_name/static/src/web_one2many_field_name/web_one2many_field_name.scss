@@ -1,0 +1,13 @@
+.o-tooltip {
+    // Parent One2many field, shown under "Field:" in embedded list tooltips.
+    .o_o2m_parent_field {
+        .o-tooltip--technical--title {
+            color: $info;
+            font-weight: $font-weight-bold;
+        }
+
+        .o_field_tooltip_copy_text {
+            font-weight: $font-weight-bold;
+        }
+    }
+}
