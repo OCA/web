@@ -1,0 +1,1 @@
+from . import test_web_ir_actions_act_window_page

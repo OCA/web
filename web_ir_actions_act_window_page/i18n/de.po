@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_ir_actions_act_window_page
+#
+# Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-03 03:50+0000\n"
+"PO-Revision-Date: 2025-09-18 11:42+0000\n"
+"Last-Translator: Bastian Günther <mail@bastian-guenther.de>\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: web_ir_actions_act_window_page
+#: model:ir.model,name:web_ir_actions_act_window_page.model_ir_actions_act_window_page_next
+msgid "Action to page to the next record from a form view button"
+msgstr ""
+"Aktion zum Blättern zum nächsten Datensatz über eine Schaltflächenaktion in "
+"der Formularansicht"
+
+#. module: web_ir_actions_act_window_page
+#: model:ir.model,name:web_ir_actions_act_window_page.model_ir_actions_act_window_page_prev
+msgid "Action to page to the previous record from a form view button"
+msgstr ""
+"Aktion zum Blättern zum vorherigen Datensatz über eine Schaltflächenaktion "
+"in der Formularansicht"
+
+#. module: web_ir_actions_act_window_page
+#: model:ir.model,name:web_ir_actions_act_window_page.model_ir_actions_act_window_page_list
+msgid "Action to switch to the list view"
+msgstr "Aktion zum Wechseln in die Listenansicht"
+
+#. module: web_ir_actions_act_window_page
+#: model_terms:ir.ui.view,arch_db:web_ir_actions_act_window_page.view_partner_form
+msgid "Next Partner"
+msgstr "Nächster Partner"
+
+#. module: web_ir_actions_act_window_page
+#: model:ir.actions.server,name:web_ir_actions_act_window_page.demo_pager_next
+msgid "Next partner"
+msgstr "Nächster Partner"
+
+#. module: web_ir_actions_act_window_page
+#: model_terms:ir.ui.view,arch_db:web_ir_actions_act_window_page.view_partner_form
+msgid "Previous Partner"
+msgstr "Voriger Partner"
+
+#. module: web_ir_actions_act_window_page
+#: model:ir.actions.server,name:web_ir_actions_act_window_page.demo_pager_previous
+msgid "Previous partner"
+msgstr "Voriger Partner"
