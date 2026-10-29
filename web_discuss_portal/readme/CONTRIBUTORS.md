@@ -1,0 +1,2 @@
+- [Vortex Dimensión Digital](https://www.dimensionvortex.com/):
+  - Jorge Rosado Julián \<<jorge.rosado@dimensionvortex.com>\>
