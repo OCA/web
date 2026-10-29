@@ -6,6 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-15 08:52+0000\n"
+"PO-Revision-Date: 2026-09-15 08:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,6 +39,18 @@ msgid "Apps Menu Theme"
 msgstr ""
 
 #. module: web_responsive
+#: model:ir.model.fields,field_description:web_responsive.field_res_users__is_auto_open_invoice_preview
+msgid "Auto-open Invoice Preview"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.model.fields,help:web_responsive.field_res_users__is_auto_open_invoice_preview
+msgid ""
+"Automatically open the PDF preview of the invoice attachment when the "
+"invoice is opened."
+msgstr ""
+
+#. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_search_type__canonical
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Canonical"
@@ -63,6 +77,11 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/components/command_palette/main.xml:0
 msgid "Exit"
+msgstr ""
+
+#. module: web_responsive
+#: model_terms:ir.ui.view,arch_db:web_responsive.view_users_form_web_responsive
+msgid "File Viewer"
 msgstr ""
 
 #. module: web_responsive

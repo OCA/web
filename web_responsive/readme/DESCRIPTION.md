@@ -29,6 +29,13 @@ their profile settings.
 
   ![image](../static/img/listview.gif)
 
+- Optionally, when opening an invoice (account.move), its most recent
+  PDF attachment is automatically displayed in the side document
+  viewer. Enable ** File Viewer / Auto-open Invoice Preview** on the user's
+  *Preferences* tab (*Settings -> Users -> Companies -> Users*), per user.
+
+  ![image](../static/img/auto_open_invoice_preview.png)
+
 **Features for mobile**: \* View type picker dropdown displays
 comfortably
 
