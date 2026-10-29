@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="web_portal_properties.PortalPropertyDefinition"
+        t-inherit="web.PropertyDefinition"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//div[hasclass('o_modal_container')]" position="inside">
+            <div class="o_field_property_definition_portal d-contents mb-3 mb-sm-0">
+                <label
+                    t-att-for="getUniqueDomID('portal')"
+                    class="o_form_label align-self-center text-900 o_property_display_in_portal"
+                >
+                    Display in Portal
+                    <sup
+                    class="text-info"
+                    title="Whether or not this Property Field is displayed in the Portal views"
+                >?</sup>
+                </label>
+                <CheckBox
+                    id="getUniqueDomID('portal')"
+                    value="props.propertyDefinition.view_in_portal"
+                    disabled="props.readonly"
+                    onChange.bind="onViewInPortalChange"
+                />
+            </div>
+        </xpath>
+    </t>
+</templates>
