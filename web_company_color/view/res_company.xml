@@ -31,6 +31,13 @@
                         type="object"
                         string="Compute colors from logo"
                     />
+                    <button
+                        class="btn-outline-danger"
+                        name="button_reset_colors"
+                        type="object"
+                        string="Reset colors"
+                        confirm="This will remove the custom colors of this company. Continue?"
+                    />
                     <div
                         class="alert alert-info info_icon mt-2 d-flex align-items-center"
                         role="alert"

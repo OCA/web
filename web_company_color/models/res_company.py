@@ -102,6 +102,17 @@ class ResCompany(models.Model):
         }
     """
 
+    _COMPANY_COLOR_FIELDS = (
+        "color_navbar_bg",
+        "color_navbar_bg_hover",
+        "color_navbar_text",
+        "color_button_bg",
+        "color_button_bg_hover",
+        "color_button_text",
+        "color_link_text",
+        "color_link_text_hover",
+    )
+
     company_colors = fields.Serialized()
     color_navbar_bg = fields.Char("Navbar Background Color", sparse="company_colors")
     color_navbar_bg_hover = fields.Char(
@@ -135,18 +146,8 @@ class ResCompany(models.Model):
 
     def write(self, values):
         if not self.env.context.get("ignore_company_color", False):
-            fields_to_check = (
-                "color_navbar_bg",
-                "color_navbar_bg_hover",
-                "color_navbar_text",
-                "color_button_bg",
-                "color_button_bg_hover",
-                "color_button_text",
-                "color_link_text",
-                "color_link_text_hover",
-            )
             result = super().write(values)
-            if any([field in values for field in fields_to_check]):
+            if any(field in values for field in self._COMPANY_COLOR_FIELDS):
                 self.scss_create_or_update_attachment()
         else:
             result = super().write(values)
@@ -174,6 +175,10 @@ class ResCompany(models.Model):
                 }
             )
         self.write(values)
+
+    def button_reset_colors(self):
+        self.ensure_one()
+        self.write({field: False for field in self._COMPANY_COLOR_FIELDS})
 
     def _scss_get_sanitized_values(self):
         self.ensure_one()

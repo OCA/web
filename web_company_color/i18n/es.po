@@ -87,7 +87,7 @@ msgstr "Color de fondo de la barra de navegación"
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg_hover
 msgid "Navbar Background Color Hover"
-msgstr "Desplazamiento del color de fondo de la barra de navegación"
+msgstr "Color de fondo de la barra de navegación Hover"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_text
@@ -100,9 +100,20 @@ msgid "Qweb"
 msgstr "Qweb"
 
 #. module: web_company_color
+#: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
+msgid "Reset colors"
+msgstr "Restablecer colores"
+
+#. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__scss_modif_timestamp
 msgid "SCSS Modif. Timestamp"
 msgstr "SCSS Modif. Marca de tiempo"
+
+#. module: web_company_color
+#: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
+msgid "This will remove the custom colors of this company. Continue?"
+msgstr ""
+"Esto eliminará los colores personalizados de esta compañía. ¿Continuar?"
 
 #~ msgid "Navbar Colors"
 #~ msgstr "Colores de la barra de navegación"
