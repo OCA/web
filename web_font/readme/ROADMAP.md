@@ -1,0 +1,2 @@
+- Allow a different font per company, per language or per user.
+- Apply the font to the login page.
