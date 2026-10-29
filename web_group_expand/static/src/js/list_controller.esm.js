@@ -8,6 +8,22 @@ function flatten(arr) {
 }
 
 patch(ListController.prototype, {
+    get allGroupsExpanded() {
+        let layer = this.model.root.groups || [];
+        while (layer.length) {
+            if (layer.some((group) => group._config.isFolded)) {
+                return false;
+            }
+            layer = layer.flatMap((group) => group.list.groups || []);
+        }
+        return true;
+    },
+
+    get allGroupsCollapsed() {
+        const groups = this.model.root.groups || [];
+        return groups.every((group) => group._config.isFolded);
+    },
+
     async expandAllGroups() {
         // We expand layer by layer. So first we need to find the highest
         // layer that's not already fully expanded.

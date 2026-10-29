@@ -8,6 +8,7 @@
                     class="btn btn-secondary fa fa-expand oe_group_by_expand"
                     data-tooltip="Expand"
                     aria-label="Expand"
+                    t-att-disabled="allGroupsExpanded"
                     t-on-click="expandAllGroups"
                 />
                 <button
@@ -15,6 +16,7 @@
                     class="btn btn-secondary fa fa-compress oe_group_by_collapse"
                     data-tooltip="Compress"
                     aria-label="Compress"
+                    t-att-disabled="allGroupsCollapsed"
                     t-on-click="collapseAllGroups"
                 />
             </t>
