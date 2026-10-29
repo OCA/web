@@ -12,6 +12,7 @@ import {
     patchWithCleanup,
 } from "@web/../tests/helpers/utils";
 import {NavBar} from "@web/webclient/navbar/navbar";
+import {appsMenuOrder} from "@web_responsive/components/apps_menu_tools.esm";
 import {actionService} from "@web/webclient/actions/action_service";
 import {browser} from "@web/core/browser/browser";
 import {hotkeyService} from "@web/core/hotkeys/hotkey_service";
@@ -70,6 +71,18 @@ QUnit.test("can be opened and closed", async (assert) => {
     await click(target, "button.o_grid_apps_menu__button");
     await nextTick();
     assert.containsNone(target, ".o-app-menu-list");
+});
+
+QUnit.test("apps are ordered following the user's saved order", async (assert) => {
+    const env = await makeTestEnv(baseConfig);
+    patchWithCleanup(appsMenuOrder, {ids: [2, 1]});
+    await mount(NavBar, target, {env});
+    await click(target, "button.o_grid_apps_menu__button");
+    await nextTick();
+    const order = [...target.querySelectorAll(".o-app-menu-item[data-menu-id]")].map(
+        (el) => Number(el.dataset.menuId)
+    );
+    assert.deepEqual(order, [2, 1], "app icons follow the saved order");
 });
 
 QUnit.test("can be active", async (assert) => {
