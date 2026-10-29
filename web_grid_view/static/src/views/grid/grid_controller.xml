@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_grid_view.GridController">
+        <Layout className="'o_grid_controller'" display="props.display">
+            <div
+                class="o_grid_toolbar d-flex align-items-center gap-1 px-3 py-2 border-bottom"
+            >
+                <div class="btn-group btn-group-sm">
+                    <t t-foreach="ranges" t-as="range" t-key="range.name">
+                        <button
+                            class="btn"
+                            t-att-class="range.name === activeRangeName ? 'btn-primary' : 'btn-outline-secondary'"
+                            t-on-click="() => this.onRangeSelect(range.name)"
+                        >
+                            <t t-esc="range.string" />
+                        </button>
+                    </t>
+                </div>
+                <div class="vr mx-1" />
+                <button
+                    class="btn btn-sm btn-outline-secondary"
+                    t-on-click="() => this.onPrev()"
+                >
+                    <i class="fa fa-chevron-left" />
+                </button>
+                <span class="fw-medium text-center px-2" t-esc="periodLabel" />
+                <button
+                    class="btn btn-sm btn-outline-secondary"
+                    t-on-click="() => this.onNext()"
+                >
+                    <i class="fa fa-chevron-right" />
+                </button>
+                <div class="vr mx-1" />
+                <button
+                    class="btn btn-sm btn-outline-primary"
+                    t-on-click="() => this.onToday()"
+                >
+                    <i class="fa fa-calendar me-1" />Today
+                </button>
+            </div>
+            <GridRenderer model="model" onCellCommit="onCellCommit" />
+        </Layout>
+    </t>
+</templates>
