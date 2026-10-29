@@ -10,6 +10,7 @@
                 aria-label="Refresh"
                 t-on-click="onClickRefresh"
                 title="Refresh"
+                data-hotkey="shift+r"
                 tabindex="-1"
             />
         </nav>
