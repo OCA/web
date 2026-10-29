@@ -29,7 +29,8 @@ msgstr ""
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Are you sure you want to reset all colors to Odoo defaults?"
-msgstr "Jeste li sigurni da želite poništiti sve boje na Odoo zadane vrijednosti?"
+msgstr ""
+"Jeste li sigurni da želite poništiti sve boje na Odoo zadane vrijednosti?"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg
@@ -72,6 +73,18 @@ msgid "Compute colors from logo"
 msgstr ""
 
 #. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_ir_qweb__display_name
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_ir_qweb__id
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__id
+msgid "ID"
+msgstr ""
+
+#. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text
 msgid "Link Text Color"
 msgstr ""
@@ -90,6 +103,11 @@ msgstr "Boja pozadine Navigacijske trake"
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg_hover
 msgid "Navbar Background Color Hover"
 msgstr "Poja pozadine navigacijske trake (hoover)"
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_border_bottom
+msgid "Navbar Bottom Border Color"
+msgstr ""
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_text

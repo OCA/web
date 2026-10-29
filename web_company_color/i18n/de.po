@@ -32,7 +32,9 @@ msgstr ""
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Are you sure you want to reset all colors to Odoo defaults?"
-msgstr "Sind Sie sicher, dass Sie alle Farben auf die Odoo-Standardwerte zurücksetzen möchten?"
+msgstr ""
+"Sind Sie sicher, dass Sie alle Farben auf die Odoo-Standardwerte "
+"zurücksetzen möchten?"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg
@@ -75,6 +77,18 @@ msgid "Compute colors from logo"
 msgstr "Farben aus Logo generieren"
 
 #. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_ir_qweb__display_name
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_ir_qweb__id
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text
 msgid "Link Text Color"
 msgstr ""
@@ -93,6 +107,11 @@ msgstr "Navbar-Hintergrundfarbe"
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg_hover
 msgid "Navbar Background Color Hover"
 msgstr "Navbar Hintergrundfarbe Hover"
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_border_bottom
+msgid "Navbar Bottom Border Color"
+msgstr ""
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_text
@@ -132,12 +151,6 @@ msgstr ""
 #~ "                        Damit die Änderungen wirksam werden, "
 #~ "aktualisieren Sie bitte\n"
 #~ "                        Sie die Seite."
-
-#~ msgid "Display Name"
-#~ msgstr "Anzeigename"
-
-#~ msgid "ID"
-#~ msgstr "ID"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Zuletzt bearbeitet am"
