@@ -26,7 +26,7 @@ test("the user can maximize and restore a dialog", async () => {
     await mountWithCleanup(Parent);
     expect(".modal-dialog.modal-md").toHaveCount(1);
     await contains(".dialog_button_extend").click();
-    expect(".modal-dialog.modal-dialog_full_screen").toHaveCount(1);
+    expect(".modal-dialog.modal-fs").toHaveCount(1);
     expect(browser.localStorage.getItem("odoo.web_dialog_size.value")).toBe("true");
     await contains(".dialog_button_restore").click();
     expect(".modal-dialog.modal-md").toHaveCount(1);
@@ -37,7 +37,7 @@ test("a stored preference opens the dialog maximized", async () => {
     browser.localStorage.setItem("odoo.web_dialog_size.value", "true");
     assignDialogTestEnv();
     await mountWithCleanup(Parent);
-    expect(".modal-dialog.modal-dialog_full_screen").toHaveCount(1);
+    expect(".modal-dialog.modal-fs").toHaveCount(1);
 });
 
 test("the server default maximizes dialogs without a stored preference", async () => {
@@ -47,5 +47,5 @@ test("the server default maximizes dialogs without a stored preference", async (
     assignDialogTestEnv();
     await mountWithCleanup(Parent);
     await animationFrame();
-    expect(".modal-dialog.modal-dialog_full_screen").toHaveCount(1);
+    expect(".modal-dialog.modal-fs").toHaveCount(1);
 });
