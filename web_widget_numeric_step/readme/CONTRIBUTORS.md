@@ -1,0 +1,8 @@
+- [GRAP](http://www.grap.coop):
+  - Quentin DUPONT \<<quentin.dupont@grap.coop>\>
+- [Tecnativa](https://www.tecnativa.com/):
+  - Alexandre Díaz
+  - Carlos Roca
+- Helly kapatel \<<helly.kapatel@initos.com>\>
+- Thanakrit Pintana \<<thanakrit.p39@gmail.com>\>
+- Dhara Solanki \<<dhara.solanki@initos.com>\>

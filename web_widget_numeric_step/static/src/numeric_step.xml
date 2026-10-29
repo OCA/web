@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright 2019 GRAP - Quentin DUPONT
+Copyright 2020 Tecnativa - Alexandre Díaz
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<template>
+    <t t-name="web_widget_numeric_step">
+        <span
+            t-if="this.props.readonly"
+            t-att-class="this.props.additional_class"
+            t-out="this.formattedValue"
+        />
+        <div
+            t-else=""
+            t-attf-class="d-flex widget_numeric_step {{this.props.additional_class or ''}}"
+        >
+            <div class="widget_numeric_step_btn">
+                <button
+                    class="oi btn btn_numeric_step"
+                    data-icon="remove"
+                    aria-label="Minus"
+                    tabindex="-1"
+                    title="Minus"
+                    type="button"
+                    data-mode="minus"
+                    t-on-click="this._onStepClick"
+                />
+            </div>
+            <input
+                t-att-id="this.props.id"
+                class="o_input"
+                t-ref="this.numpadDecimalRef"
+                t-att-placeholder="this.props.placeholder"
+                t-att-type="this.props.inputType"
+                inputmode="decimal"
+                autocomplete="off"
+                t-att-step="this.props.step"
+                t-on-focusin="this.onFocusIn"
+                t-on-focusout="this.onFocusOut"
+                t-on-keydown="this._onKeyDown"
+                t-on-wheel="this._onWheel"
+            />
+            <div class="widget_numeric_step_btn">
+                <button
+                    class="oi btn btn_numeric_step"
+                    data-icon="add"
+                    aria-label="Plus"
+                    tabindex="-1"
+                    title="Plus"
+                    type="button"
+                    data-mode="plus"
+                    t-on-click="this._onStepClick"
+                />
+            </div>
+        </div>
+    </t>
+</template>
