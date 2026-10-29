@@ -1,3 +1,5 @@
 - Florian Kantelberg \<florian.kantelberg@initos.com\>
 - [Pyxiris](https://github.com/Pyxiris)
   - [Liam Noonan](https://github.com/ljmnoonan)
+- [Altixia](https://www.altixia.com):
+  - Claude Perrin \<claude@altixia.com\>

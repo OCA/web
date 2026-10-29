@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =========
 Dark Mode
 =========
@@ -17,7 +13,7 @@ Dark Mode
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -39,6 +35,24 @@ activated by every user in the user menu in the top right.
 
 .. contents::
    :local:
+
+Usage
+=====
+
+Each user chooses an *Appearance* in their *Preferences*, next to the
+language and the time zone:
+
+- **Default**: the theme follows the device, light or dark as it is set,
+  evening included. It is checked at every page load and as soon as the
+  device switches.
+- **Light** or **Dark**: a fixed theme, whatever the device.
+
+Saving the Preferences reloads the page, so the new appearance applies
+at once.
+
+The *Dark Mode* switch of the user menu stays: it sets a fixed theme
+(Light or Dark), as a choice made by hand. To follow the device again,
+pick *Default* in the Preferences.
 
 Known issues / Roadmap
 ======================
@@ -70,6 +84,10 @@ Contributors
 - `Pyxiris <https://github.com/Pyxiris>`__
 
   - `Liam Noonan <https://github.com/ljmnoonan>`__
+
+- `Altixia <https://www.altixia.com>`__:
+
+  - Claude Perrin <claude@altixia.com>
 
 Maintainers
 -----------
