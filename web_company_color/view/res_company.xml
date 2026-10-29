@@ -18,18 +18,27 @@
                     <group string="Colors" name="navbar_colors">
                         <field name="color_navbar_bg" widget="color" />
                         <field name="color_navbar_bg_hover" widget="color" />
+                        <field name="color_navbar_border_bottom" widget="color" />
                         <field name="color_navbar_text" widget="color" />
                         <field name="color_button_bg" widget="color" />
                         <field name="color_button_bg_hover" widget="color" />
                         <field name="color_button_text" widget="color" />
                         <field name="color_link_text" widget="color" />
                         <field name="color_link_text_hover" widget="color" />
+                        <field name="color_submenu_text" widget="color" />
                     </group>
                     <button
                         class="btn-primary"
                         name="button_compute_color"
                         type="object"
                         string="Compute colors from logo"
+                    />
+                    <button
+                        class="btn-secondary ms-2"
+                        name="button_reset_colors"
+                        type="object"
+                        string="Reset colors"
+                        confirm="Are you sure you want to reset all colors to Odoo defaults?"
                     />
                     <div
                         class="alert alert-info info_icon mt-2 d-flex align-items-center"

@@ -90,6 +90,12 @@ Contributors
 
   - Bhavesh Heliconia
 
+- `PyTech <https://www.pytech.it>`__:
+
+  - Simone Rubino <simone.rubino@pytech.it>
+
+- Marwan Behillil <marwan.behillil@gmail.com>
+
 Maintainers
 -----------
 

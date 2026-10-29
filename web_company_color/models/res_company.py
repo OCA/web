@@ -5,6 +5,8 @@ from colorsys import hls_to_rgb, rgb_to_hls
 
 from odoo import api, fields, models
 
+from odoo.addons.base.models.assetsbundle import ScssStylesheetAsset
+
 from ..utils import convert_to_image, image_to_rgb, n_rgb_to_hex
 
 URL_BASE = "/web_company_color/static/src/scss/"
@@ -14,10 +16,12 @@ URL_SCSS_GEN_TEMPLATE = URL_BASE + "custom_colors.%d.gen.scss"
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    SCSS_TEMPLATE = """
+    def _get_scss_template(self):
+        return """
         .o_main_navbar {
           background: %(color_navbar_bg)s !important;
           background-color: %(color_navbar_bg)s !important;
+          border-bottom: 1px solid %(color_navbar_border_bottom)s !important;
           color: %(color_navbar_text)s !important;
 
           .show {
@@ -25,41 +29,23 @@ class ResCompany(models.Model):
               background-color: %(color_navbar_bg_hover)s !important;
             }
           }
-
-          > ul {
-            > li {
-              > a, > label {
-                color: %(color_navbar_text)s !important;
-
-                &:hover, &:focus, &:active, &:focus:active {
-                  background-color: %(color_navbar_bg_hover)s !important;
-                }
-              }
-            }
+        }
+        .o_main_navbar .o_menu_brand {
+          color: rgba(%(color_navbar_text)s, 0.9) !important;
+          &:hover, &:focus, &:active, &:focus:active {
+            background: none !important;
+            color: %(color_navbar_text)s !important;
           }
         }
-        .o_menu_brand {
-            color: %(color_navbar_text)s !important;
-            &:hover, &:focus, &:active, &:focus:active {
-              background-color: %(color_navbar_bg_hover)s !important;
-            }
-          }
-
-          a[href],
-          a[tabindex],
-          .btn-link,
-          .o_external_button {
-            color: %(color_link_text)s;
-            .o_main_navbar {
-            color: none;
-            }
-          }
+        a[href],
+        a[tabindex],
+        .btn-link,
+        .o_external_button {
+          color: %(color_link_text)s;
+        }
         a:hover,
         .btn-link:hover {
           color: %(color_link_text_hover)s;
-          .o_main_navbar {
-            color: none;
-          }
         }
         .btn-primary:not(.disabled),
         .ui-autocomplete .ui-menu-item > a.ui-state-active {
@@ -85,12 +71,12 @@ class ResCompany(models.Model):
         .o_form_view .oe_button_box .oe_stat_button > span .o_stat_value {
           color: %(color_link_text)s !important;
         }
-        .o_form_view .o_form_statusbar > .o_statusbar_status >
-        .o_arrow_button.btn-primary.disabled {
+        .o_form_view .o_form_statusbar .o_statusbar_status
+        .o_arrow_button.o_arrow_button_current {
           color: %(color_link_text)s !important;
         }
         .o_required_modifier{
-          :focus-within {
+          &:focus-within {
             --o-input-border-color: %(color_button_bg)s !important;
             --o-caret-color: %(color_button_bg)s !important;
           }
@@ -106,6 +92,7 @@ class ResCompany(models.Model):
           &:hover, &:focus, &:active, &:focus:active {
             background-color: %(color_navbar_bg_hover)s !important;
           }
+          border-bottom: 1px solid %(color_navbar_border_bottom)s !important;
         }
         .o_menu_sections .dropdown-toggle {
           background: %(color_navbar_bg)s !important;
@@ -114,6 +101,7 @@ class ResCompany(models.Model):
           &:hover, &:focus, &:active, &:focus:active {
             background-color: %(color_navbar_bg_hover)s !important;
           }
+          border-bottom: 1px solid %(color_navbar_border_bottom)s !important;
         }
         .o_menu_systray button{
             color: %(color_navbar_text)s !important;
@@ -130,6 +118,9 @@ class ResCompany(models.Model):
     color_navbar_bg = fields.Char("Navbar Background Color", sparse="company_colors")
     color_navbar_bg_hover = fields.Char(
         "Navbar Background Color Hover", sparse="company_colors"
+    )
+    color_navbar_border_bottom = fields.Char(
+        "Navbar Bottom Border Color", sparse="company_colors"
     )
     color_navbar_text = fields.Char("Navbar Text Color", sparse="company_colors")
     color_button_text = fields.Char("Button Text Color", sparse="company_colors")
@@ -159,23 +150,21 @@ class ResCompany(models.Model):
         return super().unlink()
 
     def write(self, values):
-        if not self.env.context.get("ignore_company_color", False):
-            fields_to_check = (
-                "color_navbar_bg",
-                "color_navbar_bg_hover",
-                "color_navbar_text",
-                "color_button_bg",
-                "color_button_bg_hover",
-                "color_button_text",
-                "color_link_text",
-                "color_link_text_hover",
-            )
-            result = super().write(values)
-            if any([field in values for field in fields_to_check]):
+        result = super().write(values)
+        if not self.env.context.get("ignore_company_color"):
+            fields_to_check = ["company_colors"] + [
+                field_name
+                for field_name, field in self._fields.items()
+                if field.sparse == "company_colors"
+            ]
+            if any(field in values for field in fields_to_check):
                 self.scss_create_or_update_attachment()
-        else:
-            result = super().write(values)
         return result
+
+    def button_reset_colors(self):
+        self.write({"company_colors": {}})
+        # Reload like a regular save does, so the reset colors are applied
+        return {"type": "ir.actions.client", "tag": "reload_context"}
 
     def button_compute_color(self):
         self.ensure_one()
@@ -195,10 +184,11 @@ class ResCompany(models.Model):
                 {
                     "color_navbar_bg": n_rgb_to_hex(_r, _g, _b),
                     "color_navbar_bg_hover": n_rgb_to_hex(_rd, _gd, _bd),
+                    "color_navbar_border_bottom": n_rgb_to_hex(_rd, _gd, _bd),
                     "color_navbar_text": "#000" if _a < 0.5 else "#fff",
                 }
             )
-        self.write(values)
+        self.update(values)
 
     def _scss_get_sanitized_values(self):
         self.ensure_one()
@@ -206,10 +196,16 @@ class ResCompany(models.Model):
         # This allow extend company_colors and only sanitize selected fields
         # or add custom values
         values = dict(self.company_colors or {})
+        # The SCSS is compiled alone, so Odoo SCSS variables
+        # (like $o-brand-odoo) are not available: use literal colors.
+        navbar_bg = values.get("color_navbar_bg") or "#71639e"
         values.update(
             {
-                "color_navbar_bg": (values.get("color_navbar_bg") or "$o-brand-odoo"),
-                "color_navbar_bg_hover": (values.get("color_navbar_bg_hover")),
+                "color_navbar_bg": navbar_bg,
+                "color_navbar_bg_hover": values.get("color_navbar_bg_hover")
+                or f"darken({navbar_bg}, 10%)",
+                "color_navbar_border_bottom": values.get("color_navbar_border_bottom")
+                or f"darken({navbar_bg}, 10%)",
                 "color_navbar_text": (values.get("color_navbar_text") or "#FFF"),
                 "color_button_bg": values.get("color_button_bg") or "#71639e",
                 "color_button_bg_hover": values.get("color_button_bg_hover")
@@ -218,7 +214,7 @@ class ResCompany(models.Model):
                 "color_link_text": values.get("color_link_text") or "#71639e",
                 "color_link_text_hover": values.get("color_link_text_hover")
                 or "darken(#71639e, 10%)",
-                "color_submenu_text": values.get("color_link_text") or "#374151",
+                "color_submenu_text": values.get("color_submenu_text") or "#374151",
             }
         )
         return values
@@ -228,7 +224,7 @@ class ResCompany(models.Model):
         # ir.attachment need files with content to work
         if not self.company_colors:
             return "// No Web Company Color SCSS Content\n"
-        return self.SCSS_TEMPLATE % self._scss_get_sanitized_values()
+        return self._get_scss_template() % self._scss_get_sanitized_values()
 
     def scss_get_url(self):
         self.ensure_one()
@@ -237,8 +233,12 @@ class ResCompany(models.Model):
     def scss_create_or_update_attachment(self):
         IrAttachmentObj = self.env["ir.attachment"]
         for record in self:
-            datas = base64.b64encode(record._scss_generate_content().encode("utf-8"))
             custom_url = record.scss_get_url()
+            SCSS_asset = ScssStylesheetAsset(
+                "web_company_color.company_color_assets", url=custom_url
+            )
+            compiled_CSS = SCSS_asset.compile(record._scss_generate_content())
+            datas = base64.b64encode(compiled_CSS.encode("utf-8"))
             custom_attachment = IrAttachmentObj.sudo().search(
                 [("url", "=", custom_url), ("company_id", "=", record.id)]
             )
