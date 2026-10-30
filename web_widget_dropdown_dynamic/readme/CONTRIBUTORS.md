@@ -15,3 +15,7 @@
 - [Tecnativa](https://www.tecnativa.com):
   - Carlos Roca
 - `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`_
+
+- [Data Dance s.r.o.](https://www.datadance.eu/)
+
+  - Radovan Skolnik \<<radovan@skolnik.info>\>
