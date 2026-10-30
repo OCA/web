@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="filter_button.FilterButton">
+        <div class="o_cp_bottom_filter_buttons">
+            <!-- Odoo spaces out the grouped buttons, keep them joined -->
+            <div class="btn-group gap-0" role="group">
+                <button
+                    class="btn btn-outline-primary o_header_button_filters_reset"
+                    title="Clear filters"
+                    t-on-click.stop="() => this.onClickReset()"
+                >
+                    <i class="oi" data-icon="close" />
+                </button>
+                <t t-foreach="this.props.filters" t-as="filter" t-key="filter.id">
+                    <t t-set="options" t-value="this.getOptions(filter)" />
+                    <t t-set="color" t-value="this.getColor(filter)" />
+                    <!-- An empty string on the optional name shows only the icon -->
+                    <t
+                        t-set="name"
+                        t-value="options.name !== undefined ? options.name : filter.description"
+                    />
+                    <button
+                        t-attf-class="btn ms-0 border-start-0 o_header_button_filter {{filter.isActive ? `btn-${color}` : `btn-outline-${color}`}}"
+                        t-att-aria-pressed="filter.isActive ? 'true' : 'false'"
+                        t-att-data-hotkey="options.hotkey"
+                        t-att-data-name="filter.name"
+                        t-on-click.stop="() => this.onToggleFilter(filter)"
+                    >
+                        <i
+                            t-if="options.icon"
+                            class="oi"
+                            t-attf-class="{{options.iconClass || ''}} {{name !== '' ? 'me-1' : ''}}"
+                            t-att-data-icon="options.icon"
+                        />
+                        <t t-out="name" />
+                    </button>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

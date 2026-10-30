@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_control_panel_main')]" position="after">
+            <t
+                t-if="this.env.config.viewType and this.env.config.viewType !== 'form' and this.headerButtonFilters.length"
+            >
+                <Transition
+                    visible="this.headerButtonFiltersState.visible"
+                    name="'o-fade'"
+                    t-slot-scope="transition"
+                    leaveDuration="500"
+                >
+                    <div
+                        class="o_header_button_filters overflow-hidden d-flex flex-wrap w-100 align-items-center justify-content-center gap-2"
+                        t-att-class="transition.className"
+                    >
+                        <FilterButton filters="this.headerButtonFilters" />
+                    </div>
+                </Transition>
+            </t>
+        </xpath>
+        <xpath expr="//button[@name='embedded_actions']" position="after">
+            <button
+                t-if="this.headerButtonFilters.length"
+                class="btn btn-secondary"
+                t-att-class="{active: this.headerButtonFiltersState.visible}"
+                name="header_button_filters"
+                t-on-click="() => this.onClickToggleHeaderButtonFilters()"
+                title="Show filter buttons"
+            >
+                <i class="oi" data-icon="filter_alt" />
+            </button>
+        </xpath>
+    </t>
+</templates>
