@@ -1,0 +1,12 @@
+.o_searchview_facet {
+    // Override .text-primary which is plain $o-brand-primary
+    .o_searchview_facet_label {
+        color: #{saturate(lighten($o-brand-primary, 35%), 55%)} !important;
+    }
+
+    // default is ok, but too dark. Looks like inactive.
+    .o_facet_favorite {
+        background-color: mix($o-view-background-color, $o-main-favorite-color, 65%);
+        color: $o-main-favorite-color;
+    }
+}
