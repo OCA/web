@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<templates xml:space="preserve">
+    <t t-inherit="mail.Chatter" t-inherit-mode="extension">
+        <xpath expr="//div[@t-ref='root']" position="before">
+            <div
+                t-if="props.isChatterAside"
+                class="o_chatter_resize_handle position-absolute top-0 bottom-0 start-0"
+                role="separator"
+                aria-orientation="vertical"
+                title="Drag to resize the chatter, double-click to restore its width"
+                t-ref="resizeHandle"
+                t-on-pointerdown="onResizeHandlePointerDown"
+                t-on-dblclick="onResizeHandleDblClick"
+            />
+        </xpath>
+    </t>
+</templates>
