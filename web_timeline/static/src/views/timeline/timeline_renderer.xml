@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_timeline.TimelineRenderer">
+        <div class="oe_timeline_view" t-ref="this.rootRef">
+            <div class="oe_timeline_buttons">
+                <button
+                    t-att-class="'oe_timeline_button_today btn ' + (this.mode.data == 'today' ? ' btn-primary' : 'btn-default')"
+                    t-on-click="this._onTodayClicked"
+                >Today</button>
+                <div class="btn-group btn-sm">
+                    <button
+                        t-att-class="'oe_timeline_button_scale_day btn ' + (this.mode.data == 'day' ? ' btn-primary' : 'btn-default')"
+                        t-on-click="this._onScaleDayClicked"
+                    >Day</button>
+                    <button
+                        t-att-class="'oe_timeline_button_scale_week btn ' + (this.mode.data == 'week' ? ' btn-primary' : 'btn-default')"
+                        t-on-click="this._onScaleWeekClicked"
+                    >Week</button>
+                    <button
+                        t-att-class="'oe_timeline_button_scale_month btn ' + (this.mode.data == 'month' ? ' btn-primary' : 'btn-default')"
+                        t-on-click="this._onScaleMonthClicked"
+                    >Month</button>
+                    <button
+                        t-att-class="'oe_timeline_button_scale_year btn ' + (this.mode.data == 'year' ? ' btn-primary' : 'btn-default')"
+                        t-on-click="this._onScaleYearClicked"
+                    >Year</button>
+                </div>
+            </div>
+            <div class="oe_timeline_widget" t-ref="this.canvasRef" />
+        </div>
+    </t>
+    <svg t-name="TimelineView.Canvas" class="oe_timeline_view_canvas">
+        <defs>
+            <marker
+                id="arrowhead"
+                markerWidth="10"
+                markerHeight="7"
+                refX="10"
+                refY="3.5"
+                orient="auto"
+            >
+                <polygon points="10 0, 10 7, 0 3.5" />
+            </marker>
+        </defs>
+    </svg>
+</templates>
