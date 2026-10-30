@@ -7,17 +7,17 @@
             <filter name="installed" position="attributes">
                 <attribute
                     name="context"
-                >{'shown_in_panel': {'icon': 'fa-toggle-on', 'hotkey': 'i'}}</attribute>
+                >{'shown_in_panel': {'icon': 'toggle_on', 'hotkey': 'i'}}</attribute>
             </filter>
             <filter name="not_installed" position="attributes">
                 <attribute
                     name="context"
-                >{'shown_in_panel': {'icon': 'fa-toggle-off', 'hotkey': 'u'}}</attribute>
+                >{'shown_in_panel': {'icon': 'toggle_off', 'hotkey': 'u'}}</attribute>
             </filter>
             <filter name="state" position="attributes">
                 <attribute
                     name="context"
-                >{'group_by':'state', 'shown_in_panel': {'icon': 'fa-th-list', 'hotkey': 's'}}</attribute>
+                >{'group_by':'state', 'shown_in_panel': {'icon': 'format_list_bulleted', 'hotkey': 's'}}</attribute>
             </filter>
         </field>
     </record>

@@ -21,13 +21,13 @@ Filter Button
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/19.0/web_filter_header_button
+    :target: https://github.com/OCA/web/tree/20.0/web_filter_header_button
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-19-0/web-19-0-web_filter_header_button
+    :target: https://translation.odoo-community.org/projects/web-20-0/web-20-0-web_filter_header_button
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=19.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=20.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -67,23 +67,36 @@ that key:
 
 .. code:: python
 
-   {'shown_in_panel': {'icon': 'fa-thumbs-up', 'name': 'Ok'}}
+   {'shown_in_panel': {'icon': 'thumb_up', 'name': 'Ok'}}
+
+The icon is the name of an icon of the Odoo icon font (Material
+Symbols), the same value used in the ``data-icon`` attribute of the
+``oi`` icons (e.g.: ``thumb_up``, ``toggle_on``, ``business``...).
+
+Extra classes for the icon can be set with the ``iconClass`` property.
+For example, to show the filled variant of the icon:
+
+.. code:: python
+
+   {'shown_in_panel': {'icon': 'star', 'iconClass': 'oi-filled'}}
 
 You might be interested in leaving just the icon. In that case, set an
 empty string on the ``name`` property:
 
 .. code:: python
 
-   {'shown_in_panel': {'icon': 'fa-thumbs-up', 'name': ''}}
+   {'shown_in_panel': {'icon': 'thumb_up', 'name': ''}}
 
 You could also want to add a hotkey. In such case add the ``hotkey``
 property:
 
 .. code:: python
 
-   {'shown_in_panel': {'icon': 'fa-thumbs-up', 'hotkey': 'F'}}
+   {'shown_in_panel': {'icon': 'thumb_up', 'hotkey': 'F'}}
 
-You can show filter, groups or even favorites.
+You can show filters (date filters included), groups (by date as well)
+or even favorites. Date filters and date groups are applied with their
+default period or interval.
 
 Usage
 =====
@@ -113,7 +126,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_filter_header_button%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_filter_header_button%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -131,6 +144,7 @@ Contributors
 - `Tecnativa <https://tecnativa.com>`__
 
   - David Vidal
+  - Carlos Roca
 
 - `Heliconia Solutions Pvt. Ltd. <https://www.heliconia.io>`__
 
@@ -149,6 +163,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/19.0/web_filter_header_button>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/20.0/web_filter_header_button>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

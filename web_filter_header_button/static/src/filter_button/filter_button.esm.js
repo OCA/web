@@ -1,44 +1,56 @@
-import {Component} from "@odoo/owl";
+import {Component, t, useProps} from "@odoo/owl";
+
+const COLOR_BY_TYPE = {
+    favorite: "warning",
+    groupBy: "info",
+    dateGroupBy: "info",
+};
+// Not migrated Font Awesome icons (`fa-star`, `fa fa-star`...)
+const LEGACY_ICON_RE = /(^|\s)fa-/;
 
 export class FilterButton extends Component {
     static template = "filter_button.FilterButton";
-    static props = {
-        filters: {type: Object, optional: false},
-    };
+    props = useProps({
+        filters: t.array(t.object()),
+    });
+
     setup() {
         this.model = this.env.searchModel;
     }
+
     /**
-     * Return custom properties depending on the filter properties
-     *
      * @param {Object} filter
-     * @returns {Object}
+     * @returns {String} bootstrap color for the button
      */
-    mapFilterType(filter) {
-        const mapping = {
-            filter: {
-                color: "primary",
-            },
-            favorite: {
-                color: "warning",
-            },
-            groupBy: {
-                color: "info",
-            },
-        };
-        return mapping[filter.type];
+    getColor(filter) {
+        return COLOR_BY_TYPE[filter.type] || "primary";
     }
+
     /**
-     * Clear filters
+     * @param {Object} filter
+     * @returns {Object} button options set in the `shown_in_panel` context key
      */
+    getOptions(filter) {
+        const options = filter.context.shown_in_panel;
+        if (typeof options !== "object") {
+            return {};
+        }
+        // Font Awesome isn't available anymore, so the old `fa-*` and
+        // `fa fa-*` icons would be rendered as plain text.
+        if (LEGACY_ICON_RE.test(options.icon)) {
+            return {...options, icon: false};
+        }
+        return options;
+    }
+
     onClickReset() {
         this.model.clearQuery();
     }
+
     /**
-     * Set / unset filter
      * @param {Object} filter
      */
     onToggleFilter(filter) {
-        this.model.toggleSearchItem(filter.id);
+        this.model.toggleHeaderButtonFilter(filter.id);
     }
 }

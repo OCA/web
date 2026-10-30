@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Filter Button",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "summary": "Show selected filters as buttons in the control panel",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
@@ -15,5 +15,6 @@
     ],
     "assets": {
         "web.assets_backend": ["web_filter_header_button/static/src/**/*"],
+        "web.assets_tests": ["web_filter_header_button/static/tests/tours/*.esm.js"],
     },
 }

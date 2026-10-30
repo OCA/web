@@ -1,23 +1,29 @@
 import {SearchArchParser} from "@web/search/search_arch_parser";
-import {patch} from "@web/core/utils/patch";
 import {makeContext} from "@web/core/context";
+import {patch} from "@web/core/utils/patch";
 
 patch(SearchArchParser.prototype, {
     /**
-     * Allow groupBy filters to show up as buttons
+     * The core doesn't keep the context of groupBy filters. Keep it when it
+     * has the `shown_in_panel` key so they can be shown as buttons too.
+     *
      * @override
      */
     visitFilter(node) {
-        var context_to_keep = false;
+        let contextToKeep = false;
         if (node.hasAttribute("context")) {
             const context = makeContext([node.getAttribute("context")]);
             if (context.group_by && context.shown_in_panel) {
-                context_to_keep = context;
+                contextToKeep = context;
             }
         }
+        const lastItem = this.currentGroup.at(-1);
         super.visitFilter(...arguments);
-        if (context_to_keep) {
-            this.currentGroup.at(-1).context = context_to_keep;
+        // The core may start a new group before adding the item or discard the
+        // filter, so only patch the item when it has actually been added.
+        const newItem = this.currentGroup.at(-1);
+        if (contextToKeep && newItem && newItem !== lastItem) {
+            newItem.context = contextToKeep;
         }
     },
 });
