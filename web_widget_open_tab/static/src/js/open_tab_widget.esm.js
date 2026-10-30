@@ -6,6 +6,8 @@ import {standardFieldProps} from "@web/views/fields/standard_field_props";
 export class OpenTabWidget extends Component {
     openNewTab(ev) {
         ev.stopPropagation();
+        ev.preventDefault();
+        window.open(this._getReference(), "_blank");
     }
     _getReference() {
         return `/odoo/${this.props.record.resModel}/${this.props.record.data.id}`;
