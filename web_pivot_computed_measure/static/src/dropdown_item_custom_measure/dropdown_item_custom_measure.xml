@@ -51,7 +51,7 @@
                             <label for="computed_measure_field_1">Measure 1</label>
                         </div>
                         <div class="d-table-cell">
-                            <select class="o_input" id="computed_measure_field_1">
+                            <select id="computed_measure_field_1" class="o_input">
                                 <t
                                     t-foreach="props.measures"
                                     t-as="measure"
@@ -72,7 +72,7 @@
                             <label for="computed_measure_field_2">Measure 2</label>
                         </div>
                         <div class="d-table-cell">
-                            <select class="o_input" id="computed_measure_field_2">
+                            <select id="computed_measure_field_2" class="o_input">
                                 <t
                                     t-foreach="props.measures"
                                     t-as="measure"
@@ -93,7 +93,7 @@
                             <label for="computed_measure_operation">Operation</label>
                         </div>
                         <div class="d-table-cell">
-                            <select class="o_input" id="computed_measure_operation">
+                            <select id="computed_measure_operation" class="o_input">
                                 <t
                                     t-call="web_pivot_computed_measure.ComputedMeasureOperations"
                                 />
@@ -102,8 +102,8 @@
                     </div>
                     <div
                         t-if="debug"
-                        class="d-none"
                         id="container_computed_measure_operation_custom"
+                        class="d-none"
                     >
                         <div class="d-table-cell">
                             <label
@@ -112,9 +112,9 @@
                         </div>
                         <div class="d-table-cell">
                             <input
-                                type="text"
-                                class="o_input"
                                 id="computed_measure_operation_custom"
+                                class="o_input"
+                                type="text"
                             />
                         </div>
                     </div>
@@ -124,10 +124,10 @@
                         </div>
                         <div class="d-table-cell">
                             <input
+                                id="computed_measure_name"
+                                class="o_input"
                                 placeholder="Can be empty"
                                 type="text"
-                                class="o_input"
-                                id="computed_measure_name"
                             />
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                             <label for="computed_measure_format">Format</label>
                         </div>
                         <div class="d-table-cell">
-                            <select class="o_input" id="computed_measure_format">
+                            <select id="computed_measure_format" class="o_input">
                                 <t
                                     t-call="web_pivot_computed_measure.ComputedMeasureFormats"
                                 />
