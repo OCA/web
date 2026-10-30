@@ -16,10 +16,10 @@
             "web_dark_mode/static/src/js/switch_item.esm.js",
         ],
         "web.assets_backend_lazy_dark": [
-            ("include", "web.assets_variables_dark"),
+            ("include", "web.dark_mode_variables"),
             ("include", "web.assets_backend_helpers_dark"),
         ],
-        "web.assets_variables_dark": [
+        "web.dark_mode_variables": [
             (
                 "before",
                 "web/static/src/scss/primary_variables.scss",
@@ -49,7 +49,8 @@
             ),
         ],
         "web.assets_web_dark": [
-            ("include", "web.assets_variables_dark"),
+            ("include", "web.dark_mode_variables"),
+            ("include", "web.dark_mode_assets_backend"),
             ("include", "web.assets_backend_helpers_dark"),
             "web_dark_mode/static/src/**/*.dark.scss",
         ],
