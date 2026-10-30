@@ -62,13 +62,31 @@ export const unpatchControlPanel = patch(ControlPanel.prototype, {
         const activeAnimation = scrollTop > this.initialScrollTop;
 
         rootEl.classList.toggle(STICKY_CLASS, activeAnimation);
+        this.updateStickyOffset();
         this.scrollValueCollector.collect(scrollTop - this.oldScrollTop, (min, max) => {
             const delta = min + max;
             if (delta < -this.scrollHeaderGap || delta > this.scrollHeaderGap) {
                 rootEl.style.top = `${delta < 0 ? -rootEl.clientHeight : 0}px`;
+                this.updateStickyOffset();
             }
         });
 
         this.oldScrollTop = scrollTop;
+    },
+    /**
+     * Expose the visible height of the sticky control panel, so other sticky
+     * elements (e.g. the search panel bar on mobile) can be placed below it.
+     */
+    updateStickyOffset() {
+        const rootEl = this.root.el;
+        if (!rootEl) {
+            return;
+        }
+        const top = parseInt(rootEl.style.top, 10) || 0;
+        const offset = Math.max(0, rootEl.clientHeight + top);
+        this.getScrollingElement().style.setProperty(
+            "--ControlPanel-sticky-offset",
+            `${offset}px`
+        );
     },
 });
