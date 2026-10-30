@@ -3,291 +3,253 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
 import {PivotModel} from "@web/views/pivot/pivot_model";
-import {computeReportMeasures} from "@web/views/utils";
+import {_t} from "@web/core/l10n/translation";
 import {evalOperation} from "../helpers/utils.esm";
 import {patch} from "@web/core/utils/patch";
 
+export const COMPUTED_PREFIX = "__computed_";
+
+PivotModel.services = [...new Set([...PivotModel.services, "notification"])];
+
 patch(PivotModel.prototype, {
     /**
-     * Add _computed_measures to avoid recompute them until page is recharged
+     * Keep the computed measures definitions on the model.
      *
      * @override
      */
-    setup() {
+    setup(params, services) {
         super.setup(...arguments);
+        this.notification = services.notification;
         this._computed_measures = [];
     },
 
+    // --------------------------------------------------------------------------
+    // Public
+    // --------------------------------------------------------------------------
+
     /**
-     * Create a new computed measure
+     * Create a new computed measure and enable it.
      *
-     * @param {String} id
+     * @param {String|Number} id
      * @param {String} field1
      * @param {String} field2
-     * @param {String} operation
+     * @param {String} operation formula using m1 and m2 as operands
      * @param {String} name
      * @param {String} format
-     * @returns a promise
+     * @returns {Promise}
      */
     addComputedMeasure(id, field1, field2, operation, name, format) {
-        const measure = this._computed_measures.find((item) => {
-            return (
+        const oper = operation.replace(/m1/g, field1).replace(/m2/g, field2);
+        const exists = this._computed_measures.some(
+            (item) =>
                 item.field1 === field1 &&
                 item.field2 === field2 &&
-                item.operation === operation
-            );
-        });
-        if (measure) {
+                item.operation === oper &&
+                item.format === format
+        );
+        if (exists) {
             return Promise.resolve();
         }
-        const fieldM1 = this.metaData.fields[field1];
-        const fieldM2 = this.metaData.fields[field2];
-        const cmId = "__computed_" + id;
-        const oper = operation.replace(/m1/g, field1).replace(/m2/g, field2);
-        const oper_human = operation
-            .replace(
-                /m1/g,
-                fieldM1.__computed_id ? "(" + fieldM1.string + ")" : fieldM1.string
-            )
-            .replace(
-                /m2/g,
-                fieldM2.__computed_id ? "(" + fieldM2.string + ")" : fieldM2.string
-            );
-        const cmTotal = this._computed_measures.push({
-            field1: field1,
-            field2: field2,
+        const fields = this.metaData.fields;
+        const humanName = (fieldName) => {
+            const field = fields[fieldName];
+            return field.__computed_id ? `(${field.string})` : field.string;
+        };
+        const operHuman = operation
+            .replace(/m1/g, humanName(field1))
+            .replace(/m2/g, humanName(field2));
+        const cmDef = {
+            field1,
+            field2,
             operation: oper,
-            name: name || oper_human,
-            id: cmId,
-            format: format,
-        });
-        return this._createVirtualMeasure(this._computed_measures[cmTotal - 1]);
-    },
-
-    /**
-     * Create and enable a measure based on a 'fake' field
-     *
-     * @private
-     * @param {Object} cmDef
-     * @param {List} fields *Optional*
-     * @returns a promise
-     */
-    _createVirtualMeasure(cmDef, fields) {
-        this._createVirtualField(cmDef, fields);
-        // Activate computed field
+            name: name || operHuman,
+            id: COMPUTED_PREFIX + id,
+            format,
+        };
+        this._computed_measures.push(cmDef);
+        this._createVirtualField(cmDef, this.metaData);
         return this.toggleMeasure(cmDef.id);
     },
-    _createVirtualField(cmDef, fields, config) {
-        const arrFields = fields || this.metaData.fields;
-        // This is a minimal 'fake' field info
-        arrFields[cmDef.id] = {
-            // Used to format the value
-            type: cmDef.format,
-            // Used to print the header name
-            string: cmDef.name,
-            // Referenced on payload prop at DropdownItem, used to interact with
-            // created measures
-            name: cmDef.id,
-            // Used to know if is a computed measure field
-            __computed_id: cmDef.id,
-            // Operator used for group the measure added.
-            aggregator: "sum",
-        };
-        const metaData = (config && config.metaData) || this.metaData;
-        metaData.measures[cmDef.id] = arrFields[cmDef.id];
-    },
-    /**
-     * Active the measures related to the 'fake' field
-     *
-     * @private
-     * @param {List of Strings} fields
-     */
-    async _activeMeasures(fields) {
-        let needLoad = false;
-        for (const field of fields) {
-            if (await !this._isMeasureEnabled(field)) {
-                this.metaData.activeMeasures.push(field);
-                needLoad = true;
-            }
-        }
-        if (needLoad) {
-            const config = {metaData: this.metaData, data: this.data};
-
-            return this._loadData(config).then(() => {
-                // Notify changes to renderer for show it on the pivot view
-                this.notify();
-            });
-        }
-        return Promise.resolve();
-    },
 
     /**
-     * Check if the measure is enabled
-     *
-     * @private
-     * @param {String} field
-     */
-    _isMeasureEnabled(field, config) {
-        const activeMeasures =
-            (config && config.metaData.activeMeasures) ||
-            this.metaData.activeMeasures ||
-            [];
-        return activeMeasures.includes(field);
-    },
-
-    /**
-     * Helper function to add computed measure fields data into a 'subGroupData'
-     *
-     * @private
-     * @param {Object} subGroupData
-     */
-    _fillComputedMeasuresData(subGroupData, config) {
-        for (const cm of this._computed_measures) {
-            if (!this._isMeasureEnabled(cm.id, config)) continue;
-            if (subGroupData.__count === 0) {
-                subGroupData[cm.id] = false;
-            } else {
-                subGroupData[cm.id] = evalOperation(cm.operation, subGroupData);
-            }
-        }
-    },
-
-    /**
-     * Fill the groupSubdivisions with the computed measures and their values
+     * Deny to disable measures used by an enabled computed measure. When a
+     * computed measure is enabled, also enable all the measures it depends on.
      *
      * @override
      */
-    _prepareData(group, groupSubdivisions, config) {
-        for (const groupSubdivision of groupSubdivisions) {
-            for (const subGroup of groupSubdivision.subGroups) {
-                this._fillComputedMeasuresData(subGroup, config);
+    async toggleMeasure(fieldName) {
+        const activeMeasures = this.nextActiveMeasures || this.metaData.activeMeasures;
+        if (activeMeasures.includes(fieldName)) {
+            const usedBy = this._computed_measures.find(
+                (cm) =>
+                    (cm.field1 === fieldName || cm.field2 === fieldName) &&
+                    activeMeasures.includes(cm.id)
+            );
+            if (usedBy) {
+                this.notification.add(
+                    _t(
+                        "This measure is currently used by a 'computed measure'. Please, disable the computed measure first."
+                    ),
+                    {type: "warning"}
+                );
+                return;
             }
+            return super.toggleMeasure(...arguments);
         }
-        super._prepareData(...arguments);
+        const toEnable = this._getComputedMeasureDependencies(fieldName).filter(
+            (measure) => !activeMeasures.includes(measure)
+        );
+        if (toEnable.length) {
+            // Enable the dependencies in the same load as the computed measure
+            this.nextActiveMeasures = [...activeMeasures, ...toEnable];
+        }
+        return super.toggleMeasure(...arguments);
+    },
+
+    // --------------------------------------------------------------------------
+    // Protected
+    // --------------------------------------------------------------------------
+
+    /**
+     * @param {String} fieldName
+     * @returns {Boolean}
+     */
+    _isComputedMeasure(fieldName) {
+        return typeof fieldName === "string" && fieldName.startsWith(COMPUTED_PREFIX);
     },
 
     /**
-     * _getGroupSubdivision method invokes the read_group method of the
-     * model via rpc and the passed 'fields' argument is the list of
-     * measure names that is in this.metaData.activeMeasures, so we remove the
-     * computed measures form this.metaData.activeMeasures before calling _super
-     * to prevent any possible exception.
+     * Return all the measures (computed or not) needed to compute the given
+     * measure, ordered so that dependencies come first.
      *
-     * @override
+     * @param {String} fieldName
+     * @returns {String[]}
      */
-    async _getGroupSubdivision(group, rowGroupBy, colGroupBy, config) {
-        const computed_measures = [];
-        for (let i = 0; i < config.measureSpecs.length; i++)
-            if (config.measureSpecs[i].startsWith("__computed_")) {
-                computed_measures.push(config.measureSpecs[i]);
-                config.measureSpecs.splice(i, 1);
-                i--;
+    _getComputedMeasureDependencies(fieldName) {
+        const cm = this._computed_measures.find((item) => item.id === fieldName);
+        if (!cm) {
+            return [];
+        }
+        const res = [];
+        for (const dep of [cm.field1, cm.field2]) {
+            for (const measure of [...this._getComputedMeasureDependencies(dep), dep]) {
+                if (!res.includes(measure)) {
+                    res.push(measure);
+                }
             }
-        const res = await super._getGroupSubdivision(...arguments);
-        Object.assign(config.measureSpecs, computed_measures);
+        }
         return res;
     },
 
     /**
-     * Adds a rule to deny that measures can be disabled if are being used by a computed measure.
-     * In the other hand, when enables a measure analyzes it to active all involved measures.
+     * Create a minimal 'fake' field for the computed measure.
+     *
+     * @param {Object} cmDef
+     * @param {Object} metaData
+     */
+    _createVirtualField(cmDef, metaData) {
+        const field = {
+            // Used to format the value
+            type: cmDef.format,
+            // Used to print the header name
+            string: cmDef.name,
+            name: cmDef.id,
+            // Used to know if is a computed measure field
+            __computed_id: cmDef.id,
+            // Needed by the pivot model to build the measure specs
+            aggregator: "sum",
+        };
+        metaData.fields[cmDef.id] = field;
+        if (metaData.measures) {
+            metaData.measures[cmDef.id] = field;
+        }
+    },
+
+    /**
+     * Computed measures are not real fields, so they can't be requested to
+     * the server.
      *
      * @override
      */
-    toggleMeasure(fieldName) {
-        if (this._isMeasureEnabled(fieldName)) {
-            // Mesaure is enabled
-            const umeasures = this._computed_measures.filter((item) => {
-                return item.field1 === fieldName || item.field2 === fieldName;
-            });
-            if (umeasures.length && this._isMeasureEnabled(umeasures[0].id)) {
-                return Promise.reject(
-                    this.env._t(
-                        "This measure is currently used by a 'computed measure'. Please, disable the computed measure first."
-                    )
-                );
-            }
-        } else {
-            // Measure is disabled
-            const toEnable = [];
-            const toAnalyze = [fieldName];
-            while (toAnalyze.length) {
-                // Analyze all items involved on computed measures to enable them
-                const afield = toAnalyze.shift();
-                const fieldDef = this.metaData.fields[afield];
-                // Need to check if fieldDef exists to avoid problems with __count
-                if (fieldDef?.__computed_id) {
-                    const cm = this._computed_measures.find((item) => {
-                        return item.id === fieldDef.__computed_id;
-                    });
-                    toAnalyze.push(cm.field1, cm.field2);
-                    const toEnableFields = [];
-                    if (!this.metaData.fields[cm.field1].__computed_id) {
-                        toEnableFields.push(cm.field1);
-                    }
-                    if (!this.metaData.fields[cm.field2].__computed_id) {
-                        toEnableFields.push(cm.field2);
-                    }
-                    toEnableFields.push(afield);
-                    toEnable.push(toEnableFields);
-                }
-            }
-            if (toEnable.length) {
-                this._activeMeasures(
-                    // Transform the array of arrays to a simple array.
-                    // [1, [2, 3]] => [1, 2, 3]
-                    toEnable.reverse().flat(Infinity)
-                );
-            }
+    _getMeasureSpecs(config) {
+        const activeMeasures = config.metaData.activeMeasures;
+        if (!activeMeasures.some((m) => this._isComputedMeasure(m))) {
+            return super._getMeasureSpecs(...arguments);
         }
-        return super.toggleMeasure(...arguments);
+        const metaData = Object.assign({}, config.metaData, {
+            activeMeasures: activeMeasures.filter((m) => !this._isComputedMeasure(m)),
+        });
+        return super._getMeasureSpecs({...config, metaData});
     },
+
     /**
-     * Load the measures added to selected favorite filters
+     * Add the values of the enabled computed measures.
+     *
+     * @override
+     */
+    _getMeasurements(group, config) {
+        const measurements = super._getMeasurements(...arguments);
+        const activeMeasures = config.metaData.activeMeasures;
+        // Computed measures are evaluated in creation order, so a computed
+        // measure can use the values of the previous ones.
+        for (const cm of this._computed_measures) {
+            if (!activeMeasures.includes(cm.id)) {
+                continue;
+            }
+            measurements[cm.id] = group.__count
+                ? evalOperation(cm.operation, measurements)
+                : false;
+        }
+        return measurements;
+    },
+
+    /**
+     * Ensure all computed measures are available in the measures list, even
+     * when they are disabled.
+     *
+     * @override
+     */
+    _loadData(config) {
+        for (const cmDef of this._computed_measures) {
+            this._createVirtualField(cmDef, config.metaData);
+        }
+        return super._loadData(...arguments);
+    },
+
+    /**
+     * Load the computed measures saved in favorites and remove the virtual
+     * fields of the computed measures that don't exist anymore.
      *
      * @override
      */
     async load(searchParams) {
-        var _super = super.load.bind(this);
-        var config = {metaData: this.metaData, data: this.data};
-        if (!this.metaData.measures) {
-            const metaData = this._buildMetaData();
-            metaData.measures = computeReportMeasures(
-                metaData.fields,
-                metaData.fieldAttrs,
-                metaData.activeMeasures,
-                metaData.additionalMeasures
-            );
-            config = {metaData, data: this.data};
+        const context = searchParams.context || {};
+        if ("pivot_computed_measures" in context) {
+            this._computed_measures = [...(context.pivot_computed_measures || [])];
         }
-        if ("context" in searchParams) {
-            this._computed_measures =
-                searchParams.context.pivot_computed_measures ||
-                searchParams.computed_measures ||
-                [];
+        const cmIds = this._computed_measures.map((cm) => cm.id);
+        const fields = this.metaData.fields;
+        for (const fieldName of Object.keys(fields)) {
+            if (fields[fieldName].__computed_id && !cmIds.includes(fieldName)) {
+                delete fields[fieldName];
+                delete this.metaData.measures?.[fieldName];
+            }
+        }
+        const isValid = (m) => !this._isComputedMeasure(m) || cmIds.includes(m);
+        this.metaData.activeMeasures = this.metaData.activeMeasures.filter(isValid);
+        let params = searchParams;
+        if (Array.isArray(context.pivot_measures)) {
+            params = {
+                ...searchParams,
+                context: {
+                    ...context,
+                    pivot_measures: context.pivot_measures.filter(isValid),
+                },
+            };
         }
         for (const cmDef of this._computed_measures) {
-            if (this._isMeasureEnabled(cmDef.id, config)) {
-                continue;
-            }
-            await this._createVirtualField(cmDef, undefined, config);
+            this._createVirtualField(cmDef, this.metaData);
         }
-        const fieldNames = Object.keys(this.metaData.fields);
-        for (const fieldName of fieldNames) {
-            const field = this.metaData.fields[fieldName];
-            if (field?.__computed_id) {
-                const cm = this._computed_measures.find(
-                    (item) => item.id === field.__computed_id
-                );
-                if (!cm) {
-                    delete this.metaData.fields[fieldName];
-                    delete this.metaData.measures[fieldName];
-                    this.metaData.activeMeasures = this.metaData.activeMeasures.filter(
-                        (item) => item !== fieldName
-                    );
-                }
-            }
-        }
-        return _super(...arguments);
+        return super.load(params);
     },
 });

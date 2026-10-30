@@ -4,75 +4,73 @@
 import {registry} from "@web/core/registry";
 
 registry.category("web_tour.tours").add("web_pivot_computed_measure_tour", {
-    url: "/odoo",
-    test: true,
     steps: () => [
         {
-            trigger: ".o_navbar_apps_menu button",
+            content: "Wait for the pivot table to be loaded",
+            trigger: ".o_pivot table th:contains('Pivot Computed A')",
+        },
+        {
+            content: "Open the measures dropdown",
+            trigger: ".o_pivot_buttons button.o_report_measures",
             run: "click",
         },
         {
-            trigger:
-                '.o_app[data-menu-xmlid="web_pivot_computed_measure.demo_menu_res_partner_report_pivot"]:visible',
-            run: "click",
-        },
-        {
-            trigger: '.o_pivot_buttons div[aria-label="Main actions"] button',
-            run: "click",
-        },
-        {
-            trigger: 'div[data-id="__computed__"] a',
+            content: "Open the computed measure form",
+            trigger: ".o_computed_measure_toggle",
             run: "click",
         },
         {
             trigger: "select#computed_measure_field_1",
-            run() {
-                this.anchor.value = "partner_latitude";
-            },
+            run: "select partner_latitude",
         },
         {
             trigger: "select#computed_measure_field_2",
-            run() {
-                this.anchor.value = "partner_longitude";
-            },
+            run: "select partner_longitude",
         },
         {
             trigger: "select#computed_measure_operation",
-            run() {
-                this.anchor.value = "m1+m2";
-            },
+            run: "select m1+m2",
+        },
+        {
+            trigger: "input#computed_measure_name",
+            run: "edit Geo Sum",
         },
         {
             trigger: "select#computed_measure_format",
-            run() {
-                this.anchor.value = "float";
-            },
+            run: "select float",
         },
         {
+            content: "Add the computed measure",
             trigger: "button.o_add_computed_measure",
             run: "click",
         },
         {
-            trigger: '.o_pivot_buttons div[aria-label="Main actions"] button',
-            run: "click",
+            content: "The computed measure is listed and enabled in the dropdown",
+            trigger: ".o_computed_measure.selected:contains('Geo Sum')",
         },
         {
-            trigger: 'th.o_pivot_measure_row:contains("Geo Latitude")',
+            content: "The measures used by the computed measure are enabled",
+            trigger: "th.o_pivot_measure_row:contains('Latitude')",
         },
         {
-            trigger: 'th.o_pivot_measure_row:contains("Geo Longitude")',
+            trigger: "th.o_pivot_measure_row:contains('Longitude')",
         },
         {
-            trigger: 'th.o_pivot_measure_row:contains("Geo Latitude+Geo Longitude")',
+            trigger: "th.o_pivot_measure_row:contains('Geo Sum')",
         },
         {
-            trigger: 'div.o_value:contains("40.7127760")',
+            content: "Computed value for partner A (11.11 + 22.22)",
+            trigger:
+                "tr:has(th:contains('Pivot Computed A')) div.o_value:contains('33.33')",
         },
         {
-            trigger: 'div.o_value:contains("-74.0059740")',
+            content: "Computed value for partner B (44.44 + 1.01)",
+            trigger:
+                "tr:has(th:contains('Pivot Computed B')) div.o_value:contains('45.45')",
         },
         {
-            trigger: 'div.o_value:contains("-33.29")',
+            content: "Computed value for the total (55.55 + 23.23)",
+            trigger: "div.o_value:contains('78.78')",
         },
     ],
 });

@@ -3,7 +3,6 @@
     <record id="pivot_partner_demo" model="res.partner">
         <field name="name">Pivot Demo</field>
         <field name="company_id" ref="base.main_company" />
-        <field name="company_name">YourCompany</field>
         <field name="street">3575  Buena Vista Avenue</field>
         <field name="city">Eugene</field>
         <field name="state_id" model="res.country.state" search="[('code','=','OR')]" />

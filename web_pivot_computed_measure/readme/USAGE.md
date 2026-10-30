@@ -23,7 +23,8 @@ You have the follow options to create a 'computed measure':
   - Percentage (value \* 100)
 
 - Formula\*: Custom operation formula  
-  These formula is evaluated using 'PY.eval'
+  Formula that can use 'm1', 'm2', numbers, parentheses and the
+  operators +, -, \* and /.
 
 These computed measures can be mixed (You can reuse it to make new
 computed measures) and saved as favorites.

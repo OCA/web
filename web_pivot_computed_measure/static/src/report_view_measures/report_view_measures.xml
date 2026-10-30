@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
-  <t t-inherit="web.ReportViewMeasures" t-inherit-mode="extension">
+    <t
+        t-name="web_pivot_computed_measure.ReportViewComputedMeasures"
+        t-inherit="web.ReportViewMeasures"
+        t-inherit-mode="primary"
+    >
         <xpath expr="//DropdownItem" position="attributes">
-            <attribute name="t-if">!measure.startsWith('__computed_')</attribute>
+            <attribute name="t-if">!this.isComputedMeasure(measure)</attribute>
         </xpath>
-        <xpath expr="//t[@t-foreach='props.measures']" position="after">
-            <div
-                t-if="props.add_computed_measures"
-                class="dropdown-divider"
-                role="separator"
-            />
-            <t t-foreach="props.measures" t-as="measure" t-key="measure_value.name">
+        <xpath expr="//t[@t-foreach='this.props.measures']" position="after">
+            <div class="dropdown-divider" role="separator" />
+            <t t-foreach="this.computedMeasures" t-as="measure" t-key="measure">
                 <DropdownItem
-                    t-if="props.add_computed_measures and measure.startsWith('__computed_')"
-                    class="{ o_menu_item: true, selected: props.activeMeasures.includes(measure) }"
-                    t-esc="props.measures[measure].string"
+                    class="{ o_menu_item: true, o_computed_measure: true, selected: this.props.activeMeasures.includes(measure) }"
                     closingMode="'none'"
-                    onSelected="() => this.props.onMeasureSelected({ measure: measure_value.name })"
+                    t-out="this.props.measures[measure].string"
+                    onSelected="() => this.props.onMeasureSelected({ measure: measure })"
                 />
             </t>
             <DropdownItemCustomMeasure
-                measures="props.measures"
-                model="props.model"
-                t-if="props.add_computed_measures"
+                measures="this.props.measures"
+                model="this.props.model"
             />
         </xpath>
     </t>
