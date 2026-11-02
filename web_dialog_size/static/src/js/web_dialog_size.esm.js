@@ -10,10 +10,26 @@ import {useSubEnv} from "@web/owl2/utils";
 const STORAGE_KEY = "odoo.web_dialog_size.value";
 const LAST_SERVER_KEY = "odoo.web_dialog_size.last_server_value";
 
-function triggerWindowResize() {
-    requestAnimationFrame(() => {
-        window.dispatchEvent(new Event("resize"));
-    });
+/**
+ * Resizing a list column by hand fixes the width of the table and its parent in
+ * pixels, so the list no longer follows the dialog width. Unset them to let the
+ * list fit its columns to the new dialog size.
+ *
+ * A window resize event would do it too, but it also closes every component
+ * listening to it, such as the analytic distribution widget, and with it the
+ * "Search More..." dialog it opened.
+ *
+ * @param {HTMLElement} el element inside the dialog
+ */
+function resetListColumnWidths(el) {
+    const dialog = el.closest(".modal-content");
+    if (!dialog) {
+        return;
+    }
+    for (const table of dialog.querySelectorAll(".o_list_table")) {
+        table.style.width = "";
+        table.parentElement.style.width = "";
+    }
 }
 
 export class ExpandButton extends Component {
@@ -24,11 +40,11 @@ export class ExpandButton extends Component {
         return this.env.webDialogSize.maximized();
     }
 
-    toggle() {
+    toggle(ev) {
+        resetListColumnWidths(ev.currentTarget);
         const maximized = !this.maximized;
         this.env.webDialogSize.maximized.set(maximized);
         browser.localStorage.setItem(STORAGE_KEY, String(maximized));
-        triggerWindowResize();
     }
 }
 
