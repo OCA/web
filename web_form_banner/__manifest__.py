@@ -3,7 +3,7 @@
 {
     "name": "Web Form Banner",
     "summary": "Show configurable, rule-based alert banners on backend form views",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "category": "Web",
     "author": "Quartile, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",

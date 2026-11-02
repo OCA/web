@@ -27,16 +27,16 @@ addon | version | maintainers | summary
 [web_company_context_highlight](web_company_context_highlight/) | 19.0.1.0.0 | <a href='https://github.com/pverkest'><img src='https://github.com/pverkest.png' width='32' height='32' style='border-radius:50%;' alt='pverkest'/></a> | Highlight the company switcher when multiple companies are selected
 [web_dark_mode](web_dark_mode/) | 19.0.1.0.0 |  | Enabled Dark Mode for the Odoo Backend
 [web_date_format_numeric](web_date_format_numeric/) | 19.0.1.0.0 |  | Display all date/datetime fields in numeric format
-[web_dialog_size](web_dialog_size/) | 19.0.1.0.2 |  | A module that lets the user expand a dialog box to the full screen width.
+[web_dialog_size](web_dialog_size/) | 19.0.1.0.3 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_editor_class_selector](web_editor_class_selector/) | 19.0.1.0.0 | <a href='https://github.com/carlos-lopez-tecnativa'><img src='https://github.com/carlos-lopez-tecnativa.png' width='32' height='32' style='border-radius:50%;' alt='carlos-lopez-tecnativa'/></a> | Web editor class selector
 [web_environment_ribbon](web_environment_ribbon/) | 19.0.1.0.0 |  | Web Environment Ribbon
 [web_favicon](web_favicon/) | 19.0.1.0.1 |  | Allows to set a custom shortcut icon (aka favicon)
 [web_filter_header_button](web_filter_header_button/) | 19.0.1.0.0 |  | Show selected filters as buttons in the control panel
-[web_form_banner](web_form_banner/) | 19.0.1.0.0 | <a href='https://github.com/yostashiro'><img src='https://github.com/yostashiro.png' width='32' height='32' style='border-radius:50%;' alt='yostashiro'/></a> <a href='https://github.com/aungkokolin1997'><img src='https://github.com/aungkokolin1997.png' width='32' height='32' style='border-radius:50%;' alt='aungkokolin1997'/></a> | Show configurable, rule-based alert banners on backend form views
+[web_form_banner](web_form_banner/) | 19.0.1.0.1 | <a href='https://github.com/yostashiro'><img src='https://github.com/yostashiro.png' width='32' height='32' style='border-radius:50%;' alt='yostashiro'/></a> <a href='https://github.com/aungkokolin1997'><img src='https://github.com/aungkokolin1997.png' width='32' height='32' style='border-radius:50%;' alt='aungkokolin1997'/></a> | Show configurable, rule-based alert banners on backend form views
 [web_group_expand](web_group_expand/) | 19.0.1.0.0 |  | Group Expand Buttons
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 19.0.1.0.0 |  | Enables triggering of more than one action on ActionManager
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 19.0.1.0.0 | <a href='https://github.com/hbrunn'><img src='https://github.com/hbrunn.png' width='32' height='32' style='border-radius:50%;' alt='hbrunn'/></a> | Show a message box to users
-[web_m2x_options](web_m2x_options/) | 19.0.1.0.1 |  | web_m2x_options
+[web_m2x_options](web_m2x_options/) | 19.0.1.0.2 |  | web_m2x_options
 [web_m2x_options_manager](web_m2x_options_manager/) | 19.0.1.0.0 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
 [web_no_bubble](web_no_bubble/) | 19.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 19.0.1.0.1 |  | Send notification messages to user
