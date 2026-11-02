@@ -1,5 +1,6 @@
 import * as many2OneField from "@web/views/fields/many2one/many2one_field";
 import * as many2one from "@web/views/fields/many2one/many2one";
+import {Field} from "@web/views/fields/field";
 import {FormController} from "@web/views/form/form_controller";
 import {KanbanMany2One, Many2One} from "@web/views/fields/many2one/many2one";
 import {Many2OneReferenceField} from "@web/views/fields/many2one_reference/many2one_reference_field";
@@ -145,26 +146,38 @@ patch(many2OneField.Many2OneField.prototype, {
     },
 });
 
-patch(Many2One.prototype, {
-    // Enforce the create/create_edit/open system parameters here, on the shared
-    // Many2One component, rather than only in the many2one field's extractProps.
+const M2O_SYSTEM_PARAMETER_PROPS = [
+    ["create", "canQuickCreate", "no_quick_create"],
+    ["create_edit", "canCreateEdit", "no_create_edit"],
+    ["open", "canOpen", "no_open"],
+];
+
+patch(Field.prototype, {
+    // Enforce the create/create_edit/open system parameters on every many2one
+    // widget, rather than only in the many2one field's extractProps.
     // Specialized widgets (e.g. sol_product_many2one on sale/purchase order lines)
-    // define their own extractProps and never call m2o_options_props, so a
-    // field-level override does not reach them. They all render this component,
-    // so gating it here covers every many2one.
-    get activeActions() {
-        const actions = super.activeActions;
-        if (!evaluateSystemParameterDefaultTrue("create_edit")) {
-            actions.createEdit = false;
+    // define their own extractProps and never call m2o_options_props. The field
+    // options are checked so that a field-level override still wins.
+    get fieldComponentProps() {
+        const props = super.fieldComponentProps;
+        if (this.props.record.fields[this.props.name].type !== "many2one") {
+            return props;
         }
-        return actions;
-    },
-    get hasLinkButton() {
-        if (!evaluateSystemParameterDefaultTrue("open")) {
-            return false;
+        const options = this.props.fieldInfo?.options || {};
+        for (const [parameter, prop, option] of M2O_SYSTEM_PARAMETER_PROPS) {
+            if (
+                prop in props &&
+                !(option in options) &&
+                !evaluateSystemParameterDefaultTrue(parameter)
+            ) {
+                props[prop] = false;
+            }
         }
-        return super.hasLinkButton;
+        return props;
     },
+});
+
+patch(Many2One.prototype, {
     get many2XAutocompleteProps() {
         let search_limit = 0;
         if (this.props.searchLimit) {
@@ -182,9 +195,6 @@ patch(Many2One.prototype, {
         if (field_color && field_color_options) {
             ret_props.fieldColor = field_color;
             ret_props.fieldColorOptions = field_color_options;
-        }
-        if (!evaluateSystemParameterDefaultTrue("create")) {
-            ret_props.quickCreate = null;
         }
         return ret_props;
     },
