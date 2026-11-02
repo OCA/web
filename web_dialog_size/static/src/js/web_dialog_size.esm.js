@@ -55,27 +55,31 @@ patch(Dialog.prototype, {
         }
 
         const orm = useService("orm");
-        orm.call("ir.config_parameter", "get_web_dialog_size_config").then((r) => {
-            const serverValue = String(Boolean(r.default_maximize));
-            if (serverValue !== lastServerValue) {
-                browser.localStorage.setItem(
-                    "odoo.web_dialog_size.last_server_value",
-                    serverValue
-                );
-
-                if (storedValue === null || storedValue === lastServerValue) {
+        orm.call("ir.config_parameter", "get_web_dialog_size_config")
+            .then((r) => {
+                const serverValue = String(Boolean(r.default_maximize));
+                if (serverValue !== lastServerValue) {
                     browser.localStorage.setItem(
-                        "odoo.web_dialog_size.value",
+                        "odoo.web_dialog_size.last_server_value",
                         serverValue
                     );
-                    if (serverValue === "true") {
-                        this.setSize("dialog_full_screen");
-                    } else if (this._forcedSize === "dialog_full_screen") {
-                        this.setSize(this.originalSize || "md");
+
+                    if (storedValue === null || storedValue === lastServerValue) {
+                        browser.localStorage.setItem(
+                            "odoo.web_dialog_size.value",
+                            serverValue
+                        );
+                        if (serverValue === "true") {
+                            this.setSize("dialog_full_screen");
+                        } else if (this._forcedSize === "dialog_full_screen") {
+                            this.setSize(this.originalSize || "md");
+                        }
                     }
                 }
-            }
-        });
+            })
+            .catch(() => {
+                // Session likely expired → ignore
+            });
 
         onWillRender(() => {
             if (this._forcedSize && this.props.size !== this._forcedSize) {
@@ -117,26 +121,30 @@ patch(SelectCreateDialog.prototype, {
         }
 
         const orm = useService("orm");
-        orm.call("ir.config_parameter", "get_web_dialog_size_config").then((r) => {
-            const serverValue = String(Boolean(r.default_maximize));
-            if (serverValue !== lastServerValue) {
-                browser.localStorage.setItem(
-                    "odoo.web_dialog_size.last_server_value",
-                    serverValue
-                );
-                if (storedValue === null || storedValue === lastServerValue) {
+        orm.call("ir.config_parameter", "get_web_dialog_size_config")
+            .then((r) => {
+                const serverValue = String(Boolean(r.default_maximize));
+                if (serverValue !== lastServerValue) {
                     browser.localStorage.setItem(
-                        "odoo.web_dialog_size.value",
+                        "odoo.web_dialog_size.last_server_value",
                         serverValue
                     );
-                    if (serverValue === "true") {
-                        this.setSize("dialog_full_screen");
-                    } else if (this.props.size === "dialog_full_screen") {
-                        this.setSize(this.originalSize || "md");
+                    if (storedValue === null || storedValue === lastServerValue) {
+                        browser.localStorage.setItem(
+                            "odoo.web_dialog_size.value",
+                            serverValue
+                        );
+                        if (serverValue === "true") {
+                            this.setSize("dialog_full_screen");
+                        } else if (this.props.size === "dialog_full_screen") {
+                            this.setSize(this.originalSize || "md");
+                        }
                     }
                 }
-            }
-        });
+            })
+            .catch(() => {
+                // Session likely expired → ignore
+            });
     },
 
     setSize(size) {
