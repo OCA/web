@@ -73,8 +73,9 @@ ir.config_parameter options
 
 Now you can disable "Create..." and "Create and Edit..." entry for all
 widgets in the odoo instance. If you disable one option, you can enable
-it for particular field by setting "create: True" option directly on the
-field definition.
+it for particular field by setting the "no_quick_create: False",
+"no_create_edit: False" or "no_open: False" option directly on the field
+definition.
 
 ``web_m2x_options.create`` *boolean* (Default: depends if user have
 create rights)
