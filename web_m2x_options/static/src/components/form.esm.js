@@ -20,6 +20,12 @@ Many2XAutocomplete.props = {
 Many2One.props = {
     ...Many2One.props,
     searchLimit: {type: Number, optional: true},
+    m2xOptionsOverrides: {type: Object, optional: true},
+};
+
+many2OneField.Many2OneField.props = {
+    ...many2OneField.Many2OneField.props,
+    m2xOptionsOverrides: {type: Object, optional: true},
 };
 
 function evaluateSystemParameterDefaultTrue(option) {
@@ -32,40 +38,55 @@ function evaluateSystemParameterNumber(option) {
 }
 
 export function m2o_options_props_create(props, attrs, options) {
-    const canQuickCreate = evaluateSystemParameterDefaultTrue("create");
-    if (options.no_create || options.no_quick_create) {
-        props.canQuickCreate = false;
-    } else if ("no_quick_create" in options) {
-        props.canQuickCreate = attrs.can_create
-            ? evaluateBooleanExpr(attrs.can_create)
-            : true;
-    } else if (!canQuickCreate && props.canQuickCreate) {
-        props.canQuickCreate = false;
-    } else if (canQuickCreate && !props.canQuickCreate) {
-        props.canQuickCreate = attrs.can_create
-            ? evaluateBooleanExpr(attrs.can_create)
-            : true;
+    const hasCreatePermission = attrs.can_create
+        ? evaluateBooleanExpr(attrs.can_create)
+        : true;
+    const explicitlyDenied =
+        options.create === false ||
+        options.no_create === true ||
+        options.no_quick_create === true;
+    const explicitlyAllowed =
+        options.create === true ||
+        options.no_create === false ||
+        options.no_quick_create === false;
+
+    if (options.create === false) {
+        props.canCreate = false;
     }
+    props.canQuickCreate =
+        hasCreatePermission &&
+        !explicitlyDenied &&
+        (explicitlyAllowed ||
+            (props.canQuickCreate && evaluateSystemParameterDefaultTrue("create")));
+    props.m2xOptionsOverrides = {
+        ...props.m2xOptionsOverrides,
+        create: explicitlyAllowed && !explicitlyDenied,
+    };
     return props;
 }
 
 export function m2o_options_props_create_edit(props, attrs, options) {
-    const canCreateEdit = evaluateSystemParameterDefaultTrue("create_edit");
-    if (options.no_create || options.no_create_edit) {
-        props.canCreateEdit = false;
-    } else if ("no_create_edit" in options) {
-        // Same condition set in web/views/fields/many2one/many2one_field
-        props.canCreateEdit = attrs.can_create
-            ? evaluateBooleanExpr(attrs.can_create)
-            : true;
-    } else if (!canCreateEdit && props.canCreateEdit) {
-        props.canCreateEdit = false;
-    } else if (canCreateEdit && !props.canCreateEdit) {
-        // Same condition set in web/views/fields/many2one/many2one_field
-        props.canCreateEdit = attrs.can_create
-            ? evaluateBooleanExpr(attrs.can_create)
-            : true;
-    }
+    const hasCreatePermission = attrs.can_create
+        ? evaluateBooleanExpr(attrs.can_create)
+        : true;
+    const explicitlyDenied =
+        options.create === false ||
+        options.no_create === true ||
+        options.no_create_edit === true;
+    const explicitlyAllowed =
+        options.create === true ||
+        options.no_create === false ||
+        options.no_create_edit === false;
+
+    props.canCreateEdit =
+        hasCreatePermission &&
+        !explicitlyDenied &&
+        (explicitlyAllowed ||
+            (props.canCreateEdit && evaluateSystemParameterDefaultTrue("create_edit")));
+    props.m2xOptionsOverrides = {
+        ...props.m2xOptionsOverrides,
+        createEdit: explicitlyAllowed && !explicitlyDenied,
+    };
     return props;
 }
 
@@ -80,9 +101,16 @@ export function m2o_options_props_limit(props, attrs, options) {
 }
 
 export function m2o_options_props_open(props, attrs, options) {
-    if (!("no_open" in options)) {
-        props.canOpen = evaluateSystemParameterDefaultTrue("open");
-    }
+    const explicitlyDenied = options.no_open === true || options.open === false;
+    const explicitlyAllowed = options.no_open === false || options.open === true;
+    props.canOpen =
+        !explicitlyDenied &&
+        (explicitlyAllowed ||
+            (props.canOpen && evaluateSystemParameterDefaultTrue("open")));
+    props.m2xOptionsOverrides = {
+        ...props.m2xOptionsOverrides,
+        open: explicitlyAllowed && !explicitlyDenied,
+    };
     return props;
 }
 
@@ -141,26 +169,27 @@ patch(many2OneField.Many2OneField.prototype, {
     get m2oProps() {
         const props = super.m2oProps;
         props.searchLimit = this.props.searchLimit;
+        props.m2xOptionsOverrides = this.props.m2xOptionsOverrides;
         return props;
     },
 });
 
 patch(Many2One.prototype, {
-    // Enforce the create/create_edit/open system parameters here, on the shared
-    // Many2One component, rather than only in the many2one field's extractProps.
-    // Specialized widgets (e.g. sol_product_many2one on sale/purchase order lines)
-    // define their own extractProps and never call m2o_options_props, so a
-    // field-level override does not reach them. They all render this component,
-    // so gating it here covers every many2one.
+    // Keep global restrictions on specialized widgets while respecting explicit
+    // per-field overrides applied by the standard many2one field description.
     get activeActions() {
         const actions = super.activeActions;
-        if (!evaluateSystemParameterDefaultTrue("create_edit")) {
+        const overrides = this.props.m2xOptionsOverrides || {};
+        if (!overrides.createEdit && !evaluateSystemParameterDefaultTrue("create_edit")) {
             actions.createEdit = false;
         }
         return actions;
     },
     get hasLinkButton() {
-        if (!evaluateSystemParameterDefaultTrue("open")) {
+        if (
+            !this.props.m2xOptionsOverrides?.open &&
+            !evaluateSystemParameterDefaultTrue("open")
+        ) {
             return false;
         }
         return super.hasLinkButton;
@@ -183,7 +212,10 @@ patch(Many2One.prototype, {
             ret_props.fieldColor = field_color;
             ret_props.fieldColorOptions = field_color_options;
         }
-        if (!evaluateSystemParameterDefaultTrue("create")) {
+        if (
+            !this.props.m2xOptionsOverrides?.create &&
+            !evaluateSystemParameterDefaultTrue("create")
+        ) {
             ret_props.quickCreate = null;
         }
         return ret_props;
