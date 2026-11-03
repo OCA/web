@@ -1,3 +1,10 @@
-*   No known issues.
-*   **Data Optimization**: Notification payloads compressed using `zlib` and encoded in `base64`. (Discarded for now: Tested but with thousands of messages it generated too many `blob:...` threads in the client browser, making it unable to manage all messages).
-*   **Permission Revocation Handling**: Currently, if a client loses permission to a record they are already subscribed to, they might continue receiving updates. It would be beneficial to find a server-side mechanism to force-unsubscribe a client from a specific channel when their permissions change.
+- Only changes made through the ORM `create`, `write` and `unlink` methods
+  broadcast. Stored computed fields, raw SQL and database cascades do not.
+- An SQL view model (`_auto = False`), such as most reporting models, never
+  broadcasts. Pivot and graph views on these models do not refresh.
+- A form does not refresh when only its one2many lines change.
+- The model channel is checked against access rights, not record rules. An
+  internal user who can read a model receives the ids of every changed record
+  of it, including records that record rules hide. Field values are never sent.
+- Events missed while the browser is disconnected for longer than the
+  retention period are lost. The views do not reload on reconnection.
