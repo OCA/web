@@ -3,8 +3,13 @@ import {
     DEBOUNCE_MS,
     DEFAULT_MIN_INTERVAL_MS,
 } from "@bus_record_events/hooks/use_record_stream.esm";
-import {advanceTime, animationFrame} from "@odoo/hoot-mock";
 import {
+    CHANGED_CLASS,
+    HIGHLIGHT_MS,
+    MAX_HIGHLIGHTED_RECORDS,
+} from "@bus_record_events/views/record_highlights.esm";
+import {
+    MockServer,
     contains,
     defineModels,
     fields,
@@ -12,6 +17,7 @@ import {
     mountView,
     onRpc,
 } from "@web/../tests/web_test_helpers";
+import {advanceTime, animationFrame} from "@odoo/hoot-mock";
 import {defineBusModels, waitForChannels} from "@bus/../tests/bus_test_helpers";
 import {describe, expect, test} from "@odoo/hoot";
 import {getWebSocketWorker} from "@bus/../tests/mock_websocket";
@@ -144,4 +150,91 @@ test("form with unsaved changes warns instead of reloading", async () => {
     await settle(DEBOUNCE_MS);
     expect.verifySteps([]);
     expect(".o_notification").toHaveCount(1);
+});
+
+async function mountKanban() {
+    await mountView({
+        type: "kanban",
+        resModel: "partner",
+        arch: `<kanban><templates><t t-name="card"><field name="name"/></t></templates></kanban>`,
+    });
+    await waitForChannels([CHANNEL]);
+}
+
+test("form marks the field another user changed, then clears it", async () => {
+    await mountForm();
+    MockServer.env.partner.write([1], {name: "Changed elsewhere"});
+    pushRecordEvent({written: [1]});
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps(["web_read"]);
+    expect(".o_field_widget[name=name]").toHaveClass(CHANGED_CLASS);
+
+    await settle(HIGHLIGHT_MS);
+    expect(".o_field_widget[name=name]").not.toHaveClass(CHANGED_CLASS);
+});
+
+test("form marks nothing when the shown values did not change", async () => {
+    await mountForm();
+    pushRecordEvent({written: [1]});
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps(["web_read"]);
+    expect(`.${CHANGED_CLASS}`).toHaveCount(0);
+});
+
+test("list marks only the changed cell", async () => {
+    await mountList();
+    MockServer.env.partner.write([2], {name: "Changed elsewhere"});
+    pushRecordEvent({written: [1, 2]});
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps(["web_search_read"]);
+    expect(`.${CHANGED_CLASS}`).toHaveCount(1);
+    expect(".o_data_row:eq(1) .o_data_cell[name=name]").toHaveClass(CHANGED_CLASS);
+});
+
+test("list marks a row created elsewhere", async () => {
+    await mountList();
+    const [id] = MockServer.env.partner.create([{name: "Third"}]);
+    pushRecordEvent({created: [id]});
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps(["web_search_read"]);
+    expect(".o_data_row:eq(2) .o_data_cell[name=name]").toHaveClass(CHANGED_CLASS);
+});
+
+test("list marks a row that a change elsewhere brought into the view", async () => {
+    await mountView({
+        type: "list",
+        resModel: "partner",
+        domain: [["name", "ilike", "elsewhere"]],
+        arch: `<list><field name="name"/></list>`,
+    });
+    await waitForChannels([CHANNEL]);
+    expect(".o_data_row").toHaveCount(0);
+
+    MockServer.env.partner.write([2], {name: "Renamed elsewhere"});
+    pushRecordEvent({written: [2]});
+    await settle(DEBOUNCE_MS);
+    expect(".o_data_row").toHaveCount(1);
+    expect(".o_data_row .o_data_cell[name=name]").toHaveClass(CHANGED_CLASS);
+});
+
+test("list marks nothing when too many records changed at once", async () => {
+    await mountList();
+    const ids = MockServer.env.partner.create(
+        Array.from({length: MAX_HIGHLIGHTED_RECORDS + 1}, (_, i) => ({
+            name: `New ${i}`,
+        }))
+    );
+    pushRecordEvent({created: ids});
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps(["web_search_read"]);
+    expect(`.${CHANGED_CLASS}`).toHaveCount(0);
+});
+
+test("kanban marks the card another user changed", async () => {
+    await mountKanban();
+    MockServer.env.partner.write([1], {name: "Changed elsewhere"});
+    pushRecordEvent({written: [1]});
+    await settle(DEBOUNCE_MS);
+    expect(`.o_kanban_record.${CHANGED_CLASS}`).toHaveCount(1);
+    expect(".o_kanban_record:eq(0)").toHaveClass(CHANGED_CLASS);
 });

@@ -463,6 +463,14 @@ several modules inherit the same model, the ignored fields of all of
 them apply.</p>
 <p>To stop events for one operation, such as a large import, add
 <tt class="docutils literal">bus_record_events_disable=True</tt> to the context.</p>
+<p>The change mark uses two CSS variables. Override them in a theme to
+change the color:</p>
+<pre class="code css literal-block">
+<span class="p">:</span><span class="nd">root</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nv">--bus-record-events-tint</span><span class="p">:</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">110</span><span class="p">,</span><span class="w"> </span><span class="mi">253</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">);</span><span class="w">
+    </span><span class="nv">--bus-record-events-bar</span><span class="p">:</span><span class="w"> </span><span class="nb">rgba</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">110</span><span class="p">,</span><span class="w"> </span><span class="mi">253</span><span class="p">,</span><span class="w"> </span><span class="mf">0.8</span><span class="p">);</span><span class="w">
+</span><span class="p">}</span>
+</pre>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
@@ -482,6 +490,20 @@ create or drags a card.</li>
 <li>A view in a hidden browser tab does not reload. It reloads when the
 tab becomes visible again.</li>
 </ul>
+<p>After a reload, the view marks what changed for about 3 seconds:</p>
+<ul class="simple">
+<li><strong>Form</strong>: each field whose value changed gets a light tint and a bar
+on its left side. Screen readers announce that the record was updated.</li>
+<li><strong>List</strong>: each changed cell gets the mark. All cells of a row that is
+new in the view get the mark: a record created elsewhere, or a record
+changed so that it now matches the filter, group or page.</li>
+<li><strong>Kanban</strong>: the whole card of a changed or new record gets the mark.</li>
+</ul>
+<p>The browser compares the values from before and after the reload. The
+bus event still contains ids only. A change the user made in the same
+view gives no mark. If more than 10 records changed in one reload, no
+record gets the mark. If the browser asks for reduced motion, the mark
+does not fade.</p>
 <p>Use the hook in a custom component:</p>
 <pre class="code javascript literal-block">
 <span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="nx">useRecordStream</span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;bus_record_events/hooks/use_record_stream.esm&quot;</span><span class="p">;</span><span class="w">
@@ -508,6 +530,9 @@ changed record of it, including records that record rules hide. Field
 values are never sent.</li>
 <li>Events missed while the browser is disconnected for longer than the
 retention period are lost. The views do not reload on reconnection.</li>
+<li>The change mark compares the values the view shows. One2many lines
+inside a form are not compared. The statusbar widget paints over the
+mark, so a stage change shows only through the statusbar itself.</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">

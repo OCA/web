@@ -1,5 +1,6 @@
 import {ListController} from "@web/views/list/list_controller";
 import {patch} from "@web/core/utils/patch";
+import {useRecordHighlights} from "./record_highlights.esm";
 import {useRecordStream} from "../hooks/use_record_stream.esm";
 
 patch(ListController.prototype, {
@@ -11,7 +12,7 @@ patch(ListController.prototype, {
             isBusy: async () =>
                 Boolean(this.model.root.editedRecord) ||
                 this.model.root.selection.length > 0,
-            onReload: () => this.model.load(),
+            onReload: useRecordHighlights(this.model),
         });
     },
 });

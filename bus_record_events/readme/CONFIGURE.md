@@ -33,3 +33,13 @@ modules inherit the same model, the ignored fields of all of them apply.
 
 To stop events for one operation, such as a large import, add
 `bus_record_events_disable=True` to the context.
+
+The change mark uses two CSS variables. Override them in a theme to change the
+color:
+
+```css
+:root {
+    --bus-record-events-tint: rgba(13, 110, 253, 0.2);
+    --bus-record-events-bar: rgba(13, 110, 253, 0.8);
+}
+```
