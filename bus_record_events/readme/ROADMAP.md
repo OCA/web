@@ -8,3 +8,6 @@
   of it, including records that record rules hide. Field values are never sent.
 - Events missed while the browser is disconnected for longer than the
   retention period are lost. The views do not reload on reconnection.
+- The change mark compares the values the view shows. One2many lines inside a
+  form are not compared. The statusbar widget paints over the mark, so a stage
+  change shows only through the statusbar itself.

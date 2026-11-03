@@ -1,6 +1,7 @@
 import {FormController} from "@web/views/form/form_controller";
 import {_t} from "@web/core/l10n/translation";
 import {patch} from "@web/core/utils/patch";
+import {useRecordHighlights} from "./record_highlights.esm";
 import {useRecordStream} from "../hooks/use_record_stream.esm";
 import {useService} from "@web/core/utils/hooks";
 
@@ -18,7 +19,7 @@ patch(FormController.prototype, {
                     ),
                     {type: "warning"}
                 ),
-            onReload: () => this.model.load(),
+            onReload: useRecordHighlights(this.model, {announce: true}),
             onDeleted: () => this._onRecordDeletedElsewhere(),
             minInterval: 0,
         });

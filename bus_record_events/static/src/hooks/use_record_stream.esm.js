@@ -17,7 +17,10 @@ export const DEFAULT_MIN_INTERVAL_MS = 5000;
  *
  * @param {String} resModel
  * @param {Object} options
- * @param {Function} options.onReload async, reloads the view
+ * @param {Function} options.onReload async, reloads the view. Receives the
+ *      changes collected since the last reload: ``{all, ids, created}``, where
+ *      ``ids`` and ``created`` are Sets of record ids and ``all`` is true when an
+ *      event was too large to list its ids.
  * @param {Function} [options.getResId] for single-record views: returns the id
  *      shown now, or a falsy value when there is none (new record). Only events
  *      about that id are kept. Read on every event because the form pager
@@ -43,7 +46,7 @@ export function useRecordStream(
     const recordEvents = useService("bus_record_event_service");
     let unsubscribe = null;
     let timer = null;
-    let pending = false;
+    let changes = null;
     let busyReported = false;
     let lastReload = null;
 
@@ -65,7 +68,7 @@ export function useRecordStream(
 
     async function run() {
         timer = null;
-        if (!pending || !isMounted() || document.visibilityState === "hidden") {
+        if (!changes || !isMounted() || document.visibilityState === "hidden") {
             return;
         }
         if (isBusy && (await isBusy())) {
@@ -79,11 +82,12 @@ export function useRecordStream(
         if (!isMounted()) {
             return;
         }
-        pending = false;
+        const batch = changes;
+        changes = null;
         busyReported = false;
         lastReload = Date.now();
         try {
-            await onReload();
+            await onReload(batch);
         } catch (error) {
             // A background refresh must not open an error dialog in front of
             // the user, who did not ask for it. The next event retries.
@@ -94,6 +98,18 @@ export function useRecordStream(
     function schedule(delay) {
         if (timer === null) {
             timer = browser.setTimeout(run, delay);
+        }
+    }
+
+    function collect(payload) {
+        changes ??= {all: false, ids: new Set(), created: new Set()};
+        changes.all ||= Boolean(payload.reload);
+        for (const id of payload.written ?? []) {
+            changes.ids.add(id);
+        }
+        for (const id of payload.created ?? []) {
+            changes.ids.add(id);
+            changes.created.add(id);
         }
     }
 
@@ -108,7 +124,7 @@ export function useRecordStream(
             }
             if (payload.unlinked?.includes(resId)) {
                 clearTimer();
-                pending = false;
+                changes = null;
                 onDeleted?.();
                 return;
             }
@@ -116,12 +132,12 @@ export function useRecordStream(
                 return;
             }
         }
-        pending = true;
+        collect(payload);
         schedule(nextDelay());
     }
 
     function onVisibilityChange() {
-        if (pending && document.visibilityState === "visible") {
+        if (changes && document.visibilityState === "visible") {
             schedule(nextDelay());
         }
     }
