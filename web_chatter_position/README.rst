@@ -91,6 +91,14 @@ Contributors
 
   - Bhavesh Heliconia
 
+- `ForgeFlow <https://www.forgeflow.com>`__
+
+  - Joan Sisquella <joan.sisquella@forgeflow.com>
+
+- `Tecnativa <https://www.tecnativa.com/>`__:
+
+  - Sergio Teruel
+
 Maintainers
 -----------
 

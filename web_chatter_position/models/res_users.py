@@ -9,7 +9,7 @@ class ResUsers(models.Model):
 
     chatter_position = fields.Selection(
         [
-            ("auto", "Responsive"),
+            ("auto", "Automatic"),
             ("bottom", "Bottom"),
             ("sided", "Sided"),
         ],
@@ -22,4 +22,6 @@ class ResUsers(models.Model):
 
     @property
     def SELF_WRITEABLE_FIELDS(self):
-        return super().SELF_WRITEABLE_FIELDS + ["chatter_position"]
+        return super().SELF_WRITEABLE_FIELDS + [
+            "chatter_position",
+        ]
