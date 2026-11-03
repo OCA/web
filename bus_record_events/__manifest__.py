@@ -1,38 +1,26 @@
+# Copyright 2025 Heligrafics Fotogrametria S.L.
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Bus Record Events",
-    "version": "17.0.1.0.0",
+    "summary": "Refresh open views when records change, through the bus",
+    "version": "18.0.1.0.0",
     "category": "Web",
-    "summary": "Broadcast CRUD operations (Create, Write, Unlink) via Odoo "
-    "Bus for OWL reactivity.",
     "author": "Heligrafics Fotogrametria S.L., Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "depends": [
-        "base",
         "bus",
         "web",
     ],
-    "data": [],
+    "data": [
+        "data/ir_cron.xml",
+    ],
     "assets": {
         "web.assets_backend": [
-            "bus_record_events/static/src/js/services/*.js",
-            "bus_record_events/static/src/js/hooks/*.js",
-            "bus_record_events/static/src/js/views/form/*.js",
-            "bus_record_events/static/src/js/views/kanban/*.js",
-            "bus_record_events/static/src/js/views/pivot/*.js",
-            "bus_record_events/static/src/js/views/graph/*.js",
-            "bus_record_events/static/src/js/views/calendar/*.js",
-            "bus_record_events/static/src/js/views/list/*.js",
+            "bus_record_events/static/src/**/*",
         ],
-        "web.qunit_suite_tests": [
-            "web/static/src/legacy/utils.js",
-            "web/static/src/legacy/js/**/*",
-            ("remove", "web/static/src/legacy/js/libs/**/*"),
-            ("remove", "web/static/src/legacy/js/public/**/*"),
-            "bus_record_events/static/tests/helpers/*.js",
-            "bus_record_events/static/tests/unit/hooks/*.js",
-            "bus_record_events/static/tests/unit/services/*.js",
-            "bus_record_events/static/tests/unit/views/*.js",
+        "web.assets_unit_tests": [
+            "bus_record_events/static/tests/**/*",
         ],
     },
     "installable": True,

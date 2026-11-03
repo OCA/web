@@ -1,7 +1,9 @@
-This module provides an efficient and secure mechanism to notify CRUD events
-(Create, Write, Unlink) in real-time via the Odoo Bus.
+Refreshes open views when their records change on the server.
 
-**Key Features:**
+When a record is created, written or deleted, the server sends one bus
+notification per model per transaction. The notification contains record ids
+only, never field values. Open form, list, kanban, calendar, pivot and graph
+views of that model reload by themselves.
 
-*   **Server Efficiency**: Uses Odoo's native `bus.bus` system to avoid table locking and minimize performance impact.
-*   **Granular Security**: Implements a permission system in `ir.websocket` ensuring users can only subscribe to record or model channels for which they have read permissions (Access Rights and Record Rules).
+The module patches the standard view controllers, so views with a custom
+`js_class` refresh too.

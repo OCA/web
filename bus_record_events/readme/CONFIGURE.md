@@ -1,63 +1,35 @@
-No specific configuration is required.
+A model broadcasts its changes when all of these are true:
 
-## Performance: UNLOGGED bus.bus table
+- A window action opens it. A model with no action can have no open view.
+- It is not transient, abstract or an SQL view (`_auto = False`).
+- It is not on the built-in denylist (`ir.*`, `mail.*`, `bus.*`, `queue.job*`,
+  `calendar.attendee` and other high-churn technical models).
+- It is not on the configured denylist.
 
-In high-volume environments (many concurrent users, frequent CRUD operations),
-the `bus.bus` table can generate significant WAL (Write-Ahead Logging) traffic.
-Since `bus.bus` is **ephemeral by design** — rows are auto-vacuumed after
-~100 seconds (`TIMEOUT * 2`) — the WAL overhead provides no real benefit:
-after a crash or failover, stale notifications are irrelevant because clients
-reconnect and re-poll from scratch.
+Set these system parameters in *Settings > Technical > System Parameters*:
 
-Converting `bus.bus` to `UNLOGGED` skips WAL writes entirely, which:
+| Parameter | Value | Effect |
+|---|---|---|
+| `bus_record_events.denied_models` | Comma-separated model names or patterns, such as `hr.employee.location.history, x_*` | These models never broadcast. |
+| `bus_record_events.allowed_models` | Comma-separated model names or patterns | Overrides the built-in denylist for these models. |
+| `bus_record_events.ignored_fields` | JSON, such as `{"project.task": ["x_gps_lat", "x_gps_lng"]}` | A write that changes only these fields does not broadcast. |
+| `bus_record_events.retention_minutes` | Integer, default `15` | Record events older than this are deleted. |
 
-- **Reduces disk I/O** on the WAL volume.
-- **Speeds up INSERTs** (the most frequent operation on this table).
-- **Reduces replication lag** in streaming-replica setups (unlogged tables
-  are not replicated — replicas won't see bus notifications, but they don't
-  need to since each Odoo worker polls its own database).
+Code can decide for a model, without configuration:
 
-### Tradeoffs
+```python
+class EmployeeLocation(models.Model):
+    _inherit = "hr.employee.location.history"
+    _bus_record_events = False  # never broadcast; True: always broadcast
 
-| Aspect | Impact |
-|---|---|
-| Crash recovery | Table is **truncated** automatically. Clients reconnect and miss nothing meaningful. |
-| Streaming replicas | Table is **empty** on replicas. Only relevant if replicas serve websocket workers (unusual). |
-| `pg_basebackup` | Table structure is included but data is not. No impact on backup/restore workflows. |
-| Logical replication | Unlogged tables are excluded. No impact unless bus data is replicated intentionally. |
 
-### SQL script
-
-Run this during a **maintenance window** (no active Odoo workers):
-
-```sql
--- 1. Verify current state
-SELECT relpersistence FROM pg_class WHERE relname = 'bus_bus';
--- 'p' = permanent (WAL), 'u' = unlogged
-
--- 2. Convert to UNLOGGED
-ALTER TABLE bus_bus SET UNLOGGED;
-
--- 3. Confirm
-SELECT relpersistence FROM pg_class WHERE relname = 'bus_bus';
--- Should return 'u'
+class ProjectTask(models.Model):
+    _inherit = "project.task"
+    _bus_record_events_ignored_fields = ("last_sync_hash",)
 ```
 
-To **revert** back to a permanent (WAL-logged) table:
+Setting these attributes needs no dependency on this module. When several
+modules inherit the same model, the ignored fields of all of them apply.
 
-```sql
-ALTER TABLE bus_bus SET LOGGED;
-```
-
-### Recommendation
-
-| Scenario | Recommendation |
-|---|---|
-| Single-server or active-passive HA | **Use UNLOGGED**. Safe and measurable I/O reduction. |
-| Active-active with shared websockets on replica | Keep LOGGED (rare setup). |
-| Development / staging | Optional — low traffic makes the difference negligible. |
-
-> **Note**: This optimization applies to the core `bus.bus` table from the
-> `bus` module. `bus_record_events` increases the notification volume by
-> broadcasting CRUD events, which makes the UNLOGGED optimization more
-> impactful when this module is installed.
+To stop events for one operation, such as a large import, add
+`bus_record_events_disable=True` to the context.

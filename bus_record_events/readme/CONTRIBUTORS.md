@@ -1,2 +1,4 @@
-* Heligrafics Fotogrametria S.L. \<<http://www.heligrafics.net/>\>:
+- Heligrafics Fotogrametria S.L. \<<http://www.heligrafics.net/>\>:
   - Jose Zambudio \<<jzambudio@heligrafics.net>\>
+- Field Advantage:
+  - Matt O'Keefe \<<mokeefe@fieldadv.com>\>
