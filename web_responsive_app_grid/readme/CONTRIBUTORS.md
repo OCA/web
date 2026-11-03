@@ -1,0 +1,1 @@
+- Daniel Reis <dreis.pt@gmail.com> (Open Source Integrators)
