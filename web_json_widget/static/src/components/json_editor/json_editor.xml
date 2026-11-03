@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_json_widget.JsonEditor" owl="1">
+        <div t-ref="editor" class="o_json_editor" />
+    </t>
+</templates>
