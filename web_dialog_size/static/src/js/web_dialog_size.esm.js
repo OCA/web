@@ -1,4 +1,4 @@
-import {Component, onMounted, onWillRender} from "@odoo/owl";
+import {Component, onMounted, onWillRender, useState} from "@odoo/owl";
 import {ActionDialog} from "@web/webclient/actions/action_dialog";
 import {Dialog} from "@web/core/dialog/dialog";
 import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
@@ -31,6 +31,9 @@ export class ExpandButton extends Component {
     setup() {
         this.orm = useService("orm");
         this.last_size = this.props.getsize();
+        // The props never change, so the dialog rendering does not render
+        // this button again: keep the size in its own state to switch icons
+        this.state = useState({size: this.last_size});
         this.config = this.orm.call(
             "ir.config_parameter",
             "get_web_dialog_size_config"
@@ -41,7 +44,7 @@ export class ExpandButton extends Component {
             this.config
                 .then(function (r) {
                     if (r.default_maximize) {
-                        self.props.setsize("dialog_full_screen");
+                        self.setSize("dialog_full_screen");
                     }
                 })
                 .catch(() => {
@@ -50,14 +53,19 @@ export class ExpandButton extends Component {
         });
     }
 
+    setSize(size) {
+        this.props.setsize(size);
+        this.state.size = size;
+    }
+
     dialog_button_extend(ev) {
         resetListColumnWidths(ev.currentTarget);
-        this.props.setsize("dialog_full_screen");
+        this.setSize("dialog_full_screen");
     }
 
     dialog_button_restore(ev) {
         resetListColumnWidths(ev.currentTarget);
-        this.props.setsize(this.last_size);
+        this.setSize(this.last_size);
     }
 }
 
