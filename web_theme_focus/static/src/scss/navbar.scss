@@ -1,0 +1,37 @@
+// Copyright 2026 volkantasci
+// License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+body[data-app-theme="focus"].o_apps_menu_opened {
+    background-image:
+        url("../img/app_switcher_background_light.svg"),
+        linear-gradient(to bottom, #e9e6f9, #edebf8);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    .o_main_navbar {
+        background: transparent !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+        color: #3c3c3c;
+        --NavBar-entry-color: #3c3c3c;
+        --NavBar-entry-color--hover: #1a1a1a;
+        --NavBar-entry-color--active: #1a1a1a;
+        --NavBar-brand-color: #3c3c3c;
+        --NavBar-entry-backgroundColor--hover: rgba(0, 0, 0, 0.06);
+        --NavBar-entry-backgroundColor--active: rgba(0, 0, 0, 0.06);
+    }
+
+    .o_grid_apps_menu__button {
+        color: #3c3c3c !important;
+    }
+
+    .o_action_manager {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .app-menu-container {
+        background: transparent !important;
+    }
+}
