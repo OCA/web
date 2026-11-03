@@ -1,53 +1,61 @@
 import {onMounted, onWillUnmount} from "@odoo/owl";
+import {serializeDate, serializeDateTime} from "@web/core/l10n/dates";
 import {SearchBar} from "@web/search/search_bar/search_bar";
 import {patch} from "@web/core/utils/patch";
+import {registry} from "@web/core/registry";
 
-const searchBarSetup = SearchBar.prototype.setup;
-const searchBarGetDropdownNavigation = SearchBar.prototype.getDropdownNavigation;
+const parsers = registry.category("parsers");
+
+// Same as the parseValue of web/static/src/search/search_bar/search_bar.js, not exported
+const parseValue = (value, fieldType) => {
+    const parser = parsers.contains(fieldType) ? parsers.get(fieldType) : (str) => str;
+    switch (fieldType) {
+        case "date": {
+            return serializeDate(parser(value));
+        }
+        case "datetime": {
+            return serializeDateTime(parser(value));
+        }
+        case "many2one": {
+            return value;
+        }
+        default: {
+            return parser(value);
+        }
+    }
+};
 
 patch(SearchBar.prototype, {
-    setup(...args) {
-        searchBarSetup.call(this, ...args);
+    setup() {
+        super.setup(...arguments);
         this._searchWithAndShiftPressed = false;
-        this._searchWithAndHandleKeydown = (ev) => {
-            this._searchWithAndShiftPressed = Boolean(ev.shiftKey);
-        };
-        this._searchWithAndHandleKeyup = (ev) => {
+        this._searchWithAndHandleKey = (ev) => {
             this._searchWithAndShiftPressed = Boolean(ev.shiftKey);
         };
         onMounted(() => {
-            document.addEventListener(
-                "keydown",
-                this._searchWithAndHandleKeydown,
-                true
-            );
-            document.addEventListener("keyup", this._searchWithAndHandleKeyup, true);
+            document.addEventListener("keydown", this._searchWithAndHandleKey, true);
+            document.addEventListener("keyup", this._searchWithAndHandleKey, true);
         });
         onWillUnmount(() => {
-            document.removeEventListener(
-                "keydown",
-                this._searchWithAndHandleKeydown,
-                true
-            );
-            document.removeEventListener("keyup", this._searchWithAndHandleKeyup, true);
+            document.removeEventListener("keydown", this._searchWithAndHandleKey, true);
+            document.removeEventListener("keyup", this._searchWithAndHandleKey, true);
         });
     },
 
     getDropdownNavigation() {
-        const originalNav = searchBarGetDropdownNavigation.call(this);
-        originalNav.hotkeys["shift+enter"] = {
+        const navigation = super.getDropdownNavigation(...arguments);
+        navigation.hotkeys["shift+enter"] = {
             bypassEditableProtection: true,
             isAvailable: ({navigator}) => Boolean(navigator.activeItem),
             callback: (navigator) => {
-                const activeItemIndex = navigator.activeItemIndex;
-                const item = this.items[activeItemIndex];
+                const item = this.items[navigator.activeItemIndex];
                 if (item) {
                     this._searchWithAndShiftPressed = true;
                     this.selectItem(item);
                 }
             },
         };
-        return originalNav;
+        return navigation;
     },
 
     selectItem(item) {
@@ -57,6 +65,7 @@ patch(SearchBar.prototype, {
 
         const searchItem = this.getSearchItem(item.searchItemId);
         if (
+            (searchItem.fieldType === "selection" && !item.isChild) ||
             (searchItem.type === "field" && searchItem.fieldType === "properties") ||
             (searchItem.type === "field_property" && item.unselectable)
         ) {
@@ -65,26 +74,37 @@ patch(SearchBar.prototype, {
         }
 
         if (!item.unselectable) {
-            const {searchItemId, label, operator, value} = item;
-            const isShiftPressed =
+            const {searchItemId, fieldType} = item;
+            let {label, value, operator} = item;
+            if (
+                !["selection", "boolean", "tags"].includes(fieldType) &&
+                this.state.query !== label &&
+                !item.isChild
+            ) {
+                label = this.state.query;
+                value = parseValue(this.state.query.trim(), fieldType);
+            }
+            const isShiftKey = Boolean(
                 (window.event && window.event.shiftKey) ||
-                this._searchWithAndShiftPressed;
-            const autoCompletionValues = {
+                this._searchWithAndShiftPressed
+            );
+            // A value between double quotes searches for that exact value
+            if (
+                typeof value === "string" &&
+                value.length > 1 &&
+                value.startsWith('"') &&
+                value.endsWith('"')
+            ) {
+                value = value.slice(1, -1);
+                label = label.trim().slice(1, -1);
+                operator = "=";
+            }
+            this.env.searchModel.addAutoCompletionValues(searchItemId, {
                 label,
                 operator,
                 value,
-                isShiftKey: isShiftPressed,
-            };
-            if (value && value[0] === '"' && value[value.length - 1] === '"') {
-                autoCompletionValues.value = value.slice(1, -1);
-                autoCompletionValues.label = label.slice(1, -1);
-                autoCompletionValues.operator = "=";
-                autoCompletionValues.enforceEqual = true;
-            }
-            this.env.searchModel.addAutoCompletionValues(
-                searchItemId,
-                autoCompletionValues
-            );
+                isShiftKey,
+            });
         }
 
         if (item.loadMore) {
