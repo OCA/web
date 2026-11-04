@@ -1,1 +1,2 @@
 - Arnau Cruz \<arnau.cruz@forgeflow.com\>
+- Lois Rilo \<lois.rilo@forgeflow.com\>
