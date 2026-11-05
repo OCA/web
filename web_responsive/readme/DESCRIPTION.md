@@ -13,6 +13,9 @@ their profile settings.
 
   ![image](../static/img/appmenu.gif)
 
+- Drag and drop app icons to reorder them; the arrangement is remembered
+  per user
+
 - Quick menu search inside the app menu
 
   ![image](../static/img/appsearch.gif)
