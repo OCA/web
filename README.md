@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [web_dialog_size](web_dialog_size/) | 20.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_environment_ribbon](web_environment_ribbon/) | 20.0.1.0.0 |  | Web Environment Ribbon
+[web_filter_header_button](web_filter_header_button/) | 20.0.1.0.0 |  | Show selected filters as buttons in the control panel
 [web_m2x_options](web_m2x_options/) | 20.0.1.0.0 |  | web_m2x_options
 [web_navbar_light](web_navbar_light/) | 20.0.1.0.0 | <a href='https://github.com/smaddlsoft'><img src='https://github.com/smaddlsoft.png' width='32' height='32' style='border-radius:50%;' alt='smaddlsoft'/></a> | Light main navbar for the backend
 [web_quick_start_screen](web_quick_start_screen/) | 20.0.1.0.0 |  | Configurable start screen for quick actions

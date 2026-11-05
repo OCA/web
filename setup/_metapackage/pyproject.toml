@@ -1,9 +1,10 @@
 [project]
 name = "odoo-addons-oca-web"
-version = "20.0.20261105.0"
+version = "20.0.20261105.1"
 dependencies = [
     "odoo-addon-web_dialog_size==20.0.*",
     "odoo-addon-web_environment_ribbon==20.0.*",
+    "odoo-addon-web_filter_header_button==20.0.*",
     "odoo-addon-web_m2x_options==20.0.*",
     "odoo-addon-web_navbar_light==20.0.*",
     "odoo-addon-web_quick_start_screen==20.0.*",
