@@ -1,20 +1,39 @@
-import {Component, onMounted, onWillRender} from "@odoo/owl";
+import {Component, onMounted, onWillRender, useState} from "@odoo/owl";
 import {ActionDialog} from "@web/webclient/actions/action_dialog";
 import {Dialog} from "@web/core/dialog/dialog";
 import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
 import {patch} from "@web/core/utils/patch";
 import {useService} from "@web/core/utils/hooks";
 
-function triggerWindowResize() {
-    requestAnimationFrame(() => {
-        window.dispatchEvent(new Event("resize"));
-    });
+/**
+ * Resizing a list column by hand fixes the width of the table and its parent in
+ * pixels, so the list no longer follows the dialog width. Unset them to let the
+ * list fit its columns to the new dialog size.
+ *
+ * A window resize event would do it too, but it also closes every component
+ * listening to it, such as the analytic distribution widget, and with it the
+ * "Search More..." dialog it opened.
+ *
+ * @param {HTMLElement} el element inside the dialog
+ */
+function resetListColumnWidths(el) {
+    const dialog = el.closest(".modal-content");
+    if (!dialog) {
+        return;
+    }
+    for (const table of dialog.querySelectorAll(".o_list_table")) {
+        table.style.width = "";
+        table.parentElement.style.width = "";
+    }
 }
 
 export class ExpandButton extends Component {
     setup() {
         this.orm = useService("orm");
         this.last_size = this.props.getsize();
+        // The props never change, so the dialog rendering does not render
+        // this button again: keep the size in its own state to switch icons
+        this.state = useState({size: this.last_size});
         this.config = this.orm.call(
             "ir.config_parameter",
             "get_web_dialog_size_config"
@@ -25,7 +44,7 @@ export class ExpandButton extends Component {
             this.config
                 .then(function (r) {
                     if (r.default_maximize) {
-                        self.dialog_button_extend();
+                        self.setSize("dialog_full_screen");
                     }
                 })
                 .catch(() => {
@@ -34,14 +53,19 @@ export class ExpandButton extends Component {
         });
     }
 
-    dialog_button_extend() {
-        this.props.setsize("dialog_full_screen");
-        triggerWindowResize();
+    setSize(size) {
+        this.props.setsize(size);
+        this.state.size = size;
     }
 
-    dialog_button_restore() {
-        this.props.setsize(this.last_size);
-        triggerWindowResize();
+    dialog_button_extend(ev) {
+        resetListColumnWidths(ev.currentTarget);
+        this.setSize("dialog_full_screen");
+    }
+
+    dialog_button_restore(ev) {
+        resetListColumnWidths(ev.currentTarget);
+        this.setSize(this.last_size);
     }
 }
 
