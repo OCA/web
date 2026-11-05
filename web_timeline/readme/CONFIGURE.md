@@ -14,6 +14,7 @@ These are the possible attributes for the tag:
 | stack | No | When set to false, items will not be stacked on top of each other such that they do overlap. |
 | colors | No | Allows to set certain specific colors if the expressed condition (JS syntax) is met. |
 | dependency_arrow | No | Set this attribute to a x2many field to draw arrows between the records referenced in the x2many field. |
+| show_only_active_groups | No | When set to true, only groups with events in range will be displayed. |
 
 Optionally you can declare a custom template, which will be used to
 render the timeline items. You have to name the template
