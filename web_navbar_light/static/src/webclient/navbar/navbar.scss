@@ -1,0 +1,17 @@
+@if $o-webclient-color-scheme == bright {
+    .o_main_navbar {
+        position: relative;
+
+        // Drawn above the menu entries: they take the full height of the
+        // navbar and would hide a border or an inset shadow
+        &::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            border-bottom: 1px solid $o-gray-300;
+            pointer-events: none;
+        }
+    }
+}
