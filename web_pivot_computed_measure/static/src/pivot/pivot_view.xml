@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-inherit="web.PivotView.Buttons" t-inherit-mode="extension">
+        <xpath expr="//ReportViewMeasures" position="replace">
+            <ReportViewComputedMeasures
+                measures="this.model.metaData.measures"
+                activeMeasures="this.model.metaData.activeMeasures"
+                onMeasureSelected.bind="this.onMeasureSelected"
+                model="this.model"
+            />
+        </xpath>
+    </t>
+</templates>
