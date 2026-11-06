@@ -14,7 +14,7 @@
         "Odoo Community Association (OCA)"
     ),
     "website": "https://github.com/OCA/web",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     "category": "Hidden/Dependency",
     "summary": "Show list fields as a matrix",
     "depends": ["web"],
