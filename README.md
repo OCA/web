@@ -46,6 +46,7 @@ addon | version | maintainers | summary
 [web_loading_block_ui](web_loading_block_ui/) | 18.0.1.0.0 |  | Block the screen with a centered loading overlay while requests are pending
 [web_m2x_options](web_m2x_options/) | 18.0.1.0.3 |  | web_m2x_options
 [web_m2x_options_manager](web_m2x_options_manager/) | 18.0.1.0.0 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
+[web_navbar_light](web_navbar_light/) | 18.0.1.0.0 | <a href='https://github.com/smaddlsoft'><img src='https://github.com/smaddlsoft.png' width='32' height='32' style='border-radius:50%;' alt='smaddlsoft'/></a> | Light main navbar for the backend
 [web_no_bubble](web_no_bubble/) | 18.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 18.0.1.1.2 |  | Send notification messages to user
 [web_notify_channel_message](web_notify_channel_message/) | 18.0.1.0.1 |  | Send an instant notification to channel users when a new message is posted
