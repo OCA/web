@@ -1,12 +1,13 @@
 # Copyright 2023 ooops404
 # Copyright 2025 Simone Rubino - PyTech
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html)
-from odoo import api, fields, models, tools
+from odoo import _, api, fields, models, tools
 from odoo.tools.safe_eval import safe_eval
 
 
 class CustomFieldRestriction(models.Model):
     _name = "custom.field.restriction"
+    _inherit = ["mail.thread"]
     _description = "Make field invisible or required"
 
     field_id = fields.Many2one(
@@ -44,14 +45,14 @@ class CustomFieldRestriction(models.Model):
         string="Model Name",
         index=True,
     )
-    condition_domain = fields.Char()
+    condition_domain = fields.Char(tracking=True)
     group_ids = fields.Many2many("res.groups", required=True)
     default_required = fields.Boolean(
         related="field_id.required", string="Required by Default"
     )
-    required = fields.Boolean()
-    field_invisible = fields.Boolean()
-    field_readonly = fields.Boolean()
+    required = fields.Boolean(tracking=True)
+    field_invisible = fields.Boolean(tracking=True)
+    field_readonly = fields.Boolean(tracking=True)
     # generated technical fields used in form attrs:
     visibility_field_id = fields.Many2one("ir.model.fields")
     readonly_field_id = fields.Many2one("ir.model.fields")
@@ -106,6 +107,9 @@ class CustomFieldRestriction(models.Model):
         return rec
 
     def write(self, vals):
+        old_groups_by_id = {}
+        if "group_ids" in vals:
+            old_groups_by_id = {rec.id: rec.group_ids for rec in self}
         res = super().write(vals)
         if vals.get("field_id"):
             if self.visibility_field_id:
@@ -119,7 +123,32 @@ class CustomFieldRestriction(models.Model):
                 self.create_restriction_field("required")
         if "model_name" in vals:
             self.clear_caches()
+        if old_groups_by_id:
+            self._track_group_ids_change(old_groups_by_id)
         return res
+
+    def _track_group_ids_change(self, old_groups_by_id):
+        """Log 'group_ids' changes in the chatter.
+
+        Many2many fields are not supported by the native tracking
+        mechanism (``tracking=True``), so the change is logged manually.
+        """
+        for rec in self:
+            old_groups = old_groups_by_id.get(rec.id, self.env["res.groups"])
+            added = rec.group_ids - old_groups
+            removed = old_groups - rec.group_ids
+            if not added and not removed:
+                continue
+            messages = []
+            if added:
+                messages.append(
+                    _("Added: %s") % ", ".join(added.mapped("display_name"))
+                )
+            if removed:
+                messages.append(
+                    _("Removed: %s") % ", ".join(removed.mapped("display_name"))
+                )
+            rec.message_post(body=_("Group: %s") % " ; ".join(messages))
 
     def create_restriction_field(self, f_type):
         field_name = self.get_field_name(f_type)
