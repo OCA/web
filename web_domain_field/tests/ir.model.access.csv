@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+full_access,Full Access,model_web_domain_field_fake_model,,1,1,1,1
