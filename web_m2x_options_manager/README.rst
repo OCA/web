@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =======================
 Web M2X Options Manager
 =======================
@@ -17,7 +13,7 @@ Web M2X Options Manager
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -45,11 +41,16 @@ Usage
 
 Go to Settings > Technical > Models.
 
-Choose the model you wish to edit, and open its form view. Go to the
-"Create/Edit Options" tab, and add the fields you want to manage.
+Choose the model you wish to edit, and open its form view. Go to the "Create/Edit Options" tab,
+and add the fields you want to manage in 2 different sections:
 
-Button "Fill" will add every missing field to the options.
-Button "Empty" will remove every option.
+* the first list view allows you to handle fields for the selected model
+* the second list view allows you to handle fields where the selected model is the comodel
+
+For both sections:
+
+* button "Fill" will add every missing field to the options
+* button "Empty" will remove every option
 
 Bug Tracker
 ===========
