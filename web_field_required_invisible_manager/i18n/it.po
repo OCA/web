@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-13 11:40+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2026-11-06 15:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.actions.act_window,name:web_field_required_invisible_manager.action_cfr_all_view_tree
@@ -193,7 +193,7 @@ msgstr "Campi in sola lettura"
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required
 msgid "Required"
-msgstr "Obbligatorio"
+msgstr "Richiesta"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required_field_id
