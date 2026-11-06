@@ -1,0 +1,24 @@
+// Dark mode is left to web_dark_mode, which has its own navbar variables
+$o-navbar-background: null !default;
+$o-navbar-border-bottom: null !default;
+$o-navbar-entry-color: null !default;
+$o-navbar-entry-color--hover: null !default;
+$o-navbar-entry-bg--hover: null !default;
+$o-navbar-brand-color: null !default;
+$o-navbar-badge-color: null !default;
+$o-navbar-badge-text-shadow: null !default;
+
+@if $o-webclient-color-scheme == bright {
+    $o-navbar-background: $o-view-background-color !default;
+    // The line is drawn in navbar.scss
+    $o-navbar-border-bottom: 0 !default;
+
+    $o-navbar-entry-color: $o-gray-700 !default;
+    $o-navbar-entry-color--hover: $o-gray-900 !default;
+    $o-navbar-entry-bg--hover: mix($o-brand-odoo, $o-navbar-background, 8%) !default;
+
+    $o-navbar-brand-color: $o-brand-odoo !default;
+
+    $o-navbar-badge-color: $o-white !default;
+    $o-navbar-badge-text-shadow: none !default;
+}
