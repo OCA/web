@@ -16,35 +16,62 @@ class Base(models.AbstractModel):
                 res.update(vals)
         return res
 
+    def _check_restriction_group(self, rule):
+        """
+        Determina si la restricción debe aplicarse al usuario actual basándose
+        en los grupos y el método (Whitelist/Blacklist).
+        Devuelve True si la restricción debe activarse (bloquear/ocultar).
+        """
+        user_groups = self.env.user.groups_id
+        has_group = bool(rule.group_ids & user_groups)
+
+        method = getattr(rule, "restriction_method", "exclude") or "exclude"
+
+        if method == "exclude":
+            return has_group
+        elif method == "include":
+            return not has_group
+        return False
+
     def _default_get_compute_restrictions_fields(self):
-        restrictions_ids = self.env["custom.field.restriction"]._get_ids_by_model(
-            self._name
+        restrictions = (
+            self.env["custom.field.restriction"]
+            .sudo()
+            .search([("model_name", "=", self._name)])
         )
+
         values = {}
-        if not restrictions_ids:
+        if not restrictions:
             return values
 
-        for r in self.env["custom.field.restriction"].browse(restrictions_ids):
+        for r in restrictions:
+            field_name = False
             if r.visibility_field_id:
                 field_name = r.visibility_field_id.name
-                values[field_name] = False
-            if r.required_field_id:
+            elif r.required_field_id:
                 field_name = r.required_field_id.name
-                values[field_name] = False
-            if r.readonly_field_id:
+            elif r.readonly_field_id:
                 field_name = r.readonly_field_id.name
+
+            if field_name:
                 values[field_name] = False
-            if r.group_ids:
-                if r.group_ids & self.env.user.groups_id:
+
+                if self._check_restriction_group(r):
                     values[field_name] = True
+
         return values
 
     def _compute_restrictions_fields(self):
         """Common compute method for all restrictions types"""
-        restrictions_ids = self.env["custom.field.restriction"]._get_ids_by_model(
-            self._name
+        restrictions = (
+            self.env["custom.field.restriction"]
+            .sudo()
+            .search([("model_name", "=", self._name)])
         )
-        for r in self.env["custom.field.restriction"].browse(restrictions_ids):
+
+        for r in restrictions:
+            applies_to_user = self._check_restriction_group(r)
+
             for record in self:
                 if r.visibility_field_id:
                     field_name = r.visibility_field_id.name
@@ -55,12 +82,29 @@ class Base(models.AbstractModel):
                 if r.readonly_field_id:
                     field_name = r.readonly_field_id.name
                     record[field_name] = False
+
+                field_to_set = False
+                if r.visibility_field_id:
+                    field_to_set = r.visibility_field_id.name
+                elif r.required_field_id:
+                    field_to_set = r.required_field_id.name
+                elif r.readonly_field_id:
+                    field_to_set = r.readonly_field_id.name
+
+                if not field_to_set:
+                    continue
+
+                should_restrict = False
+
                 if r.condition_domain:
-                    filtered_rec_id = record.filtered_domain(
-                        safe_eval(r.condition_domain)
-                    )
-                    if filtered_rec_id and r.group_ids & self.env.user.groups_id:
-                        record[field_name] = True
-                elif r.group_ids:
-                    if r.group_ids & self.env.user.groups_id:
-                        record[field_name] = True
+                    try:
+                        domain = safe_eval(r.condition_domain)
+                        if record.filtered_domain(domain) and applies_to_user:
+                            should_restrict = True
+                    except Exception:
+                        pass
+                elif applies_to_user:
+                    should_restrict = True
+
+                if should_restrict:
+                    record[field_to_set] = True

@@ -1,5 +1,4 @@
 # Copyright 2023 ooops404
-# Copyright 2025 Simone Rubino - PyTech
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html)
 import json
 
@@ -13,19 +12,37 @@ from odoo.addons.base.models.ir_ui_view import NameManager
 class IrUiView(models.Model):
     _inherit = "ir.ui.view"
 
+    def _get_applicable_restrictions(self, model_name):
+        """
+        Returns the restrictions that apply to the current user for the given model,
+        handling both Blacklist (exclude) and Whitelist (include) logic.
+        """
+        restrictions = (
+            self.env["custom.field.restriction"]
+            .sudo()
+            .search([("model_name", "=", model_name)])
+        )
+
+        user_groups = self.env.user.groups_id
+        applicable_restrictions = self.env["custom.field.restriction"]
+
+        for rule in restrictions:
+            user_has_group = bool(user_groups & rule.group_ids)
+
+            if rule.restriction_method == "exclude":
+                if user_has_group:
+                    applicable_restrictions += rule
+            elif rule.restriction_method == "include":
+                if not user_has_group:
+                    applicable_restrictions += rule
+
+        return applicable_restrictions
+
     def postprocess_and_fields(self, node, model=None, validate=False):
         arch, new_fields = super().postprocess_and_fields(node, model, validate)
         if self.type not in ["form", "tree"] and node.tag not in ["form", "tree"]:
             return arch, new_fields
-        restrictions_ids = self.env["custom.field.restriction"]._get_ids_by_model(
-            model or self.model
-        )
-        restrictions = self.env["custom.field.restriction"].search(
-            [
-                ("id", "in", restrictions_ids),
-                ("group_ids", "in", self.env.user.groups_id.ids),
-            ]
-        )
+        restrictions = self._get_applicable_restrictions(model or self.model)
         view_type = node.tag or self.type
         if restrictions:
             arch = self.create_restrictions_fields(restrictions, view_type, arch)
@@ -40,17 +57,10 @@ class IrUiView(models.Model):
             for k in view_model.field_id
             if k.ttype in ["many2many", "many2one", "one2many"]
         ]
-        restrictions_ids = []
+        # [r[1] for r in related_fields]
+        restrictions = self.env["custom.field.restriction"]
         for model_name in [r[1] for r in related_fields]:
-            restrictions_ids += self.env["custom.field.restriction"]._get_ids_by_model(
-                model_name
-            )
-        restrictions = self.env["custom.field.restriction"].search(
-            [
-                ("id", "in", restrictions_ids),
-                ("group_ids", "in", self.env.user.groups_id.ids),
-            ]
-        )
+            restrictions += self._get_applicable_restrictions(model_name)
         if restrictions and view_type == "form":
             for restr in restrictions:
                 todo_fields = list(
