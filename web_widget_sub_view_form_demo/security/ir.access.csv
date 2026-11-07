@@ -1,0 +1,4 @@
+id,name,model_id,group_id/id,operation,domain
+access_partner_teacher,partner.teacher,partner.teacher,base.group_user,crud,
+access_partner_course,partner.course,partner.course,base.group_user,crud,
+access_partner_student,partner.student,partner.student,base.group_user,crud,
