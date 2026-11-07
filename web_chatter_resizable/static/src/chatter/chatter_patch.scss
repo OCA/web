@@ -1,0 +1,65 @@
+// Copyright 2026 Luca Orioli <lucaorioli@gmail.com>
+// License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+
+// Keep in sync with VIEW_MIN_WIDTH in chatter_patch.esm.js
+$o-chatter-resizable-view-min-width: 10px;
+
+:root {
+    // Read by chatter_patch.esm.js: the chatter is not designed to be narrower
+    --ChatterResizable-minWidth: #{$o-mail-Chatter-minWidth};
+}
+
+.o-mail-ChatterContainer.o-aside {
+    &:has(> .o_chatter_resize_handle) {
+        position: relative;
+    }
+
+    &.o_chatter_resized {
+        // Override fixed widths set by other modules, e.g. web_responsive
+        flex: 0 0 var(--ChatterResizable-width) !important;
+        width: var(--ChatterResizable-width);
+        max-width: calc(100% - #{$o-chatter-resizable-view-min-width});
+    }
+
+    &.o_chatter_hidden {
+        display: none !important;
+    }
+}
+
+// Same look as the outer handle of ResizablePanel in Odoo 20.0, a thin line when
+// the pointer rests on it or while dragging, but inside the chatter: the edge of
+// the form beside it holds the scrollbar of the sheet
+.o_chatter_resize_handle {
+    z-index: 10;
+    width: map-get($spacers, 2);
+    cursor: col-resize;
+    touch-action: none;
+    opacity: 0;
+
+    &:hover {
+        opacity: 1;
+        transition: opacity 0s 0.25s;
+    }
+
+    .o_chatter_resizing & {
+        opacity: 1;
+        transition: none;
+    }
+}
+
+body.o_chatter_resizing {
+    cursor: col-resize;
+    user-select: none;
+}
+
+// Let the form use all the room left beside a side chatter, also on very wide
+// screens, so that it does not jump when the chatter is resized or restored.
+// A hidden chatter leaves the form as without chatter.
+.o_form_renderer:has(> .o-mail-Form-chatter.o-aside:not(.o_chatter_hidden)) {
+    max-width: none;
+}
+
+.o_form_sheet_bg:has(+ .o-mail-Form-chatter.o-aside:not(.o_chatter_hidden)) {
+    max-width: none;
+    min-width: $o-chatter-resizable-view-min-width;
+}
