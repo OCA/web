@@ -11,6 +11,9 @@ extend-select = [
     "UP",  # pyupgrade
 ]
 extend-safe-fixes = ["UP008"]
+extend-ignore = [
+    "RUF012",  # mutable-class-default
+]
 exclude = ["setup/*"]
 
 [format]
