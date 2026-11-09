@@ -5,6 +5,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestIrActionsActWindowMessage(BaseCommon):
+    _test_user_groups = ("base.group_system",)
+
     def test_get_readable_fields(self):
         action = self.env["ir.actions.act_window.message"].create(
             {

@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Client side message boxes",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "author": "Therp BV, ACSONE SA/NV, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
@@ -11,7 +11,7 @@
     "maintainers": ["hbrunn"],
     "depends": ["web"],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
     ],
     "demo": [
         "demo/ir_actions_server.xml",

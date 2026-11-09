@@ -5,6 +5,7 @@
 - Abraham Anes (Studio73) \<<abraham@studio73.es>\>
 - Miguel Gandia (Studio73) \<<miguel@studio73.es>\>
 - Sergio Martínez (Studio73) \<<sergio.martinez@studio73.es>\>
+- Alex Garcia (Studio73) \<<alex@studio73.es>\>
 - [DynApps NV](https://www.dynapps.be):
   - Koen Loodts
   - Raf Ven

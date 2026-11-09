@@ -1,20 +1,23 @@
-import {Component, onWillStart, useState} from "@odoo/owl";
+import {Component, t, useProps} from "@odoo/owl";
 import {Dialog} from "@web/core/dialog/dialog";
 import {_t} from "@web/core/l10n/translation";
-import {useService} from "@web/core/utils/hooks";
 import {router} from "@web/core/browser/router";
+import {useService} from "@web/core/utils/hooks";
 
 export class ActWindowMessageDialog extends Component {
+    props = useProps({
+        title: t.string().optional(),
+        body: t.string().optional(),
+        action: t.object(),
+        is_html_message: t.boolean().optional(false),
+        size: t.string(),
+        close: t.function(),
+    });
+
     setup() {
         this.orm = useService("orm");
         this.action = useService("action");
-        this.state = useState({
-            buttons: [],
-        });
-        onWillStart(this.willStart);
-    }
-
-    async willStart() {
+        this.buttons = [];
         this.generateButtons();
     }
 
@@ -44,7 +47,7 @@ export class ActWindowMessageDialog extends Component {
         var self = this;
         const action = self.props.action;
         if (action.close_button_title !== false) {
-            self.state.buttons.push({
+            self.buttons.push({
                 name: action.close_button_title || _t("Close"),
                 click: () => {
                     self._refreshWidget();
@@ -82,7 +85,7 @@ export class ActWindowMessageDialog extends Component {
                     }
                 },
             };
-            self.state.buttons.push(button_data);
+            self.buttons.push(button_data);
         }
     }
 }
@@ -91,18 +94,4 @@ ActWindowMessageDialog.template =
     "web_ir_actions_act_window_message.ActWindowMessageDialog";
 ActWindowMessageDialog.components = {
     Dialog,
-};
-ActWindowMessageDialog.props = {
-    title: {
-        type: String,
-        optional: true,
-    },
-    body: {
-        type: String,
-        optional: true,
-    },
-    action: {type: Object, optional: true},
-    is_html_message: {type: Boolean, optional: true},
-    size: {type: String},
-    close: Function,
 };
