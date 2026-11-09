@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="demo_action" model="ir.actions.server">
         <field name="name">web_ir_actions_act_window_message test (html)</field>
