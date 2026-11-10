@@ -34,7 +34,7 @@ export class ExpandButton extends Component {
             ? this.props.getoriginalsize()
             : this.props.getsize() !== "dialog_full_screen"
               ? this.props.getsize()
-              : "md";
+              : Dialog.defaultProps.size;
         // The props never change, so the dialog rendering does not render
         // this button again: keep the size in its own state to switch icons
         this.state = useState({size: this.props.getsize()});
@@ -68,6 +68,7 @@ ExpandButton.template = "web_dialog_size.ExpandButton";
 patch(Dialog.prototype, {
     setup() {
         this.originalSize = this.props.size;
+        this._parentSize = this.props.size;
         super.setup();
         this.setSize = this.setSize.bind(this);
         this.getSize = this.getSize.bind(this);
@@ -101,7 +102,7 @@ patch(Dialog.prototype, {
                         if (serverValue === "true") {
                             this.setSize("dialog_full_screen");
                         } else if (this._forcedSize === "dialog_full_screen") {
-                            this.setSize(this.originalSize || "md");
+                            this.setSize(this.originalSize || Dialog.defaultProps.size);
                         }
                     }
                 }
@@ -109,6 +110,18 @@ patch(Dialog.prototype, {
             .catch(() => {
                 // Session likely expired → ignore
             });
+
+        onWillUpdateProps((nextProps) => {
+            // A size coming from the parent (e.g. the expand button of a
+            // SelectCreateDialog, which wraps this dialog) replaces the forced
+            // one. Otherwise the dialog could never leave its forced size.
+            if (nextProps.size !== this._parentSize) {
+                this._parentSize = nextProps.size;
+                if (this._forcedSize) {
+                    this._forcedSize = nextProps.size;
+                }
+            }
+        });
 
         onWillRender(() => {
             if (this._forcedSize && this.props.size !== this._forcedSize) {
@@ -128,7 +141,7 @@ patch(Dialog.prototype, {
     },
 
     getOriginalSize() {
-        return this.originalSize || "md";
+        return this.originalSize || Dialog.defaultProps.size;
     },
 });
 
@@ -166,7 +179,7 @@ patch(SelectCreateDialog.prototype, {
                         if (serverValue === "true") {
                             this.setSize("dialog_full_screen");
                         } else if (this.props.size === "dialog_full_screen") {
-                            this.setSize(this.originalSize || "md");
+                            this.setSize(this.originalSize || Dialog.defaultProps.size);
                         }
                     }
                 }
@@ -186,7 +199,7 @@ patch(SelectCreateDialog.prototype, {
     },
 
     getOriginalSize() {
-        return this.originalSize || "md";
+        return this.originalSize || Dialog.defaultProps.size;
     },
 });
 
