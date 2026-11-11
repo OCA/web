@@ -1,0 +1,33 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_discuss_portal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-21 08:15+0000\n"
+"PO-Revision-Date: 2026-07-21 08:15+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_discuss_portal
+#: model_terms:ir.ui.view,arch_db:web_discuss_portal.portal_template
+msgid "Chat with us"
+msgstr ""
+
+#. module: web_discuss_portal
+#: model_terms:ir.ui.view,arch_db:web_discuss_portal.discuss_portal
+#: model_terms:ir.ui.view,arch_db:web_discuss_portal.portal_breadcrumbs
+#: model_terms:ir.ui.view,arch_db:web_discuss_portal.portal_template
+msgid "Discuss"
+msgstr ""
+
+#. module: web_discuss_portal
+#: model_terms:ir.ui.view,arch_db:web_discuss_portal.discuss_portal
+msgid "There are no channels available for you yet."
+msgstr ""

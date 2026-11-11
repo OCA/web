@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="portal_template"
+        name="Portal My Home: discuss"
+        inherit_id="portal.portal_my_home"
+        priority="20"
+    >
+        <div id="portal_common_category" position="after">
+            <div class="o_portal_discuss row g-2 mt-3" id="portal_discuss">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Discuss</t>
+                    <t t-set="text">Chat with us</t>
+                    <t t-set="url" t-value="'/my/discuss'" />
+                    <t
+                        t-set="icon"
+                        t-value="'/web_discuss_portal/static/img/discuss.svg'"
+                    />
+                    <t t-set="config_card" t-value="True" />
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <template
+        id="portal_breadcrumbs"
+        inherit_id="portal.portal_breadcrumbs"
+        priority="20"
+    >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'discuss'" class="breadcrumb-item">Discuss</li>
+        </xpath>
+    </template>
+
+    <template id="discuss_portal" name="My Discuss Channels">
+        <t t-call="portal.portal_layout">
+            <h3 class="mb-3">Discuss</h3>
+            <t t-if="not channels">
+                <div class="alert alert-info" role="alert">
+                    There are no channels available for you yet.
+                </div>
+            </t>
+            <t t-else="">
+                <t t-call="portal.portal_table">
+                    <tbody>
+                        <tr t-foreach="channels" t-as="channel">
+                            <td>
+                                <a t-attf-href="/discuss/channel/#{channel.id}">
+                                    <t t-out="channel.name" />
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
