@@ -4,13 +4,14 @@
 
 import logging
 
+from lxml import html
+
 from odoo import api, models
 
 _logger = logging.getLogger(__name__)
 
 try:
     import mpld3
-    from bs4 import BeautifulSoup
 except (OSError, ImportError) as err:  # pragma: no cover
     _logger.debug(err)
 
@@ -22,9 +23,11 @@ class AbstractMpld3Parser(models.AbstractModel):
     @api.model
     def convert_figure_to_json(self, figure):  # pragma: no cover
         html_string = mpld3.fig_to_html(figure, no_extras=True, include_libraries=False)
-        soup = BeautifulSoup(html_string, "lxml")
+        root = html.fragment_fromstring(html_string, create_parent="div")
         json_data = {
-            "div": str(soup.div),
-            "script": soup.script.decode_contents(),
+            "div": html.tostring(
+                root.find(".//div"), encoding="unicode", with_tail=False
+            ),
+            "script": root.find(".//script").text or "",
         }
         return json_data
