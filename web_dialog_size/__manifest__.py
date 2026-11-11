@@ -15,7 +15,7 @@
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "category": "web",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "license": "AGPL-3",
     "depends": ["web"],
     "installable": True,
