@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ir_actions_close_wizard_refresh_view,access_ir_actions_close_wizard_refresh_view,model_ir_actions_close_wizard_refresh_view,base.group_user,1,1,1,1
