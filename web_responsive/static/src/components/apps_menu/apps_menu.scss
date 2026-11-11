@@ -93,7 +93,11 @@
     // Display apps in a grid
     align-content: flex-start;
     display: flex !important;
-    z-index: 1024 !important;
+    // Must stay below mail's .o-mail-ChatWindow (z-index: $zindex-sticky):
+    // both are full-height `position: fixed` panels that spatially overlap,
+    // so a value >= $zindex-sticky here permanently hides any open chat
+    // window whenever the apps grid is opened.
+    z-index: $zindex-sticky - 1 !important;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
