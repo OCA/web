@@ -16,7 +16,7 @@ const viewRegistry = registry.category("views");
 
 export const TimelineView = {
     display_name: _t("Timeline"),
-    icon: "fa fa-tasks",
+    icon: "view_timeline",
     multiRecord: true,
     ArchParser: TimelineArchParser,
     Controller: TimelineController,
