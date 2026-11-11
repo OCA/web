@@ -55,7 +55,17 @@ patch(Dialog.prototype, {
     },
 
     get size() {
-        return this.maximized() ? "dialog_full_screen" : super.size;
+        return this.maximized() ? "fs" : super.size;
+    },
+});
+
+patch(ActionDialog.prototype, {
+    setup() {
+        super.setup();
+        // Core (mail) adds its own expand button to some action dialogs, with its
+        // own state. This module already provides one for every dialog, so hide it.
+        // Defined on the instance so it wins whatever the patch order is.
+        Object.defineProperty(this, "canExpand", {get: () => false});
     },
 });
 
