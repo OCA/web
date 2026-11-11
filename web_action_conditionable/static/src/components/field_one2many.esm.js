@@ -1,8 +1,7 @@
-/** @odoo-module **/
 /* global console */
-import {X2ManyField} from "@web/views/fields/x2many/x2many_field";
-import {evaluateExpr} from "@web/core/py_js/py";
+import {evaluateBooleanExpr} from "@web/core/py_js/py";
 import {patch} from "@web/core/utils/patch";
+import {X2ManyField} from "@web/views/fields/x2many/x2many_field";
 
 patch(X2ManyField.prototype, {
     get rendererProps() {
@@ -10,21 +9,21 @@ patch(X2ManyField.prototype, {
         return super.rendererProps;
     },
     updateActiveActions() {
+        const archInfo = this.archInfo;
         if (
             this.props.viewMode === "list" &&
             this.activeActions.type === "one2many" &&
-            !this.props.readonly
+            !this.props.readonly &&
+            archInfo?.xmlDoc
         ) {
-            const self = this;
-            const archInfo = this.activeField.views[this.props.viewMode];
             const xmlDoc = archInfo.xmlDoc;
-            ["create", "delete"].forEach(function (item) {
-                if (item in self.activeActions && xmlDoc.hasAttribute(item)) {
-                    const expr = xmlDoc.getAttribute(item);
+            for (const action of ["create", "delete"]) {
+                if (action in this.activeActions && xmlDoc.hasAttribute(action)) {
+                    const expr = xmlDoc.getAttribute(action);
                     try {
-                        self.activeActions[item] = evaluateExpr(
+                        this.activeActions[action] = evaluateBooleanExpr(
                             expr,
-                            self.props.record.data
+                            this.props.record.evalContext
                         );
                     } catch (error) {
                         console.warn(
@@ -35,7 +34,7 @@ patch(X2ManyField.prototype, {
                         console.warn(error);
                     }
                 }
-            });
+            }
         }
     },
 });
