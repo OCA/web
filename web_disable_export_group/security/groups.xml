@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2016 Onestein
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).-->
+<odoo>
+    <record id="res_groups_privilege_export" model="res.groups.privilege">
+        <field name="name">Export All</field>
+        <field name="sequence">999</field>
+        <field name="category_id" ref="base.module_category_hidden" />
+    </record>
+
+    <record id="group_export_xlsx_data" model="res.groups">
+        <field name="name">Direct Export (xlsx)</field>
+        <field name="user_ids" eval="[(5, 0, 0)]" />
+    </record>
+    <record id="base.group_allow_export" model="res.groups">
+        <field
+            name="implied_ids"
+            eval="[(3, ref('web_disable_export_group.group_export_xlsx_data'))]"
+        />
+    </record>
+</odoo>
