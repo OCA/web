@@ -4,6 +4,7 @@
 import base64
 import io
 
+from lxml import html
 from PIL import Image
 
 from odoo import exceptions
@@ -30,6 +31,14 @@ class TestWebPwaCustomize(HttpCaseWithUserDemo):
         self.assertEqual(data["short_name"], "SHORT-NAME")
         self.assertEqual(data["background_color"], "#2E69B5")
         self.assertEqual(data["theme_color"], "#2E69B4")
+
+    def test_webclient_theme_color(self):
+        self.authenticate("demo", "demo")
+        response = self.url_open("/odoo")
+        theme_color = html.fromstring(response.content).xpath(
+            "//meta[@name='theme-color']/@content"
+        )
+        self.assertEqual(theme_color, ["#2E69B4"])
 
     def test_pwa_settings_processing(self):
         """Test the settings logic and icon attachment generation"""
