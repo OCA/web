@@ -1,6 +1,8 @@
 # Copyright 2025 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.service.model import call_kw
+
 from .common import Common
 
 
@@ -84,6 +86,21 @@ class TestIrModelFields(Common):
             [r[0] for r in ir_model_fields.name_search(name, domain, limit=None)],
             [test_field_abc.id, test_field.id],
         )
+
+        # The web client passes the domain by keyword (Search More, search bar)
+        result = call_kw(
+            ir_model_fields,
+            "name_search",
+            [],
+            {
+                "name": name,
+                "domain": domain,
+                "operator": "ilike",
+                "limit": 8,
+                "context": {"search_by_technical_name": True},
+            },
+        )
+        self.assertEqual([r[0] for r in result], [test_field_abc.id, test_field.id])
 
         # Search again by mimicking the ``ir.model`` Form view for m2x options
         users_model = self.env["ir.model"]._get("res.users")
