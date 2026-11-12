@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_daypilot.DayPilotRendererControls">
+        <div class="o_daypilot_navigation_buttons btn-group d-print-none">
+            <button
+                class="o_daypilot_button_prev btn btn-secondary d-none d-md-block"
+                title="Previous"
+                aria-label="Previous"
+                t-on-click.stop="() => this.selectRange('previous')"
+            >
+                <i class="oi oi-arrow-left" />
+            </button>
+            <button
+                class="o_daypilot_button_next btn btn-secondary d-none d-md-block"
+                title="Next"
+                aria-label="Next"
+                t-on-click.stop="() => this.selectRange('next')"
+            >
+                <i class="oi oi-arrow-right" />
+            </button>
+        </div>
+        <button
+            class="o_daypilot_button_today btn btn-secondary d-print-none order-2 order-lg-0 ms-auto ms-lg-0"
+            t-att-class="env.isSmall ? 'btn-sm btn-light' : 'btn-secondary'"
+            title="Focus Today"
+            data-hotkey="t"
+            t-on-click.stop="onTodayClicked"
+        >
+            <span t-if="env.isSmall" class="position-relative pt-1">
+                <t t-esc="today" />
+                <i
+                    class="fa fa-calendar-o position-absolute top-50 start-50 translate-middle fs-1"
+                />
+            </span>
+            <t t-else="">Today</t>
+        </button>
+        <div class="btn-group d-print-none position-relative">
+            <button
+                class="btn btn-secondary"
+                title="Select Date"
+                t-on-click.stop="toggleDatePicker"
+            >
+                <i class="oi oi-calendar me-1" />
+                <t t-esc="dateHeader" />
+            </button>
+            <div
+                t-if="state.showDatePicker"
+                class="position-absolute top-100 start-0 mt-1 z-3 shadow bg-white rounded p-2"
+            >
+                <DatePicker t-props="datePickerProps" />
+            </div>
+        </div>
+    </t>
+
+</templates>

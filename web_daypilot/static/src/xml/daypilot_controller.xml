@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_daypilot.DayPilotController">
+        <div t-att-class="className" t-ref="root">
+            <Layout
+                className="model.useSampleModel ? 'o_view_sample_data' : ''"
+                display="props.display"
+            >
+                <t t-set-slot="control-panel-create-button">
+                    <button
+                        t-if="model.metaData.canCreate"
+                        class="o_daypilot_button_add btn btn-primary"
+                        data-hotkey="r"
+                        t-on-click="onNewClicked"
+                    >
+                        New
+                    </button>
+                </t>
+                <t t-set-slot="control-panel-additional-actions">
+                    <CogMenu />
+                </t>
+                <t t-set-slot="layout-buttons">
+                    <t t-call="{{ props.buttonTemplate }}" />
+                </t>
+                <t t-set-slot="layout-actions">
+                    <SearchBar toggler="searchBarToggler" />
+                </t>
+                <t t-set-slot="control-panel-navigation-additional">
+                    <t
+                        t-component="searchBarToggler.component"
+                        t-props="searchBarToggler.props"
+                    />
+                </t>
+                <t t-set-slot="default" t-slot-scope="layout">
+                    <t t-if="showNoContentHelp">
+                        <ActionHelper noContentHelp="props.info.noContentHelp" />
+                    </t>
+                    <t
+                        t-component="props.Renderer"
+                        class="model.useSampleModel ? 'o_sample_data_disabled' : ''"
+                        model="model"
+                        create.bind="create"
+                        openDialog.bind="openDialog"
+                    />
+                </t>
+            </Layout>
+        </div>
+    </t>
+
+    <t t-name="web_daypilot.DayPilotView.Buttons" />
+
+</templates>

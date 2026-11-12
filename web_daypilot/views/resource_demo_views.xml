@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Demo DayPilot view for resource.calendar.leaves (Time Off) -->
+    <record id="view_resource_daypilot" model="ir.ui.view">
+        <field name="name">resource.calendar.leaves.daypilot</field>
+        <field name="model">resource.calendar.leaves</field>
+        <field name="arch" type="xml">
+            <daypilot
+                date_start="date_from"
+                date_stop="date_to"
+                default_scale="CellDuration"
+                default_range="day"
+                time_slot_duration="30"
+                business_hours_start="8"
+                business_hours_end="18"
+            >
+                <field name="name" />
+                <field name="resource_id" />
+                <field name="calendar_id" />
+                <field name="time_type" />
+            </daypilot>
+        </field>
+    </record>
+
+    <!-- Demo action for the DayPilot view -->
+    <record id="action_resource_daypilot_demo" model="ir.actions.act_window">
+        <field name="name">DayPilot Demo</field>
+        <field name="res_model">resource.calendar.leaves</field>
+        <field name="view_mode">daypilot,list,form</field>
+        <field name="view_id" ref="view_resource_daypilot" />
+        <field name="context">{'group_by': ['resource_id']}</field>
+    </record>
+
+    <!-- Demo menu item (Settings > Technical) -->
+    <menuitem
+        id="menu_resource_daypilot_demo"
+        name="Resource DayPilot Demo"
+        parent="base.menu_custom"
+        action="action_resource_daypilot_demo"
+        sequence="4"
+    />
+</odoo>
