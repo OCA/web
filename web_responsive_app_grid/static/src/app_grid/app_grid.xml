@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<templates>
+    <!-- Replace the flat app list inside the apps drawer with the free-form grid. -->
+    <t t-inherit="web_responsive.AppsMenu" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o-app-menu-list')]" position="replace">
+            <AppGrid />
+        </xpath>
+    </t>
+
+    <t t-name="web_responsive_app_grid.AppGrid">
+        <div
+            class="o_app_grid"
+            t-ref="grid"
+            t-att-class="{o_editing: state.editing}"
+            t-on-pointerdown="onPointerDown"
+            t-on-pointermove="onPointerMove"
+            t-on-pointerup="cancelLongPress"
+            t-on-pointercancel="cancelLongPress"
+            t-on-pointerleave="cancelLongPress"
+            t-on-contextmenu="(ev) => ev.preventDefault()"
+            t-on-click="onCanvasClick"
+        >
+            <div class="o_app_grid__cells">
+                <div
+                    t-foreach="visualModel.cells"
+                    t-as="cell"
+                    t-key="cell.row * 100 + cell.col"
+                    class="o_app_grid__cell"
+                    t-att-class="cell.classes"
+                    t-att-style="cell.style"
+                    t-att-data-row="cell.row"
+                    t-att-data-col="cell.col"
+                >
+                    <img
+                        t-if="cell.ghost"
+                        class="o_app_grid__ghost"
+                        t-att-src="cell.ghost"
+                    />
+                </div>
+                <div
+                    t-foreach="visualModel.seps"
+                    t-as="sep"
+                    t-key="sep.key"
+                    class="o_app_grid__sep"
+                    t-att-class="sep.classes"
+                    t-att-style="sep.style"
+                    t-att-data-from-row="sep.fromRow"
+                    t-on-dblclick="() => this.onSepDblClick(sep.row)"
+                >
+                    <input
+                        t-if="state.titleRow === sep.row"
+                        t-ref="titleInput"
+                        class="o_app_grid__sep_input"
+                        placeholder="Group name"
+                        t-att-value="sep.title"
+                        t-on-pointerdown="(ev) => ev.stopPropagation()"
+                        t-on-blur="(ev) => this.onTitleCommit(sep.row, ev)"
+                        t-on-keydown="(ev) => this.onTitleKeydown(sep.row, ev)"
+                    />
+                    <t t-else="">
+                        <span
+                            t-if="sep.title"
+                            class="o_app_grid__sep_title"
+                            t-out="sep.title"
+                        />
+                    </t>
+                    <button
+                        t-if="state.editing"
+                        class="o_app_grid__sep_remove btn"
+                        t-on-pointerdown="(ev) => ev.stopPropagation()"
+                        t-on-click="() => this.onRemoveGroup(sep.row)"
+                    >
+                        ×
+                    </button>
+                </div>
+                <div
+                    t-if="visualModel.sepCue"
+                    class="o_app_grid__sep o_sep_cue"
+                    t-att-style="visualModel.sepCue.style"
+                />
+                <a
+                    t-foreach="visualModel.items"
+                    t-as="item"
+                    t-key="item.menuId"
+                    class="o-app-menu-item o_app_grid__item"
+                    t-att-class="{o_landed: item.menuId === state.landedId}"
+                    t-att-style="item.style"
+                    t-att-href="item.href"
+                    t-att-data-menu-id="item.menuId"
+                    t-att-aria-label="item.name"
+                    t-att-data-from-row="item.row"
+                    t-att-data-from-col="item.col"
+                    t-on-click="onItemClick"
+                    draggable="false"
+                >
+                    <div class="position-relative o_app">
+                        <img
+                            class="o-app-menu-item__icon rounded-3"
+                            draggable="false"
+                            t-att-src="item.icon"
+                        />
+                    </div>
+                    <span class="o-app-menu-item__name" t-out="item.name" />
+                </a>
+            </div>
+            <div t-if="state.showHint" class="o_app_grid__hint">
+                Press &amp; hold an icon or empty space to rearrange
+            </div>
+            <div t-if="state.editing" class="o_app_grid__actions">
+                <button class="o_app_grid__save btn" t-on-click="stopEditing">
+                    Save
+                </button>
+                <button
+                    t-if="state.undoAvailable"
+                    class="o_app_grid__discard btn"
+                    t-on-click="onDiscardClick"
+                >
+                    Discard
+                </button>
+                <button class="o_app_grid__options btn" t-on-click="onAddGroup">
+                    + Group
+                </button>
+                <button class="o_app_grid__options btn" t-on-click="onOptionsClick">
+                    Options
+                </button>
+            </div>
+        </div>
+    </t>
+</templates>
