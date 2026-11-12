@@ -1,6 +1,6 @@
 [project]
 name = "odoo-addons-oca-web"
-version = "20.0.20261112.0"
+version = "20.0.20261112.1"
 dependencies = [
     "odoo-addon-web_dialog_size==20.0.*",
     "odoo-addon-web_environment_ribbon==20.0.*",
@@ -12,6 +12,7 @@ dependencies = [
     "odoo-addon-web_refresher==20.0.*",
     "odoo-addon-web_responsive==20.0.*",
     "odoo-addon-web_timeline==20.0.*",
+    "odoo-addon-web_widget_bokeh_chart==20.0.*",
     "odoo-addon-web_widget_numeric_step==20.0.*",
 ]
 classifiers=[
