@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Le Filament - License AGPL-3.0 or later -->
+<odoo>
+    <!-- Resources -->
+    <record id="res_room_a" model="fc.demo.resource">
+        <field name="name">Room A</field>
+        <field name="resource_type">room</field>
+    </record>
+    <record id="res_room_b" model="fc.demo.resource">
+        <field name="name">Room B</field>
+        <field name="resource_type">room</field>
+    </record>
+    <record id="res_car" model="fc.demo.resource">
+        <field name="name">Vehicle 1</field>
+        <field name="resource_type">car</field>
+    </record>
+    <record id="res_video" model="fc.demo.resource">
+        <field name="name">Video call</field>
+        <field name="resource_type">video</field>
+    </record>
+
+    <!-- Today's bookings (times in UTC) -->
+    <record id="booking_1" model="fc.demo.booking">
+        <field name="name">Management committee</field>
+        <field name="resource_id" ref="res_room_a" />
+        <field
+            name="date_start"
+            eval="(datetime.now().replace(hour=7, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="date_stop"
+            eval="(datetime.now().replace(hour=8, minute=30, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+    <record id="booking_2" model="fc.demo.booking">
+        <field name="name">Recruitment interview</field>
+        <field name="resource_id" ref="res_room_a" />
+        <field
+            name="date_start"
+            eval="(datetime.now().replace(hour=9, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="date_stop"
+            eval="(datetime.now().replace(hour=10, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+    <record id="booking_3" model="fc.demo.booking">
+        <field name="name">Product workshop</field>
+        <field name="resource_id" ref="res_room_b" />
+        <field
+            name="date_start"
+            eval="(datetime.now().replace(hour=8, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="date_stop"
+            eval="(datetime.now().replace(hour=11, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+    <record id="booking_4" model="fc.demo.booking">
+        <field name="name">Customer visit</field>
+        <field name="resource_id" ref="res_car" />
+        <field
+            name="date_start"
+            eval="(datetime.now().replace(hour=7, minute=30, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="date_stop"
+            eval="(datetime.now().replace(hour=12, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+    <record id="booking_5" model="fc.demo.booking">
+        <field name="name">Weekly video meeting</field>
+        <field name="resource_id" ref="res_video" />
+        <field
+            name="date_start"
+            eval="(datetime.now().replace(hour=12, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="date_stop"
+            eval="(datetime.now().replace(hour=13, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+    <record id="booking_6" model="fc.demo.booking">
+        <field name="name">Internal training</field>
+        <field name="resource_id" ref="res_room_b" />
+        <field
+            name="date_start"
+            eval="(datetime.now().replace(hour=13, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="date_stop"
+            eval="(datetime.now().replace(hour=15, minute=0, second=0, microsecond=0)).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+</odoo>
