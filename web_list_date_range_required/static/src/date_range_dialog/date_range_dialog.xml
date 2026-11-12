@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Heligrafics Fotogrametria S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+    <t t-name="web_list_date_range_required.DateRangeDialog">
+        <Dialog title="title" size="'md'">
+            <div class="o_date_range_dialog d-flex flex-column gap-3">
+                <div>
+                    <div
+                        t-foreach="rangeOptions"
+                        t-as="option"
+                        t-key="option.value"
+                        class="form-check form-check-inline"
+                    >
+                        <input
+                            type="radio"
+                            name="date_range"
+                            class="form-check-input"
+                            t-att-id="'o_date_range_' + option.value"
+                            t-att-value="option.value"
+                            t-att-checked="state.dateRange === option.value"
+                            t-on-change="() => this.onChangeDateRange(option.value)"
+                        />
+                        <label
+                            class="form-check-label"
+                            t-att-for="'o_date_range_' + option.value"
+                            t-esc="option.label"
+                        />
+                    </div>
+                </div>
+                <div
+                    t-if="state.dateRange === 'custom'"
+                    class="o_date_range_custom d-flex flex-column gap-2"
+                >
+                    <div class="o_date_range_from">
+                        <label class="form-label">Start Date</label>
+                        <DateTimeInput
+                            type="props.fieldType"
+                            value="state.fromDate"
+                            onChange="(date) => this.onChangeFromDate(date)"
+                            onApply="(date) => this.onChangeFromDate(date)"
+                        />
+                    </div>
+                    <div class="o_date_range_until">
+                        <label class="form-label">End Date</label>
+                        <DateTimeInput
+                            type="props.fieldType"
+                            value="state.untilDate"
+                            onChange="(date) => this.onChangeUntilDate(date)"
+                            onApply="(date) => this.onChangeUntilDate(date)"
+                        />
+                    </div>
+                </div>
+                <div
+                    t-if="state.error"
+                    class="o_date_range_error alert alert-danger mb-0"
+                    t-esc="state.error"
+                />
+            </div>
+            <t t-set-slot="footer">
+                <button
+                    class="btn btn-primary o_date_range_search"
+                    t-att-disabled="!!state.error"
+                    t-on-click="onSearch"
+                >Search</button>
+                <button
+                    class="btn btn-secondary"
+                    t-on-click="props.close"
+                >Close</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>

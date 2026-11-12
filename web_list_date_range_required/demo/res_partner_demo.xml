@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Heligrafics Fotogrametria S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="demo_partner_view_tree" model="ir.ui.view">
+        <field name="name">res.partner.tree.date_range_list.demo</field>
+        <field name="model">res.partner</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <tree js_class="date_range_list">
+                <field name="name" />
+                <field name="email" />
+                <field name="city" />
+                <field
+                    name="date"
+                    string="Last contact"
+                    options="{'date_range': {'max_days': 90}}"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record id="demo_partner_action" model="ir.actions.act_window">
+        <field name="name">Contacts by Last Contact Date</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="demo_partner_view_tree" />
+    </record>
+
+    <menuitem
+        id="demo_partner_menu"
+        parent="base.menu_users"
+        action="demo_partner_action"
+        sequence="100"
+    />
+
+    <record id="demo_partner_today" model="res.partner">
+        <field name="name">Northwind Freight</field>
+        <field name="email">ops@northwind.example.com</field>
+        <field name="city">Valencia</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-%m-%d')" />
+    </record>
+    <record id="demo_partner_today_2" model="res.partner">
+        <field name="name">Blue Harbor Drones</field>
+        <field name="email">fleet@blueharbor.example.com</field>
+        <field name="city">Alicante</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-%m-%d')" />
+    </record>
+    <record id="demo_partner_yesterday" model="res.partner">
+        <field name="name">Sierra Aerial Survey</field>
+        <field name="email">info@sierra-survey.example.com</field>
+        <field name="city">Granada</field>
+        <field
+            name="date"
+            eval="(DateTime.today() - relativedelta(days=1)).strftime('%Y-%m-%d')"
+        />
+    </record>
+    <record id="demo_partner_3_days" model="res.partner">
+        <field name="name">Coastline Rescue Unit</field>
+        <field name="email">dispatch@coastline.example.com</field>
+        <field name="city">Málaga</field>
+        <field
+            name="date"
+            eval="(DateTime.today() - relativedelta(days=3)).strftime('%Y-%m-%d')"
+        />
+    </record>
+    <record id="demo_partner_6_days" model="res.partner">
+        <field name="name">Pinewood Forestry</field>
+        <field name="email">rangers@pinewood.example.com</field>
+        <field name="city">Soria</field>
+        <field
+            name="date"
+            eval="(DateTime.today() - relativedelta(days=6)).strftime('%Y-%m-%d')"
+        />
+    </record>
+    <record id="demo_partner_12_days" model="res.partner">
+        <field name="name">Atlas Telemetry</field>
+        <field name="email">support@atlas-telemetry.example.com</field>
+        <field name="city">Zaragoza</field>
+        <field
+            name="date"
+            eval="(DateTime.today() - relativedelta(days=12)).strftime('%Y-%m-%d')"
+        />
+    </record>
+    <record id="demo_partner_25_days" model="res.partner">
+        <field name="name">Riverside Water Board</field>
+        <field name="email">alerts@riverside.example.com</field>
+        <field name="city">Sevilla</field>
+        <field
+            name="date"
+            eval="(DateTime.today() - relativedelta(days=25)).strftime('%Y-%m-%d')"
+        />
+    </record>
+    <record id="demo_partner_45_days" model="res.partner">
+        <field name="name">Highland Fire Brigade</field>
+        <field name="email">station@highland.example.com</field>
+        <field name="city">Huesca</field>
+        <field
+            name="date"
+            eval="(DateTime.today() - relativedelta(days=45)).strftime('%Y-%m-%d')"
+        />
+    </record>
+</odoo>
