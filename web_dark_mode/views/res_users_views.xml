@@ -5,9 +5,7 @@
         <field name="inherit_id" ref="base.view_users_form_simple_modif" />
         <field name="arch" type="xml">
             <group name="other_preferences" position="inside">
-                <group>
-                    <field name="dark_mode_device_dependent" />
-                </group>
+                <field name="dark_mode_device_dependent" />
             </group>
         </field>
     </record>
