@@ -42,6 +42,9 @@ comfortably
 
 - Big inputs on form in edit mode
 
+- Sticky search panel bar (the one replacing the sidebar) at the top of
+  the views, placed right below the control panel when it is visible.
+
 **Features for desktop computers**:
 
 - Keyboard shortcuts for easier navigation, **using \`Alt + Shift +

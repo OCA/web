@@ -1,0 +1,36 @@
+/* Copyright 2026 Tecnativa - Carlos Roca
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+// Sticky search panel bar (the one replacing the sidebar) on small screens.
+// It stays right below the control panel when this one is visible.
+@include media-breakpoint-down(md) {
+    // The action scrolls instead of its content, so let the content grow with
+    // the view. Otherwise the sticky bar is released once the scroll goes
+    // beyond the screen height, as it can't leave its parent.
+    html
+        .o_web_client
+        > .o_action_manager
+        > .o_action:not(.o_action_delegate_scroll)
+        > .o_content.o_component_with_search_panel {
+        flex-shrink: 0;
+        height: auto;
+
+        .o_renderer,
+        .o_renderer_with_searchpanel {
+            flex-shrink: 0;
+            height: auto;
+            max-height: none;
+        }
+    }
+
+    .o_component_with_search_panel,
+    .o_controller_with_searchpanel {
+        > .o_search_panel {
+            @include o-position-sticky($top: var(--ControlPanel-sticky-offset, 0px));
+            z-index: 9;
+            background-color: $o-view-background-color;
+            border-bottom: $border-width solid $border-color;
+            transition: top 0.5s;
+        }
+    }
+}
