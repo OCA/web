@@ -21,7 +21,7 @@ exclude: |
   # You don't usually want a bot to modify your legal texts
   (LICENSE.*|COPYING.*)
 default_language_version:
-  python: python3
+  python: python3.12
   node: "22.9.0"
 repos:
   - repo: local
@@ -38,12 +38,17 @@ repos:
         entry: found a en.po file
         language: fail
         files: '[a-zA-Z0-9_]*/i18n/en\.po$'
+      - id: obsolete dotfiles
+        name: obsolete dotfiles
+        entry: found obsolete files; remove them
+        files: '^(\.travis\.yml|\.t2d\.yml|CONTRIBUTING\.md|\.prettierrc\.yml|\.eslintrc\.yml)$'
+        language: fail
   - repo: https://github.com/sbidoul/whool
     rev: v1.3
     hooks:
       - id: whool-init
   - repo: https://github.com/oca/maintainer-tools
-    rev: f9b919b9868143135a9c9cb03021089cabba8223
+    rev: b8311a95009805a6e5593f0390f52c0fa350117f
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
@@ -60,7 +65,7 @@ repos:
           - --convert-fragments-to-markdown
       - id: oca-gen-external-dependencies
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
-    rev: v0.1.6
+    rev: v0.1.7
     hooks:
       - id: oca-checks-odoo-module
       - id: oca-checks-po
@@ -123,7 +128,7 @@ repos:
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
   - repo: https://github.com/OCA/pylint-odoo
-    rev: v9.3.15
+    rev: v10.0.8
     hooks:
       - id: pylint_odoo
         name: pylint with optional checks

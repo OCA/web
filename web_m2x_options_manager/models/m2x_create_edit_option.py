@@ -23,7 +23,6 @@ class M2xCreateEditOption(models.Model):
         ondelete="cascade",
         required=True,
         index=True,
-        string="Field",
     )
     field_name = fields.Char(
         related="field_id.name",
