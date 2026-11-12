@@ -4,6 +4,56 @@
  * Copyright 2023 Taras Shabaranskyi
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
+import {reactive} from "@odoo/owl";
+import {user} from "@web/core/user";
+
+/**
+ * Per-user apps menu ordering, persisted on `res.users.settings`.
+ * `ids` is `null` until loaded lazily on first access, because
+ * `user.settings` is not populated yet when this module is evaluated.
+ */
+export const appsMenuOrder = reactive({ids: null});
+
+function _loadAppsMenuOrder() {
+    if (appsMenuOrder.ids === null) {
+        const saved = user.settings.apps_menu_order;
+        appsMenuOrder.ids = Array.isArray(saved)
+            ? saved.map(Number).filter(Number.isFinite)
+            : [];
+    }
+}
+
+/**
+ * Sort apps following the user's custom order. Apps not present in the
+ * saved order (e.g. newly installed) are appended in their default order.
+ *
+ * @param {Object[]} apps
+ * @returns {Object[]}
+ */
+export function sortApps(apps) {
+    _loadAppsMenuOrder();
+    const byId = new Map(apps.map((app) => [app.id, app]));
+    const seen = new Set();
+    const sorted = [];
+    for (const id of appsMenuOrder.ids) {
+        if (byId.has(id) && !seen.has(id)) {
+            seen.add(id);
+            sorted.push(byId.get(id));
+        }
+    }
+    return sorted.concat(apps.filter((app) => !seen.has(app.id)));
+}
+
+/**
+ * Persist the given apps ordering for the current user.
+ *
+ * @param {Number[]} ids root menu ids
+ */
+export function saveAppsMenuOrder(ids) {
+    appsMenuOrder.ids = [...ids];
+    return user.setUserSettings("apps_menu_order", appsMenuOrder.ids);
+}
+
 export function getWebIconData(menu) {
     const result = "/web_responsive/static/img/default_icon_app.png";
     const webIcon = menu.webIcon;
