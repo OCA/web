@@ -1,0 +1,2 @@
+- [glueckkanja AG](https://www.glueckkanja.com)
+  - Christopher Rogos <christopher.rogos@glueckkanja.com>
