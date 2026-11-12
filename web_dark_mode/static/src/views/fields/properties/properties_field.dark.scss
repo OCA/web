@@ -14,10 +14,7 @@
 
 // This is the < Create "tagname" > link that shows when you type a
 // tag that doesn't exist. It was getting set to purple for some reason
-.o_property_field_value
-    .ui-widget.ui-autocomplete
-    .ui-menu-item.o_field_property_dropdown_add
-    a {
+.o_field_widget.o_field_property_tag .o_field_property_dropdown_add * {
     color: $o-main-link-color !important;
 }
 
