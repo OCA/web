@@ -27,6 +27,7 @@ addon | version | maintainers | summary
 [web_filter_header_button](web_filter_header_button/) | 20.0.1.0.0 |  | Show selected filters as buttons in the control panel
 [web_m2x_options](web_m2x_options/) | 20.0.1.0.0 |  | web_m2x_options
 [web_navbar_light](web_navbar_light/) | 20.0.1.0.0 | <a href='https://github.com/smaddlsoft'><img src='https://github.com/smaddlsoft.png' width='32' height='32' style='border-radius:50%;' alt='smaddlsoft'/></a> | Light main navbar for the backend
+[web_pivot_computed_measure](web_pivot_computed_measure/) | 20.0.1.0.0 | <a href='https://github.com/CarlosRoca13'><img src='https://github.com/CarlosRoca13.png' width='32' height='32' style='border-radius:50%;' alt='CarlosRoca13'/></a> | Web Pivot Computed Measure
 [web_quick_start_screen](web_quick_start_screen/) | 20.0.1.0.0 |  | Configurable start screen for quick actions
 [web_refresher](web_refresher/) | 20.0.1.0.0 |  | Web Refresher
 [web_responsive](web_responsive/) | 20.0.1.0.0 | <a href='https://github.com/Tardo'><img src='https://github.com/Tardo.png' width='32' height='32' style='border-radius:50%;' alt='Tardo'/></a> <a href='https://github.com/SplashS'><img src='https://github.com/SplashS.png' width='32' height='32' style='border-radius:50%;' alt='SplashS'/></a> | Responsive web client, community-supported
