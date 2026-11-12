@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Jarsa
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.web_x2many_list_scroll</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='companies_setting_container']" position="after">
+                <block
+                    title="Lists in Forms"
+                    name="web_x2many_list_scroll_setting_container"
+                >
+                    <setting
+                        id="web_x2many_list_scroll_setting"
+                        string="Scrollable Lists"
+                        help="Lists of lines inside forms (order lines, invoice lines...) scroll within this number of rows instead of stretching the page, so their header and totals stay in sight. 0 leaves them as they are."
+                    >
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label
+                                    for="web_x2many_list_scroll_rows"
+                                    string="Visible rows"
+                                    class="col-lg-4 o_light_label"
+                                />
+                                <field
+                                    name="web_x2many_list_scroll_rows"
+                                    class="oe_inline"
+                                />
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
