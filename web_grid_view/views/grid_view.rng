@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar
+    xmlns="http://relaxng.org/ns/structure/1.0"
+    datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+
+  <start>
+    <element name="grid_view">
+      <optional><attribute name="string"/></optional>
+      <optional><attribute name="editable"><data type="boolean"/></attribute></optional>
+      <optional><attribute name="class"/></optional>
+      <optional><attribute name="create_inline"><data type="boolean"/></attribute></optional>
+      <optional><attribute name="display_empty"><data type="boolean"/></attribute></optional>
+      <optional><attribute name="js_class"/></optional>
+      <optional><attribute name="hide_column_total"><data type="boolean"/></attribute></optional>
+      <optional><attribute name="hide_line_total"><data type="boolean"/></attribute></optional>
+      <optional><attribute name="barchart_total"><data type="boolean"/></attribute></optional>
+      <optional><attribute name="sample"><data type="boolean"/></attribute></optional>
+      <optional><attribute name="form_view_id"><data type="integer"/></attribute></optional>
+      <optional><attribute name="action"/></optional>
+      <optional><attribute name="type"/></optional>
+      <optional><attribute name="create"><data type="boolean"/></attribute></optional>
+      <optional><attribute name="edit"><data type="boolean"/></attribute></optional>
+      <optional><attribute name="delete"><data type="boolean"/></attribute></optional>
+      <zeroOrMore>
+        <choice>
+          <ref name="field"/>
+          <ref name="button"/>
+          <ref name="empty"/>
+          <ref name="toolbar"/>
+          <element name="xpath"><text/></element>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </start>
+  <define name="toolbar">
+    <element name="toolbar"><zeroOrMore><ref name="button"/></zeroOrMore></element>
+  </define>
+  <define name="field">
+    <element name="field">
+      <attribute name="name"/>
+      <choice>
+        <group>
+          <attribute name="type"><value>row</value></attribute>
+          <optional><attribute name="section"><data type="boolean"/></attribute></optional>
+          <optional><attribute name="widget"/></optional>
+          <optional><attribute name="invisible"><data type="boolean"/></attribute></optional>
+        </group>
+        <group>
+          <attribute name="type"><value>col</value></attribute>
+          <optional><attribute name="operator"/></optional>
+          <optional><attribute name="string"/></optional>
+          <optional><attribute name="invisible"><data type="boolean"/></attribute></optional>
+          <zeroOrMore><ref name="range"/></zeroOrMore>
+        </group>
+        <group>
+          <attribute name="type"><value>measure</value></attribute>
+          <optional><attribute name="widget"/></optional>
+          <optional><attribute name="string"/></optional>
+          <optional><attribute name="operator"/></optional>
+        </group>
+        <group>
+          <attribute name="type"><value>readonly</value></attribute>
+          <optional><attribute name="operator"/></optional>
+        </group>
+      </choice>
+      <optional><attribute name="options"/></optional>
+    </element>
+  </define>
+  <define name="range">
+    <element name="range">
+      <attribute name="name"/>
+      <attribute name="string"/>
+      <attribute name="span"><choice><value>day</value><value>week</value><value>month</value><value>year</value></choice></attribute>
+      <attribute name="step"><choice><value>day</value><value>month</value></choice></attribute>
+      <optional><attribute name="default"><data type="boolean"/></attribute></optional>
+      <optional><attribute name="hotkey"/></optional>
+    </element>
+  </define>
+  <define name="button">
+    <element name="button">
+      <attribute name="string"/>
+      <attribute name="type"><choice><value>object</value><value>action</value></choice></attribute>
+      <optional><attribute name="name"/></optional>
+      <optional><attribute name="class"/></optional>
+      <optional><attribute name="context"/></optional>
+      <optional><attribute name="invisible"><data type="boolean"/></attribute></optional>
+    </element>
+  </define>
+  <define name="empty">
+    <element name="empty">
+      <oneOrMore>
+        <element name="p">
+          <optional><element name="a"><attribute name="href"/><text/></element></optional>
+          <optional><element name="img"><attribute name="src"/></element></optional>
+          <text/>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+</grammar>
