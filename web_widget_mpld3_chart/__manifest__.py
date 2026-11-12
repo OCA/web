@@ -6,7 +6,7 @@
     "category": "Hidden",
     "summary": "This widget allows to display charts using MPLD3 library.",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": [],
