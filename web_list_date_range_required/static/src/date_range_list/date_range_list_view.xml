@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Heligrafics Fotogrametria S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+    <t
+        t-name="web_list_date_range_required.DateRangeList.Buttons"
+        t-inherit="web.ListView.Buttons"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
+            <button
+                type="button"
+                class="btn btn-primary o_date_range_button text-nowrap ms-2"
+                t-on-click="openDateRangeDialog"
+            >
+                <i class="fa fa-calendar me-1" />
+                <t t-esc="dateRangeLabel" />
+            </button>
+        </xpath>
+    </t>
+</templates>

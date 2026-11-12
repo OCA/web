@@ -1,0 +1,108 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_list_date_range_required
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-12 11:03+0000\n"
+"PO-Revision-Date: 2026-11-12 09:54+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: web_list_date_range_required
+#. odoo-javascript
+#: code:addons/web_list_date_range_required/static/src/date_range_dialog/date_range_dialog.xml:0
+#, python-format
+msgid "Close"
+msgstr "Fechar"
+
+#. module: web_list_date_range_required
+#: model:ir.actions.act_window,name:web_list_date_range_required.demo_partner_action
+#: model:ir.ui.menu,name:web_list_date_range_required.demo_partner_menu
+msgid "Contacts by Last Contact Date"
+msgstr "Contactos por data do último contacto"
+
+#. module: web_list_date_range_required
+#. odoo-javascript
+#: code:addons/web_list_date_range_required/static/src/date_range_dialog/date_range_dialog.esm.js:0
+#, python-format
+msgid "Custom"
+msgstr "Personalizado"
+
+#. module: web_list_date_range_required
+#. odoo-javascript
+#: code:addons/web_list_date_range_required/static/src/date_range_dialog/date_range_dialog.xml:0
+#, python-format
+msgid "End Date"
+msgstr "Data de fim"
+
+#. module: web_list_date_range_required
+#. odoo-javascript
+#: code:addons/web_list_date_range_required/static/src/date_range_dialog/date_range_dialog.esm.js:0
+#: code:addons/web_list_date_range_required/static/src/date_range_list/date_range_list_view.esm.js:0
+#, python-format
+msgid "Last 7 Days"
+msgstr "Últimos 7 dias"
+
+#. module: web_list_date_range_required
+#: model_terms:ir.ui.view,arch_db:web_list_date_range_required.demo_partner_view_tree
+msgid "Last contact"
+msgstr "Último contacto"
+
+#. module: web_list_date_range_required
+#. odoo-javascript
+#: code:addons/web_list_date_range_required/static/src/date_range_dialog/date_range_dialog.xml:0
+#, python-format
+msgid "Search"
+msgstr "Pesquisar"
+
+#. module: web_list_date_range_required
+#. odoo-javascript
+#: code:addons/web_list_date_range_required/static/src/date_range_dialog/date_range_dialog.esm.js:0
+#, python-format
+msgid "Select Date Range"
+msgstr "Selecionar intervalo de datas"
+
+#. module: web_list_date_range_required
+#. odoo-javascript
+#: code:addons/web_list_date_range_required/static/src/date_range_dialog/date_range_dialog.xml:0
+#, python-format
+msgid "Start Date"
+msgstr "Data de início"
+
+#. module: web_list_date_range_required
+#. odoo-javascript
+#: code:addons/web_list_date_range_required/static/src/date_range_dialog/date_range_dialog.esm.js:0
+#, python-format
+msgid "The maximum allowed range is %s days."
+msgstr "O intervalo máximo permitido é de %s dias."
+
+#. module: web_list_date_range_required
+#. odoo-javascript
+#: code:addons/web_list_date_range_required/static/src/date_range_dialog/date_range_dialog.esm.js:0
+#, python-format
+msgid "The start date cannot be after the end date."
+msgstr "A data de início não pode ser posterior à data de fim."
+
+#. module: web_list_date_range_required
+#. odoo-javascript
+#: code:addons/web_list_date_range_required/static/src/date_range_dialog/date_range_dialog.esm.js:0
+#: code:addons/web_list_date_range_required/static/src/date_range_list/date_range_list_view.esm.js:0
+#, python-format
+msgid "Today"
+msgstr "Hoje"
+
+#. module: web_list_date_range_required
+#. odoo-javascript
+#: code:addons/web_list_date_range_required/static/src/date_range_dialog/date_range_dialog.esm.js:0
+#: code:addons/web_list_date_range_required/static/src/date_range_list/date_range_list_view.esm.js:0
+#, python-format
+msgid "Yesterday"
+msgstr "Ontem"
