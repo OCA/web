@@ -114,8 +114,10 @@ export function m2o_options_props(props, attrs, options) {
     newProps = m2o_options_props_open(newProps, attrs, options);
     newProps.fieldColor = options.field_color;
     newProps.fieldColorOptions = options.colors;
-    newProps.m2xCreateOverride = "create" in options;
-    newProps.m2xCreateEditOverride = "create_edit" in options;
+    newProps.m2xCreateOverride = "create" in options || "no_quick_create" in options;
+    newProps.m2xCreateEditOverride =
+        "create_edit" in options || "no_create_edit" in options;
+    newProps.m2xOpenOverride = "no_open" in options;
     return newProps;
 }
 
@@ -139,6 +141,7 @@ many2one.computeM2OProps = (fieldProps) => {
         searchLimit: fieldProps.searchLimit,
         m2xCreateOverride: fieldProps.m2xCreateOverride,
         m2xCreateEditOverride: fieldProps.m2xCreateEditOverride,
+        m2xOpenOverride: fieldProps.m2xOpenOverride,
     };
 };
 
@@ -168,6 +171,7 @@ patch(many2OneField.Many2OneField.prototype, {
         props.searchLimit = this.props.searchLimit;
         props.m2xCreateOverride = this.props.m2xCreateOverride;
         props.m2xCreateEditOverride = this.props.m2xCreateEditOverride;
+        props.m2xOpenOverride = this.props.m2xOpenOverride;
         return props;
     },
 });
@@ -179,7 +183,7 @@ patch(Many2One.prototype, {
     // define their own extractProps and never call m2o_options_props, so a
     // field-level override does not reach them. They all render this component,
     // so gating it here covers every many2one. Field-level create/create_edit
-    // options still take precedence, see m2o_options_props.
+    // and open options still take precedence, see m2o_options_props.
     get activeActions() {
         const actions = super.activeActions;
         if (
@@ -191,7 +195,10 @@ patch(Many2One.prototype, {
         return actions;
     },
     get hasLinkButton() {
-        if (!evaluateSystemParameterDefaultTrue("open")) {
+        if (
+            !this.props.m2xOpenOverride &&
+            !evaluateSystemParameterDefaultTrue("open")
+        ) {
             return false;
         }
         return super.hasLinkButton;
