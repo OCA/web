@@ -107,6 +107,10 @@ Contributors
   - Daryl Chen <dc@oerp.ca>
   - Yash Pathak <yp@oerp.ca>
 
+- `NuoBiT Solutions SL <https://www.nuobit.com>`__
+
+  - Eric Antones <eantones@nuobit.com>
+
 Maintainers
 -----------
 
