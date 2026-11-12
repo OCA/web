@@ -1,0 +1,1 @@
+Introduce an option to make a field unsortable in a list view.
