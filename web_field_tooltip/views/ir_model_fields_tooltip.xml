@@ -2,7 +2,6 @@
 <!-- Copyright 2023 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.ui.view" id="ir_model_fields_tooltip_form_view">
         <field name="model">ir.model.fields.tooltip</field>
         <field name="inherit_id" eval="0" />
@@ -81,5 +80,4 @@
         <field name="parent_id" ref="base.next_id_9" />
         <field name="action" ref="ir_model_fields_tooltip_act_window" />
     </record>
-
 </odoo>

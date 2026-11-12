@@ -2,7 +2,6 @@
 <!-- Copyright 2023 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.model.access" id="ir_model_fields_tooltip_access_reader">
         <field name="name">ir.model.fields.tooltip access reader</field>
         <field name="model_id" ref="model_ir_model_fields_tooltip" />
@@ -42,5 +41,4 @@
         <field name="perm_write" eval="0" />
         <field name="perm_unlink" eval="0" />
     </record>
-
 </odoo>
