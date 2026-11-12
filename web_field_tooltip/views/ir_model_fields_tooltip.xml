@@ -62,17 +62,17 @@
     <record model="ir.ui.view" id="ir_model_fields_tooltip_tree_view">
         <field name="model">ir.model.fields.tooltip</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="model_id" />
                 <field name="field_id" />
-            </tree>
+            </list>
         </field>
     </record>
 
     <record model="ir.actions.act_window" id="ir_model_fields_tooltip_act_window">
         <field name="name">Fields Tooltips</field>
         <field name="res_model">ir.model.fields.tooltip</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record model="ir.ui.menu" id="ir_model_fields_tooltip_menu">

@@ -4,11 +4,10 @@
 <odoo>
     <record id="group_tooltip_manager" model="res.groups">
         <field name="name">Tooltip Manager</field>
-        <field name="category_id" ref="base.module_category_hidden" />
         <field name="comment">The user will be able to manage all the tooltips.</field>
         <field
-            name="users"
-            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+            name="user_ids"
+            eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"
         />
     </record>
 </odoo>

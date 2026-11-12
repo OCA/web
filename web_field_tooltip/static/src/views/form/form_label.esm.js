@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {FormLabel} from "@web/views/form/form_label";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
 import {patch} from "@web/core/utils/patch";
@@ -42,27 +40,18 @@ const web_field_tooltip = {
     },
 
     get tooltipInfo() {
-        if (odoo.debug) {
-            if (this.hasFieldTooltip) {
-                const field = this.props.record.fields[this.props.fieldName];
-                if (this.props.fieldInfo.help) {
-                    this.props.fieldInfo.help = [
-                        this.props.fieldInfo.help,
-                        field.field_tooltip.tooltip_text,
-                    ]
-                        .filter((x) => x)
-                        .join("\n");
-                } else {
-                    this.props.record.fields[this.props.fieldName].help = [
-                        field.help,
-                        field.field_tooltip.tooltip_text,
-                    ]
-                        .filter((x) => x)
-                        .join("\n");
-                }
-            }
+        const tooltipInfo = super.tooltipInfo;
+        if (!odoo.debug || !this.hasFieldTooltip) {
+            return tooltipInfo;
         }
-        return super.tooltipInfo;
+        // In debug mode the tooltip takes its help from the field, not from
+        // tooltipHelp: add the field tooltip to it without changing the props.
+        const field = this.props.record.fields[this.props.fieldName];
+        const info = JSON.parse(tooltipInfo);
+        info.field.help = [info.field.help, field.field_tooltip.tooltip_text]
+            .filter((x) => x)
+            .join("\n");
+        return JSON.stringify(info);
     },
 
     onClickTooltip(ev) {

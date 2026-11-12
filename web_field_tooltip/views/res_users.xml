@@ -6,7 +6,7 @@
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.view_users_form_simple_modif" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='email']" position="after">
+            <xpath expr="//group[@name='other_preferences']" position="inside">
                 <field name="tooltip_show_add_helper_allowed" invisible="1" />
                 <field
                     name="tooltip_show_add_helper"

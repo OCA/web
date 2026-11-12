@@ -20,7 +20,9 @@ class Base(models.AbstractModel):
                     ("model", "=", self._name),
                     ("field_name", "in", list(fnames)),
                 ],
-                [],
+                # An empty list of fields makes search_read call fields_get,
+                # which would come back here.
+                ["field_name", "tooltip_text"],
             )
         )
         for tooltip_data in tooltips_data:
