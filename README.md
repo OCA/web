@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [web_dialog_size](web_dialog_size/) | 20.0.1.0.2 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_environment_ribbon](web_environment_ribbon/) | 20.0.1.0.0 |  | Web Environment Ribbon
 [web_filter_header_button](web_filter_header_button/) | 20.0.1.0.0 |  | Show selected filters as buttons in the control panel
+[web_ir_actions_act_multi](web_ir_actions_act_multi/) | 20.0.1.0.0 |  | Enables triggering of more than one action on ActionManager
 [web_m2x_options](web_m2x_options/) | 20.0.1.0.0 |  | web_m2x_options
 [web_navbar_light](web_navbar_light/) | 20.0.1.0.0 | <a href='https://github.com/smaddlsoft'><img src='https://github.com/smaddlsoft.png' width='32' height='32' style='border-radius:50%;' alt='smaddlsoft'/></a> | Light main navbar for the backend
 [web_pivot_computed_measure](web_pivot_computed_measure/) | 20.0.1.0.0 | <a href='https://github.com/CarlosRoca13'><img src='https://github.com/CarlosRoca13.png' width='32' height='32' style='border-radius:50%;' alt='CarlosRoca13'/></a> | Web Pivot Computed Measure
