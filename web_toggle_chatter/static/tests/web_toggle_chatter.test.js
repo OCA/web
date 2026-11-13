@@ -28,7 +28,7 @@ function patchFormCompilerWithMockChatter() {
                 const formViewEl = compiledArch.querySelector(".o_form_view");
                 if (formViewEl) {
                     const mockChatter = document.createElement("div");
-                    mockChatter.className = "o-mail-Form-chatter";
+                    mockChatter.className = "o-mail-Form-chatter o-aside";
                     formViewEl.appendChild(mockChatter);
                 }
             }

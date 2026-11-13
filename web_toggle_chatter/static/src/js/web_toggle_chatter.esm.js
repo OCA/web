@@ -5,8 +5,9 @@ import {FormRenderer} from "@web/views/form/form_renderer";
 import {patch} from "@web/core/utils/patch";
 
 const SELECTORS = {
-    chatter: ".o-mail-Form-chatter:not(.o-isInFormSheetBg)",
-    fallbackChatter: ".o-mail-Form-chatter",
+    chatter: ".o-mail-Form-chatter",
+    chatterHook: ".o-mail-Form-chatter:not(.o-isInFormSheetBg)",
+    sideChatter: ".o-mail-Form-chatter.o-aside",
     formView: ".o_form_view",
     formRenderer: ".o_form_renderer",
     rootContent: ".o_content",
@@ -54,9 +55,7 @@ patch(FormCompiler.prototype, {
         if (compiledArch.querySelector(`.${CLASSES.toggleWrapper}`)) {
             return;
         }
-        const chatterContainer =
-            compiledArch.querySelector(SELECTORS.chatter) ||
-            compiledArch.querySelector(SELECTORS.fallbackChatter);
+        const chatterContainer = compiledArch.querySelector(SELECTORS.chatterHook);
         if (!chatterContainer || !chatterContainer.parentNode) {
             return;
         }
@@ -122,6 +121,7 @@ patch(FormRenderer.prototype, {
             formContainer.classList.remove(CLASSES.enabled);
             formContainer.classList.remove(CLASSES.collapsed);
             formContainer.classList.remove(CLASSES.mobileMode);
+            this._clearInlineStyles(formContainer);
             return;
         }
         this._ensureRuntimeToggleWrapper(formContainer, chatterContainer);
@@ -135,7 +135,7 @@ patch(FormRenderer.prototype, {
         formContainer.classList.toggle(CLASSES.mobileMode, isMobileLayout);
         if (isMobileLayout) {
             formContainer.classList.remove(CLASSES.collapsed);
-            this._clearInlineStyles(formContainer, chatterContainer);
+            this._clearInlineStyles(formContainer);
             return;
         }
         const isCollapsed = !this.webToggleChatterState.isVisible;
@@ -162,10 +162,14 @@ patch(FormRenderer.prototype, {
         }
     },
 
-    _clearInlineStyles(formContainer, chatterContainer) {
+    _clearInlineStyles(formContainer) {
         const sheetContainer = formContainer.querySelector(SELECTORS.sheet);
-        for (const propertyName of INLINE_STYLE_PROPERTIES) {
-            chatterContainer.style.removeProperty(propertyName);
+        for (const chatterContainer of formContainer.querySelectorAll(
+            SELECTORS.chatter
+        )) {
+            for (const propertyName of INLINE_STYLE_PROPERTIES) {
+                chatterContainer.style.removeProperty(propertyName);
+            }
         }
         if (sheetContainer) {
             sheetContainer.style.removeProperty("width");
@@ -268,8 +272,8 @@ patch(FormRenderer.prototype, {
             return null;
         }
         return (
-            element.closest(SELECTORS.formView) ||
-            element.closest(SELECTORS.formRenderer)
+            element.closest(SELECTORS.formRenderer) ||
+            element.closest(SELECTORS.formView)
         );
     },
 
@@ -284,9 +288,6 @@ patch(FormRenderer.prototype, {
     },
 
     _resolveChatterContainer(formContainer) {
-        return (
-            formContainer.querySelector(SELECTORS.chatter) ||
-            formContainer.querySelector(SELECTORS.fallbackChatter)
-        );
+        return formContainer.querySelector(SELECTORS.sideChatter);
     },
 });
