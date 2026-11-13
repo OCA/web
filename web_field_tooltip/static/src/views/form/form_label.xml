@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_field_tooltip.FormLabel"
+        t-inherit="web.FormLabel"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//sup" position="attributes">
+            <attribute name="t-on-click">(ev) => this.onClickTooltip(ev)</attribute>
+        </xpath>
+    </t>
+
+</templates>
