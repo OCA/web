@@ -53,11 +53,17 @@ export class TimelineModel extends Model {
      * @param {Object} searchParams
      */
     async load(searchParams) {
-        if (searchParams.groupBy && searchParams.groupBy.length) {
-            this.last_group_bys = searchParams.groupBy;
-        } else {
-            this.last_group_bys = this.params.default_group_by.split(",");
-        }
+        // Odoo sends date group-bys with a granularity suffix ("date:month"),
+        // which is not a valid field for search_read. The timeline can only
+        // build groups from relational fields, so ignore anything else.
+        const groupBy = (searchParams.groupBy || [])
+            .map((groupByName) => groupByName.split(":")[0])
+            .filter((fieldName) =>
+                ["many2one", "many2many"].includes(this.fields[fieldName]?.type)
+            );
+        this.last_group_bys = groupBy.length
+            ? groupBy
+            : this.params.default_group_by.split(",");
         let fields = this.params.fieldNames;
         fields = [...new Set(fields.concat(this.last_group_bys))];
         // Avoid ordering by many2many fields
