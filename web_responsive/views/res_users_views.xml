@@ -69,7 +69,7 @@
         <field name="arch" type="xml">
             <data>
                 <field name="action_id" position="after">
-                    <field name="is_redirect_home" invisible="action_id" />
+                    <field name="is_redirect_home" />
                 </field>
             </data>
         </field>
