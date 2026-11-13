@@ -1,0 +1,10 @@
+// The navbar is usually purple, as set by web/static/src/webclient/navbar/navbar.variables.scss
+// We override it here for dark mode.
+$o-navbar-background: $o-webclient-background-color !default;
+
+$o-navbar-entry-color: $o-gray-900 !default;
+$o-navbar-entry-color--hover: $o-black !default;
+
+$o-navbar-badge-bg: $o-danger !default;
+$o-navbar-badge-color: $o-black !default;
+$o-navbar-badge-text-shadow: 0 !default;

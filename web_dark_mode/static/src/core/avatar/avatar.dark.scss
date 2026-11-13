@@ -1,0 +1,6 @@
+/* o-mail-Message-avatar should not really be here, but it is convenient */
+img.o-mail-Message-avatar:not([src*="email_icon.png"]):not([data-src*="email_icon.png"]), // #NOQA
+.o_avatar img,
+img.o_avatar {
+    background-color: #fff;
+}
