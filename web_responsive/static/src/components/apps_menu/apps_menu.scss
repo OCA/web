@@ -37,6 +37,11 @@
 }
 
 .o_apps_menu_opened .o_main_navbar {
+    // Odoo makes the navbar sticky when installed as an app (display-mode:
+    // standalone), so it becomes a stacking context and the apps menu inside
+    // it would be painted under the positioned elements of the current view
+    z-index: 1000;
+
     .o_menu_brand,
     .o_menu_sections {
         display: none !important;
