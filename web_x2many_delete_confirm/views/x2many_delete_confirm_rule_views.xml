@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Escodoo
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="x2many_delete_confirm_rule_view_tree" model="ir.ui.view">
+        <field name="model">x2many.delete.confirm.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="model_id" />
+                <field name="parent_model_id" optional="show" />
+                <field name="message" optional="hide" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </list>
+        </field>
+    </record>
+
+    <record id="x2many_delete_confirm_rule_view_form" model="ir.ui.view">
+        <field name="model">x2many.delete.confirm.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="text-bg-danger"
+                        invisible="active"
+                    />
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field
+                                name="name"
+                                placeholder="e.g. Purchase order lines"
+                            />
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="scope" string="Applies to">
+                            <field name="active" invisible="1" />
+                            <field name="model_id" options="{'no_create': True}" />
+                            <field
+                                name="parent_model_id"
+                                options="{'no_create': True}"
+                            />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                            <field
+                                name="group_ids"
+                                widget="many2many_tags"
+                                options="{'no_create': True}"
+                            />
+                        </group>
+                        <group name="dialog" string="Dialog">
+                            <field name="title" placeholder="Confirm deletion" />
+                            <field
+                                name="message"
+                                placeholder="Do you really want to delete this line?"
+                            />
+                            <field name="sequence" />
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        Leave the title and the message empty to use the default ones,
+                        translated in the language of each user. Users have to reload
+                        their page before a new or modified rule applies to them.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="x2many_delete_confirm_rule_view_search" model="ir.ui.view">
+        <field name="model">x2many.delete.confirm.rule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="model_id" />
+                <field name="parent_model_id" />
+                <filter
+                    name="inactive"
+                    string="Archived"
+                    domain="[('active', '=', False)]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="group_by_model"
+                        string="Line Model"
+                        context="{'group_by': 'model_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="x2many_delete_confirm_rule_action" model="ir.actions.act_window">
+        <field name="name">Delete Confirmation Rules</field>
+        <field name="res_model">x2many.delete.confirm.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p
+                class="o_view_nocontent_smiling_face"
+            >Create a delete confirmation rule</p>
+            <p>
+                Pick the model of the lines you want to protect and the web client
+                will ask for a confirmation before one of them is removed from its
+                parent form. Users must reload the page to see your changes.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="x2many_delete_confirm_rule_menu"
+        parent="base.next_id_2"
+        action="x2many_delete_confirm_rule_action"
+        sequence="50"
+    />
+</odoo>
