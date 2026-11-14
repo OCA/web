@@ -29,14 +29,16 @@ class IrModelFields(models.Model):
                 field.comodel_id = empty
 
     @api.model
-    def name_search(self, name="", args=None, operator="ilike", limit=100):
+    def name_search(self, name="", domain=None, operator="ilike", limit=100):
         # OVERRIDE: allow searching by field tech name if the correct context key is
         # used; in this case, fields fetched by tech name are prepended to other fields
-        result = super().name_search(name, args, operator, limit)
+        result = super().name_search(name, domain, operator, limit)
         if not (name and self.env.context.get("search_by_technical_name")):
             return result
-        domain = Domain.AND([args or [], [("name", operator, name)]])
-        new_fields = self.search_read(domain, fields=["display_name"], limit=limit)
+        tech_name_domain = Domain.AND([domain or [], [("name", operator, name)]])
+        new_fields = self.search_read(
+            tech_name_domain, fields=["display_name"], limit=limit
+        )
         new_result = {f["id"]: f["display_name"] for f in new_fields}
         while result and not (limit and 0 < limit <= len(new_result)):
             field_id, field_display_name = result.pop(0)
