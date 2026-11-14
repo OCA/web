@@ -1,0 +1,13 @@
+.o_list_renderer {
+    .o_list_duplicate_line {
+        width: 1px; // keep the column from expanding
+    }
+
+    .o_list_duplicate_line button {
+        padding: 0;
+        background: none;
+        border-style: none;
+        display: table-cell;
+        cursor: pointer;
+    }
+}
