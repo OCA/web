@@ -1,0 +1,224 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_field_required_invisible_manager
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_field_required_invisible_manager
+#: model:ir.actions.act_window,name:web_field_required_invisible_manager.action_cfr_all_view_tree
+#: model:ir.ui.menu,name:web_field_required_invisible_manager.menu_field_manager_all
+msgid "All Fields Restrictions"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model,name:web_field_required_invisible_manager.model_base
+msgid "Base"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__condition_domain
+msgid "Condition Domain"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
+msgid "Custom Invisible Fields"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__custom_invisible_restriction_ids
+msgid "Custom Invisible Restriction"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
+msgid "Custom Readonly Fields"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__custom_readonly_restriction_ids
+msgid "Custom Readonly Restriction"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
+msgid "Custom Required Fields"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__custom_required_restriction_ids
+msgid "Custom Required Restriction"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__display_name
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__display_name
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_ui_view__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__field_id
+msgid "Field"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__field_invisible
+msgid "Field Invisible"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__field_name
+msgid "Field Name"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__field_readonly
+msgid "Field Readonly"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.ui.menu,name:web_field_required_invisible_manager.menu_field_manager_config
+msgid "Fields Restrictions"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__group_ids
+msgid "Group"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__id
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__id
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_ui_view__id
+msgid "ID"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.cfr_all_view_form
+msgid "Invisible Field Rule"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.actions.act_window,name:web_field_required_invisible_manager.action_cfr_invisible_view_tree
+#: model:ir.ui.menu,name:web_field_required_invisible_manager.menu_field_manager_invisible
+msgid "Invisible Fields"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction____last_update
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model____last_update
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_ui_view____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model,name:web_field_required_invisible_manager.model_custom_field_restriction
+msgid "Make field invisible or required"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__readonly_model_id
+msgid "Model (readonly)"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required_model_id
+msgid "Model (required)"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__invisible_model_id
+msgid "Model (visibility)"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__model_name
+msgid "Model Name"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model,name:web_field_required_invisible_manager.model_ir_model
+msgid "Models"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__readonly_field_id
+msgid "Readonly Field"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.cfr_all_view_form
+msgid "Readonly Field Rule"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.actions.act_window,name:web_field_required_invisible_manager.action_cfr_readonly_view_tree
+#: model:ir.ui.menu,name:web_field_required_invisible_manager.menu_field_manager_readonly
+msgid "Readonly Fields"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required
+msgid "Required"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required_field_id
+msgid "Required Field"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.cfr_all_view_form
+msgid "Required Field Rule"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.actions.act_window,name:web_field_required_invisible_manager.action_field_manager_required_view_tree
+#: model:ir.ui.menu,name:web_field_required_invisible_manager.menu_field_manager_required
+msgid "Required Fields"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__default_required
+msgid "Required by Default"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model,name:web_field_required_invisible_manager.model_ir_ui_view
+msgid "View"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__visibility_field_id
+msgid "Visibility Field"
+msgstr ""
