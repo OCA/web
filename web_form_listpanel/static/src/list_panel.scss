@@ -1,0 +1,85 @@
+.o_listpanel_container {
+    flex: 0 0 auto;
+    max-height: 100%;
+}
+
+// Below XXL the form renderer is a flex column (sheet, then chatter): lay it
+// out as a grid so the panel stays on the left of everything else and
+// sticks to the top of the scrolling content. ListPanel sets its height.
+.o_form_renderer.flex-column:has(> .o_listpanel_container) {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+
+    > * {
+        grid-column: 2;
+    }
+
+    > .o_listpanel_container {
+        grid-column: 1;
+        grid-row: 1 / span 3;
+        position: sticky;
+        top: 0;
+        max-height: none;
+    }
+}
+
+.o_listpanel {
+    height: 100%;
+    border-right: 1px solid $border-color;
+    background-color: $o-view-background-color;
+    font-size: $font-size-sm;
+    overflow: hidden;
+
+    &.o_listpanel_expanded {
+        width: 280px;
+    }
+
+    &.o_listpanel_collapsed {
+        width: 2rem;
+    }
+
+    .o_listpanel_header {
+        min-height: 2.25rem;
+        border-bottom: 1px solid $border-color;
+    }
+
+    // The core list is a few pixels wider than the panel: never scroll sideways.
+    .o_listpanel_body,
+    .o_list_renderer {
+        overflow-x: hidden !important;
+    }
+
+    // The core list, in the panel: compact rows.
+    .o_list_table {
+        --ListRenderer-thead-padding-y: #{map-get($spacers, 1)};
+
+        .o_data_row > td {
+            padding-top: map-get($spacers, 1);
+            padding-bottom: map-get($spacers, 1);
+        }
+    }
+
+    // A pending load: the rows on screen are the previous ones. Dimmed only
+    // if it lasts, so quick loads do not flicker.
+    .o_listpanel_loading .o_list_renderer {
+        opacity: 0.5;
+        pointer-events: none;
+        transition: opacity 0.1s 0.3s;
+    }
+
+    // The form's record: a bar on the left of its row, beside the grey.
+    .o_listpanel_current > td:first-child {
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 3px;
+            background-color: $primary;
+        }
+    }
+}
