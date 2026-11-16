@@ -1,11 +1,13 @@
 # Copyright 2019 Alexandre Díaz <dev@redneboa.es>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import base64
+import re
 from colorsys import hls_to_rgb, rgb_to_hls
 
-from odoo import api, fields, models
+from odoo import api, fields, models, tools
+from odoo.http import request
 
-from odoo.addons.base.models.assetsbundle import ScssStylesheetAsset
+from odoo.addons.base.models.assetsbundle import CompileError, ScssStylesheetAsset
 
 from ..utils import convert_to_image, image_to_rgb, n_rgb_to_hex
 
@@ -192,6 +194,38 @@ class ResCompany(models.Model):
                 }
             )
         self.update(values)
+
+    @api.model
+    def _get_web_company_color_active_company(self):
+        try:
+            active_company_id = int(
+                request.httprequest.cookies.get("cids", "").split("-")[0]
+            )
+        except Exception:
+            active_company_id = False
+        return (
+            self.env.user.company_ids.filtered(lambda c: c.id == active_company_id)
+            or self.env.company
+        )
+
+    def _get_theme_color(self):
+        self.ensure_one()
+        if not self.color_navbar_bg:
+            return False
+        return self._compile_theme_color(self.color_navbar_bg)
+
+    @api.model
+    @tools.ormcache("color")
+    def _compile_theme_color(self, color):
+        scss_asset = ScssStylesheetAsset(
+            "web_company_color.company_color_assets", url=URL_BASE
+        )
+        try:
+            css = scss_asset.compile(f".o_theme_color {{ color: {color}; }}")
+        except CompileError:
+            return False
+        match = re.search(r"color:\s*([^;]+);", css)
+        return match and match.group(1).strip()
 
     def _scss_get_sanitized_values(self):
         self.ensure_one()
