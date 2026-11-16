@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_disable_remaining_days_rule_user","access_disable_remaining_days_rule_user","model_disable_remaining_days_rule","base.group_user",1,0,0,0
+"access_disable_remaining_days_rule_manager","access_disable_remaining_days_rule_manager","model_disable_remaining_days_rule","base.group_system",1,1,1,1
+"access_disable_remaining_days_rule_wizard_manager","access_disable_remaining_days_rule_wizard_manager","model_disable_remaining_days_rule_wizard","base.group_system",1,1,1,1
+"access_disable_remaining_days_rule_line_wizard_manager","access_disable_remaining_days_rule_line_wizard_manager","model_disable_remaining_days_rule_line_wizard","base.group_system",1,1,0,0
