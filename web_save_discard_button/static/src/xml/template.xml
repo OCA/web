@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Save and Discard Button-->
+<templates>
+    <t
+        t-name="web_save_discard_button.FormStatusIndicator"
+        t-inherit="web.FormStatusIndicator"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//button[(hasclass('o_form_button_save'))]" position="attributes">
+            <attribute name="class">o_form_button_save btn btn-primary</attribute>
+        </xpath>
+        <xpath expr="//button[(hasclass('o_form_button_save'))]/i" position="replace">
+            <span>Save</span>
+        </xpath>
+        <xpath expr="//button[(hasclass('o_form_button_cancel'))]/i" position="replace">
+            <span>Discard</span>
+        </xpath>
+    </t>
+</templates>
