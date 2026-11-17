@@ -70,6 +70,8 @@ Contributors
 
      - Joep Sanders <joep.sanders@codeforward.nl>
 
+- Panithan k. <panithank@ecosoft.co.th>
+
 Maintainers
 -----------
 
