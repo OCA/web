@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="webclient_bootstrap" inherit_id="web.webclient_bootstrap">
+        <xpath expr="//meta[@name='theme-color']" position="attributes">
+            <attribute name="t-att-content">pwa_theme_color or '#71639e'</attribute>
+        </xpath>
+        <xpath expr="//link[@rel='apple-touch-icon']" position="attributes">
+            <attribute
+                name="t-att-href"
+            >pwa_apple_touch_icon or '/web/static/img/odoo-icon-ios.png'</attribute>
+        </xpath>
+        <xpath expr="//link[@rel='apple-touch-icon']" position="after">
+            <meta
+                t-if="pwa_short_name"
+                name="apple-mobile-web-app-title"
+                t-att-content="pwa_short_name"
+            />
+        </xpath>
+    </template>
+</odoo>

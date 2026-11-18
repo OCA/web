@@ -4,6 +4,7 @@
 import base64
 import io
 
+from lxml import html
 from PIL import Image
 
 from odoo import exceptions
@@ -30,6 +31,46 @@ class TestWebPwaCustomize(HttpCaseWithUserDemo):
         self.assertEqual(data["short_name"], "SHORT-NAME")
         self.assertEqual(data["background_color"], "#2E69B5")
         self.assertEqual(data["theme_color"], "#2E69B4")
+
+    def test_webclient_theme_color(self):
+        self.authenticate("demo", "demo")
+        response = self.url_open("/odoo")
+        theme_color = html.fromstring(response.content).xpath(
+            "//meta[@name='theme-color']/@content"
+        )
+        self.assertEqual(theme_color, ["#2E69B4"])
+
+    def test_webclient_apple_app_title(self):
+        self.authenticate("demo", "demo")
+        response = self.url_open("/odoo")
+        app_title = html.fromstring(response.content).xpath(
+            "//meta[@name='apple-mobile-web-app-title']/@content"
+        )
+        self.assertEqual(app_title, ["SHORT-NAME"])
+
+    def _get_apple_touch_icon(self):
+        response = self.url_open("/odoo")
+        return html.fromstring(response.content).xpath(
+            "//link[@rel='apple-touch-icon']/@href"
+        )
+
+    def test_webclient_apple_touch_icon(self):
+        self.env["ir.attachment"].search(
+            [("url", "like", "/web_pwa_customize/icon")]
+        ).unlink()
+        self.authenticate("demo", "demo")
+        self.assertEqual(
+            self._get_apple_touch_icon(), ["/web/static/img/odoo-icon-ios.png"]
+        )
+        img = Image.new("RGB", (512, 512), color="red")
+        img_byte_arr = io.BytesIO()
+        img.save(img_byte_arr, format="PNG")
+        self.env["res.config.settings"].create(
+            {"pwa_icon": base64.b64encode(img_byte_arr.getvalue())}
+        ).execute()
+        self.assertEqual(
+            self._get_apple_touch_icon(), ["/web_pwa_customize/icon512x512.png"]
+        )
 
     def test_pwa_settings_processing(self):
         """Test the settings logic and icon attachment generation"""
