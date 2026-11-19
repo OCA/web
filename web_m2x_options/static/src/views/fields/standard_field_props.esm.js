@@ -6,11 +6,12 @@ export const fieldColorProps = {
     fieldColorOptions: {type: Object, optional: true},
 };
 
-// Set when the field defines its own create/create_edit options, so the
+// Set when the field defines its own create/create_edit/open options, so the
 // Many2One component does not apply the system parameters over them
 export const m2xOverrideProps = {
     m2xCreateOverride: {type: Boolean, optional: true},
     m2xCreateEditOverride: {type: Boolean, optional: true},
+    m2xOpenOverride: {type: Boolean, optional: true},
 };
 
 patch(standardFieldProps, {
