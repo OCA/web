@@ -12,6 +12,7 @@ class IrHttp(models.AbstractModel):
         user = self.env.user
         return {
             **session,
+            "displayFileViewer": user.display_file_viewer,
             "apps_menu": {
                 "search_type": user.apps_menu_search_type,
                 "theme": user.apps_menu_theme,
