@@ -10,5 +10,8 @@
     "category": "Website",
     "installable": True,
     "maintainers": ["victoralmau"],
-    "data": ["views/res_config_settings_views.xml"],
+    "data": [
+        "views/res_config_settings_views.xml",
+        "views/webclient_templates.xml",
+    ],
 }
