@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <record id="res_users_view_form_apps_menu_preferences_app_grid" model="ir.ui.view">
+        <field name="name">res.users.apps.menu.preferences.form.app.grid</field>
+        <field name="model">res.users</field>
+        <field
+            name="inherit_id"
+            ref="web_responsive.res_users_view_form_apps_menu_preferences"
+        />
+        <field name="arch" type="xml">
+            <group position="after">
+                <group string="App Grid" colspan="2">
+                    <div>
+                        <button
+                            name="action_reset_apps_menu_grid"
+                            string="Reset layout"
+                            type="object"
+                            class="btn-link p-0"
+                            confirm="Reset the app grid to the default layout?"
+                        />
+                    </div>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>
