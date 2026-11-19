@@ -5,6 +5,13 @@
      Copyright 2023 Taras Shabaranskyi
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
 <templates>
+    <!-- Sort apps following the per-user ordering -->
+    <t t-inherit="web.NavBar" t-inherit-mode="extension">
+        <xpath expr="//t[@t-set='apps']" position="attributes">
+            <attribute name="t-value">sortedApps</attribute>
+        </xpath>
+    </t>
+
     <t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension">
         <!-- odoo 18 has created a left sidebar where the button of all apps
         and the dropdown for the user where can logout
@@ -50,7 +57,7 @@
             </button>
             <div t-if="state.open" class="app-menu-container">
                 <t t-slot="search_bar" />
-                <div class="o-app-menu-list">
+                <div class="o-app-menu-list" t-ref="appMenuList">
                     <t t-slot="default" />
                 </div>
             </div>
