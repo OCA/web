@@ -32,6 +32,7 @@
                             t-att-href="menu.path"
                             t-att-data-menu-id="menu.id"
                             t-att-data-action-id="menu.actionID"
+                            t-on-click="(ev) => this._onSearchItemClick(ev, menu)"
                             draggable="false"
                             tabindex="-1"
                         >
@@ -66,6 +67,7 @@
                             t-att-href="menu.path"
                             t-att-data-menu-id="menu.id"
                             t-att-data-action-id="menu.actionID"
+                            t-on-click="(ev) => this._onSearchItemClick(ev, menu)"
                             draggable="false"
                             tabindex="-1"
                         >
