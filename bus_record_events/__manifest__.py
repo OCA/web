@@ -18,6 +18,12 @@
     "assets": {
         "web.assets_backend": [
             "bus_record_events/static/src/**/*",
+            ("remove", "bus_record_events/static/src/views/lazy/**/*"),
+        ],
+        # Odoo 18 ships the graph and pivot views in the lazy bundle, so their
+        # patches must load there or their imports are undefined.
+        "web.assets_backend_lazy": [
+            "bus_record_events/static/src/views/lazy/**/*",
         ],
         "web.assets_unit_tests": [
             "bus_record_events/static/tests/**/*",
