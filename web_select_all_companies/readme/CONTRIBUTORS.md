@@ -1,0 +1,3 @@
+- Telmo Santos \<telmo.santos@camptocamp.com\>
+- [PyTech](https://www.pytech.it):
+  - Simone Rubino \<<simone.rubino@pytech.it>\>
