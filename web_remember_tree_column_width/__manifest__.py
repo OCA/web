@@ -5,7 +5,7 @@
     "website": "https://github.com/OCA/web",
     "license": "LGPL-3",
     "category": "Extra Tools",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "maintainers": [
         "frahikLV",
         "luisg123v",
@@ -18,6 +18,9 @@
     "assets": {
         "web.assets_backend": [
             "web_remember_tree_column_width/static/src/js/list_renderer.esm.js",
+        ],
+        "web.assets_unit_tests": [
+            "web_remember_tree_column_width/static/tests/**/*.test.js",
         ],
     },
     "installable": True,
