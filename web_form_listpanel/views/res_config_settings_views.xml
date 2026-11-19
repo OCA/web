@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Roberto Fichera
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <block id="user_default_rights" position="after">
+                <block title="List Panel" id="web_form_listpanel_settings">
+                    <setting
+                        id="web_form_listpanel_auto_panel_setting"
+                        help="Forms without a listpanel tag get a button next to the pager that opens the panel with the list's records and columns."
+                    >
+                        <field name="listpanel_auto_panel" />
+                    </setting>
+                </block>
+            </block>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Roberto Fichera
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<templates xml:space="preserve">
+    <t t-name="web_form_listpanel.ListPanel">
+        <div
+            t-if="isWideEnough and state.collapsed"
+            t-ref="root"
+            class="o_listpanel o_listpanel_collapsed d-flex flex-column align-items-center py-1"
+        >
+            <button
+                type="button"
+                class="o_listpanel_expand btn btn-sm btn-link px-1"
+                title="Show the list panel"
+                t-on-click="toggleCollapsed"
+            >
+                <i class="fa fa-angle-double-right" />
+            </button>
+        </div>
+        <div
+            t-elif="isWideEnough"
+            t-ref="root"
+            class="o_listpanel o_listpanel_expanded d-flex flex-column h-100"
+        >
+            <div class="o_listpanel_header d-flex align-items-center gap-2 px-2 py-1">
+                <div
+                    t-if="hasRelated"
+                    class="o_listpanel_toggle btn-group btn-group-sm"
+                    role="group"
+                >
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-mode="related"
+                        t-att-class="{active: state.mode === 'related'}"
+                        t-on-click="() => this.setMode('related')"
+                    >Related</button>
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-mode="search"
+                        t-att-class="{active: state.mode === 'search'}"
+                        t-att-disabled="!hasSearch"
+                        t-att-title="hasSearch ? '' : searchDisabledTitle"
+                        t-on-click="() => this.setMode('search')"
+                    >Search</button>
+                </div>
+                <span
+                    t-if="title"
+                    class="o_listpanel_title fw-bold text-truncate"
+                    t-esc="title"
+                />
+                <div t-if="state.total > state.limit" class="ms-auto">
+                    <Pager t-props="pagerProps" />
+                </div>
+                <button
+                    type="button"
+                    class="o_listpanel_collapse btn btn-sm btn-link px-1"
+                    t-att-class="{'ms-auto': state.total &lt;= state.limit}"
+                    title="Hide the list panel"
+                    t-on-click="toggleCollapsed"
+                >
+                    <i class="fa fa-angle-double-left" />
+                </button>
+            </div>
+            <div
+                class="o_listpanel_body flex-grow-1 overflow-auto"
+                t-att-class="{o_listpanel_loading: state.loading}"
+            >
+                <div
+                    t-if="state.error"
+                    class="o_listpanel_error text-muted px-2 py-1"
+                    t-esc="errorMessage"
+                />
+                <div
+                    t-elif="!state.rowCount"
+                    class="o_listpanel_empty text-muted px-2 py-1"
+                >No records</div>
+                <ListPanelRenderer t-else="" t-props="rendererProps" />
+            </div>
+        </div>
+    </t>
+</templates>

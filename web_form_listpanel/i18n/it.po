@@ -1,0 +1,116 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_form_listpanel
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-15 13:40+0000\n"
+"PO-Revision-Date: 2026-11-15 10:23+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_form_listpanel
+#. odoo-javascript
+#: code:addons/web_form_listpanel/static/src/list_panel.esm.js:0
+msgid "Cannot display the records"
+msgstr "Impossibile visualizzare i record"
+
+#. module: web_form_listpanel
+#. odoo-javascript
+#: code:addons/web_form_listpanel/static/src/list_panel.esm.js:0
+msgid "Cannot evaluate the domain"
+msgstr "Impossibile valutare il dominio"
+
+#. module: web_form_listpanel
+#: model:ir.model,name:web_form_listpanel.model_res_config_settings
+msgid "Config Settings"
+msgstr "Impostazioni di configurazione"
+
+#. module: web_form_listpanel
+#. odoo-javascript
+#: code:addons/web_form_listpanel/static/src/list_panel.esm.js:0
+msgid "Could not load records"
+msgstr "Impossibile caricare i record"
+
+#. module: web_form_listpanel
+#. odoo-javascript
+#: code:addons/web_form_listpanel/static/src/list_panel.esm.js:0
+#: model:ir.model.fields,field_description:web_form_listpanel.field_ir_http__display_name
+#: model:ir.model.fields,field_description:web_form_listpanel.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: web_form_listpanel
+#: model_terms:ir.ui.view,arch_db:web_form_listpanel.res_config_settings_view_form
+msgid "Forms without a listpanel tag get a button next to the pager that opens the panel with the list's records and columns."
+msgstr "I form senza il tag listpanel ottengono un pulsante accanto al paginatore che apre il pannello con i record e le colonne dell'elenco."
+
+#. module: web_form_listpanel
+#: model:ir.model,name:web_form_listpanel.model_ir_http
+msgid "HTTP Routing"
+msgstr "Instradamento HTTP"
+
+#. module: web_form_listpanel
+#. odoo-javascript
+#: code:addons/web_form_listpanel/static/src/list_panel.xml:0
+msgid "Hide the list panel"
+msgstr "Nascondi il pannello elenco"
+
+#. module: web_form_listpanel
+#: model:ir.model.fields,field_description:web_form_listpanel.field_ir_http__id
+#: model:ir.model.fields,field_description:web_form_listpanel.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_form_listpanel
+#: model_terms:ir.ui.view,arch_db:web_form_listpanel.res_config_settings_view_form
+msgid "List Panel"
+msgstr "Pannello elenco"
+
+#. module: web_form_listpanel
+#. odoo-javascript
+#: code:addons/web_form_listpanel/static/src/list_panel.xml:0
+msgid "No records"
+msgstr "Nessun record"
+
+#. module: web_form_listpanel
+#. odoo-javascript
+#: code:addons/web_form_listpanel/static/src/list_panel.esm.js:0
+msgid "Open this form from a list or kanban view to browse its records here"
+msgstr "Apri questo modulo da una vista elenco o kanban per sfogliarne qui i record"
+
+#. module: web_form_listpanel
+#. odoo-javascript
+#: code:addons/web_form_listpanel/static/src/list_panel.xml:0
+msgid "Related"
+msgstr "Correlati"
+
+#. module: web_form_listpanel
+#. odoo-javascript
+#: code:addons/web_form_listpanel/static/src/list_panel.xml:0
+msgid "Search"
+msgstr "Ricerca"
+
+#. module: web_form_listpanel
+#. odoo-javascript
+#: code:addons/web_form_listpanel/static/src/control_panel.xml:0
+msgid "Show or hide the list panel"
+msgstr "Mostra o nascondi il pannello elenco"
+
+#. module: web_form_listpanel
+#. odoo-javascript
+#: code:addons/web_form_listpanel/static/src/list_panel.xml:0
+msgid "Show the list panel"
+msgstr "Mostra il pannello elenco"
+
+#. module: web_form_listpanel
+#: model:ir.model.fields,field_description:web_form_listpanel.field_res_config_settings__listpanel_auto_panel
+msgid "Show the panel on every form opened from a list"
+msgstr "Mostra il pannello in ogni form aperto da un elenco"
