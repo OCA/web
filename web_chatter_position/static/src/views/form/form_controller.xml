@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright 2026 ForgeFlow S.L. (https://www.forgeflow.com).
+    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+-->
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_chatter_position.FormView"
+        t-inherit="web.FormView"
+        t-inherit-mode="extension"
+    >
+        <xpath
+            expr="//t[@t-set-slot='control-panel-create-button'][last()]"
+            position="after"
+        >
+            <t t-set-slot="control-panel-always-buttons">
+                <button
+                    t-if="isChatterToggleVisible"
+                    type="button"
+                    class="btn btn-secondary o_chatter_position_button"
+                    t-on-click="onClickChangePosition"
+                    title="Toggle chatter position"
+                >
+                    <i class="fa fa-arrows-h" />
+                </button>
+            </t>
+        </xpath>
+    </t>
+
+</templates>
