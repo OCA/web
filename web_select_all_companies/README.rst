@@ -31,9 +31,9 @@ Web Select All Companies
 This module allows you to select or deselect all the companies in a
 single click.
 
-|image|
+|Select all companies|
 
-.. |image| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_select_all_companies/static/description/select_all_companies.png
+.. |Select all companies| image:: https://raw.githubusercontent.com/OCA/web/18.0/web_select_all_companies/static/description/select_all_companies.mp4
 
 **Table of contents**
 
@@ -62,6 +62,9 @@ Contributors
 ------------
 
 - Telmo Santos <telmo.santos@camptocamp.com>
+- `PyTech <https://www.pytech.it>`__:
+
+  - Simone Rubino <simone.rubino@pytech.it>
 
 Maintainers
 -----------

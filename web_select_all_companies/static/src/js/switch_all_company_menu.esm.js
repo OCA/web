@@ -1,49 +1,14 @@
-/** @odoo-module **/
 /* Copyright 2023 Camptocamp - Telmo Santos
- * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
+   Copyright 2026 Simone Rubino - PyTech
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html). */
 import {SwitchCompanyMenu} from "@web/webclient/switch_company_menu/switch_company_menu";
-import {browser} from "@web/core/browser/browser";
 import {patch} from "@web/core/utils/patch";
 
-patch(SwitchCompanyMenu.prototype, "SwitchAllCompanyMenu", {
-    setup() {
-        this._super(...arguments);
-        this.allCompanyIds = Object.values(this.companyService.availableCompanies).map(
-            (x) => x.id
+patch(SwitchCompanyMenu.prototype, {
+    get hasLotsOfCompanies() {
+        // Just change threshold from 9 to 1
+        return (
+            Object.values(this.companyService.allowedCompaniesWithAncestors).length > 1
         );
-        this.isAllCompaniesSelected = this.allCompanyIds.every((elem) =>
-            this.selectedCompanies.includes(elem)
-        );
-    },
-
-    toggleSelectAllCompanies() {
-        if (this.isAllCompaniesSelected) {
-            // Deselect all
-            this.state.companiesToToggle = this.allCompanyIds;
-            this.toggleCompany(this.currentCompany.id);
-            this.isAllCompaniesSelected = false;
-            browser.clearTimeout(this.toggleTimer);
-            this.toggleTimer = browser.setTimeout(() => {
-                this.companyService.setCompanies(
-                    "toggle",
-                    ...this.state.companiesToToggle
-                );
-            }, this.constructor.toggleDelay);
-        } else {
-            // Select all
-            this.state.companiesToToggle = [
-                this.allCompanyIds.filter(
-                    (x) => !this.companyService.allowedCompanyIds.includes(x)
-                ),
-            ];
-            this.isAllCompaniesSelected = true;
-            browser.clearTimeout(this.toggleTimer);
-            this.toggleTimer = browser.setTimeout(() => {
-                this.companyService.setCompanies(
-                    "loginto",
-                    ...this.state.companiesToToggle
-                );
-            }, this.constructor.toggleDelay);
-        }
     },
 });
