@@ -8,6 +8,7 @@ import {
     HIGHLIGHT_MS,
     MAX_HIGHLIGHTED_RECORDS,
 } from "@bus_record_events/views/record_highlights.esm";
+import {Deferred, advanceTime, animationFrame} from "@odoo/hoot-mock";
 import {
     MockServer,
     contains,
@@ -17,7 +18,6 @@ import {
     mountView,
     onRpc,
 } from "@web/../tests/web_test_helpers";
-import {advanceTime, animationFrame} from "@odoo/hoot-mock";
 import {defineBusModels, waitForChannels} from "@bus/../tests/bus_test_helpers";
 import {describe, expect, test} from "@odoo/hoot";
 import {getWebSocketWorker} from "@bus/../tests/mock_websocket";
@@ -237,4 +237,84 @@ test("kanban marks the card another user changed", async () => {
     await settle(DEBOUNCE_MS);
     expect(`.o_kanban_record.${CHANGED_CLASS}`).toHaveCount(1);
     expect(".o_kanban_record:eq(0)").toHaveClass(CHANGED_CLASS);
+});
+
+/**
+ * A view button reloads the view with ``model.load()`` and enables the view's
+ * buttons only once that load settles. A refresh from the bus that starts in
+ * between drops the button's load, and the buttons stay disabled.
+ */
+async function clickButtonWithSlowReload(rpcName, buttonSelector) {
+    let heldRead = null;
+    onRpc(rpcName, async () => {
+        expect.step(rpcName);
+        await heldRead;
+    });
+    onRpc("/web/dataset/call_button/*", () => false);
+    return {
+        async click() {
+            heldRead = new Deferred();
+            await contains(buttonSelector).click();
+            await animationFrame();
+            expect.verifySteps([rpcName]);
+            expect(buttonSelector).toHaveAttribute("disabled");
+        },
+        release() {
+            heldRead.resolve();
+            heldRead = null;
+        },
+    };
+}
+
+test("list refresh waits for a row button's reload", async () => {
+    const button = await clickButtonWithSlowReload(
+        "web_search_read",
+        ".o_data_row:eq(0) button[name=do_it]"
+    );
+    await mountView({
+        type: "list",
+        resModel: "partner",
+        arch: `<list><field name="name"/><button name="do_it" type="object" string="Do"/></list>`,
+    });
+    await waitForChannels([CHANNEL]);
+    expect.verifySteps(["web_search_read"]);
+
+    await button.click();
+    pushRecordEvent({written: [1]});
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps([]);
+
+    button.release();
+    await animationFrame();
+    expect(".o_data_row:eq(0) button[name=do_it]").not.toHaveAttribute("disabled");
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps(["web_search_read"]);
+});
+
+test("form refresh waits for a header button's reload", async () => {
+    const button = await clickButtonWithSlowReload(
+        "web_read",
+        ".o_form_view header button[name=do_it]"
+    );
+    await mountView({
+        type: "form",
+        resModel: "partner",
+        resId: 1,
+        arch: `<form><header><button name="do_it" type="object" string="Do"/></header><field name="name"/></form>`,
+    });
+    await waitForChannels([CHANNEL]);
+    expect.verifySteps(["web_read"]);
+
+    await button.click();
+    pushRecordEvent({written: [1]});
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps([]);
+    expect(".o_notification").toHaveCount(0);
+
+    button.release();
+    await animationFrame();
+    expect(".o_form_view header button[name=do_it]").not.toHaveAttribute("disabled");
+    expect(".o_form_button_save").not.toHaveAttribute("disabled");
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps(["web_read"]);
 });

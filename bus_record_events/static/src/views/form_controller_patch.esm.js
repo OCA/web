@@ -10,6 +10,7 @@ patch(FormController.prototype, {
         super.setup(...arguments);
         this.recordEventsNotification = useService("notification");
         useRecordStream(this.props.resModel, {
+            isLoading: () => this.model.busRecordEventsLoading,
             getResId: () => !this.model.root.isNew && this.model.root.resId,
             isBusy: () => this.model.root.isDirty(),
             onBusy: () =>
@@ -19,7 +20,14 @@ patch(FormController.prototype, {
                     ),
                     {type: "warning"}
                 ),
-            onReload: useRecordHighlights(this.model, {announce: true}),
+            // The record reloads itself in the model's mutex, after any save
+            // or onchange, and stays the root that running code holds.
+            // ``model.load()`` would build a new root and go through the
+            // KeepLast that a view button's own reload is waiting on.
+            onReload: useRecordHighlights(this.model, {
+                announce: true,
+                load: () => this.model.root.load(),
+            }),
             onDeleted: () => this._onRecordDeletedElsewhere(),
             minInterval: 0,
         });
