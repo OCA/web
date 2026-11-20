@@ -113,12 +113,12 @@ render the timeline items. You have to name the template
 'timeline-item'. These are the variables available in template
 rendering:
 
-- ``record``: to access the fields values selected in the timeline
-  definition.
-- ``formatters``: used to format values (see available functions in
-  ``@web/views/fields/formatters``).
-- ``parsers``: used to parse values (see available functions in
-  ``@web/views/fields/parsers``).
+-  ``record``: to access the fields values selected in the timeline
+   definition.
+-  ``formatters``: used to format values (see available functions in
+   ``@web/views/fields/formatters``).
+-  ``parsers``: used to parse values (see available functions in
+   ``@web/views/fields/parsers``).
 
 You also need to declare the view in an action window of the involved
 model.
@@ -213,7 +213,7 @@ Records are grouped in different blocks depending on the group by
 criteria selected (if none is specified, then the default group by is
 applied). Dragging a record from one block to another change the
 corresponding field to the value that represents the block. You can also
-click on the group name to edit the involved record directly.
+double-click on the group name to edit the involved record directly.
 
 Double-click on the record to edit it. Double-click in open area to
 create a new record with the group and start date linked to the area you
@@ -223,20 +223,20 @@ create a new record with the dragged start and end date.
 Known issues / Roadmap
 ======================
 
-- Implement a more efficient way of refreshing timeline after a record
-  update;
-- Make ``attrs`` attribute work;
-- When grouping by m2m and more than one record is set, the timeline
-  item appears only on one group. Allow showing in both groups.
-- When grouping by m2m and dragging for changing the time or the group,
-  the changes on the group will not be set, because it could make
-  disappear the records not related with the changes that we want to
-  make. When the item is showed in all groups change the value according
-  the group of the dragged item.
-- When an item label does not fit in its date-range box: ✅ the label
-  correctly overflows the box; ✅ clicking anywhere on the label allows
-  moving the box; ❌ double-clicking the label outside of the box does
-  not open that item.
+-  Implement a more efficient way of refreshing timeline after a record
+   update;
+-  Make ``attrs`` attribute work;
+-  When grouping by m2m and more than one record is set, the timeline
+   item appears only on one group. Allow showing in both groups.
+-  When grouping by m2m and dragging for changing the time or the group,
+   the changes on the group will not be set, because it could make
+   disappear the records not related with the changes that we want to
+   make. When the item is showed in all groups change the value
+   according the group of the dragged item.
+-  When an item label does not fit in its date-range box: ✅ the label
+   correctly overflows the box; ✅ clicking anywhere on the label allows
+   moving the box; ❌ double-clicking the label outside of the box does
+   not open that item.
 
 Bug Tracker
 ===========
@@ -263,28 +263,28 @@ Authors
 Contributors
 ------------
 
-- Laurent Mignon <laurent.mignon@acsone.eu>
-- Adrien Peiffer <adrien.peiffer@acsone.eu>
-- Leonardo Donelli <donelli@webmonks.it>
-- Adrien Didenot <adrien.didenot@horanet.com>
-- Thong Nguyen Van <thongnv@trobz.com>
-- Murtaza Mithaiwala <mmithaiwala@opensourceintegrators.com>
-- Ammar Officewala <aofficewala@opensourceintegrators.com>
-- `Tecnativa <https://www.tecnativa.com>`__:
+-  Laurent Mignon <laurent.mignon@acsone.eu>
+-  Adrien Peiffer <adrien.peiffer@acsone.eu>
+-  Leonardo Donelli <donelli@webmonks.it>
+-  Adrien Didenot <adrien.didenot@horanet.com>
+-  Thong Nguyen Van <thongnv@trobz.com>
+-  Murtaza Mithaiwala <mmithaiwala@opensourceintegrators.com>
+-  Ammar Officewala <aofficewala@opensourceintegrators.com>
+-  `Tecnativa <https://www.tecnativa.com>`__:
 
-  - Pedro M. Baeza
-  - Alexandre Díaz
-  - César A. Sánchez
-  - Carlos López
+   -  Pedro M. Baeza
+   -  Alexandre Díaz
+   -  César A. Sánchez
+   -  Carlos López
 
-- `Onestein <https://www.onestein.nl>`__:
+-  `Onestein <https://www.onestein.nl>`__:
 
-  - Dennis Sluijk <d.sluijk@onestein.nl>
-  - Anjeel Haria
+   -  Dennis Sluijk <d.sluijk@onestein.nl>
+   -  Anjeel Haria
 
-- `XCG Consulting <https://xcg-consulting.fr>`__:
+-  `XCG Consulting <https://xcg-consulting.fr>`__:
 
-  - Houzéfa Abbasbhay
+   -  Houzéfa Abbasbhay
 
 - `PyTech <https://www.pytech.it>`__:
 
