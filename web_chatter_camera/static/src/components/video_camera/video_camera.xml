@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_chatter_camera.VideoCameraDialog" owl="1">
+        <Dialog title="'Camera'" fullscreen="true" size="'xl'">
+            <video
+                t-ref="videoPreview"
+                muted="true"
+                autoplay="true"
+                playsinline="true"
+                class="w-100 h-100"
+            />
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="onCapture">
+                    <i
+                        class="fa fa-camera fa-lg me-1"
+                        role="img"
+                        aria-label="Capture"
+                    />
+                    <t>Capture</t>
+                </button>
+                <button class="btn btn-secondary" t-on-click="props.close">
+                    <i class="fa fa-times fa-lg me-1" role="img" aria-label="Close" />
+                    <t>Close</t>
+                </button>
+            </t>
+        </Dialog>
+    </t>
+</templates>
