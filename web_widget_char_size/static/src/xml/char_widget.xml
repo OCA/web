@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t
+        t-name="web_widget_char_size.UrlField"
+        t-inherit="web.UrlField"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//input" position="attributes">
+            <attribute name="t-att-maxlength">maxLength</attribute>
+        </xpath>
+    </t>
+
+    <t
+        t-name="web_widget_char_size.FormUrlField"
+        t-inherit="web.FormUrlField"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//input" position="attributes">
+            <attribute name="t-att-maxlength">maxLength</attribute>
+        </xpath>
+    </t>
+
+    <t
+        t-name="web_widget_char_size.EmailField"
+        t-inherit="web.EmailField"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//input" position="attributes">
+            <attribute name="t-att-maxlength">maxLength</attribute>
+        </xpath>
+    </t>
+
+    <t
+        t-name="web_widget_char_size.FormEmailField"
+        t-inherit="web.FormEmailField"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//input" position="attributes">
+            <attribute name="t-att-maxlength">maxLength</attribute>
+        </xpath>
+    </t>
+
+    <t
+        t-name="web_widget_char_size.PhoneField"
+        t-inherit="web.PhoneField"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//input" position="attributes">
+            <attribute name="t-att-maxlength">maxLength</attribute>
+        </xpath>
+    </t>
+
+    <t
+        t-name="web_widget_char_size.FormPhoneField"
+        t-inherit="web.FormPhoneField"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//input" position="attributes">
+            <attribute name="t-att-maxlength">maxLength</attribute>
+        </xpath>
+    </t>
+</templates>
