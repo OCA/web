@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2025 Yves Goldberg (Ygol InternetWork)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<templates id="template" xml:space="preserve">
+
+    <t t-name="web_editor_paste_markdown.PasteMarkdownDialog" owl="1">
+        <Dialog title="'Paste Markdown'" size="'xl'">
+            <div class="o_paste_markdown_dialog">
+                <div class="row h-100">
+                    <!-- Markdown Input -->
+                    <div class="col-6 d-flex flex-column">
+                        <label class="form-label fw-bold">
+                            <i class="fa fa-edit me-1" />Markdown
+                        </label>
+                        <textarea
+                            t-ref="markdownTextarea"
+                            class="form-control o_paste_markdown_textarea flex-grow-1"
+                            t-on-input="onMarkdownInput"
+                            t-att-value="state.markdownContent"
+                            placeholder="Paste your Markdown content here...
+
+# Example
+**Bold text** and *italic text*
+
+- List item 1
+- List item 2
+
+```
+code block
+```"
+                        />
+                    </div>
+                    <!-- HTML Preview -->
+                    <div class="col-6 d-flex flex-column">
+                        <label class="form-label fw-bold">
+                            <i class="fa fa-eye me-1" />HTML Preview
+                        </label>
+                        <div
+                            t-ref="htmlPreview"
+                            class="o_paste_markdown_preview flex-grow-1 border rounded p-3 bg-white overflow-auto"
+                        />
+                    </div>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="onConfirm">
+                    <i class="fa fa-check me-1" />Insert HTML
+                </button>
+                <button class="btn btn-secondary" t-on-click="onCancel">
+                    Cancel
+                </button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>
