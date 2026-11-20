@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Yves Goldberg (Ygol InternetWork)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_groups_form_markdown_demo" model="ir.ui.view">
+        <field name="name">res.groups.form.markdown.demo</field>
+        <field name="model">res.groups</field>
+        <field name="inherit_id" ref="base.view_groups_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//page[@name='notes']/field[@name='comment']"
+                position="attributes"
+            >
+                <attribute name="widget">markdown</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="group_markdown_demo" model="res.groups">
+        <field name="name">Markdown widget demo</field>
+        <field
+            name="comment"
+            eval="'# Markdown demo\n\nText in **bold**, *italic* and `inline code`.\n\n- first item\n- second item\n\n- [ ] to do\n- [x] done\n\n| Column A | Column B |\n| --- | --- |\n| 1 | 2 |\n\n&gt; A quote\n\n```python\nprint(&quot;hello&quot;)\n```\n'"
+        />
+    </record>
+</odoo>
