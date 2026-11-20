@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2025 Yves Goldberg (Ygol InternetWork)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+
+    <t t-name="web_widget_markdown_editor.MarkdownField" owl="1">
+        <div
+            t-att-class="props.readonly ? 'o_field_markdown_readonly' : 'o_field_markdown_editor'"
+            t-ref="container"
+        />
+    </t>
+
+</templates>

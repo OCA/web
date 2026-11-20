@@ -1,0 +1,1 @@
+- The command converts Markdown to HTML only; there is no HTML to Markdown export.
