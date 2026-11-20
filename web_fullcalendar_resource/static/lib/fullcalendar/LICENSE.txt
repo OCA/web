@@ -1,0 +1,10 @@
+FullCalendar Scheduler v6.1.11 — (c) Adam Shaw — https://fullcalendar.io
+Paquets : premium-common, resource, resource-daygrid, resource-timegrid.
+
+Tri-licencié : commerciale / CC BY-NC-ND 4.0 / GPLv3.
+Utilisé ici sous GPLv3 (schedulerLicenseKey = "GPL-My-Project-Is-Open-Source").
+=> copyleft : tout projet redistribuant ces plugins doit rester sous licence
+compatible GPL (GPLv3/AGPLv3). Usage propriétaire = licence commerciale.
+Voir https://fullcalendar.io/license
+
+Le cœur de FullCalendar (module Odoo "web") est sous licence MIT.
