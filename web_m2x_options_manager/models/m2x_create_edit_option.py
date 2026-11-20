@@ -184,11 +184,19 @@ class M2xCreateEditOption(models.Model):
         eval_ctx.update({"context": dict(eval_ctx)})
         return eval_ctx
 
+    # Odoo 18 renamed the field-level option keys and inverted their boolean sense:
+    # old: create=False  → new: no_quick_create=True
+    # old: create_edit=False → new: no_create_edit=True
+    _OPTION_KEY_MAP = {
+        "create": "no_quick_create",
+        "create_edit": "no_create_edit",
+    }
+
     def _read_own_options(self):
         """Helper method to retrieve M2X options from ``self``
 
         :return: a dictionary mapping each M2X option to its mode and value, eg:
-            {'create': ('force', 'true'), 'create_edit': ('set', 'false')}
+            {'no_quick_create': ('force', True), 'no_create_edit': ('set', True)}
         :rtype: dict[str, tuple[str, Any]]
         """
         self.ensure_one()
@@ -196,7 +204,13 @@ class M2xCreateEditOption(models.Model):
         for fname, fvalue in self.read(self._get_option_fields())[0].items():
             if fname != "id" and fvalue != "none":
                 mode, value = tuple(fvalue.split("_"))
-                res[fname.replace("option_", "")] = (mode, value == "true")
+                old_key = fname.replace("option_", "")
+                new_key = self._OPTION_KEY_MAP.get(old_key, old_key)
+                # Value is inverted: create=False means no_quick_create=True
+                bool_value = value == "true"
+                if new_key != old_key:
+                    bool_value = not bool_value
+                res[new_key] = (mode, bool_value)
         return res
 
     def _get_option_fields(self):
