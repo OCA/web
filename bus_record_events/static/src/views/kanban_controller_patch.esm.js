@@ -8,6 +8,7 @@ patch(KanbanController.prototype, {
     setup() {
         super.setup(...arguments);
         useRecordStream(this.props.resModel, {
+            isLoading: () => this.model.busRecordEventsLoading,
             // A reload would close an open quick create and re-render the card
             // under the pointer during a drag.
             isBusy: async () =>

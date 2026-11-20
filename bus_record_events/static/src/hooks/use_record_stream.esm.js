@@ -27,6 +27,9 @@ export const DEFAULT_MIN_INTERVAL_MS = 5000;
  *      changes the record without remounting the controller.
  * @param {Function} [options.onDeleted] single-record views: the shown record
  *      was deleted elsewhere
+ * @param {Function} [options.isLoading] true while the view is loading. The
+ *      reload waits for it without telling the user: a reload started now
+ *      would drop that load, and with it whatever waits for it.
  * @param {Function} [options.isBusy] async, true to postpone the reload
  * @param {Function} [options.onBusy] called once when a reload is postponed
  * @param {Number} [options.minInterval]
@@ -37,6 +40,7 @@ export function useRecordStream(
         onReload,
         getResId,
         onDeleted,
+        isLoading,
         isBusy,
         onBusy,
         minInterval = DEFAULT_MIN_INTERVAL_MS,
@@ -69,6 +73,10 @@ export function useRecordStream(
     async function run() {
         timer = null;
         if (!changes || !isMounted() || document.visibilityState === "hidden") {
+            return;
+        }
+        if (isLoading?.()) {
+            timer = browser.setTimeout(run, DEBOUNCE_MS);
             return;
         }
         if (isBusy && (await isBusy())) {
