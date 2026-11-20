@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_field_tooltip_copy.FieldTooltip"
+        t-inherit="web.FieldTooltip"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//li[@data-item='label']" position="replace">
+            <li data-item="label" t-if="field and field.label">
+                <span class="o-tooltip--technical--title">Label:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t t-set="copy_value" t-value="field.label" />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='field']" position="replace">
+            <li data-item="field" t-if="field and field.name">
+                <span class="o-tooltip--technical--title">Field:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t t-set="copy_value" t-value="field.name" />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='object']" position="replace">
+            <li data-item="object" t-if="resModel">
+                <span class="o-tooltip--technical--title">Model:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t t-set="copy_value" t-value="resModel" />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='type']" position="replace">
+            <li t-if="field.type" data-item="type">
+                <span class="o-tooltip--technical--title">Type:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t t-set="copy_value" t-value="field.type" />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='model_field']" position="replace">
+            <li t-if="field.model_field" data-item="model_field">
+                <span class="o-tooltip--technical--title">Model field:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t t-set="copy_value" t-value="field.model_field" />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='widget']" position="replace">
+            <li t-if="field.widget" data-item="widget">
+                <span class="o-tooltip--technical--title">Widget:</span>
+                <t t-if="field.widgetDescription" t-esc="field.widgetDescription" />
+                <t t-if="field.widget">
+                    (<t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t t-set="copy_value" t-value="field.widget" />
+                </t>)
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='context']" position="replace">
+            <li t-if="field.context" data-item="context">
+                <span class="o-tooltip--technical--title">Context:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t
+                        t-set="copy_value"
+                        t-value="typeof field.context === 'string' ? field.context : JSON.stringify(field.context)"
+                    />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='domain']" position="replace">
+            <li t-if="field.domain" data-item="domain">
+                <span class="o-tooltip--technical--title">Domain:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t
+                        t-set="copy_value"
+                        t-value="typeof field.domain === 'string' ? field.domain : (field.domain.length === 0 ? '[]' : JSON.stringify(field.domain))"
+                    />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='invisible']" position="replace">
+            <li t-if="field.invisible" data-item="invisible">
+                <span class="o-tooltip--technical--title">Invisible:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t
+                        t-set="copy_value"
+                        t-value="typeof field.invisible === 'string' ? field.invisible : JSON.stringify(field.invisible)"
+                    />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='column_invisible']" position="replace">
+            <li t-if="field.column_invisible" data-item="column_invisible">
+                <span class="o-tooltip--technical--title">Column invisible:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t
+                        t-set="copy_value"
+                        t-value="typeof field.column_invisible === 'string' ? field.column_invisible : JSON.stringify(field.column_invisible)"
+                    />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='required']" position="replace">
+            <li t-if="field.required" data-item="required">
+                <span class="o-tooltip--technical--title">Required:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t
+                        t-set="copy_value"
+                        t-value="typeof field.required === 'string' ? field.required : JSON.stringify(field.required)"
+                    />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='readonly']" position="replace">
+            <li t-if="field.readonly" data-item="readonly">
+                <span class="o-tooltip--technical--title">Readonly:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t
+                        t-set="copy_value"
+                        t-value="typeof field.readonly === 'string' ? field.readonly : JSON.stringify(field.readonly)"
+                    />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='default']" position="replace">
+            <li t-if="field.default" data-item="default">
+                <span class="o-tooltip--technical--title">Default:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t
+                        t-set="copy_value"
+                        t-value="typeof field.default === 'string' ? field.default : JSON.stringify(field.default)"
+                    />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='relation']" position="replace">
+            <li t-if="field.relation" data-item="relation">
+                <span class="o-tooltip--technical--title">Relation:</span>
+                <t t-call="web_field_tooltip_copy.CopyableValue">
+                    <t t-set="copy_value" t-value="field.relation" />
+                </t>
+            </li>
+        </xpath>
+
+        <xpath expr="//li[@data-item='selection']" position="replace">
+            <li t-if="field.selection" data-item="selection">
+                <span class="o-tooltip--technical--title">Selection:</span>
+                <ul class="o-tooltip--technical">
+                    <li t-foreach="field.selection" t-as="option" t-key="option_index">
+                        <t t-call="web_field_tooltip_copy.CopyableValue">
+                            <t t-set="copy_value" t-value="option[0]" />
+                        </t>
+                        <t t-if="option[1]">
+                            <span class="o_field_tooltip_copy_selection_sep"> - </span>
+                            <t t-call="web_field_tooltip_copy.CopyableValue">
+                                <t t-set="copy_value" t-value="option[1]" />
+                            </t>
+                        </t>
+                    </li>
+                </ul>
+            </li>
+        </xpath>
+    </t>
+
+    <t t-name="web_field_tooltip_copy.CopyableValue">
+        <button
+            type="button"
+            class="btn o_field_tooltip_copy_value"
+            t-att-data-copy-value="copy_value"
+            title="Click to copy"
+            aria-label="Copy value"
+        >
+            <span class="o_field_tooltip_copy_text" t-esc="copy_value" />
+            <i class="fa fa-clipboard o_field_tooltip_copy_icon" aria-hidden="true" />
+            <span class="o_field_tooltip_copy_badge d-none" />
+        </button>
+    </t>
+
+</templates>
