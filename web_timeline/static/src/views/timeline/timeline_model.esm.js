@@ -140,6 +140,9 @@ export class TimelineModel extends Model {
                 this.fields[this.date_stop],
                 record[this.date_stop]
             );
+            if (this.fields[this.date_stop].type === "date") {
+                date_stop = date_stop.endOf("day");
+            }
         }
         if (!date_stop && date_delay) {
             date_stop = date_start.plus({hours: date_delay});
