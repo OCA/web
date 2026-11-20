@@ -1,0 +1,93 @@
+/* Copyright 2018 Tecnativa - Jairo Llopis
+ * Copyright 2021 ITerra - Sergey Shebanin
+ * Copyright 2023 Onestein - Anjeel Haria
+ * Copyright 2023 Taras Shabaranskyi
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+/* Remove navbar border-bottom */
+.o_main_navbar {
+    border-bottom: none !important;
+}
+
+/* Enterprise-like navbar button styling for Odoo Community Edition v18 */
+.o_main_navbar {
+    // Ensure navbar items are vertically centered
+    align-items: center !important;
+
+    // Style all navbar interactive elements
+    .o_nav_entry,
+    button:not(.o_grid_apps_menu__button),
+    .dropdown-toggle,
+    a.dropdown-toggle,
+    .o_menu_sections .dropdown > a,
+    .o_menu_systray > * {
+        // Remove default full-height styling
+        min-height: unset !important;
+        height: unset !important;
+
+        // Create centered, rounded buttons
+        display: inline-flex !important;
+        align-items: center !important;
+        align-self: center !important;
+
+        padding: 6px 12px !important;
+        margin: 0 2px !important;
+
+        border-radius: 6px !important;
+        background-color: transparent !important;
+        transition: background-color 0.15s ease, box-shadow 0.15s ease !important;
+
+        // Hover and active states
+        &:hover,
+        &:focus,
+        &.show {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+
+        &:active,
+        &.active {
+            background-color: rgba(0, 0, 0, 0.08) !important;
+        }
+    }
+
+    // Special handling for apps menu button to keep icon centered
+    .o_grid_apps_menu__button {
+        min-height: unset !important;
+        height: 40px !important;
+        width: 40px !important;
+
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        align-self: center !important;
+
+        padding: 6px !important;
+        margin: 0 4px !important;
+
+        border-radius: 6px !important;
+        background-color: transparent !important;
+        transition: background-color 0.15s ease !important;
+
+        &:hover,
+        &:focus {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+    }
+
+    // Keep menu brand (module name) aligned
+    .o_menu_brand {
+        display: inline-flex !important;
+        align-items: center !important;
+        align-self: center !important;
+        padding: 6px 12px !important;
+        margin: 0 4px !important;
+        border-radius: 6px !important;
+        background-color: transparent !important;
+        transition: background-color 0.15s ease !important;
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+    }
+}
+
