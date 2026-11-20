@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2016 Onestein
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).-->
+<odoo>
+    <record id="group_export_xlsx_data" model="res.groups">
+        <field name="name">Direct Export (xlsx)</field>
+        <field name="category_id" ref="base.module_category_hidden" />
+        <field
+            name="users"
+            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+        />
+    </record>
+    <record id="base.group_allow_export" model="res.groups">
+        <field
+            name="implied_ids"
+            eval="[(4, ref('web_disable_export_group.group_export_xlsx_data'))]"
+        />
+    </record>
+</odoo>
