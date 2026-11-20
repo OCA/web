@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_web_diagram_builder_path_form" model="ir.ui.view">
+        <field name="name">web.diagram.builder.path.form</field>
+        <field name="model">web.diagram.builder.path</field>
+        <field name="arch" type="xml">
+            <form string="Find Path Between Nodes">
+                <sheet>
+                    <group>
+                        <field name="builder_id" invisible="1"/>
+                        <field name="node_a_id" options="{'no_create': True}" required="1"/>
+                        <field name="node_b_id" options="{'no_create': True}" required="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_find_path"
+                                string="Find Path"
+                                type="object"
+                                class="btn-primary"/>
+                        <button string="Close"
+                                special="cancel"
+                                class="btn-secondary"/>
+                    </footer>
+                    <div invisible="not path_html">
+                        <field name="path_html" widget="html"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

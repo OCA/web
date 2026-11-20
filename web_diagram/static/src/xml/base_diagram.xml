@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<!-- DiagramController template. -->
+<t t-name="web_diagram.DiagramController" owl="1">
+    <Layout display="display">
+        <t t-set-slot="control-panel-create-button">
+            <button t-if="archInfo.canCreate" type="button"
+                    class="btn btn-primary o_diagram_new_button"
+                    t-on-click="addNode"
+                    t-esc="_t('New Node')"/>
+            <button type="button" class="btn btn-secondary ms-1"
+                    t-on-click="exportSVG"
+                    t-esc="_t('Export PNG')"/>
+            <button type="button" class="btn btn-secondary ms-1 o_stat_button"
+                    t-on-click="showNavHelp"
+                    t-att-title="_t('Navigation Help')">
+                <i class="fa fa-question-circle me-1"/>
+                <span t-esc="_t('Help')"/>
+            </button>
+        </t>
+        <t t-set-slot="control-panel-navigation-additional">
+            <Pager t-if="state.pager.total > 1"
+                   offset="state.pager.offset"
+                   limit="1"
+                   total="state.pager.total"
+                   onUpdate.bind="onPagerUpdate"
+                   updateTotal.bind="onPagerUpdateTotal"/>
+        </t>
+        <div class="o_diagram_view o_view_controller">
+            <DiagramRenderer
+                nodes="state.nodes"
+                edges="state.edges"
+                labels="state.labels"
+                onEditNode.bind="editNode"
+                onRemoveNode.bind="removeNode"
+                onEditEdge.bind="editEdge"
+                onAddEdge.bind="addEdge"
+                onRemoveEdge.bind="removeEdge"
+            />
+        </div>
+    </Layout>
+</t>
+
+<!-- DiagramRenderer template. -->
+<t t-name="web_diagram.DiagramView" owl="1">
+    <div class="o_diagram_header">
+        <t t-foreach="props.labels" t-as="label" t-key="label_index">
+            <span t-esc="label"/>
+        </t>
+    </div>
+    <div class="o_diagram" t-ref="diagram"/>
+</t>
+
+</templates>

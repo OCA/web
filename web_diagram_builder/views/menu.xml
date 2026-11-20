@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_web_diagram_builder_root"
+              name="Diagram Builder"
+              sequence="50"
+              web_icon="web_diagram_builder,static/description/icon.png"/>
+
+    <menuitem id="menu_web_diagram_builder_main"
+              name="Diagrams"
+              parent="menu_web_diagram_builder_root"
+              action="action_web_diagram_builder"
+              sequence="10"/>
+
+    <menuitem id="menu_web_diagram_builder_import"
+              name="Import from CSV"
+              parent="menu_web_diagram_builder_root"
+              action="action_web_diagram_builder_import"
+              sequence="20"/>
+
+    <menuitem id="menu_web_diagram_builder_config"
+              name="Configuration"
+              parent="menu_web_diagram_builder_root"
+              sequence="90"/>
+
+    <menuitem id="menu_web_diagram_builder_template"
+              name="Templates"
+              parent="menu_web_diagram_builder_config"
+              action="action_web_diagram_builder_template"
+              sequence="10"/>
+
+    <menuitem id="menu_web_diagram_builder_guide"
+              name="Quick Guide"
+              parent="menu_web_diagram_builder_config"
+              action="action_web_diagram_builder_guide"
+              sequence="20"/>
+
+</odoo>
