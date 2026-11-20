@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <!--
+        Inject the parent One2many technical name right under "Field:" in the
+        developer FieldTooltip (list columns inside One2many only).
+        data-copy-value works with web_field_tooltip_copy when that module is
+        installed; a small fallback handler is also registered in JS.
+    -->
+    <t
+        t-name="web_one2many_field_name.FieldTooltip"
+        t-inherit="web.FieldTooltip"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//li[@data-item='field']" position="after">
+            <li
+                class="o_o2m_parent_field"
+                data-item="parent_one2many_field"
+                t-if="debug and parentOne2manyField"
+            >
+                <span class="o-tooltip--technical--title">One2many:</span>
+                <button
+                    type="button"
+                    class="btn o_field_tooltip_copy_value"
+                    t-att-data-copy-value="parentOne2manyField"
+                    title="Click to copy"
+                    aria-label="Copy value"
+                >
+                    <span
+                        class="o_field_tooltip_copy_text"
+                        t-esc="parentOne2manyField"
+                    />
+                    <i
+                        class="fa fa-clipboard o_field_tooltip_copy_icon"
+                        aria-hidden="true"
+                    />
+                    <span class="o_field_tooltip_copy_badge d-none" />
+                </button>
+            </li>
+        </xpath>
+    </t>
+
+</templates>
