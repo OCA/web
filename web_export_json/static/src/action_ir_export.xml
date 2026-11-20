@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="web_export_json.CustomExportDataDialog"
+        t-inherit="web.ExportDataDialog"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_import_compat')]" position="after">
+            <p>Foo Bar Baz</p>
+        </xpath>
+    </t>
+</templates>
