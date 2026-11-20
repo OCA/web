@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="web_diagram_builder.DiagramHelpWidget" owl="1">
+        <button class="btn btn-light border ms-3 mt-1 flex-shrink-0" t-on-click="openHelp">
+            <i class="fa fa-question-circle me-1"/>
+            <t t-esc="label"/>
+        </button>
+    </t>
+</templates>

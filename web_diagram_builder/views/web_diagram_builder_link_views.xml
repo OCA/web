@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_web_diagram_builder_link_form" model="ir.ui.view">
+        <field name="name">web.diagram.builder.link.form</field>
+        <field name="model">web.diagram.builder.link</field>
+        <field name="arch" type="xml">
+            <form string="Transition">
+                <sheet>
+                    <field name="builder_id" invisible="1"/>
+                    <group>
+                        <field name="source_node_id"
+                               domain="[('builder_id', '=', builder_id)]"/>
+                        <field name="dest_node_id"
+                               domain="[('builder_id', '=', builder_id)]"/>
+                        <field name="signal" string="Label"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
