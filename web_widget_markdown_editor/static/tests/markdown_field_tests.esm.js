@@ -8,6 +8,7 @@ import {makeView, setupViewRegistries} from "@web/../tests/views/helpers";
 import {MarkdownField} from "@web_widget_markdown_editor/js/markdown_field.esm";
 import {makeFakeNotificationService} from "@web/../tests/helpers/mock_services";
 import {registry} from "@web/core/registry";
+import {FormController} from "@web/views/form/form_controller";
 
 // Reason: modules installed next to this one (e.g. web_refresh_from_backend)
 // make every form controller use these services, absent from the test registry.
@@ -44,6 +45,16 @@ QUnit.module("web_widget_markdown_editor", (hooks) => {
         }
         if (!services.contains("notification")) {
             services.add("notification", makeFakeNotificationService());
+        }
+        // Reason: web_m2x_options (same repository) adds this step to every form
+        // view load and reads its settings from a session the test environment
+        // does not have; it only concerns x2many fields, absent here.
+        if (FormController.prototype._setSubViewLimit) {
+            patchWithCleanup(FormController.prototype, {
+                async _setSubViewLimit() {
+                    return undefined;
+                },
+            });
         }
     });
 
