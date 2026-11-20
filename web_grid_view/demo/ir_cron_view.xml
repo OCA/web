@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Add a demo grid view on cron jobs to showcase this module. -->
+    <record id="ir_cron_grid_view" model="ir.ui.view">
+        <field name="name">ir.cron.grid.view</field>
+        <field name="model">ir.cron</field>
+        <field name="type">grid_view</field>
+        <field name="arch" type="xml">
+            <grid_view string="Scheduled Actions">
+                <field name="interval_type" type="row" section="1" />
+                <field name="user_id" type="row" />
+                <field name="nextcall" type="col">
+                    <range name="day" string="Day" span="day" step="day" />
+                    <range
+                        name="week"
+                        string="Week"
+                        span="week"
+                        step="day"
+                        default="1"
+                    />
+                    <range name="month" string="Month" span="month" step="day" />
+                </field>
+                <field
+                    name="id"
+                    type="measure"
+                    operator="count_distinct"
+                    string="Actions"
+                />
+            </grid_view>
+        </field>
+    </record>
+
+    <!--
+        Append grid_view to the existing "Scheduled Actions" action so the view
+        is reachable through the standard ir.cron menu, without adding a custom
+        menu, action or model.
+    -->
+    <function model="ir.actions.act_window" name="write">
+        <value eval="[ref('base.ir_cron_act')]" />
+        <value
+            model="ir.actions.act_window"
+            eval="{
+                'view_mode': obj().env.ref('base.ir_cron_act').view_mode + ',grid_view',
+                'view_ids': [
+                    Command.create({
+                        'view_mode': 'grid_view',
+                        'view_id': ref('ir_cron_grid_view'),
+                    }),
+                ],
+            }"
+        />
+    </function>
+</odoo>
