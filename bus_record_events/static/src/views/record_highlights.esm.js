@@ -125,10 +125,15 @@ function announce(message) {
  * @param {Object} [options]
  * @param {Boolean} [options.announce] tell screen readers that the record
  *      changed; for single-record views
+ * @param {Function} [options.load] async, reloads the view; ``model.load()``
+ *      by default
  * @returns {Function} async ``(changes) => void``, to pass to
  *      ``useRecordStream`` as ``onReload``
  */
-export function useRecordHighlights(model, {announce: shouldAnnounce = false} = {}) {
+export function useRecordHighlights(
+    model,
+    {announce: shouldAnnounce = false, load = () => model.load()} = {}
+) {
     model.recordHighlights ??= reactive(new Map());
     const marks = model.recordHighlights;
     const timers = new Set();
@@ -156,7 +161,7 @@ export function useRecordHighlights(model, {announce: shouldAnnounce = false} = 
 
     return async function reloadWithHighlights(changes) {
         if (!changes || changes.all) {
-            await model.load();
+            await load();
             return;
         }
         const before = new Map();
@@ -165,7 +170,7 @@ export function useRecordHighlights(model, {announce: shouldAnnounce = false} = 
                 before.set(record.resId, snapshot(record));
             }
         }
-        await model.load();
+        await load();
 
         const found = findChanges(model.root, before, changes);
         if (!found.length || found.length > MAX_HIGHLIGHTED_RECORDS) {

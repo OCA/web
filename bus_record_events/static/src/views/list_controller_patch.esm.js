@@ -7,6 +7,7 @@ patch(ListController.prototype, {
     setup() {
         super.setup(...arguments);
         useRecordStream(this.props.resModel, {
+            isLoading: () => this.model.busRecordEventsLoading,
             // A reload discards the row being edited and the selection a mass
             // action is about to use.
             isBusy: async () =>
