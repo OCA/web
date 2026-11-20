@@ -49,17 +49,17 @@
             box-shadow: 0 0 0 2px rgba(113, 125, 136, 0.25);
         }
 
-        .fa {
+        .oi {
             font-size: 22px;
             line-height: 1;
             display: block;
         }
 
-        .fa-angle-right {
+        [data-icon="keyboard_arrow_right"] {
             transform: translate(1px, -1px);
         }
 
-        .fa-angle-left {
+        [data-icon="keyboard_arrow_left"] {
             transform: translate(-1px, -1px);
         }
     }

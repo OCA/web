@@ -10,7 +10,7 @@ import {
 import {expect, test} from "@odoo/hoot";
 import {EventBus} from "@odoo/owl";
 import {FormCompiler} from "@web/views/form/form_compiler";
-import {SIZES} from "@web/core/ui/ui_service";
+import {SIZES} from "@web/core/ui/ui_utils";
 
 class Partner extends models.Model {
     name = fields.Char();

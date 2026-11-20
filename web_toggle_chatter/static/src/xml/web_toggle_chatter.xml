@@ -8,7 +8,8 @@
             t-att-aria-label="__comp__.webToggleChatterState.isVisible ? 'Toggle chatter' : 'Show chatter'"
         >
             <i
-                t-attf-class="fa {{ __comp__.webToggleChatterState.isVisible ? 'fa-angle-right' : 'fa-angle-left' }}"
+                class="oi"
+                t-att-data-icon="__comp__.webToggleChatterState.isVisible ? 'keyboard_arrow_right' : 'keyboard_arrow_left'"
             />
         </button>
     </t>

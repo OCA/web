@@ -1,5 +1,5 @@
 import {append, createElement} from "@web/core/utils/xml";
-import {onMounted, onPatched, onWillUnmount, useState} from "@odoo/owl";
+import {onMounted, onPatched, onWillUnmount, proxy} from "@odoo/owl";
 import {FormCompiler} from "@web/views/form/form_compiler";
 import {FormRenderer} from "@web/views/form/form_renderer";
 import {patch} from "@web/core/utils/patch";
@@ -87,7 +87,7 @@ patch(FormCompiler.prototype, {
 patch(FormRenderer.prototype, {
     setup() {
         super.setup();
-        this.webToggleChatterState = useState({
+        this.webToggleChatterState = proxy({
             isVisible: true,
         });
         this._onViewportChange = this._onViewportChange.bind(this);
@@ -183,7 +183,8 @@ patch(FormRenderer.prototype, {
         toggleButton.className = "o_web_toggle_chatter_toggle_btn btn btn-light";
         toggleButton.setAttribute("aria-label", "Toggle chatter");
         const icon = document.createElement("i");
-        icon.className = "fa fa-angle-right";
+        icon.className = "oi";
+        icon.dataset.icon = "keyboard_arrow_right";
         toggleButton.appendChild(icon);
         toggleButton.addEventListener("click", (clickEvent) => {
             clickEvent.preventDefault();
@@ -198,7 +199,7 @@ patch(FormRenderer.prototype, {
         if (!toggleButton) {
             return;
         }
-        const icon = toggleButton.querySelector(".fa");
+        const icon = toggleButton.querySelector(".oi");
         const isVisible = this.webToggleChatterState.isVisible;
         toggleButton.setAttribute(
             "aria-label",
@@ -207,8 +208,7 @@ patch(FormRenderer.prototype, {
         if (!icon) {
             return;
         }
-        icon.classList.toggle("fa-angle-right", isVisible);
-        icon.classList.toggle("fa-angle-left", !isVisible);
+        icon.dataset.icon = isVisible ? "keyboard_arrow_right" : "keyboard_arrow_left";
     },
 
     _onViewportChange() {
