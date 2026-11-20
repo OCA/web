@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_web_form_banner_rule_public,web_form_banner_rule_public,model_web_form_banner_rule,base.group_public,1,0,0,0
+access_web_form_banner_rule_portal,web_form_banner_rule_portal,model_web_form_banner_rule,base.group_portal,1,0,0,0
+access_web_form_banner_rule_user,web_form_banner_rule_user,model_web_form_banner_rule,base.group_user,1,0,0,0
+access_web_form_banner_rule_group_system,web_form_banner_rule_group_system,model_web_form_banner_rule,base.group_system,1,1,1,1

@@ -1,0 +1,11 @@
+// tighten vertical rhythm for stacked banners in form views
+.o_form_view .o_form_banner.alert {
+    margin: 4px 0; // Bootstrap's default is ~1rem bottom; shrink it
+    padding-top: 6px; // slightly tighter padding
+    padding-bottom: 6px;
+}
+
+// avoid extra gaps from paragraphs inside the banner
+.o_form_view .o_form_banner.alert p:last-child {
+    margin-bottom: 0;
+}
