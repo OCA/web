@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+
+  <t t-name="base_quick_groupby.group_by_button">
+    <t t-if="isColumnGroupable(column)">
+      <button
+                t-att-ref="'groupByButton_' + column.name"
+                t-att-data-field="column.name"
+                t-on-click="onGroupByColumn"
+                t-att-title="isColumnCurrentlyGrouped(column) ? 'Click to remove grouping' : 'Click to group by this column'"
+                t-att-style="getButtonStyle(column)"
+                class="btn btn-link p-0 ms-1"
+                style="font-size: 0.9em; border: none; background: transparent; cursor: pointer; transition: transform 0.1s ease;"
+            >
+        <i t-if="isColumnCurrentlyGrouped(column)" class="fa fa-toggle-on" />
+        <i t-if="!isColumnCurrentlyGrouped(column)" class="fa fa-toggle-off" />
+      </button>
+    </t>
+  </t>
+
+  <!-- Standard Lists -->
+  <t
+        t-name="base_quick_groupby.add_button_to_header"
+        t-inherit="web.ListRenderer"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+    <xpath
+            expr="//thead//th//span[contains(@class, 'd-block') and contains(@class, 'text-truncate')]"
+            position="after"
+        >
+      <t t-call="base_quick_groupby.group_by_button" />
+    </xpath>
+  </t>
+
+</templates>
