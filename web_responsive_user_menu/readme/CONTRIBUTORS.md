@@ -1,0 +1,1 @@
+- Sébastien Couratin, Semper Connect
