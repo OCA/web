@@ -1,0 +1,66 @@
+/* Copyright 2025 Yves Goldberg (Ygol InternetWork)
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
+
+/* The editor size comes from the Toast UI height / minHeight options: do not
+ * force heights here, Toast UI lays out its toolbar, panes and mode tabs itself. */
+.o_field_widget.o_field_markdown,
+.o_field_markdown_editor,
+.o_field_markdown_readonly {
+    width: 100%;
+}
+
+.o_field_markdown_editor .toastui-editor-defaultUI {
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
+
+.o_field_markdown_editor .toastui-editor-defaultUI-toolbar {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Use the Odoo font in every mode (source, preview, WYSIWYG, read-only) */
+.o_field_markdown_editor .toastui-editor-contents,
+.o_field_markdown_editor .ProseMirror,
+.o_field_markdown_readonly .toastui-editor-contents {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.5;
+}
+
+/* Rendered Markdown: light headings and tables, as in the Odoo html editor */
+.o_field_markdown_editor .toastui-editor-contents h1,
+.o_field_markdown_editor .toastui-editor-contents h2,
+.o_field_markdown_readonly .toastui-editor-contents h1,
+.o_field_markdown_readonly .toastui-editor-contents h2 {
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 0.25rem;
+}
+
+.o_field_markdown_editor .toastui-editor-contents table,
+.o_field_markdown_readonly .toastui-editor-contents table {
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+}
+
+.o_field_markdown_editor .toastui-editor-contents table th,
+.o_field_markdown_editor .toastui-editor-contents table td,
+.o_field_markdown_readonly .toastui-editor-contents table th,
+.o_field_markdown_readonly .toastui-editor-contents table td {
+    border: 1px solid #dee2e6;
+    padding: 0.4rem 0.75rem;
+}
+
+.o_field_markdown_editor .toastui-editor-contents table th,
+.o_field_markdown_editor .toastui-editor-contents table th p,
+.o_field_markdown_readonly .toastui-editor-contents table th,
+.o_field_markdown_readonly .toastui-editor-contents table th p {
+    background-color: #f8f9fa;
+    color: #212529;
+    font-weight: 600;
+}
+
+.o_field_markdown_readonly .toastui-editor-contents img {
+    max-width: 100%;
+    height: auto;
+}
