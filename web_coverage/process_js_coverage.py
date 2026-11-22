@@ -40,9 +40,7 @@ def process(env, _logger):
             file_name_relative = file_coverage["name"][1:]
             file_name_fs = file_path(file_name_relative)
             if not file_name_fs:
-                _logger.warning(
-                    "bundle file %s not found - ignoring", file_name_relative
-                )
+                _logger.debug("bundle file %s not found - ignoring", file_name_relative)
                 file_coverage["line_count"] = 0
                 file_coverage["missed"] = set()
                 continue
