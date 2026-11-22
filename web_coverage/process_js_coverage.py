@@ -27,7 +27,7 @@ def process(env, _logger):
         js_attachment = asset_bundle.get_attachments("js")
         sourcemap_attachment = asset_bundle.get_attachments("js.map")
         if not sourcemap_attachment:
-            _logger.warning(
+            _logger.debug(
                 "sourcemap file for bundle %s not found - ignoring", bundle_name
             )
             continue
