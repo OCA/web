@@ -17,7 +17,7 @@
     "data": [],
     "assets": {
         "web.assets_backend": [
-            "web_remember_tree_column_width/static/src/js/list_renderer.esm.js",
+            "web_remember_tree_column_width/static/src/**/*",
         ],
     },
     "installable": True,
