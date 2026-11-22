@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2025 Yves Goldberg (Ygol InternetWork)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<templates id="template" xml:space="preserve">
+
+    <t t-name="web_editor_paste_markdown.PasteMarkdownDialog" owl="1">
+        <Dialog title="title" size="'xl'">
+            <div class="o_paste_markdown_dialog" t-ref="root">
+                <div
+                    t-if="state.showLossWarning"
+                    class="alert alert-warning o_to_markdown_loss_warning"
+                    role="alert"
+                >
+                    <i class="fa fa-exclamation-triangle me-1" />
+                    Replacing loses formatting that Markdown cannot express:
+                    <b t-esc="lostFormattingLabel" />.
+                    <div class="mt-2">
+                        <button
+                            class="btn btn-sm btn-warning o_to_markdown_replace_confirm"
+                            t-on-click="onReplaceConfirm"
+                        >Replace anyway</button>
+                        <button
+                            class="btn btn-sm btn-secondary ms-2 o_to_markdown_replace_cancel"
+                            t-on-click="onReplaceCancel"
+                        >Cancel</button>
+                    </div>
+                </div>
+                <div class="row h-100">
+                    <!-- Markdown Input -->
+                    <div class="col-6 d-flex flex-column">
+                        <label class="form-label fw-bold">
+                            <i class="fa fa-edit me-1" />Markdown
+                        </label>
+                        <textarea
+                            t-ref="markdownTextarea"
+                            class="form-control o_paste_markdown_textarea flex-grow-1"
+                            t-on-input="onMarkdownInput"
+                            t-att-value="state.markdownContent"
+                            placeholder="Paste your Markdown content here...
+
+# Example
+**Bold text** and *italic text*
+
+- List item 1
+- List item 2
+
+```
+code block
+```"
+                        />
+                    </div>
+                    <!-- HTML Preview -->
+                    <div class="col-6 d-flex flex-column">
+                        <label class="form-label fw-bold">
+                            <i class="fa fa-eye me-1" />HTML Preview
+                        </label>
+                        <div
+                            t-ref="htmlPreview"
+                            class="o_paste_markdown_preview flex-grow-1 border rounded p-3 bg-white overflow-auto"
+                        />
+                    </div>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <t t-if="isExport">
+                    <button
+                        class="btn btn-primary o_to_markdown_copy"
+                        t-on-click="onCopy"
+                    >
+                        <i class="fa fa-clipboard me-1" />Copy
+                    </button>
+                    <button
+                        class="btn btn-secondary o_to_markdown_replace"
+                        t-on-click="onReplace"
+                    >
+                        <i class="fa fa-exchange me-1" />Replace
+                    </button>
+                    <button
+                        class="btn btn-secondary o_to_markdown_close"
+                        t-on-click="onCancel"
+                    >Close</button>
+                </t>
+                <t t-else="">
+                    <button
+                        class="btn btn-primary o_paste_markdown_insert"
+                        t-on-click="onConfirm"
+                    >
+                        <i class="fa fa-check me-1" />Insert HTML
+                    </button>
+                    <button class="btn btn-secondary" t-on-click="onCancel">
+                        Cancel
+                    </button>
+                </t>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>
