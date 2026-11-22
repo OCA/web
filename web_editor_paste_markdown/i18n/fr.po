@@ -1,0 +1,184 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_editor_paste_markdown
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-21 19:25+0000\n"
+"PO-Revision-Date: 2026-11-21 19:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "Basic blocks"
+msgstr "Blocs de base"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/xml/paste_markdown.xml:0
+#: code:addons/web_editor_paste_markdown/static/src/xml/paste_markdown.xml:0
+#, python-format
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/xml/paste_markdown.xml:0
+#, python-format
+msgid "Close"
+msgstr "Fermer"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "Convert Markdown to HTML"
+msgstr "Convertir du Markdown en HTML"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/xml/paste_markdown.xml:0
+#, python-format
+msgid "Copy"
+msgstr "Copier"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "Get the content as Markdown"
+msgstr "Obtenir le contenu en Markdown"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/xml/paste_markdown.xml:0
+#, python-format
+msgid "HTML Preview"
+msgstr "Aperçu HTML"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/xml/paste_markdown.xml:0
+#, python-format
+msgid "Insert HTML"
+msgstr "Insérer le HTML"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/xml/paste_markdown.xml:0
+#, python-format
+msgid "Markdown"
+msgstr ""
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "Markdown copied to the clipboard."
+msgstr "Markdown copié dans le presse-papiers."
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "Paste Markdown"
+msgstr "Coller du Markdown"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/xml/paste_markdown.xml:0
+#, python-format
+msgid ""
+"Paste your Markdown content here...  # Example **Bold text** and *italic "
+"text*  - List item 1 - List item 2  ``` code block ```"
+msgstr ""
+"Collez votre contenu Markdown ici...  # Exemple **Texte en gras** et *texte "
+"en italique*  - Élément 1 - Élément 2  ``` bloc de code ```Collez votre "
+"contenu Markdown ici...  # Exemple **Texte en gras** et *texte en italique*"
+"  - Élément 1 - Élément 2  ``` bloc de code ```"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/xml/paste_markdown.xml:0
+#, python-format
+msgid "Replace"
+msgstr "Remplacer"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/xml/paste_markdown.xml:0
+#, python-format
+msgid "Replace anyway"
+msgstr "Remplacer quand même"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/xml/paste_markdown.xml:0
+#, python-format
+msgid "Replacing loses formatting that Markdown cannot express:"
+msgstr ""
+"Le remplacement perd la mise en forme que le Markdown ne sait pas exprimer :"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "The clipboard is not available: select the text and copy it."
+msgstr ""
+"Le presse-papiers n'est pas disponible : sélectionnez le texte et copiez-le."
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "To Markdown"
+msgstr "Vers Markdown"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "colors"
+msgstr "couleurs"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "embedded image"
+msgstr "image intégrée"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "image"
+msgstr ""
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "merged cells"
+msgstr "cellules fusionnées"
+
+#. module: web_editor_paste_markdown
+#. odoo-javascript
+#: code:addons/web_editor_paste_markdown/static/src/js/paste_markdown.esm.js:0
+#, python-format
+msgid "styles"
+msgstr ""

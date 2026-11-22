@@ -1,0 +1,118 @@
+/* Copyright 2025 Yves Goldberg (Ygol InternetWork)
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
+
+/* =============================================================
+   Paste Markdown Dialog Styles
+   ============================================================= */
+
+.o_paste_markdown_dialog {
+    min-height: 400px;
+}
+
+.o_paste_markdown_dialog .row {
+    min-height: 350px;
+}
+
+.o_paste_markdown_textarea {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: none;
+    min-height: 300px;
+}
+
+.o_paste_markdown_preview {
+    min-height: 300px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Preview content styling */
+.o_paste_markdown_preview h1,
+.o_paste_markdown_preview h2,
+.o_paste_markdown_preview h3,
+.o_paste_markdown_preview h4,
+.o_paste_markdown_preview h5,
+.o_paste_markdown_preview h6 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.o_paste_markdown_preview h1 {
+    font-size: 1.5rem;
+}
+.o_paste_markdown_preview h2 {
+    font-size: 1.3rem;
+}
+.o_paste_markdown_preview h3 {
+    font-size: 1.1rem;
+}
+
+.o_paste_markdown_preview p {
+    margin-bottom: 0.5rem;
+}
+
+.o_paste_markdown_preview code {
+    padding: 0.2em 0.4em;
+    background-color: rgba(27, 31, 35, 0.05);
+    border-radius: 3px;
+    font-size: 85%;
+}
+
+.o_paste_markdown_preview pre {
+    padding: 0.75rem;
+    background-color: #f6f8fa;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+.o_paste_markdown_preview pre code {
+    padding: 0;
+    background-color: transparent;
+}
+
+.o_paste_markdown_preview blockquote {
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+    margin: 0.5rem 0;
+}
+
+.o_paste_markdown_preview ul,
+.o_paste_markdown_preview ol {
+    padding-left: 1.5em;
+    margin-bottom: 0.5rem;
+}
+
+.o_paste_markdown_preview table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.o_paste_markdown_preview th,
+.o_paste_markdown_preview td {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #dee2e6;
+}
+
+.o_paste_markdown_preview th {
+    background-color: #f8f9fa;
+}
+
+/* Paste Markdown toolbar button */
+#paste-markdown-btn-group {
+    margin-left: 5px;
+}
+
+#paste-markdown-btn-group .o_paste_markdown_btn {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+#paste-markdown-btn-group .o_paste_markdown_btn i {
+    font-size: 14px;
+}
