@@ -17,20 +17,50 @@ export async function loadBokehLibraries() {
         await loadJS(script);
     }
 }
+export function useBokehScript(getTarget, getScript) {
+    let script = null;
+    const embed = () => {
+        if (script) {
+            script.remove();
+        }
+        script = null;
+        const text = getScript();
+        if (!text) {
+            return;
+        }
+        const current = document.createElement("script");
+        current.text = text;
+        script = current;
+        const bokehEmbed = window.Bokeh?.embed;
+        const embedItems = bokehEmbed?.embed_items;
+        if (embedItems) {
+            bokehEmbed.embed_items = (...args) =>
+                Promise.resolve(embedItems(...args)).catch((error) => {
+                    if (current.isConnected) {
+                        throw error;
+                    }
+                });
+        }
+        try {
+            getTarget().append(current);
+        } finally {
+            if (embedItems) {
+                bokehEmbed.embed_items = embedItems;
+            }
+        }
+    };
+    onMounted(embed);
+    onPatched(embed);
+}
+
 export default class BokehChartWidget extends CharField {
     widget = signal.ref();
 
     setup() {
-        onPatched(() => {
-            var script = document.createElement("script");
-            script.text = this.json_value.script;
-            this.widget().append(script);
-        });
-        onMounted(() => {
-            var script = document.createElement("script");
-            script.text = this.json_value.script;
-            this.widget().append(script);
-        });
+        useBokehScript(
+            () => this.widget(),
+            () => this.json_value?.script
+        );
         super.setup();
         onWillStart(() => loadBokehLibraries());
     }
