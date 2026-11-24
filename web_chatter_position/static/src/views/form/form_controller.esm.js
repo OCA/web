@@ -134,16 +134,24 @@ patch(FormController.prototype, "web_chatter_position", {
     },
 
     _moveChatter(target) {
-        if (!target || !this.rootRef.el) {
+        if (!target || !target.isConnected || !this.rootRef.el) {
             return;
         }
         const currentChatter = this.rootRef.el.querySelector(
             "div.o_FormRenderer_chatterContainer.oe_chatter"
         );
-        if (!currentChatter) {
+        if (!currentChatter || !currentChatter.isConnected) {
             return;
         }
-        append(target, currentChatter);
+        try {
+            append(target, currentChatter);
+        } catch {
+            // The chatter node can be detached/replaced by Owl's own
+            // reconciliation right around a save (edit -> readonly
+            // transition). In that case, skip this move: the next
+            // onPatched/resize call will retry once the DOM settles.
+            return;
+        }
 
         const forceBottom = this.hasAttachmentViewer();
         const chatterContainer = currentChatter.querySelector("div.o_ChatterContainer");
