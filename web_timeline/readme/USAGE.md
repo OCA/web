@@ -22,7 +22,7 @@ Records are grouped in different blocks depending on the group by
 criteria selected (if none is specified, then the default group by is
 applied). Dragging a record from one block to another change the
 corresponding field to the value that represents the block. You can also
-click on the group name to edit the involved record directly.
+double-click on the group name to edit the involved record directly.
 
 Double-click on the record to edit it. Double-click in open area to
 create a new record with the group and start date linked to the area you
