@@ -1,0 +1,2 @@
+- [Altixia](https://www.altixia.com):
+  - Claude Perrin \<claude@altixia.com\>
