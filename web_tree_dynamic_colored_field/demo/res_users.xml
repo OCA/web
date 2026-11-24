@@ -6,15 +6,15 @@
         <field name="arch" type="xml">
             <field name="login_date" position="attributes">
                 <attribute name="options">{
-              "bg_color": "#9e1635: login_date == False",
-              "fg_color": "white: login_date == False"
-            }</attribute>
+                    "bg_color": "#9e1635: login_date == False",
+                    "fg_color": "white: login_date == False"
+                }</attribute>
             </field>
             <field name="name" position="attributes">
                 <attribute name="options"> {
-              "bg_color": "blue; #653b5b: login == 'admin'",
-              "fg_color": "white"
-            }</attribute>
+                    "bg_color": "blue; #653b5b: login == 'admin'",
+                    "fg_color": "white"
+                }</attribute>
             </field>
         </field>
     </record>

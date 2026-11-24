@@ -370,95 +370,105 @@ ul.auto-toc {
 !! source digest: sha256:9421f600f808456315bd58fa3ad58e5d8790f99fb1f0809e81ce7bb0ef0774b1
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/18.0/web_tree_dynamic_colored_field"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-18-0/web-18-0-web_tree_dynamic_colored_field"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This module aims to add support for dynamically coloring fields in tree
+<p>This module aims to add support for dynamically coloring fields in list
 view according to data in the record.</p>
 <div class="section" id="features">
 <h1>Features</h1>
 <ul class="simple">
 <li>Add attribute <tt class="docutils literal">bg_color</tt> on field’s <tt class="docutils literal">options</tt> to color background
-of a cell in tree view</li>
+of a cell in list view</li>
 <li>Add attribute <tt class="docutils literal">fg_color</tt> on field’s <tt class="docutils literal">options</tt> to change text color
-of a cell in tree view</li>
+of a cell in list view</li>
+<li>Add attribute <tt class="docutils literal">bg_color_field</tt> on list’s <tt class="docutils literal">colors</tt> to change
+background color of the entire row in list view (*)</li>
+<li>Add attribute <tt class="docutils literal">fg_color_field</tt> on list’s <tt class="docutils literal">colors</tt> to change text
+color of the entire row in list view (*)</li>
 </ul>
+<p>(*) This functionality only works for list defined in a form. Since
+13.0, the <tt class="docutils literal">colors</tt> attribute is no longer in the RelaxNG schema of the
+list view, so we can’t use it like before, but it looks like the RNG is
+not checked for embedded list.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-2">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a></li>
+<li><a class="reference internal" href="#using-view-conditions" id="toc-entry-2">Using view conditions</a></li>
+<li><a class="reference internal" href="#using-view-fields" id="toc-entry-3">Using view fields</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-4">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-5">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-6">Credits</a></li>
 </ul>
 </div>
 <div class="section" id="usage">
 <h2><a class="toc-backref" href="#toc-entry-1">Usage</a></h2>
+</div>
+<div class="section" id="using-view-conditions">
+<h2><a class="toc-backref" href="#toc-entry-2">Using view conditions</a></h2>
 <ul>
-<li><p class="first">In the tree view declaration, put
+<li><p class="first">In the list view declaration, put
 <tt class="docutils literal"><span class="pre">options='{&quot;bg_color&quot;:</span> &quot;red: <span class="pre">customer==True&quot;}</span></tt> attribute in the
 <tt class="docutils literal">field</tt> tag:</p>
-<pre class="literal-block">
-...
-&lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
-    &lt;tree string=&quot;View name&quot;&gt;
-        ...
-        &lt;field name=&quot;name&quot; options='{&quot;bg_color&quot;: &quot;red: customer == True&quot;}'/&gt;
-        ...
-    &lt;/tree&gt;
-&lt;/field&gt;
-...
-
-With this example, column which renders 'name' field will have its **background** colored in red on customer records.
+<pre class="code xml literal-block">
+...<span class="w">
+</span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;arch&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xml&quot;</span><span class="nt">&gt;</span><span class="w">
+    </span><span class="nt">&lt;list</span><span class="w"> </span><span class="na">string=</span><span class="s">&quot;View name&quot;</span><span class="nt">&gt;</span><span class="w">
+        </span>...<span class="w">
+        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">'{&quot;bg_color&quot;: &quot;red: customer == True&quot;}'</span><span class="nt">/&gt;</span><span class="w">
+        </span>...<span class="w">
+    </span><span class="nt">&lt;/list&gt;</span><span class="w">
+</span><span class="nt">&lt;/field&gt;</span><span class="w">
+</span>...
 </pre>
+<p>With this example, column which renders ‘name’ field will have its
+<strong>background</strong> colored in red on customer records.</p>
 </li>
-<li><p class="first">In the tree view declaration, put
+<li><p class="first">In the list view declaration, put
 <tt class="docutils literal"><span class="pre">options='{&quot;fg_color&quot;:</span> &quot;white:customer == <span class="pre">True&quot;}'</span></tt> attribute in the
 <tt class="docutils literal">field</tt> tag:</p>
-<pre class="literal-block">
-...
-&lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
-    &lt;tree string=&quot;View name&quot;&gt;
-        ...
-        &lt;field name=&quot;name&quot; options='{&quot;fg_color&quot;: &quot;white:customer == True&quot;}'/&gt;
-        ...
-    &lt;/tree&gt;
-&lt;/field&gt;
-...
-
-With this example, column which renders 'name' field will have its **text** colored in white on customer records.
+<pre class="code xml literal-block">
+...<span class="w">
+</span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;arch&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xml&quot;</span><span class="nt">&gt;</span><span class="w">
+    </span><span class="nt">&lt;list</span><span class="w"> </span><span class="na">string=</span><span class="s">&quot;View name&quot;</span><span class="nt">&gt;</span><span class="w">
+        </span>...<span class="w">
+        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">'{&quot;fg_color&quot;: &quot;white:customer == True&quot;}'</span><span class="nt">/&gt;</span><span class="w">
+        </span>...<span class="w">
+    </span><span class="nt">&lt;/list&gt;</span><span class="w">
+</span><span class="nt">&lt;/field&gt;</span><span class="w">
+</span>...
 </pre>
+<p>With this example, column which renders ‘name’ field will have its
+<strong>text</strong> colored in white on customer records.</p>
 </li>
 <li><p class="first">If you want to use more than one color, you can split the attributes
 using ‘;’:</p>
-</li>
-</ul>
 <pre class="literal-block">
 options='{&quot;fg_color&quot;: &quot;red:red_color == True; green:green_color == True&quot;}'
 </pre>
-<p>Example:</p>
 <pre class="code xml literal-block">
 ...<span class="w">
- </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;arch&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xml&quot;</span><span class="nt">&gt;</span><span class="w">
-     </span><span class="nt">&lt;tree</span><span class="w"> </span><span class="na">string=</span><span class="s">&quot;View name&quot;</span><span class="nt">&gt;</span><span class="w">
-         </span>...<span class="w">
-         </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">'{&quot;fg_color&quot;: &quot;red:red_color == True; green:green_color == True&quot;}'</span><span class="nt">/&gt;</span><span class="w">
-         </span>...<span class="w">
-     </span><span class="nt">&lt;/tree&gt;</span><span class="w">
- </span><span class="nt">&lt;/field&gt;</span><span class="w">
- </span>...
+</span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;arch&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xml&quot;</span><span class="nt">&gt;</span><span class="w">
+    </span><span class="nt">&lt;list</span><span class="w"> </span><span class="na">string=</span><span class="s">&quot;View name&quot;</span><span class="nt">&gt;</span><span class="w">
+        </span>...<span class="w">
+        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">'{&quot;fg_color&quot;: &quot;red:red_color == True; green:green_color == True&quot;}'</span><span class="nt">/&gt;</span><span class="w">
+        </span>...<span class="w">
+    </span><span class="nt">&lt;/list&gt;</span><span class="w">
+</span><span class="nt">&lt;/field&gt;</span><span class="w">
+</span>...
 </pre>
-<ul>
-<li><p class="first">Can use strings too… In the tree view declaration, put
+</li>
+<li><p class="first">Can use strings too… In the list view declaration, put
 <tt class="docutils literal"><span class="pre">options=&quot;{'fg_color':</span> 'green:customer_state == <span class="pre">\'success\''}&quot;</span></tt>
 attribute in the <tt class="docutils literal">field</tt> tag:</p>
-<pre class="literal-block">
-...
-&lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
-    &lt;tree string=&quot;View name&quot;&gt;
-        ...
-        &lt;field name=&quot;name&quot; options=&quot;{'fg_color': 'green:customer_state == \'success\''}&quot;/&gt;
-        ...
-    &lt;/tree&gt;
-&lt;/field&gt;
-...
+<pre class="code xml literal-block">
+...<span class="w">
+</span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;arch&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xml&quot;</span><span class="nt">&gt;</span><span class="w">
+    </span><span class="nt">&lt;list</span><span class="w"> </span><span class="na">string=</span><span class="s">&quot;View name&quot;</span><span class="nt">&gt;</span><span class="w">
+        </span>...<span class="w">
+        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">&quot;{'fg_color': 'green:customer_state == \'success\''}&quot;</span><span class="nt">/&gt;</span><span class="w">
+        </span>...<span class="w">
+    </span><span class="nt">&lt;/list&gt;</span><span class="w">
+</span><span class="nt">&lt;/field&gt;</span><span class="w">
+</span>...
 </pre>
 </li>
 </ul>
@@ -466,21 +476,39 @@ attribute in the <tt class="docutils literal">field</tt> tag:</p>
 the options doesn’t follow the JSON format, the options string will be
 evaluated using py.eval()</strong></p>
 </div>
+<div class="section" id="using-view-fields">
+<h2><a class="toc-backref" href="#toc-entry-3">Using view fields</a></h2>
+<ul>
+<li><p class="first">In the list view declaration, put
+<tt class="docutils literal"><span class="pre">options='{&quot;bg_color&quot;:</span> &quot;my_color&quot;}</tt> attribute in the <tt class="docutils literal">field</tt> tag:</p>
+<pre class="code xml literal-block">
+...<span class="w">
+</span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;arch&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xml&quot;</span><span class="nt">&gt;</span><span class="w">
+    </span><span class="nt">&lt;list</span><span class="w"> </span><span class="na">string=</span><span class="s">&quot;View name&quot;</span><span class="nt">&gt;</span><span class="w">
+        </span>...<span class="w">
+        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;my_color&quot;</span><span class="w"> </span><span class="na">column_invisible=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span><span class="w">
+        </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">'{&quot;bg_color&quot;: &quot;my_color&quot;}'</span><span class="nt">/&gt;</span><span class="w">
+        </span>...<span class="w">
+    </span><span class="nt">&lt;/list&gt;</span><span class="w">
+</span><span class="nt">&lt;/field&gt;</span><span class="w">
+</span>...
+</pre>
+<p>With this example, the content of the field named <tt class="docutils literal">my_color</tt> will be
+used to populate the <tt class="docutils literal"><span class="pre">background-color</span></tt> CSS value. Use a compute
+field to return whichever color you want depending on the other record
+values.</p>
+</li>
+</ul>
+</div>
 <div class="section" id="known-issues-roadmap">
-<h2><a class="toc-backref" href="#toc-entry-2">Known issues / Roadmap</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-4">Known issues / Roadmap</a></h2>
 <ul class="simple">
-<li>Before version 13.0, this module had a feature allowing to change the
-color of a line depending on a field, using a <tt class="docutils literal">colors</tt> attribute
-with the name of the field on the <tt class="docutils literal">&lt;tree&gt;</tt> element. Since 13.0, the
-<tt class="docutils literal">colors</tt> attribute is no longer in the RelaxNG schema of the tree
-view, so we can’t use it anymore. This feature has then been dropped,
-but could be reimplement in another way.</li>
 <li>Since version 17.0 coloring is written into <tt class="docutils literal">style</tt> attribute of
 (td) element</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
-<h2><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-5">Bug Tracker</a></h2>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -488,7 +516,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h2><a class="toc-backref" href="#toc-entry-4">Credits</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-6">Credits</a></h2>
 </div>
 </div>
 <div class="section" id="authors">
@@ -508,6 +536,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Phuc Tran Thanh &lt;<a class="reference external" href="mailto:phuc&#64;trobz.com">phuc&#64;trobz.com</a>&gt;</li>
 <li>Sylvain LE GAL &lt;<a class="reference external" href="https://twitter.com/legalsylvain">https://twitter.com/legalsylvain</a>&gt;</li>
 <li>Jurgis Pralgauskis &lt;<a class="reference external" href="mailto:jurgis&#64;versada.eu">jurgis&#64;versada.eu</a>&gt;</li>
+<li>Yann Papouin &lt;<a class="reference external" href="mailto:ypa&#64;decgroupe.com">ypa&#64;decgroupe.com</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="other-credits">

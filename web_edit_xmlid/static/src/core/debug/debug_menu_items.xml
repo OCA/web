@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.DebugMenu.GetMetadataDialog" t-inherit-mode="extension">
+        <xpath expr="//t[@t-esc='state.xmlid']" position="replace">
+            <t t-elif="state.xmlid">
+                <t t-esc="state.xmlid"/> <a t-on-click="onClickEditXmlid"> (edit)</a>
+            </t>
+        </xpath>
+    </t>
+
+</templates>
