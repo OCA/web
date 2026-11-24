@@ -5,7 +5,7 @@
     "name": "Dark Mode",
     "summary": "Enabled Dark Mode for the Odoo Backend",
     "license": "AGPL-3",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "website": "https://github.com/OCA/web",
     "author": "initOS GmbH, Odoo Community Association (OCA)",
     "depends": ["web"],
@@ -14,6 +14,9 @@
     "assets": {
         "web.assets_backend": [
             "web_dark_mode/static/src/js/switch_item.esm.js",
+        ],
+        "web.assets_unit_tests": [
+            "web_dark_mode/static/tests/**/*",
         ],
         "web.assets_backend_lazy_dark": [
             ("include", "web.assets_variables_dark"),
