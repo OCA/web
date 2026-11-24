@@ -1,3 +1,7 @@
+.o_web_toggle_chatter_toggle_wrapper {
+    display: none;
+}
+
 .o_form_view.o_web_toggle_chatter_enabled:not(.o_web_toggle_chatter_mobile_mode),
 .o_form_renderer.o_web_toggle_chatter_enabled:not(.o_web_toggle_chatter_mobile_mode) {
     --o-web-toggle-chatter-toggle-size: 34px;
@@ -10,6 +14,7 @@
     flex-wrap: nowrap;
 
     .o_web_toggle_chatter_toggle_wrapper {
+        display: block;
         position: relative;
         width: 0;
         min-width: 0;
