@@ -1,0 +1,100 @@
+html.o_portal_discuss_fullscreen,
+body.o_portal_discuss_fullscreen {
+    overflow: hidden;
+}
+
+body.o_portal_discuss_fullscreen {
+    .o_portal_discuss_shell {
+        position: relative;
+        z-index: 20;
+    }
+
+    .o_portal_discuss_breadcrumb {
+        width: 100%;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        z-index: 21;
+        background: #fff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .o_portal_discuss_breadcrumb_inner {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0 1.5rem;
+    }
+
+    .o_portal_discuss_brand {
+        display: inline-flex;
+        align-items: center;
+        flex: 0 0 auto;
+        height: 42px;
+    }
+
+    .o_portal_discuss_brand img {
+        display: block;
+        max-height: 42px;
+        width: auto;
+    }
+
+    .o_portal_discuss_breadcrumb .breadcrumb {
+        flex: 1 1 auto;
+        min-width: 0;
+        margin-bottom: 0;
+    }
+
+    .o_portal_discuss_breadcrumb a {
+        color: var(--o-brand-odoo, #714b67);
+    }
+
+    .o_portal_discuss_breadcrumb a:hover {
+        color: var(--o-brand-odoo, #714b67);
+    }
+
+    .o-mail-Discuss {
+        position: fixed !important;
+        top: 56px !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: auto !important;
+        max-width: none !important;
+        max-height: none !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        z-index: 1 !important;
+        background: var(--o-view-background-color, #fff);
+    }
+
+    .o-mail-Discuss-content {
+        min-width: 0;
+        min-height: 0;
+    }
+
+    @media (max-width: 991.98px) {
+        .o_portal_discuss_breadcrumb {
+            height: 52px;
+        }
+
+        .o_portal_discuss_breadcrumb_inner {
+            padding: 0 1rem;
+        }
+
+        .o_portal_discuss_brand {
+            height: 38px;
+        }
+
+        .o_portal_discuss_brand img {
+            max-height: 38px;
+        }
+
+        .o-mail-Discuss {
+            top: 52px !important;
+        }
+    }
+}
