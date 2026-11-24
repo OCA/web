@@ -13,14 +13,14 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "Language: sv\n"
-"PO-Revision-Date: 2026-11-24 12:46+0000\n"
+"PO-Revision-Date: 2026-11-24 15:46+0000\n"
 "X-Generator: Weblate 2026.11.2\n"
 
 #. module: web_timeline
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.esm.js:0
 msgid "<b>UNASSIGNED</b>"
-msgstr ""
+msgstr "<b>EJ TILLDELAD</b>"
 
 #. module: web_timeline
 #: model:ir.model,name:web_timeline.model_ir_actions_act_window_view
@@ -31,31 +31,31 @@ msgstr "Vy för åtgärdsfönster"
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_controller.esm.js:0
 msgid "Are you sure you want to delete this record?"
-msgstr ""
+msgstr "Är du säker på att du vill ta bort den här posten?"
 
 #. module: web_timeline
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_controller.esm.js:0
 msgid "Confirm"
-msgstr ""
+msgstr "Bekräfta"
 
 #. module: web_timeline
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.xml:0
 msgid "Day"
-msgstr ""
+msgstr "Dag"
 
 #. module: web_timeline
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_controller.esm.js:0
 msgid "Discard"
-msgstr ""
+msgstr "Förkasta"
 
 #. module: web_timeline
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.xml:0
 msgid "Month"
-msgstr ""
+msgstr "Månad"
 
 #. module: web_timeline
 #. odoo-javascript
@@ -63,25 +63,25 @@ msgstr ""
 #: model:ir.model.fields.selection,name:web_timeline.selection__ir_actions_act_window_view__view_mode__timeline
 #: model:ir.model.fields.selection,name:web_timeline.selection__ir_ui_view__type__timeline
 msgid "Timeline"
-msgstr ""
+msgstr "Tidslinje"
 
 #. module: web_timeline
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_arch_parser.esm.js:0
 msgid "Timeline view has not defined 'date_start' attribute."
-msgstr ""
+msgstr "Tidslinjevyn har inte definierat attributet 'date_start'."
 
 #. module: web_timeline
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_arch_parser.esm.js:0
 msgid "Timeline view has not defined 'default_group_by' attribute."
-msgstr ""
+msgstr "Tidslinjevyn har inte definierat attributet 'default_group_by'."
 
 #. module: web_timeline
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.xml:0
 msgid "Today"
-msgstr ""
+msgstr "Idag"
 
 #. module: web_timeline
 #: model:ir.model,name:web_timeline.model_ir_ui_view
@@ -98,16 +98,16 @@ msgstr "Typ av vy"
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_controller.esm.js:0
 msgid "Warning"
-msgstr ""
+msgstr "Varning"
 
 #. module: web_timeline
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.xml:0
 msgid "Week"
-msgstr ""
+msgstr "Vecka"
 
 #. module: web_timeline
 #. odoo-javascript
 #: code:addons/web_timeline/static/src/views/timeline/timeline_renderer.xml:0
 msgid "Year"
-msgstr ""
+msgstr "År"
