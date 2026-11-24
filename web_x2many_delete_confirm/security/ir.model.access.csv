@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_x2many_delete_confirm_rule_user,x2many.delete.confirm.rule user,model_x2many_delete_confirm_rule,base.group_user,1,0,0,0
+access_x2many_delete_confirm_rule_system,x2many.delete.confirm.rule system,model_x2many_delete_confirm_rule,base.group_system,1,1,1,1
