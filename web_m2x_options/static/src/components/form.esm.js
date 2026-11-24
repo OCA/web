@@ -129,6 +129,9 @@ patch(many2OneField, {
             {attrs, context, decorations, options, string},
             dynamicInfo
         );
+        if (!this.m2m_options_props) {
+            return props;
+        }
         return this.m2o_options_props(props, attrs, options);
     },
 });
