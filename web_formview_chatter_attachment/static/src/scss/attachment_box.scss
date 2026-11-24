@@ -1,0 +1,14 @@
+.oe_chatter {
+    &.hide_topbar {
+        .o-mail-Chatter-top {
+            display: none !important;
+        }
+    }
+    &.readonly_attachments {
+        .o-mail-AttachmentCard-unlink,
+        .o-mail-Chatter-fileUploader,
+        .o-mail-Chatter-attachFiles {
+            display: none !important;
+        }
+    }
+}
