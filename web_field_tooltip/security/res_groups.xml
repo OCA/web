@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="group_tooltip_manager" model="res.groups">
+        <field name="name">Tooltip Manager</field>
+        <field name="comment">The user will be able to manage all the tooltips.</field>
+        <field
+            name="user_ids"
+            eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"
+        />
+    </record>
+</odoo>
