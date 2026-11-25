@@ -22,6 +22,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[web_dark_mode](web_dark_mode/) | 20.0.1.0.0 |  | Enabled Dark Mode for the Odoo Backend
 [web_dialog_size](web_dialog_size/) | 20.0.1.0.2 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_environment_ribbon](web_environment_ribbon/) | 20.0.1.0.0 |  | Web Environment Ribbon
 [web_filter_header_button](web_filter_header_button/) | 20.0.1.0.0 |  | Show selected filters as buttons in the control panel
