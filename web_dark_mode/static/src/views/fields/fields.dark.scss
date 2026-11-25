@@ -1,0 +1,4 @@
+// A global approach for coercing image backgrounds to white
+.o_field_widget[class*="_image"] img {
+    background-color: #fff;
+}
