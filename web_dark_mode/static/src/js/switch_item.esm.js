@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {_t} from "@web/core/l10n/translation";
 import {browser} from "@web/core/browser/browser";
 import {cookie} from "@web/core/browser/cookie";
@@ -20,9 +18,9 @@ export function darkModeSwitchItem(env) {
 }
 
 export const colorSchemeService = {
-    dependencies: ["orm", "ui"],
+    dependencies: ["ui"],
 
-    async start(env, {orm, ui}) {
+    async start(env, {ui}) {
         // This is only for browsers like Firefox and Safari that do not support
         // Sec-CH-Prefers-Color-Scheme. Browsers that do support it will have already
         // set the correct cookie value on first request due to server side handling
@@ -46,9 +44,7 @@ export const colorSchemeService = {
             async switchColorScheme() {
                 const scheme = cookie.get("color_scheme") === "dark" ? "light" : "dark";
                 cookie.set("color_scheme", scheme);
-                await orm.write("res.users", [user.userId], {
-                    dark_mode: scheme === "dark",
-                });
+                await user.setUserSettings("dark_mode", scheme === "dark");
 
                 ui.block();
                 browser.location.reload();
