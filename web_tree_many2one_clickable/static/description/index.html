@@ -374,11 +374,13 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:dc9e876bc405587499888cf1a048aa4b1e9f4501663a247fa7029d95d2c52392
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/19.0/web_tree_many2one_clickable"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-19-0/web-19-0-web_tree_many2one_clickable"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=19.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/20.0/web_tree_many2one_clickable"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-20-0/web-20-0-web_tree_many2one_clickable"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=20.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This addon forces Odoo to use many2one widget on a many2one fields in
 tree views. This allows users to open linked resources from trees
 directly, using a button without accessing the form.</p>
 <p>This also works in the lines of sales, purchases and invoices.</p>
+<p>The button is also shown in columns using the many2one avatar widgets
+(<tt class="docutils literal">many2one_avatar</tt>, <tt class="docutils literal">many2one_avatar_user</tt>…).</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -402,7 +404,7 @@ by default.</p>
 <div class="section" id="usage">
 <h2><a class="toc-backref" href="#toc-entry-2">Usage</a></h2>
 <p>Put the mouse pointer over a many2one cell and click the button.</p>
-<p><img alt="image" src="https://raw.githubusercontent.com/OCA/web/19.0/web_tree_many2one_clickable/static/img/clickable.gif" /></p>
+<p><img alt="image" src="https://raw.githubusercontent.com/OCA/web/20.0/web_tree_many2one_clickable/static/img/clickable.gif" /></p>
 </div>
 <div class="section" id="known-issues-roadmap">
 <h2><a class="toc-backref" href="#toc-entry-3">Known issues / Roadmap</a></h2>
@@ -415,7 +417,7 @@ for further details.</p>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_tree_many2one_clickable%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_tree_many2one_clickable%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -438,11 +440,13 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Anand Kansagra &lt;<a class="reference external" href="mailto:kansagraanand&#64;hotmail.com">kansagraanand&#64;hotmail.com</a>&gt;</li>
 <li>Dennis Sluijk &lt;<a class="reference external" href="mailto:d.sluijk&#64;onestein.nl">d.sluijk&#64;onestein.nl</a>&gt;</li>
 <li>Maciej Wichowski &lt;<a class="reference external" href="mailto:maciej&#64;versada.eu">maciej&#64;versada.eu</a>&gt;</li>
+<li>Jaydev &lt;<a class="reference external" href="mailto:jaydev&#64;cloudastra.in">jaydev&#64;cloudastra.in</a>&gt;</li>
 <li><a class="reference external" href="https://www.tecnativa.com">Tecnativa</a><ul>
 <li>Pedro M. Baeza</li>
 <li>Antonio Espinosa</li>
 <li>Alexandre Díaz</li>
 <li>Carlos Roca</li>
+<li>Cristina Hidalgo</li>
 </ul>
 </li>
 </ul>
@@ -456,7 +460,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/19.0/web_tree_many2one_clickable">OCA/web</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/20.0/web_tree_many2one_clickable">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>

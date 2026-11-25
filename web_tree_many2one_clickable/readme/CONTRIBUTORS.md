@@ -4,9 +4,11 @@
 - Anand Kansagra \<<kansagraanand@hotmail.com>\>
 - Dennis Sluijk \<<d.sluijk@onestein.nl>\>
 - Maciej Wichowski \<<maciej@versada.eu>\>
+- Jaydev \<<jaydev@cloudastra.in>\>
 
 - [Tecnativa](https://www.tecnativa.com)
   - Pedro M. Baeza
   - Antonio Espinosa
   - Alexandre Díaz
   - Carlos Roca
+  - Cristina Hidalgo

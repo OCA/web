@@ -1,10 +1,36 @@
 td.o_list_many2one {
     button.web_tree_many2one_clickable {
-        margin-left: 0.5em;
         visibility: hidden;
     }
 
-    &:hover button.web_tree_many2one_clickable {
-        visibility: visible;
+    &:hover,
+    &:focus-within {
+        button.web_tree_many2one_clickable {
+            visibility: visible;
+        }
+    }
+
+    // Avatar widgets render a block-level flex container, so the button is placed
+    // at the right of the cell. The space for it is only reserved while the button
+    // is visible, to not shorten the name of narrow columns otherwise
+    &:has(> .o_field_many2one_avatar) {
+        position: relative;
+
+        &:hover,
+        &:focus-within {
+            padding-right: 2.5rem;
+        }
+
+        button.web_tree_many2one_clickable {
+            position: absolute;
+            right: 0.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        // Let the name be truncated before the button instead of overflowing
+        .o_field_many2one_avatar .o_many2one {
+            min-width: 0;
+        }
     }
 }

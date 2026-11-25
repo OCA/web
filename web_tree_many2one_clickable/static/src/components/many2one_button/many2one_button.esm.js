@@ -8,6 +8,7 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 import {ListRenderer} from "@web/views/list/list_renderer";
+import {evaluateExpr} from "@web/core/py_js/py";
 import {patch} from "@web/core/utils/patch";
 import {useService} from "@web/core/utils/hooks";
 
@@ -16,17 +17,35 @@ patch(ListRenderer.prototype, {
         this.actionService = useService("action");
         super.setup(...arguments);
     },
+    canShowM2oButton(column, record) {
+        if (column.widget && column.widget.startsWith("many2one_avatar")) {
+            // If the view sets no_open explicitly, core already handles the link
+            if ("no_open" in column.options) {
+                return false;
+            }
+            // Avatar widgets are not formatter-based: only keep the readonly check
+            return this.canUseFormatter({...column, widget: undefined}, record);
+        }
+        return this.canUseFormatter(column, record);
+    },
     async onClickM2oButton(record, column, ev) {
         ev.stopPropagation();
         const field = record.fields[column.name];
         const value = record.data[column.name];
-        return this.actionService.doAction({
-            type: "ir.actions.act_window",
-            res_model: field.relation,
-            res_id: value && value.id,
-            views: [[false, "form"]],
-            target: "current",
-            additionalContext: column.context || {},
-        });
+        return this.actionService.doAction(
+            {
+                type: "ir.actions.act_window",
+                res_model: field.relation,
+                res_id: value && value.id,
+                views: [[false, "form"]],
+                target: "current",
+            },
+            {
+                additionalContext: evaluateExpr(
+                    column.context || "{}",
+                    record.evalContext
+                ),
+            }
+        );
     },
 });

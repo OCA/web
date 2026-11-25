@@ -3,10 +3,16 @@
     <t t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="extension">
         <xpath expr="//t[@t-if='!isInvisible']" position="inside">
             <button
-                class="btn btn-sm btn-secondary fa fa-arrow-right web_tree_many2one_clickable"
+                t-if="record.fields[column.name].type == 'many2one' and record.data[column.name] and this.canShowM2oButton(column, record) and !column.options.no_open"
+                class="web_tree_many2one_clickable btn btn-light btn-sm d-inline-flex align-items-center py-0 ms-2"
+                type="button"
+                tabindex="-1"
+                aria-label="Internal link"
+                data-tooltip="Internal link"
                 t-on-click="(ev) => this.onClickM2oButton(record, column, ev)"
-                t-if="record.fields[column.name].type == 'many2one' and record.data[column.name] and canUseFormatter(column, record) and !column.options.no_open"
-            />
+            >
+                <i class="oi" data-icon="arrow_forward" />
+            </button>
         </xpath>
     </t>
 </templates>
