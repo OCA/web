@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Roberto Fichera
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<templates xml:space="preserve">
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_cp_pager')]" position="before">
+            <button
+                t-if="showListPanelAuto"
+                type="button"
+                class="o_listpanel_auto_toggle btn btn-secondary"
+                t-att-class="{active: listPanelAutoState.shown}"
+                title="Show or hide the list panel"
+                t-on-click="() => listPanelAuto.toggle()"
+            >
+                <i class="fa fa-list" />
+            </button>
+        </xpath>
+    </t>
+</templates>
