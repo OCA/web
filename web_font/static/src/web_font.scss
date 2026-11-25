@@ -1,0 +1,9 @@
+// The chosen font, with the default Odoo fonts as fallback
+:root.o_web_font {
+    --body-font-family: var(--web-font-family), var(--font-sans-serif);
+
+    // Headings use their own font family in Odoo, use the chosen font as well
+    :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
+        font-family: var(--body-font-family);
+    }
+}
