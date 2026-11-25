@@ -19,6 +19,9 @@
         "web.assets_backend": [
             "web_remember_tree_column_width/static/src/**/*",
         ],
+        "web.assets_unit_tests": [
+            "web_remember_tree_column_width/static/tests/**/*.test.js",
+        ],
     },
     "installable": True,
 }
