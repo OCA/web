@@ -1,6 +1,7 @@
 # Copyright 2015 Therp BV <http://therp.nl>
 # Copyright 2016 Pedro M. Baeza
 # Copyright 2024 OERP Canada <https://www.oerp.ca>
+# Copyright 2026 NuoBiT Solutions SL - Eric Antones <eantones@nuobit.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import base64
@@ -71,15 +72,17 @@ class ResCompany(models.Model):
         if self.env.context.get("website_id"):
             website = self.env["website"].browse(self.env.context.get("website_id"))
             return website.image_url(website, "favicon")
-        company_id = (
-            request.cookies.get("cids") if request.cookies.get("cids") else False
-        )
+        # Pick the company the web client activates: the first one of the
+        # cookie when all of them are the user's, otherwise the user's default
+        # company (the cookie is not set yet on the first page after a login).
+        cids = request.cookies.get("cids", "").split("-")
+        user_company_ids = self.env.user._get_company_ids()
         company = (
-            self.browse(int(company_id.split("-")[0])).sudo()
-            if company_id and self.browse(int(company_id.split("-")[0])).sudo().favicon
-            else False
-        )
-        if company:
+            self.browse(int(cids[0]))
+            if all(cid.isdigit() and int(cid) in user_company_ids for cid in cids)
+            else self.env.company
+        ).sudo()
+        if company.favicon:
             sha = hashlib.sha512(str(company.write_date).encode("utf-8")).hexdigest()[
                 :7
             ]

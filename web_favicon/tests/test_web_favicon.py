@@ -1,8 +1,10 @@
 # Copyright 2024 OERP Canada <https://www.oerp.ca>
+# Copyright 2026 NuoBiT Solutions SL - Eric Antones <eantones@nuobit.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
 from PIL import Image
 
+from odoo import Command
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
 from odoo.tools.image import base64_to_image, image_to_base64
@@ -100,4 +102,104 @@ class TestWebFavicon(TransactionCase):
             str(company_1.id),
             favicon_url,
             "Favicon URL should correspond to the first company in the cids cookie.",
+        )
+
+    def test_05_favicon_without_cids_cookie(self):
+        """Test _get_favicon with no cids cookie, as after a login."""
+        Company = self.env["res.company"]
+        company = self.env.company
+        company.favicon = Company._get_default_favicon()
+
+        with MockRequest(self.env):
+            favicon_url = Company._get_favicon()
+
+        self.assertTrue(
+            favicon_url, "Favicon URL should be generated without cids cookie."
+        )
+        self.assertIn(
+            f"/web/image/res.company/{company.id}/favicon",
+            favicon_url,
+            "Favicon URL should correspond to the current company.",
+        )
+
+    def test_06_favicon_company_without_favicon(self):
+        """Test _get_favicon with a company that has no favicon."""
+        Company = self.env["res.company"]
+        company = Company.create({"name": "Company without favicon"})
+        company.favicon = False
+
+        with MockRequest(self.env) as mock_request:
+            mock_request.cookies = {"cids": str(company.id)}
+            favicon_url = Company._get_favicon()
+
+        self.assertFalse(
+            favicon_url, "Favicon URL should not be generated without favicon."
+        )
+
+    def test_07_favicon_cookie_company_not_allowed(self):
+        """Test _get_favicon with a cookie company not allowed for the user."""
+        Company = self.env["res.company"]
+        company = self.env.company
+        company.favicon = Company._get_default_favicon()
+        other_company = Company.create(
+            {"name": "Other Company", "favicon": Company._get_default_favicon()}
+        )
+        self.env.user.write({"company_ids": [Command.unlink(other_company.id)]})
+
+        with MockRequest(self.env) as mock_request:
+            mock_request.cookies = {"cids": str(other_company.id)}
+            favicon_url = Company._get_favicon()
+
+        self.assertTrue(
+            favicon_url, "Favicon URL should be generated for the current company."
+        )
+        self.assertIn(
+            f"/web/image/res.company/{company.id}/favicon",
+            favicon_url,
+            "Favicon URL should correspond to the current company.",
+        )
+
+    def test_08_favicon_cookie_companies_partly_allowed(self):
+        """Test _get_favicon with a cookie where only some companies are allowed."""
+        Company = self.env["res.company"]
+        company = self.env.company
+        company.favicon = Company._get_default_favicon()
+        company_1 = Company.create(
+            {"name": "Company 1", "favicon": Company._get_default_favicon()}
+        )
+        company_2 = Company.create(
+            {"name": "Company 2", "favicon": Company._get_default_favicon()}
+        )
+        self.env.user.write({"company_ids": [Command.unlink(company_2.id)]})
+
+        with MockRequest(self.env) as mock_request:
+            mock_request.cookies = {"cids": f"{company_1.id}-{company_2.id}"}
+            favicon_url = Company._get_favicon()
+
+        self.assertTrue(
+            favicon_url, "Favicon URL should be generated for the current company."
+        )
+        self.assertIn(
+            f"/web/image/res.company/{company.id}/favicon",
+            favicon_url,
+            "Favicon URL should correspond to the current company.",
+        )
+
+    def test_09_favicon_malformed_cids_cookie(self):
+        """Test _get_favicon with a malformed cids cookie."""
+        Company = self.env["res.company"]
+        company = self.env.company
+        company.favicon = Company._get_default_favicon()
+
+        with MockRequest(self.env) as mock_request:
+            mock_request.cookies = {"cids": "abc"}
+            favicon_url = Company._get_favicon()
+
+        self.assertTrue(
+            favicon_url, "Favicon URL should be generated for the current company."
+        )
+        self.assertIn(
+            f"/web/image/res.company/{company.id}/favicon",
+            favicon_url,
+            "Favicon URL should correspond to the current company.",
         )
