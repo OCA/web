@@ -1,0 +1,97 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_company_context_highlight
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-08-11 12:48+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: web_company_context_highlight
+#: model_terms:ir.ui.view,arch_db:web_company_context_highlight.res_config_settings_view_form
+msgid "Background Color"
+msgstr "Colore sfondo"
+
+#. module: web_company_context_highlight
+#: model:ir.model.fields,help:web_company_context_highlight.field_res_config_settings__web_company_context_highlight_color
+msgid ""
+"Background color used to highlight the company switcher when in multi-"
+"company context."
+msgstr ""
+"Il colore di sfondo viene utilizzato per evidenziare il selettore "
+"dell'azienda in un contesto multi-azienda."
+
+#. module: web_company_context_highlight
+#: model:ir.model.fields,field_description:web_company_context_highlight.field_res_config_settings__web_company_context_highlight_color
+msgid "Company Highlight Color"
+msgstr "Colore evidenza dell'azienda"
+
+#. module: web_company_context_highlight
+#: model:ir.model.fields,field_description:web_company_context_highlight.field_res_config_settings__web_company_context_highlight_text_color
+msgid "Company Highlight Text Color"
+msgstr "Colore evidenza test dell'azienda"
+
+#. module: web_company_context_highlight
+#: model_terms:ir.ui.view,arch_db:web_company_context_highlight.res_config_settings_view_form
+msgid "Company Switcher Highlight"
+msgstr "Evidenza cambio dell'azienda"
+
+#. module: web_company_context_highlight
+#: model:ir.model,name:web_company_context_highlight.model_res_config_settings
+msgid "Config Settings"
+msgstr "Impostazioni configurazione"
+
+#. module: web_company_context_highlight
+#: model_terms:ir.ui.view,arch_db:web_company_context_highlight.res_config_settings_view_form
+msgid ""
+"Configure background and text colors to highlight the company switcher when "
+"multiple companies are selected."
+msgstr ""
+"Configura i colori di sfondo e del testo per evidenziare il selettore delle "
+"aziende quando ne vengono selezionate più di una."
+
+#. module: web_company_context_highlight
+#: model:ir.model.fields,field_description:web_company_context_highlight.field_ir_http__display_name
+#: model:ir.model.fields,field_description:web_company_context_highlight.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: web_company_context_highlight
+#: model:ir.model,name:web_company_context_highlight.model_ir_http
+msgid "HTTP Routing"
+msgstr "Instradamento HTTP"
+
+#. module: web_company_context_highlight
+#: model:ir.model.fields,field_description:web_company_context_highlight.field_ir_http__id
+#: model:ir.model.fields,field_description:web_company_context_highlight.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_company_context_highlight
+#. odoo-javascript
+#: code:addons/web_company_context_highlight/static/src/xml/switch_company_menu.xml:0
+msgid "Multi-company context active"
+msgstr "Contesto multi azienda attivo"
+
+#. module: web_company_context_highlight
+#: model_terms:ir.ui.view,arch_db:web_company_context_highlight.res_config_settings_view_form
+msgid "Text Color"
+msgstr "Colore testo"
+
+#. module: web_company_context_highlight
+#: model:ir.model.fields,help:web_company_context_highlight.field_res_config_settings__web_company_context_highlight_text_color
+msgid ""
+"Text color used to highlight the company switcher when in multi-company "
+"context."
+msgstr ""
+"Il colore del testo viene utilizzato per evidenziare il selettore "
+"dell'azienda in un contesto multi-azienda."
