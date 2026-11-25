@@ -3,10 +3,10 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 */
 
-import {FormCompiler} from "@web/views/form/form_compiler";
-import {patch} from "@web/core/utils/patch";
 import {append, setAttributes} from "@web/core/utils/xml";
+import {FormCompiler} from "@web/views/form/form_compiler";
 import {SIZES} from "@web/core/ui/ui_service";
+import {patch} from "@web/core/utils/patch";
 
 patch(FormCompiler.prototype, {
     /**
@@ -52,7 +52,10 @@ patch(FormCompiler.prototype, {
             } else {
                 const sheetBgChatterContainerHookXml =
                     chatterContainerHookXml.cloneNode(true);
-                sheetBgChatterContainerHookXml.classList.add("o-isInFormSheetBg");
+                sheetBgChatterContainerHookXml.classList.add(
+                    "o-isInFormSheetBg",
+                    "w-auto"
+                );
                 setAttributes(sheetBgChatterContainerHookXml, {
                     "t-if": "true",
                     "t-attf-class": `{{ (__comp__.uiService.size >= ${SIZES.XXL} && ${
