@@ -17,6 +17,11 @@ msgstr ""
 "X-Generator: Weblate 5.15.2\n"
 
 #. module: web_chatter_position
+#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
+msgid "Automatic"
+msgstr ""
+
+#. module: web_chatter_position
 #: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__bottom
 msgid "Bottom"
 msgstr "Nederst"
@@ -37,16 +42,20 @@ msgid "ID"
 msgstr "ID"
 
 #. module: web_chatter_position
-#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
-msgid "Responsive"
-msgstr "Responsiv"
-
-#. module: web_chatter_position
 #: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__sided
 msgid "Sided"
 msgstr "Ved siden af"
 
 #. module: web_chatter_position
+#. odoo-javascript
+#: code:addons/web_chatter_position/static/src/views/form/form_controller.xml:0
+msgid "Toggle chatter position"
+msgstr ""
+
+#. module: web_chatter_position
 #: model:ir.model,name:web_chatter_position.model_res_users
 msgid "User"
 msgstr "Bruger"
+
+#~ msgid "Responsive"
+#~ msgstr "Responsiv"

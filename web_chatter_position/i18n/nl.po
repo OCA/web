@@ -17,6 +17,11 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: web_chatter_position
+#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
+msgid "Automatic"
+msgstr ""
+
+#. module: web_chatter_position
 #: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__bottom
 msgid "Bottom"
 msgstr "Onderkant"
@@ -27,9 +32,14 @@ msgid "Chatter Position"
 msgstr "Chatter-positie"
 
 #. module: web_chatter_position
-#: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
-msgid "Responsive"
-msgstr "Snel reagerend"
+#: model:ir.model.fields,field_description:web_chatter_position.field_res_users__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_chatter_position
+#: model:ir.model.fields,field_description:web_chatter_position.field_res_users__id
+msgid "ID"
+msgstr ""
 
 #. module: web_chatter_position
 #: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__sided
@@ -37,6 +47,15 @@ msgid "Sided"
 msgstr "Zijdelings"
 
 #. module: web_chatter_position
+#. odoo-javascript
+#: code:addons/web_chatter_position/static/src/views/form/form_controller.xml:0
+msgid "Toggle chatter position"
+msgstr ""
+
+#. module: web_chatter_position
 #: model:ir.model,name:web_chatter_position.model_res_users
 msgid "User"
 msgstr "Gebruiker"
+
+#~ msgid "Responsive"
+#~ msgstr "Snel reagerend"
