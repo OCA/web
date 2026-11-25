@@ -1,15 +1,8 @@
-import {
-    Component,
-    markup,
-    onMounted,
-    onPatched,
-    onWillStart,
-    signal,
-    useProps,
-} from "@odoo/owl";
+import {Component, markup, onWillStart, signal, useProps} from "@odoo/owl";
 import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
+import {useBokehScript} from "@web_widget_bokeh_chart/js/web_widget_bokeh_chart.esm";
 
 export async function loadBokehLibraries() {
     const scripts = [
@@ -31,16 +24,10 @@ export default class BokehChartJsonWidget extends Component {
     widget = signal.ref();
 
     setup() {
-        onPatched(() => {
-            var script = document.createElement("script");
-            script.text = this.props.record.data[this.props.name].script;
-            this.widget().append(script);
-        });
-        onMounted(() => {
-            var script = document.createElement("script");
-            script.text = this.props.record.data[this.props.name].script;
-            this.widget().append(script);
-        });
+        useBokehScript(
+            () => this.widget(),
+            () => this.props.record.data[this.props.name].script
+        );
         onWillStart(() => loadBokehLibraries());
     }
     markup(value) {
