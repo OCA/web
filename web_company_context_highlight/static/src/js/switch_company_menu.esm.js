@@ -14,4 +14,16 @@ patch(SwitchCompanyMenu.prototype, {
         this.highlightTextColor =
             session.web_company_context_highlight_text_color || "#212529";
     },
+    get isMultiCompanyContext() {
+        return this.user.activeCompanies.length > 1;
+    },
+    get highlightStyle() {
+        if (!this.isMultiCompanyContext) {
+            return "";
+        }
+        return (
+            `--o-company-context-highlight-bg: ${this.highlightColor};` +
+            ` --o-company-context-highlight-color: ${this.highlightTextColor};`
+        );
+    },
 });
