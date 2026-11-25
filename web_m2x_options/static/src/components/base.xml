@@ -11,6 +11,16 @@
         <xpath expr="//t[@t-foreach='source.options']/li/t" position="attributes">
             <attribute name="t-attf-style">{{ option.style }}</attribute>
         </xpath>
+        <xpath
+            expr="//t[@t-foreach='source.options']/li/t/t[@t-slot]"
+            position="before"
+        >
+            <i
+                t-if="option.icon"
+                t-attf-class="fa {{ option.icon }} fa-fw me-1 text-muted"
+                aria-hidden="true"
+            />
+        </xpath>
     </t>
 
      <t
@@ -22,6 +32,9 @@
             <attribute name="searchLimit">props.searchLimit</attribute>
             <attribute name="fieldColor">props.fieldColor</attribute>
             <attribute name="fieldColorOptions">props.fieldColorOptions</attribute>
+            <attribute name="fieldColorStyle">props.fieldColorStyle</attribute>
+            <attribute name="fieldIcon">props.fieldIcon</attribute>
+            <attribute name="fieldIconOptions">props.fieldIconOptions</attribute>
         </xpath>
     </t>
 

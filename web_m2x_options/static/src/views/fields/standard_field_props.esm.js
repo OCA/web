@@ -4,6 +4,12 @@ import {standardFieldProps} from "@web/views/fields/standard_field_props";
 export const fieldColorProps = {
     fieldColor: {type: String, optional: true},
     fieldColorOptions: {type: Object, optional: true},
+    fieldColorStyle: {type: String, optional: true},
+};
+
+export const fieldIconProps = {
+    fieldIcon: {type: String, optional: true},
+    fieldIconOptions: {type: Object, optional: true},
 };
 
 // Set when the field defines its own create/create_edit options, so the
@@ -15,6 +21,7 @@ export const m2xOverrideProps = {
 
 patch(standardFieldProps, {
     ...fieldColorProps,
+    ...fieldIconProps,
     ...m2xOverrideProps,
     searchLimit: {type: Number, optional: true},
 });

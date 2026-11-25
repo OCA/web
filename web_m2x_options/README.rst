@@ -68,6 +68,28 @@ in the field's options dict
    A dictionary to link field value with a HTML color. This option has
    to be used with field_color.
 
+``color_style`` *string* (Default: ``text``)
+
+   How the color is shown in the drop-down panel. ``text`` colors the
+   record's text. ``bar`` draws a thin accent bar on the left of the
+   record and leaves the text untouched. With ``bar``, a Bootstrap theme
+   color name (``primary``, ``secondary``, ``success``, ``info``,
+   ``warning``, ``danger``, ``light``, ``dark``) follows the light or
+   dark theme; any other value is used as a HTML color. This option has
+   to be used with field_color and colors.
+
+``field_icon`` *string*
+
+   A string to define the field used to pick an icon. This option has to
+   be used with icons.
+
+``icons`` *dictionary*
+
+   A dictionary to link field value with a Font Awesome icon class,
+   shown on the left of the record in the drop-down panel. Values
+   without an entry get no icon. This option has to be used with
+   field_icon.
+
 ir.config_parameter options
 ---------------------------
 
@@ -114,6 +136,18 @@ Your XML form view definition could contain:
 
    ...
    <field name="partner_id" options="{'limit': 10, 'field_color':'type', 'colors':{'contact':'green', 'invoice': 'red', 'delivery': 'blue'}}"/>
+   ...
+
+.. code:: xml
+
+   ...
+   <field name="partner_id" options="{'field_color': 'type', 'color_style': 'bar', 'colors': {'contact': 'success', 'invoice': 'warning', 'delivery': 'info'}}"/>
+   ...
+
+.. code:: xml
+
+   ...
+   <field name="partner_id" options="{'field_icon': 'type', 'icons': {'contact': 'fa-user', 'invoice': 'fa-money', 'delivery': 'fa-truck'}}"/>
    ...
 
 Known issues / Roadmap
