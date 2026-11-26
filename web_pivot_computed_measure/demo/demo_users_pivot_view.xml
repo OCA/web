@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="pivot_partner_demo" model="res.partner">
+        <field name="name">Pivot Demo</field>
+        <field name="company_id" ref="base.main_company" />
+        <field name="company_name">YourCompany</field>
+        <field name="street">3575  Buena Vista Avenue</field>
+        <field name="city">Eugene</field>
+        <field name="state_id" model="res.country.state" search="[('code','=','OR')]" />
+        <field name="zip">97401</field>
+        <field name="country_id" ref="base.us" />
+        <field name="tz">Europe/Brussels</field>
+        <field name="email">mark.brown23@example.com</field>
+        <field name="phone">(441)-695-2344</field>
+        <field name="partner_latitude">40.712776</field>
+        <field name="partner_longitude">-74.005974</field>
+    </record>
+
+    <record id="demo_view_res_partner_report_pivot" model="ir.ui.view">
+        <field name="name">res.partner.report.pivot</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <pivot string="Partners Table" sample="1">
+                <field name="active" type="col" />
+                <field name="name" type="row" />
+            </pivot>
+        </field>
+    </record>
+
+    <record id="demo_action_res_partner_report_pivot" model="ir.actions.act_window">
+        <field name="name">Demo Pivot</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">pivot</field>
+        <field
+            name="view_id"
+            ref="web_pivot_computed_measure.demo_view_res_partner_report_pivot"
+        />
+    </record>
+
+    <menuitem
+        id="demo_menu_res_partner_report_pivot"
+        action="web_pivot_computed_measure.demo_action_res_partner_report_pivot"
+        sequence="10"
+    />
+</odoo>
