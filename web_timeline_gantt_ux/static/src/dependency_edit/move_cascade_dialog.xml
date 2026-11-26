@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_timeline_gantt_ux.MoveCascadeDialog">
+        <Dialog size="'md'" title="props.title">
+            <p class="mb-0" t-esc="props.body" />
+            <t t-set-slot="footer">
+                <button
+                    class="btn btn-primary"
+                    t-on-click="() => this.choose('cascade')"
+                >Shift dependent tasks</button>
+                <button
+                    class="btn btn-secondary"
+                    t-on-click="() => this.choose('single')"
+                >Only the moved task</button>
+                <button
+                    class="btn btn-secondary"
+                    t-on-click="() => this.choose('abort')"
+                >Cancel move</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>
