@@ -6,7 +6,7 @@
 :root {
     .o_grid_apps_menu[data-theme="milk"] {
         --apps-menu-scrollbar-background: #{$o-brand-odoo};
-        --apps-menu-empty-search-color: $app-menu-text-color;
+        --apps-menu-empty-search-color: #{$app-menu-text-color};
     }
 
     .o_grid_apps_menu[data-theme="community"] {
