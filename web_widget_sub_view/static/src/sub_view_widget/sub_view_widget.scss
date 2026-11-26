@@ -1,0 +1,7 @@
+.o_form_view
+    .o_notebook
+    > .tab-content
+    > .tab-pane
+    > :first-child:not(.o_group).o_widget_sub_view_widget {
+    @include o-form-sheet-negative-margin;
+}
