@@ -1,0 +1,15 @@
+/* Valor por defecto en pt */
+:root {
+    --report-font-size: 11pt;
+}
+
+/* Aplica al wrapper típico y a .page (usado por algunos informes) */
+.o_report_layout,
+.page {
+    font-size: var(--report-font-size) !important;
+}
+
+.o_report_layout *,
+.page * {
+    font-size: inherit !important;
+}
