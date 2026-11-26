@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Tecnativa - Víctor Martínez
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template
+        id="webclient_bootstrap_apple_touch_icon"
+        inherit_id="web.webclient_bootstrap"
+    >
+        <xpath expr="//link[@rel='apple-touch-icon']" position="attributes">
+            <attribute name="href">/web_pwa_customize/apple_touch_icon</attribute>
+        </xpath>
+    </template>
+</odoo>
