@@ -1,0 +1,10 @@
+/*
+    Copyright 2024 Alitec Pte Ltd (https://www.alitec.sg).
+    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+*/
+
+.o-mail-Form-chatter {
+    &:not(.o-aside):not(.o-full-width) .o-mail-Chatter {
+        max-width: $o-form-view-sheet-max-width;
+    }
+}
