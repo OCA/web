@@ -23,5 +23,11 @@
         "web.assets_backend": [
             "web_environment_ribbon/static/src/components/environment_ribbon/*",
         ],
+        "web.tests_assets": [
+            (
+                "remove",
+                "web_environment_ribbon/static/src/components/environment_ribbon/*",
+            ),
+        ],
     },
 }
