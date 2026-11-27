@@ -12,8 +12,8 @@ Set these system parameters in *Settings > Technical > System Parameters*:
 |---|---|---|
 | `bus_record_events.denied_models` | Comma-separated model names or patterns, such as `hr.employee.location.history, x_*` | These models never broadcast. |
 | `bus_record_events.allowed_models` | Comma-separated model names or patterns | Overrides the built-in denylist for these models. |
-| `bus_record_events.ignored_fields` | JSON, such as `{"project.task": ["x_gps_lat", "x_gps_lng"]}` | A write that changes only these fields does not broadcast. |
-| `bus_record_events.retention_minutes` | Integer, default `15` | Record events older than this are deleted. |
+| `bus_record_events.ignored_fields` | JSON object of model name to list of field names, such as `{"project.task": ["x_gps_lat", "x_gps_lng"]}` | A write that changes only these fields does not broadcast. Any other shape is ignored and logs a warning. |
+| `bus_record_events.retention_minutes` | Positive integer, default `15` | Record events older than this are deleted. Any other value logs a warning and uses `15`. |
 
 Code can decide for a model, without configuration:
 

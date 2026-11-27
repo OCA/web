@@ -1,3 +1,4 @@
+import logging
 from datetime import timedelta
 
 from odoo import api, fields, models
@@ -10,6 +11,8 @@ from .base import (
     record_events_channel,
 )
 
+_logger = logging.getLogger(__name__)
+
 PARAM_RETENTION_MINUTES = "bus_record_events.retention_minutes"
 DEFAULT_RETENTION_MINUTES = 15
 
@@ -21,14 +24,15 @@ class BusBus(models.Model):
     def _bus_record_events_send(self, pending):
         """Send one ``bus.record/event`` per model in ``pending``.
 
-        The payload carries ids only, never field values: the subscription check
-        only proves the listener can read the model, not every record or field.
+        The payload carries ids and the tokens of the tabs that made the changes,
+        never field values: the subscription check only proves the listener can
+        read the model, not every record or field.
         """
         for model_name, operations in pending.items():
             unlinked = operations["unlinked"]
             created = operations["created"] - unlinked
             written = operations["written"] - unlinked - created
-            payload = {"model": model_name}
+            payload = {"model": model_name, "origins": sorted(operations["origins"])}
             if len(created) + len(written) + len(unlinked) > MAX_IDS_PER_EVENT:
                 payload["reload"] = True
             else:
@@ -47,12 +51,9 @@ class BusBus(models.Model):
         catch up on chat. A record event is useless after a few minutes, and
         every first poll scans ``bus_bus`` by ``create_date``.
         """
-        minutes = int(
-            self.env["ir.config_parameter"]
-            .sudo()
-            .get_param(PARAM_RETENTION_MINUTES, DEFAULT_RETENTION_MINUTES)
+        cutoff = fields.Datetime.now() - timedelta(
+            minutes=self._record_events_retention()
         )
-        cutoff = fields.Datetime.now() - timedelta(minutes=minutes)
         escaped_prefix = CHANNEL_PREFIX.replace("_", r"\_")
         self.env.cr.execute(
             SQL(
@@ -61,3 +62,26 @@ class BusBus(models.Model):
                 cutoff,
             )
         )
+
+    @api.model
+    def _record_events_retention(self) -> int:
+        raw = (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param(PARAM_RETENTION_MINUTES, DEFAULT_RETENTION_MINUTES)
+        )
+        try:
+            minutes = int(raw)
+        except (TypeError, ValueError):
+            minutes = 0
+        if minutes > 0:
+            return minutes
+        # A cron that fails on every run leaves record events to the core
+        # garbage collector, which keeps them for a day.
+        _logger.warning(
+            "%s must be a positive number of minutes, got %r; using %s",
+            PARAM_RETENTION_MINUTES,
+            raw,
+            DEFAULT_RETENTION_MINUTES,
+        )
+        return DEFAULT_RETENTION_MINUTES

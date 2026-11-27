@@ -95,15 +95,35 @@ class IrModel(models.Model):
             for cls in type(self.env[model_name]).__mro__
             for field_name in vars(cls).get("_bus_record_events_ignored_fields", ())
         }
-        raw = self.env["ir.config_parameter"].sudo().get_param(PARAM_IGNORED_FIELDS)
-        if raw:
-            try:
-                configured = json.loads(raw)
-            except ValueError:
-                _logger.warning(
-                    "Ignoring %s: the value is not valid JSON", PARAM_IGNORED_FIELDS
-                )
-                configured = {}
-            if isinstance(configured, dict):
-                ignored.update(configured.get(model_name) or ())
+        ignored.update(self._bus_record_events_configured_ignored_fields(model_name))
         return frozenset(ignored)
+
+    @api.model
+    def _bus_record_events_configured_ignored_fields(self, model_name):
+        raw = self.env["ir.config_parameter"].sudo().get_param(PARAM_IGNORED_FIELDS)
+        if not raw:
+            return ()
+        try:
+            configured = json.loads(raw)
+        except ValueError:
+            _logger.warning(
+                "Ignoring %s: the value is not valid JSON", PARAM_IGNORED_FIELDS
+            )
+            return ()
+        if not isinstance(configured, dict):
+            _logger.warning(
+                "Ignoring %s: the value must be a JSON object", PARAM_IGNORED_FIELDS
+            )
+            return ()
+        field_names = configured.get(model_name) or []
+        # A bare string would otherwise be read as a list of its characters.
+        if not isinstance(field_names, list) or not all(
+            isinstance(name, str) for name in field_names
+        ):
+            _logger.warning(
+                "Ignoring %s for %s: the value must be a list of field names",
+                PARAM_IGNORED_FIELDS,
+                model_name,
+            )
+            return ()
+        return field_names

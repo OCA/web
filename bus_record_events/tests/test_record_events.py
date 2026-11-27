@@ -2,13 +2,19 @@ import json
 from datetime import timedelta
 from unittest.mock import patch
 
-from odoo import fields
+from odoo import fields, models
+from odoo.exceptions import UserError
 from odoo.tests import TransactionCase, tagged
 
 from odoo.addons.bus.models.bus import channel_with_db, json_dump
 
 from ..models import bus_bus
-from ..models.base import NOTIFICATION_TYPE, record_events_channel
+from ..models.base import (
+    NOTIFICATION_TYPE,
+    TOKEN_CONTEXT_KEY,
+    record_events_channel,
+)
+from ..models.bus_bus import DEFAULT_RETENTION_MINUTES, PARAM_RETENTION_MINUTES
 from ..models.ir_model import (
     PARAM_ALLOWED_MODELS,
     PARAM_DENIED_MODELS,
@@ -93,6 +99,7 @@ class TestRecordEvents(TransactionCase):
                     "created": [fourth.id],
                     "written": [existing.id],
                     "unlinked": sorted([first.id, second.id]),
+                    "origins": [""],
                 }
             ],
         )
@@ -103,7 +110,9 @@ class TestRecordEvents(TransactionCase):
         self.events()
         partner.write({"name": "Still secret", "comment": "private note"})
         (payload,) = self.events()
-        self.assertEqual(set(payload), {"model", "created", "written", "unlinked"})
+        self.assertEqual(
+            set(payload), {"model", "created", "written", "unlinked", "origins"}
+        )
         self.assertNotIn("secret", json.dumps(payload).lower())
 
     def test_ignored_fields_alone_do_not_emit(self):
@@ -150,7 +159,56 @@ class TestRecordEvents(TransactionCase):
     def test_large_batches_ask_for_a_reload(self):
         self.patch(bus_bus, "MAX_IDS_PER_EVENT", 2)
         self.Partner.create([{"name": f"Partner {i}"} for i in range(3)])
-        self.assertEqual(self.events(), [{"model": "res.partner", "reload": True}])
+        self.assertEqual(
+            self.events(), [{"model": "res.partner", "origins": [""], "reload": True}]
+        )
+
+    def test_origins_list_the_tabs_that_made_the_changes(self):
+        self.Partner.with_context(**{TOKEN_CONTEXT_KEY: "tab-a"}).create(
+            {"name": "From tab A"}
+        )
+        self.assertEqual(self.events()[0]["origins"], ["tab-a"])
+
+        self.Partner.with_context(**{TOKEN_CONTEXT_KEY: "tab-a"}).create(
+            {"name": "From tab A"}
+        )
+        self.Partner.create({"name": "From the server"})
+        self.assertEqual(self.events()[0]["origins"], ["", "tab-a"])
+
+    def test_invalid_origin_tokens_count_as_unknown(self):
+        for token in (["not", "a", "string"], "x" * 65, ""):
+            self.Partner.with_context(**{TOKEN_CONTEXT_KEY: token}).create(
+                {"name": "Odd token"}
+            )
+            self.assertEqual(self.events()[0]["origins"], [""])
+
+    def test_failed_unlink_does_not_emit(self):
+        partner = self.Partner.create({"name": "Kept"})
+        self.events()
+
+        def refuse(records):
+            raise UserError(records.env._("refused"))
+
+        self.patch(models.BaseModel, "unlink", refuse)
+        with self.assertRaises(UserError):
+            partner.unlink()
+        self.assertEqual(self.events(), [])
+
+    def test_ignored_fields_parameter_needs_a_list(self):
+        partner = self.Partner.create({"name": "Tracked"})
+        self.events()
+        self.set_param(PARAM_IGNORED_FIELDS, json.dumps({"res.partner": "comment"}))
+        with self.assertLogs("odoo.addons.bus_record_events", level="WARNING"):
+            partner.write({"comment": "still an event"})
+        self.assertEqual(self.events()[0]["written"], [partner.id])
+
+    def test_ignored_fields_parameter_needs_an_object(self):
+        partner = self.Partner.create({"name": "Tracked"})
+        self.events()
+        self.set_param(PARAM_IGNORED_FIELDS, json.dumps(["comment"]))
+        with self.assertLogs("odoo.addons.bus_record_events", level="WARNING"):
+            partner.write({"comment": "still an event"})
+        self.assertEqual(self.events()[0]["written"], [partner.id])
 
     def test_context_flag_disables_events(self):
         self.Partner.with_context(bus_record_events_disable=True).create(
@@ -185,3 +243,14 @@ class TestRecordEvents(TransactionCase):
         remaining = Bus.search([("id", ">", self.last_bus_id)])
         self.assertEqual(len(remaining), 1)
         self.assertIn("other_channel", remaining.channel)
+
+    def test_invalid_retention_falls_back_to_the_default(self):
+        Bus = self.env["bus.bus"].sudo()
+        for value in ("15 min", "0", "-5"):
+            self.set_param(PARAM_RETENTION_MINUTES, value)
+            with self.assertLogs("odoo.addons.bus_record_events", level="WARNING"):
+                self.assertEqual(
+                    Bus._record_events_retention(), DEFAULT_RETENTION_MINUTES
+                )
+        self.set_param(PARAM_RETENTION_MINUTES, "30")
+        self.assertEqual(Bus._record_events_retention(), 30)

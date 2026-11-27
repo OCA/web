@@ -14,10 +14,22 @@ import {
     contains,
     defineModels,
     fields,
+    getService,
+    makeMockEnv,
     models,
     mountView,
     onRpc,
 } from "@web/../tests/web_test_helpers";
+import {
+    TAB_TOKEN,
+    TOKEN_CONTEXT_KEY,
+} from "@bus_record_events/services/bus_record_event_service.esm";
+import {
+    checkLabels,
+    getModeButton,
+    selectMode,
+    setupChartJsForTests,
+} from "@web/../tests/views/graph/graph_test_helpers";
 import {defineBusModels, waitForChannels} from "@bus/../tests/bus_test_helpers";
 import {describe, expect, test} from "@odoo/hoot";
 import {getWebSocketWorker} from "@bus/../tests/mock_websocket";
@@ -26,14 +38,17 @@ describe.current.tags("desktop");
 
 class Partner extends models.Model {
     name = fields.Char();
+    age = fields.Integer();
+    note = fields.Char({onChange: () => expect.step("note onchange")});
     _records = [
-        {id: 1, name: "First"},
-        {id: 2, name: "Second"},
+        {id: 1, name: "First", age: 30},
+        {id: 2, name: "Second", age: 40},
     ];
 }
 
 defineBusModels();
 defineModels([Partner]);
+setupChartJsForTests();
 
 const CHANNEL = "record_events:partner";
 let lastNotificationId = 0;
@@ -317,4 +332,100 @@ test("form refresh waits for a header button's reload", async () => {
     expect(".o_form_button_save").not.toHaveAttribute("disabled");
     await settle(DEBOUNCE_MS);
     expect.verifySteps(["web_read"]);
+});
+
+test("a tab skips the events only it caused", async () => {
+    await mountList();
+    pushRecordEvent({written: [1], origins: [TAB_TOKEN]});
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps([]);
+
+    pushRecordEvent({written: [1], origins: ["", TAB_TOKEN]});
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps(["web_search_read"]);
+});
+
+test("requests carry the tab token", async () => {
+    onRpc("web_save", ({kwargs}) => {
+        expect.step(kwargs.context[TOKEN_CONTEXT_KEY] === TAB_TOKEN);
+    });
+    await mountForm();
+    await contains(".o_field_widget[name=name] input").edit("Saved");
+    await contains(".o_form_button_save").click();
+    expect.verifySteps([true]);
+});
+
+test("form waits without committing what the user is typing", async () => {
+    await mountView({
+        type: "form",
+        resModel: "partner",
+        resId: 1,
+        arch: `<form><field name="name"/><field name="note"/></form>`,
+    });
+    await waitForChannels([CHANNEL]);
+    expect.verifySteps([]);
+
+    await contains(".o_field_widget[name=note] input").edit("Half", {confirm: false});
+    pushRecordEvent({written: [1]});
+    await settle(DEBOUNCE_MS);
+    await settle(BUSY_RETRY_MS);
+    expect.verifySteps([]);
+    expect(".o_notification").toHaveCount(1);
+    expect(".o_field_widget[name=note] input").toHaveValue("Half");
+});
+
+test("form tells the user when a large change deleted its record", async () => {
+    await mountForm();
+    MockServer.env.partner.unlink([1]);
+    pushRecordEvent({reload: true});
+    await settle(DEBOUNCE_MS);
+    expect.verifySteps([]);
+    expect(".o_notification:contains(deleted by someone else)").toHaveCount(1);
+});
+
+test("a channel dropped before it was added ends up deleted", async () => {
+    await makeMockEnv();
+    const recordEvents = getService("bus_record_event_service");
+    recordEvents.subscribe("partner", () => expect.step("partner event"))();
+    recordEvents.subscribe("res.users", () => expect.step("users event"));
+    await waitForChannels(["record_events:res.users"]);
+    await waitForChannels([CHANNEL], {operation: "delete"});
+});
+
+test("pivot shows new rows and keeps the measures the user picked", async () => {
+    await mountView({
+        type: "pivot",
+        resModel: "partner",
+        context: {pivot_measures: ["__count"]},
+        arch: `<pivot><field name="name" type="row"/></pivot>`,
+    });
+    await waitForChannels([CHANNEL]);
+    expect(".o_pivot table tbody tr").toHaveCount(3);
+    await contains(".o_pivot_buttons button.dropdown-toggle").click();
+    await contains(".dropdown-item:contains(Age)").click();
+    expect(".o_pivot_measure_row").toHaveCount(2);
+
+    MockServer.env.partner.create([{name: "Third", age: 50}]);
+    pushRecordEvent({created: [3]});
+    await settle(DEBOUNCE_MS);
+    expect(".o_pivot table tbody tr").toHaveCount(4);
+    expect(".o_pivot_measure_row").toHaveCount(2);
+});
+
+test("graph shows new data and keeps the mode the user picked", async () => {
+    const view = await mountView({
+        type: "graph",
+        resModel: "partner",
+        context: {graph_mode: "bar"},
+        arch: `<graph><field name="name"/></graph>`,
+    });
+    await waitForChannels([CHANNEL]);
+    checkLabels(view, ["First", "Second"]);
+    await selectMode("pie");
+
+    MockServer.env.partner.create([{name: "Third"}]);
+    pushRecordEvent({created: [3]});
+    await settle(DEBOUNCE_MS);
+    checkLabels(view, ["First", "Second", "Third"]);
+    expect(getModeButton("pie")).toHaveClass("active");
 });

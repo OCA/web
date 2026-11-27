@@ -92,6 +92,7 @@ class TestRecordEventsWebsocket(WebsocketCase):
                     "created": [partner.id],
                     "written": [],
                     "unlinked": [],
+                    "origins": [""],
                 },
             },
             messages,

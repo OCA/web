@@ -69,13 +69,18 @@ Parameters*:
 |                                         |                                                  | built-in denylist    |
 |                                         |                                                  | for these models.    |
 +-----------------------------------------+--------------------------------------------------+----------------------+
-| ``bus_record_events.ignored_fields``    | JSON, such as                                    | A write that changes |
-|                                         | ``{"project.task": ["x_gps_lat", "x_gps_lng"]}`` | only these fields    |
-|                                         |                                                  | does not broadcast.  |
+| ``bus_record_events.ignored_fields``    | JSON object of model name to list of field       | A write that changes |
+|                                         | names, such as                                   | only these fields    |
+|                                         | ``{"project.task": ["x_gps_lat", "x_gps_lng"]}`` | does not broadcast.  |
+|                                         |                                                  | Any other shape is   |
+|                                         |                                                  | ignored and logs a   |
+|                                         |                                                  | warning.             |
 +-----------------------------------------+--------------------------------------------------+----------------------+
-| ``bus_record_events.retention_minutes`` | Integer, default ``15``                          | Record events older  |
+| ``bus_record_events.retention_minutes`` | Positive integer, default ``15``                 | Record events older  |
 |                                         |                                                  | than this are        |
-|                                         |                                                  | deleted.             |
+|                                         |                                                  | deleted. Any other   |
+|                                         |                                                  | value logs a warning |
+|                                         |                                                  | and uses ``15``.     |
 +-----------------------------------------+--------------------------------------------------+----------------------+
 
 Code can decide for a model, without configuration:
@@ -117,14 +122,19 @@ other browser reloads the list within a few seconds.
 How each view reacts:
 
 - **Form**: reloads only when its own record changes. If the user has
-  unsaved changes, the form shows a warning and reloads after the user
-  saves or discards. If the record is deleted, the form goes back to the
-  previous view.
+  unsaved changes, or is typing in a field, the form shows a warning and
+  reloads after the user saves or discards. If the record is deleted,
+  the form goes back to the previous view.
 - **List and kanban**: reload at most once every 5 seconds. They wait
   while the user edits a row, has records selected, uses kanban quick
   create or drags a card.
 - **Calendar**: reloads at most once every 5 seconds.
-- **Pivot and graph**: reload at most once every 30 seconds.
+- **Pivot and graph**: reload at most once every 30 seconds. They keep
+  the measures, groupings, expanded headers and chart mode the user
+  picked.
+- A tab does not reload for changes that only that tab made. Each tab
+  sends a random token with its requests, and the event lists the tokens
+  of the tabs that made the changes.
 - A view in a hidden browser tab does not reload. It reloads when the
   tab becomes visible again.
 

@@ -147,12 +147,15 @@ export function useRecordHighlights(
     });
 
     function mark(key, fieldNames) {
-        marks.set(key, fieldNames);
+        // A new object per mark: ``fieldNames`` may be the shared
+        // ``WHOLE_RECORD`` string, which cannot tell two marks apart.
+        const entry = {fieldNames};
+        marks.set(key, entry);
         const timer = browser.setTimeout(() => {
             timers.delete(timer);
             // A newer reload may have marked the record again; leave that one.
-            // ``get`` on the reactive map returns a proxy, never ``fieldNames``.
-            if (toRaw(marks).get(key) === fieldNames) {
+            // ``get`` on the reactive map returns a proxy, never ``entry``.
+            if (toRaw(marks).get(key) === entry) {
                 marks.delete(key);
             }
         }, HIGHLIGHT_MS);
@@ -206,5 +209,6 @@ export function isHighlighted(marks, record, fieldName) {
     if (!entry) {
         return false;
     }
-    return entry === WHOLE_RECORD || !fieldName || entry.has(fieldName);
+    const {fieldNames} = entry;
+    return fieldNames === WHOLE_RECORD || !fieldName || fieldNames.has(fieldName);
 }
