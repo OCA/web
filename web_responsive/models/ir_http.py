@@ -16,4 +16,5 @@ class IrHttp(models.AbstractModel):
                 "search_type": user.apps_menu_search_type,
                 "theme": user.apps_menu_theme,
             },
+            "auto_open_invoice_preview": user.is_auto_open_invoice_preview,
         }
