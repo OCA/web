@@ -6,6 +6,10 @@ CHANNEL_PREFIX = "record_events:"
 NOTIFICATION_TYPE = "bus.record/event"
 PENDING_KEY = "bus_record_events.pending"
 OPERATIONS = ("created", "written", "unlinked")
+# Context key the web client sets to a random value per browser tab, so a tab
+# can skip the events its own requests caused.
+TOKEN_CONTEXT_KEY = "bus_record_events_token"
+MAX_TOKEN_LENGTH = 64
 
 # Above this many ids for one model in one transaction, the payload asks clients
 # to reload instead of listing ids. Keeps imports and mass actions from writing
@@ -45,11 +49,14 @@ class Base(models.AbstractModel):
         return res
 
     def unlink(self):
-        # Queue before super(): the ids are gone afterwards. A failed unlink rolls
-        # the transaction back, and the precommit queue with it.
-        if self and self._bus_record_events_active():
+        # Queue only once the delete succeeded: a caller may catch the error
+        # without a savepoint and commit, and open forms would then be told
+        # that a record still in the database was deleted.
+        active = self and self._bus_record_events_active()
+        res = super().unlink()
+        if active:
             self._bus_record_events_queue("unlinked")
-        return super().unlink()
+        return res
 
     def _bus_record_events_active(self) -> bool:
         # registry.ready is False while modules install or upgrade, when every
@@ -75,7 +82,10 @@ class Base(models.AbstractModel):
         pending = precommit.data.get(PENDING_KEY)
         if pending is None:
             pending = precommit.data[PENDING_KEY] = defaultdict(
-                lambda: {operation: set() for operation in OPERATIONS}
+                lambda: {
+                    **{operation: set() for operation in OPERATIONS},
+                    "origins": set(),
+                }
             )
             env = self.env
 
@@ -86,3 +96,16 @@ class Base(models.AbstractModel):
                 )
 
         pending[self._name][operation].update(self.ids)
+        pending[self._name]["origins"].add(self._bus_record_events_origin())
+
+    def _bus_record_events_origin(self) -> str:
+        """The browser tab that caused this change, or "" when unknown.
+
+        The value comes from the request, so a client can send any token, even
+        one it read in another tab's events. The most that does is stop that tab
+        from refreshing for this client's own changes; it reveals no data.
+        """
+        token = self.env.context.get(TOKEN_CONTEXT_KEY)
+        if isinstance(token, str) and 0 < len(token) <= MAX_TOKEN_LENGTH:
+            return token
+        return ""

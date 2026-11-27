@@ -4,13 +4,18 @@ browser reloads the list within a few seconds.
 How each view reacts:
 
 - **Form**: reloads only when its own record changes. If the user has unsaved
-  changes, the form shows a warning and reloads after the user saves or
-  discards. If the record is deleted, the form goes back to the previous view.
+  changes, or is typing in a field, the form shows a warning and reloads after
+  the user saves or discards. If the record is deleted, the form goes back to
+  the previous view.
 - **List and kanban**: reload at most once every 5 seconds. They wait while the
   user edits a row, has records selected, uses kanban quick create or drags a
   card.
 - **Calendar**: reloads at most once every 5 seconds.
-- **Pivot and graph**: reload at most once every 30 seconds.
+- **Pivot and graph**: reload at most once every 30 seconds. They keep the
+  measures, groupings, expanded headers and chart mode the user picked.
+- A tab does not reload for changes that only that tab made. Each tab sends
+  a random token with its requests, and the event lists the tokens of the
+  tabs that made the changes.
 - A view in a hidden browser tab does not reload. It reloads when the tab
   becomes visible again.
 

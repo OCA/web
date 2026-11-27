@@ -433,17 +433,23 @@ built-in denylist
 for these models.</td>
 </tr>
 <tr><td><tt class="docutils literal">bus_record_events.ignored_fields</tt></td>
-<td>JSON, such as
+<td>JSON object of model name to list of field
+names, such as
 <tt class="docutils literal">{&quot;project.task&quot;: [&quot;x_gps_lat&quot;, <span class="pre">&quot;x_gps_lng&quot;]}</span></tt></td>
 <td>A write that changes
 only these fields
-does not broadcast.</td>
+does not broadcast.
+Any other shape is
+ignored and logs a
+warning.</td>
 </tr>
 <tr><td><tt class="docutils literal">bus_record_events.retention_minutes</tt></td>
-<td>Integer, default <tt class="docutils literal">15</tt></td>
+<td>Positive integer, default <tt class="docutils literal">15</tt></td>
 <td>Record events older
 than this are
-deleted.</td>
+deleted. Any other
+value logs a warning
+and uses <tt class="docutils literal">15</tt>.</td>
 </tr>
 </tbody>
 </table>
@@ -479,14 +485,19 @@ other browser reloads the list within a few seconds.</p>
 <p>How each view reacts:</p>
 <ul class="simple">
 <li><strong>Form</strong>: reloads only when its own record changes. If the user has
-unsaved changes, the form shows a warning and reloads after the user
-saves or discards. If the record is deleted, the form goes back to the
-previous view.</li>
+unsaved changes, or is typing in a field, the form shows a warning and
+reloads after the user saves or discards. If the record is deleted,
+the form goes back to the previous view.</li>
 <li><strong>List and kanban</strong>: reload at most once every 5 seconds. They wait
 while the user edits a row, has records selected, uses kanban quick
 create or drags a card.</li>
 <li><strong>Calendar</strong>: reloads at most once every 5 seconds.</li>
-<li><strong>Pivot and graph</strong>: reload at most once every 30 seconds.</li>
+<li><strong>Pivot and graph</strong>: reload at most once every 30 seconds. They keep
+the measures, groupings, expanded headers and chart mode the user
+picked.</li>
+<li>A tab does not reload for changes that only that tab made. Each tab
+sends a random token with its requests, and the event lists the tokens
+of the tabs that made the changes.</li>
 <li>A view in a hidden browser tab does not reload. It reloads when the
 tab becomes visible again.</li>
 </ul>
