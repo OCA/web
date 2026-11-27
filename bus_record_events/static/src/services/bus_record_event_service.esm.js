@@ -3,7 +3,7 @@ import {rpcBus} from "@web/core/network/rpc";
 
 export const CHANNEL_PREFIX = "record_events:";
 export const NOTIFICATION_TYPE = "bus.record/event";
-export const TOKEN_CONTEXT_KEY = "bus_record_events_token";
+export const TOKEN_KEY = "bus_record_events_token";
 
 /**
  * Random per tab. The server echoes it in ``origins`` so the tab can tell its
@@ -14,31 +14,16 @@ export const TAB_TOKEN = Array.from(crypto.getRandomValues(new Uint32Array(4)), 
 ).join("");
 
 /**
- * Add the token to the request on the wire only. ``user.context`` would also
- * carry it, but it is part of the key of the RPC cache, and a key that differs
- * per tab would defeat that cache.
+ * Put the token in the JSON-RPC envelope, next to ``params``. Inside the
+ * context it would be copied into the actions and filters the server returns,
+ * and into the key of the RPC cache; inside ``params`` the server would pass
+ * it to the route as an argument. Routes and test mock servers only read
+ * ``params``, so the envelope member reaches this module alone.
+ *
+ * @param {CustomEvent} ev
  */
 function addTabToken({detail}) {
-    const {data, url} = detail;
-    const params = data.params;
-    if (params?.kwargs?.context && typeof params.kwargs.context === "object") {
-        data.params = {
-            ...params,
-            kwargs: {
-                ...params.kwargs,
-                context: {...params.kwargs.context, [TOKEN_CONTEXT_KEY]: TAB_TOKEN},
-            },
-        };
-    } else if (
-        url === "/web/action/run" &&
-        params?.context &&
-        typeof params.context === "object"
-    ) {
-        data.params = {
-            ...params,
-            context: {...params.context, [TOKEN_CONTEXT_KEY]: TAB_TOKEN},
-        };
-    }
+    detail.data[TOKEN_KEY] = TAB_TOKEN;
 }
 
 rpcBus.addEventListener("RPC:REQUEST", addTabToken);

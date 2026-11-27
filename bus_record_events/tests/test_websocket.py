@@ -2,11 +2,11 @@ import json
 
 from odoo.tests import new_test_user, tagged
 
-from odoo.addons.bus.models.bus import channel_with_db, hashable
+from odoo.addons.bus.models.bus import channel_with_db, hashable, json_dump
 from odoo.addons.bus.tests.common import WebsocketCase
 from odoo.addons.bus.websocket import dispatch
 
-from ..models.base import NOTIFICATION_TYPE, record_events_channel
+from ..models.base import NOTIFICATION_TYPE, TOKEN_KEY, record_events_channel
 
 PARTNER_CHANNEL = record_events_channel("res.partner")
 
@@ -96,4 +96,37 @@ class TestRecordEventsWebsocket(WebsocketCase):
                 },
             },
             messages,
+        )
+
+    def test_origin_comes_from_the_json_rpc_envelope(self):
+        self.authenticate("admin", "admin")
+        last_id = self.env["bus.bus"]._bus_last_id()
+        response = self.url_open(
+            "/web/dataset/call_kw/res.partner/create",
+            data=json.dumps(
+                {
+                    "jsonrpc": "2.0",
+                    "method": "call",
+                    "id": 1,
+                    TOKEN_KEY: "tab-a",
+                    "params": {
+                        "model": "res.partner",
+                        "method": "create",
+                        "args": [{"name": "From tab A"}],
+                        "kwargs": {},
+                    },
+                }
+            ),
+            headers={"Content-Type": "application/json"},
+        )
+        self.assertNotIn("error", response.json())
+        channel = json_dump(channel_with_db(self.registry.db_name, PARTNER_CHANNEL))
+        rows = (
+            self.env["bus.bus"]
+            .sudo()
+            .search([("id", ">", last_id), ("channel", "=", channel)])
+        )
+        self.assertEqual(
+            [json.loads(row.message)["payload"]["origins"] for row in rows],
+            [["tab-a"]],
         )

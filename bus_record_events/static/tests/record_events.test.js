@@ -22,7 +22,7 @@ import {
 } from "@web/../tests/web_test_helpers";
 import {
     TAB_TOKEN,
-    TOKEN_CONTEXT_KEY,
+    TOKEN_KEY,
 } from "@bus_record_events/services/bus_record_event_service.esm";
 import {
     checkLabels,
@@ -33,6 +33,7 @@ import {
 import {defineBusModels, waitForChannels} from "@bus/../tests/bus_test_helpers";
 import {describe, expect, test} from "@odoo/hoot";
 import {getWebSocketWorker} from "@bus/../tests/mock_websocket";
+import {rpcBus} from "@web/core/network/rpc";
 
 describe.current.tags("desktop");
 
@@ -345,14 +346,22 @@ test("a tab skips the events only it caused", async () => {
     expect.verifySteps(["web_search_read"]);
 });
 
-test("requests carry the tab token", async () => {
-    onRpc("web_save", ({kwargs}) => {
-        expect.step(kwargs.context[TOKEN_CONTEXT_KEY] === TAB_TOKEN);
+test("requests carry the tab token outside their params", async () => {
+    const params = {model: "partner", method: "write", args: [[1], {}], kwargs: {}};
+    const data = {id: 1, jsonrpc: "2.0", method: "call", params};
+    rpcBus.trigger("RPC:REQUEST", {
+        data,
+        url: "/web/dataset/call_kw/partner/write",
+        settings: {},
     });
-    await mountForm();
-    await contains(".o_field_widget[name=name] input").edit("Saved");
-    await contains(".o_form_button_save").click();
-    expect.verifySteps([true]);
+    expect(data[TOKEN_KEY]).toBe(TAB_TOKEN);
+    expect(data.params).toBe(params);
+    expect(params).toEqual({
+        model: "partner",
+        method: "write",
+        args: [[1], {}],
+        kwargs: {},
+    });
 });
 
 test("form waits without committing what the user is typing", async () => {
