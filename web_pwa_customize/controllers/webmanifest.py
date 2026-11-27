@@ -55,11 +55,7 @@ class WebManifest(webmanifest.WebManifest):
             "pwa.manifest.background_color", "#714B67"
         )
         manifest["theme_color"] = icp.get_param("pwa.manifest.theme_color", "#714B67")
-        pwa_icon = (
-            request.env["ir.attachment"]
-            .sudo()
-            .search([("url", "like", "/web_pwa_customize/icon.")])
-        )
+        pwa_icon = request.env["ir.attachment"].sudo()._get_pwa_icon()
         if pwa_icon:
             manifest["icons"] = self._get_pwa_manifest_icons(pwa_icon)
         body = json.dumps(manifest, default=ustr)
