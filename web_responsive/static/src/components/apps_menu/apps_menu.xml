@@ -89,4 +89,18 @@
             </button>
         </xpath>
     </t>
+
+    <t t-name="web_responsive.AppsMenuPreferences">
+        <div class="o-dropdown dropdown o-dropdown--no-caret">
+            <button
+                role="button"
+                type="button"
+                title="App Menu Preferences"
+                class="dropdown-toggle o-dropdown--narrow"
+                t-on-click="_onClick"
+            >
+                <i class="fa fa-tint fa-lg px-1" />
+            </button>
+        </div>
+    </t>
 </templates>
