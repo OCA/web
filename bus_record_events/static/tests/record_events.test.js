@@ -294,7 +294,7 @@ test("list refresh waits for a row button's reload", async () => {
 test("form refresh waits for a header button's reload", async () => {
     const button = await clickButtonWithSlowReload(
         "web_read",
-        ".o_form_view header button[name=do_it]"
+        ".o_form_statusbar button[name=do_it]"
     );
     await mountView({
         type: "form",
@@ -313,7 +313,7 @@ test("form refresh waits for a header button's reload", async () => {
 
     button.release();
     await animationFrame();
-    expect(".o_form_view header button[name=do_it]").not.toHaveAttribute("disabled");
+    expect(".o_form_statusbar button[name=do_it]").not.toHaveAttribute("disabled");
     expect(".o_form_button_save").not.toHaveAttribute("disabled");
     await settle(DEBOUNCE_MS);
     expect.verifySteps(["web_read"]);
