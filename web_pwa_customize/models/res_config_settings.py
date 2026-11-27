@@ -1,5 +1,5 @@
 # Copyright 2024 Tecnativa - Víctor Martínez
-# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import base64
 import io
 import sys
@@ -62,7 +62,7 @@ class ResConfigSettings(models.TransientModel):
             resized_image.save(icon_bytes_output, format=extension.lstrip(".").upper())
             icon = base64.b64encode(icon_bytes_output.getvalue())
             url = f"{self._pwa_icon_url_base}{str(size[0])}x{str(size[1])}{extension}"
-        # Retreive existing attachment
+        # Retrieve existing attachment
         attachment_model = self.env["ir.attachment"].sudo()
         attachment = attachment_model.search([("url", "like", url)])
         # Write values to ir_attachment
@@ -134,3 +134,4 @@ class ResConfigSettings(models.TransientModel):
                 self._write_icon_to_attachment(
                     pwa_icon_extension, pwa_icon_mimetype, size=size
                 )
+        return res

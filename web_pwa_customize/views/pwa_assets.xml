@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="webclient_bootstrap_pwa" inherit_id="web.webclient_bootstrap">
+        <xpath expr="//meta[@name='theme-color']" position="attributes">
+            <attribute name="t-att-content">manifest_theme_color</attribute>
+        </xpath>
+        <xpath expr="//meta[@name='theme-color']" position="after">
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+            <meta
+                name="apple-mobile-web-app-title"
+                t-att-content="manifest_short_name"
+            />
+        </xpath>
+        <xpath expr="//link[@rel='apple-touch-icon']" position="attributes">
+            <attribute name="t-att-href">manifest_apple_touch_icon</attribute>
+        </xpath>
+    </template>
+</odoo>
