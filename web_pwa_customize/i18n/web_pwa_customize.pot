@@ -24,6 +24,11 @@ msgid "<span class=\"d-block w-75 py-2\">Theme Color</span>"
 msgstr ""
 
 #. module: web_pwa_customize
+#: model:ir.model,name:web_pwa_customize.model_ir_attachment
+msgid "Attachment"
+msgstr ""
+
+#. module: web_pwa_customize
 #: model:ir.model.fields,field_description:web_pwa_customize.field_res_config_settings__pwa_background_color
 msgid "Background Color"
 msgstr ""
