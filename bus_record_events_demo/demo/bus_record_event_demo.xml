@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="demo_record_1" model="bus.record.event.demo">
+        <field name="name">Record for User 1</field>
+        <field name="user_id" ref="user_demo_bus_1" />
+    </record>
+
+    <record id="demo_record_2" model="bus.record.event.demo">
+        <field name="name">Record for User 2</field>
+        <field name="user_id" ref="user_demo_bus_2" />
+    </record>
+
+    <record id="demo_record_public" model="bus.record.event.demo">
+        <field name="name">Public Record</field>
+        <field name="user_id" eval="False" />
+    </record>
+</odoo>
