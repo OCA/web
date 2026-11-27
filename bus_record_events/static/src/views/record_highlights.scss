@@ -1,0 +1,41 @@
+// Inset shadows paint above the background and below the content, so the tint
+// shows on table cells (whose background Bootstrap paints the same way) and on
+// kanban cards without hiding or moving what they show. The left bar gives
+// the mark a shape, so it does not rely on color alone.
+:root {
+    --bus-record-events-tint: #{rgba($warning, 0.28)};
+    --bus-record-events-bar: #{rgba($warning, 0.9)};
+}
+
+$bus-record-events-duration: 3s; // HIGHLIGHT_MS in record_highlights.esm.js
+
+@keyframes o_bus_record_events_fade {
+    0%,
+    30% {
+        box-shadow:
+            inset 3px 0 0 var(--bus-record-events-bar),
+            inset 0 0 0 9999px var(--bus-record-events-tint);
+    }
+    100% {
+        box-shadow:
+            inset 3px 0 0 transparent,
+            inset 0 0 0 9999px transparent;
+    }
+}
+
+.o_field_widget.o_bus_record_events_changed,
+.o_data_cell.o_bus_record_events_changed,
+.o_kanban_record.o_bus_record_events_changed {
+    animation: o_bus_record_events_fade $bus-record-events-duration ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .o_field_widget.o_bus_record_events_changed,
+    .o_data_cell.o_bus_record_events_changed,
+    .o_kanban_record.o_bus_record_events_changed {
+        animation: none;
+        box-shadow:
+            inset 3px 0 0 var(--bus-record-events-bar),
+            inset 0 0 0 9999px var(--bus-record-events-tint);
+    }
+}
