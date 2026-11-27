@@ -181,7 +181,7 @@ class M2xCreateEditOption(models.Model):
         """
         self.ensure_one()
         eval_ctx = dict(self.env.context or [])
-        eval_ctx.update({"context": dict(eval_ctx)})
+        eval_ctx.update({"context": dict(eval_ctx), "true": True, "false": False})
         return eval_ctx
 
     def _read_own_options(self):
