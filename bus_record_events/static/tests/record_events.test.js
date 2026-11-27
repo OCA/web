@@ -8,7 +8,14 @@ import {
     HIGHLIGHT_MS,
     MAX_HIGHLIGHTED_RECORDS,
 } from "@bus_record_events/views/record_highlights.esm";
-import {Deferred, advanceTime, animationFrame} from "@odoo/hoot-mock";
+import {
+    Deferred,
+    advanceTime,
+    animationFrame,
+    describe,
+    expect,
+    test,
+} from "@odoo/hoot";
 import {
     MockServer,
     contains,
@@ -31,8 +38,6 @@ import {
     setupChartJsForTests,
 } from "@web/../tests/views/graph/graph_test_helpers";
 import {defineBusModels, waitForChannels} from "@bus/../tests/bus_test_helpers";
-import {describe, expect, test} from "@odoo/hoot";
-import {getWebSocketWorker} from "@bus/../tests/mock_websocket";
 import {rpcBus} from "@web/core/network/rpc";
 
 describe.current.tags("desktop");
@@ -52,24 +57,15 @@ defineModels([Partner]);
 setupChartJsForTests();
 
 const CHANNEL = "record_events:partner";
-let lastNotificationId = 0;
 
 function pushRecordEvent(payload) {
-    getWebSocketWorker().broadcast("notification", [
-        {
-            id: ++lastNotificationId,
-            message: {
-                type: "bus.record/event",
-                payload: {
-                    model: "partner",
-                    created: [],
-                    written: [],
-                    unlinked: [],
-                    ...payload,
-                },
-            },
-        },
-    ]);
+    MockServer.env["bus.bus"]._sendone(CHANNEL, "bus.record/event", {
+        model: "partner",
+        created: [],
+        written: [],
+        unlinked: [],
+        ...payload,
+    });
 }
 
 async function settle(ms) {

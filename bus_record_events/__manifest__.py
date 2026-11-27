@@ -3,7 +3,7 @@
 {
     "name": "Bus Record Events",
     "summary": "Refresh open views when records change, through the bus",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Web",
     "author": "Heligrafics Fotogrametria S.L., Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
@@ -20,7 +20,7 @@
             "bus_record_events/static/src/**/*",
             ("remove", "bus_record_events/static/src/views/lazy/**/*"),
         ],
-        # Odoo 18 ships the graph and pivot views in the lazy bundle, so their
+        # Odoo ships the graph and pivot views in the lazy bundle, so their
         # patches must load there or their imports are undefined.
         "web.assets_backend_lazy": [
             "bus_record_events/static/src/views/lazy/**/*",
