@@ -8,3 +8,4 @@
 - Mayank Patel \<<mayankpatel3555@gmail.com>\>
 - [360ERP](https://www.360erp.com):
   - Andrea Stirpe
+- Arif Waram \<<arifwaram@gmail.com>\>
