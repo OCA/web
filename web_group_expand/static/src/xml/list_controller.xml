@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
-    <t t-inherit="web.ListView.Buttons" t-inherit-mode="extension" owl="1">
-        <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
-            <t t-if="model.root.isGrouped">
-                <button
-                    type="button"
-                    class="btn btn-secondary fa fa-expand oe_group_by_expand"
-                    data-tooltip="Expand"
-                    aria-label="Expand"
-                    t-on-click="expandAllGroups"
-                />
-                <button
-                    type="button"
-                    class="btn btn-secondary fa fa-compress oe_group_by_collapse"
-                    data-tooltip="Compress"
-                    aria-label="Compress"
-                    t-on-click="collapseAllGroups"
-                />
-            </t>
+    <t t-name="web_group_expand.GroupExpandButtons">
+        <t t-if="props.showButtons and model.root.isGrouped">
+            <button
+                type="button"
+                class="btn btn-secondary fa fa-expand oe_group_by_expand"
+                data-tooltip="Expand"
+                aria-label="Expand"
+                t-on-click="expandAllGroups"
+            />
+            <button
+                type="button"
+                class="btn btn-secondary fa fa-compress oe_group_by_collapse"
+                data-tooltip="Compress"
+                aria-label="Compress"
+                t-on-click="collapseAllGroups"
+            />
+        </t>
+    </t>
+
+    <!--
+        Extend web.ListView instead of web.ListView.Buttons: views using a
+        custom buttonTemplate defined as a primary inheritance of
+        web.ListView.Buttons (e.g. account.AccountMoveListView.Buttons) don't
+        receive extensions from modules loaded after them.
+    -->
+    <t t-inherit="web.ListView" t-inherit-mode="extension">
+        <xpath
+            expr="//t[@t-set-slot='control-panel-create-button']/t[@t-call='{{ props.buttonTemplate }}']"
+            position="after"
+        >
+            <t t-if="env.isSmall" t-call="web_group_expand.GroupExpandButtons" />
+        </xpath>
+        <xpath
+            expr="//t[@t-set-slot='layout-buttons']/t[@t-call='{{ props.buttonTemplate }}']"
+            position="after"
+        >
+            <t t-if="!env.isSmall" t-call="web_group_expand.GroupExpandButtons" />
         </xpath>
     </t>
 </templates>
