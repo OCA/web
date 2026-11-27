@@ -1,0 +1,4 @@
+// Single record: no pager nor other navigation buttons
+.o_sub_view_form .o_control_panel_navigation {
+    display: none !important;
+}

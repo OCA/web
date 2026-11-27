@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="base.res_partner_address_16" model="res.partner">
+        <field name="kind">teacher</field>
+    </record>
+    <record id="base.res_partner_address_2" model="res.partner">
+        <field name="kind">student</field>
+    </record>
+    <record id="base.res_partner_address_3" model="res.partner">
+        <field name="kind">student</field>
+    </record>
+</odoo>
