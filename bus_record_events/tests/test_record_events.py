@@ -11,7 +11,6 @@ from odoo.addons.bus.models.bus import channel_with_db, json_dump
 from ..models import bus_bus
 from ..models.base import (
     NOTIFICATION_TYPE,
-    TOKEN_CONTEXT_KEY,
     record_events_channel,
 )
 from ..models.bus_bus import DEFAULT_RETENTION_MINUTES, PARAM_RETENTION_MINUTES
@@ -163,23 +162,27 @@ class TestRecordEvents(TransactionCase):
             self.events(), [{"model": "res.partner", "origins": [""], "reload": True}]
         )
 
-    def test_origins_list_the_tabs_that_made_the_changes(self):
-        self.Partner.with_context(**{TOKEN_CONTEXT_KEY: "tab-a"}).create(
-            {"name": "From tab A"}
+    def request_token(self, token):
+        return patch.object(
+            type(self.Partner),
+            "_bus_record_events_request_token",
+            lambda records: token,
         )
+
+    def test_origins_list_the_tabs_that_made_the_changes(self):
+        with self.request_token("tab-a"):
+            self.Partner.create({"name": "From tab A"})
         self.assertEqual(self.events()[0]["origins"], ["tab-a"])
 
-        self.Partner.with_context(**{TOKEN_CONTEXT_KEY: "tab-a"}).create(
-            {"name": "From tab A"}
-        )
+        with self.request_token("tab-a"):
+            self.Partner.create({"name": "From tab A"})
         self.Partner.create({"name": "From the server"})
         self.assertEqual(self.events()[0]["origins"], ["", "tab-a"])
 
     def test_invalid_origin_tokens_count_as_unknown(self):
         for token in (["not", "a", "string"], "x" * 65, ""):
-            self.Partner.with_context(**{TOKEN_CONTEXT_KEY: token}).create(
-                {"name": "Odd token"}
-            )
+            with self.request_token(token):
+                self.Partner.create({"name": "Odd token"})
             self.assertEqual(self.events()[0]["origins"], [""])
 
     def test_failed_unlink_does_not_emit(self):

@@ -1,14 +1,17 @@
 from collections import defaultdict
 
 from odoo import api, models
+from odoo.http import request
 
 CHANNEL_PREFIX = "record_events:"
 NOTIFICATION_TYPE = "bus.record/event"
 PENDING_KEY = "bus_record_events.pending"
 OPERATIONS = ("created", "written", "unlinked")
-# Context key the web client sets to a random value per browser tab, so a tab
-# can skip the events its own requests caused.
-TOKEN_CONTEXT_KEY = "bus_record_events_token"
+# Member of the JSON-RPC envelope, next to ``params``, that the web client sets
+# to a random value per browser tab, so a tab can skip the events its own
+# requests caused. Not a context key: the context is copied into the actions
+# and filters the server returns, and into the RPC cache key of the client.
+TOKEN_KEY = "bus_record_events_token"
 MAX_TOKEN_LENGTH = 64
 
 # Above this many ids for one model in one transaction, the payload asks clients
@@ -105,7 +108,16 @@ class Base(models.AbstractModel):
         one it read in another tab's events. The most that does is stop that tab
         from refreshing for this client's own changes; it reveals no data.
         """
-        token = self.env.context.get(TOKEN_CONTEXT_KEY)
+        token = self._bus_record_events_request_token()
         if isinstance(token, str) and 0 < len(token) <= MAX_TOKEN_LENGTH:
             return token
         return ""
+
+    @api.model
+    def _bus_record_events_request_token(self):
+        if not request:
+            return None
+        jsonrequest = getattr(request.dispatcher, "jsonrequest", None)
+        if not isinstance(jsonrequest, dict):
+            return None
+        return jsonrequest.get(TOKEN_KEY)
