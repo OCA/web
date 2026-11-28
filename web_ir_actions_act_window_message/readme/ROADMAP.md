@@ -1,0 +1,1 @@
+- add message_type to differenciate between warnings, errors, etc.
