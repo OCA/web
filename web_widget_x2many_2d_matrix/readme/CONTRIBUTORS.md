@@ -11,3 +11,5 @@
 - Christopher Ormaza \<<chris.ormaza@forgeflow.com>\>
 - SodexisTeam \<<dev@sodexis.com>\>
 - Jasmin Solanki \<<jasmin.solanki@forgeflow.com>\>
+- [Komit](https://komit-consulting.com):
+  - Cuong NGUYEN MINH TRAN MANH  \<<cuong.nmtm@komit-consulting.com>\>

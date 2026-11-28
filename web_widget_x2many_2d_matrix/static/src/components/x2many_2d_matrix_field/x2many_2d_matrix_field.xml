@@ -11,6 +11,7 @@
                 readonly="props.readonly"
                 isXClickable="props.isXClickable"
                 isYClickable="props.isYClickable"
+                x2mListColumns="props.x2mListColumns"
             />
         </div>
     </t>
